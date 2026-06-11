@@ -24,7 +24,7 @@ export default function Hero() {
         <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
           Kraftig lyd til din fest. Alle kabler inkluderet.
           <br />
-          Hent fredag, aflever mandag. Book på 2 min.
+          Book uforpligtende på 2 min. Betal ved afhentning.
         </p>
         <a
           href="#book"
