@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useMemo, FormEvent } from "react";
 
 /* ───── Data ───── */
 
@@ -27,11 +27,14 @@ const speakers = [
   },
 ];
 
-const periods = [
-  { id: "weekend", label: "Weekend", sub: "Fre → Man", multiplier: 1 },
-  { id: "day", label: "1 døgn", sub: "24 timer", multiplier: 0.8 },
-  { id: "week", label: "1 uge", sub: "7 dage", multiplier: 1.5 },
-];
+// Price multiplier by number of rental days (base = 3 days / weekend)
+const dayMultiplier: Record<number, number> = {
+  1: 0.8,
+  2: 0.9,
+  3: 1.0,
+  4: 1.2,
+  5: 1.4,
+};
 
 const addons = [
   {
@@ -48,19 +51,145 @@ const addons = [
   },
 ];
 
+/* ───── Helpers ───── */
+
+const DAY_NAMES = ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"];
+const MONTH_NAMES = [
+  "Januar", "Februar", "Marts", "April", "Maj", "Juni",
+  "Juli", "August", "September", "Oktober", "November", "December",
+];
+
+function dateKey(d: Date) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function addDays(d: Date, n: number) {
+  const r = new Date(d);
+  r.setDate(r.getDate() + n);
+  return r;
+}
+
+function diffDays(a: Date, b: Date) {
+  return Math.round((b.getTime() - a.getTime()) / 86400000);
+}
+
+function formatDate(d: Date) {
+  return `${DAY_NAMES[d.getDay()]} ${d.getDate()}. ${MONTH_NAMES[d.getMonth()].toLowerCase().slice(0, 3)}`;
+}
+
+function isSameDay(a: Date, b: Date) {
+  return dateKey(a) === dateKey(b);
+}
+
+/* ───── Mini Calendar ───── */
+
+function MiniCalendar({
+  pickupDate,
+  returnDate,
+  onSelectDate,
+}: {
+  pickupDate: Date | null;
+  returnDate: Date | null;
+  onSelectDate: (d: Date) => void;
+}) {
+  const [viewMonth, setViewMonth] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
+
+  const today = useMemo(() => {
+    const t = new Date();
+    t.setHours(0, 0, 0, 0);
+    return t;
+  }, []);
+
+  const daysInMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
+  const firstDayOfWeek = (new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1).getDay() + 6) % 7; // Monday = 0
+
+  const cells: (Date | null)[] = [];
+  for (let i = 0; i < firstDayOfWeek; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) {
+    cells.push(new Date(viewMonth.getFullYear(), viewMonth.getMonth(), d));
+  }
+
+  function prevMonth() {
+    setViewMonth((m) => new Date(m.getFullYear(), m.getMonth() - 1, 1));
+  }
+  function nextMonth() {
+    setViewMonth((m) => new Date(m.getFullYear(), m.getMonth() + 1, 1));
+  }
+
+  return (
+    <div className="glass rounded-2xl p-4">
+      {/* Month nav */}
+      <div className="flex items-center justify-between mb-3">
+        <button type="button" onClick={prevMonth} className="rounded-lg p-2 hover:bg-white/10 transition">
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
+        </button>
+        <span className="font-semibold">
+          {MONTH_NAMES[viewMonth.getMonth()]} {viewMonth.getFullYear()}
+        </span>
+        <button type="button" onClick={nextMonth} className="rounded-lg p-2 hover:bg-white/10 transition">
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+
+      {/* Day headers (Mon-Sun) */}
+      <div className="grid grid-cols-7 text-center text-xs text-white/30 mb-1">
+        {["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"].map((d) => (
+          <div key={d} className="py-1">{d}</div>
+        ))}
+      </div>
+
+      {/* Days */}
+      <div className="grid grid-cols-7 gap-0.5">
+        {cells.map((date, i) => {
+          if (!date) return <div key={`e${i}`} />;
+
+          const isPast = date < today;
+          const isPickup = pickupDate && isSameDay(date, pickupDate);
+          const isReturn = returnDate && isSameDay(date, returnDate);
+          const isInRange =
+            pickupDate &&
+            returnDate &&
+            date > pickupDate &&
+            date < returnDate;
+          const isTooFar =
+            pickupDate && !returnDate && diffDays(pickupDate, date) > 5;
+
+          return (
+            <button
+              type="button"
+              key={dateKey(date)}
+              disabled={isPast || !!isTooFar}
+              onClick={() => onSelectDate(date)}
+              className={`
+                h-10 rounded-lg text-sm font-medium transition
+                ${isPast || isTooFar ? "text-white/15 cursor-not-allowed" : "hover:bg-white/10 cursor-pointer"}
+                ${isPickup ? "bg-brand-500 text-black font-bold" : ""}
+                ${isReturn ? "bg-brand-600 text-black font-bold" : ""}
+                ${isInRange ? "bg-brand-500/20 text-brand-300" : ""}
+              `}
+            >
+              {date.getDate()}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 /* ───── Light Overlay ───── */
 
 function LightOverlay() {
   return (
     <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
-      {/* Sweeping light beams */}
-      <div className="absolute top-0 left-1/4 h-full w-32 bg-gradient-to-b from-purple-500/30 via-transparent to-transparent blur-3xl animate-beam-1" />
-      <div className="absolute top-0 right-1/4 h-full w-24 bg-gradient-to-b from-pink-500/25 via-transparent to-transparent blur-3xl animate-beam-2" />
-      <div className="absolute top-0 left-1/2 h-full w-20 bg-gradient-to-b from-blue-500/20 via-transparent to-transparent blur-3xl animate-beam-3" />
-      {/* Pulsing glow at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-purple-600/20 to-transparent animate-pulse-slow" />
-      {/* Color-shifting ambient */}
-      <div className="absolute inset-0 animate-color-shift opacity-15 bg-gradient-to-br from-purple-600 via-pink-500 to-blue-600" />
+      <div className="absolute top-0 left-1/4 h-full w-32 bg-gradient-to-b from-yellow-400/30 via-transparent to-transparent blur-3xl animate-beam-1" />
+      <div className="absolute top-0 right-1/4 h-full w-24 bg-gradient-to-b from-amber-400/25 via-transparent to-transparent blur-3xl animate-beam-2" />
+      <div className="absolute top-0 left-1/2 h-full w-20 bg-gradient-to-b from-orange-400/20 via-transparent to-transparent blur-3xl animate-beam-3" />
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-yellow-500/15 to-transparent animate-pulse-slow" />
+      <div className="absolute inset-0 animate-color-shift opacity-10 bg-gradient-to-br from-yellow-500 via-amber-400 to-orange-500" />
     </div>
   );
 }
@@ -70,24 +199,45 @@ function LightOverlay() {
 export default function BookingFlow() {
   const [step, setStep] = useState(1);
   const [speaker, setSpeaker] = useState<string | null>(null);
-  const [period, setPeriod] = useState("weekend");
+  const [pickupDate, setPickupDate] = useState<Date | null>(null);
+  const [returnDate, setReturnDate] = useState<Date | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
-  const [form, setForm] = useState({ name: "", email: "", phone: "", date: "", comment: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", comment: "" });
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
 
   const selectedSpeaker = speakers.find((s) => s.id === speaker);
-  const selectedPeriod = periods.find((p) => p.id === period)!;
   const hasLights = selectedAddons.includes("lys");
 
-  const speakerPrice = selectedSpeaker
-    ? Math.round(selectedSpeaker.price * selectedPeriod.multiplier)
-    : 0;
+  const rentalDays = pickupDate && returnDate ? diffDays(pickupDate, returnDate) : 3;
+  const multiplier = dayMultiplier[rentalDays] ?? 1;
+  const speakerPrice = selectedSpeaker ? Math.round(selectedSpeaker.price * multiplier) : 0;
   const addonsPrice = addons
     .filter((a) => selectedAddons.includes(a.id))
     .reduce((sum, a) => sum + a.price, 0);
   const total = speakerPrice + addonsPrice;
+
+  const periodLabel = pickupDate && returnDate
+    ? `${formatDate(pickupDate)} → ${formatDate(returnDate)} (${rentalDays} ${rentalDays === 1 ? "dag" : "dage"})`
+    : "Ikke valgt";
+
+  function handleDateSelect(d: Date) {
+    if (!pickupDate || (pickupDate && returnDate)) {
+      setPickupDate(d);
+      setReturnDate(null);
+    } else {
+      if (d <= pickupDate) {
+        setPickupDate(d);
+        setReturnDate(null);
+      } else {
+        const days = diffDays(pickupDate, d);
+        if (days >= 1 && days <= 5) {
+          setReturnDate(d);
+        }
+      }
+    }
+  }
 
   function toggleAddon(id: string) {
     setSelectedAddons((prev) =>
@@ -115,7 +265,10 @@ export default function BookingFlow() {
         body: JSON.stringify({
           speaker: selectedSpeaker?.name,
           speakerSize: selectedSpeaker?.size,
-          period: selectedPeriod.label,
+          period: periodLabel,
+          pickup: pickupDate?.toISOString(),
+          returnDate: returnDate?.toISOString(),
+          days: rentalDays,
           addons: addons
             .filter((a) => selectedAddons.includes(a.id))
             .map((a) => a.label),
@@ -135,43 +288,56 @@ export default function BookingFlow() {
 
   if (done) {
     return (
-      <section id="book" className="mx-auto max-w-lg px-4 py-24 text-center">
-        <div className="glass rounded-3xl p-10">
-          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20">
-            <svg className="h-10 w-10 text-green-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
+      <section id="book" className="relative overflow-hidden">
+        {/* Fixed mood bg */}
+        {speakers.map((s) => (
+          <div
+            key={s.id}
+            className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
+            style={{
+              backgroundImage: `url(${s.mood})`,
+              opacity: speaker === s.id ? 0.35 : 0,
+            }}
+          />
+        ))}
+        <div className="fixed inset-0 bg-gradient-to-b from-[#07060b] via-[#07060b]/80 to-[#07060b]" />
+        <div className="relative z-20 mx-auto max-w-lg px-4 py-24 text-center">
+          <div className="glass rounded-3xl p-10">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20">
+              <svg className="h-10 w-10 text-green-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold">Booking modtaget!</h2>
+            <p className="mt-4 text-white/60">
+              Vi har sendt en bekræftelse til <strong className="text-white">{form.email}</strong>.
+              <br />
+              Du hører fra os inden for kort tid med afhentningsadresse og detaljer.
+            </p>
+            <p className="mt-6 text-3xl font-bold text-brand-400">{total} kr</p>
+            <p className="text-sm text-white/40">Betales ved afhentning</p>
           </div>
-          <h2 className="text-2xl font-bold">Booking modtaget!</h2>
-          <p className="mt-4 text-white/60">
-            Vi har sendt en bekræftelse til <strong className="text-white">{form.email}</strong>.
-            <br />
-            Du hører fra os inden for kort tid med afhentningsadresse og detaljer.
-          </p>
-          <p className="mt-6 text-3xl font-bold text-brand-400">{total} kr</p>
-          <p className="text-sm text-white/40">Betales ved afhentning</p>
         </div>
       </section>
     );
   }
 
   return (
-    <section id="book" className="relative overflow-hidden">
-      {/* ── Dynamic mood background ── */}
+    <section id="book" className="relative">
+      {/* ── Fixed mood background ── */}
       {speakers.map((s) => (
         <div
           key={s.id}
-          className="absolute inset-0 bg-cover bg-center transition-opacity duration-700 ease-in-out"
+          className="fixed inset-0 bg-cover bg-center transition-opacity duration-700 ease-in-out"
           style={{
             backgroundImage: `url(${s.mood})`,
             opacity: speaker === s.id ? 0.35 : 0,
           }}
         />
       ))}
-      {/* Gradient overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#07060b] via-[#07060b]/80 to-[#07060b]" />
+      <div className="fixed inset-0 bg-gradient-to-b from-[#07060b] via-[#07060b]/80 to-[#07060b]" />
 
-      {/* ── Animated light effects (when lys-pakke selected) ── */}
+      {/* ── Animated light effects ── */}
       {hasLights && <LightOverlay />}
 
       {/* ── Content ── */}
@@ -197,7 +363,7 @@ export default function BookingFlow() {
           <div className="space-y-4">
             <h2 className="text-center text-2xl font-bold">Vælg højtaler</h2>
             <p className="text-center text-sm text-white/50">
-              Begge leveres i en padded sportstaske
+              Inkl. alle kabler (iPhone, USB-C, AUX). Leveres i padded sportstaske.
             </p>
             <div className="mt-6 space-y-4">
               {speakers.map((s) => (
@@ -211,7 +377,6 @@ export default function BookingFlow() {
                     speaker === s.id ? "glass-selected" : "glass hover:border-white/20"
                   }`}
                 >
-                  {/* Product image */}
                   <div className="relative h-48 overflow-hidden bg-[#0d0c12]">
                     <img
                       src={s.product}
@@ -220,15 +385,18 @@ export default function BookingFlow() {
                     />
                     <div className="absolute bottom-4 right-4 text-right">
                       <p className="text-3xl font-bold text-brand-400">{s.price},-</p>
-                      <p className="text-xs text-white/60">pr. weekend</p>
+                      <p className="text-xs text-white/60">fra pr. weekend</p>
                     </div>
                   </div>
                   <div className="p-5">
                     <h3 className="text-xl font-semibold">{s.name}</h3>
                     <p className="mt-1 text-sm text-white/50">
-                      {s.size} — {s.capacity}
+                      {s.size} &mdash; {s.capacity}
                     </p>
                     <p className="mt-2 text-sm text-white/40">{s.desc}</p>
+                    <p className="mt-2 text-xs text-brand-400/70">
+                      Inkl. iPhone-kabel med USB-C adapter, AUX og strømkabel
+                    </p>
                   </div>
                 </button>
               ))}
@@ -236,59 +404,51 @@ export default function BookingFlow() {
           </div>
         )}
 
-        {/* Step 2: Period */}
+        {/* Step 2: Date picker */}
         {step === 2 && (
           <div className="space-y-4">
-            <h2 className="text-center text-2xl font-bold">Vælg periode</h2>
+            <h2 className="text-center text-2xl font-bold">Vælg datoer</h2>
             <p className="text-center text-sm text-white/50">
-              Standard er fredag &rarr; mandag
+              Vælg afhentning og returnering (maks 5 dage)
             </p>
-            <div className="mt-6 space-y-3">
-              {periods.map((p) => {
-                const price = selectedSpeaker
-                  ? Math.round(selectedSpeaker.price * p.multiplier)
-                  : 0;
-                const saving =
-                  p.multiplier < 1
-                    ? `-${Math.round((1 - p.multiplier) * 100)}%`
-                    : p.multiplier > 1
-                      ? `+${Math.round((p.multiplier - 1) * 100)}%`
-                      : null;
-                return (
-                  <button
-                    key={p.id}
-                    onClick={() => setPeriod(p.id)}
-                    className={`w-full rounded-2xl p-5 text-left transition active:scale-[0.98] ${
-                      period === p.id ? "glass-selected" : "glass hover:border-white/20"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="font-semibold">{p.label}</h3>
-                        <p className="text-sm text-white/40">{p.sub}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xl font-bold">{price} kr</p>
-                        {saving && (
-                          <p
-                            className={`text-xs font-medium ${
-                              p.multiplier < 1 ? "text-green-400" : "text-orange-400"
-                            }`}
-                          >
-                            {saving}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
+
+            <MiniCalendar
+              pickupDate={pickupDate}
+              returnDate={returnDate}
+              onSelectDate={handleDateSelect}
+            />
+
+            {/* Selection summary */}
+            <div className="glass rounded-xl p-4 text-sm">
+              <div className="flex justify-between">
+                <span className="text-white/50">Afhentning</span>
+                <span className={pickupDate ? "text-white font-medium" : "text-white/30"}>
+                  {pickupDate ? formatDate(pickupDate) : "Vælg dato"}
+                </span>
+              </div>
+              <div className="flex justify-between mt-2">
+                <span className="text-white/50">Returnering</span>
+                <span className={returnDate ? "text-white font-medium" : "text-white/30"}>
+                  {returnDate ? formatDate(returnDate) : "Vælg dato"}
+                </span>
+              </div>
+              {pickupDate && returnDate && (
+                <div className="flex justify-between mt-3 pt-3 border-t border-white/10">
+                  <span className="text-white/50">Pris ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
+                  <span className="text-brand-400 font-bold">{speakerPrice} kr</span>
+                </div>
+              )}
             </div>
-            <div className="flex gap-3 pt-4">
+
+            <div className="flex gap-3 pt-2">
               <button onClick={prevStep} className="flex-1 rounded-xl border border-white/10 py-3 font-medium transition hover:bg-white/5">
                 Tilbage
               </button>
-              <button onClick={nextStep} className="flex-1 rounded-xl bg-brand-600 py-3 font-semibold transition hover:bg-brand-500 active:scale-95">
+              <button
+                onClick={nextStep}
+                disabled={!pickupDate || !returnDate}
+                className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+              >
                 Videre
               </button>
             </div>
@@ -316,12 +476,12 @@ export default function BookingFlow() {
                         <div
                           className={`flex h-6 w-6 items-center justify-center rounded-md border transition ${
                             selected
-                              ? "border-brand-500 bg-brand-600"
+                              ? "border-brand-500 bg-brand-500"
                               : "border-white/20 bg-white/5"
                           }`}
                         >
                           {selected && (
-                            <svg className="h-4 w-4 text-white" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                            <svg className="h-4 w-4 text-black" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                             </svg>
                           )}
@@ -341,7 +501,7 @@ export default function BookingFlow() {
             {/* Price summary */}
             <div className="glass rounded-2xl p-5">
               <div className="flex justify-between text-sm text-white/50">
-                <span>{selectedSpeaker?.name}-højtaler ({selectedPeriod.label})</span>
+                <span>{selectedSpeaker?.name}-højtaler ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
                 <span>{speakerPrice} kr</span>
               </div>
               {addons
@@ -363,7 +523,7 @@ export default function BookingFlow() {
               <button onClick={prevStep} className="flex-1 rounded-xl border border-white/10 py-3 font-medium transition hover:bg-white/5">
                 Tilbage
               </button>
-              <button onClick={nextStep} className="flex-1 rounded-xl bg-brand-600 py-3 font-semibold transition hover:bg-brand-500 active:scale-95">
+              <button onClick={nextStep} className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95">
                 Videre
               </button>
             </div>
@@ -403,14 +563,6 @@ export default function BookingFlow() {
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               />
-              <input
-                required
-                type="text"
-                placeholder="Ønsket dato (f.eks. fredag 23. maj)"
-                value={form.date}
-                onChange={(e) => setForm({ ...form, date: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
-              />
               <textarea
                 rows={3}
                 placeholder="Kommentar (valgfrit — f.eks. ønsket tidspunkt, leveringsadresse)"
@@ -423,8 +575,11 @@ export default function BookingFlow() {
             {/* Price summary */}
             <div className="glass rounded-2xl p-5">
               <div className="flex justify-between text-sm text-white/50">
-                <span>{selectedSpeaker?.name}-højtaler ({selectedPeriod.label})</span>
+                <span>{selectedSpeaker?.name}-højtaler ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
                 <span>{speakerPrice} kr</span>
+              </div>
+              <div className="flex justify-between text-sm text-white/50">
+                <span>{periodLabel}</span>
               </div>
               {addons
                 .filter((a) => selectedAddons.includes(a.id))
@@ -458,7 +613,7 @@ export default function BookingFlow() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex-1 rounded-xl bg-brand-600 py-3.5 font-semibold transition hover:bg-brand-500 active:scale-95 disabled:opacity-50"
+                className="flex-1 rounded-xl bg-brand-500 py-3.5 font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-50"
               >
                 {submitting ? "Sender..." : "Send booking"}
               </button>

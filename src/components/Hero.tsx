@@ -1,14 +1,14 @@
 export default function Hero() {
   return (
     <section className="relative flex min-h-[85vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
-      {/* Background image */}
+      {/* Fixed background image */}
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-40"
+        className="fixed inset-0 bg-cover bg-center opacity-40"
         style={{ backgroundImage: "url(/images/hero.png)" }}
       />
       {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#07060b]/60 via-transparent to-[#07060b]" />
-      <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-brand-600/15 blur-[120px]" />
+      <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/60 via-transparent to-[#07060b]" />
+      <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-brand-500/10 blur-[120px]" />
 
       <div className="relative z-10 max-w-2xl">
         <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
@@ -22,13 +22,13 @@ export default function Hero() {
           </span>
         </h1>
         <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-          Kraftig lyd til din fest. Hent fredag, aflever mandag.
+          Kraftig lyd til din fest. Alle kabler inkluderet.
           <br />
-          Book online på 2 minutter.
+          Hent fredag, aflever mandag. Book på 2 min.
         </p>
         <a
           href="#book"
-          className="mt-8 inline-block rounded-full bg-brand-600 px-8 py-4 text-lg font-semibold text-white transition hover:bg-brand-500 active:scale-95"
+          className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
         >
           Book nu
         </a>
