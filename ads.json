@@ -1,10 +1,17 @@
 {
   "google_ads_account": {
-    "note": "Opret ny Google Ads-konto til hojtalerudlejning.dk",
+    "note": "Opret ny Google Ads-konto til lejhojtaler.dk",
+    "status": "TODO — ads.json klar, konto ikke oprettet endnu",
     "target_location": "København og omegn (radius 30 km)",
     "language": "da",
     "budget_daily_dkk": 100,
-    "bid_strategy": "Maximize conversions"
+    "bid_strategy": "Maximize conversions",
+    "expected_cpc_ranges": {
+      "højtalerudlejning_københavn": "8–20 kr",
+      "lyd_udstyr_leje_københavn": "6–18 kr",
+      "festudstyr_leje": "5–15 kr",
+      "speaker_rental_copenhagen": "10–25 kr"
+    }
   },
   "campaigns": [
     {
@@ -21,15 +28,22 @@
             "lej højtaler københavn",
             "højtaler til fest",
             "højtaler leje",
+            "højtaler leje københavn",
             "udlej højtaler",
             "højtaler til leje",
-            "højtaler til leje københavn"
+            "højtaler til leje københavn",
+            "højtalerudlejning",
+            "højtalerudlejning københavn",
+            "festhøjtaler leje",
+            "lej højtaler",
+            "lejhojtaler"
           ],
           "negative_keywords": [
             "køb",
             "sælg",
             "brugt",
-            "reparation"
+            "reparation",
+            "bluetooth højtaler"
           ],
           "ads": [
             {
@@ -62,19 +76,26 @@
           ]
         },
         {
-          "name": "Musikanlæg udlejning",
+          "name": "PA-anlæg og lydudstyr",
           "keywords": [
+            "PA anlæg udlejning",
+            "PA anlæg udlejning københavn",
+            "PA anlæg leje",
+            "lej PA anlæg",
+            "lydudstyr udlejning",
+            "lydudstyr udlejning københavn",
+            "lydudstyr leje",
+            "lyd udstyr leje københavn",
+            "lej lydudstyr",
+            "lydudstyrsudlejning",
             "musikanlæg udlejning",
             "musikanlæg udlejning københavn",
             "lej musikanlæg",
-            "lej musikanlæg københavn",
             "musikanlæg til fest",
-            "musikanlæg leje",
-            "musikanlæg til leje",
             "lydanlæg udlejning",
+            "lydanlæg udlejning københavn",
             "lydanlæg til fest",
-            "lej lydanlæg",
-            "lydanlæg udlejning københavn"
+            "lej lydanlæg"
           ],
           "negative_keywords": [
             "køb",
@@ -82,22 +103,23 @@
             "brugt",
             "reparation",
             "professionel",
-            "koncert"
+            "koncert",
+            "band"
           ],
           "ads": [
             {
               "type": "RSA",
               "headlines": [
-                "Musikanlæg Fra 400,-",
-                "Lej Musikanlæg I KBH",
-                "Lydanlæg Til Din Fest",
-                "Fra 400 Kr/Weekend",
-                "Nemt Og Billigt",
+                "PA-Anlæg Fra 400,-",
+                "Lej PA-Anlæg I KBH",
+                "Lydudstyr Til Din Fest",
+                "Lydanlæg Fra 400 Kr",
+                "Musikanlæg Til Leje",
                 "Hent Fredag - Aflever Mandag",
                 "Op Til 100 Personer",
                 "Book Online På 2 Min",
                 "Levering I København",
-                "Musikanlæg Til Fester",
+                "Inkl. Alle Kabler",
                 "Lydanlæg Fra 400,-",
                 "Inkl. Sportstaske",
                 "Kraftig Lyd Til Fest",
@@ -105,12 +127,12 @@
                 "Lej Et Anlæg Nu"
               ],
               "descriptions": [
-                "Lej musikanlæg fra kun 400 kr/weekend. Hent fredag, aflever mandag. Simpelt og billigt.",
+                "Lej PA-anlæg fra kun 400 kr/weekend. Hent fredag, aflever mandag. Simpelt og billigt.",
                 "Kraftig lyd til op til 100 personer. Book online, betal ved afhentning. Levering mulig.",
-                "Musikanlæg i padded sportstaske. Vælg mellem 10\" og 12\" højtaler. Lys-pakke mulig.",
+                "Lydudstyr i padded sportstaske. Vælg mellem 10\" og 12\" højtaler. Tilkøb lys-pakke.",
                 "Online booking på 2 minutter. Vælg anlæg, dato og evt. levering. Nemmere bliver det ikke."
               ],
-              "paths": ["musikanlaeg", "lej-nu"]
+              "paths": ["pa-anlaeg", "lej-nu"]
             }
           ]
         },
@@ -126,7 +148,11 @@
             "højtaler til privatfest",
             "anlæg til havefest",
             "festhøjtaler",
-            "lyd til garden party"
+            "lyd til garden party",
+            "festudstyr leje",
+            "festudstyr leje københavn",
+            "festudstyr udlejning",
+            "festlyd københavn"
           ],
           "negative_keywords": [
             "køb",
@@ -151,7 +177,7 @@
                 "Nem Leje - Lav Pris",
                 "Levering Mulig I KBH",
                 "Kraftig Fest-Højtaler",
-                "Inkl. Lys-Pakke 500,-",
+                "Festudstyr Fra 400,-",
                 "Weekend-Leje Fra 400,-",
                 "Party-Anlæg Til Leje",
                 "Billig Fest-Lyd KBH"
@@ -163,6 +189,109 @@
                 "Simpel online booking. Vælg anlæg og dato, betal ved afhentning. Hent i padded taske."
               ],
               "paths": ["fest-lyd", "book-nu"]
+            }
+          ]
+        },
+        {
+          "name": "Lys og festbelysning",
+          "keywords": [
+            "lys til fest",
+            "lys til fest leje",
+            "festlys udlejning",
+            "festlys leje",
+            "festlys leje københavn",
+            "lej festlys",
+            "festbelysning leje",
+            "festbelysning udlejning",
+            "LED lys til fest",
+            "lys udlejning københavn",
+            "festlys københavn",
+            "diskolys leje"
+          ],
+          "negative_keywords": [
+            "køb",
+            "sælg",
+            "lampe",
+            "loftlampe",
+            "indendørs belysning"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Festlys Fra 500,-",
+                "Lej Lys Til Din Fest",
+                "Festlys I København",
+                "LED Lys + Effekter",
+                "2 Lamper + Centereffekt",
+                "Røgmaskine Kun 250,-",
+                "Hent Fredag - Aflever Man",
+                "Book Online På 2 Min",
+                "Lys-Pakke 500 Kr",
+                "Kombiner Med Højtaler",
+                "Levering I KBH Mulig",
+                "Fed Lysoplevelse",
+                "Perfekt Til Fester",
+                "Inkl. Stativ",
+                "Nemt Og Billigt"
+              ],
+              "descriptions": [
+                "Lej festlys fra 500 kr. 2 farvede LED-lamper + centereffekt på stativ. Tilkøb røgmaskine.",
+                "Gør din fest 10x federe med festlys og røgmaskine. Book online, betal ved afhentning.",
+                "Kombiner med højtaler fra 400 kr for den fulde festoplevelse. Levering mulig i KBH.",
+                "Nem booking online. Vælg lys, evt. røgmaskine og højtalere. Hent fredag i København."
+              ],
+              "paths": ["festlys", "book-nu"]
+            }
+          ]
+        },
+        {
+          "name": "Speaker Rental Copenhagen (EN)",
+          "keywords": [
+            "speaker rental copenhagen",
+            "rent speaker copenhagen",
+            "speaker hire copenhagen",
+            "PA system rental copenhagen",
+            "sound system rental copenhagen",
+            "party speaker copenhagen",
+            "rent sound equipment copenhagen",
+            "speaker rental denmark"
+          ],
+          "negative_keywords": [
+            "buy",
+            "sell",
+            "used",
+            "repair",
+            "professional",
+            "concert"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Speaker Rental From 400kr",
+                "Rent A Speaker In CPH",
+                "Party Speaker From 400,-",
+                "Festival Sound 700,-",
+                "Pick Up Fri - Return Mon",
+                "Up To 100 People",
+                "Delivery In Copenhagen",
+                "Book Online In 2 Min",
+                "Easy Rental - Low Price",
+                "Includes All Cables",
+                "Light Package 500,-",
+                "Weekend Rental CPH",
+                "Pay At Pickup",
+                "Carry Bag Included",
+                "Rent Sound Equipment"
+              ],
+              "descriptions": [
+                "Rent a powerful speaker from just 400 DKK/weekend. Pick up Friday, return Monday. Easy.",
+                "Party speaker for 40 people or festival sound for 100. Book online in 2 minutes.",
+                "We provide carry bag with all cables. Delivery and setup in Copenhagen for 500 DKK.",
+                "Simple online booking. Choose speaker, dates and extras. Pay at pickup. No deposit."
+              ],
+              "paths": ["speaker-rental", "book-now"]
             }
           ]
         }

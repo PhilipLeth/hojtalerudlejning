@@ -18,12 +18,12 @@ export default function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
-            name: "Scharling Studio / Højtalerudlejning.dk",
+            name: "Scharling Studio / Lejhøjtaler.dk",
             legalName: "Scharling Studio",
             taxID: "DK40994904",
             description:
               "Højtalerudlejning i København. Lej højtaler, PA-anlæg og lydudstyr til fest, event og party. Festudstyr til leje fra 400 kr/weekend.",
-            url: "https://hojtalerudlejning.dk",
+            url: "https://lejhojtaler.dk",
             address: {
               "@type": "PostalAddress",
               streetAddress: "Halvtolv 9, 1. th",
@@ -63,10 +63,10 @@ export default function Home() {
             name: "Party-højtaler udlejning",
             description:
               "Kompakt 10\" party-højtaler til leje. Op til 40 personer. Inkl. alle kabler (iPhone, USB-C, AUX). Ideel til fødselsdage, havefester og mindre events i København.",
-            image: "https://hojtalerudlejning.dk/images/product-party.png",
+            image: "https://lejhojtaler.dk/images/product-party.png",
             brand: {
               "@type": "Brand",
-              name: "Højtalerudlejning.dk",
+              name: "Lejhøjtaler.dk",
             },
             offers: {
               "@type": "Offer",
@@ -74,7 +74,7 @@ export default function Home() {
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
               availability: "https://schema.org/InStock",
-              url: "https://hojtalerudlejning.dk/#book",
+              url: "https://lejhojtaler.dk/#book",
               description: "Fra 400 kr/weekend (fre–man). Højtalerleje København.",
             },
           }),
@@ -91,10 +91,10 @@ export default function Home() {
             name: "Festival-højtaler udlejning",
             description:
               "Kraftig 12\" festival-højtaler til leje. 40–100 personer. Inkl. stativer og alle kabler. Perfekt til store fester, events og udendørs arrangementer i København.",
-            image: "https://hojtalerudlejning.dk/images/product-festival.png",
+            image: "https://lejhojtaler.dk/images/product-festival.png",
             brand: {
               "@type": "Brand",
-              name: "Højtalerudlejning.dk",
+              name: "Lejhøjtaler.dk",
             },
             offers: {
               "@type": "Offer",
@@ -102,7 +102,7 @@ export default function Home() {
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
               availability: "https://schema.org/InStock",
-              url: "https://hojtalerudlejning.dk/#book",
+              url: "https://lejhojtaler.dk/#book",
               description: "Fra 700 kr/weekend (fre–man). PA-anlæg udlejning København.",
             },
           }),
@@ -118,11 +118,11 @@ export default function Home() {
             "@type": "Product",
             name: "Lys-pakke udlejning",
             description:
-              "Festlys til leje: 2 farvede LED-lamper + centereffekt på stativ. Tilkøb til højtalerudlejning for den fulde festoplevelse.",
-            image: "https://hojtalerudlejning.dk/images/product-lys.png",
+              "Festlys til leje: 2 farvede LED-lamper + centereffekt på stativ. Tilkøb til din højtaler for den fulde festoplevelse.",
+            image: "https://lejhojtaler.dk/images/product-lys.png",
             brand: {
               "@type": "Brand",
-              name: "Højtalerudlejning.dk",
+              name: "Lejhøjtaler.dk",
             },
             offers: {
               "@type": "Offer",
@@ -130,7 +130,7 @@ export default function Home() {
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
               availability: "https://schema.org/InStock",
-              url: "https://hojtalerudlejning.dk/#book",
+              url: "https://lejhojtaler.dk/#book",
               description: "500 kr tilkøb. Festudstyr leje København.",
             },
           }),

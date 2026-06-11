@@ -1,175 +1,226 @@
 {
-  "project": "hojtalerudlejning.dk",
-  "description": "Ultra-simpel one-page booking-side for højttalerudlejning i København. App-feel, lavest mulig friktion, betaling ved afhentning.",
+  "project": "lejhojtaler.dk",
+  "description": "Ultra-simpel one-page booking-side for højtalerudlejning i København. App-feel, lavest mulig friktion, betaling ved afhentning.",
+  "business": {
+    "name": "Scharling Studio",
+    "cvr": "40994904",
+    "address": "Halvtolv 9, 1. th, 1436 København K"
+  },
   "domains": {
-    "da": "hojtalerudlejning.dk",
-    "en": "hojtalerudlejning.com"
+    "da": "lejhojtaler.dk",
+    "en": "lejhojtaler.com"
   },
   "tech_stack": {
-    "framework": "Next.js (App Router)",
-    "styling": "Tailwind CSS",
+    "framework": "Next.js 15 (App Router, static export)",
+    "styling": "Tailwind CSS (Ryanair-gul #ffd600 brand, dark theme)",
     "email": "SendGrid",
-    "deployment": "Vercel",
+    "storage": "Cloudflare KV (bookings)",
+    "deployment": "Cloudflare Pages (speaker-rental.pages.dev)",
     "analytics": "Google Analytics 4 + Google Ads conversion tracking"
   },
   "products": [
     {
       "id": "party",
       "name_da": "Party-højtaler",
-      "name_en": "Party Speaker",
-      "description_da": "Perfekt til fester op til 40 personer",
-      "description_en": "Perfect for parties up to 40 people",
+      "description_da": "Kompakt og nem at bære — tag den med til fods eller 2 pers. på cykel.",
       "size": "10 tommer",
-      "capacity": "0-40 personer",
-      "price_dkk": 400
+      "capacity": "Op til 40 personer",
+      "price_dkk": 400,
+      "includes": ["Padded sportstaske", "iPhone-kabel m/ USB-C adapter", "AUX-kabel", "Strømkabel"],
+      "extra": "Stativ kan tilkøbes, men er sjældent nødvendigt."
     },
     {
       "id": "festival",
       "name_da": "Festival-højtaler",
-      "name_en": "Festival Speaker",
-      "description_da": "Kraftig lyd til events op til 100 personer",
-      "description_en": "Powerful sound for events up to 100 people",
+      "description_da": "Kraftig lyd til store fester, events og udendørs arrangementer.",
       "size": "12 tommer",
-      "capacity": "40-100 personer",
-      "price_dkk": 700
+      "capacity": "40–100 personer",
+      "price_dkk": 700,
+      "includes": ["Padded sportstaske", "Stativer (standard)", "iPhone-kabel m/ USB-C adapter", "AUX-kabel", "Strømkabel"],
+      "extra": null
+    },
+    {
+      "id": "lys-only",
+      "name_da": "Kun lys-pakke",
+      "description_da": "Lej kun lys-pakken uden højtalere.",
+      "price_dkk": 500,
+      "includes": ["2 farvede LED-lamper", "Centereffekt", "Stativ"]
     }
   ],
   "addons": [
     {
       "id": "lys",
       "name_da": "Lys-pakke",
-      "name_en": "Light package",
+      "description_da": "2 farvede lamper + centereffekt på stativ",
       "price_dkk": 500
+    },
+    {
+      "id": "rog",
+      "name_da": "Røgmaskine",
+      "description_da": "Kompakt røgmaskine med væske — gør lyset 10x federe",
+      "price_dkk": 250
     },
     {
       "id": "levering",
       "name_da": "Levering, opsætning & afhentning i KBH",
-      "name_en": "Delivery, setup & pickup in Copenhagen",
       "price_dkk": 500
     }
   ],
   "pricing_rules": {
-    "standard_period": "Fredag til mandag (weekend)",
-    "one_day_discount": "-20%",
-    "one_week_surcharge": "+50%"
+    "base": "3 dage (weekend) = 100% af listepris",
+    "day_multipliers": {
+      "1_dag": 0.8,
+      "2_dage": 0.9,
+      "3_dage": 1.0,
+      "4_dage": 1.2,
+      "5_dage": 1.4
+    },
+    "max_rental_days": 5
   },
   "opening_hours": {
-    "friday": "14:00-18:00",
-    "monday": "15:00-17:00",
+    "friday": "14:00–18:00 (afhentning)",
+    "monday": "15:00–17:00 (aflevering)",
     "other": "Efter aftale (angiv i kommentarfelt)"
   },
   "pickup": {
     "method": "Lejer henter i padded sportstaske",
-    "location": "København (adresse oplyses ved booking)",
+    "location": "Halvtolv 9, 1. th, 1436 København K",
     "payment": "Betaling ved afhentning (MobilePay eller kontant)"
   },
   "pages": {
     "home": {
-      "description": "One-page med booking-flow + about-sektion",
+      "path": "/",
+      "description": "One-page med hero + booking-flow + how-it-works + footer",
       "sections": [
         {
           "id": "hero",
-          "description": "Kort, punchy hero med headline og CTA-knap der scroller ned til booking"
+          "description": "Fixed baggrundsbillede (København rooftop fest), gul gradient-tekst, 'Book uforpligtende på 2 min. Betal ved afhentning.'"
         },
         {
           "id": "booking",
-          "description": "Inline booking-flow i steps med app-feel",
+          "description": "4-step booking-flow med app-feel, mood-baggrunde der skifter pr. højtaler",
           "steps": [
             {
               "step": 1,
-              "name": "Vælg højtaler",
-              "description": "Visuelt klikbart valg mellem Party og Festival"
+              "name": "Vælg højtalere",
+              "description": "Visuelle produktkort med billede + pris. 'Kun lys?'-shortcut i bunden."
             },
             {
               "step": 2,
-              "name": "Vælg periode",
-              "description": "Weekend (standard), 1 døgn (-20%), 1 uge (+50%). Live prisberegning"
+              "name": "Vælg datoer",
+              "description": "Mini-kalender med dato-range (maks 5 dage). Hot-friday nudge på næste 2 weekender."
             },
             {
               "step": 3,
               "name": "Tilvalg",
-              "description": "Checkboxes: Lys-pakke (500 kr), Levering+opsætning (500 kr). Pris opdateres live"
+              "description": "Lys-pakke (500 kr), Røgmaskine (250 kr), Levering+opsætning (500 kr). Leveringsadresse-felt ved valg af levering."
             },
             {
               "step": 4,
               "name": "Dine oplysninger + send",
-              "description": "Navn, telefon, email, dato, kommentarfelt. Submit sender booking-email via SendGrid"
+              "description": "Navn, email, telefon, kommentar. Ordreopsummering med total. Submit sender booking-email via SendGrid + gemmer i KV."
             }
           ]
         },
         {
-          "id": "about",
-          "description": "Sådan virker det: 1) Vælg og book, 2) Hent fredag (eller vi leverer), 3) Fest!, 4) Aflever mandag. Plus åbningstider og FAQ"
+          "id": "confirmation",
+          "description": "Bekræftelsesside med ordredetaljer, statusindikator ('Vi tjekker din booking nu'), inkluderet udstyr."
+        },
+        {
+          "id": "how-it-works",
+          "description": "4 trin med ikoner + SEO-tekst. Åbningstider-kort."
+        },
+        {
+          "id": "footer",
+          "description": "Scharling Studio info, CVR, link til lejevilkår."
         }
       ]
+    },
+    "lejevilkaar": {
+      "path": "/lejevilkaar",
+      "description": "Fuld lejekontrakt: lejeperiode, depositum, skader, forsinket returnering, aflysning, ansvar, afhentning, betaling, persondatapolitik."
+    },
+    "admin": {
+      "path": "/admin",
+      "description": "Password-beskyttet admin dashboard. Viser alle bookinger fra KV med statusflow (ny → bekræftet → afhentet → afleveret)."
+    }
+  },
+  "api_endpoints": {
+    "book": {
+      "path": "/api/book",
+      "method": "POST",
+      "description": "Modtag booking, send email via SendGrid, gem i Cloudflare KV"
+    },
+    "bookings": {
+      "path": "/api/bookings",
+      "method": "GET",
+      "description": "List alle bookinger (kræver ?secret=ADMIN_SECRET)"
+    },
+    "bookings_update": {
+      "path": "/api/bookings-update",
+      "method": "POST",
+      "description": "Opdater booking-status (kræver ?secret=ADMIN_SECRET)"
+    },
+    "availability": {
+      "path": "/api/availability",
+      "method": "GET",
+      "description": "Public. Accepterer ?from=YYYY-MM-DD&to=YYYY-MM-DD. Returnerer inventory counts, booked counts (overlap), blocked dates."
+    },
+    "inventory": {
+      "path": "/api/inventory",
+      "method": "POST",
+      "description": "Admin. Actions: set_inventory, block_date, unblock_date. Kræver ?secret=ADMIN_SECRET."
     }
   },
   "email_flow": {
     "provider": "SendGrid",
     "on_booking": {
-      "to_owner": "Ny booking med alle detaljer (produkt, periode, pris, kundeinfo, kommentar)",
-      "to_customer": "Bekræftelse med opsummering, afhentningsadresse, åbningstider, kontaktinfo"
+      "to_owner": "Ny booking med alle detaljer (produkt, periode, pris, kundeinfo, leveringsadresse, kommentar). Reply-to sat til kundens email.",
+      "to_customer": "Bekræftelse med opsummering, afhentningsadresse, inkluderet udstyr, CVR-info."
     }
-  },
-  "i18n": {
-    "default_locale": "da",
-    "locales": ["da", "en"],
-    "strategy": "Dansk på hojtalerudlejning.dk, engelsk på hojtalerudlejning.com (eller /en prefix)"
-  },
-  "design": {
-    "style": "Mørkt fest-tema, mobil-first, smooth animations mellem steps",
-    "mobile_priority": true,
-    "inspiration": "Amazon one-click simplicity"
   },
   "seo": {
-    "json_ld": ["LocalBusiness", "Product"],
-    "google_business_profile": true
+    "json_ld": ["LocalBusiness", "Product (Party, Festival, Lys)", "BreadcrumbList"],
+    "keywords": [
+      "højtalerudlejning københavn",
+      "lej højtaler københavn",
+      "lydudstyr udlejning københavn",
+      "højtaler leje",
+      "PA anlæg udlejning",
+      "festudstyr leje københavn",
+      "speaker rental copenhagen",
+      "højtaler udlejning",
+      "lej lydanlæg",
+      "festhøjtaler leje"
+    ],
+    "canonical": "https://lejhojtaler.dk",
+    "opengraph": true,
+    "google_business_profile": "TODO"
   },
   "legal": {
-    "lejevilkaar": "Simpel lejeaftale (skader, forsinkelse)",
-    "gdpr": "Privatlivspolitik",
+    "lejevilkaar": "/lejevilkaar (10 sektioner, fuld lejekontrakt)",
     "cookie_consent": "Minimal eller undgå"
   },
-  "milestones": [
-    {
-      "id": "M1",
-      "name": "Projekt-setup + landing page",
-      "tasks": [
-        "Next.js projekt med Tailwind",
-        "One-page layout med hero, booking-flow (UI only), about-sektion",
-        "Mobil-first responsive design",
-        "Mørkt fest-tema"
-      ]
-    },
-    {
-      "id": "M2",
-      "name": "Booking-flow + SendGrid",
-      "tasks": [
-        "Interaktiv booking-stepper med live prisberegning",
-        "API route til SendGrid (booking-email til ejer + bekræftelse til kunde)",
-        "Form validation",
-        "Succes-besked efter booking"
-      ]
-    },
-    {
-      "id": "M3",
-      "name": "Engelsk version",
-      "tasks": [
-        "i18n setup",
-        "Oversæt al UI-tekst",
-        "Metadata på engelsk"
-      ]
-    },
-    {
-      "id": "M4",
-      "name": "SEO + Google Ads + lancering",
-      "tasks": [
-        "Metadata, OpenGraph, JSON-LD",
-        "Sitemap + robots.txt",
-        "Google Ads kampagner (kun KBH)",
-        "Google Analytics + conversion tracking",
-        "Deploy til Vercel + domæner"
-      ]
-    }
-  ]
+  "design": {
+    "color": "#ffd600 (Ryanair-gul budget-farve)",
+    "theme": "Mørkt fest-tema (#07060b baggrund)",
+    "mobile_priority": true,
+    "features": [
+      "Fixed mood-baggrunde der crossfader mellem højtalervalg",
+      "Glass-morphism kort",
+      "Letvægts light-bar animation (CSS translateX)",
+      "Floating product showcase (speaker + lys) ved step 2+",
+      "DALL-E-genererede produktbilleder og stemningsbilleder"
+    ]
+  },
+  "infrastructure": {
+    "github_repo": "PhilipLeth/hojtalerudlejning",
+    "cloudflare_pages_project": "speaker-rental",
+    "kv_namespace": "BOOKINGS (c46378bfa06c46c19841331217f812c5)",
+    "secrets": ["SENDGRID_API_KEY", "NOTIFY_EMAIL", "ADMIN_SECRET"]
+  },
+  "status": {
+    "completed": ["M1: Projekt + landing page", "M2: Booking-flow + SendGrid", "M4: SEO + ads.json", "Admin dashboard", "Lejevilkår", "Lys-only booking", "Røgmaskine addon", "Lagerstyring + udsolgt-logik + dato-blokering"],
+    "pending": ["Engelsk version (lejhojtaler.com)", "Google Ads konto oprettelse", "Google Business Profile", "SendGrid secrets i Cloudflare", "Custom domæne DNS", "GA4 + conversion tracking"]
+  }
 }

@@ -44,7 +44,7 @@ export default function HowItWorks() {
         Sådan lejer du en højtaler i København
       </h2>
       <p className="mx-auto mb-6 max-w-2xl text-center text-white/50">
-        Højtalerudlejning behøver ikke være besværligt. Hos os booker du
+        At leje en højtaler behøver ikke være besværligt. Hos os booker du
         online, henter dit lydudstyr på vores adresse i indre København og
         afleverer igen efter festen. Ingen depositum, ingen lange kontrakter.
       </p>

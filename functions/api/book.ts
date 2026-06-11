@@ -72,15 +72,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const messages = [
     {
       to: [{ email: NOTIFY_EMAIL }],
-      from: { email: NOTIFY_EMAIL, name: "Højtalerudlejning.dk" },
+      from: { email: NOTIFY_EMAIL, name: "Lejhøjtaler.dk" },
       reply_to: { email: data.email, name: data.name },
       subject: `Ny booking: ${data.speaker} — ${data.period} — ${data.name}`,
       content: [{ type: "text/html", value: ownerHtml }],
     },
     {
       to: [{ email: data.email, name: data.name }],
-      from: { email: NOTIFY_EMAIL, name: "Højtalerudlejning.dk" },
-      subject: "Booking bekræftelse — Højtalerudlejning.dk",
+      from: { email: NOTIFY_EMAIL, name: "Lejhøjtaler.dk" },
+      subject: "Booking bekræftelse — Lejhøjtaler.dk",
       content: [{ type: "text/html", value: customerHtml }],
     },
   ];

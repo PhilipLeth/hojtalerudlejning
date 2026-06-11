@@ -11,7 +11,7 @@ export default function Footer() {
           Lejevilkår
         </Link>
       </p>
-      <p className="mt-3">&copy; {new Date().getFullYear()} Højtalerudlejning.dk</p>
+      <p className="mt-3">&copy; {new Date().getFullYear()} Lejhøjtaler.dk</p>
     </footer>
   );
 }

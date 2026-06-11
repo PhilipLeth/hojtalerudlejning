@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Lejevilkår | Højtalerudlejning.dk",
+  title: "Lejevilkår | Lejhøjtaler.dk",
   description:
-    "Lejevilkår for leje af højtalere, lysudstyr og PA-anlæg hos Højtalerudlejning.dk. Læs om priser, lejeperiode, afhentning, returnering og ansvar.",
+    "Lejevilkår for leje af højtalere, lysudstyr og PA-anlæg hos Lejhøjtaler.dk. Læs om priser, lejeperiode, afhentning, returnering og ansvar.",
   alternates: {
-    canonical: "https://hojtalerudlejning.dk/lejevilkaar",
+    canonical: "https://lejhojtaler.dk/lejevilkaar",
   },
 };
 
@@ -103,7 +103,7 @@ export default function Lejevilkaar() {
         <h1 className="text-4xl font-bold sm:text-5xl">Lejevilkår</h1>
         <p className="mt-4 text-lg text-white/50">
           Vilkår for leje af højtalere, lysudstyr og tilbehør hos
-          Højtalerudlejning.dk
+          Lejhøjtaler.dk
         </p>
       </div>
 
@@ -155,13 +155,13 @@ export default function Lejevilkaar() {
                 "@type": "ListItem",
                 position: 1,
                 name: "Forside",
-                item: "https://hojtalerudlejning.dk",
+                item: "https://lejhojtaler.dk",
               },
               {
                 "@type": "ListItem",
                 position: 2,
                 name: "Lejevilkår",
-                item: "https://hojtalerudlejning.dk/lejevilkaar",
+                item: "https://lejhojtaler.dk/lejevilkaar",
               },
             ],
           }),
