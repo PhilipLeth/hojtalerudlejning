@@ -1,0 +1,175 @@
+{
+  "project": "hojtalerudlejning.dk",
+  "description": "Ultra-simpel one-page booking-side for højttalerudlejning i København. App-feel, lavest mulig friktion, betaling ved afhentning.",
+  "domains": {
+    "da": "hojtalerudlejning.dk",
+    "en": "hojtalerudlejning.com"
+  },
+  "tech_stack": {
+    "framework": "Next.js (App Router)",
+    "styling": "Tailwind CSS",
+    "email": "SendGrid",
+    "deployment": "Vercel",
+    "analytics": "Google Analytics 4 + Google Ads conversion tracking"
+  },
+  "products": [
+    {
+      "id": "party",
+      "name_da": "Party-højtaler",
+      "name_en": "Party Speaker",
+      "description_da": "Perfekt til fester op til 40 personer",
+      "description_en": "Perfect for parties up to 40 people",
+      "size": "10 tommer",
+      "capacity": "0-40 personer",
+      "price_dkk": 400
+    },
+    {
+      "id": "festival",
+      "name_da": "Festival-højtaler",
+      "name_en": "Festival Speaker",
+      "description_da": "Kraftig lyd til events op til 100 personer",
+      "description_en": "Powerful sound for events up to 100 people",
+      "size": "12 tommer",
+      "capacity": "40-100 personer",
+      "price_dkk": 700
+    }
+  ],
+  "addons": [
+    {
+      "id": "lys",
+      "name_da": "Lys-pakke",
+      "name_en": "Light package",
+      "price_dkk": 500
+    },
+    {
+      "id": "levering",
+      "name_da": "Levering, opsætning & afhentning i KBH",
+      "name_en": "Delivery, setup & pickup in Copenhagen",
+      "price_dkk": 500
+    }
+  ],
+  "pricing_rules": {
+    "standard_period": "Fredag til mandag (weekend)",
+    "one_day_discount": "-20%",
+    "one_week_surcharge": "+50%"
+  },
+  "opening_hours": {
+    "friday": "14:00-18:00",
+    "monday": "15:00-17:00",
+    "other": "Efter aftale (angiv i kommentarfelt)"
+  },
+  "pickup": {
+    "method": "Lejer henter i padded sportstaske",
+    "location": "København (adresse oplyses ved booking)",
+    "payment": "Betaling ved afhentning (MobilePay eller kontant)"
+  },
+  "pages": {
+    "home": {
+      "description": "One-page med booking-flow + about-sektion",
+      "sections": [
+        {
+          "id": "hero",
+          "description": "Kort, punchy hero med headline og CTA-knap der scroller ned til booking"
+        },
+        {
+          "id": "booking",
+          "description": "Inline booking-flow i steps med app-feel",
+          "steps": [
+            {
+              "step": 1,
+              "name": "Vælg højtaler",
+              "description": "Visuelt klikbart valg mellem Party og Festival"
+            },
+            {
+              "step": 2,
+              "name": "Vælg periode",
+              "description": "Weekend (standard), 1 døgn (-20%), 1 uge (+50%). Live prisberegning"
+            },
+            {
+              "step": 3,
+              "name": "Tilvalg",
+              "description": "Checkboxes: Lys-pakke (500 kr), Levering+opsætning (500 kr). Pris opdateres live"
+            },
+            {
+              "step": 4,
+              "name": "Dine oplysninger + send",
+              "description": "Navn, telefon, email, dato, kommentarfelt. Submit sender booking-email via SendGrid"
+            }
+          ]
+        },
+        {
+          "id": "about",
+          "description": "Sådan virker det: 1) Vælg og book, 2) Hent fredag (eller vi leverer), 3) Fest!, 4) Aflever mandag. Plus åbningstider og FAQ"
+        }
+      ]
+    }
+  },
+  "email_flow": {
+    "provider": "SendGrid",
+    "on_booking": {
+      "to_owner": "Ny booking med alle detaljer (produkt, periode, pris, kundeinfo, kommentar)",
+      "to_customer": "Bekræftelse med opsummering, afhentningsadresse, åbningstider, kontaktinfo"
+    }
+  },
+  "i18n": {
+    "default_locale": "da",
+    "locales": ["da", "en"],
+    "strategy": "Dansk på hojtalerudlejning.dk, engelsk på hojtalerudlejning.com (eller /en prefix)"
+  },
+  "design": {
+    "style": "Mørkt fest-tema, mobil-first, smooth animations mellem steps",
+    "mobile_priority": true,
+    "inspiration": "Amazon one-click simplicity"
+  },
+  "seo": {
+    "json_ld": ["LocalBusiness", "Product"],
+    "google_business_profile": true
+  },
+  "legal": {
+    "lejevilkaar": "Simpel lejeaftale (skader, forsinkelse)",
+    "gdpr": "Privatlivspolitik",
+    "cookie_consent": "Minimal eller undgå"
+  },
+  "milestones": [
+    {
+      "id": "M1",
+      "name": "Projekt-setup + landing page",
+      "tasks": [
+        "Next.js projekt med Tailwind",
+        "One-page layout med hero, booking-flow (UI only), about-sektion",
+        "Mobil-first responsive design",
+        "Mørkt fest-tema"
+      ]
+    },
+    {
+      "id": "M2",
+      "name": "Booking-flow + SendGrid",
+      "tasks": [
+        "Interaktiv booking-stepper med live prisberegning",
+        "API route til SendGrid (booking-email til ejer + bekræftelse til kunde)",
+        "Form validation",
+        "Succes-besked efter booking"
+      ]
+    },
+    {
+      "id": "M3",
+      "name": "Engelsk version",
+      "tasks": [
+        "i18n setup",
+        "Oversæt al UI-tekst",
+        "Metadata på engelsk"
+      ]
+    },
+    {
+      "id": "M4",
+      "name": "SEO + Google Ads + lancering",
+      "tasks": [
+        "Metadata, OpenGraph, JSON-LD",
+        "Sitemap + robots.txt",
+        "Google Ads kampagner (kun KBH)",
+        "Google Analytics + conversion tracking",
+        "Deploy til Vercel + domæner"
+      ]
+    }
+  ]
+}

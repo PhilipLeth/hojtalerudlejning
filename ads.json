@@ -1,0 +1,172 @@
+{
+  "google_ads_account": {
+    "note": "Opret ny Google Ads-konto til hojtalerudlejning.dk",
+    "target_location": "København og omegn (radius 30 km)",
+    "language": "da",
+    "budget_daily_dkk": 100,
+    "bid_strategy": "Maximize conversions"
+  },
+  "campaigns": [
+    {
+      "name": "Højtaler Udlejning - Search",
+      "type": "SEARCH",
+      "location": "København, Danmark (radius 30 km)",
+      "ad_groups": [
+        {
+          "name": "Højtaler udlejning",
+          "keywords": [
+            "højtaler udlejning",
+            "højtaler udlejning københavn",
+            "lej højtaler",
+            "lej højtaler københavn",
+            "højtaler til fest",
+            "højtaler leje",
+            "udlej højtaler",
+            "højtaler til leje",
+            "højtaler til leje københavn"
+          ],
+          "negative_keywords": [
+            "køb",
+            "sælg",
+            "brugt",
+            "reparation"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Lej En Højtaler Fra 400,-",
+                "Højtaler Til Din Fest",
+                "Lej Højtaler I København",
+                "Fra 400 Kr/Weekend",
+                "Hent Fredag - Aflever Mandag",
+                "Op Til 100 Personer",
+                "Levering I København",
+                "Book Online Nu",
+                "Nem Booking - Lav Pris",
+                "Party-Højtaler 400,-",
+                "Festival-Lyd 700,-",
+                "Inkl. Sportstaske",
+                "Lys-Pakke Fra 500,-",
+                "Perfekt Til Fester",
+                "Weekend-Udlejning"
+              ],
+              "descriptions": [
+                "Lej en kraftig højtaler fra kun 400 kr. Hent fredag, aflever mandag. Nemt og billigt.",
+                "Party-højtaler til 40 pers. eller festival-lyd til 100 pers. Book online på 2 min.",
+                "Vi udleverer i KBH med padded sportstaske. Levering og opsætning for kun 500 kr.",
+                "Nem online booking. Vælg højtaler, dato og tilvalg. Betaling ved afhentning."
+              ],
+              "paths": ["lej-hojtaler", "book-nu"]
+            }
+          ]
+        },
+        {
+          "name": "Musikanlæg udlejning",
+          "keywords": [
+            "musikanlæg udlejning",
+            "musikanlæg udlejning københavn",
+            "lej musikanlæg",
+            "lej musikanlæg københavn",
+            "musikanlæg til fest",
+            "musikanlæg leje",
+            "musikanlæg til leje",
+            "lydanlæg udlejning",
+            "lydanlæg til fest",
+            "lej lydanlæg",
+            "lydanlæg udlejning københavn"
+          ],
+          "negative_keywords": [
+            "køb",
+            "sælg",
+            "brugt",
+            "reparation",
+            "professionel",
+            "koncert"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Musikanlæg Fra 400,-",
+                "Lej Musikanlæg I KBH",
+                "Lydanlæg Til Din Fest",
+                "Fra 400 Kr/Weekend",
+                "Nemt Og Billigt",
+                "Hent Fredag - Aflever Mandag",
+                "Op Til 100 Personer",
+                "Book Online På 2 Min",
+                "Levering I København",
+                "Musikanlæg Til Fester",
+                "Lydanlæg Fra 400,-",
+                "Inkl. Sportstaske",
+                "Kraftig Lyd Til Fest",
+                "Weekend-Udlejning KBH",
+                "Lej Et Anlæg Nu"
+              ],
+              "descriptions": [
+                "Lej musikanlæg fra kun 400 kr/weekend. Hent fredag, aflever mandag. Simpelt og billigt.",
+                "Kraftig lyd til op til 100 personer. Book online, betal ved afhentning. Levering mulig.",
+                "Musikanlæg i padded sportstaske. Vælg mellem 10\" og 12\" højtaler. Lys-pakke mulig.",
+                "Online booking på 2 minutter. Vælg anlæg, dato og evt. levering. Nemmere bliver det ikke."
+              ],
+              "paths": ["musikanlaeg", "lej-nu"]
+            }
+          ]
+        },
+        {
+          "name": "Fest og event lyd",
+          "keywords": [
+            "lyd til fest",
+            "anlæg til fest",
+            "højtaler fest københavn",
+            "festanlæg leje",
+            "lyd til havefest",
+            "højtaler til fødselsdag",
+            "højtaler til privatfest",
+            "anlæg til havefest",
+            "festhøjtaler",
+            "lyd til garden party"
+          ],
+          "negative_keywords": [
+            "køb",
+            "sælg",
+            "dj",
+            "bryllup",
+            "band",
+            "koncert"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Lyd Til Din Fest",
+                "Højtaler Fra 400,-",
+                "Fest-Lyd I København",
+                "Perfekt Til Havefester",
+                "Fødselsdag? Lej Lyd!",
+                "Hent Fredag - Fest Hele WE",
+                "Anlæg Til 100 Pers.",
+                "Book Online - Betal Ved Hent",
+                "Nem Leje - Lav Pris",
+                "Levering Mulig I KBH",
+                "Kraftig Fest-Højtaler",
+                "Inkl. Lys-Pakke 500,-",
+                "Weekend-Leje Fra 400,-",
+                "Party-Anlæg Til Leje",
+                "Billig Fest-Lyd KBH"
+              ],
+              "descriptions": [
+                "Gør din fest komplet med en kraftig højtaler. Fra 400 kr for en hel weekend. Book nu.",
+                "Højtaler til fødselsdage, havefester og events. Hent i KBH eller vi leverer for 500 kr.",
+                "Vælg mellem Party (40 pers.) og Festival (100 pers.). Tilkøb lys-pakke for 500 kr.",
+                "Simpel online booking. Vælg anlæg og dato, betal ved afhentning. Hent i padded taske."
+              ],
+              "paths": ["fest-lyd", "book-nu"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
