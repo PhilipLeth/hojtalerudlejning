@@ -7,12 +7,13 @@ interface BookingData {
   speaker: string;
   speakerSize: string;
   period: string;
+  days: number;
   addons: string[];
+  deliveryAddress?: string;
   total: number;
   name: string;
   email: string;
   phone: string;
-  date: string;
   comment: string;
 }
 
@@ -31,14 +32,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const addonsText =
     data.addons.length > 0 ? data.addons.join(", ") : "Ingen";
 
-  // Email to owner
   const ownerHtml = `
     <h2>Ny booking fra ${data.name}</h2>
     <table style="border-collapse:collapse;font-family:sans-serif;">
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Højtaler:</td><td>${data.speaker} (${data.speakerSize})</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Periode:</td><td>${data.period}</td></tr>
-      <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Dato:</td><td>${data.date}</td></tr>
+      <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Dage:</td><td>${data.days}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Tilvalg:</td><td>${addonsText}</td></tr>
+      ${data.deliveryAddress ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Leveringsadresse:</td><td>${data.deliveryAddress}</td></tr>` : ""}
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Total:</td><td><strong>${data.total} kr</strong></td></tr>
       <tr><td colspan="2" style="padding-top:12px;border-top:1px solid #ddd;"></td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Navn:</td><td>${data.name}</td></tr>
@@ -48,24 +49,22 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     </table>
   `;
 
-  // Email to customer
   const customerHtml = `
     <div style="font-family:sans-serif;max-width:480px;">
-      <h2 style="color:#9b07bf;">Tak for din booking!</h2>
+      <h2 style="color:#bfa000;">Tak for din booking!</h2>
       <p>Hej ${data.name},</p>
-      <p>Vi har modtaget din booking og vender tilbage med afhentningsadresse og bekræftelse hurtigst muligt.</p>
-      <div style="background:#f8f4ff;padding:16px;border-radius:8px;margin:16px 0;">
+      <p>Vi har modtaget din booking og vender tilbage med bekræftelse hurtigst muligt.</p>
+      <div style="background:#fffef0;padding:16px;border-radius:8px;margin:16px 0;">
         <p style="margin:4px 0;"><strong>Højtaler:</strong> ${data.speaker} (${data.speakerSize})</p>
         <p style="margin:4px 0;"><strong>Periode:</strong> ${data.period}</p>
-        <p style="margin:4px 0;"><strong>Dato:</strong> ${data.date}</p>
         <p style="margin:4px 0;"><strong>Tilvalg:</strong> ${addonsText}</p>
+        ${data.deliveryAddress ? `<p style="margin:4px 0;"><strong>Levering til:</strong> ${data.deliveryAddress}</p>` : `<p style="margin:4px 0;"><strong>Afhentning:</strong> Halvtolv 9, 1. th, København K</p>`}
         <p style="margin:8px 0 0;font-size:20px;"><strong>Total: ${data.total} kr</strong></p>
         <p style="margin:0;font-size:12px;color:#888;">Betales ved afhentning (MobilePay eller kontant)</p>
       </div>
-      <p><strong>Åbningstider:</strong></p>
-      <p style="margin:4px 0;">Afhentning: Fredag 14:00–18:00</p>
-      <p style="margin:4px 0;">Aflevering: Mandag 15:00–17:00</p>
+      <p><strong>Inkluderet:</strong> Alle kabler (iPhone m/ USB-C adapter, AUX, strøm), padded sportstaske.</p>
       <p style="margin-top:16px;color:#888;font-size:13px;">Ved spørgsmål er du velkommen til at svare på denne mail.</p>
+      <p style="margin-top:8px;color:#bbb;font-size:12px;">Scharling Studio &middot; Halvtolv 9, 1. th &middot; 1436 København K &middot; CVR 40994904</p>
     </div>
   `;
 
@@ -74,7 +73,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       to: [{ email: NOTIFY_EMAIL }],
       from: { email: NOTIFY_EMAIL, name: "Højtalerudlejning.dk" },
       reply_to: { email: data.email, name: data.name },
-      subject: `Ny booking: ${data.speaker} — ${data.date} — ${data.name}`,
+      subject: `Ny booking: ${data.speaker} — ${data.period} — ${data.name}`,
       content: [{ type: "text/html", value: ownerHtml }],
     },
     {
