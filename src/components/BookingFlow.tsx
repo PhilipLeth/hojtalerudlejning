@@ -81,6 +81,18 @@ function isSameDay(a: Date, b: Date) {
 
 /* ───── Mini Calendar ───── */
 
+function getNextFridays(today: Date, count: number): Set<string> {
+  const fridays = new Set<string>();
+  const d = new Date(today);
+  // Advance to next Friday
+  d.setDate(d.getDate() + ((5 - d.getDay() + 7) % 7 || 7));
+  for (let i = 0; i < count; i++) {
+    fridays.add(dateKey(d));
+    d.setDate(d.getDate() + 7);
+  }
+  return fridays;
+}
+
 function MiniCalendar({
   pickupDate,
   returnDate,
@@ -100,6 +112,8 @@ function MiniCalendar({
     t.setHours(0, 0, 0, 0);
     return t;
   }, []);
+
+  const hotFridays = useMemo(() => getNextFridays(today, 2), [today]);
 
   const daysInMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
   const firstDayOfWeek = (new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1).getDay() + 6) % 7;
@@ -138,6 +152,7 @@ function MiniCalendar({
           const isReturn = returnDate && isSameDay(date, returnDate);
           const isInRange = pickupDate && returnDate && date > pickupDate && date < returnDate;
           const isTooFar = pickupDate && !returnDate && diffDays(pickupDate, date) > 5;
+          const isHotFriday = hotFridays.has(dateKey(date));
 
           return (
             <button
@@ -146,17 +161,30 @@ function MiniCalendar({
               disabled={isPast || !!isTooFar}
               onClick={() => onSelectDate(date)}
               className={`
-                h-10 rounded-lg text-sm font-medium transition
+                relative h-10 rounded-lg text-sm font-medium transition
                 ${isPast || isTooFar ? "text-white/15 cursor-not-allowed" : "hover:bg-white/10 cursor-pointer"}
                 ${isPickup ? "bg-brand-500 text-black font-bold" : ""}
                 ${isReturn ? "bg-brand-600 text-black font-bold" : ""}
                 ${isInRange ? "bg-brand-500/20 text-brand-300" : ""}
+                ${isHotFriday && !isPast && !isPickup ? "ring-1 ring-orange-400/50" : ""}
               `}
             >
               {date.getDate()}
+              {isHotFriday && !isPast && (
+                <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 animate-ping" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-orange-400" />
+                </span>
+              )}
             </button>
           );
         })}
+      </div>
+
+      {/* Nudge */}
+      <div className="mt-3 flex items-center gap-2 rounded-lg bg-orange-400/10 px-3 py-2 text-xs text-orange-300">
+        <span className="flex h-2 w-2 shrink-0 rounded-full bg-orange-400" />
+        Få anlæg tilbage de næste weekender — book hurtigt
       </div>
     </div>
   );
@@ -369,6 +397,26 @@ export default function BookingFlow() {
       <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
 
       {hasLights && <LightBar />}
+
+      {/* ── Floating product showcase ── */}
+      {selectedSpeaker && step > 1 && (
+        <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden">
+          {/* Speaker — bottom left */}
+          <img
+            src={selectedSpeaker.product}
+            alt=""
+            className="absolute -bottom-8 -left-8 w-56 opacity-20 transition-opacity duration-700 sm:w-72 sm:-left-4"
+          />
+          {/* Lights — top right (only when selected) */}
+          {hasLights && (
+            <img
+              src="/images/product-lys.png"
+              alt=""
+              className="absolute -top-4 -right-4 w-44 opacity-20 transition-opacity duration-700 sm:w-56"
+            />
+          )}
+        </div>
+      )}
 
       {/* ── Content ── */}
       <div className="relative z-20 mx-auto max-w-lg px-4 py-24">
