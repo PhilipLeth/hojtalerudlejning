@@ -11,7 +11,7 @@ export default function Home() {
       <HowItWorks />
       <Footer />
 
-      {/* JSON-LD */}
+      {/* JSON-LD: LocalBusiness */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -22,7 +22,7 @@ export default function Home() {
             legalName: "Scharling Studio",
             taxID: "DK40994904",
             description:
-              "Udlejning af højtalere og musikanlæg til fester i København",
+              "Højtalerudlejning i København. Lej højtaler, PA-anlæg og lydudstyr til fest, event og party. Festudstyr til leje fra 400 kr/weekend.",
             url: "https://hojtalerudlejning.dk",
             address: {
               "@type": "PostalAddress",
@@ -49,6 +49,90 @@ export default function Home() {
                 closes: "17:00",
               },
             ],
+          }),
+        }}
+      />
+
+      {/* JSON-LD: Product — Party-højtaler */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: "Party-højtaler udlejning",
+            description:
+              "Kompakt 10\" party-højtaler til leje. Op til 40 personer. Inkl. alle kabler (iPhone, USB-C, AUX). Ideel til fødselsdage, havefester og mindre events i København.",
+            image: "https://hojtalerudlejning.dk/images/product-party.png",
+            brand: {
+              "@type": "Brand",
+              name: "Højtalerudlejning.dk",
+            },
+            offers: {
+              "@type": "Offer",
+              price: "400",
+              priceCurrency: "DKK",
+              priceValidUntil: "2026-12-31",
+              availability: "https://schema.org/InStock",
+              url: "https://hojtalerudlejning.dk/#book",
+              description: "Fra 400 kr/weekend (fre–man). Højtalerleje København.",
+            },
+          }),
+        }}
+      />
+
+      {/* JSON-LD: Product — Festival-højtaler */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: "Festival-højtaler udlejning",
+            description:
+              "Kraftig 12\" festival-højtaler til leje. 40–100 personer. Inkl. stativer og alle kabler. Perfekt til store fester, events og udendørs arrangementer i København.",
+            image: "https://hojtalerudlejning.dk/images/product-festival.png",
+            brand: {
+              "@type": "Brand",
+              name: "Højtalerudlejning.dk",
+            },
+            offers: {
+              "@type": "Offer",
+              price: "700",
+              priceCurrency: "DKK",
+              priceValidUntil: "2026-12-31",
+              availability: "https://schema.org/InStock",
+              url: "https://hojtalerudlejning.dk/#book",
+              description: "Fra 700 kr/weekend (fre–man). PA-anlæg udlejning København.",
+            },
+          }),
+        }}
+      />
+
+      {/* JSON-LD: Product — Lys-pakke */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: "Lys-pakke udlejning",
+            description:
+              "Festlys til leje: 2 farvede LED-lamper + centereffekt på stativ. Tilkøb til højtalerudlejning for den fulde festoplevelse.",
+            image: "https://hojtalerudlejning.dk/images/product-lys.png",
+            brand: {
+              "@type": "Brand",
+              name: "Højtalerudlejning.dk",
+            },
+            offers: {
+              "@type": "Offer",
+              price: "500",
+              priceCurrency: "DKK",
+              priceValidUntil: "2026-12-31",
+              availability: "https://schema.org/InStock",
+              url: "https://hojtalerudlejning.dk/#book",
+              description: "500 kr tilkøb. Festudstyr leje København.",
+            },
           }),
         }}
       />

@@ -1,0 +1,6 @@
+name = "speaker-rental"
+pages_build_output_dir = "out"
+
+[[kv_namespaces]]
+binding = "BOOKINGS"
+id = "c46378bfa06c46c19841331217f812c5"

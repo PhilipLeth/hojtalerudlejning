@@ -1,6 +1,7 @@
 interface Env {
   SENDGRID_API_KEY: string;
   NOTIFY_EMAIL: string;
+  BOOKINGS: KVNamespace;
 }
 
 interface BookingData {
@@ -102,6 +103,23 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         headers: { "Content-Type": "application/json" },
       });
     }
+  }
+
+  // Save booking to KV
+  try {
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2, 8);
+    const key = `booking_${timestamp}_${random}`;
+    const booking = {
+      ...data,
+      id: key,
+      status: "ny",
+      createdAt: new Date(timestamp).toISOString(),
+    };
+    await context.env.BOOKINGS.put(key, JSON.stringify(booking));
+  } catch (e) {
+    console.error("KV save error:", e);
+    // Don't fail the booking if KV save fails — emails were already sent
   }
 
   return new Response(JSON.stringify({ ok: true }), {

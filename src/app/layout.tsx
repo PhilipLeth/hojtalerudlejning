@@ -2,13 +2,25 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Højtalerudlejning i København | Fra 400 kr/weekend",
+  title: "Højtalerudlejning København | Lej højtaler fra 400 kr/weekend",
   description:
-    "Lej en kraftig højtaler til din fest i København. Party-højtaler (40 pers.) fra 400 kr eller festival-lyd (100 pers.) fra 700 kr. Hent fredag, aflever mandag.",
+    "Lej højtaler i København fra 400 kr/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje — hent fredag, aflever mandag. Book online på 2 min.",
+  keywords: [
+    "højtalerudlejning københavn",
+    "lej højtaler københavn",
+    "lydudstyr udlejning københavn",
+    "højtaler leje",
+    "PA anlæg udlejning",
+    "festudstyr leje københavn",
+    "speaker rental copenhagen",
+    "højtaler udlejning",
+    "lej lydanlæg",
+    "festhøjtaler leje",
+  ],
   openGraph: {
-    title: "Højtalerudlejning i København | Fra 400 kr/weekend",
+    title: "Højtalerudlejning København | Lej højtaler fra 400 kr/weekend",
     description:
-      "Lej en kraftig højtaler til din fest. Fra 400 kr for en hel weekend. Book online på 2 minutter.",
+      "Lej højtaler og PA-anlæg til din fest i København. Lydudstyr udlejning fra 400 kr/weekend. Festudstyr til leje — book online på 2 minutter.",
     url: "https://hojtalerudlejning.dk",
     siteName: "Højtalerudlejning.dk",
     locale: "da_DK",
@@ -16,6 +28,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://hojtalerudlejning.dk",
+    languages: {
+      "en": "https://hojtalerudlejning.dk",
+    },
   },
 };
 

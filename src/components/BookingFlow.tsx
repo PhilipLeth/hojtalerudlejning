@@ -47,6 +47,13 @@ const addons = [
     image: "/images/product-lys.png",
   },
   {
+    id: "rog",
+    label: "Røgmaskine",
+    desc: "Kompakt røgmaskine med væske — gør lyset 10x federe",
+    price: 250,
+    image: null,
+  },
+  {
     id: "levering",
     label: "Levering + opsætning",
     desc: "Vi bringer, sætter op og henter i København",
@@ -239,6 +246,7 @@ export default function BookingFlow() {
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
 
+  const isLysOnly = speaker === "lys-only";
   const selectedSpeaker = speakers.find((s) => s.id === speaker);
   const hasLights = selectedAddons.includes("lys");
   const hasDelivery = selectedAddons.includes("levering");
@@ -299,8 +307,8 @@ export default function BookingFlow() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          speaker: selectedSpeaker?.name,
-          speakerSize: selectedSpeaker?.size,
+          speaker: isLysOnly ? "Kun lys" : selectedSpeaker?.name,
+          speakerSize: isLysOnly ? "—" : selectedSpeaker?.size,
           period: periodLabel,
           pickup: pickupDate?.toISOString(),
           returnDate: returnDate?.toISOString(),
@@ -327,10 +335,12 @@ export default function BookingFlow() {
   function PriceSummary() {
     return (
       <div className="glass rounded-2xl p-5">
-        <div className="flex justify-between text-sm text-white/50">
-          <span>{selectedSpeaker?.name}-højtaler ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
-          <span>{speakerPrice} kr</span>
-        </div>
+        {selectedSpeaker && (
+          <div className="flex justify-between text-sm text-white/50">
+            <span>{selectedSpeaker.name}-højtaler ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
+            <span>{speakerPrice} kr</span>
+          </div>
+        )}
         {addons
           .filter((a) => selectedAddons.includes(a.id))
           .map((a) => (
@@ -350,7 +360,7 @@ export default function BookingFlow() {
 
   if (done) {
     const orderItems = [
-      { label: `${selectedSpeaker?.name}-højtaler (${selectedSpeaker?.size})`, value: `${speakerPrice} kr` },
+      ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}-højtaler (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
       ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: a.label, value: `${a.price} kr` })),
     ];
 
@@ -366,9 +376,9 @@ export default function BookingFlow() {
         <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
 
         {/* Floating products */}
-        {selectedSpeaker && (
+        {(selectedSpeaker || isLysOnly) && (
           <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden">
-            <img src={selectedSpeaker.product} alt="" className="absolute -bottom-8 -left-8 w-56 opacity-15 sm:w-72 sm:-left-4" />
+            {selectedSpeaker && <img src={selectedSpeaker.product} alt="" className="absolute -bottom-8 -left-8 w-56 opacity-15 sm:w-72 sm:-left-4" />}
             {hasLights && <img src="/images/product-lys.png" alt="" className="absolute -top-4 -right-4 w-44 opacity-15 sm:w-56" />}
           </div>
         )}
@@ -405,10 +415,10 @@ export default function BookingFlow() {
           <div className="glass rounded-2xl overflow-hidden mb-4">
             {/* Product preview */}
             <div className="flex items-center gap-4 bg-white/[0.02] p-4">
-              <img src={selectedSpeaker?.product} alt="" className="h-16 w-16 object-contain" />
+              <img src={isLysOnly ? "/images/product-lys.png" : selectedSpeaker?.product} alt="" className="h-16 w-16 object-contain" />
               <div>
-                <p className="font-semibold">{selectedSpeaker?.name}-højtaler</p>
-                <p className="text-sm text-white/40">{selectedSpeaker?.size} &mdash; {selectedSpeaker?.capacity}</p>
+                <p className="font-semibold">{isLysOnly ? "Kun lys-pakke" : `${selectedSpeaker?.name}-højtaler`}</p>
+                <p className="text-sm text-white/40">{isLysOnly ? "2 farvede lamper + centereffekt" : `${selectedSpeaker?.size} — ${selectedSpeaker?.capacity}`}</p>
               </div>
             </div>
 
@@ -572,6 +582,24 @@ export default function BookingFlow() {
                 </button>
               ))}
             </div>
+
+            {/* Lights-only shortcut */}
+            <button
+              onClick={() => {
+                setSpeaker("lys-only");
+                setSelectedAddons(["lys"]);
+                nextStep();
+              }}
+              className="w-full rounded-xl border border-dashed border-white/15 p-4 text-center transition hover:border-brand-500/40 hover:bg-white/[0.02] active:scale-[0.98]"
+            >
+              <div className="flex items-center justify-center gap-3">
+                <img src="/images/product-lys.png" alt="Lys" className="h-10 w-10 object-contain" />
+                <div className="text-left">
+                  <p className="text-sm font-medium text-white/70">Kun lys? <span className="text-brand-400">Fra 500,-</span></p>
+                  <p className="text-xs text-white/30">Lej kun lys-pakken uden højtalere</p>
+                </div>
+              </div>
+            </button>
           </div>
         )}
 
@@ -602,7 +630,7 @@ export default function BookingFlow() {
                   {returnDate ? formatDate(returnDate) : "Vælg dato"}
                 </span>
               </div>
-              {pickupDate && returnDate && (
+              {pickupDate && returnDate && !isLysOnly && (
                 <div className="flex justify-between mt-3 pt-3 border-t border-white/10">
                   <span className="text-white/50">Pris ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
                   <span className="text-brand-400 font-bold">{speakerPrice} kr</span>
@@ -634,10 +662,11 @@ export default function BookingFlow() {
             <div className="mt-6 space-y-3">
               {addons.map((a) => {
                 const selected = selectedAddons.includes(a.id);
+                const locked = isLysOnly && a.id === "lys";
                 return (
                   <div key={a.id} className="space-y-0">
                     <button
-                      onClick={() => toggleAddon(a.id)}
+                      onClick={() => !locked && toggleAddon(a.id)}
                       className={`w-full overflow-hidden rounded-2xl text-left transition active:scale-[0.98] ${
                         selected ? "glass-selected" : "glass hover:border-white/20"
                       }`}
@@ -748,10 +777,12 @@ export default function BookingFlow() {
 
             {/* Order summary */}
             <div className="glass rounded-2xl p-5">
-              <div className="flex justify-between text-sm text-white/50">
-                <span>{selectedSpeaker?.name}-højtaler ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
-                <span>{speakerPrice} kr</span>
-              </div>
+              {selectedSpeaker && (
+                <div className="flex justify-between text-sm text-white/50">
+                  <span>{selectedSpeaker.name}-højtaler ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
+                  <span>{speakerPrice} kr</span>
+                </div>
+              )}
               <div className="text-sm text-white/30">
                 <span>{periodLabel}</span>
               </div>

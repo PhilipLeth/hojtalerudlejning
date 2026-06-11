@@ -41,10 +41,17 @@ export default function HowItWorks() {
   return (
     <section id="about" className="relative z-20 mx-auto max-w-4xl px-4 py-24">
       <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
-        Sådan virker det
+        Sådan lejer du en højtaler i København
       </h2>
-      <p className="mx-auto mb-16 max-w-lg text-center text-white/50">
-        Fra booking til aflevering — nemmere bliver det ikke.
+      <p className="mx-auto mb-6 max-w-2xl text-center text-white/50">
+        Højtalerudlejning behøver ikke være besværligt. Hos os booker du
+        online, henter dit lydudstyr på vores adresse i indre København og
+        afleverer igen efter festen. Ingen depositum, ingen lange kontrakter.
+      </p>
+      <p className="mx-auto mb-16 max-w-2xl text-center text-sm text-white/35">
+        Vi udlejer PA-anlæg og festudstyr til private fester, firmaarrangementer
+        og events i hele Københavnsområdet. Vores højtalere leveres med alle
+        kabler, så du kan tilslutte din telefon med det samme og komme i gang.
       </p>
 
       <div className="grid gap-8 sm:grid-cols-2">
