@@ -12,7 +12,8 @@ const speakers = [
     capacity: "Op til 40 pers.",
     price: 400,
     desc: "Perfekt til fødselsdage, havefester og mindre events.",
-    image: "/images/speaker-party.png",
+    product: "/images/product-party.png",
+    mood: "/images/mood-party.png",
   },
   {
     id: "festival",
@@ -21,7 +22,8 @@ const speakers = [
     capacity: "40–100 pers.",
     price: 700,
     desc: "Kraftig lyd til store fester, events og udendørs arrangementer.",
-    image: "/images/speaker-festival.png",
+    product: "/images/product-festival.png",
+    mood: "/images/mood-festival.png",
   },
 ];
 
@@ -155,14 +157,14 @@ export default function BookingFlow() {
 
   return (
     <section id="book" className="relative overflow-hidden">
-      {/* ── Dynamic background images ── */}
+      {/* ── Dynamic mood background ── */}
       {speakers.map((s) => (
         <div
           key={s.id}
           className="absolute inset-0 bg-cover bg-center transition-opacity duration-700 ease-in-out"
           style={{
-            backgroundImage: `url(${s.image})`,
-            opacity: speaker === s.id ? 0.3 : 0,
+            backgroundImage: `url(${s.mood})`,
+            opacity: speaker === s.id ? 0.35 : 0,
           }}
         />
       ))}
@@ -210,13 +212,12 @@ export default function BookingFlow() {
                   }`}
                 >
                   {/* Product image */}
-                  <div className="relative h-44 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden bg-[#0d0c12]">
                     <img
-                      src={s.image}
+                      src={s.product}
                       alt={s.name}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     <div className="absolute bottom-4 right-4 text-right">
                       <p className="text-3xl font-bold text-brand-400">{s.price},-</p>
                       <p className="text-xs text-white/60">pr. weekend</p>
