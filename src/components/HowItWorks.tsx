@@ -15,7 +15,7 @@ const steps = [
       </svg>
     ),
     title: "2. Hent din højtaler",
-    text: "Hent i en padded sportstaske med alle kabler (iPhone, USB-C, AUX). Fredag kl. 14-18 eller efter aftale.",
+    text: "Hent på Halvtolv 9, København K i en padded sportstaske med alle kabler (iPhone, USB-C, AUX). Fredag kl. 14-18 eller efter aftale.",
   },
   {
     icon: (

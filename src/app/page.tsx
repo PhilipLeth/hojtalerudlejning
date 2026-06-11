@@ -18,10 +18,19 @@ export default function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
-            name: "Højtalerudlejning.dk",
+            name: "Scharling Studio / Højtalerudlejning.dk",
+            legalName: "Scharling Studio",
+            taxID: "DK40994904",
             description:
               "Udlejning af højtalere og musikanlæg til fester i København",
             url: "https://hojtalerudlejning.dk",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Halvtolv 9, 1. th",
+              postalCode: "1436",
+              addressLocality: "København K",
+              addressCountry: "DK",
+            },
             areaServed: {
               "@type": "City",
               name: "København",
