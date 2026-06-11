@@ -3,11 +3,11 @@ export default function Hero() {
     <section className="relative flex min-h-[85vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
       {/* Fixed background image */}
       <div
-        className="fixed inset-0 bg-cover bg-center opacity-40"
+        className="fixed inset-0 bg-cover bg-center opacity-55"
         style={{ backgroundImage: "url(/images/hero.png)" }}
       />
       {/* Gradient overlays */}
-      <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/60 via-transparent to-[#07060b]" />
+      <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
       <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-brand-500/10 blur-[120px]" />
 
       <div className="relative z-10 max-w-2xl">

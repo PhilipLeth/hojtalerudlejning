@@ -180,16 +180,12 @@ function MiniCalendar({
   );
 }
 
-/* ───── Light Overlay ───── */
+/* ───── Light Bar (simple, low-perf) ───── */
 
-function LightOverlay() {
+function LightBar() {
   return (
-    <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
-      <div className="absolute top-0 left-1/4 h-full w-32 bg-gradient-to-b from-yellow-400/30 via-transparent to-transparent blur-3xl animate-beam-1" />
-      <div className="absolute top-0 right-1/4 h-full w-24 bg-gradient-to-b from-amber-400/25 via-transparent to-transparent blur-3xl animate-beam-2" />
-      <div className="absolute top-0 left-1/2 h-full w-20 bg-gradient-to-b from-orange-400/20 via-transparent to-transparent blur-3xl animate-beam-3" />
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-yellow-500/15 to-transparent animate-pulse-slow" />
-      <div className="absolute inset-0 animate-color-shift opacity-10 bg-gradient-to-br from-yellow-500 via-amber-400 to-orange-500" />
+    <div className="pointer-events-none fixed top-0 left-0 right-0 z-10 h-1.5 overflow-hidden">
+      <div className="h-full w-full animate-light-bar bg-gradient-to-r from-transparent via-brand-400/80 to-transparent" />
     </div>
   );
 }
@@ -296,11 +292,11 @@ export default function BookingFlow() {
             className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
             style={{
               backgroundImage: `url(${s.mood})`,
-              opacity: speaker === s.id ? 0.35 : 0,
+              opacity: speaker === s.id ? 0.5 : 0,
             }}
           />
         ))}
-        <div className="fixed inset-0 bg-gradient-to-b from-[#07060b] via-[#07060b]/80 to-[#07060b]" />
+        <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
         <div className="relative z-20 mx-auto max-w-lg px-4 py-24 text-center">
           <div className="glass rounded-3xl p-10">
             <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20">
@@ -325,20 +321,28 @@ export default function BookingFlow() {
   return (
     <section id="book" className="relative">
       {/* ── Fixed mood background ── */}
+      {/* Default: hero image before any speaker is selected */}
+      <div
+        className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
+        style={{
+          backgroundImage: "url(/images/hero.png)",
+          opacity: speaker === null ? 0.5 : 0,
+        }}
+      />
       {speakers.map((s) => (
         <div
           key={s.id}
           className="fixed inset-0 bg-cover bg-center transition-opacity duration-700 ease-in-out"
           style={{
             backgroundImage: `url(${s.mood})`,
-            opacity: speaker === s.id ? 0.35 : 0,
+            opacity: speaker === s.id ? 0.5 : 0,
           }}
         />
       ))}
-      <div className="fixed inset-0 bg-gradient-to-b from-[#07060b] via-[#07060b]/80 to-[#07060b]" />
+      <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
 
       {/* ── Animated light effects ── */}
-      {hasLights && <LightOverlay />}
+      {hasLights && <LightBar />}
 
       {/* ── Content ── */}
       <div className="relative z-20 mx-auto max-w-lg px-4 py-24">

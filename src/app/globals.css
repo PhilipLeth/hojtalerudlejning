@@ -34,32 +34,13 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* ── Light-effect animations ── */
+/* ── Light bar animation (lightweight) ── */
 
-@keyframes beam-1 {
-  0%, 100% { transform: translateX(0) rotate(-8deg); opacity: 0.4; }
-  50% { transform: translateX(80px) rotate(8deg); opacity: 0.7; }
-}
-@keyframes beam-2 {
-  0%, 100% { transform: translateX(0) rotate(6deg); opacity: 0.3; }
-  50% { transform: translateX(-60px) rotate(-10deg); opacity: 0.6; }
-}
-@keyframes beam-3 {
-  0%, 100% { transform: translateX(-30px) rotate(-4deg); opacity: 0.2; }
-  50% { transform: translateX(40px) rotate(6deg); opacity: 0.5; }
-}
-@keyframes color-shift {
-  0% { filter: hue-rotate(0deg); }
-  50% { filter: hue-rotate(60deg); }
-  100% { filter: hue-rotate(0deg); }
-}
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.6; }
+@keyframes light-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-.animate-beam-1 { animation: beam-1 4s ease-in-out infinite; }
-.animate-beam-2 { animation: beam-2 5s ease-in-out infinite 0.5s; }
-.animate-beam-3 { animation: beam-3 6s ease-in-out infinite 1s; }
-.animate-color-shift { animation: color-shift 8s ease-in-out infinite; }
-.animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+.animate-light-bar {
+  animation: light-bar 3s ease-in-out infinite;
+}
