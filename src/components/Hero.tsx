@@ -1,8 +1,13 @@
 export default function Hero() {
   return (
     <section className="relative flex min-h-[85vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
-      {/* Gradient bg */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-900/30 via-transparent to-transparent" />
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-40"
+        style={{ backgroundImage: "url(/images/hero.png)" }}
+      />
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#07060b]/60 via-transparent to-[#07060b]" />
       <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-brand-600/15 blur-[120px]" />
 
       <div className="relative z-10 max-w-2xl">
