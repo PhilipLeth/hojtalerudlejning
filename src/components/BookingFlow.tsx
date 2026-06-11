@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, FormEvent } from "react";
+import { useState, useMemo, useEffect, useCallback, FormEvent } from "react";
 
 /* ───── Data ───── */
 
@@ -84,6 +84,28 @@ function formatDate(d: Date) {
 
 function isSameDay(a: Date, b: Date) {
   return dateKey(a) === dateKey(b);
+}
+
+/* ───── Availability ───── */
+
+interface AvailabilityData {
+  inventory: Record<string, number>;
+  booked: Record<string, number>;
+  blocked_dates: Array<{ date: string; reason: string; products: string[] }>;
+}
+
+function getRemaining(avail: AvailabilityData | null, product: string): number {
+  if (!avail) return 999; // Unknown = assume available
+  const total = avail.inventory[product] ?? 0;
+  const used = avail.booked[product] ?? 0;
+  return Math.max(0, total - used);
+}
+
+function isBlockedForProduct(avail: AvailabilityData | null, product: string): boolean {
+  if (!avail) return false;
+  return avail.blocked_dates.some(
+    (b) => b.products.length === 0 || b.products.includes(product)
+  );
 }
 
 /* ───── Mini Calendar ───── */
@@ -246,6 +268,55 @@ export default function BookingFlow() {
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
 
+  // Availability state
+  const [availOverview, setAvailOverview] = useState<AvailabilityData | null>(null);
+  const [availSelected, setAvailSelected] = useState<AvailabilityData | null>(null);
+  const [soldOutMsg, setSoldOutMsg] = useState("");
+
+  // Fetch availability for the next 8 weekends on mount (overview for step 1)
+  useEffect(() => {
+    const today = new Date();
+    const from = dateKey(today);
+    const future = new Date(today);
+    future.setDate(future.getDate() + 60);
+    const to = dateKey(future);
+    fetch(`/api/availability?from=${from}&to=${to}`)
+      .then((r) => r.json())
+      .then((data: AvailabilityData) => setAvailOverview(data))
+      .catch(() => {});
+  }, []);
+
+  // Fetch availability for selected date range (step 2 validation)
+  const checkDateAvailability = useCallback(async (pickup: Date, ret: Date) => {
+    setSoldOutMsg("");
+    try {
+      const from = dateKey(pickup);
+      const to = dateKey(ret);
+      const r = await fetch(`/api/availability?from=${from}&to=${to}`);
+      const data: AvailabilityData = await r.json();
+      setAvailSelected(data);
+
+      // Check if the selected product is available
+      const productId = speaker === "lys-only" ? "lys" : speaker;
+      if (productId) {
+        const remaining = getRemaining(data, productId);
+        const blocked = isBlockedForProduct(data, productId);
+        if (remaining <= 0 || blocked) {
+          setSoldOutMsg("Desvaerre udsolgt i denne periode — proev andre datoer");
+        }
+        // Also check lys if it's an addon
+        if (speaker !== "lys-only" && selectedAddons.includes("lys")) {
+          const lysRemaining = getRemaining(data, "lys");
+          if (lysRemaining <= 0) {
+            setSoldOutMsg("Lys-pakken er desvaerre udsolgt i denne periode");
+          }
+        }
+      }
+    } catch {
+      // Don't block booking on fetch failure
+    }
+  }, [speaker, selectedAddons]);
+
   const isLysOnly = speaker === "lys-only";
   const selectedSpeaker = speakers.find((s) => s.id === speaker);
   const hasLights = selectedAddons.includes("lys");
@@ -264,17 +335,21 @@ export default function BookingFlow() {
     : "Ikke valgt";
 
   function handleDateSelect(d: Date) {
+    setSoldOutMsg("");
     if (!pickupDate || (pickupDate && returnDate)) {
       setPickupDate(d);
       setReturnDate(null);
+      setAvailSelected(null);
     } else {
       if (d <= pickupDate) {
         setPickupDate(d);
         setReturnDate(null);
+        setAvailSelected(null);
       } else {
         const days = diffDays(pickupDate, d);
         if (days >= 1 && days <= 5) {
           setReturnDate(d);
+          checkDateAvailability(pickupDate, d);
         }
       }
     }
@@ -546,60 +621,99 @@ export default function BookingFlow() {
             <PickupInfo />
 
             <div className="space-y-4">
-              {speakers.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => {
-                    setSpeaker(s.id);
-                    nextStep();
-                  }}
-                  className={`group w-full overflow-hidden rounded-2xl text-left transition active:scale-[0.98] ${
-                    speaker === s.id ? "glass-selected" : "glass hover:border-white/20"
-                  }`}
-                >
-                  <div className="relative h-48 overflow-hidden bg-[#0d0c12]">
-                    <img
-                      src={s.product}
-                      alt={s.name}
-                      className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute bottom-4 right-4 text-right">
-                      <p className="text-3xl font-bold text-brand-400">{s.price},-</p>
-                      <p className="text-xs text-white/60">fra pr. weekend</p>
+              {speakers.map((s) => {
+                const remaining = getRemaining(availOverview, s.id);
+                const totalUnits = availOverview?.inventory[s.id] ?? 1;
+                const isSoldOut = availOverview !== null && remaining <= 0;
+                const isLow = availOverview !== null && remaining > 0 && remaining < totalUnits;
+
+                return (
+                  <button
+                    key={s.id}
+                    disabled={isSoldOut}
+                    onClick={() => {
+                      setSpeaker(s.id);
+                      nextStep();
+                    }}
+                    className={`group w-full overflow-hidden rounded-2xl text-left transition active:scale-[0.98] ${
+                      isSoldOut
+                        ? "glass opacity-50 cursor-not-allowed"
+                        : speaker === s.id
+                          ? "glass-selected"
+                          : "glass hover:border-white/20"
+                    }`}
+                  >
+                    <div className="relative h-48 overflow-hidden bg-[#0d0c12]">
+                      <img
+                        src={s.product}
+                        alt={s.name}
+                        className={`h-full w-full object-contain p-4 transition-transform duration-500 ${isSoldOut ? "" : "group-hover:scale-110"}`}
+                      />
+                      {isSoldOut && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+                          <span className="rounded-full bg-red-500/90 px-4 py-1.5 text-sm font-bold text-white">Udsolgt</span>
+                        </div>
+                      )}
+                      {isLow && (
+                        <div className="absolute top-3 left-3">
+                          <span className="rounded-full bg-orange-500/90 px-3 py-1 text-xs font-bold text-white">Faa ledige</span>
+                        </div>
+                      )}
+                      <div className="absolute bottom-4 right-4 text-right">
+                        <p className="text-3xl font-bold text-brand-400">{s.price},-</p>
+                        <p className="text-xs text-white/60">fra pr. weekend</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-5">
-                    <h3 className="text-xl font-semibold">{s.name}</h3>
-                    <p className="mt-1 text-sm text-white/50">
-                      {s.size} &mdash; {s.capacity}
-                    </p>
-                    <p className="mt-2 text-sm text-white/40">{s.desc}</p>
-                    <p className="mt-1 text-xs text-white/30">{s.extra}</p>
-                    <p className="mt-2 text-xs text-brand-400/70">
-                      Inkl. alle kabler (iPhone m/ USB-C adapter, AUX, strøm)
-                    </p>
-                  </div>
-                </button>
-              ))}
+                    <div className="p-5">
+                      <h3 className="text-xl font-semibold">{s.name}</h3>
+                      <p className="mt-1 text-sm text-white/50">
+                        {s.size} &mdash; {s.capacity}
+                      </p>
+                      <p className="mt-2 text-sm text-white/40">{s.desc}</p>
+                      <p className="mt-1 text-xs text-white/30">{s.extra}</p>
+                      <p className="mt-2 text-xs text-brand-400/70">
+                        Inkl. alle kabler (iPhone m/ USB-C adapter, AUX, strøm)
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Lights-only shortcut */}
-            <button
-              onClick={() => {
-                setSpeaker("lys-only");
-                setSelectedAddons(["lys"]);
-                nextStep();
-              }}
-              className="w-full rounded-xl border border-dashed border-white/15 p-4 text-center transition hover:border-brand-500/40 hover:bg-white/[0.02] active:scale-[0.98]"
-            >
-              <div className="flex items-center justify-center gap-3">
-                <img src="/images/product-lys.png" alt="Lys" className="h-10 w-10 object-contain" />
-                <div className="text-left">
-                  <p className="text-sm font-medium text-white/70">Kun lys? <span className="text-brand-400">Fra 500,-</span></p>
-                  <p className="text-xs text-white/30">Lej kun lys-pakken uden højtalere</p>
-                </div>
-              </div>
-            </button>
+            {(() => {
+              const lysRemaining = getRemaining(availOverview, "lys");
+              const lysTotal = availOverview?.inventory.lys ?? 2;
+              const lysSoldOut = availOverview !== null && lysRemaining <= 0;
+              const lysLow = availOverview !== null && lysRemaining > 0 && lysRemaining < lysTotal;
+              return (
+                <button
+                  disabled={lysSoldOut}
+                  onClick={() => {
+                    setSpeaker("lys-only");
+                    setSelectedAddons(["lys"]);
+                    nextStep();
+                  }}
+                  className={`w-full rounded-xl border border-dashed p-4 text-center transition active:scale-[0.98] ${
+                    lysSoldOut
+                      ? "border-white/10 opacity-50 cursor-not-allowed"
+                      : "border-white/15 hover:border-brand-500/40 hover:bg-white/[0.02]"
+                  }`}
+                >
+                  <div className="flex items-center justify-center gap-3">
+                    <img src="/images/product-lys.png" alt="Lys" className="h-10 w-10 object-contain" />
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-white/70">
+                        Kun lys? <span className="text-brand-400">Fra 500,-</span>
+                        {lysSoldOut && <span className="ml-2 rounded-full bg-red-500/90 px-2 py-0.5 text-xs font-bold text-white">Udsolgt</span>}
+                        {lysLow && <span className="ml-2 rounded-full bg-orange-500/90 px-2 py-0.5 text-xs font-bold text-white">Faa ledige</span>}
+                      </p>
+                      <p className="text-xs text-white/30">Lej kun lys-pakken uden højtalere</p>
+                    </div>
+                  </div>
+                </button>
+              );
+            })()}
           </div>
         )}
 
@@ -638,13 +752,19 @@ export default function BookingFlow() {
               )}
             </div>
 
+            {soldOutMsg && (
+              <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-center text-sm text-red-400">
+                {soldOutMsg}
+              </div>
+            )}
+
             <div className="flex gap-3 pt-2">
               <button onClick={prevStep} className="flex-1 rounded-xl border border-white/10 py-3 font-medium transition hover:bg-white/5">
                 Tilbage
               </button>
               <button
                 onClick={nextStep}
-                disabled={!pickupDate || !returnDate}
+                disabled={!pickupDate || !returnDate || !!soldOutMsg}
                 className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 Videre
