@@ -349,6 +349,11 @@ export default function BookingFlow() {
   }
 
   if (done) {
+    const orderItems = [
+      { label: `${selectedSpeaker?.name}-højtaler (${selectedSpeaker?.size})`, value: `${speakerPrice} kr` },
+      ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: a.label, value: `${a.price} kr` })),
+    ];
+
     return (
       <section id="book" className="relative overflow-hidden">
         {speakers.map((s) => (
@@ -359,21 +364,112 @@ export default function BookingFlow() {
           />
         ))}
         <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
-        <div className="relative z-20 mx-auto max-w-lg px-4 py-24 text-center">
-          <div className="glass rounded-3xl p-10">
-            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20">
+
+        {/* Floating products */}
+        {selectedSpeaker && (
+          <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden">
+            <img src={selectedSpeaker.product} alt="" className="absolute -bottom-8 -left-8 w-56 opacity-15 sm:w-72 sm:-left-4" />
+            {hasLights && <img src="/images/product-lys.png" alt="" className="absolute -top-4 -right-4 w-44 opacity-15 sm:w-56" />}
+          </div>
+        )}
+
+        <div className="relative z-20 mx-auto max-w-lg px-4 py-16">
+          {/* Success header */}
+          <div className="text-center mb-8">
+            <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20">
               <svg className="h-10 w-10 text-green-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold">Booking modtaget!</h2>
-            <p className="mt-4 text-white/60">
-              Vi har sendt en bekræftelse til <strong className="text-white">{form.email}</strong>.
-              <br />
-              Du hører fra os inden for kort tid med detaljer.
+            <h2 className="text-3xl font-bold">Booking modtaget!</h2>
+            <p className="mt-3 text-white/50">
+              Bekræftelse sendt til <strong className="text-white">{form.email}</strong>
             </p>
-            <p className="mt-6 text-3xl font-bold text-brand-400">{total} kr</p>
-            <p className="text-sm text-white/40">Betales ved afhentning</p>
+          </div>
+
+          {/* Status card */}
+          <div className="glass rounded-2xl p-5 mb-4">
+            <div className="flex items-center gap-3">
+              <div className="relative flex h-3 w-3 shrink-0">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75 animate-ping" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-400" />
+              </div>
+              <div>
+                <p className="font-medium text-white">Vi tjekker din booking nu</p>
+                <p className="text-sm text-white/40">Du hører fra os inden for få minutter med bekræftelse og praktiske detaljer.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Order details */}
+          <div className="glass rounded-2xl overflow-hidden mb-4">
+            {/* Product preview */}
+            <div className="flex items-center gap-4 bg-white/[0.02] p-4">
+              <img src={selectedSpeaker?.product} alt="" className="h-16 w-16 object-contain" />
+              <div>
+                <p className="font-semibold">{selectedSpeaker?.name}-højtaler</p>
+                <p className="text-sm text-white/40">{selectedSpeaker?.size} &mdash; {selectedSpeaker?.capacity}</p>
+              </div>
+            </div>
+
+            <div className="p-5 space-y-3">
+              {/* Dates */}
+              <div className="flex items-center gap-3 text-sm">
+                <svg className="h-4 w-4 shrink-0 text-white/30" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                </svg>
+                <span className="text-white/70">{periodLabel}</span>
+              </div>
+
+              {/* Pickup/delivery */}
+              <div className="flex items-center gap-3 text-sm">
+                <svg className="h-4 w-4 shrink-0 text-white/30" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+                <span className="text-white/70">
+                  {hasDelivery && deliveryAddress
+                    ? `Levering til ${deliveryAddress}`
+                    : "Afhentning: Halvtolv 9, København K"}
+                </span>
+              </div>
+
+              {/* Contact */}
+              <div className="flex items-center gap-3 text-sm">
+                <svg className="h-4 w-4 shrink-0 text-white/30" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0" />
+                </svg>
+                <span className="text-white/70">{form.name} &middot; {form.phone}</span>
+              </div>
+
+              {/* Line items */}
+              <div className="border-t border-white/10 pt-3 mt-3 space-y-1.5">
+                {orderItems.map((item, i) => (
+                  <div key={i} className="flex justify-between text-sm">
+                    <span className="text-white/50">{item.label}</span>
+                    <span className="text-white/70">{item.value}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Total */}
+              <div className="flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
+                <span>Total</span>
+                <span className="text-brand-400">{total} kr</span>
+              </div>
+              <p className="text-right text-xs text-white/30">Betales ved afhentning (MobilePay eller kontant)</p>
+            </div>
+          </div>
+
+          {/* Included info */}
+          <div className="glass rounded-2xl p-4 text-sm text-white/40">
+            <p className="font-medium text-white/60 mb-2">Inkluderet i din booking:</p>
+            <ul className="space-y-1">
+              <li>Padded sportstaske til transport</li>
+              <li>Alle kabler (iPhone m/ USB-C adapter, AUX, strøm)</li>
+              {speaker === "festival" && <li>Stativer</li>}
+              {hasLights && <li>Lys-bar med 2 LED-lamper + centereffekt på stativ</li>}
+            </ul>
           </div>
         </div>
       </section>
