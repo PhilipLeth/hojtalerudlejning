@@ -6,9 +6,12 @@ export default function Footer() {
       <p className="font-medium text-white/50">Scharling Studio</p>
       <p className="mt-1">Halvtolv 9, 1. th &middot; 1436 København K</p>
       <p className="mt-1">CVR 40994904</p>
-      <p className="mt-4">
+      <p className="mt-4 flex items-center justify-center gap-4">
         <Link href="/lejevilkaar" className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
           Lejevilkår
+        </Link>
+        <Link href="/blog" className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
+          Blog
         </Link>
       </p>
       <p className="mt-3">&copy; {new Date().getFullYear()} Lejhøjtaler.dk</p>
