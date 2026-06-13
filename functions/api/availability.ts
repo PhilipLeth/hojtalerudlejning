@@ -10,7 +10,7 @@ const corsHeaders = {
   "Content-Type": "application/json",
 };
 
-const DEFAULT_INVENTORY: Record<string, number> = { party: 1, festival: 1, lys: 2 };
+const DEFAULT_INVENTORY: Record<string, number> = { party: 1, festival: 1, lys: 2, rog: 1, stativer: 2 };
 
 // Map booking speaker names back to product IDs
 function speakerNameToId(name: string): string | null {
@@ -50,7 +50,14 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     }
 
     // Count overlapping bookings per product
-    const booked: Record<string, number> = { party: 0, festival: 0, lys: 0 };
+    const booked: Record<string, number> = { party: 0, festival: 0, lys: 0, rog: 0, stativer: 0 };
+
+    // Map addon display names to product IDs
+    const addonNameToId: Record<string, string> = {
+      lys: "lys", lysshow: "lys", "lys show": "lys",
+      rog: "rog", "røg": "rog", roegmaskine: "rog", "røgmaskine": "rog", "smoke": "rog",
+      stativer: "stativer", stativ: "stativer",
+    };
 
     const list = await context.env.BOOKINGS.list({ prefix: "booking_" });
     for (const key of list.keys) {
@@ -67,7 +74,6 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       const bookingReturn = booking.returnDate;
       if (!bookingPickup || !bookingReturn) continue;
 
-      // Compare as ISO date strings (works for YYYY-MM-DD comparison)
       const bPickup = bookingPickup.slice(0, 10);
       const bReturn = bookingReturn.slice(0, 10);
       const qFrom = from.slice(0, 10);
@@ -78,15 +84,18 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
         const speakerId = speakerNameToId(booking.speaker);
 
         if (speakerId === "lys-only") {
-          // Only lys
           booked.lys = (booked.lys || 0) + 1;
         } else if (speakerId === "party" || speakerId === "festival") {
           booked[speakerId] = (booked[speakerId] || 0) + 1;
+        }
 
-          // If booking has lys addon, also count lys
-          const addonLabels: string[] = booking.addons || [];
-          if (addonLabels.some((a: string) => a.toLowerCase().includes("lys"))) {
-            booked.lys = (booked.lys || 0) + 1;
+        // Count all addons (lys, rog, stativer)
+        const addonLabels: string[] = booking.addons || [];
+        for (const label of addonLabels) {
+          const lower = label.toLowerCase().replace(/[^a-zæøå]/g, "");
+          const pid = addonNameToId[lower];
+          if (pid && pid in booked) {
+            booked[pid] = (booked[pid] || 0) + 1;
           }
         }
       }
