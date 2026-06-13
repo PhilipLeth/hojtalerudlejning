@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import ExitPopup from "@/components/ExitPopup";
 import "./globals.css";
 
 const GTM_ID = "GTM-M52R25VF";
@@ -63,6 +64,7 @@ export default function RootLayout({
           />
         </noscript>
         {children}
+        <ExitPopup locale="da" />
       </body>
     </html>
   );

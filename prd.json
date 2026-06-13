@@ -127,7 +127,7 @@
             {
               "step": 4,
               "name": "Dine oplysninger + send",
-              "description": "Navn, email, telefon, kommentar. Ordreopsummering med total. Submit sender booking-email via SendGrid + gemmer i KV."
+              "description": "Navn, email, telefon, kommentar. Nyhedsbrev-checkbox (default on). Ordreopsummering med total. Submit sender booking-email via SendGrid + gemmer i KV + tilmelder nyhedsbrev hvis checked."
             }
           ]
         },
@@ -149,7 +149,11 @@
         },
         {
           "id": "footer",
-          "description": "Scharling Studio info, CVR, link til lejevilkår."
+          "description": "Scharling Studio info, CVR, link til lejevilkår. Nyhedsbrev-tilmeldingsformular."
+        },
+        {
+          "id": "exit-popup",
+          "description": "Exit-intent popup med nyhedsbrev-tilmelding. Vises én gang pr. session når musen forlader viewport (desktop). 5 sek. delay. Tilbyder 10% rabat på første leje. Gemmes via /api/newsletter."
         }
       ]
     },
@@ -159,7 +163,7 @@
     },
     "admin": {
       "path": "/admin",
-      "description": "Password-beskyttet admin dashboard. Viser alle bookinger fra KV med statusflow (ny → bekræftet → afhentet → afleveret)."
+      "description": "Password-beskyttet admin dashboard med tre sider: /admin (bookinger med statusflow), /admin/lager (lagerbeholdning + blokerede datoer), /admin/nyhedsbrev (subscribers med CSV-eksport)."
     },
     "om": {
       "path": "/om",
@@ -217,6 +221,11 @@
       "path": "/api/inventory",
       "method": "POST",
       "description": "Admin. Actions: set_inventory, block_date, unblock_date. Kræver ?secret=ADMIN_SECRET."
+    },
+    "newsletter": {
+      "path": "/api/newsletter",
+      "method": "GET/POST",
+      "description": "POST: tilmeld email. GET: list alle subscribers (kræver ?secret=ADMIN_SECRET). Data i KV med prefix newsletter_."
     }
   },
   "email_flow": {
@@ -278,7 +287,7 @@
     }
   },
   "status": {
-    "completed": ["M1: Projekt + landing page", "M2: Booking-flow + SendGrid", "M3: Engelsk version (/en, /en/om, /en/lejevilkaar, /en/blog)", "M4: SEO + ads.json + GA4 + GTM", "Admin dashboard", "Lejevilkår", "Effects-only booking (lys + røg)", "Røgmaskine addon", "Taske addon", "Stativer addon", "Lagerstyring + udsolgt-logik + dato-blokering", "Om-side", "Blog (11 posts)", "Testimonials (4 rigtige)", "København landing page", "Produktbillede-styleguide"],
+    "completed": ["M1: Projekt + landing page", "M2: Booking-flow + SendGrid", "M3: Engelsk version (/en, /en/om, /en/lejevilkaar, /en/blog)", "M4: SEO + ads.json + GA4 + GTM", "Admin dashboard (bookinger, lager, nyhedsbrev)", "Lejevilkår", "Effects-only booking (lys + røg)", "Røgmaskine addon", "Taske addon", "Stativer addon", "Lagerstyring + udsolgt-logik + dato-blokering (inkl. røg + stativer)", "Om-side", "Blog (11 posts)", "Testimonials (4 rigtige)", "København landing page", "Produktbillede-styleguide", "Nyhedsbrev: exit-intent popup + checkout checkbox + footer signup + admin-oversigt med CSV-eksport"],
     "pending": ["Auto-deploy (mangler CLOUDFLARE_API_TOKEN secret)", "Google Business Profile", "lejhojtaler.com → /en redirect"]
   }
 }

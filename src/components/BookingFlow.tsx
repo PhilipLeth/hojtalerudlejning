@@ -219,6 +219,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", comment: "" });
+  const [newsletter, setNewsletter] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -365,6 +366,14 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
       });
 
       if (!res.ok) throw new Error(s.bookingFailed);
+      // Subscribe to newsletter if checked
+      if (newsletter && form.email) {
+        fetch("/api/newsletter", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: form.email }),
+        }).catch(() => {});
+      }
       // Push conversion event to GTM dataLayer
       if (typeof window !== "undefined" && (window as any).dataLayer) {
         (window as any).dataLayer.push({
@@ -863,6 +872,17 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                 onChange={(e) => setForm({ ...form, comment: e.target.value })}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 resize-none"
               />
+              <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={newsletter}
+                  onChange={(e) => setNewsletter(e.target.checked)}
+                  className="h-4 w-4 rounded border-white/20 bg-white/5 text-brand-500 focus:ring-brand-500 accent-[#ffd600]"
+                />
+                <span className="text-sm text-white/50">
+                  {locale === "da" ? "Ja tak, send mig tilbud og nyheder" : "Yes, send me deals and news"}
+                </span>
+              </label>
             </div>
 
             {/* Order summary */}

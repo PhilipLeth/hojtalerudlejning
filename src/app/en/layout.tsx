@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ExitPopup from "@/components/ExitPopup";
 
 export const metadata: Metadata = {
   alternates: {
@@ -17,7 +18,10 @@ export default function EnLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <ExitPopup locale="en" />
+      </body>
     </html>
   );
 }
