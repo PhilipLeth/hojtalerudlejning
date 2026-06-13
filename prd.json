@@ -137,7 +137,7 @@
         },
         {
           "id": "testimonials",
-          "description": "4 rigtige kundeanmeldelser (Caroline V., Rune K., Mikkel L., Ilektra M.) i glassmorphism cards."
+          "description": "4 rigtige kundeanmeldelser (Caroline V., Rune K., Mikkel L., Matthew H.) i glassmorphism cards."
         },
         {
           "id": "about",
@@ -256,7 +256,6 @@
       "Fixed mood-baggrunde der crossfader mellem højtalervalg",
       "Glass-morphism kort",
       "Letvægts light-bar animation (CSS translateX)",
-      "Floating product showcase (speaker + lys) ved step 2+",
       "DALL-E-genererede produktbilleder og stemningsbilleder"
     ]
   },
@@ -264,10 +263,22 @@
     "github_repo": "PhilipLeth/hojtalerudlejning",
     "cloudflare_pages_project": "speaker-rental",
     "kv_namespace": "BOOKINGS (c46378bfa06c46c19841331217f812c5)",
-    "secrets": ["SENDGRID_API_KEY", "NOTIFY_EMAIL", "ADMIN_SECRET"]
+    "secrets": ["SENDGRID_API_KEY", "NOTIFY_EMAIL", "ADMIN_SECRET"],
+    "auto_deploy": {
+      "description": "GitHub Actions workflow (.github/workflows/deploy.yml) bygger og deployer til Cloudflare Pages ved push til main.",
+      "github_secrets_needed": ["CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID"],
+      "setup_steps": [
+        "1. Gå til https://dash.cloudflare.com/profile/api-tokens",
+        "2. Opret token med 'Edit Cloudflare Pages' template",
+        "3. Begræns til account 3e5a00606c7d80a43b229f6d15994043",
+        "4. Kopiér token og kør: gh secret set CLOUDFLARE_API_TOKEN -R PhilipLeth/hojtalerudlejning -b '<TOKEN>'",
+        "5. CLOUDFLARE_ACCOUNT_ID er allerede sat."
+      ],
+      "status": "pending — mangler CLOUDFLARE_API_TOKEN GitHub secret"
+    }
   },
   "status": {
-    "completed": ["M1: Projekt + landing page", "M2: Booking-flow + SendGrid", "M4: SEO + ads.json", "Admin dashboard", "Lejevilkår", "Lys-only booking", "Røgmaskine addon", "Lagerstyring + udsolgt-logik + dato-blokering"],
-    "pending": ["Engelsk version (lejhojtaler.com)", "Google Ads konto oprettelse", "Google Business Profile", "SendGrid secrets i Cloudflare", "Custom domæne DNS", "GA4 + conversion tracking"]
+    "completed": ["M1: Projekt + landing page", "M2: Booking-flow + SendGrid", "M3: Engelsk version (/en, /en/om, /en/lejevilkaar, /en/blog)", "M4: SEO + ads.json + GA4 + GTM", "Admin dashboard", "Lejevilkår", "Effects-only booking (lys + røg)", "Røgmaskine addon", "Taske addon", "Stativer addon", "Lagerstyring + udsolgt-logik + dato-blokering", "Om-side", "Blog (11 posts)", "Testimonials (4 rigtige)", "København landing page", "Produktbillede-styleguide"],
+    "pending": ["Auto-deploy (mangler CLOUDFLARE_API_TOKEN secret)", "Google Business Profile", "lejhojtaler.com → /en redirect"]
   }
 }
