@@ -234,9 +234,9 @@ export default function AdminPage() {
 
   if (!secret) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f5f5f5", fontFamily: "system-ui, sans-serif" }}>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
         <form onSubmit={handleLogin} style={{ background: "#fff", padding: "40px", borderRadius: "12px", boxShadow: "0 2px 12px rgba(0,0,0,0.1)", maxWidth: "400px", width: "100%" }}>
-          <h1 style={{ margin: "0 0 8px", fontSize: "24px" }}>Admin</h1>
+          <h1 style={{ margin: "0 0 8px", fontSize: "24px", color: "#111" }}>Admin</h1>
           <p style={{ margin: "0 0 24px", color: "#666" }}>Indtast adgangskode</p>
           <input
             type="password"
@@ -254,7 +254,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f5f5f5", fontFamily: "system-ui, sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
       <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h1 style={{ margin: 0, fontSize: "20px" }}>Bookinger</h1>
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
