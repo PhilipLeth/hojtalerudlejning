@@ -10,7 +10,7 @@ const corsHeaders = {
   "Content-Type": "application/json",
 };
 
-const DEFAULT_INVENTORY: Record<string, number> = { party: 1, festival: 1, lys: 2, rog: 1, stativer: 2 };
+const DEFAULT_INVENTORY: Record<string, number> = { party: 1, festival: 1, lys: 2, rog: 1, stativer: 2, taske: 2 };
 
 // Map booking speaker names back to product IDs
 function speakerNameToId(name: string): string | null {
@@ -50,13 +50,14 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     }
 
     // Count overlapping bookings per product
-    const booked: Record<string, number> = { party: 0, festival: 0, lys: 0, rog: 0, stativer: 0 };
+    const booked: Record<string, number> = { party: 0, festival: 0, lys: 0, rog: 0, stativer: 0, taske: 0 };
 
     // Map addon display names to product IDs
     const addonNameToId: Record<string, string> = {
       lys: "lys", lysshow: "lys", "lys show": "lys",
       rog: "rog", "røg": "rog", roegmaskine: "rog", "røgmaskine": "rog", "smoke": "rog",
       stativer: "stativer", stativ: "stativer",
+      taske: "taske", baeretaske: "taske", "bæretaske": "taske",
     };
 
     const list = await context.env.BOOKINGS.list({ prefix: "booking_" });
