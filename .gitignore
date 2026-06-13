@@ -7,3 +7,8 @@ out/
 next-env.d.ts
 .vercel
 .wrangler
+
+# Setup scripts with secrets
+publish-gtm.py
+setup-ga4.py
+setup-gtm-ga4.py

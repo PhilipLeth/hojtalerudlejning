@@ -1,17 +1,52 @@
+import type { Metadata } from "next";
 import BookingFlow from "@/components/BookingFlow";
 import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Rent Speaker Copenhagen | From 400 DKK/weekend | Lejhøjtaler.dk",
+  description:
+    "Rent speakers in Copenhagen from 400 DKK/weekend. PA system rental for parties, events and celebrations. Sound equipment for hire — pick up Friday, return Monday. Book online in 2 minutes.",
+  keywords: [
+    "rent speaker copenhagen",
+    "speaker rental copenhagen",
+    "PA system rental copenhagen",
+    "party speaker hire copenhagen",
+    "sound equipment rental copenhagen",
+    "speaker hire denmark",
+    "rent PA system copenhagen",
+    "event speaker rental",
+    "lej højtaler",
+    "lejhojtaler",
+  ],
+  openGraph: {
+    title: "Rent Speaker Copenhagen | From 400 DKK/weekend | Lejhøjtaler.dk",
+    description:
+      "Rent speakers and PA systems for your party in Copenhagen. Sound equipment rental from 400 DKK/weekend. Book online in 2 minutes.",
+    url: "https://lejhojtaler.dk/en",
+    siteName: "Lejhøjtaler.dk",
+    locale: "en_GB",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/en",
+    languages: {
+      da: "https://lejhojtaler.dk",
+      en: "https://lejhojtaler.dk/en",
+    },
+  },
+};
+
+export default function EnHome() {
   return (
-    <main className="min-h-screen">
-      <Hero />
-      <BookingFlow />
-      <Testimonials />
-      <HowItWorks />
-      <Footer />
+    <main className="min-h-screen" lang="en">
+      <Hero locale="en" />
+      <BookingFlow locale="en" />
+      <Testimonials locale="en" />
+      <HowItWorks locale="en" />
+      <Footer locale="en" />
 
       {/* JSON-LD: LocalBusiness */}
       <script
@@ -24,8 +59,8 @@ export default function Home() {
             legalName: "Scharling Studio",
             taxID: "DK40994904",
             description:
-              "Højtalerudlejning i København. Lej højtaler, PA-anlæg og lydudstyr til fest, event og party. Festudstyr til leje fra 400 kr/weekend.",
-            url: "https://lejhojtaler.dk",
+              "Speaker rental in Copenhagen. Rent speakers, PA systems and sound equipment for parties, events and celebrations. Equipment for hire from 400 DKK/weekend.",
+            url: "https://lejhojtaler.dk/en",
             address: {
               "@type": "PostalAddress",
               streetAddress: "Halvtolv 9, 1. th",
@@ -35,7 +70,7 @@ export default function Home() {
             },
             areaServed: {
               "@type": "City",
-              name: "København",
+              name: "Copenhagen",
             },
             openingHoursSpecification: [
               {
@@ -55,16 +90,16 @@ export default function Home() {
         }}
       />
 
-      {/* JSON-LD: Product — Party-højtaler */}
+      {/* JSON-LD: Product — Small Speaker Package */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
-            name: "Lille højtalerpakke udlejning",
+            name: "Small Speaker Package rental",
             description:
-              "2× 10\" Alto højtalere med Bluetooth til leje. Op til 40 personer. 12 kg i bæretaske — klar til cyklen. Inkl. alle kabler.",
+              '2x 10" Alto speakers with Bluetooth for rent. Up to 40 people. 12 kg in carry bag — ready for your bike. All cables included.',
             image: "https://lejhojtaler.dk/images/product-party.png",
             brand: {
               "@type": "Brand",
@@ -76,23 +111,23 @@ export default function Home() {
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
               availability: "https://schema.org/InStock",
-              url: "https://lejhojtaler.dk/#book",
-              description: "Fra 400 kr/weekend (fre–man). Højtalerleje København.",
+              url: "https://lejhojtaler.dk/en#book",
+              description: "From 400 DKK/weekend (Fri-Mon). Speaker rental Copenhagen.",
             },
           }),
         }}
       />
 
-      {/* JSON-LD: Product — Festival-højtaler */}
+      {/* JSON-LD: Product — Large Speaker Package */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
-            name: "Stor højtalerpakke udlejning",
+            name: "Large Speaker Package rental",
             description:
-              "2× 12\" EV højtalere med Bluetooth til leje. 40–100 personer. Inkl. stativer og alle kabler. Perfekt til store fester og events i København.",
+              '2x 12" EV speakers with Bluetooth for rent. 40-100 people. Stands and all cables included. Perfect for large parties and events in Copenhagen.',
             image: "https://lejhojtaler.dk/images/product-festival.png",
             brand: {
               "@type": "Brand",
@@ -104,23 +139,23 @@ export default function Home() {
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
               availability: "https://schema.org/InStock",
-              url: "https://lejhojtaler.dk/#book",
-              description: "Fra 700 kr/weekend (fre–man). PA-anlæg udlejning København.",
+              url: "https://lejhojtaler.dk/en#book",
+              description: "From 700 DKK/weekend (Fri-Mon). PA system rental Copenhagen.",
             },
           }),
         }}
       />
 
-      {/* JSON-LD: Product — Lys-pakke */}
+      {/* JSON-LD: Product — Light Package */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
-            name: "Lys-pakke udlejning",
+            name: "Light package rental",
             description:
-              "Festlys til leje: 2 farvede LED-lamper + centereffekt på stativ. Tilkøb til din højtaler for den fulde festoplevelse.",
+              "Party lights for rent: 2 coloured LED lamps + centre effect on stand. Add to your speaker rental for the full party experience.",
             image: "https://lejhojtaler.dk/images/product-lys.png",
             brand: {
               "@type": "Brand",
@@ -132,8 +167,8 @@ export default function Home() {
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
               availability: "https://schema.org/InStock",
-              url: "https://lejhojtaler.dk/#book",
-              description: "500 kr tilkøb. Festudstyr leje København.",
+              url: "https://lejhojtaler.dk/en#book",
+              description: "500 DKK add-on. Party equipment rental Copenhagen.",
             },
           }),
         }}

@@ -21,22 +21,25 @@
   "products": [
     {
       "id": "party",
-      "name_da": "Party-højtaler",
-      "description_da": "Kompakt og nem at bære — tag den med til fods eller 2 pers. på cykel.",
-      "size": "10 tommer",
+      "name_da": "Lille højtalerpakke",
+      "description_da": "To kompakte 10\" Alto højtalere med Bluetooth. 12 kg i bæretaske — klar til cyklen.",
+      "brand": "Alto",
+      "size": "2× 10 tommer",
       "capacity": "Op til 40 personer",
-      "price_dkk": 400,
-      "includes": ["Padded sportstaske", "iPhone-kabel m/ USB-C adapter", "AUX-kabel", "Strømkabel"],
-      "extra": "Stativ kan tilkøbes, men er sjældent nødvendigt."
+      "weight": "12 kg",
+      "price_dkk": 399,
+      "includes": ["Bæretaske", "iPhone-kabel m/ USB-C adapter", "AUX-kabel", "Strømkabel", "Bluetooth"],
+      "extra": "Stativ kan tilkøbes."
     },
     {
       "id": "festival",
-      "name_da": "Festival-højtaler",
-      "description_da": "Kraftig lyd til store fester, events og udendørs arrangementer.",
-      "size": "12 tommer",
+      "name_da": "Stor højtalerpakke",
+      "description_da": "To kraftige 12\" EV aktive højtalere med Bluetooth. Klar lyd til større rum og udendørs.",
+      "brand": "Electro-Voice (EV)",
+      "size": "2× 12 tommer",
       "capacity": "40–100 personer",
       "price_dkk": 700,
-      "includes": ["Padded sportstaske", "Stativer (standard)", "iPhone-kabel m/ USB-C adapter", "AUX-kabel", "Strømkabel"],
+      "includes": ["Stativer", "iPhone-kabel m/ USB-C adapter", "AUX-kabel", "Strømkabel", "Bluetooth"],
       "extra": null
     },
     {
@@ -61,8 +64,14 @@
       "price_dkk": 250
     },
     {
+      "id": "stativer",
+      "name_da": "Højtalerstativer",
+      "description_da": "2 professionelle stativer — løfter lyden op i øjenhøjde",
+      "price_dkk": 100
+    },
+    {
       "id": "levering",
-      "name_da": "Levering, opsætning & afhentning i KBH",
+      "name_da": "Levering, opsætning & afhentning i Storkøbenhavn",
       "price_dkk": 500
     }
   ],
@@ -127,6 +136,14 @@
           "description": "Bekræftelsesside med ordredetaljer, statusindikator ('Vi tjekker din booking nu'), inkluderet udstyr."
         },
         {
+          "id": "testimonials",
+          "description": "4 rigtige kundeanmeldelser (Caroline V., Rune K., Mikkel L., Ilektra M.) i glassmorphism cards."
+        },
+        {
+          "id": "about",
+          "description": "Om os-sektion med Frederik Scharlings baggrund, Soundboks-alternativ pitch, cykel-USP, produktoversigt. SEO-tungt indhold."
+        },
+        {
           "id": "how-it-works",
           "description": "4 trin med ikoner + SEO-tekst. Åbningstider-kort."
         },
@@ -143,7 +160,37 @@
     "admin": {
       "path": "/admin",
       "description": "Password-beskyttet admin dashboard. Viser alle bookinger fra KV med statusflow (ny → bekræftet → afhentet → afleveret)."
+    },
+    "om": {
+      "path": "/om",
+      "description": "Om os-side med Frederiks baggrund, Soundboks-pitch, cykel-USP, produktoversigt. Standalone side med CTA."
+    },
+    "en_home": {
+      "path": "/en",
+      "description": "English version of the front page. Same booking flow, testimonials, how-it-works. All UI strings translated via i18n.ts."
+    },
+    "blog_posts_seo": {
+      "description": "SEO-blogindlæg i /docs/*.md — renderet via /blog/[slug]",
+      "articles": [
+        "hojtaler-til-fest",
+        "pa-anlaeg-udlejning-kobenhavn",
+        "festlys-guide",
+        "foedselsdagsfest-lyd",
+        "lyd-til-havefest",
+        "musikanlaeg-til-fest",
+        "billig-hojtaler-leje",
+        "speaker-rental-copenhagen",
+        "soundboks-alternativ-kobenhavn",
+        "hojtaler-paa-cykel-kobenhavn",
+        "om-lejhojtaler"
+      ]
     }
+  },
+  "i18n": {
+    "default_locale": "da",
+    "locales": ["da", "en"],
+    "strategy": "Dansk på lejhojtaler.dk (root), engelsk på /en prefix. Alle komponenter accepterer locale prop. Oversættelser i src/lib/i18n.ts.",
+    "domain_plan": "lejhojtaler.com kan pege på /en via redirect når domænet er sat op."
   },
   "api_endpoints": {
     "book": {

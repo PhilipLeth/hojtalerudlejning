@@ -1,4 +1,7 @@
-export default function Hero() {
+import { type Locale, t } from "@/lib/i18n";
+
+export default function Hero({ locale = "da" }: { locale?: Locale }) {
+  const s = t[locale].hero;
   return (
     <section className="relative flex min-h-[85vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
       {/* Fixed background image */}
@@ -12,25 +15,25 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-2xl">
         <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-          København
+          {s.location}
         </p>
         <h1 className="text-4xl font-bold leading-tight sm:text-6xl">
-          Lej en højtaler
+          {s.title}
           <br />
           <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-            fra 400 kr
+            {s.titleHighlight}
           </span>
         </h1>
         <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-          Kraftig lyd til din fest. Alle kabler inkluderet.
+          {s.subtitle}
           <br />
-          Book uforpligtende på 2 min. Betal ved afhentning.
+          {s.subtitleLine2}
         </p>
         <a
           href="#book"
           className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
         >
-          Book nu
+          {s.cta}
         </a>
       </div>
 

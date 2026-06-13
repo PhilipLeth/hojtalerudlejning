@@ -1,74 +1,11 @@
 "use client";
 
 import { useState, useMemo, useEffect, useCallback, FormEvent } from "react";
+import { type Locale, t } from "@/lib/i18n";
 
-/* ───── Data ───── */
-
-const speakers = [
-  {
-    id: "party",
-    name: "Party",
-    size: '10"',
-    capacity: "Op til 40 pers.",
-    price: 400,
-    desc: "Kompakt og nem at bære — tag den med til fods eller 2 pers. på cykel.",
-    extra: "Stativ kan tilkøbes, men er sjældent nødvendigt.",
-    product: "/images/product-party.png",
-    mood: "/images/mood-party.png",
-  },
-  {
-    id: "festival",
-    name: "Festival",
-    size: '12"',
-    capacity: "40–100 pers.",
-    price: 700,
-    desc: "Kraftig lyd til store fester, events og udendørs arrangementer.",
-    extra: "Inkl. stativer som standard.",
-    product: "/images/product-festival.png",
-    mood: "/images/mood-festival.png",
-  },
-];
-
-// Price multiplier by number of rental days (base = 3 days / weekend)
-const dayMultiplier: Record<number, number> = {
-  1: 0.8,
-  2: 0.9,
-  3: 1.0,
-  4: 1.2,
-  5: 1.4,
-};
-
-const addons = [
-  {
-    id: "lys",
-    label: "Lys-pakke",
-    desc: "2 farvede lamper + centereffekt på stativ",
-    price: 500,
-    image: "/images/product-lys.png",
-  },
-  {
-    id: "rog",
-    label: "Røgmaskine",
-    desc: "Kompakt røgmaskine med væske — gør lyset 10x federe",
-    price: 250,
-    image: null,
-  },
-  {
-    id: "levering",
-    label: "Levering + opsætning",
-    desc: "Vi bringer, sætter op og henter i København",
-    price: 500,
-    image: null,
-  },
-];
+import { speakers as speakersData, addons as addonsData, dayMultiplier } from "@/lib/products";
 
 /* ───── Helpers ───── */
-
-const DAY_NAMES = ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"];
-const MONTH_NAMES = [
-  "Januar", "Februar", "Marts", "April", "Maj", "Juni",
-  "Juli", "August", "September", "Oktober", "November", "December",
-];
 
 function dateKey(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -76,10 +13,6 @@ function dateKey(d: Date) {
 
 function diffDays(a: Date, b: Date) {
   return Math.round((b.getTime() - a.getTime()) / 86400000);
-}
-
-function formatDate(d: Date) {
-  return `${DAY_NAMES[d.getDay()]} ${d.getDate()}. ${MONTH_NAMES[d.getMonth()].toLowerCase().slice(0, 3)}`;
 }
 
 function isSameDay(a: Date, b: Date) {
@@ -126,20 +59,23 @@ function MiniCalendar({
   pickupDate,
   returnDate,
   onSelectDate,
+  locale = "da",
 }: {
   pickupDate: Date | null;
   returnDate: Date | null;
   onSelectDate: (d: Date) => void;
+  locale?: Locale;
 }) {
+  const s = t[locale].booking;
   const [viewMonth, setViewMonth] = useState(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1);
   });
 
   const today = useMemo(() => {
-    const t = new Date();
-    t.setHours(0, 0, 0, 0);
-    return t;
+    const td = new Date();
+    td.setHours(0, 0, 0, 0);
+    return td;
   }, []);
 
   const hotFridays = useMemo(() => getNextFridays(today, 2), [today]);
@@ -160,7 +96,7 @@ function MiniCalendar({
           <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
         </button>
         <span className="font-semibold">
-          {MONTH_NAMES[viewMonth.getMonth()]} {viewMonth.getFullYear()}
+          {s.monthNames[viewMonth.getMonth()]} {viewMonth.getFullYear()}
         </span>
         <button type="button" onClick={() => setViewMonth((m) => new Date(m.getFullYear(), m.getMonth() + 1, 1))} className="rounded-lg p-2 hover:bg-white/10 transition">
           <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
@@ -168,7 +104,7 @@ function MiniCalendar({
       </div>
 
       <div className="grid grid-cols-7 text-center text-xs text-white/30 mb-1">
-        {["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"].map((d) => (
+        {s.dayNamesShort.map((d) => (
           <div key={d} className="py-1">{d}</div>
         ))}
       </div>
@@ -213,7 +149,7 @@ function MiniCalendar({
       {/* Nudge */}
       <div className="mt-3 flex items-center gap-2 rounded-lg bg-orange-400/10 px-3 py-2 text-xs text-orange-300">
         <span className="flex h-2 w-2 shrink-0 rounded-full bg-orange-400" />
-        Få anlæg tilbage de næste weekender — book hurtigt
+        {s.calendarNudge}
       </div>
     </div>
   );
@@ -221,7 +157,8 @@ function MiniCalendar({
 
 /* ───── Pickup Info ───── */
 
-function PickupInfo() {
+function PickupInfo({ locale = "da" }: { locale?: Locale }) {
+  const s = t[locale].booking;
   return (
     <div className="glass rounded-2xl p-5 text-sm">
       <div className="flex items-start gap-3">
@@ -232,11 +169,11 @@ function PickupInfo() {
           </svg>
         </div>
         <div>
-          <p className="font-medium text-white">Hent på Halvtolv 9, København K</p>
+          <p className="font-medium text-white">{s.pickupAddress}</p>
           <p className="mt-1 text-white/40">
-            Leveres i padded sportstaske med alle kabler (iPhone, USB-C, AUX).
+            {s.pickupDesc}
             <br />
-            Mixere og lignende kan forespørges ved booking.
+            {s.pickupDesc2}
           </p>
         </div>
       </div>
@@ -256,7 +193,25 @@ function LightBar() {
 
 /* ───── Component ───── */
 
-export default function BookingFlow() {
+export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
+  const s = t[locale].booking;
+
+  // Build localized speaker/addon arrays with prices from data
+  const speakers = useMemo(() => speakersData.map((sd, i) => ({
+    ...sd,
+    name: s.speakers[i].name,
+    size: s.speakers[i].size,
+    capacity: s.speakers[i].capacity,
+    desc: s.speakers[i].desc,
+    extra: s.speakers[i].extra,
+  })), [s]);
+
+  const addons = useMemo(() => addonsData.map((ad, i) => ({
+    ...ad,
+    label: s.addons[i].label,
+    desc: s.addons[i].desc,
+  })), [s]);
+
   const [step, setStep] = useState(1);
   const [speaker, setSpeaker] = useState<string | null>(null);
   const [pickupDate, setPickupDate] = useState<Date | null>(null);
@@ -297,28 +252,35 @@ export default function BookingFlow() {
       setAvailSelected(data);
 
       // Check if the selected product is available
-      const productId = speaker === "lys-only" ? "lys" : speaker;
-      if (productId) {
-        const remaining = getRemaining(data, productId);
-        const blocked = isBlockedForProduct(data, productId);
-        if (remaining <= 0 || blocked) {
-          setSoldOutMsg("Desvaerre udsolgt i denne periode — proev andre datoer");
-        }
-        // Also check lys if it's an addon
-        if (speaker !== "lys-only" && selectedAddons.includes("lys")) {
+      if (speaker === "effects-only") {
+        // Check each selected effect addon
+        if (selectedAddons.includes("lys")) {
           const lysRemaining = getRemaining(data, "lys");
           if (lysRemaining <= 0) {
-            setSoldOutMsg("Lys-pakken er desvaerre udsolgt i denne periode");
+            setSoldOutMsg(s.lightsSoldOutPeriod);
+          }
+        }
+      } else if (speaker) {
+        const remaining = getRemaining(data, speaker);
+        const blocked = isBlockedForProduct(data, speaker);
+        if (remaining <= 0 || blocked) {
+          setSoldOutMsg(s.soldOutPeriod);
+        }
+        // Also check lys if it's an addon
+        if (selectedAddons.includes("lys")) {
+          const lysRemaining = getRemaining(data, "lys");
+          if (lysRemaining <= 0) {
+            setSoldOutMsg(s.lightsSoldOutPeriod);
           }
         }
       }
     } catch {
       // Don't block booking on fetch failure
     }
-  }, [speaker, selectedAddons]);
+  }, [speaker, selectedAddons, s]);
 
-  const isLysOnly = speaker === "lys-only";
-  const selectedSpeaker = speakers.find((s) => s.id === speaker);
+  const isEffectsOnly = speaker === "effects-only";
+  const selectedSpeaker = speakers.find((sp) => sp.id === speaker);
   const hasLights = selectedAddons.includes("lys");
   const hasDelivery = selectedAddons.includes("levering");
 
@@ -330,9 +292,13 @@ export default function BookingFlow() {
     .reduce((sum, a) => sum + a.price, 0);
   const total = speakerPrice + addonsPrice;
 
+  function formatDate(d: Date) {
+    return `${s.dayNames[d.getDay()]} ${d.getDate()}. ${s.monthNames[d.getMonth()].toLowerCase().slice(0, 3)}`;
+  }
+
   const periodLabel = pickupDate && returnDate
-    ? `${formatDate(pickupDate)} → ${formatDate(returnDate)} (${rentalDays} ${rentalDays === 1 ? "dag" : "dage"})`
-    : "Ikke valgt";
+    ? `${formatDate(pickupDate)} \u2192 ${formatDate(returnDate)} (${rentalDays} ${rentalDays === 1 ? s.day : s.days})`
+    : s.notSelected;
 
   function handleDateSelect(d: Date) {
     setSoldOutMsg("");
@@ -365,11 +331,11 @@ export default function BookingFlow() {
   }
 
   function nextStep() {
-    setStep((s) => Math.min(s + 1, 4));
+    setStep((st) => Math.min(st + 1, 4));
   }
 
   function prevStep() {
-    setStep((s) => Math.max(s - 1, 1));
+    setStep((st) => Math.max(st - 1, 1));
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -382,8 +348,8 @@ export default function BookingFlow() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          speaker: isLysOnly ? "Kun lys" : selectedSpeaker?.name,
-          speakerSize: isLysOnly ? "—" : selectedSpeaker?.size,
+          speaker: isEffectsOnly ? (locale === "en" ? "Effects only" : "Kun effekter") : selectedSpeaker?.name,
+          speakerSize: isEffectsOnly ? "\u2014" : selectedSpeaker?.size,
           period: periodLabel,
           pickup: pickupDate?.toISOString(),
           returnDate: returnDate?.toISOString(),
@@ -393,14 +359,24 @@ export default function BookingFlow() {
             .map((a) => a.label),
           deliveryAddress: hasDelivery ? deliveryAddress : undefined,
           total,
+          locale,
           ...form,
         }),
       });
 
-      if (!res.ok) throw new Error("Booking fejlede");
+      if (!res.ok) throw new Error(s.bookingFailed);
+      // Push conversion event to GTM dataLayer
+      if (typeof window !== "undefined" && (window as any).dataLayer) {
+        (window as any).dataLayer.push({
+          event: "booking_complete",
+          booking_value: total,
+          booking_currency: "DKK",
+          booking_product: isEffectsOnly ? "effects-only" : speaker,
+        });
+      }
       setDone(true);
     } catch {
-      setError("Noget gik galt. Prøv igen eller ring til os.");
+      setError(s.errorRetry);
     } finally {
       setSubmitting(false);
     }
@@ -412,7 +388,7 @@ export default function BookingFlow() {
       <div className="glass rounded-2xl p-5">
         {selectedSpeaker && (
           <div className="flex justify-between text-sm text-white/50">
-            <span>{selectedSpeaker.name}-højtaler ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
+            <span>{selectedSpeaker.name}{s.speakerSuffix} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
             <span>{speakerPrice} kr</span>
           </div>
         )}
@@ -425,38 +401,31 @@ export default function BookingFlow() {
             </div>
           ))}
         <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
-          <span>Total</span>
+          <span>{s.total}</span>
           <span className="text-brand-400">{total} kr</span>
         </div>
-        <p className="mt-1 text-right text-xs text-white/30">Betales ved afhentning</p>
+        <p className="mt-1 text-right text-xs text-white/30">{s.paidAtPickup}</p>
       </div>
     );
   }
 
   if (done) {
     const orderItems = [
-      ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}-højtaler (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
+      ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
       ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: a.label, value: `${a.price} kr` })),
     ];
 
     return (
       <section id="book" className="relative overflow-hidden">
-        {speakers.map((s) => (
+        {speakersData.map((sd) => (
           <div
-            key={s.id}
+            key={sd.id}
             className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
-            style={{ backgroundImage: `url(${s.mood})`, opacity: speaker === s.id ? 0.5 : 0 }}
+            style={{ backgroundImage: `url(${sd.mood})`, opacity: speaker === sd.id ? 0.5 : 0 }}
           />
         ))}
         <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
 
-        {/* Floating products */}
-        {(selectedSpeaker || isLysOnly) && (
-          <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden">
-            {selectedSpeaker && <img src={selectedSpeaker.product} alt="" className="absolute -bottom-8 -left-8 w-56 opacity-15 sm:w-72 sm:-left-4" />}
-            {hasLights && <img src="/images/product-lys.png" alt="" className="absolute -top-4 -right-4 w-44 opacity-15 sm:w-56" />}
-          </div>
-        )}
 
         <div className="relative z-20 mx-auto max-w-lg px-4 py-16">
           {/* Success header */}
@@ -466,9 +435,9 @@ export default function BookingFlow() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold">Booking modtaget!</h2>
+            <h2 className="text-3xl font-bold">{s.successTitle}</h2>
             <p className="mt-3 text-white/50">
-              Bekræftelse sendt til <strong className="text-white">{form.email}</strong>
+              {s.successEmailSent} <strong className="text-white">{form.email}</strong>
             </p>
           </div>
 
@@ -480,8 +449,8 @@ export default function BookingFlow() {
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-400" />
               </div>
               <div>
-                <p className="font-medium text-white">Vi tjekker din booking nu</p>
-                <p className="text-sm text-white/40">Du hører fra os inden for få minutter med bekræftelse og praktiske detaljer.</p>
+                <p className="font-medium text-white">{s.successChecking}</p>
+                <p className="text-sm text-white/40">{s.successCheckingDesc}</p>
               </div>
             </div>
           </div>
@@ -490,10 +459,10 @@ export default function BookingFlow() {
           <div className="glass rounded-2xl overflow-hidden mb-4">
             {/* Product preview */}
             <div className="flex items-center gap-4 bg-white/[0.02] p-4">
-              <img src={isLysOnly ? "/images/product-lys.png" : selectedSpeaker?.product} alt="" className="h-16 w-16 object-contain" />
+              <img src={isEffectsOnly ? (hasLights ? "/images/product-lys.png" : "/images/product-rog.png") : selectedSpeaker?.product} alt="" className="h-16 w-16 object-contain rounded-lg" />
               <div>
-                <p className="font-semibold">{isLysOnly ? "Kun lys-pakke" : `${selectedSpeaker?.name}-højtaler`}</p>
-                <p className="text-sm text-white/40">{isLysOnly ? "2 farvede lamper + centereffekt" : `${selectedSpeaker?.size} — ${selectedSpeaker?.capacity}`}</p>
+                <p className="font-semibold">{isEffectsOnly ? s.effectsOnlyLabel : `${selectedSpeaker?.name}${s.speakerSuffix}`}</p>
+                <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && a.id !== "levering").map((a) => a.label).join(" + ") : `${selectedSpeaker?.size} \u2014 ${selectedSpeaker?.capacity}`}</p>
               </div>
             </div>
 
@@ -514,8 +483,8 @@ export default function BookingFlow() {
                 </svg>
                 <span className="text-white/70">
                   {hasDelivery && deliveryAddress
-                    ? `Levering til ${deliveryAddress}`
-                    : "Afhentning: Halvtolv 9, København K"}
+                    ? `${s.successDelivery} ${deliveryAddress}`
+                    : s.successPickup}
                 </span>
               </div>
 
@@ -539,21 +508,21 @@ export default function BookingFlow() {
 
               {/* Total */}
               <div className="flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
-                <span>Total</span>
+                <span>{s.total}</span>
                 <span className="text-brand-400">{total} kr</span>
               </div>
-              <p className="text-right text-xs text-white/30">Betales ved afhentning (MobilePay eller kontant)</p>
+              <p className="text-right text-xs text-white/30">{s.paidAtPickupFull}</p>
             </div>
           </div>
 
           {/* Included info */}
           <div className="glass rounded-2xl p-4 text-sm text-white/40">
-            <p className="font-medium text-white/60 mb-2">Inkluderet i din booking:</p>
+            <p className="font-medium text-white/60 mb-2">{s.successIncluded}</p>
             <ul className="space-y-1">
-              <li>Padded sportstaske til transport</li>
-              <li>Alle kabler (iPhone m/ USB-C adapter, AUX, strøm)</li>
-              {speaker === "festival" && <li>Stativer</li>}
-              {hasLights && <li>Lys-bar med 2 LED-lamper + centereffekt på stativ</li>}
+              <li>{s.successBag}</li>
+              <li>{s.successCables}</li>
+              {speaker === "festival" && <li>{s.successStands}</li>}
+              {hasLights && <li>{s.successLightBar}</li>}
             </ul>
           </div>
         </div>
@@ -568,46 +537,27 @@ export default function BookingFlow() {
         className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
         style={{ backgroundImage: "url(/images/hero.png)", opacity: speaker === null ? 0.5 : 0 }}
       />
-      {speakers.map((s) => (
+      {speakersData.map((sd) => (
         <div
-          key={s.id}
+          key={sd.id}
           className="fixed inset-0 bg-cover bg-center transition-opacity duration-700 ease-in-out"
-          style={{ backgroundImage: `url(${s.mood})`, opacity: speaker === s.id ? 0.5 : 0 }}
+          style={{ backgroundImage: `url(${sd.mood})`, opacity: speaker === sd.id ? 0.5 : 0 }}
         />
       ))}
       <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
 
       {hasLights && <LightBar />}
 
-      {/* ── Floating product showcase ── */}
-      {selectedSpeaker && step > 1 && (
-        <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden">
-          {/* Speaker — bottom left */}
-          <img
-            src={selectedSpeaker.product}
-            alt=""
-            className="absolute -bottom-8 -left-8 w-56 opacity-20 transition-opacity duration-700 sm:w-72 sm:-left-4"
-          />
-          {/* Lights — top right (only when selected) */}
-          {hasLights && (
-            <img
-              src="/images/product-lys.png"
-              alt=""
-              className="absolute -top-4 -right-4 w-44 opacity-20 transition-opacity duration-700 sm:w-56"
-            />
-          )}
-        </div>
-      )}
 
       {/* ── Content ── */}
       <div className="relative z-20 mx-auto max-w-lg px-4 py-24">
         {/* Progress */}
         <div className="mb-8 flex items-center justify-center gap-2">
-          {[1, 2, 3, 4].map((s) => (
+          {[1, 2, 3, 4].map((st) => (
             <div
-              key={s}
+              key={st}
               className={`h-2 rounded-full transition-all duration-300 ${
-                s === step ? "w-8 bg-brand-500" : s < step ? "w-8 bg-brand-700" : "w-8 bg-white/10"
+                st === step ? "w-8 bg-brand-500" : st < step ? "w-8 bg-brand-700" : "w-8 bg-white/10"
               }`}
             />
           ))}
@@ -616,63 +566,63 @@ export default function BookingFlow() {
         {/* Step 1: Speaker */}
         {step === 1 && (
           <div className="space-y-4">
-            <h2 className="text-center text-2xl font-bold">Vælg højtalere</h2>
+            <h2 className="text-center text-2xl font-bold">{s.step1Title}</h2>
 
-            <PickupInfo />
+            <PickupInfo locale={locale} />
 
             <div className="space-y-4">
-              {speakers.map((s) => {
-                const remaining = getRemaining(availOverview, s.id);
-                const totalUnits = availOverview?.inventory[s.id] ?? 1;
+              {speakers.map((sp) => {
+                const remaining = getRemaining(availOverview, sp.id);
+                const totalUnits = availOverview?.inventory[sp.id] ?? 1;
                 const isSoldOut = availOverview !== null && remaining <= 0;
                 const isLow = availOverview !== null && remaining > 0 && remaining < totalUnits;
 
                 return (
                   <button
-                    key={s.id}
+                    key={sp.id}
                     disabled={isSoldOut}
                     onClick={() => {
-                      setSpeaker(s.id);
+                      setSpeaker(sp.id);
                       nextStep();
                     }}
                     className={`group w-full overflow-hidden rounded-2xl text-left transition active:scale-[0.98] ${
                       isSoldOut
                         ? "glass opacity-50 cursor-not-allowed"
-                        : speaker === s.id
+                        : speaker === sp.id
                           ? "glass-selected"
                           : "glass hover:border-white/20"
                     }`}
                   >
                     <div className="relative h-48 overflow-hidden bg-[#0d0c12]">
                       <img
-                        src={s.product}
-                        alt={s.name}
+                        src={sp.product}
+                        alt={sp.name}
                         className={`h-full w-full object-contain p-4 transition-transform duration-500 ${isSoldOut ? "" : "group-hover:scale-110"}`}
                       />
                       {isSoldOut && (
                         <div className="absolute inset-0 flex items-center justify-center bg-black/60">
-                          <span className="rounded-full bg-red-500/90 px-4 py-1.5 text-sm font-bold text-white">Udsolgt</span>
+                          <span className="rounded-full bg-red-500/90 px-4 py-1.5 text-sm font-bold text-white">{s.soldOut}</span>
                         </div>
                       )}
                       {isLow && (
                         <div className="absolute top-3 left-3">
-                          <span className="rounded-full bg-orange-500/90 px-3 py-1 text-xs font-bold text-white">Faa ledige</span>
+                          <span className="rounded-full bg-orange-500/90 px-3 py-1 text-xs font-bold text-white">{s.fewLeft}</span>
                         </div>
                       )}
                       <div className="absolute bottom-4 right-4 text-right">
-                        <p className="text-3xl font-bold text-brand-400">{s.price},-</p>
-                        <p className="text-xs text-white/60">fra pr. weekend</p>
+                        <p className="text-3xl font-bold text-brand-400">{sp.price},-</p>
+                        <p className="text-xs text-white/60">{s.fromPerWeekend}</p>
                       </div>
                     </div>
                     <div className="p-5">
-                      <h3 className="text-xl font-semibold">{s.name}</h3>
+                      <h3 className="text-xl font-semibold">{sp.name}</h3>
                       <p className="mt-1 text-sm text-white/50">
-                        {s.size} &mdash; {s.capacity}
+                        {sp.size} &mdash; {sp.capacity}
                       </p>
-                      <p className="mt-2 text-sm text-white/40">{s.desc}</p>
-                      <p className="mt-1 text-xs text-white/30">{s.extra}</p>
+                      <p className="mt-2 text-sm text-white/40">{sp.desc}</p>
+                      <p className="mt-1 text-xs text-white/30">{sp.extra}</p>
                       <p className="mt-2 text-xs text-brand-400/70">
-                        Inkl. alle kabler (iPhone m/ USB-C adapter, AUX, strøm)
+                        {s.cablesIncluded}
                       </p>
                     </div>
                   </button>
@@ -680,73 +630,93 @@ export default function BookingFlow() {
               })}
             </div>
 
-            {/* Lights-only shortcut */}
-            {(() => {
-              const lysRemaining = getRemaining(availOverview, "lys");
-              const lysTotal = availOverview?.inventory.lys ?? 2;
-              const lysSoldOut = availOverview !== null && lysRemaining <= 0;
-              const lysLow = availOverview !== null && lysRemaining > 0 && lysRemaining < lysTotal;
-              return (
+            {/* Effects-only shortcuts (lights / fog without speakers) */}
+            <div className="space-y-2">
+              <p className="text-center text-sm text-white/40">{s.effectsOnlyTitle}</p>
+              <div className="grid grid-cols-2 gap-3">
+                {/* Lights only */}
+                {(() => {
+                  const lysRemaining = getRemaining(availOverview, "lys");
+                  const lysTotal = availOverview?.inventory.lys ?? 2;
+                  const lysSoldOut = availOverview !== null && lysRemaining <= 0;
+                  const lysLow = availOverview !== null && lysRemaining > 0 && lysRemaining < lysTotal;
+                  return (
+                    <button
+                      disabled={lysSoldOut}
+                      onClick={() => {
+                        setSpeaker("effects-only");
+                        setSelectedAddons(["lys"]);
+                        nextStep();
+                      }}
+                      className={`rounded-xl border border-dashed p-3 text-center transition active:scale-[0.98] ${
+                        lysSoldOut
+                          ? "border-white/10 opacity-50 cursor-not-allowed"
+                          : "border-white/15 hover:border-brand-500/40 hover:bg-white/[0.02]"
+                      }`}
+                    >
+                      <img src="/images/product-lys.png" alt="" className="mx-auto h-12 w-12 object-contain rounded-lg" />
+                      <p className="mt-2 text-sm font-medium text-white/70">
+                        {s.addons[0].label}
+                      </p>
+                      <p className="text-brand-400 text-sm">{s.lightsOnlyFrom}</p>
+                      {lysSoldOut && <span className="mt-1 inline-block rounded-full bg-red-500/90 px-2 py-0.5 text-xs font-bold text-white">{s.soldOut}</span>}
+                      {lysLow && <span className="mt-1 inline-block rounded-full bg-orange-500/90 px-2 py-0.5 text-xs font-bold text-white">{s.fewLeft}</span>}
+                    </button>
+                  );
+                })()}
+
+                {/* Fog only */}
                 <button
-                  disabled={lysSoldOut}
                   onClick={() => {
-                    setSpeaker("lys-only");
-                    setSelectedAddons(["lys"]);
+                    setSpeaker("effects-only");
+                    setSelectedAddons(["rog"]);
                     nextStep();
                   }}
-                  className={`w-full rounded-xl border border-dashed p-4 text-center transition active:scale-[0.98] ${
-                    lysSoldOut
-                      ? "border-white/10 opacity-50 cursor-not-allowed"
-                      : "border-white/15 hover:border-brand-500/40 hover:bg-white/[0.02]"
-                  }`}
+                  className="rounded-xl border border-dashed border-white/15 p-3 text-center transition active:scale-[0.98] hover:border-brand-500/40 hover:bg-white/[0.02]"
                 >
-                  <div className="flex items-center justify-center gap-3">
-                    <img src="/images/product-lys.png" alt="Lys" className="h-10 w-10 object-contain" />
-                    <div className="text-left">
-                      <p className="text-sm font-medium text-white/70">
-                        Kun lys? <span className="text-brand-400">Fra 500,-</span>
-                        {lysSoldOut && <span className="ml-2 rounded-full bg-red-500/90 px-2 py-0.5 text-xs font-bold text-white">Udsolgt</span>}
-                        {lysLow && <span className="ml-2 rounded-full bg-orange-500/90 px-2 py-0.5 text-xs font-bold text-white">Faa ledige</span>}
-                      </p>
-                      <p className="text-xs text-white/30">Lej kun lys-pakken uden højtalere</p>
-                    </div>
-                  </div>
+                  <img src="/images/product-rog.png" alt="" className="mx-auto h-12 w-12 object-contain rounded-lg" />
+                  <p className="mt-2 text-sm font-medium text-white/70">
+                    {s.addons[1].label}
+                  </p>
+                  <p className="text-brand-400 text-sm">{s.fogOnlyFrom}</p>
                 </button>
-              );
-            })()}
+              </div>
+              <p className="text-center text-xs text-white/30">{s.effectsOnlyDesc}</p>
+            </div>
           </div>
         )}
 
         {/* Step 2: Date picker */}
         {step === 2 && (
           <div className="space-y-4">
-            <h2 className="text-center text-2xl font-bold">Vælg datoer</h2>
+            <h2 className="text-center text-2xl font-bold">{s.step2Title}</h2>
             <p className="text-center text-sm text-white/50">
-              Vælg afhentning og returnering (maks 5 dage)
+              {s.step2Desc}
             </p>
 
             <MiniCalendar
               pickupDate={pickupDate}
               returnDate={returnDate}
               onSelectDate={handleDateSelect}
+              locale={locale}
             />
 
             <div className="glass rounded-xl p-4 text-sm">
               <div className="flex justify-between">
-                <span className="text-white/50">Afhentning</span>
+                <span className="text-white/50">{s.pickup}</span>
                 <span className={pickupDate ? "text-white font-medium" : "text-white/30"}>
-                  {pickupDate ? formatDate(pickupDate) : "Vælg dato"}
+                  {pickupDate ? formatDate(pickupDate) : s.selectDate}
                 </span>
               </div>
               <div className="flex justify-between mt-2">
-                <span className="text-white/50">Returnering</span>
+                <span className="text-white/50">{s.returnLabel}</span>
                 <span className={returnDate ? "text-white font-medium" : "text-white/30"}>
-                  {returnDate ? formatDate(returnDate) : "Vælg dato"}
+                  {returnDate ? formatDate(returnDate) : s.selectDate}
                 </span>
               </div>
-              {pickupDate && returnDate && !isLysOnly && (
+              {pickupDate && returnDate && !isEffectsOnly && (
                 <div className="flex justify-between mt-3 pt-3 border-t border-white/10">
-                  <span className="text-white/50">Pris ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
+                  <span className="text-white/50">{s.price} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
                   <span className="text-brand-400 font-bold">{speakerPrice} kr</span>
                 </div>
               )}
@@ -760,14 +730,14 @@ export default function BookingFlow() {
 
             <div className="flex gap-3 pt-2">
               <button onClick={prevStep} className="flex-1 rounded-xl border border-white/10 py-3 font-medium transition hover:bg-white/5">
-                Tilbage
+                {s.back}
               </button>
               <button
                 onClick={nextStep}
                 disabled={!pickupDate || !returnDate || !!soldOutMsg}
                 className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
               >
-                Videre
+                {s.next}
               </button>
             </div>
           </div>
@@ -776,13 +746,13 @@ export default function BookingFlow() {
         {/* Step 3: Addons */}
         {step === 3 && (
           <div className="space-y-4">
-            <h2 className="text-center text-2xl font-bold">Tilvalg</h2>
-            <p className="text-center text-sm text-white/50">Valgfrit — spring over hvis du vil</p>
+            <h2 className="text-center text-2xl font-bold">{s.step3Title}</h2>
+            <p className="text-center text-sm text-white/50">{s.step3Desc}</p>
 
             <div className="mt-6 space-y-3">
               {addons.map((a) => {
                 const selected = selectedAddons.includes(a.id);
-                const locked = isLysOnly && a.id === "lys";
+                const locked = false;
                 return (
                   <div key={a.id} className="space-y-0">
                     <button
@@ -828,7 +798,7 @@ export default function BookingFlow() {
                       <div className="px-2 pt-3">
                         <input
                           type="text"
-                          placeholder="Leveringsadresse i København"
+                          placeholder={s.deliveryPlaceholder}
                           value={deliveryAddress}
                           onChange={(e) => setDeliveryAddress(e.target.value)}
                           className="w-full rounded-xl border border-brand-500/30 bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
@@ -844,10 +814,10 @@ export default function BookingFlow() {
 
             <div className="flex gap-3 pt-2">
               <button onClick={prevStep} className="flex-1 rounded-xl border border-white/10 py-3 font-medium transition hover:bg-white/5">
-                Tilbage
+                {s.back}
               </button>
               <button onClick={nextStep} className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95">
-                Videre
+                {s.next}
               </button>
             </div>
           </div>
@@ -856,16 +826,16 @@ export default function BookingFlow() {
         {/* Step 4: Contact + Submit */}
         {step === 4 && (
           <form onSubmit={handleSubmit} className="space-y-4">
-            <h2 className="text-center text-2xl font-bold">Dine oplysninger</h2>
+            <h2 className="text-center text-2xl font-bold">{s.step4Title}</h2>
             <p className="text-center text-sm text-white/50">
-              Vi sender en bekræftelse på e-mail
+              {s.step4Desc}
             </p>
 
             <div className="mt-6 space-y-3">
               <input
                 required
                 type="text"
-                placeholder="Navn"
+                placeholder={s.formName}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
@@ -873,7 +843,7 @@ export default function BookingFlow() {
               <input
                 required
                 type="email"
-                placeholder="Email"
+                placeholder={s.formEmail}
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
@@ -881,14 +851,14 @@ export default function BookingFlow() {
               <input
                 required
                 type="tel"
-                placeholder="Telefon"
+                placeholder={s.formPhone}
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               />
               <textarea
                 rows={3}
-                placeholder="Kommentar (valgfrit — f.eks. ønsket tidspunkt, special-kabler)"
+                placeholder={s.formComment}
                 value={form.comment}
                 onChange={(e) => setForm({ ...form, comment: e.target.value })}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 resize-none"
@@ -899,7 +869,7 @@ export default function BookingFlow() {
             <div className="glass rounded-2xl p-5">
               {selectedSpeaker && (
                 <div className="flex justify-between text-sm text-white/50">
-                  <span>{selectedSpeaker.name}-højtaler ({rentalDays} {rentalDays === 1 ? "dag" : "dage"})</span>
+                  <span>{selectedSpeaker.name}{s.speakerSuffix} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
                   <span>{speakerPrice} kr</span>
                 </div>
               )}
@@ -916,14 +886,14 @@ export default function BookingFlow() {
                 ))}
               {hasDelivery && deliveryAddress && (
                 <div className="text-sm text-white/30">
-                  Levering til: {deliveryAddress}
+                  {s.successDelivery}: {deliveryAddress}
                 </div>
               )}
               <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
-                <span>Total</span>
+                <span>{s.total}</span>
                 <span className="text-brand-400">{total} kr</span>
               </div>
-              <p className="mt-1 text-right text-xs text-white/30">Betales ved afhentning</p>
+              <p className="mt-1 text-right text-xs text-white/30">{s.paidAtPickup}</p>
             </div>
 
             {error && (
@@ -938,14 +908,14 @@ export default function BookingFlow() {
                 onClick={prevStep}
                 className="flex-1 rounded-xl border border-white/10 py-3 font-medium transition hover:bg-white/5"
               >
-                Tilbage
+                {s.back}
               </button>
               <button
                 type="submit"
                 disabled={submitting}
                 className="flex-1 rounded-xl bg-brand-500 py-3.5 font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-50"
               >
-                {submitting ? "Sender..." : "Send booking"}
+                {submitting ? s.sending : s.sendBooking}
               </button>
             </div>
           </form>

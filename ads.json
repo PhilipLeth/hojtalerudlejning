@@ -17,6 +17,7 @@
     {
       "name": "Højtaler Udlejning - Search",
       "type": "SEARCH",
+      "landing_page": "https://lejhojtaler.dk",
       "location": "København, Danmark (radius 30 km)",
       "ad_groups": [
         {
