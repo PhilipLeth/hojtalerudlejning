@@ -94,17 +94,16 @@ export default function ExitIntent() {
         ) : (
           <>
             <h2 className="mb-2 text-xl font-bold text-white">
-              Skal vi give dig besked?
+              Vent! Få 10% på din første leje
             </h2>
             <p className="mb-6 text-sm leading-relaxed text-white/60">
-              Tilmeld dig vores nyhedsbrev og hør om nye produkter, skarpe
-              priser og vores kommende app.
+              Tilmeld dig vores nyhedsbrev og få en rabatkode.
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <input
                 type="email"
                 required
-                placeholder="din@email.dk"
+                placeholder="Din email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
@@ -113,9 +112,15 @@ export default function ExitIntent() {
                 type="submit"
                 className="rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-brand-400"
               >
-                Tilmeld
+                Få rabat
               </button>
             </form>
+            <button
+              onClick={() => setVisible(false)}
+              className="mt-3 w-full text-center text-sm text-white/40 transition hover:text-white/60"
+            >
+              Nej tak
+            </button>
           </>
         )}
       </div>
