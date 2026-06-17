@@ -1,5 +1,5 @@
 interface Env {
-  SENDGRID_API_KEY: string;
+  RESEND_API_KEY: string;
   NOTIFY_EMAIL: string;
   BOOKINGS: KVNamespace;
 }
@@ -19,9 +19,9 @@ interface BookingData {
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const { SENDGRID_API_KEY, NOTIFY_EMAIL } = context.env;
+  const { RESEND_API_KEY, NOTIFY_EMAIL } = context.env;
 
-  if (!SENDGRID_API_KEY || !NOTIFY_EMAIL) {
+  if (!RESEND_API_KEY || !NOTIFY_EMAIL) {
     return new Response(JSON.stringify({ error: "Server not configured" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
@@ -69,35 +69,37 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     </div>
   `;
 
-  const messages = [
+  const fromEmail = `Lejhøjtaler.dk <booking@lejhojtaler.dk>`;
+
+  const emails = [
     {
-      to: [{ email: NOTIFY_EMAIL }],
-      from: { email: NOTIFY_EMAIL, name: "Lejhøjtaler.dk" },
-      reply_to: { email: data.email, name: data.name },
+      from: fromEmail,
+      to: [NOTIFY_EMAIL],
+      reply_to: data.email,
       subject: `Ny booking: ${data.speaker} — ${data.period} — ${data.name}`,
-      content: [{ type: "text/html", value: ownerHtml }],
+      html: ownerHtml,
     },
     {
-      to: [{ email: data.email, name: data.name }],
-      from: { email: NOTIFY_EMAIL, name: "Lejhøjtaler.dk" },
+      from: fromEmail,
+      to: [data.email],
       subject: "Booking bekræftelse — Lejhøjtaler.dk",
-      content: [{ type: "text/html", value: customerHtml }],
+      html: customerHtml,
     },
   ];
 
-  for (const msg of messages) {
-    const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
+  for (const email of emails) {
+    const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${SENDGRID_API_KEY}`,
+        Authorization: `Bearer ${RESEND_API_KEY}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ personalizations: [{ to: msg.to }], from: msg.from, reply_to: msg.reply_to, subject: msg.subject, content: msg.content }),
+      body: JSON.stringify(email),
     });
 
     if (!res.ok) {
       const text = await res.text();
-      console.error("SendGrid error:", text);
+      console.error("Resend error:", text);
       return new Response(JSON.stringify({ error: "Email failed" }), {
         status: 500,
         headers: { "Content-Type": "application/json" },

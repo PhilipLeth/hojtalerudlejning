@@ -2,7 +2,10 @@ import BookingFlow from "@/components/BookingFlow";
 import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
+import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import StickyBookBar from "@/components/StickyBookBar";
+import ExitIntent from "@/components/ExitIntent";
 
 export default function Home() {
   return (
@@ -11,7 +14,9 @@ export default function Home() {
       <BookingFlow />
       <Testimonials />
       <HowItWorks />
+      <FAQ />
       <Footer />
+      <StickyBookBar />
 
       {/* JSON-LD: LocalBusiness */}
       <script
@@ -138,6 +143,8 @@ export default function Home() {
           }),
         }}
       />
+
+      <ExitIntent />
     </main>
   );
 }

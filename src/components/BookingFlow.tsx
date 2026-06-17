@@ -350,7 +350,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           speaker: isEffectsOnly ? (locale === "en" ? "Effects only" : "Kun effekter") : selectedSpeaker?.name,
-          speakerSize: isEffectsOnly ? "\u2014" : selectedSpeaker?.size,
+          speakerSize: isEffectsOnly ? "—" : selectedSpeaker?.size,
           period: periodLabel,
           pickup: pickupDate?.toISOString(),
           returnDate: returnDate?.toISOString(),
@@ -361,6 +361,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
           deliveryAddress: hasDelivery ? deliveryAddress : undefined,
           total,
           locale,
+          newsletter,
           ...form,
         }),
       });
@@ -468,10 +469,10 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
           <div className="glass rounded-2xl overflow-hidden mb-4">
             {/* Product preview */}
             <div className="flex items-center gap-4 bg-white/[0.02] p-4">
-              <img src={isEffectsOnly ? (hasLights ? "/images/product-lys.png" : "/images/product-rog.png") : selectedSpeaker?.product} alt="" className="h-16 w-16 object-contain rounded-lg" />
+              <img src={isEffectsOnly ? (hasLights ? "/images/product-lys.png" : "/images/product-rog.png") : selectedSpeaker?.product} alt={isEffectsOnly ? (hasLights ? "Lys-pakke med LED-lamper og centereffekt" : "Røgmaskine til fest") : `${selectedSpeaker?.name ?? "Højtalerpakke"}`} className="h-16 w-16 object-contain rounded-lg" />
               <div>
                 <p className="font-semibold">{isEffectsOnly ? s.effectsOnlyLabel : `${selectedSpeaker?.name}${s.speakerSuffix}`}</p>
-                <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && a.id !== "levering").map((a) => a.label).join(" + ") : `${selectedSpeaker?.size} \u2014 ${selectedSpeaker?.capacity}`}</p>
+                <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && a.id !== "levering").map((a) => a.label).join(" + ") : `${selectedSpeaker?.size} — ${selectedSpeaker?.capacity}`}</p>
               </div>
             </div>
 
@@ -663,7 +664,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                           : "border-white/15 hover:border-brand-500/40 hover:bg-white/[0.02]"
                       }`}
                     >
-                      <img src="/images/product-lys.png" alt="" className="mx-auto h-12 w-12 object-contain rounded-lg" />
+                      <img src="/images/product-lys.png" alt="Lys-pakke med LED-lamper og centereffekt" className="mx-auto h-12 w-12 object-contain rounded-lg" />
                       <p className="mt-2 text-sm font-medium text-white/70">
                         {s.addons[0].label}
                       </p>
@@ -683,7 +684,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                   }}
                   className="rounded-xl border border-dashed border-white/15 p-3 text-center transition active:scale-[0.98] hover:border-brand-500/40 hover:bg-white/[0.02]"
                 >
-                  <img src="/images/product-rog.png" alt="" className="mx-auto h-12 w-12 object-contain rounded-lg" />
+                  <img src="/images/product-rog.png" alt="Røgmaskine til fest" className="mx-auto h-12 w-12 object-contain rounded-lg" />
                   <p className="mt-2 text-sm font-medium text-white/70">
                     {s.addons[1].label}
                   </p>
@@ -872,15 +873,18 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                 onChange={(e) => setForm({ ...form, comment: e.target.value })}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 resize-none"
               />
-              <label className="flex items-center gap-2.5 cursor-pointer select-none">
+
+              <label className="flex items-start gap-3 cursor-pointer rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3.5 transition hover:border-white/20">
                 <input
                   type="checkbox"
                   checked={newsletter}
                   onChange={(e) => setNewsletter(e.target.checked)}
-                  className="h-4 w-4 rounded border-white/20 bg-white/5 text-brand-500 focus:ring-brand-500 accent-[#ffd600]"
+                  className="mt-0.5 h-5 w-5 shrink-0 rounded border-white/20 bg-white/5 text-brand-500 focus:ring-brand-500 accent-[#a3e635]"
                 />
-                <span className="text-sm text-white/50">
-                  {locale === "da" ? "Ja tak, send mig tilbud og nyheder" : "Yes, send me deals and news"}
+                <span className="text-sm text-white/60">
+                  {locale === "en"
+                    ? "Send me tips, offers and news about upcoming features"
+                    : "Send mig tips, tilbud og nyheder om kommende features"}
                 </span>
               </label>
             </div>
@@ -913,7 +917,10 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                 <span>{s.total}</span>
                 <span className="text-brand-400">{total} kr</span>
               </div>
-              <p className="mt-1 text-right text-xs text-white/30">{s.paidAtPickup}</p>
+              <p className="mt-1 flex items-center justify-end gap-1.5 text-xs text-white/30">
+                <span className="inline-flex items-center rounded-full bg-[#5A78FF]/15 px-1.5 py-0.5 text-[10px] font-semibold text-[#7B93FF]">MobilePay</span>
+                {s.paidAtPickup}
+              </p>
             </div>
 
             {error && (
