@@ -157,6 +157,9 @@ export default function AdminPage() {
           <a href="/admin/nyhedsbrev" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
             Nyhedsbrev
           </a>
+          <a href="/admin/lejeseddel" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
+            Lejeseddel
+          </a>
           <button onClick={fetchBookings} disabled={loading} style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", cursor: "pointer", color: "#111" }}>
             {loading ? "Henter..." : "Opdater"}
           </button>
@@ -210,6 +213,7 @@ export default function AdminPage() {
                     {b.comment && <div style={{ gridColumn: "1 / -1" }}><strong>Kommentar:</strong> {b.comment}</div>}
                   </div>
 
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                   {nextStatus && (
                     <button
                       onClick={() => updateStatus(b.id, nextStatus)}
@@ -229,6 +233,14 @@ export default function AdminPage() {
                       {updating === b.id ? "Opdaterer..." : `Marker som ${STATUS_LABELS[nextStatus]}`}
                     </button>
                   )}
+                  <a
+                    href="/admin/lejeseddel"
+                    onClick={() => sessionStorage.setItem("lejeseddel_booking", JSON.stringify(b))}
+                    style={{ display: "inline-block", padding: "8px 20px", fontSize: "14px", fontWeight: 500, background: "#f0f0f0", color: "#333", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", cursor: "pointer" }}
+                  >
+                    Print lejeseddel
+                  </a>
+                  </div>
                 </div>
               </div>
             );
