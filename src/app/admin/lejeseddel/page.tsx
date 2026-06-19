@@ -164,12 +164,13 @@ export default function LejeseddelPage() {
 
   return (
     <>
-      {/* Print styles */}
+      {/* Override dark theme + print styles */}
       <style>{`
+        body { background: #f5f5f5 !important; color: #111 !important; }
         @media print {
           .no-print { display: none !important; }
-          body { margin: 0; padding: 0; }
-          .print-page { padding: 20mm 15mm !important; font-size: 11pt !important; max-width: none !important; }
+          body { margin: 0; padding: 0; background: #fff !important; }
+          .print-page { padding: 20mm 15mm !important; font-size: 11pt !important; max-width: none !important; background: #fff !important; }
           .print-page table { page-break-inside: avoid; }
         }
         .rental-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
@@ -213,7 +214,7 @@ export default function LejeseddelPage() {
       </div>
 
       {/* Printable rental slip */}
-      <div className="print-page" style={{ maxWidth: "700px", margin: "0 auto", padding: "24px", fontFamily: "Georgia, 'Times New Roman', serif", color: "#111", lineHeight: 1.5 }}>
+      <div className="print-page" style={{ maxWidth: "700px", margin: "0 auto", padding: "24px", fontFamily: "Georgia, 'Times New Roman', serif", color: "#111", lineHeight: 1.5, background: "#fff", borderRadius: "12px", marginTop: "16px", marginBottom: "24px" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "24px" }}>
           <h1 style={{ margin: "0 0 4px", fontSize: "22px", fontWeight: 700, letterSpacing: "0.02em" }}>
