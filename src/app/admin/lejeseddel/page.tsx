@@ -134,6 +134,9 @@ export default function LejeseddelPage() {
             <a href="/admin/lager" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
               Lager
             </a>
+            <a href="/admin/nyhedsbrev" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
+              Nyhedsbrev
+            </a>
           </div>
         </header>
         <main style={{ maxWidth: "700px", margin: "0 auto", padding: "24px" }}>
