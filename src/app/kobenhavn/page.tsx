@@ -6,9 +6,9 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title:
-    "Billigste Højtalerudlejning København | Fra 400 kr | Lejhøjtaler.dk",
+    "Billigste Højtalerudlejning København | Fra 399 kr | Lejhøjtaler.dk",
   description:
-    "Københavns billigste højtalerudlejning fra 400 kr/weekend. Lej højtalere, PA-anlæg, lys og røgmaskine. Afhentning i København K eller levering. Book online på 2 min.",
+    "Københavns billigste højtalerudlejning fra 399 kr/weekend. Lej højtalere, PA-anlæg, lys og røgmaskine. Afhentning i København K eller levering. Book online på 2 min.",
   keywords: [
     "billigste højtalerudlejning københavn",
     "billig højtaler leje københavn",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/kobenhavn" },
   openGraph: {
-    title: "Billigste Højtalerudlejning København | Fra 400 kr",
+    title: "Billigste Højtalerudlejning København | Fra 399 kr",
     description:
-      "Københavns billigste højtalerudlejning fra 400 kr/weekend. PA-anlæg, lys og røgmaskine til leje. Book online.",
+      "Københavns billigste højtalerudlejning fra 399 kr/weekend. PA-anlæg, lys og røgmaskine til leje. Book online.",
     url: "https://lejhojtaler.dk/kobenhavn",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -58,7 +58,7 @@ export default function KobenhavnPage() {
     "@type": "LocalBusiness",
     name: "Lejhøjtaler.dk",
     description:
-      "Københavns billigste højtalerudlejning. Lej højtalere, PA-anlæg, lys og røgmaskine fra 400 kr/weekend.",
+      "Københavns billigste højtalerudlejning. Lej højtalere, PA-anlæg, lys og røgmaskine fra 399 kr/weekend.",
     url: "https://lejhojtaler.dk/kobenhavn",
     telephone: "",
     address: {
@@ -77,7 +77,7 @@ export default function KobenhavnPage() {
       "@type": "City",
       name: "København",
     },
-    priceRange: "400-700 DKK",
+    priceRange: "399-700 DKK",
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Friday"],
@@ -107,7 +107,7 @@ export default function KobenhavnPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            K&oslash;benhavn K &middot; Fra 400 kr/weekend
+            K&oslash;benhavn K &middot; Fra 399 kr/weekend
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Billigste h&oslash;jtalerudlejning
@@ -117,7 +117,7 @@ export default function KobenhavnPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Professionel lyd til din fest fra 400 kr.
+            Professionel lyd til din fest fra 399 kr.
             <br />
             Afhent i K&oslash;benhavn K eller f&aring; det leveret.
           </p>
@@ -159,7 +159,7 @@ export default function KobenhavnPage() {
                 2&times; 10&quot; Alto TS410 &middot; 12 kg total &middot; Kabler inkluderet
               </p>
               <p className="mt-4 text-3xl font-bold text-brand-400">
-                400 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                399 kr<span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="mt-4 space-y-2 text-sm text-white/60">
                 <li>&bull; Perfekt til lejlighed, g&aring;rdhave, privat fest</li>
@@ -277,7 +277,7 @@ export default function KobenhavnPage() {
                 <tbody className="text-white/60">
                   <tr className="border-b border-white/5">
                     <td className="py-3">Pris/weekend</td>
-                    <td className="py-3 font-semibold text-brand-400">Fra 400 kr</td>
+                    <td className="py-3 font-semibold text-brand-400">Fra 399 kr</td>
                     <td className="py-3">500-800 kr</td>
                   </tr>
                   <tr className="border-b border-white/5">
@@ -336,7 +336,7 @@ export default function KobenhavnPage() {
             Klar til K&oslash;benhavns billigste festlyd?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online p&aring; 2 minutter. Hent fredag i K&oslash;benhavn K, aflever mandag. Fra 400 kr/weekend.
+            Book online p&aring; 2 minutter. Hent fredag i K&oslash;benhavn K, aflever mandag. Fra 399 kr/weekend.
           </p>
           <a
             href="/#book"

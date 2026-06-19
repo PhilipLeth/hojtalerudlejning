@@ -50,7 +50,7 @@ export default function StickyBookBar() {
         href="#book"
         className="font-semibold text-black text-base"
       >
-        Book fra 400 kr
+        Book fra 399 kr
       </a>
 
       <span className="h-5 w-px bg-black/20" />

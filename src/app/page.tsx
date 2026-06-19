@@ -29,7 +29,7 @@ export default function Home() {
             legalName: "Scharling Studio",
             taxID: "DK40994904",
             description:
-              "Højtalerudlejning i København. Lej højtaler, PA-anlæg og lydudstyr til fest, event og party. Festudstyr til leje fra 400 kr/weekend.",
+              "Højtalerudlejning i København. Lej højtaler, PA-anlæg og lydudstyr til fest, event og party. Festudstyr til leje fra 399 kr/weekend.",
             url: "https://lejhojtaler.dk",
             address: {
               "@type": "PostalAddress",
@@ -77,12 +77,12 @@ export default function Home() {
             },
             offers: {
               "@type": "Offer",
-              price: "400",
+              price: "399",
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
               availability: "https://schema.org/InStock",
               url: "https://lejhojtaler.dk/#book",
-              description: "Fra 400 kr/weekend (fre–man). Højtalerleje København.",
+              description: "Fra 399 kr/weekend (fre–man). Højtalerleje København.",
             },
           }),
         }}

@@ -31,7 +31,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
 
   it("shows prices for both speakers", () => {
     render(<BookingFlow />);
-    expect(screen.getByText("400,-")).toBeInTheDocument();
+    expect(screen.getByText("399,-")).toBeInTheDocument();
     expect(screen.getByText("700,-")).toBeInTheDocument();
   });
 

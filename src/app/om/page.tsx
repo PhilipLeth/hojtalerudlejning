@@ -139,7 +139,7 @@ export default function OmPage() {
                 </p>
                 <p>
                   Vi tror p&aring; at lyd til fest i K&oslash;benhavn ikke
-                  beh&oslash;ver at koste en formue. Vores priser starter fra 400
+                  beh&oslash;ver at koste en formue. Vores priser starter fra 399
                   kr. for en komplet h&oslash;jtalerpakke med kabler inkluderet.
                   Sammenlign det med hvad andre opkr&aelig;ver, og du vil hurtigt se
                   forskellen.

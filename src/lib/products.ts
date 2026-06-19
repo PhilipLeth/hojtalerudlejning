@@ -16,7 +16,7 @@ export interface Addon {
 export const speakers: Speaker[] = [
   {
     id: "party",
-    price: 400,
+    price: 399,
     product: "/images/product-party.png",
     mood: "/images/mood-party.png",
   },
@@ -46,4 +46,4 @@ export const dayMultiplier: Record<number, number> = {
 };
 
 /** Cheapest speaker price — use in meta tags, hero, etc. */
-export const startPrice = speakers[0].price; // 400
+export const startPrice = speakers[0].price; // 399

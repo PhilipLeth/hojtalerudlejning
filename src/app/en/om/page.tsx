@@ -136,7 +136,7 @@ export default function AboutPageEn() {
                 </p>
                 <p>
                   We believe that sound for a party in Copenhagen doesn&rsquo;t
-                  have to cost a fortune. Our prices start from 400 DKK for a
+                  have to cost a fortune. Our prices start from 399 DKK for a
                   complete speaker package with all cables included. Compare that
                   with what others charge, and you&rsquo;ll quickly see the
                   difference.

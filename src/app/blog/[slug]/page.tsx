@@ -127,7 +127,7 @@ export default async function BlogPostPage({ params }: Props) {
               Klar til at leje? Book din hojtaler nu
             </h2>
             <p className="mt-2 text-white/50 text-sm">
-              Fra 400 kr/weekend. Hent fredag, aflever mandag.
+              Fra 399 kr/weekend. Hent fredag, aflever mandag.
             </p>
             <Link
               href="/#book"

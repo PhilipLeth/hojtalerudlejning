@@ -4,8 +4,8 @@ export const t = {
   da: {
     hero: {
       location: "København",
-      title: "Lej en højtaler",
-      titleHighlight: "fra 400 kr",
+      title: "Lej højtalere",
+      titleHighlight: "fra 399 kr",
       subtitle: "Kraftig lyd til din fest. Alle kabler inkluderet.",
       subtitleLine2: "Book uforpligtende på 2 min. Betal ved afhentning.",
       cta: "Book nu",
@@ -191,7 +191,7 @@ export const t = {
     hero: {
       location: "Copenhagen",
       title: "Rent a speaker",
-      titleHighlight: "from 400 DKK",
+      titleHighlight: "from 399 DKK",
       subtitle: "Powerful sound for your party. All cables included.",
       subtitleLine2: "Book in 2 minutes. Pay at pickup.",
       cta: "Book now",

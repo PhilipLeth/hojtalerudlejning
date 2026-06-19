@@ -6,7 +6,7 @@ describe("i18n - Danish", () => {
   const da = t.da;
 
   it("has hero section", () => {
-    expect(da.hero.title).toBe("Lej en højtaler");
+    expect(da.hero.title).toBe("Lej højtalere");
     expect(da.hero.cta).toBe("Book nu");
   });
 

@@ -7,8 +7,8 @@ describe("Products data", () => {
     expect(speakers.map((s) => s.id)).toEqual(["party", "festival"]);
   });
 
-  it("party speaker is 400 kr", () => {
-    expect(speakers.find((s) => s.id === "party")!.price).toBe(400);
+  it("party speaker is 399 kr", () => {
+    expect(speakers.find((s) => s.id === "party")!.price).toBe(399);
   });
 
   it("festival speaker is 700 kr", () => {
@@ -18,7 +18,7 @@ describe("Products data", () => {
   it("startPrice matches cheapest speaker", () => {
     const cheapest = Math.min(...speakers.map((s) => s.price));
     expect(startPrice).toBe(cheapest);
-    expect(startPrice).toBe(400);
+    expect(startPrice).toBe(399);
   });
 
   it("all speakers have product and mood images", () => {
@@ -84,11 +84,11 @@ describe("Day multiplier pricing", () => {
   });
 
   it("party speaker 1 day = 320 kr", () => {
-    expect(Math.round(400 * dayMultiplier[1])).toBe(320);
+    expect(Math.round(399 * dayMultiplier[1])).toBe(320);
   });
 
   it("party speaker 5 days = 560 kr", () => {
-    expect(Math.round(400 * dayMultiplier[5])).toBe(560);
+    expect(Math.round(399 * dayMultiplier[5])).toBe(560);
   });
 
   it("festival speaker weekend = 700 kr", () => {

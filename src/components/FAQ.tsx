@@ -6,7 +6,7 @@ const faqs = [
   {
     question: "Hvad koster det at leje en højtaler?",
     answer:
-      "Vores lille højtalerpakke koster fra 400 kr/weekend og den store fra 700 kr/weekend. Prisen inkluderer alle kabler. Ved kortere leje (1-2 dage) får du rabat.",
+      "Vores lille højtalerpakke koster fra 399 kr/weekend og den store fra 700 kr/weekend. Prisen inkluderer alle kabler. Ved kortere leje (1-2 dage) får du rabat.",
   },
   {
     question: "Hvordan fungerer afhentning?",
