@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback, FormEvent } from "react";
 import { type Locale, t } from "@/lib/i18n";
 
-import { speakers as speakersData, addons as addonsData, dayMultiplier } from "@/lib/products";
+import { speakers as speakersData, addons as addonsData, dayMultiplier, isSummerSale, applyDiscount } from "@/lib/products";
 
 /* ───── Helpers ───── */
 
@@ -285,13 +285,18 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   const hasLights = selectedAddons.includes("lys");
   const hasDelivery = selectedAddons.includes("levering");
 
+  const summer = isSummerSale();
+  const summerLabel = t[locale].summer;
   const rentalDays = pickupDate && returnDate ? diffDays(pickupDate, returnDate) : 3;
   const multiplier = dayMultiplier[rentalDays] ?? 1;
-  const speakerPrice = selectedSpeaker ? Math.round(selectedSpeaker.price * multiplier) : 0;
-  const addonsPrice = addons
+  const speakerBasePrice = selectedSpeaker ? Math.round(selectedSpeaker.price * multiplier) : 0;
+  const speakerPrice = summer ? applyDiscount(speakerBasePrice) : speakerBasePrice;
+  const addonsBasePrice = addons
     .filter((a) => selectedAddons.includes(a.id))
     .reduce((sum, a) => sum + a.price, 0);
+  const addonsPrice = summer ? applyDiscount(addonsBasePrice) : addonsBasePrice;
   const total = speakerPrice + addonsPrice;
+  const totalBeforeDiscount = summer ? speakerBasePrice + addonsBasePrice : total;
 
   function formatDate(d: Date) {
     return `${s.dayNames[d.getDay()]} ${d.getDate()}. ${s.monthNames[d.getMonth()].toLowerCase().slice(0, 3)}`;
@@ -396,10 +401,19 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   function PriceSummary() {
     return (
       <div className="glass rounded-2xl p-5">
+        {summer && (
+          <div className="mb-3 flex items-center gap-2 rounded-lg bg-amber-500/10 border border-amber-500/20 px-3 py-2 text-xs font-semibold text-amber-400">
+            <span className="rounded-full bg-amber-500 px-1.5 py-0.5 text-[10px] font-bold text-black">{summerLabel.badge}</span>
+            {summerLabel.banner}
+          </div>
+        )}
         {selectedSpeaker && (
           <div className="flex justify-between text-sm text-white/50">
             <span>{selectedSpeaker.name}{s.speakerSuffix} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
-            <span>{speakerPrice} kr</span>
+            <span>
+              {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
+              {speakerPrice} kr
+            </span>
           </div>
         )}
         {addons
@@ -407,12 +421,18 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
           .map((a) => (
             <div key={a.id} className="flex justify-between text-sm text-white/50">
               <span>{a.label}</span>
-              <span>{a.price} kr</span>
+              <span>
+                {summer && <span className="line-through text-white/30 mr-2">{a.price} kr</span>}
+                {summer ? applyDiscount(a.price) : a.price} kr
+              </span>
             </div>
           ))}
         <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
           <span>{s.total}</span>
-          <span className="text-brand-400">{total} kr</span>
+          <span className={summer ? "text-amber-400" : "text-brand-400"}>
+            {summer && <span className="text-sm line-through text-white/30 mr-2 font-normal">{totalBeforeDiscount} kr</span>}
+            {total} kr
+          </span>
         </div>
         <p className="mt-1 text-right text-xs text-white/30">{s.paidAtPickup}</p>
       </div>
@@ -620,7 +640,13 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                         </div>
                       )}
                       <div className="absolute bottom-4 right-4 text-right">
-                        <p className="text-3xl font-bold text-brand-400">{sp.price},-</p>
+                        {summer && (
+                          <div className="flex items-center justify-end gap-2 mb-1">
+                            <span className="rounded-full bg-amber-500 px-2 py-0.5 text-xs font-bold text-black">{summerLabel.badge}</span>
+                            <span className="text-lg text-white/40 line-through">{sp.price},-</span>
+                          </div>
+                        )}
+                        <p className={`text-3xl font-bold ${summer ? "text-amber-400" : "text-brand-400"}`}>{summer ? applyDiscount(sp.price) : sp.price},-</p>
                         <p className="text-xs text-white/60">{s.fromPerWeekend}</p>
                       </div>
                     </div>
@@ -668,7 +694,9 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                       <p className="mt-2 text-sm font-medium text-white/70">
                         {s.addons[0].label}
                       </p>
-                      <p className="text-brand-400 text-sm">{s.lightsOnlyFrom}</p>
+                      <p className={`text-sm ${summer ? "text-amber-400" : "text-brand-400"}`}>
+                        {summer ? <><span className="line-through text-white/30 mr-1">{s.lightsOnlyFrom}</span>Fra {applyDiscount(500)},-</> : s.lightsOnlyFrom}
+                      </p>
                       {lysSoldOut && <span className="mt-1 inline-block rounded-full bg-red-500/90 px-2 py-0.5 text-xs font-bold text-white">{s.soldOut}</span>}
                       {lysLow && <span className="mt-1 inline-block rounded-full bg-orange-500/90 px-2 py-0.5 text-xs font-bold text-white">{s.fewLeft}</span>}
                     </button>
@@ -688,7 +716,9 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                   <p className="mt-2 text-sm font-medium text-white/70">
                     {s.addons[1].label}
                   </p>
-                  <p className="text-brand-400 text-sm">{s.fogOnlyFrom}</p>
+                  <p className={`text-sm ${summer ? "text-amber-400" : "text-brand-400"}`}>
+                    {summer ? <><span className="line-through text-white/30 mr-1">{s.fogOnlyFrom}</span>Fra {applyDiscount(250)},-</> : s.fogOnlyFrom}
+                  </p>
                 </button>
               </div>
               <p className="text-center text-xs text-white/30">{s.effectsOnlyDesc}</p>
@@ -799,7 +829,10 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                             <p className="text-sm text-white/40">{a.desc}</p>
                           </div>
                         </div>
-                        <p className="text-lg font-bold shrink-0">+{a.price},-</p>
+                        <p className="text-lg font-bold shrink-0">
+                          {summer && <span className="text-sm line-through text-white/30 mr-1">{a.price},-</span>}
+                          +{summer ? applyDiscount(a.price) : a.price},-
+                        </p>
                       </div>
                     </button>
 
@@ -891,10 +924,19 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
 
             {/* Order summary */}
             <div className="glass rounded-2xl p-5">
+              {summer && (
+                <div className="mb-3 flex items-center gap-2 rounded-lg bg-amber-500/10 border border-amber-500/20 px-3 py-2 text-xs font-semibold text-amber-400">
+                  <span className="rounded-full bg-amber-500 px-1.5 py-0.5 text-[10px] font-bold text-black">{summerLabel.badge}</span>
+                  {summerLabel.banner}
+                </div>
+              )}
               {selectedSpeaker && (
                 <div className="flex justify-between text-sm text-white/50">
                   <span>{selectedSpeaker.name}{s.speakerSuffix} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
-                  <span>{speakerPrice} kr</span>
+                  <span>
+                    {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
+                    {speakerPrice} kr
+                  </span>
                 </div>
               )}
               <div className="text-sm text-white/30">
@@ -905,7 +947,10 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                 .map((a) => (
                   <div key={a.id} className="flex justify-between text-sm text-white/50">
                     <span>{a.label}</span>
-                    <span>{a.price} kr</span>
+                    <span>
+                      {summer && <span className="line-through text-white/30 mr-2">{a.price} kr</span>}
+                      {summer ? applyDiscount(a.price) : a.price} kr
+                    </span>
                   </div>
                 ))}
               {hasDelivery && deliveryAddress && (
@@ -915,7 +960,10 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
               )}
               <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
                 <span>{s.total}</span>
-                <span className="text-brand-400">{total} kr</span>
+                <span className={summer ? "text-amber-400" : "text-brand-400"}>
+                  {summer && <span className="text-sm line-through text-white/30 mr-2 font-normal">{totalBeforeDiscount} kr</span>}
+                  {total} kr
+                </span>
               </div>
               <p className="mt-1 flex items-center justify-end gap-1.5 text-xs text-white/30">
                 <span className="inline-flex items-center rounded-full bg-[#5A78FF]/15 px-1.5 py-0.5 text-[10px] font-semibold text-[#7B93FF]">MobilePay</span>

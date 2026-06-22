@@ -2,6 +2,11 @@ export type Locale = "da" | "en";
 
 export const t = {
   da: {
+    summer: {
+      banner: "SOMMERRABAT: 25% på alt i juni & juli",
+      badge: "-25%",
+      originalPrice: "Normalpris",
+    },
     hero: {
       location: "København",
       title: "Lej højtalere",
@@ -188,6 +193,11 @@ export const t = {
     },
   },
   en: {
+    summer: {
+      banner: "SUMMER SALE: 25% off everything in June & July",
+      badge: "-25%",
+      originalPrice: "Regular price",
+    },
     hero: {
       location: "Copenhagen",
       title: "Rent a speaker",

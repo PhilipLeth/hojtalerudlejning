@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import ExitPopup from "@/components/ExitPopup";
+import SummerBanner from "@/components/SummerBanner";
 import "./globals.css";
 
 const GTM_ID = "GTM-M52R25VF";
@@ -76,6 +77,7 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        <SummerBanner />
         {children}
         <ExitPopup locale="da" />
       </body>

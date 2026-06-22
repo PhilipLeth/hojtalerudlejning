@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { startPrice, applyDiscount, isSummerSale } from "@/lib/products";
 
 export default function StickyBookBar() {
   const [visible, setVisible] = useState(false);
+  const summer = isSummerSale();
+  const price = summer ? applyDiscount(startPrice) : startPrice;
 
   useEffect(() => {
     const hero = document.querySelector<HTMLElement>("section.hero-section");
@@ -42,15 +45,22 @@ export default function StickyBookBar() {
 
   return (
     <div
-      className={`fixed bottom-0 inset-x-0 z-40 flex items-center justify-center gap-4 bg-brand-500 px-4 py-3 shadow-[0_-2px_12px_rgba(0,0,0,0.25)] rounded-t-2xl transition-transform duration-300 ${
+      className={`fixed bottom-0 inset-x-0 z-40 flex items-center justify-center gap-4 ${
+        summer
+          ? "bg-gradient-to-r from-amber-500 to-orange-500"
+          : "bg-brand-500"
+      } px-4 py-3 shadow-[0_-2px_12px_rgba(0,0,0,0.25)] rounded-t-2xl transition-transform duration-300 ${
         visible ? "translate-y-0" : "translate-y-full"
       }`}
     >
+      {summer && (
+        <span className="rounded-full bg-black/20 px-2 py-0.5 text-xs font-bold text-white">-25%</span>
+      )}
       <a
         href="#book"
         className="font-semibold text-black text-base"
       >
-        Book fra 399 kr
+        Book fra {summer && <span className="line-through opacity-60 mr-1">{startPrice}</span>}{price} kr
       </a>
 
       <span className="h-5 w-px bg-black/20" />

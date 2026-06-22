@@ -1,7 +1,13 @@
 import { type Locale, t } from "@/lib/i18n";
+import { startPrice, applyDiscount, isSummerSale } from "@/lib/products";
 
 export default function Hero({ locale = "da" }: { locale?: Locale }) {
   const s = t[locale].hero;
+  const summer = isSummerSale();
+  const discountedStart = applyDiscount(startPrice);
+  const currency = locale === "en" ? "DKK" : "kr";
+  const fromLabel = locale === "en" ? "from" : "fra";
+
   return (
     <section className="hero-section relative flex min-h-[85vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
       {/* Fixed background image */}
@@ -16,16 +22,34 @@ export default function Hero({ locale = "da" }: { locale?: Locale }) {
       <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-brand-500/10 blur-[120px]" />
 
       <div className="relative z-10 max-w-2xl">
+        {summer && <div className="h-10" />}
         <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
           {s.location}
         </p>
         <h1 className="text-4xl font-bold leading-tight sm:text-6xl">
           {s.title}
           <br />
-          <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-            {s.titleHighlight}
-          </span>
+          {summer ? (
+            <span className="inline-flex flex-col items-center gap-1">
+              <span className="text-lg sm:text-2xl font-medium text-white/40 line-through decoration-red-500/70">
+                {fromLabel} {startPrice} {currency}
+              </span>
+              <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+                {fromLabel} {discountedStart} {currency}
+              </span>
+            </span>
+          ) : (
+            <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
+              {s.titleHighlight}
+            </span>
+          )}
         </h1>
+        {summer && (
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-5 py-2">
+            <span className="rounded-full bg-amber-500 px-2 py-0.5 text-xs font-bold text-black">{t[locale].summer.badge}</span>
+            <span className="text-sm font-semibold text-amber-300">{t[locale].summer.banner}</span>
+          </div>
+        )}
         <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
           {s.subtitle}
         </p>
