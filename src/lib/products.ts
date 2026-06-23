@@ -1,5 +1,7 @@
 /* ───── Single source of truth for all product data ───── */
 
+export type ProductCategory = "lyd" | "lys" | "av";
+
 export interface Speaker {
   id: string;
   price: number;
@@ -11,6 +13,13 @@ export interface Addon {
   id: string;
   price: number;
   image: string | null;
+}
+
+export interface RentalProduct {
+  id: string;
+  category: ProductCategory;
+  price: number;
+  image: string;
 }
 
 export const speakers: Speaker[] = [
@@ -36,10 +45,21 @@ export const addons: Addon[] = [
   { id: "levering", price: 500, image: null },
 ];
 
+/** New standalone rental products (lys, av) */
+export const rentalProducts: RentalProduct[] = [
+  { id: "discokugle", category: "lys", price: 250, image: "/images/product-discokugle.svg" },
+  { id: "lyskaeder", category: "lys", price: 200, image: "/images/product-lyskaeder.svg" },
+  { id: "lysshow", category: "lys", price: 800, image: "/images/product-lysshow.svg" },
+  { id: "projektor", category: "av", price: 500, image: "/images/product-projektor.svg" },
+  { id: "skaerm", category: "av", price: 600, image: "/images/product-skaerm.svg" },
+  { id: "traadloes_mikrofon", category: "av", price: 300, image: "/images/product-mikrofon.svg" },
+  { id: "headset", category: "av", price: 350, image: "/images/product-headset.svg" },
+];
+
 /** Price multiplier by number of rental days (base = 3 days / weekend) */
 export const dayMultiplier: Record<number, number> = {
-  1: 0.8,
-  2: 0.9,
+  1: 1.0,
+  2: 1.0,
   3: 1.0,
   4: 1.2,
   5: 1.4,
