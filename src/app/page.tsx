@@ -1,5 +1,6 @@
 import BookingFlow from "@/components/BookingFlow";
 import Hero from "@/components/Hero";
+import TopBar from "@/components/TopBar";
 import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
 import FAQ from "@/components/FAQ";
@@ -10,6 +11,7 @@ import ExitIntent from "@/components/ExitIntent";
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <TopBar />
       <Hero />
       <BookingFlow />
       <Testimonials />

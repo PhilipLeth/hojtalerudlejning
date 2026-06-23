@@ -26,12 +26,15 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
     render(<BookingFlow />);
     expect(screen.getByText("Vælg højtalere")).toBeInTheDocument();
     expect(screen.getByText("Lille højtalerpakke")).toBeInTheDocument();
+    expect(screen.getByText("Soundboks Mix")).toBeInTheDocument();
     expect(screen.getByText("Stor højtalerpakke")).toBeInTheDocument();
   });
 
-  it("shows prices for both speakers", () => {
+  it("shows prices for all speakers", () => {
     render(<BookingFlow />);
+    // Original prices shown as strikethrough during summer sale, or as main price outside sale
     expect(screen.getByText("399,-")).toBeInTheDocument();
+    expect(screen.getByText("600,-")).toBeInTheDocument();
     expect(screen.getByText("700,-")).toBeInTheDocument();
   });
 
@@ -48,6 +51,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
     render(<BookingFlow locale="en" />);
     expect(screen.getByText("Choose speakers")).toBeInTheDocument();
     expect(screen.getByText("Small Speaker Package")).toBeInTheDocument();
+    expect(screen.getByText("Soundboks Mix")).toBeInTheDocument();
     expect(screen.getByText("Large Speaker Package")).toBeInTheDocument();
     expect(screen.getByText("Without speakers?")).toBeInTheDocument();
   });

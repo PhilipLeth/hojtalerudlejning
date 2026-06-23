@@ -38,6 +38,14 @@ export const t = {
           extra: "Inkl. bæretaske og alle kabler. Stativ kan tilkøbes.",
         },
         {
+          id: "soundboks",
+          name: "Soundboks Mix",
+          size: "Soundboks Go + Mix",
+          capacity: "Op til 50 pers.",
+          desc: "Den populære Soundboks med kraftig bas og Bluetooth. Batteridrevet — ingen strøm nødvendig. Perfekt til udendørs fester.",
+          extra: "Inkl. oplader og AUX-kabel.",
+        },
+        {
           id: "festival",
           name: "Stor højtalerpakke",
           size: '2× 12" EV',
@@ -227,6 +235,14 @@ export const t = {
           capacity: "Up to 40 people",
           desc: 'Two compact 10" speakers with Bluetooth. Only 12 kg — fits in a carry bag, ready for your bike.',
           extra: "Incl. carry bag and all cables. Stands available as add-on.",
+        },
+        {
+          id: "soundboks",
+          name: "Soundboks Mix",
+          size: "Soundboks Go + Mix",
+          capacity: "Up to 50 people",
+          desc: "The popular Soundboks with powerful bass and Bluetooth. Battery-powered — no power needed. Perfect for outdoor parties.",
+          extra: "Incl. charger and AUX cable.",
         },
         {
           id: "festival",

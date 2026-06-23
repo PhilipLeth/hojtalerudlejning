@@ -17,10 +17,11 @@ describe("i18n - Danish", () => {
     expect(da.booking.step4Title).toBeTruthy();
   });
 
-  it("has two speaker descriptions", () => {
-    expect(da.booking.speakers).toHaveLength(2);
+  it("has three speaker descriptions", () => {
+    expect(da.booking.speakers).toHaveLength(3);
     expect(da.booking.speakers[0].id).toBe("party");
-    expect(da.booking.speakers[1].id).toBe("festival");
+    expect(da.booking.speakers[1].id).toBe("soundboks");
+    expect(da.booking.speakers[2].id).toBe("festival");
   });
 
   it("has addon labels matching products.ts", () => {
@@ -68,8 +69,8 @@ describe("i18n - English", () => {
     expect(en.hero.cta).toBe("Book now");
   });
 
-  it("has two speaker descriptions", () => {
-    expect(en.booking.speakers).toHaveLength(2);
+  it("has three speaker descriptions", () => {
+    expect(en.booking.speakers).toHaveLength(3);
   });
 
   it("has addon labels matching products.ts", () => {

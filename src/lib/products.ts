@@ -30,6 +30,12 @@ export const speakers: Speaker[] = [
     mood: "/images/mood-party.png",
   },
   {
+    id: "soundboks",
+    price: 600,
+    product: "/images/product-soundboks.png",
+    mood: "/images/mood-party.png",
+  },
+  {
     id: "festival",
     price: 700,
     product: "/images/product-festival.png",
@@ -51,7 +57,8 @@ export const rentalProducts: RentalProduct[] = [
   { id: "lyskaeder", category: "lys", price: 200, image: "/images/product-lyskaeder.png" },
   { id: "lysshow", category: "lys", price: 800, image: "/images/product-lysshow.png" },
   { id: "projektor", category: "av", price: 500, image: "/images/product-projektor.png" },
-  { id: "skaerm", category: "av", price: 600, image: "/images/product-skaerm.png" },
+  { id: "skaerm_55", category: "av", price: 600, image: "/images/product-skaerm.png" },
+  { id: "skaerm_75", category: "av", price: 900, image: "/images/product-skaerm.png" },
   { id: "traadloes_mikrofon", category: "av", price: 300, image: "/images/product-mikrofon.png" },
   { id: "headset", category: "av", price: 350, image: "/images/product-headset.png" },
 ];

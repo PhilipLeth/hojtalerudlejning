@@ -9,7 +9,7 @@ export default function Hero({ locale = "da" }: { locale?: Locale }) {
   const fromLabel = locale === "en" ? "from" : "fra";
 
   return (
-    <section className="hero-section relative flex min-h-[85vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+    <section className="hero-section relative flex min-h-[85vh] flex-col items-center justify-center px-4 pt-10 text-center overflow-hidden">
       {/* Fixed background image */}
       <div
         role="img"

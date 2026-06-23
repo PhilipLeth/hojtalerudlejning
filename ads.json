@@ -247,6 +247,108 @@
           ]
         },
         {
+          "name": "Soundboks udlejning",
+          "keywords": [
+            "soundboks leje",
+            "soundboks udlejning",
+            "soundboks leje københavn",
+            "soundboks udlejning københavn",
+            "lej soundboks",
+            "lej soundboks københavn",
+            "soundboks til fest",
+            "soundboks til leje",
+            "soundboks leje billig",
+            "soundboks alternativ",
+            "soundboks mix leje"
+          ],
+          "negative_keywords": [
+            "køb",
+            "sælg",
+            "brugt",
+            "reparation"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Soundboks Leje Fra 450,-",
+                "Lej Soundboks I KBH",
+                "Soundboks Mix Til Fest",
+                "Batteridrevet Lyd",
+                "Ingen Strøm Nødvendig",
+                "Op Til 50 Personer",
+                "Hent Fredag - Aflever Man",
+                "Book Online På 2 Min",
+                "25% Sommerrabat Nu",
+                "Soundboks Til Leje KBH",
+                "Levering I København",
+                "Betal Ved Afhentning",
+                "Kraftig Bass Til Fest",
+                "Billig Soundboks Leje",
+                "Weekend Fra 450,-"
+              ],
+              "descriptions": [
+                "Lej en Soundboks Mix fra kun 450 kr med sommerrabat. Batteridrevet - ingen strøm nødvendig.",
+                "Soundboks til fest og events. Hent fredag, aflever mandag. Book online på 2 minutter.",
+                "Kraftig bass til op til 50 personer. Tilkøb lys og røgmaskine for den fulde oplevelse.",
+                "Billigste Soundboks-leje i København. Ingen depositum, betal ved afhentning."
+              ],
+              "paths": ["soundboks", "book-nu"]
+            }
+          ]
+        },
+        {
+          "name": "Erhverv og events",
+          "keywords": [
+            "lyd til firmafest",
+            "højtaler til firmafest",
+            "udstyr til firmafest",
+            "AV udstyr leje",
+            "AV udstyr leje københavn",
+            "skærm til konference",
+            "skærm udlejning københavn",
+            "projektor udlejning",
+            "projektor leje københavn",
+            "lyd til event",
+            "event udstyr leje",
+            "erhverv lyd leje"
+          ],
+          "negative_keywords": [
+            "køb",
+            "sælg",
+            "brugt"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Lyd & AV Til Dit Event",
+                "Firmafest-Pakke 1.150,-",
+                "Konference-Pakke 1.200,-",
+                "Skærm + Lyd Til Leje",
+                "55\" Og 75\" Skærme",
+                "Levering I København",
+                "Book Online På 2 Min",
+                "Professionelt Udstyr",
+                "Betal Ved Afhentning",
+                "Alt Til Dit Event",
+                "Mikrofon + Højtalere",
+                "Ingen Depositum",
+                "Firmafest? Vi Klarer Det",
+                "Event-Udstyr Fra 399,-",
+                "Opsætning Inkluderet"
+              ],
+              "descriptions": [
+                "Professionelt lyd- og AV-udstyr til firmafester, konferencer og events. Levering og opsætning i KBH.",
+                "Skærme fra 55\" til 75\" med stativ og højtalere. Perfekt til præsentationer og firmaarrangementer.",
+                "Firmafest-pakke med stor højtaler, lys og røg fra 1.150 kr. Vi leverer, sætter op og henter.",
+                "Book online på 2 min. Faste pakkepriser, ingen overraskelser. Betal ved afhentning."
+              ],
+              "paths": ["erhverv", "book-nu"]
+            }
+          ]
+        },
+        {
           "name": "Speaker Rental Copenhagen (EN)",
           "keywords": [
             "speaker rental copenhagen",

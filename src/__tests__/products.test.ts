@@ -2,13 +2,17 @@ import { describe, it, expect } from "vitest";
 import { speakers, addons, dayMultiplier, startPrice } from "@/lib/products";
 
 describe("Products data", () => {
-  it("has two speaker packages", () => {
-    expect(speakers).toHaveLength(2);
-    expect(speakers.map((s) => s.id)).toEqual(["party", "festival"]);
+  it("has three speaker packages", () => {
+    expect(speakers).toHaveLength(3);
+    expect(speakers.map((s) => s.id)).toEqual(["party", "soundboks", "festival"]);
   });
 
   it("party speaker is 399 kr", () => {
     expect(speakers.find((s) => s.id === "party")!.price).toBe(399);
+  });
+
+  it("soundboks mix is 600 kr", () => {
+    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(600);
   });
 
   it("festival speaker is 700 kr", () => {
