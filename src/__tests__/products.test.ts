@@ -75,20 +75,20 @@ describe("Day multiplier pricing", () => {
     expect(dayMultiplier[3]).toBe(1.0);
   });
 
-  it("4 days = 120%", () => {
-    expect(dayMultiplier[4]).toBe(1.2);
+  it("4 days = 100% (flat price)", () => {
+    expect(dayMultiplier[4]).toBe(1.0);
   });
 
-  it("5 days = 140%", () => {
-    expect(dayMultiplier[5]).toBe(1.4);
+  it("5 days = 100% (flat price)", () => {
+    expect(dayMultiplier[5]).toBe(1.0);
   });
 
   it("party speaker 1 day = 399 kr (same as base)", () => {
     expect(Math.round(399 * dayMultiplier[1])).toBe(399);
   });
 
-  it("party speaker 5 days = 559 kr", () => {
-    expect(Math.round(399 * dayMultiplier[5])).toBe(559);
+  it("party speaker 5 days = 399 kr (same as base)", () => {
+    expect(Math.round(399 * dayMultiplier[5])).toBe(399);
   });
 
   it("festival speaker weekend = 700 kr", () => {
