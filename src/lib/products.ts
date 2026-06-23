@@ -47,22 +47,22 @@ export const addons: Addon[] = [
 
 /** New standalone rental products (lys, av) */
 export const rentalProducts: RentalProduct[] = [
-  { id: "discokugle", category: "lys", price: 250, image: "/images/product-discokugle.svg" },
-  { id: "lyskaeder", category: "lys", price: 200, image: "/images/product-lyskaeder.svg" },
-  { id: "lysshow", category: "lys", price: 800, image: "/images/product-lysshow.svg" },
-  { id: "projektor", category: "av", price: 500, image: "/images/product-projektor.svg" },
-  { id: "skaerm", category: "av", price: 600, image: "/images/product-skaerm.svg" },
-  { id: "traadloes_mikrofon", category: "av", price: 300, image: "/images/product-mikrofon.svg" },
-  { id: "headset", category: "av", price: 350, image: "/images/product-headset.svg" },
+  { id: "discokugle", category: "lys", price: 250, image: "/images/product-discokugle.png" },
+  { id: "lyskaeder", category: "lys", price: 200, image: "/images/product-lyskaeder.png" },
+  { id: "lysshow", category: "lys", price: 800, image: "/images/product-lysshow.png" },
+  { id: "projektor", category: "av", price: 500, image: "/images/product-projektor.png" },
+  { id: "skaerm", category: "av", price: 600, image: "/images/product-skaerm.png" },
+  { id: "traadloes_mikrofon", category: "av", price: 300, image: "/images/product-mikrofon.png" },
+  { id: "headset", category: "av", price: 350, image: "/images/product-headset.png" },
 ];
 
-/** Price multiplier by number of rental days (base = 3 days / weekend) */
+/** Price multiplier by number of rental days — flat price regardless of duration */
 export const dayMultiplier: Record<number, number> = {
   1: 1.0,
   2: 1.0,
   3: 1.0,
-  4: 1.2,
-  5: 1.4,
+  4: 1.0,
+  5: 1.0,
 };
 
 /* ───── Summer sale: 25% off everything in June & July ───── */
