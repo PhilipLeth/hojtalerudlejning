@@ -26,14 +26,29 @@ export default function TopBar() {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-brand-500 text-black text-center text-sm font-semibold py-2 px-4">
-      <span
-        className={`inline-block transition-all duration-300 ${
-          visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
-        }`}
-      >
-        {messages[index]}
-      </span>
+    <div className="fixed top-0 left-0 right-0 z-40 bg-brand-500 text-black text-sm font-semibold py-2 px-4">
+      {/* Mobile: rotate messages */}
+      <div className="md:hidden text-center">
+        <span
+          className={`inline-block transition-all duration-300 ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+          }`}
+        >
+          {messages[index]}
+        </span>
+      </div>
+
+      {/* Desktop: show all USPs */}
+      <div className="hidden md:flex items-center justify-center gap-6">
+        {messages.map((msg, i) => (
+          <span key={i} className="flex items-center gap-1.5">
+            <svg className="h-3.5 w-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+            {msg}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
