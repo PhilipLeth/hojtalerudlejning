@@ -42,12 +42,14 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   }
 
   try {
-    // Read inventory (or use defaults)
+    // Read inventory — merge stored counts over defaults so newly added
+    // products (not yet saved from /admin/lager) get their default count
+    // instead of appearing sold out
     let inventory: Record<string, number> = { ...DEFAULT_INVENTORY };
     const inventoryRaw = await context.env.BOOKINGS.get("inventory");
     if (inventoryRaw) {
       try {
-        inventory = JSON.parse(inventoryRaw);
+        inventory = { ...DEFAULT_INVENTORY, ...JSON.parse(inventoryRaw) };
       } catch {
         // use defaults
       }
