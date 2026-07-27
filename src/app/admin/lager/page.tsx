@@ -8,9 +8,11 @@ interface BlockedDate {
   products: string[];
 }
 
-const PRODUCT_IDS = ["party", "festival", "lys", "rog", "stativer", "taske"];
+const PRODUCT_IDS = ["thumpgo", "party", "soundboks", "festival", "lys", "rog", "stativer", "taske"];
 const PRODUCT_LABELS: Record<string, string> = {
+  thumpgo: "Thump GO",
   party: "Party",
+  soundboks: "Soundboks",
   festival: "Festival",
   lys: "Lys",
   rog: "Roegmaskine",
@@ -21,8 +23,8 @@ const PRODUCT_LABELS: Record<string, string> = {
 export default function LagerPage() {
   const [secret, setSecret] = useState("");
 
-  const [inventory, setInventory] = useState<Record<string, number>>({ party: 1, festival: 1, lys: 2, rog: 1, stativer: 2, taske: 2 });
-  const [inventoryDraft, setInventoryDraft] = useState<Record<string, number>>({ party: 1, festival: 1, lys: 2, rog: 1, stativer: 2, taske: 2 });
+  const [inventory, setInventory] = useState<Record<string, number>>({ thumpgo: 1, party: 1, soundboks: 1, festival: 1, lys: 2, rog: 1, stativer: 2, taske: 2 });
+  const [inventoryDraft, setInventoryDraft] = useState<Record<string, number>>({ thumpgo: 1, party: 1, soundboks: 1, festival: 1, lys: 2, rog: 1, stativer: 2, taske: 2 });
   const [savingInventory, setSavingInventory] = useState(false);
 
   const [blockedDates, setBlockedDates] = useState<BlockedDate[]>([]);

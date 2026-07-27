@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" role="img" aria-label="Mackie Thump GO batterihøjtaler">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#23222a"/>
+      <stop offset="1" stop-color="#0d0c12"/>
+    </linearGradient>
+    <radialGradient id="cone" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#3a3944"/>
+      <stop offset="0.7" stop-color="#17161d"/>
+      <stop offset="1" stop-color="#0a0a0e"/>
+    </radialGradient>
+    <radialGradient id="dust" cx="0.4" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#4d4c58"/>
+      <stop offset="1" stop-color="#1c1b22"/>
+    </radialGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffd600" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffd600" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#ffd600" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- floor glow -->
+  <ellipse cx="200" cy="452" rx="150" ry="16" fill="#ffd600" opacity="0.08"/>
+
+  <!-- handle -->
+  <path d="M140 60 q60 -38 120 0 l-14 26 q-46 -26 -92 0 z" fill="#17161d" stroke="#33323c" stroke-width="3"/>
+
+  <!-- cabinet -->
+  <rect x="90" y="76" width="220" height="360" rx="26" fill="url(#body)" stroke="#3a3944" stroke-width="3"/>
+  <rect x="103" y="89" width="194" height="334" rx="18" fill="#101017" stroke="#26252e" stroke-width="2"/>
+
+  <!-- grille dots -->
+  <g fill="#2e2d37">
+    <circle cx="130" cy="112" r="3"/><circle cx="154" cy="112" r="3"/><circle cx="178" cy="112" r="3"/><circle cx="202" cy="112" r="3"/><circle cx="226" cy="112" r="3"/><circle cx="250" cy="112" r="3"/><circle cx="274" cy="112" r="3"/>
+    <circle cx="142" cy="130" r="3"/><circle cx="166" cy="130" r="3"/><circle cx="190" cy="130" r="3"/><circle cx="214" cy="130" r="3"/><circle cx="238" cy="130" r="3"/><circle cx="262" cy="130" r="3"/>
+  </g>
+
+  <!-- tweeter -->
+  <circle cx="200" cy="182" r="34" fill="url(#cone)" stroke="#3a3944" stroke-width="3"/>
+  <circle cx="200" cy="182" r="14" fill="url(#dust)"/>
+
+  <!-- woofer -->
+  <circle cx="200" cy="322" r="82" fill="url(#cone)" stroke="#3a3944" stroke-width="4"/>
+  <circle cx="200" cy="322" r="64" fill="none" stroke="#26252e" stroke-width="3"/>
+  <circle cx="200" cy="322" r="30" fill="url(#dust)" stroke="#33323c" stroke-width="2"/>
+  <circle cx="182" cy="306" r="8" fill="#5d5c68" opacity="0.5"/>
+
+  <!-- brand line -->
+  <rect x="150" y="243" width="100" height="4" rx="2" fill="url(#glow)"/>
+
+  <!-- battery badge -->
+  <g transform="translate(258, 96)">
+    <rect x="0" y="0" width="46" height="24" rx="7" fill="#0e2515" stroke="#2f7d4a" stroke-width="2"/>
+    <rect x="46" y="7" width="5" height="10" rx="2" fill="#2f7d4a"/>
+    <rect x="5" y="5" width="10" height="14" rx="2" fill="#4ade80"/>
+    <rect x="18" y="5" width="10" height="14" rx="2" fill="#4ade80"/>
+    <rect x="31" y="5" width="10" height="14" rx="2" fill="#4ade80" opacity="0.45"/>
+  </g>
+
+  <!-- power LED -->
+  <circle cx="122" cy="108" r="4" fill="#ffd600"/>
+  <circle cx="122" cy="108" r="8" fill="#ffd600" opacity="0.25"/>
+</svg>

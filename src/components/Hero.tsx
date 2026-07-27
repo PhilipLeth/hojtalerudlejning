@@ -1,9 +1,13 @@
+"use client";
+
 import { type Locale, t } from "@/lib/i18n";
-import { startPrice, applyDiscount, isSummerSale } from "@/lib/products";
+import { applyDiscount, isSummerSale } from "@/lib/products";
+import { useProducts } from "@/lib/useProducts";
 
 export default function Hero({ locale = "da" }: { locale?: Locale }) {
   const s = t[locale].hero;
   const summer = isSummerSale();
+  const { startPrice } = useProducts();
   const discountedStart = applyDiscount(startPrice);
   const currency = locale === "en" ? "DKK" : "kr";
   const fromLabel = locale === "en" ? "from" : "fra";
@@ -40,7 +44,7 @@ export default function Hero({ locale = "da" }: { locale?: Locale }) {
             </span>
           ) : (
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              {s.titleHighlight}
+              {fromLabel} {startPrice} {currency}
             </span>
           )}
         </h1>

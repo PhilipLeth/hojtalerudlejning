@@ -1,5 +1,6 @@
 import BookingFlow from "@/components/BookingFlow";
 import Hero from "@/components/Hero";
+import SpeakerCompare from "@/components/SpeakerCompare";
 import TopBar from "@/components/TopBar";
 import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
@@ -14,6 +15,7 @@ export default function Home() {
       <TopBar />
       <Hero />
       <BookingFlow />
+      <SpeakerCompare />
       <Testimonials />
       <HowItWorks />
       <FAQ />
@@ -31,7 +33,7 @@ export default function Home() {
             legalName: "Scharling Studio",
             taxID: "DK40994904",
             description:
-              "Højtalerudlejning i København. Lej højtaler, PA-anlæg og lydudstyr til fest, event og party. Festudstyr til leje fra 399 kr/weekend.",
+              "Højtalerudlejning i København. Lej højtaler, PA-anlæg, batterihøjtaler og lydudstyr til fest, event og party. Billig levering i hele København. Festudstyr til leje fra 350 kr/weekend.",
             url: "https://lejhojtaler.dk",
             address: {
               "@type": "PostalAddress",
@@ -58,6 +60,34 @@ export default function Home() {
                 closes: "17:00",
               },
             ],
+          }),
+        }}
+      />
+
+      {/* JSON-LD: Product — Mackie Thump GO batterihøjtaler */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: "Mackie Thump GO batterihøjtaler udlejning",
+            description:
+              "Batteridrevet 8\" Mackie Thump GO med Bluetooth til leje. Op til 12 timers batteri — ingen strøm nødvendig. Perfekt til park, strand og baggård i København.",
+            image: "https://lejhojtaler.dk/images/product-thumpgo.svg",
+            brand: {
+              "@type": "Brand",
+              name: "Lejhøjtaler.dk",
+            },
+            offers: {
+              "@type": "Offer",
+              price: "350",
+              priceCurrency: "DKK",
+              priceValidUntil: "2026-12-31",
+              availability: "https://schema.org/InStock",
+              url: "https://lejhojtaler.dk/#book",
+              description: "Fra 350 kr/weekend (fre–man). Batterihøjtaler leje København.",
+            },
           }),
         }}
       />

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { startPrice, applyDiscount, isSummerSale } from "@/lib/products";
+import { applyDiscount, isSummerSale } from "@/lib/products";
+import { useProducts } from "@/lib/useProducts";
 
 export default function StickyBookBar() {
   const [visible, setVisible] = useState(false);
   const summer = isSummerSale();
+  const { startPrice } = useProducts();
   const price = summer ? applyDiscount(startPrice) : startPrice;
 
   useEffect(() => {

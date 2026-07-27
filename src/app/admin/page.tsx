@@ -154,6 +154,9 @@ export default function AdminPage() {
           <a href="/admin/lager" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
             Lager
           </a>
+          <a href="/admin/produkter" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
+            Produkter
+          </a>
           <a href="/admin/nyhedsbrev" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
             Nyhedsbrev
           </a>

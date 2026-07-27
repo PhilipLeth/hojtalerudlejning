@@ -253,7 +253,7 @@ export default function KobenhavnPage() {
               </div>
               <h3 className="font-semibold text-white">K&oslash;benhavn K</h3>
               <p className="mt-2 text-sm text-white/50">
-                Centralt afhentningssted. Eller levering i Stork&oslash;benhavn for 500 kr.
+                Centralt afhentningssted. Eller billig levering i hele K&oslash;benhavn — kun 500 kr inkl. ops&aelig;tning og afhentning.
               </p>
             </div>
           </div>
@@ -319,9 +319,9 @@ export default function KobenhavnPage() {
                 <p className="mt-1 text-white/40">Fredag 15-18, aflevering mandag 9-12</p>
               </div>
               <div>
-                <h3 className="mb-2 font-semibold text-white">Levering (500 kr)</h3>
+                <h3 className="mb-2 font-semibold text-white">Billig levering (500 kr inkl. ops&aelig;tning)</h3>
                 <p>Hele Stork&oslash;benhavn: Indre By, &Oslash;sterbro, N&oslash;rrebro, Vesterbro, Frederiksberg, Amager, Valby, Vanl&oslash;se, Br&oslash;nsh&oslash;j</p>
-                <p className="mt-1 text-white/40">Ops&aelig;tning kan tilk&oslash;bes for 500 kr ekstra</p>
+                <p className="mt-1 text-white/40">Vi bringer udstyret ud, s&aelig;tter det op og henter det igen — alt inkluderet i prisen</p>
               </div>
             </div>
           </div>

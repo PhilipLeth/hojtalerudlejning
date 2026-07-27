@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import BookingFlow from "@/components/BookingFlow";
 import Hero from "@/components/Hero";
+import SpeakerCompare from "@/components/SpeakerCompare";
 import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Rent Speaker Copenhagen | From 399 DKK/weekend | Lejhøjtaler.dk",
+  title: "Rent Speaker Copenhagen | From 350 DKK/weekend | Lejhøjtaler.dk",
   description:
-    "Rent speakers in Copenhagen from 399 DKK/weekend. PA system rental for parties, events and celebrations. Sound equipment for hire — pick up Friday, return Monday. Book online in 2 minutes.",
+    "Rent speakers in Copenhagen from 350 DKK/weekend. PA system rental for parties, events and celebrations. Sound equipment for hire — pick up Friday, return Monday. Book online in 2 minutes.",
   keywords: [
     "rent speaker copenhagen",
     "speaker rental copenhagen",
@@ -22,9 +23,9 @@ export const metadata: Metadata = {
     "lejhojtaler",
   ],
   openGraph: {
-    title: "Rent Speaker Copenhagen | From 399 DKK/weekend | Lejhøjtaler.dk",
+    title: "Rent Speaker Copenhagen | From 350 DKK/weekend | Lejhøjtaler.dk",
     description:
-      "Rent speakers and PA systems for your party in Copenhagen. Sound equipment rental from 399 DKK/weekend. Book online in 2 minutes.",
+      "Rent speakers and PA systems for your party in Copenhagen. Sound equipment rental from 350 DKK/weekend. Book online in 2 minutes.",
     url: "https://lejhojtaler.dk/en",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -44,6 +45,7 @@ export default function EnHome() {
     <main className="min-h-screen" lang="en">
       <Hero locale="en" />
       <BookingFlow locale="en" />
+      <SpeakerCompare locale="en" />
       <Testimonials locale="en" />
       <HowItWorks locale="en" />
       <Footer locale="en" />
@@ -59,7 +61,7 @@ export default function EnHome() {
             legalName: "Scharling Studio",
             taxID: "DK40994904",
             description:
-              "Speaker rental in Copenhagen. Rent speakers, PA systems and sound equipment for parties, events and celebrations. Equipment for hire from 399 DKK/weekend.",
+              "Speaker rental in Copenhagen. Rent speakers, PA systems and sound equipment for parties, events and celebrations. Equipment for hire from 350 DKK/weekend.",
             url: "https://lejhojtaler.dk/en",
             address: {
               "@type": "PostalAddress",
@@ -112,7 +114,7 @@ export default function EnHome() {
               priceValidUntil: "2026-12-31",
               availability: "https://schema.org/InStock",
               url: "https://lejhojtaler.dk/en#book",
-              description: "From 399 DKK/weekend (Fri-Mon). Speaker rental Copenhagen.",
+              description: "From 350 DKK/weekend (Fri-Mon). Speaker rental Copenhagen.",
             },
           }),
         }}

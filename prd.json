@@ -18,8 +18,27 @@
     "deployment": "Cloudflare Pages (speaker-rental.pages.dev)",
     "analytics": "Google Analytics 4 (G-QDXW7S53GF) + GTM (GTM-M52R25VF) + Google Ads conversion tracking"
   },
-
   "products": [
+    {
+      "id": "thumpgo",
+      "category": "lyd",
+      "name_da": "Mackie Thump GO",
+      "description_da": "Batteridrevet 8\" højtaler med Bluetooth og op til 12 timers batteri. Ingen strøm nødvendig — perfekt til park, strand og baggård.",
+      "brand": "Mackie",
+      "size": "8 tommer (batteri)",
+      "capacity": "Op til 30 personer",
+      "weight": "10 kg",
+      "power": "batteri",
+      "price_dkk": 350,
+      "image": "/images/product-thumpgo.svg",
+      "includes": [
+        "Oplader",
+        "AUX-kabel",
+        "Bluetooth"
+      ],
+      "extra": "Batteriet holder hele festen.",
+      "status": "live"
+    },
     {
       "id": "party",
       "category": "lyd",
@@ -32,7 +51,13 @@
       "price_dkk": 399,
       "image": "/images/product-party.png",
       "mood_image": "/images/mood-party.png",
-      "includes": ["Bæretaske", "iPhone-kabel m/ USB-C adapter", "AUX-kabel", "Strømkabel", "Bluetooth"],
+      "includes": [
+        "Bæretaske",
+        "iPhone-kabel m/ USB-C adapter",
+        "AUX-kabel",
+        "Strømkabel",
+        "Bluetooth"
+      ],
       "extra": "Stativ kan tilkøbes.",
       "status": "live"
     },
@@ -47,7 +72,13 @@
       "price_dkk": 700,
       "image": "/images/product-festival.png",
       "mood_image": "/images/mood-festival.png",
-      "includes": ["Stativer", "iPhone-kabel m/ USB-C adapter", "AUX-kabel", "Strømkabel", "Bluetooth"],
+      "includes": [
+        "Stativer",
+        "iPhone-kabel m/ USB-C adapter",
+        "AUX-kabel",
+        "Strømkabel",
+        "Bluetooth"
+      ],
       "extra": null,
       "status": "live"
     },
@@ -57,16 +88,25 @@
       "name_da": "Discokugle",
       "description_da": "Roterende discokugle med LED-lys og farver. Plug-and-play — klar på 2 min.",
       "price_dkk": 250,
-      "includes": ["Discokugle med motor", "Ophæng/stativ", "Spotlight", "Strømkabel"],
+      "includes": [
+        "Discokugle med motor",
+        "Ophæng/stativ",
+        "Spotlight",
+        "Strømkabel"
+      ],
       "status": "planned"
     },
     {
       "id": "lyskaeder",
       "category": "lys",
       "name_da": "Lyskæder",
-      "description_da": "2x 10m lyskæde med varm hvid belysning. Perfekt til havefest, bryllup, fødselsdag.",
+      "description_da": "10m lyskæde — vælg mellem almindelig varm hvid eller farvet. Perfekt til havefest, bryllup, fødselsdag.",
       "price_dkk": 200,
-      "includes": ["2x 10m lyskæde (varm hvid)", "Forlængerledning", "Ophængsclips"],
+      "variants": ["varm hvid", "farvet"],
+      "includes": [
+        "1x 10m lyskæde (varm hvid eller farvet)",
+        "Kabelstrips til ophæng"
+      ],
       "status": "planned"
     },
     {
@@ -75,7 +115,13 @@
       "name_da": "Lysshow-pakke",
       "description_da": "Komplet lysshow med 2x moving head og DMX-controller. Forudprogrammerede shows — ingen teknik nødvendig.",
       "price_dkk": 800,
-      "includes": ["2x moving head", "DMX-controller", "Stativer", "Alle kabler", "Forudprogrammerede shows"],
+      "includes": [
+        "2x moving head",
+        "DMX-controller",
+        "Stativer",
+        "Alle kabler",
+        "Forudprogrammerede shows"
+      ],
       "status": "planned"
     },
     {
@@ -84,7 +130,12 @@
       "name_da": "Projektor",
       "description_da": "Full HD-projektor til præsentationer og film. HDMI — klar til brug på 5 min.",
       "price_dkk": 500,
-      "includes": ["Full HD projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"],
+      "includes": [
+        "Full HD projektor",
+        "HDMI-kabel",
+        "Strømkabel",
+        "Fjernbetjening"
+      ],
       "status": "planned"
     },
     {
@@ -93,7 +144,12 @@
       "name_da": "Storskærm",
       "description_da": "55\" LED-skærm på gulvstativ. Fungerer i dagslys — skarpere end projektor.",
       "price_dkk": 600,
-      "includes": ["55\" LED-skærm", "Gulvstativ", "HDMI-kabel", "Strømkabel"],
+      "includes": [
+        "55\" LED-skærm",
+        "Gulvstativ",
+        "HDMI-kabel",
+        "Strømkabel"
+      ],
       "status": "planned"
     },
     {
@@ -102,7 +158,12 @@
       "name_da": "Trådløs mikrofon",
       "description_da": "Professionel trådløs håndholdt mikrofon til taler og events.",
       "price_dkk": 300,
-      "includes": ["Trådløs håndholdt mikrofon", "Modtager", "Batterier", "Kabel til højtaler/mixer"],
+      "includes": [
+        "Trådløs håndholdt mikrofon",
+        "Modtager",
+        "Batterier",
+        "Kabel til højtaler/mixer"
+      ],
       "status": "planned"
     },
     {
@@ -111,11 +172,16 @@
       "name_da": "Trådløst headset",
       "description_da": "Headset-mikrofon til præsentationer og konferencer. Hands-free.",
       "price_dkk": 350,
-      "includes": ["Trådløst headset", "Bodypack-sender", "Modtager", "Batterier", "Kabel til højtaler/mixer"],
+      "includes": [
+        "Trådløst headset",
+        "Bodypack-sender",
+        "Modtager",
+        "Batterier",
+        "Kabel til højtaler/mixer"
+      ],
       "status": "planned"
     }
   ],
-
   "addons": [
     {
       "id": "lys",
@@ -151,32 +217,32 @@
     },
     {
       "id": "levering",
-      "name_da": "Levering, opsætning & afhentning i Storkøbenhavn",
+      "name_da": "Billig levering, opsætning & afhentning i hele København",
       "price_dkk": 500,
       "image": null,
       "status": "live"
     }
   ],
-
   "pricing_rules": {
     "base": "Samme pris uanset antal dage (1-5)",
     "day_multipliers": "Ingen — fast pris uanset lejeperiode",
     "max_rental_days": 5,
-    "summer_sale": { "discount": "25%", "months": "juni & juli", "applies_to": "alt" }
+    "summer_sale": {
+      "discount": "25%",
+      "months": "juni & juli",
+      "applies_to": "alt"
+    }
   },
-
   "opening_hours": {
     "friday": "14:00-18:00 (afhentning)",
     "monday": "15:00-17:00 (aflevering)",
     "other": "Efter aftale (angiv i kommentarfelt)"
   },
-
   "pickup": {
     "method": "Lejer henter i padded sportstaske",
     "location": "Halvtolv 9, 1. th, 1436 København K",
     "payment": "Betaling ved afhentning (MobilePay eller kontant)"
   },
-
   "pages": {
     "home": {
       "path": "/",
@@ -235,10 +301,21 @@
       "description": "SEO-blogindlæg renderet via /blog/[slug]. 11 artikler.",
       "status": "live"
     },
-    "om": { "path": "/om", "description": "Om os-side.", "status": "live" },
-    "lejevilkaar": { "path": "/lejevilkaar", "description": "Fuld lejekontrakt.", "status": "live" },
-    "admin": { "path": "/admin", "description": "Admin dashboard: bookinger, lager, nyhedsbrev.", "status": "live" },
-
+    "om": {
+      "path": "/om",
+      "description": "Om os-side.",
+      "status": "live"
+    },
+    "lejevilkaar": {
+      "path": "/lejevilkaar",
+      "description": "Fuld lejekontrakt.",
+      "status": "live"
+    },
+    "admin": {
+      "path": "/admin",
+      "description": "Admin dashboard: bookinger, lager, produkter (rediger priser/tekster/synlighed live), nyhedsbrev.",
+      "status": "live"
+    },
     "discokugle": {
       "path": "/discokugle",
       "ads_group": "AG 4 - Discokugle",
@@ -296,97 +373,219 @@
       "status": "live"
     }
   },
-
   "event_type_recommendations": {
     "description": "Bruges på /av-udstyr til step-by-step booking wizard.",
     "types": [
       {
         "id": "firmapraesentation",
         "name_da": "Firmapræsentation",
-        "recommended": ["projektor", "traadloes_mikrofon"],
-        "optional": ["skaerm", "headset", "festival"]
+        "recommended": [
+          "projektor",
+          "traadloes_mikrofon"
+        ],
+        "optional": [
+          "skaerm",
+          "headset",
+          "festival"
+        ]
       },
       {
         "id": "konference",
         "name_da": "Konference / møde",
-        "recommended": ["skaerm", "headset", "traadloes_mikrofon"],
-        "optional": ["projektor", "festival"]
+        "recommended": [
+          "skaerm",
+          "headset",
+          "traadloes_mikrofon"
+        ],
+        "optional": [
+          "projektor",
+          "festival"
+        ]
       },
       {
         "id": "bryllup",
         "name_da": "Bryllup",
-        "recommended": ["traadloes_mikrofon", "festival", "lyskaeder"],
-        "optional": ["projektor", "discokugle", "lysshow"]
+        "recommended": [
+          "traadloes_mikrofon",
+          "festival",
+          "lyskaeder"
+        ],
+        "optional": [
+          "projektor",
+          "discokugle",
+          "lysshow"
+        ]
       },
       {
         "id": "fest",
         "name_da": "Fest / fødselsdag",
-        "recommended": ["festival", "discokugle"],
-        "optional": ["lysshow", "lyskaeder", "traadloes_mikrofon"]
+        "recommended": [
+          "festival",
+          "discokugle"
+        ],
+        "optional": [
+          "lysshow",
+          "lyskaeder",
+          "traadloes_mikrofon"
+        ]
       },
       {
         "id": "undervisning",
         "name_da": "Undervisning / workshop",
-        "recommended": ["projektor", "headset"],
-        "optional": ["skaerm", "traadloes_mikrofon"]
+        "recommended": [
+          "projektor",
+          "headset"
+        ],
+        "optional": [
+          "skaerm",
+          "traadloes_mikrofon"
+        ]
       },
       {
         "id": "andet",
         "name_da": "Andet",
         "recommended": [],
-        "optional": ["projektor", "skaerm", "traadloes_mikrofon", "headset", "festival", "party"]
+        "optional": [
+          "projektor",
+          "skaerm",
+          "traadloes_mikrofon",
+          "headset",
+          "festival",
+          "party"
+        ]
       }
     ]
   },
-
   "navigation": {
     "description": "Burger-menu i højre hjørne. Klik åbner slide-in panel fra højre med kategoriserede links (Lyd, Lys, AV) + footer-links + CTA.",
     "sections": [
       {
         "title": "Lyd & Højtalere",
-        "links": ["/lej-hojtaler", "/festlyd", "/lydudstyr", "/soundboks-alternativ"]
+        "links": [
+          "/lej-hojtaler",
+          "/festlyd",
+          "/lydudstyr",
+          "/soundboks-alternativ"
+        ]
       },
       {
         "title": "Lys & Effekter",
-        "links": ["/festlys", "/discokugle", "/lyskaeder", "/lysshow", "/roegmaskine"]
+        "links": [
+          "/festlys",
+          "/discokugle",
+          "/lyskaeder",
+          "/lysshow",
+          "/roegmaskine"
+        ]
       },
       {
         "title": "AV-udstyr",
-        "links": ["/av-udstyr", "/projektor", "/skaerm", "/traadloes-mikrofon", "/headset-mikrofon"]
+        "links": [
+          "/av-udstyr",
+          "/projektor",
+          "/skaerm",
+          "/traadloes-mikrofon",
+          "/headset-mikrofon"
+        ]
       }
     ],
     "status": "live"
   },
-
   "api_endpoints": {
-    "book": { "path": "/api/book", "method": "POST", "description": "Modtag booking, send email, gem i KV", "status": "live" },
-    "bookings": { "path": "/api/bookings", "method": "GET", "description": "List bookinger (kræver ADMIN_SECRET)", "status": "live" },
-    "bookings_update": { "path": "/api/bookings-update", "method": "POST", "description": "Opdater booking-status", "status": "live" },
-    "availability": { "path": "/api/availability", "method": "GET", "description": "Public. Inventory + booked counts.", "status": "live" },
-    "inventory": { "path": "/api/inventory", "method": "POST", "description": "Admin. set_inventory, block_date, unblock_date.", "status": "live" },
-    "newsletter": { "path": "/api/newsletter", "method": "GET/POST", "description": "Nyhedsbrev signup + admin list.", "status": "live" }
+    "book": {
+      "path": "/api/book",
+      "method": "POST",
+      "description": "Modtag booking, send email, gem i KV",
+      "status": "live"
+    },
+    "bookings": {
+      "path": "/api/bookings",
+      "method": "GET",
+      "description": "List bookinger (kræver ADMIN_SECRET)",
+      "status": "live"
+    },
+    "bookings_update": {
+      "path": "/api/bookings-update",
+      "method": "POST",
+      "description": "Opdater booking-status",
+      "status": "live"
+    },
+    "availability": {
+      "path": "/api/availability",
+      "method": "GET",
+      "description": "Public. Inventory + booked counts.",
+      "status": "live"
+    },
+    "inventory": {
+      "path": "/api/inventory",
+      "method": "POST",
+      "description": "Admin. set_inventory, block_date, unblock_date.",
+      "status": "live"
+    },
+    "newsletter": {
+      "path": "/api/newsletter",
+      "method": "GET/POST",
+      "description": "Nyhedsbrev signup + admin list.",
+      "status": "live"
+    },
+    "products": {
+      "path": "/api/products",
+      "method": "GET/POST",
+      "description": "GET: public produktkatalog fra KV (null = brug defaults i koden). POST (ADMIN_SECRET): gem katalog eller action=reset.",
+      "status": "live"
+    }
   },
-
   "email_flow": {
     "provider": "SendGrid + Resend",
-    "secrets": ["SENDGRID_API_KEY", "RESEND_API_KEY", "NOTIFY_EMAIL", "ADMIN_SECRET"],
+    "secrets": [
+      "SENDGRID_API_KEY",
+      "RESEND_API_KEY",
+      "NOTIFY_EMAIL",
+      "ADMIN_SECRET"
+    ],
     "on_booking": {
       "to_owner": "Ny booking med alle detaljer. Reply-to sat til kundens email.",
       "to_customer": "Bekræftelse med opsummering, afhentningsadresse, inkluderet udstyr."
     }
   },
-
   "i18n": {
     "default_locale": "da",
-    "locales": ["da", "en"],
+    "locales": [
+      "da",
+      "en"
+    ],
     "strategy": "Dansk på root, engelsk på /en prefix. Alle komponenter accepterer locale prop. Oversættelser i src/lib/i18n.ts."
   },
-
   "seo": {
-    "json_ld": ["LocalBusiness", "Product", "BreadcrumbList", "FAQPage"],
-    "sitemap_paths": ["/", "/lej-hojtaler", "/festlys", "/festlyd", "/lydudstyr", "/soundboks-alternativ", "/roegmaskine", "/kobenhavn", "/om", "/lejevilkaar", "/blog", "/en", "/discokugle", "/lyskaeder", "/lysshow", "/av-udstyr", "/projektor", "/skaerm", "/traadloes-mikrofon", "/headset-mikrofon"]
+    "json_ld": [
+      "LocalBusiness",
+      "Product",
+      "BreadcrumbList",
+      "FAQPage"
+    ],
+    "sitemap_paths": [
+      "/",
+      "/lej-hojtaler",
+      "/festlys",
+      "/festlyd",
+      "/lydudstyr",
+      "/soundboks-alternativ",
+      "/roegmaskine",
+      "/kobenhavn",
+      "/om",
+      "/lejevilkaar",
+      "/blog",
+      "/en",
+      "/discokugle",
+      "/lyskaeder",
+      "/lysshow",
+      "/av-udstyr",
+      "/projektor",
+      "/skaerm",
+      "/traadloes-mikrofon",
+      "/headset-mikrofon"
+    ]
   },
-
   "design": {
     "color": "#ffd600 (amber/guld brand-farve)",
     "theme": "Mørkt fest-tema (#07060b baggrund, glasmorfisme-kort)",
@@ -400,23 +599,78 @@
       "Sticky book-bar på mobil"
     ]
   },
-
   "infrastructure": {
     "source_project": "/Users/philipleth/hojtalerudlejning",
     "cloudflare_pages_project": "speaker-rental",
     "kv_namespace": "BOOKINGS (c46378bfa06c46c19841331217f812c5)",
     "github_repo": "PhilipLeth/hojtalerudlejning",
-    "secrets": ["SENDGRID_API_KEY", "RESEND_API_KEY", "NOTIFY_EMAIL", "ADMIN_SECRET"]
+    "secrets": [
+      "SENDGRID_API_KEY",
+      "RESEND_API_KEY",
+      "NOTIFY_EMAIL",
+      "ADMIN_SECRET"
+    ]
   },
-
   "google_ads": {
     "customer_id": "3936363454",
     "mcc": "623-100-6021",
     "campaign": "Højtaler Udlejning - Search",
-    "ad_groups_live": ["AG 1 - Højtalere & Lyd", "AG 2 - Lys & Røgmaskine", "AG 3 - Røgmaskine", "AG 4 - Discokugle", "AG 5 - Lyskæder", "AG 6 - Lysshow", "AG 7 - Soundboks-alternativ", "AG 8 - Fest og event lyd", "AG 9 - PA-anlæg og lydudstyr", "AG 10 - AV-udstyr", "AG 11 - Projektor", "AG 12 - Skærm til event", "AG 13 - Trådløs mikrofon", "AG 14 - Headset mikrofon", "AG 15 - Speaker Rental Copenhagen (EN)"],
+    "ad_groups_live": [
+      "AG 1 - Højtalere & Lyd",
+      "AG 2 - Lys & Røgmaskine",
+      "AG 3 - Røgmaskine",
+      "AG 4 - Discokugle",
+      "AG 5 - Lyskæder",
+      "AG 6 - Lysshow",
+      "AG 7 - Soundboks-alternativ",
+      "AG 8 - Fest og event lyd",
+      "AG 9 - PA-anlæg og lydudstyr",
+      "AG 10 - AV-udstyr",
+      "AG 11 - Projektor",
+      "AG 12 - Skærm til event",
+      "AG 13 - Trådløs mikrofon",
+      "AG 14 - Headset mikrofon",
+      "AG 15 - Speaker Rental Copenhagen (EN)"
+    ],
     "note": "Alle 15 annoncegrupper er live. Alle landingssider er deployed."
   },
-
+  "tasks": [
+    {
+      "id": "forside-thump-go",
+      "title": "Forsiden skal fremhæve Mackie Thump GO (batterihøjtaler)",
+      "description": "Tilføj Mackie Thump GO 8\" batterihøjtaler som produkt (speakers i src/lib/products.ts + i18n) og giv den en fremtrædende plads på forsiden sammen med de eksisterende højtalere. Vinkel: mobil, batteridrevet, ingen strøm nødvendig — tag den med i parken, på stranden, på ladcyklen.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "forside-anlaeg-tabel",
+      "title": "Sammenligningstabel: mobil/batteri vs. kabel-anlæg, lille og stor",
+      "description": "Tilføj en tabel på forsiden der opdeler anlæggene i to kolonner (mobil/batteri og kabel/strøm) med lille og stor variant i hver: mobil lille = Mackie Thump GO, mobil stor = Soundboks, kabel lille = Lille højtalerpakke (Alto), kabel stor = Stor højtalerpakke (EV). Vis pris, kapacitet (antal personer), vægt og 'kræver strøm ja/nej', med link/CTA direkte til booking af hvert anlæg.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "billig-levering-kbh",
+      "title": "Fremhæv billig levering i København",
+      "description": "Fokusér messaging på at vi leverer billigt inde i København: opdater hero/USP-topbar, levering-addon, /kobenhavn-siden og FAQ. Overvej lavere leveringspris inden for København K/brokvartererne end resten af Storkøbenhavn (i dag én pris: 500 kr). Skal også afspejles i JSON-LD (areaServed) og ads-landingssider.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "fjern-skaerm-75",
+      "title": "Fjern 75\" skærmen",
+      "description": "Fjern skaerm_75 fra src/lib/products.ts og alle steder den optræder (i18n-tekster, /skaerm-siden, BookingFlow/checkout, evt. sammenligninger). 55\" skærmen (skaerm_55) beholdes som eneste skærmprodukt.",
+      "priority": "medium",
+      "status": "done"
+    },
+    {
+      "id": "produkter-backend-admin",
+      "title": "Alle produkter styres fra backend/admin",
+      "description": "Bind alt produktdata (navn, beskrivelse, pris, billede, status/synlighed, includes) op på backend i stedet for hardcodede arrays i src/lib/products.ts og i18n.ts. Gem produkter i Cloudflare KV, udstil dem via et public API-endpoint (fx GET /api/products) og et admin-endpoint til CRUD. Byg redigerings-UI i /admin (opret, redigér, skjul/vis, slet). Frontend (forside, BookingFlow, alle landingssider, /en) skal læse produkter derfra alle steder, så priser og tekster kan rettes i admin uden deploy. Hardcodede data bruges kun som fallback/seed.",
+      "priority": "high",
+      "status": "done"
+    }
+  ],
   "status": {
     "completed": [
       "Forside med hero + 4-step booking-flow + testimonials + about + how-it-works",
@@ -432,11 +686,17 @@
       "GA4 + GTM + Google Ads conversion tracking",
       "Exit-intent popup, summer banner, sticky book-bar",
       "15 Google Ads annoncegrupper live med landingssider",
-      "Sitemap opdateret med alle nye sider"
+      "Sitemap opdateret med alle nye sider",
+      "Mackie Thump GO batterihøjtaler (350 kr) tilføjet som produkt og fremhævet på forsiden (da + en)",
+      "Sammenligningstabel på forsiden: mobil/batteri vs. kabel-anlæg, lille og stor i begge (Thump GO, Soundboks, Alto, EV)",
+      "Billig levering i København fremhævet: TopBar, hero, FAQ, /kobenhavn, JSON-LD",
+      "75\" skærm (skaerm_75) fjernet",
+      "Produktkatalog backend-drevet: /api/products (KV) + admin-editor /admin/produkter — priser, tekster (da/en), billeder og synlighed kan redigeres uden deploy",
+      "AVBookingWizard-komponent oprettet (manglede i repo — build var brudt)"
     ],
     "pending": [
-      "Nye produkter integreret i BookingFlow checkout (discokugle, lyskæder, lysshow, projektor, skærm, mikrofon, headset som valgbare i booking)",
-      "Google Business Profile"
+      "Google Business Profile",
+      "Nye produkter (discokugle, lyskæder, lysshow, projektor, skærm, mikrofon, headset) som valgbare i BookingFlow checkout"
     ]
   }
 }

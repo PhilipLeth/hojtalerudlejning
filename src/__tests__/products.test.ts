@@ -1,10 +1,14 @@
 import { describe, it, expect } from "vitest";
-import { speakers, addons, dayMultiplier, startPrice } from "@/lib/products";
+import { speakers, addons, dayMultiplier, startPrice, cheapestSpeakerPrice } from "@/lib/products";
 
 describe("Products data", () => {
-  it("has three speaker packages", () => {
-    expect(speakers).toHaveLength(3);
-    expect(speakers.map((s) => s.id)).toEqual(["party", "soundboks", "festival"]);
+  it("has four speaker packages", () => {
+    expect(speakers).toHaveLength(4);
+    expect(speakers.map((s) => s.id)).toEqual(["thumpgo", "party", "soundboks", "festival"]);
+  });
+
+  it("thump go is 350 kr", () => {
+    expect(speakers.find((s) => s.id === "thumpgo")!.price).toBe(350);
   });
 
   it("party speaker is 399 kr", () => {
@@ -22,13 +26,46 @@ describe("Products data", () => {
   it("startPrice matches cheapest speaker", () => {
     const cheapest = Math.min(...speakers.map((s) => s.price));
     expect(startPrice).toBe(cheapest);
-    expect(startPrice).toBe(399);
+    expect(startPrice).toBe(350);
+  });
+
+  it("cheapestSpeakerPrice ignores hidden speakers", () => {
+    const list = speakers.map((s) => (s.id === "thumpgo" ? { ...s, hidden: true } : s));
+    expect(cheapestSpeakerPrice(list)).toBe(399);
   });
 
   it("all speakers have product and mood images", () => {
     for (const s of speakers) {
-      expect(s.product).toMatch(/^\/images\/product-.+\.png$/);
+      expect(s.product).toMatch(/^\/images\/product-.+\.(png|svg)$/);
       expect(s.mood).toMatch(/^\/images\/mood-.+\.png$/);
+    }
+  });
+
+  it("all speakers have power, size class and weight", () => {
+    for (const s of speakers) {
+      expect(["batteri", "kabel"]).toContain(s.power);
+      expect(["lille", "stor"]).toContain(s.sizeClass);
+      expect(s.weight).toBeTruthy();
+    }
+  });
+
+  it("has small and large in both battery and cable groups", () => {
+    for (const power of ["batteri", "kabel"] as const) {
+      const group = speakers.filter((s) => s.power === power);
+      expect(group.map((s) => s.sizeClass)).toContain("lille");
+      expect(group.map((s) => s.sizeClass)).toContain("stor");
+    }
+  });
+
+  it("all speakers have da and en text", () => {
+    for (const s of speakers) {
+      for (const loc of ["da", "en"] as const) {
+        expect(s[loc].name).toBeTruthy();
+        expect(s[loc].size).toBeTruthy();
+        expect(s[loc].capacity).toBeTruthy();
+        expect(s[loc].desc.length).toBeGreaterThan(20);
+        expect(s[loc].extra).toBeTruthy();
+      }
     }
   });
 });
@@ -60,7 +97,16 @@ describe("Addons data", () => {
       if (a.id === "levering") {
         expect(a.image).toBeNull();
       } else {
-        expect(a.image).toMatch(/^\/images\/product-.+\.png$/);
+        expect(a.image).toMatch(/^\/images\/product-.+\.(png|svg)$/);
+      }
+    }
+  });
+
+  it("all addons have da and en text", () => {
+    for (const a of addons) {
+      for (const loc of ["da", "en"] as const) {
+        expect(a[loc].label).toBeTruthy();
+        expect(a[loc].desc).toBeTruthy();
       }
     }
   });

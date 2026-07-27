@@ -3,7 +3,8 @@
 import { useState, useMemo, useEffect, useCallback, FormEvent } from "react";
 import { type Locale, t } from "@/lib/i18n";
 
-import { speakers as speakersData, addons as addonsData, dayMultiplier, isSummerSale, applyDiscount } from "@/lib/products";
+import { dayMultiplier, isSummerSale, applyDiscount } from "@/lib/products";
+import { useProducts } from "@/lib/useProducts";
 
 /* ───── Helpers ───── */
 
@@ -196,21 +197,18 @@ function LightBar() {
 export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   const s = t[locale].booking;
 
-  // Build localized speaker/addon arrays with prices from data
-  const speakers = useMemo(() => speakersData.map((sd, i) => ({
-    ...sd,
-    name: s.speakers[i].name,
-    size: s.speakers[i].size,
-    capacity: s.speakers[i].capacity,
-    desc: s.speakers[i].desc,
-    extra: s.speakers[i].extra,
-  })), [s]);
-
-  const addons = useMemo(() => addonsData.map((ad, i) => ({
-    ...ad,
-    label: s.addons[i].label,
-    desc: s.addons[i].desc,
-  })), [s]);
+  // Live catalog (admin-editable) localized for the current locale
+  const catalog = useProducts();
+  const speakers = useMemo(
+    () => catalog.speakers.map((sd) => ({ ...sd, ...sd[locale] })),
+    [catalog.speakers, locale]
+  );
+  const addons = useMemo(
+    () => catalog.addons.map((ad) => ({ ...ad, ...ad[locale] })),
+    [catalog.addons, locale]
+  );
+  const lysAddon = addons.find((a) => a.id === "lys");
+  const rogAddon = addons.find((a) => a.id === "rog");
 
   const [step, setStep] = useState(1);
   const [speaker, setSpeaker] = useState<string | null>(null);
@@ -355,6 +353,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           speaker: isEffectsOnly ? (locale === "en" ? "Effects only" : "Kun effekter") : selectedSpeaker?.name,
+          speakerId: isEffectsOnly ? "effects-only" : speaker,
           speakerSize: isEffectsOnly ? "—" : selectedSpeaker?.size,
           period: periodLabel,
           pickup: pickupDate?.toISOString(),
@@ -363,6 +362,9 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
           addons: addons
             .filter((a) => selectedAddons.includes(a.id))
             .map((a) => a.label),
+          addonIds: addons
+            .filter((a) => selectedAddons.includes(a.id))
+            .map((a) => a.id),
           deliveryAddress: hasDelivery ? deliveryAddress : undefined,
           total,
           locale,
@@ -447,7 +449,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
 
     return (
       <section id="book" className="relative overflow-hidden">
-        {speakersData.map((sd) => (
+        {speakers.map((sd) => (
           <div
             key={sd.id}
             className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
@@ -567,7 +569,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
         className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
         style={{ backgroundImage: "url(/images/hero.png)", opacity: speaker === null ? 0.5 : 0 }}
       />
-      {speakersData.map((sd) => (
+      {speakers.map((sd) => (
         <div
           key={sd.id}
           className="fixed inset-0 bg-cover bg-center transition-opacity duration-700 ease-in-out"
@@ -651,7 +653,14 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                       </div>
                     </div>
                     <div className="p-5">
-                      <h3 className="text-xl font-semibold">{sp.name}</h3>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-xl font-semibold">{sp.name}</h3>
+                        {sp.power === "batteri" && (
+                          <span className="rounded-full bg-green-500/15 px-2 py-0.5 text-[11px] font-semibold text-green-400">
+                            🔋 {s.batteryBadge}
+                          </span>
+                        )}
+                      </div>
                       <p className="mt-1 text-sm text-white/50">
                         {sp.size} &mdash; {sp.capacity}
                       </p>
@@ -692,10 +701,10 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                     >
                       <img src="/images/product-lys.png" alt="Lys-pakke med LED-lamper og centereffekt" className="mx-auto h-12 w-12 object-contain rounded-lg" />
                       <p className="mt-2 text-sm font-medium text-white/70">
-                        {s.addons[0].label}
+                        {lysAddon?.label}
                       </p>
                       <p className={`text-sm ${summer ? "text-amber-400" : "text-brand-400"}`}>
-                        {summer ? <><span className="line-through text-white/30 mr-1">{s.lightsOnlyFrom}</span>Fra {applyDiscount(500)},-</> : s.lightsOnlyFrom}
+                        {summer ? <><span className="line-through text-white/30 mr-1">{s.fromShort} {lysAddon?.price ?? 500},-</span>{s.fromShort} {applyDiscount(lysAddon?.price ?? 500)},-</> : <>{s.fromShort} {lysAddon?.price ?? 500},-</>}
                       </p>
                       {lysSoldOut && <span className="mt-1 inline-block rounded-full bg-red-500/90 px-2 py-0.5 text-xs font-bold text-white">{s.soldOut}</span>}
                       {lysLow && <span className="mt-1 inline-block rounded-full bg-orange-500/90 px-2 py-0.5 text-xs font-bold text-white">{s.fewLeft}</span>}
@@ -714,10 +723,10 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                 >
                   <img src="/images/product-rog.png" alt="Røgmaskine til fest" className="mx-auto h-12 w-12 object-contain rounded-lg" />
                   <p className="mt-2 text-sm font-medium text-white/70">
-                    {s.addons[1].label}
+                    {rogAddon?.label}
                   </p>
                   <p className={`text-sm ${summer ? "text-amber-400" : "text-brand-400"}`}>
-                    {summer ? <><span className="line-through text-white/30 mr-1">{s.fogOnlyFrom}</span>Fra {applyDiscount(250)},-</> : s.fogOnlyFrom}
+                    {summer ? <><span className="line-through text-white/30 mr-1">{s.fromShort} {rogAddon?.price ?? 250},-</span>{s.fromShort} {applyDiscount(rogAddon?.price ?? 250)},-</> : <>{s.fromShort} {rogAddon?.price ?? 250},-</>}
                   </p>
                 </button>
               </div>

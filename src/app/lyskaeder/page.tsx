@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Lej Lyskæder København | Fra 200 kr | Lejhøjtaler.dk",
   description:
-    "Lej lyskæder i København fra 200 kr/weekend. 2x 10m lyskæde med varm hvid belysning. Perfekt til havefest, bryllup og fødselsdag. Ingen depositum.",
+    "Lej lyskæde i København fra 200 kr/weekend. 10m lyskæde — vælg mellem varm hvid eller farvet. Perfekt til havefest, bryllup og fødselsdag. Ingen depositum.",
   keywords: [
     "lej lyskæder",
     "lyskæder udlejning",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Lyskæder København | Fra 200 kr",
     description:
-      "Lej lyskæder i København fra 200 kr. 2x 10m lyskæde med varm hvid belysning. Book online.",
+      "Lej lyskæde i København fra 200 kr. 10m lyskæde — varm hvid eller farvet. Book online.",
     url: "https://lejhojtaler.dk/lyskaeder",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -74,7 +74,7 @@ export default function LyskaederPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            2x 10m lyskæde med varm hvid belysning. Perfekt til enhver fest.
+            10m lyskæde — vælg mellem almindelig varm hvid eller farvet. Perfekt til enhver fest.
           </p>
           <a
             href="/#book"
@@ -89,14 +89,27 @@ export default function LyskaederPage() {
         {/* Product detail */}
         <section className="mx-auto max-w-4xl px-4 py-24">
           <div className="grid gap-8 sm:grid-cols-2 items-center">
-            <div className="overflow-hidden rounded-2xl">
-              <img
-                src="/images/product-lyskaeder.png"
-                alt="Lyskæder til leje i København"
-                width={600}
-                height={400}
-                className="w-full object-cover"
-              />
+            <div className="space-y-4">
+              <div className="overflow-hidden rounded-2xl">
+                <img
+                  src="/images/product-lyskaeder.svg"
+                  alt="Lyskæde med varmt hvidt lys til leje i København"
+                  width={600}
+                  height={400}
+                  className="w-full object-cover"
+                />
+                <p className="mt-2 text-center text-sm text-white/50">Almindelig — varm hvid</p>
+              </div>
+              <div className="overflow-hidden rounded-2xl">
+                <img
+                  src="/images/product-lyskaeder-farvet.svg"
+                  alt="Farvet lyskæde til leje i København"
+                  width={600}
+                  height={400}
+                  className="w-full object-cover"
+                />
+                <p className="mt-2 text-center text-sm text-white/50">Farvet</p>
+              </div>
             </div>
             <div>
               <h2 className="mb-4 text-3xl font-bold">Lyskæder</h2>
@@ -106,15 +119,11 @@ export default function LyskaederPage() {
               <ul className="space-y-3 text-white/60">
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>2x 10m lyskæde (varm hvid)</span>
+                  <span>10m lyskæde — vælg varm hvid eller farvet</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Forlængerledning inkluderet</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Ophængsclips medfølger</span>
+                  <span>Kabelstrips til ophæng medfølger</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>

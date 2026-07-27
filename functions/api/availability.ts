@@ -10,13 +10,17 @@ const corsHeaders = {
   "Content-Type": "application/json",
 };
 
-const DEFAULT_INVENTORY: Record<string, number> = { party: 1, festival: 1, lys: 2, rog: 1, stativer: 2, taske: 2 };
+const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 1, soundboks: 1, festival: 1, lys: 2, rog: 1, stativer: 2, taske: 2 };
 
-// Map booking speaker names back to product IDs
+const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival"];
+
+// Map booking speaker names back to product IDs (fallback for old bookings without speakerId)
 function speakerNameToId(name: string): string | null {
   const lower = name.toLowerCase();
-  if (lower === "party") return "party";
-  if (lower === "festival") return "festival";
+  if (lower === "party" || lower.includes("lille højtalerpakke") || lower.includes("small speaker")) return "party";
+  if (lower === "festival" || lower.includes("stor højtalerpakke") || lower.includes("large speaker")) return "festival";
+  if (lower.includes("thump")) return "thumpgo";
+  if (lower.includes("soundboks")) return "soundboks";
   if (lower === "kun lys") return "lys-only";
   return null;
 }
@@ -50,7 +54,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     }
 
     // Count overlapping bookings per product
-    const booked: Record<string, number> = { party: 0, festival: 0, lys: 0, rog: 0, stativer: 0, taske: 0 };
+    const booked: Record<string, number> = { thumpgo: 0, party: 0, soundboks: 0, festival: 0, lys: 0, rog: 0, stativer: 0, taske: 0 };
 
     // Map addon display names to product IDs
     const addonNameToId: Record<string, string> = {
@@ -81,22 +85,34 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       const qTo = to.slice(0, 10);
 
       if (bPickup < qTo && bReturn > qFrom) {
-        // Overlaps — figure out which products are booked
-        const speakerId = speakerNameToId(booking.speaker);
+        // Overlaps — figure out which products are booked.
+        // New bookings carry speakerId/addonIds directly; old ones need name matching.
+        const speakerId: string | null =
+          typeof booking.speakerId === "string" && booking.speakerId
+            ? booking.speakerId
+            : speakerNameToId(booking.speaker || "");
 
         if (speakerId === "lys-only") {
           booked.lys = (booked.lys || 0) + 1;
-        } else if (speakerId === "party" || speakerId === "festival") {
+        } else if (speakerId && speakerId !== "effects-only" && SPEAKER_IDS.includes(speakerId)) {
           booked[speakerId] = (booked[speakerId] || 0) + 1;
         }
 
-        // Count all addons (lys, rog, stativer)
-        const addonLabels: string[] = booking.addons || [];
-        for (const label of addonLabels) {
-          const lower = label.toLowerCase().replace(/[^a-zæøå]/g, "");
-          const pid = addonNameToId[lower];
-          if (pid && pid in booked) {
-            booked[pid] = (booked[pid] || 0) + 1;
+        // Count all addons (lys, rog, stativer, taske)
+        if (Array.isArray(booking.addonIds) && booking.addonIds.length) {
+          for (const pid of booking.addonIds) {
+            if (typeof pid === "string" && pid in booked) {
+              booked[pid] = (booked[pid] || 0) + 1;
+            }
+          }
+        } else {
+          const addonLabels: string[] = booking.addons || [];
+          for (const label of addonLabels) {
+            const lower = label.toLowerCase().replace(/[^a-zæøå]/g, "");
+            const pid = addonNameToId[lower];
+            if (pid && pid in booked) {
+              booked[pid] = (booked[pid] || 0) + 1;
+            }
           }
         }
       }

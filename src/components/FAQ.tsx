@@ -6,7 +6,7 @@ const faqs = [
   {
     question: "Hvad koster det at leje en højtaler?",
     answer:
-      "Vores lille højtalerpakke koster fra 399 kr/weekend og den store fra 700 kr/weekend. Prisen inkluderer alle kabler. Ved kortere leje (1-2 dage) får du rabat.",
+      "Vores batteridrevne Mackie Thump GO koster fra 350 kr/weekend, den lille højtalerpakke fra 399 kr og den store fra 700 kr/weekend. Prisen er den samme uanset antal dage (1-5), og alle kabler er inkluderet.",
   },
   {
     question: "Hvordan fungerer afhentning?",
@@ -21,7 +21,12 @@ const faqs = [
   {
     question: "Kan I levere udstyret?",
     answer:
-      "Ja, vi leverer og sætter op i hele Storkøbenhavn for 500 kr. Skriv din adresse i bookingflowet.",
+      "Ja — vi er baseret på Holmen og leverer billigt i hele København. For kun 500 kr bringer vi udstyret ud, sætter det op og henter det igen efter festen. Skriv din adresse i bookingflowet, så klarer vi resten.",
+  },
+  {
+    question: "Kan jeg leje en højtaler uden strøm?",
+    answer:
+      "Ja! Vores Mackie Thump GO og Soundboks er batteridrevne med op til 12 timers spilletid — perfekte til parken, stranden eller baggården, hvor der ikke er en stikkontakt.",
   },
   {
     question: "Skal jeg betale depositum?",

@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { t } from "@/lib/i18n";
-import { addons } from "@/lib/products";
 
 describe("i18n - Danish", () => {
   const da = t.da;
@@ -17,20 +16,12 @@ describe("i18n - Danish", () => {
     expect(da.booking.step4Title).toBeTruthy();
   });
 
-  it("has three speaker descriptions", () => {
-    expect(da.booking.speakers).toHaveLength(3);
-    expect(da.booking.speakers[0].id).toBe("party");
-    expect(da.booking.speakers[1].id).toBe("soundboks");
-    expect(da.booking.speakers[2].id).toBe("festival");
-  });
-
-  it("has addon labels matching products.ts", () => {
-    expect(da.booking.addons.length).toBe(addons.length);
-    for (let i = 0; i < addons.length; i++) {
-      expect(da.booking.addons[i].id).toBe(addons[i].id);
-      expect(da.booking.addons[i].label).toBeTruthy();
-      expect(da.booking.addons[i].desc).toBeTruthy();
-    }
+  it("has compare table strings", () => {
+    expect(da.compare.title).toBeTruthy();
+    expect(da.compare.groupBattery).toBeTruthy();
+    expect(da.compare.groupCable).toBeTruthy();
+    expect(da.compare.noPower).toBeTruthy();
+    expect(da.compare.needsPower).toBeTruthy();
   });
 
   it("has 4 testimonials", () => {
@@ -69,15 +60,10 @@ describe("i18n - English", () => {
     expect(en.hero.cta).toBe("Book now");
   });
 
-  it("has three speaker descriptions", () => {
-    expect(en.booking.speakers).toHaveLength(3);
-  });
-
-  it("has addon labels matching products.ts", () => {
-    expect(en.booking.addons.length).toBe(addons.length);
-    for (let i = 0; i < addons.length; i++) {
-      expect(en.booking.addons[i].id).toBe(addons[i].id);
-    }
+  it("has compare table strings", () => {
+    expect(en.compare.title).toBeTruthy();
+    expect(en.compare.groupBattery).toBeTruthy();
+    expect(en.compare.groupCable).toBeTruthy();
   });
 
   it("has 4 testimonials", () => {
@@ -98,19 +84,11 @@ describe("i18n - English", () => {
   it("effects-only strings exist", () => {
     expect(en.booking.effectsOnlyTitle).toBeTruthy();
     expect(en.booking.effectsOnlyLabel).toBeTruthy();
-    expect(en.booking.fogOnlyFrom).toBeTruthy();
+    expect(en.booking.fromShort).toBeTruthy();
   });
 });
 
 describe("i18n - DA/EN parity", () => {
-  it("same number of speakers in both locales", () => {
-    expect(t.da.booking.speakers.length).toBe(t.en.booking.speakers.length);
-  });
-
-  it("same number of addons in both locales", () => {
-    expect(t.da.booking.addons.length).toBe(t.en.booking.addons.length);
-  });
-
   it("same number of testimonials in both locales", () => {
     expect(t.da.testimonials.reviews.length).toBe(t.en.testimonials.reviews.length);
   });
@@ -119,15 +97,11 @@ describe("i18n - DA/EN parity", () => {
     expect(t.da.howItWorks.steps.length).toBe(t.en.howItWorks.steps.length);
   });
 
-  it("speaker IDs match across locales", () => {
-    const daIds = t.da.booking.speakers.map((s) => s.id);
-    const enIds = t.en.booking.speakers.map((s) => s.id);
-    expect(daIds).toEqual(enIds);
+  it("compare keys match across locales", () => {
+    expect(Object.keys(t.da.compare).sort()).toEqual(Object.keys(t.en.compare).sort());
   });
 
-  it("addon IDs match across locales", () => {
-    const daIds = t.da.booking.addons.map((a) => a.id);
-    const enIds = t.en.booking.addons.map((a) => a.id);
-    expect(daIds).toEqual(enIds);
+  it("booking keys match across locales", () => {
+    expect(Object.keys(t.da.booking).sort()).toEqual(Object.keys(t.en.booking).sort());
   });
 });

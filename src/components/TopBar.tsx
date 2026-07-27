@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { isSummerSale } from "@/lib/products";
 
 const messages = [
+  "Billig levering i hele København",
   "Lej op til 5 dage til samme pris",
   "Til private fester & professionelle events",
-  "Levering og opsætning i KBH fra 500,-",
   "Ingen depositum. Betal ved afhentning",
   "Alle kabler inkluderet",
 ];
