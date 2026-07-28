@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import ExitPopup from "@/components/ExitPopup";
 import BurgerMenu from "@/components/BurgerMenu";
 import TopBar from "@/components/TopBar";
 import "./globals.css";
@@ -81,7 +80,6 @@ export default function RootLayout({
         <TopBar />
         <BurgerMenu />
         {children}
-        <ExitPopup locale="da" />
       </body>
     </html>
   );

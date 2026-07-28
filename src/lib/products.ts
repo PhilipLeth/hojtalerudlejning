@@ -51,6 +51,8 @@ export interface RentalProduct {
   category: ProductCategory;
   price: number;
   image: string;
+  name_da: string;
+  name_en: string;
 }
 
 export const speakers: Speaker[] = [
@@ -192,15 +194,14 @@ export const addons: Addon[] = [
   },
 ];
 
-/** New standalone rental products (lys, av) */
+/** Standalone rental products (lys, av) — bookable via /?product=ID#book */
 export const rentalProducts: RentalProduct[] = [
-  { id: "discokugle", category: "lys", price: 250, image: "/images/product-discokugle.png" },
-  { id: "lyskaeder", category: "lys", price: 200, image: "/images/product-lyskaeder.svg" },
-  { id: "lysshow", category: "lys", price: 800, image: "/images/product-lysshow.png" },
-  { id: "projektor", category: "av", price: 500, image: "/images/product-projektor.png" },
-  { id: "skaerm_55", category: "av", price: 600, image: "/images/product-skaerm.png" },
-  { id: "traadloes_mikrofon", category: "av", price: 300, image: "/images/product-mikrofon.png" },
-  { id: "headset", category: "av", price: 350, image: "/images/product-headset.png" },
+  { id: "discokugle", category: "lys", price: 250, image: "/images/product-discokugle.png", name_da: "Discokugle", name_en: "Disco ball" },
+  { id: "lyskaeder", category: "lys", price: 200, image: "/images/product-lyskaeder.svg", name_da: "Lyskæder", name_en: "Fairy lights" },
+  { id: "projektor", category: "av", price: 500, image: "/images/product-projektor.png", name_da: "Projektor", name_en: "Projector" },
+  { id: "skaerm_55", category: "av", price: 600, image: "/images/product-skaerm.png", name_da: '55" Storskærm', name_en: '55" Screen' },
+  { id: "traadloes_mikrofon", category: "av", price: 300, image: "/images/product-mikrofon.png", name_da: "Trådløs mikrofon", name_en: "Wireless mic" },
+  { id: "headset", category: "av", price: 350, image: "/images/product-headset.png", name_da: "Trådløst headset", name_en: "Wireless headset" },
 ];
 
 /** Price multiplier by number of rental days — flat price regardless of duration */

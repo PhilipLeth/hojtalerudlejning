@@ -227,11 +227,8 @@
     "base": "Samme pris uanset antal dage (1-5)",
     "day_multipliers": "Ingen — fast pris uanset lejeperiode",
     "max_rental_days": 5,
-    "summer_sale": {
-      "discount": "25%",
-      "months": "juni & juli",
-      "applies_to": "alt"
-    }
+    "summer_sale": null,
+    "note": "Juli-rabat / summer sale er fjernet — ingen sæsonrabat."
   },
   "opening_hours": {
     "friday": "14:00-18:00 (afhentning)",
@@ -243,11 +240,110 @@
     "location": "Halvtolv 9, 1. th, 1436 København K",
     "payment": "Betaling ved afhentning (MobilePay eller kontant)"
   },
+  "forside": {
+    "description": "Forsiden er produktkatalog + ads-venlige produktlandinger — ikke one-page booking.",
+    "header": {
+      "brand": "LejHøjtaler.dk",
+      "url": "https://lejhojtaler.dk",
+      "logo": "/images/logo-lejhojtaler.png",
+      "note": "Øverst stor header med logo + virksomhedsnavn som hero-signal."
+    },
+    "usps": {
+      "layout": "Tre KPI'er/USP's i én linje (ikoner eller bokse) direkte under header",
+      "items": [
+        "5 dages leje til samme pris",
+        "Billig levering i hele København",
+        "Alle kabler inkluderet"
+      ]
+    },
+    "produktgrid": {
+      "layout": "3 produkter pr. linje",
+      "sort_by": "popularitet",
+      "order": [
+        "Soundboks 4",
+        "Mackie Thump GO",
+        "Højtalerpakke lille",
+        "Højtalerpakke normal",
+        "Lysbar",
+        "Røgmaskine"
+      ],
+      "note": "Derefter øvrige produkter. Hvert produktkort har en Book-knap."
+    }
+  },
+  "produktflow": {
+    "description": "Booking-flow via egne produktsider (vigtigt for ads: hvert produkt = egen landingpage).",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Klik Book på produktkort",
+        "result": "Bruger kommer til produktsiden med mere info om produktet"
+      },
+      {
+        "step": 2,
+        "action": "Klik Book igen på produktsiden",
+        "result": "Bruger kommer til side hvor afhentnings- og afleveringsdato vælges"
+      },
+      {
+        "step": 3,
+        "action": "Før checkout: mulighed for 'Tilføj flere produkter'",
+        "result": "Bruger sendes tilbage til forsiden for at booke yderligere produkter, inden den samlede ordre gennemføres"
+      }
+    ],
+    "mersalg": {
+      "description": "Upsell/addons under booking (efter produktvalg / før checkout).",
+      "items": [
+        "Mikrofon (trådløs)",
+        "Ekstra batteri",
+        "Stativer",
+        "Bæretaske",
+        "Lys-pakke",
+        "Røgmaskine",
+        "Levering"
+      ]
+    },
+    "soundboks_popup": {
+      "trigger": "På Soundboks 4-produktsiden",
+      "action": "Popup med henvisning til Mackie Thump GO som alternativ (billigere / batteri / mobil)",
+      "cta": "Link til /mackie-thump-go"
+    }
+  },
   "pages": {
     "home": {
       "path": "/",
-      "description": "One-page med hero + booking-flow + testimonials + about + how-it-works + footer",
-      "status": "live"
+      "description": "Forside: logo + brand-header (LejHøjtaler.dk) → 3 USP'er → produktgrid (3 kolonner, sorteret efter popularitet) med Book-knap pr. produkt. Se forside + produktflow.",
+      "status": "planned"
+    },
+    "soundboks_4": {
+      "path": "/soundboks-4",
+      "product_id": "soundboks",
+      "ads": true,
+      "description": "Selvstændig produktside for Soundboks 4 (ads-landing). Popup henviser til Mackie Thump GO.",
+      "checkout_preselect": "soundboks",
+      "status": "planned"
+    },
+    "mackie_thump_go": {
+      "path": "/mackie-thump-go",
+      "product_id": "thumpgo",
+      "ads": true,
+      "description": "Selvstændig produktside for Mackie Thump GO (ads-landing).",
+      "checkout_preselect": "thumpgo",
+      "status": "planned"
+    },
+    "hojtalerpakke_lille": {
+      "path": "/hojtalerpakke-lille",
+      "product_id": "party",
+      "ads": true,
+      "description": "Selvstændig produktside for Højtalerpakke lille / Lille højtalerpakke (ads-landing).",
+      "checkout_preselect": "party",
+      "status": "planned"
+    },
+    "hojtalerpakke_normal": {
+      "path": "/hojtalerpakke-normal",
+      "product_id": "festival",
+      "ads": true,
+      "description": "Selvstændig produktside for Højtalerpakke normal / Stor højtalerpakke (ads-landing).",
+      "checkout_preselect": "festival",
+      "status": "planned"
     },
     "lej_hojtaler": {
       "path": "/lej-hojtaler",
@@ -565,6 +661,10 @@
     ],
     "sitemap_paths": [
       "/",
+      "/soundboks-4",
+      "/mackie-thump-go",
+      "/hojtalerpakke-lille",
+      "/hojtalerpakke-normal",
       "/lej-hojtaler",
       "/festlys",
       "/festlyd",
@@ -587,16 +687,20 @@
     ]
   },
   "design": {
+    "logo": "/images/logo-lejhojtaler.png",
     "color": "#ffd600 (amber/guld brand-farve)",
     "theme": "Mørkt fest-tema (#07060b baggrund, glasmorfisme-kort)",
     "mobile_priority": true,
     "features": [
+      "Logo (LejHøjtaler) i header/forside",
       "Fixed mood-baggrunde der crossfader mellem højtalervalg",
       "Glass-morphism kort (rgba(255,255,255,0.04) + backdrop-blur)",
       "Letvægts light-bar animation",
       "Exit-intent popup med nyhedsbrev",
-      "Summer banner (25% rabat juni/juli)",
       "Sticky book-bar på mobil"
+    ],
+    "removed": [
+      "Summer banner (25% rabat juni/juli) — fjernet"
     ]
   },
   "infrastructure": {
@@ -635,6 +739,41 @@
     "note": "Alle 15 annoncegrupper er live. Alle landingssider er deployed."
   },
   "tasks": [
+    {
+      "id": "forside-produktgrid-flow",
+      "title": "Ny forside: logo + USP'er + produktgrid + Book-flow",
+      "description": "Ombyg forsiden: logo (/images/logo-lejhojtaler.png) + LejHøjtaler.dk, tre USP'er (5 dages leje samme pris, billig levering i hele København, alle kabler inkluderet), produktgrid 3 pr. linje sorteret efter popularitet med Book-knap. Flow: Book → produktside → Book → dato → 'Tilføj flere produkter'. Se forside + produktflow i PRD.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "produkt-ads-sider",
+      "title": "Selvstændige produktsider til ads",
+      "description": "Lav egne URL-produktsider: /soundboks-4, /mackie-thump-go, /hojtalerpakke-lille, /hojtalerpakke-normal. Hver side er ads-landing med produktinfo + Book → dato-flow.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "soundboks-popup-mackie",
+      "title": "Popup på Soundboks → henvisning til Mackie Thump GO",
+      "description": "På /soundboks-4: popup der henviser til Mackie Thump GO som alternativ (CTA til /mackie-thump-go).",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "mersalg-addons",
+      "title": "Opsæt mersalg (mikrofon, ekstra batteri, stativer m.m.)",
+      "description": "Under booking/før checkout: mersalg for mikrofon, ekstra batteri, stativer, bæretaske, lys, røg, levering. Se produktflow.mersalg.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "fjern-juli-rabat",
+      "title": "Fjern juli-/summer-rabat",
+      "description": "Fjern summer sale / 25% rabat juni-juli: banner, pricing_rules, i18n-tekster og alle steder rabatten nævnes. Ingen sæsonrabat fremover.",
+      "priority": "high",
+      "status": "todo"
+    },
     {
       "id": "forside-thump-go",
       "title": "Forsiden skal fremhæve Mackie Thump GO (batterihøjtaler)",
@@ -695,6 +834,11 @@
       "AVBookingWizard-komponent oprettet (manglede i repo — build var brudt)"
     ],
     "pending": [
+      "Ny forside: logo + 3 USP'er + produktgrid + Book-flow",
+      "Produktsider til ads: /soundboks-4, /mackie-thump-go, /hojtalerpakke-lille, /hojtalerpakke-normal",
+      "Soundboks-popup → Mackie Thump GO",
+      "Mersalg: mikrofon, ekstra batteri, stativer m.m.",
+      "Fjern juli-/summer-rabat",
       "Google Business Profile",
       "Nye produkter (discokugle, lyskæder, lysshow, projektor, skærm, mikrofon, headset) som valgbare i BookingFlow checkout"
     ]
