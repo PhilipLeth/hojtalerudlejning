@@ -80,7 +80,7 @@ export default function SoundboksAlternativPage() {
             Fra 399 kr. i stedet for 5.000+ kr.
           </p>
           <a
-            href="/#book"
+            href="/?product=soundboks#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book højtaler nu
@@ -214,7 +214,7 @@ export default function SoundboksAlternativPage() {
                   399 kr<span className="text-lg font-normal text-white/40">/weekend</span>
                 </p>
                 <a
-                  href="/#book"
+                  href="/?product=soundboks#book"
                   className="inline-block rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95"
                 >
                   Book nu
@@ -236,7 +236,7 @@ export default function SoundboksAlternativPage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 399 kr/weekend.
           </p>
           <a
-            href="/#book"
+            href="/?product=soundboks#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book højtaler nu

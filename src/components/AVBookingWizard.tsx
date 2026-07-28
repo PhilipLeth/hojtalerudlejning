@@ -15,15 +15,14 @@ interface EventType {
 const EVENT_TYPES: EventType[] = [
   { id: "firmapraesentation", label: "Firmapræsentation", emoji: "💼", recommended: ["projektor", "traadloes_mikrofon"], optional: ["skaerm_55", "headset", "festival"] },
   { id: "konference", label: "Konference / møde", emoji: "🎤", recommended: ["skaerm_55", "headset", "traadloes_mikrofon"], optional: ["projektor", "festival"] },
-  { id: "bryllup", label: "Bryllup", emoji: "💍", recommended: ["traadloes_mikrofon", "festival", "lyskaeder"], optional: ["projektor", "discokugle", "lysshow"] },
-  { id: "fest", label: "Fest / fødselsdag", emoji: "🎉", recommended: ["festival", "discokugle"], optional: ["lysshow", "lyskaeder", "traadloes_mikrofon"] },
+  { id: "bryllup", label: "Bryllup", emoji: "💍", recommended: ["traadloes_mikrofon", "festival", "lyskaeder"], optional: ["projektor", "discokugle"] },
+  { id: "fest", label: "Fest / fødselsdag", emoji: "🎉", recommended: ["festival", "discokugle"], optional: ["lyskaeder", "traadloes_mikrofon"] },
   { id: "undervisning", label: "Undervisning / workshop", emoji: "📚", recommended: ["projektor", "headset"], optional: ["skaerm_55", "traadloes_mikrofon"] },
 ];
 
 const PRODUCT_INFO: Record<string, { name: string; href: string }> = {
   discokugle: { name: "Discokugle", href: "/discokugle" },
   lyskaeder: { name: "Lyskæder", href: "/lyskaeder" },
-  lysshow: { name: "Lysshow-pakke", href: "/lysshow" },
   projektor: { name: "Projektor", href: "/projektor" },
   skaerm_55: { name: '55" Storskærm', href: "/skaerm" },
   traadloes_mikrofon: { name: "Trådløs mikrofon", href: "/traadloes-mikrofon" },
@@ -37,7 +36,7 @@ function ProductCard({ id, badge }: { id: string; badge?: string }) {
   const speaker = speakers.find((sp) => sp.id === id);
 
   const info = speaker
-    ? { name: speaker.da.name, href: "/#book", price: speaker.price, image: speaker.product }
+    ? { name: speaker.da.name, href: `/?product=${id}#book`, price: speaker.price, image: speaker.product }
     : rental && PRODUCT_INFO[id]
       ? { ...PRODUCT_INFO[id], price: rental.price, image: rental.image }
       : null;

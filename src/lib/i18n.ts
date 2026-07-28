@@ -31,7 +31,7 @@ export const t = {
       cablesIncluded: "Inkl. alle kabler (iPhone m/ USB-C adapter, AUX, strøm)",
       fromPerWeekend: "fra pr. weekend",
       soldOut: "Udsolgt",
-      fewLeft: "Faa ledige",
+      fewLeft: "Få ledige",
       effectsOnlyTitle: "Uden højtalere?",
       effectsOnlyDesc: "Lej kun lys og/eller røgmaskine",
       effectsOnlyLabel: "Kun effekter",

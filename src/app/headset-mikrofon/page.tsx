@@ -76,7 +76,7 @@ export default function HeadsetMikrofonPage() {
             Trådløst headset til præsentationer og konferencer. Hands-free.
           </p>
           <a
-            href="/#book"
+            href="/?product=headset#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book headset nu
@@ -170,7 +170,7 @@ export default function HeadsetMikrofonPage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 350 kr/weekend.
           </p>
           <a
-            href="/#book"
+            href="/?product=headset#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book headset nu

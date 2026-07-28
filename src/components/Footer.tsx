@@ -8,7 +8,7 @@ function NewsletterForm({ locale }: { locale: Locale }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
 
-  const label = locale === "da" ? "Faa tilbud og nyheder" : "Get deals and news";
+  const label = locale === "da" ? "Få tilbud og nyheder" : "Get deals and news";
   const placeholder = locale === "da" ? "Din email" : "Your email";
   const btnText = locale === "da" ? "Tilmeld" : "Subscribe";
   const doneText = locale === "da" ? "Tak! Du er tilmeldt." : "Thanks! You're subscribed.";
@@ -62,7 +62,7 @@ function NewsletterForm({ locale }: { locale: Locale }) {
 
 export default function Footer({ locale = "da" }: { locale?: Locale }) {
   const s = t[locale].footer;
-  const newsletterLabel = locale === "da" ? "Faa tilbud og nyheder" : "Get deals and news";
+  const newsletterLabel = locale === "da" ? "Få tilbud og nyheder" : "Get deals and news";
   return (
     <footer className="relative z-20 border-t border-white/5 bg-[#07060b] px-4 py-12 text-center text-sm text-white/30">
       <p className="font-medium text-white/50">Scharling Studio</p>

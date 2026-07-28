@@ -80,7 +80,7 @@ export default function FestlysPage() {
             Lysbar fra 500 kr. · Røgmaskine fra 250 kr.
           </p>
           <a
-            href="/#book"
+            href="/?product=lys#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book festlys nu
@@ -195,7 +195,7 @@ export default function FestlysPage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag.
           </p>
           <a
-            href="/#book"
+            href="/?product=lys#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book festlys nu

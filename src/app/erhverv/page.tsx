@@ -24,7 +24,7 @@ const useCases = [
   {
     title: "Produktlancering",
     desc: "Imponér gæsterne med professionel lyd, lys og storskærm. Vi klarer opsætningen.",
-    equipment: "Højtalere + lysshow + projektor + mikrofon",
+    equipment: "Højtalere + lys + projektor + mikrofon",
     icon: "🚀",
   },
   {

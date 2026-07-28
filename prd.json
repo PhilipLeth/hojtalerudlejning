@@ -1,6 +1,6 @@
 {
   "project": "lejhojtaler.dk",
-  "description": "Udlejning af højtalere, lys, røgmaskine, discokugle, lyskæder, lysshow og AV-udstyr i København. App-feel booking, lavest mulig friktion, betaling ved afhentning. Dark tema med amber/guld brand-farve (#ffd600).",
+  "description": "Udlejning af højtalere, lys, røgmaskine, discokugle, lyskæder og AV-udstyr i København. App-feel booking, lavest mulig friktion, betaling ved afhentning. Dark tema med amber/guld brand-farve (#ffd600).",
   "business": {
     "name": "Scharling Studio",
     "cvr": "40994904",
@@ -110,21 +110,6 @@
       "status": "planned"
     },
     {
-      "id": "lysshow",
-      "category": "lys",
-      "name_da": "Lysshow-pakke",
-      "description_da": "Komplet lysshow med 2x moving head og DMX-controller. Forudprogrammerede shows — ingen teknik nødvendig.",
-      "price_dkk": 800,
-      "includes": [
-        "2x moving head",
-        "DMX-controller",
-        "Stativer",
-        "Alle kabler",
-        "Forudprogrammerede shows"
-      ],
-      "status": "planned"
-    },
-    {
       "id": "projektor",
       "category": "av",
       "name_da": "Projektor",
@@ -199,29 +184,45 @@
       "image": "/images/product-rog.png",
       "status": "live"
     },
-    {
-      "id": "stativer",
-      "name_da": "Højtalerstativer",
-      "description_da": "2 professionelle stativer — løfter lyden op i øjenhøjde",
-      "price_dkk": 100,
-      "image": "/images/product-stativer.png",
-      "status": "live"
-    },
-    {
-      "id": "taske",
-      "name_da": "Bæretaske",
-      "description_da": "Polstret sportstaske til sikker transport på cykel eller i bil",
-      "price_dkk": 100,
-      "image": "/images/product-taske.png",
-      "status": "live"
-    },
-    {
-      "id": "levering",
-      "name_da": "Billig levering, opsætning & afhentning i hele København",
-      "price_dkk": 500,
-      "image": null,
-      "status": "live"
-    }
+  {
+    "id": "mikrofon",
+    "name_da": "Trådløs mikrofon",
+    "description_da": "Professionel håndholdt mikrofon til taler og karaoke",
+    "price_dkk": 300,
+    "image": "/images/product-mikrofon.png",
+    "status": "live"
+  },
+  {
+    "id": "batteri",
+    "name_da": "Ekstra batteri",
+    "description_da": "Ekstra batteri til batterihøjtaler",
+    "price_dkk": 150,
+    "image": "/images/product-thumpgo.svg",
+    "status": "live"
+  },
+  {
+    "id": "stativer",
+    "name_da": "Højtalerstativer",
+    "description_da": "2 professionelle stativer — løfter lyden op i øjenhøjde",
+    "price_dkk": 100,
+    "image": "/images/product-stativer.png",
+    "status": "live"
+  },
+  {
+    "id": "taske",
+    "name_da": "Bæretaske",
+    "description_da": "Polstret sportstaske til sikker transport på cykel eller i bil",
+    "price_dkk": 100,
+    "image": "/images/product-taske.png",
+    "status": "live"
+  },
+  {
+    "id": "levering",
+    "name_da": "Billig levering, opsætning & afhentning i hele København",
+    "price_dkk": 500,
+    "image": null,
+    "status": "live"
+  }
   ],
   "pricing_rules": {
     "base": "Samme pris uanset antal dage (1-5)",
@@ -311,7 +312,7 @@
     "home": {
       "path": "/",
       "description": "Forside: logo + brand-header (LejHøjtaler.dk) → 3 USP'er → produktgrid (3 kolonner, sorteret efter popularitet) med Book-knap pr. produkt. Se forside + produktflow.",
-      "status": "planned"
+      "status": "live"
     },
     "soundboks_4": {
       "path": "/soundboks-4",
@@ -319,7 +320,7 @@
       "ads": true,
       "description": "Selvstændig produktside for Soundboks 4 (ads-landing). Popup henviser til Mackie Thump GO.",
       "checkout_preselect": "soundboks",
-      "status": "planned"
+      "status": "live"
     },
     "mackie_thump_go": {
       "path": "/mackie-thump-go",
@@ -327,7 +328,7 @@
       "ads": true,
       "description": "Selvstændig produktside for Mackie Thump GO (ads-landing).",
       "checkout_preselect": "thumpgo",
-      "status": "planned"
+      "status": "live"
     },
     "hojtalerpakke_lille": {
       "path": "/hojtalerpakke-lille",
@@ -335,7 +336,7 @@
       "ads": true,
       "description": "Selvstændig produktside for Højtalerpakke lille / Lille højtalerpakke (ads-landing).",
       "checkout_preselect": "party",
-      "status": "planned"
+      "status": "live"
     },
     "hojtalerpakke_normal": {
       "path": "/hojtalerpakke-normal",
@@ -343,7 +344,7 @@
       "ads": true,
       "description": "Selvstændig produktside for Højtalerpakke normal / Stor højtalerpakke (ads-landing).",
       "checkout_preselect": "festival",
-      "status": "planned"
+      "status": "live"
     },
     "lej_hojtaler": {
       "path": "/lej-hojtaler",
@@ -429,9 +430,8 @@
     "lysshow": {
       "path": "/lysshow",
       "ads_group": "AG 6 - Lysshow",
-      "description": "Ads-landing for lysshow. Moving heads + DMX detaljer. Kombiner med røg og lyd.",
-      "checkout_preselect": "lysshow",
-      "status": "live"
+      "description": "Fjernet — lysshow-pakke udgår.",
+      "status": "removed"
     },
     "av_udstyr": {
       "path": "/av-udstyr",
@@ -508,8 +508,7 @@
         ],
         "optional": [
           "projektor",
-          "discokugle",
-          "lysshow"
+          "discokugle"
         ]
       },
       {
@@ -520,7 +519,6 @@
           "discokugle"
         ],
         "optional": [
-          "lysshow",
           "lyskaeder",
           "traadloes_mikrofon"
         ]
@@ -570,7 +568,6 @@
           "/festlys",
           "/discokugle",
           "/lyskaeder",
-          "/lysshow",
           "/roegmaskine"
         ]
       },
@@ -678,7 +675,6 @@
       "/en",
       "/discokugle",
       "/lyskaeder",
-      "/lysshow",
       "/av-udstyr",
       "/projektor",
       "/skaerm",
@@ -696,11 +692,11 @@
       "Fixed mood-baggrunde der crossfader mellem højtalervalg",
       "Glass-morphism kort (rgba(255,255,255,0.04) + backdrop-blur)",
       "Letvægts light-bar animation",
-      "Exit-intent popup med nyhedsbrev",
       "Sticky book-bar på mobil"
     ],
     "removed": [
-      "Summer banner (25% rabat juni/juli) — fjernet"
+      "Summer banner (25% rabat juni/juli) — fjernet",
+      "Exit-intent / ExitPopup — fjernet (poppede hele tiden + Faa/paa)"
     ]
   },
   "infrastructure": {
@@ -744,35 +740,35 @@
       "title": "Ny forside: logo + USP'er + produktgrid + Book-flow",
       "description": "Ombyg forsiden: logo (/images/logo-lejhojtaler.png) + LejHøjtaler.dk, tre USP'er (5 dages leje samme pris, billig levering i hele København, alle kabler inkluderet), produktgrid 3 pr. linje sorteret efter popularitet med Book-knap. Flow: Book → produktside → Book → dato → 'Tilføj flere produkter'. Se forside + produktflow i PRD.",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "produkt-ads-sider",
       "title": "Selvstændige produktsider til ads",
       "description": "Lav egne URL-produktsider: /soundboks-4, /mackie-thump-go, /hojtalerpakke-lille, /hojtalerpakke-normal. Hver side er ads-landing med produktinfo + Book → dato-flow.",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "soundboks-popup-mackie",
       "title": "Popup på Soundboks → henvisning til Mackie Thump GO",
       "description": "På /soundboks-4: popup der henviser til Mackie Thump GO som alternativ (CTA til /mackie-thump-go).",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "mersalg-addons",
       "title": "Opsæt mersalg (mikrofon, ekstra batteri, stativer m.m.)",
       "description": "Under booking/før checkout: mersalg for mikrofon, ekstra batteri, stativer, bæretaske, lys, røg, levering. Se produktflow.mersalg.",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "fjern-juli-rabat",
       "title": "Fjern juli-/summer-rabat",
       "description": "Fjern summer sale / 25% rabat juni-juli: banner, pricing_rules, i18n-tekster og alle steder rabatten nævnes. Ingen sæsonrabat fremover.",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "forside-thump-go",
@@ -823,7 +819,7 @@
       "Blog (11 SEO-posts)",
       "Lejevilkår, Om-side, København-side",
       "GA4 + GTM + Google Ads conversion tracking",
-      "Exit-intent popup, summer banner, sticky book-bar",
+      "Exit-intent popup, sticky book-bar",
       "15 Google Ads annoncegrupper live med landingssider",
       "Sitemap opdateret med alle nye sider",
       "Mackie Thump GO batterihøjtaler (350 kr) tilføjet som produkt og fremhævet på forsiden (da + en)",
@@ -831,16 +827,18 @@
       "Billig levering i København fremhævet: TopBar, hero, FAQ, /kobenhavn, JSON-LD",
       "75\" skærm (skaerm_75) fjernet",
       "Produktkatalog backend-drevet: /api/products (KV) + admin-editor /admin/produkter — priser, tekster (da/en), billeder og synlighed kan redigeres uden deploy",
-      "AVBookingWizard-komponent oprettet (manglede i repo — build var brudt)"
+      "AVBookingWizard-komponent oprettet (manglede i repo — build var brudt)",
+      "Book-knapper på produktsider linker til /?product=ID#book (lyskæder, discokugle, AV, lys, røg, soundboks)",
+      "Lysshow-pakke fjernet (side, menu, katalog)",
+      "Exit-popup fjernet (Faa/paa + poppede hele tiden)",
+      "Ny forside: logo + USP'er + produktgrid med Book",
+      "Produktsider: /soundboks-4, /mackie-thump-go, /hojtalerpakke-lille, /hojtalerpakke-normal",
+      "Soundboks-popup → Mackie Thump GO",
+      "Mersalg: mikrofon + ekstra batteri tilføjet som addons",
+      "Juli-/summer-rabat deaktiveret"
     ],
     "pending": [
-      "Ny forside: logo + 3 USP'er + produktgrid + Book-flow",
-      "Produktsider til ads: /soundboks-4, /mackie-thump-go, /hojtalerpakke-lille, /hojtalerpakke-normal",
-      "Soundboks-popup → Mackie Thump GO",
-      "Mersalg: mikrofon, ekstra batteri, stativer m.m.",
-      "Fjern juli-/summer-rabat",
-      "Google Business Profile",
-      "Nye produkter (discokugle, lyskæder, lysshow, projektor, skærm, mikrofon, headset) som valgbare i BookingFlow checkout"
+      "Google Business Profile"
     ]
   }
 }

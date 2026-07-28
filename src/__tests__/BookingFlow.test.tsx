@@ -228,7 +228,7 @@ describe("BookingFlow - Sold out handling", () => {
 
     render(<BookingFlow />);
     await waitFor(() => {
-      const fewLeft = screen.queryByText("Faa ledige");
+      const fewLeft = screen.queryByText("Få ledige");
       if (fewLeft) {
         expect(fewLeft).toBeInTheDocument();
       }

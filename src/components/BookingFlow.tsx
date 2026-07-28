@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useMemo, useEffect, useCallback, FormEvent } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef, FormEvent } from "react";
 import { type Locale, t } from "@/lib/i18n";
 
-import { dayMultiplier, isSummerSale, applyDiscount } from "@/lib/products";
+import { dayMultiplier, isSummerSale, applyDiscount, rentalProducts } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 
 /* ───── Helpers ───── */
@@ -226,6 +226,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   const [availOverview, setAvailOverview] = useState<AvailabilityData | null>(null);
   const [availSelected, setAvailSelected] = useState<AvailabilityData | null>(null);
   const [soldOutMsg, setSoldOutMsg] = useState("");
+  const preselected = useRef(false);
 
   // Fetch availability for the next 8 weekends on mount (overview for step 1)
   useEffect(() => {
@@ -239,6 +240,40 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
       .then((data: AvailabilityData) => setAvailOverview(data))
       .catch(() => {});
   }, []);
+
+  // Preselect product from ?product=ID (ads landing Book-knapper) — once
+  useEffect(() => {
+    if (preselected.current || typeof window === "undefined") return;
+    const product = new URLSearchParams(window.location.search).get("product");
+    if (!product) return;
+
+    // Lys / røg as effects-only
+    if (product === "lys" || product === "rog") {
+      console.log("[booking] Preselect effects-only:", product);
+      preselected.current = true;
+      setSpeaker("effects-only");
+      setSelectedAddons([product]);
+      setStep(2);
+      return;
+    }
+
+    // Speakers
+    if (speakers.some((sp) => sp.id === product)) {
+      console.log("[booking] Preselect speaker:", product);
+      preselected.current = true;
+      setSpeaker(product);
+      setStep(2);
+      return;
+    }
+
+    // Standalone rental products (lyskæder, discokugle, AV, …)
+    if (rentalProducts.some((p) => p.id === product)) {
+      console.log("[booking] Preselect rental:", product);
+      preselected.current = true;
+      setSpeaker(product);
+      setStep(2);
+    }
+  }, [speakers]);
 
   // Fetch availability for selected date range (step 2 validation)
   const checkDateAvailability = useCallback(async (pickup: Date, ret: Date) => {
@@ -262,7 +297,9 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
       } else if (speaker) {
         const remaining = getRemaining(data, speaker);
         const blocked = isBlockedForProduct(data, speaker);
-        if (remaining <= 0 || blocked) {
+        // Rental products may have no inventory entry yet — don't block
+        const isKnownInventory = data.inventory[speaker] !== undefined;
+        if (isKnownInventory && (remaining <= 0 || blocked)) {
           setSoldOutMsg(s.soldOutPeriod);
         }
         // Also check lys if it's an addon
@@ -280,6 +317,13 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
 
   const isEffectsOnly = speaker === "effects-only";
   const selectedSpeaker = speakers.find((sp) => sp.id === speaker);
+  const selectedRental = rentalProducts.find((p) => p.id === speaker);
+  const isRentalOnly = !!selectedRental;
+  const rentalName = selectedRental
+    ? locale === "en"
+      ? selectedRental.name_en
+      : selectedRental.name_da
+    : null;
   const hasLights = selectedAddons.includes("lys");
   const hasDelivery = selectedAddons.includes("levering");
 
@@ -287,7 +331,11 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   const summerLabel = t[locale].summer;
   const rentalDays = pickupDate && returnDate ? diffDays(pickupDate, returnDate) : 3;
   const multiplier = dayMultiplier[rentalDays] ?? 1;
-  const speakerBasePrice = selectedSpeaker ? Math.round(selectedSpeaker.price * multiplier) : 0;
+  const speakerBasePrice = selectedSpeaker
+    ? Math.round(selectedSpeaker.price * multiplier)
+    : selectedRental
+      ? Math.round(selectedRental.price * multiplier)
+      : 0;
   const speakerPrice = summer ? applyDiscount(speakerBasePrice) : speakerBasePrice;
   const addonsBasePrice = addons
     .filter((a) => selectedAddons.includes(a.id))
@@ -352,9 +400,13 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          speaker: isEffectsOnly ? (locale === "en" ? "Effects only" : "Kun effekter") : selectedSpeaker?.name,
+          speaker: isEffectsOnly
+            ? locale === "en"
+              ? "Effects only"
+              : "Kun effekter"
+            : selectedSpeaker?.name ?? rentalName,
           speakerId: isEffectsOnly ? "effects-only" : speaker,
-          speakerSize: isEffectsOnly ? "—" : selectedSpeaker?.size,
+          speakerSize: isEffectsOnly || isRentalOnly ? "—" : selectedSpeaker?.size,
           period: periodLabel,
           pickup: pickupDate?.toISOString(),
           returnDate: returnDate?.toISOString(),
@@ -418,6 +470,15 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
             </span>
           </div>
         )}
+        {isRentalOnly && rentalName && (
+          <div className="flex justify-between text-sm text-white/50">
+            <span>{rentalName} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
+            <span>
+              {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
+              {speakerPrice} kr
+            </span>
+          </div>
+        )}
         {addons
           .filter((a) => selectedAddons.includes(a.id))
           .map((a) => (
@@ -444,6 +505,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   if (done) {
     const orderItems = [
       ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
+      ...(isRentalOnly && rentalName ? [{ label: rentalName, value: `${speakerPrice} kr` }] : []),
       ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: a.label, value: `${a.price} kr` })),
     ];
 
@@ -491,10 +553,10 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
           <div className="glass rounded-2xl overflow-hidden mb-4">
             {/* Product preview */}
             <div className="flex items-center gap-4 bg-white/[0.02] p-4">
-              <img src={isEffectsOnly ? (hasLights ? "/images/product-lys.png" : "/images/product-rog.png") : selectedSpeaker?.product} alt={isEffectsOnly ? (hasLights ? "Lys-pakke med LED-lamper og centereffekt" : "Røgmaskine til fest") : `${selectedSpeaker?.name ?? "Højtalerpakke"}`} className="h-16 w-16 object-contain rounded-lg" />
+              <img src={isEffectsOnly ? (hasLights ? "/images/product-lys.png" : "/images/product-rog.png") : selectedRental?.image ?? selectedSpeaker?.product} alt={isEffectsOnly ? (hasLights ? "Lys-pakke med LED-lamper og centereffekt" : "Røgmaskine til fest") : rentalName ?? `${selectedSpeaker?.name ?? "Højtalerpakke"}`} className="h-16 w-16 object-contain rounded-lg" />
               <div>
-                <p className="font-semibold">{isEffectsOnly ? s.effectsOnlyLabel : `${selectedSpeaker?.name}${s.speakerSuffix}`}</p>
-                <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && a.id !== "levering").map((a) => a.label).join(" + ") : `${selectedSpeaker?.size} — ${selectedSpeaker?.capacity}`}</p>
+                <p className="font-semibold">{isEffectsOnly ? s.effectsOnlyLabel : isRentalOnly ? rentalName : `${selectedSpeaker?.name}${s.speakerSuffix}`}</p>
+                <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && a.id !== "levering").map((a) => a.label).join(" + ") : isRentalOnly ? "" : `${selectedSpeaker?.size} — ${selectedSpeaker?.capacity}`}</p>
               </div>
             </div>
 
@@ -864,6 +926,13 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
 
             <PriceSummary />
 
+            <a
+              href="/#produkter"
+              className="block text-center text-sm text-brand-400 transition hover:text-brand-300"
+            >
+              {locale === "en" ? "+ Add more products" : "+ Tilføj flere produkter"}
+            </a>
+
             <div className="flex gap-3 pt-2">
               <button onClick={prevStep} className="flex-1 rounded-xl border border-white/10 py-3 font-medium transition hover:bg-white/5">
                 {s.back}
@@ -942,6 +1011,15 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
               {selectedSpeaker && (
                 <div className="flex justify-between text-sm text-white/50">
                   <span>{selectedSpeaker.name}{s.speakerSuffix} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
+                  <span>
+                    {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
+                    {speakerPrice} kr
+                  </span>
+                </div>
+              )}
+              {isRentalOnly && rentalName && (
+                <div className="flex justify-between text-sm text-white/50">
+                  <span>{rentalName} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
                   <span>
                     {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
                     {speakerPrice} kr

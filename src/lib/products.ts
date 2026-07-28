@@ -111,17 +111,17 @@ export const speakers: Speaker[] = [
     sizeClass: "stor",
     weight: "11 kg",
     da: {
-      name: "Soundboks Mix",
-      size: "Soundboks Go + Mix",
+      name: "Soundboks 4",
+      size: "Soundboks 4",
       capacity: "Op til 50 pers.",
-      desc: "Den populære Soundboks med kraftig bas og Bluetooth. Batteridrevet — ingen strøm nødvendig. Perfekt til udendørs fester.",
+      desc: "Den populære Soundboks 4 med kraftig bas og Bluetooth. Batteridrevet — ingen strøm nødvendig. Perfekt til udendørs fester.",
       extra: "Inkl. oplader og AUX-kabel.",
     },
     en: {
-      name: "Soundboks Mix",
-      size: "Soundboks Go + Mix",
+      name: "Soundboks 4",
+      size: "Soundboks 4",
       capacity: "Up to 50 people",
-      desc: "The popular Soundboks with powerful bass and Bluetooth. Battery-powered — no power needed. Perfect for outdoor parties.",
+      desc: "The popular Soundboks 4 with powerful bass and Bluetooth. Battery-powered — no power needed. Perfect for outdoor parties.",
       extra: "Incl. charger and AUX cable.",
     },
   },
@@ -173,6 +173,20 @@ export const addons: Addon[] = [
     en: { label: "Speaker stands", desc: "2 professional stands — lifts the sound to ear level" },
   },
   {
+    id: "mikrofon",
+    price: 300,
+    image: "/images/product-mikrofon.png",
+    da: { label: "Trådløs mikrofon", desc: "Professionel håndholdt mikrofon til taler og karaoke" },
+    en: { label: "Wireless mic", desc: "Professional handheld mic for speeches and karaoke" },
+  },
+  {
+    id: "batteri",
+    price: 150,
+    image: "/images/product-thumpgo.svg",
+    da: { label: "Ekstra batteri", desc: "Ekstra batteri til batterihøjtaler — mere spilletid uden strøm" },
+    en: { label: "Extra battery", desc: "Extra battery for battery speakers — more playtime without power" },
+  },
+  {
     id: "taske",
     price: 100,
     image: "/images/product-taske.png",
@@ -213,18 +227,14 @@ export const dayMultiplier: Record<number, number> = {
   5: 1.0,
 };
 
-/* ───── Summer sale: 25% off everything in June & July ───── */
-
-const SUMMER_DISCOUNT = 0.25;
-const SUMMER_MONTHS = [5, 6]; // 0-indexed: 5 = June, 6 = July
+/* ───── Summer sale disabled (juli-rabat fjernet) ───── */
 
 export function isSummerSale(): boolean {
-  return SUMMER_MONTHS.includes(new Date().getMonth());
+  return false;
 }
 
 export function applyDiscount(price: number): number {
-  if (!isSummerSale()) return price;
-  return Math.round(price * (1 - SUMMER_DISCOUNT));
+  return price;
 }
 
 /** Cheapest speaker price — use in meta tags, hero, etc. */
