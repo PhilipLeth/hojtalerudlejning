@@ -24,7 +24,7 @@ export default function HojtalerpakkeNormalPage() {
       name="Højtalerpakke normal"
       price={700}
       headline="Lej højtalerpakke normal i København"
-      sub="To kraftige 12\" EV aktive højtalere — klar lyd til større rum og udendørs."
+      sub={'To kraftige 12" EV aktive højtalere - klar lyd til større rum og udendørs.'}
       image="/images/product-festival.png"
       imageAlt="Normal højtalerpakke til leje i København"
       productId="festival"

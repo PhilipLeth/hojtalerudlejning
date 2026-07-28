@@ -28,12 +28,12 @@ export default function Soundboks4Page() {
         name="Soundboks 4"
         price={600}
         headline="Lej Soundboks 4 i København"
-        sub="Batteridrevet højtaler med kraftig bas — ingen strøm nødvendig."
+        sub="Batteridrevet højtaler med kraftig bas - ingen strøm nødvendig."
         image="/images/product-soundboks.png"
         imageAlt="Soundboks 4 til leje i København"
         productId="soundboks"
         bullets={[
-          "Batteridrevet — tag den med overalt",
+          "Batteridrevet - tag den med overalt",
           "Kraftig bas til udendørs fest",
           "Bluetooth + AUX",
           "Oplader og kabler inkluderet",
@@ -44,7 +44,7 @@ export default function Soundboks4Page() {
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-3 text-2xl font-bold">Billigere alternativ?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
-              Mackie Thump GO er lettere og billigere — perfekt hvis du ikke behøver Soundboks-bas.
+              Mackie Thump GO er lettere og billigere - perfekt hvis du ikke behøver Soundboks-bas.
             </p>
             <Link
               href="/mackie-thump-go"

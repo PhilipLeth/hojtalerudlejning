@@ -24,7 +24,7 @@ export default function HojtalerpakkeLillePage() {
       name="Højtalerpakke lille"
       price={399}
       headline="Lej højtalerpakke lille i København"
-      sub="To kompakte 10\" Alto højtalere med Bluetooth — klar til cyklen."
+      sub={'To kompakte 10" Alto højtalere med Bluetooth - klar til cyklen.'}
       image="/images/product-party.png"
       imageAlt="Lille højtalerpakke til leje i København"
       productId="party"
