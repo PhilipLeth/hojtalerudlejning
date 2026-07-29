@@ -3,8 +3,8 @@
 import Link from "next/link";
 
 const USPS = [
-  { title: "5 dages leje", desc: "Samme pris uanset antal dage" },
-  { title: "Billig levering", desc: "I hele København" },
+  { title: "5 dages leje", desc: "Én pris for op til 5 dage" },
+  { title: "Billig levering", desc: "500 kr i hele København" },
   { title: "Alle kabler inkl.", desc: "Klar til plug-and-play" },
 ];
 
@@ -20,14 +20,13 @@ export default function HomeHero() {
       <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-brand-500/10 blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-3xl text-center">
-        <Link href="/" className="inline-block">
-          <img
-            src="/images/logo-lejhojtaler.png"
-            alt="LejHøjtaler.dk"
-            className="mx-auto h-16 w-auto sm:h-24"
-            width={320}
-            height={156}
-          />
+        <Link href="/" className="inline-block group">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            <span className="bg-gradient-to-r from-brand-400 to-brand-500 bg-clip-text text-transparent transition group-hover:from-brand-300 group-hover:to-brand-400">
+              LejHøjtaler
+            </span>
+            <span className="text-white/35">.dk</span>
+          </h1>
         </Link>
         <p className="mt-4 text-sm font-medium uppercase tracking-[0.2em] text-brand-400">
           København · Ingen depositum

@@ -225,7 +225,7 @@
   }
   ],
   "pricing_rules": {
-    "base": "Samme pris uanset antal dage (1-5)",
+    "base": "Én pris for 1–5 dages leje (max 5 dage)",
     "day_multipliers": "Ingen — fast pris uanset lejeperiode",
     "max_rental_days": 5,
     "summer_sale": null,
@@ -252,8 +252,8 @@
     "usps": {
       "layout": "Tre KPI'er/USP's i én linje (ikoner eller bokse) direkte under header",
       "items": [
-        "5 dages leje til samme pris",
-        "Billig levering i hele København",
+        "5 dages leje til én pris (max 5 dage)",
+        "Billig levering i hele København fra 500 kr",
         "Alle kabler inkluderet"
       ]
     },
@@ -840,5 +840,25 @@
     "pending": [
       "Google Business Profile"
     ]
+  },
+  "admin_improvements": {
+    "image_upload": {
+      "status": "done",
+      "description": "ImageField bruger nu fil-upload (klik eller drag-and-drop) i stedet for manuel SVG-sti. Billeder gemmes i KV og serveres via /api/image/<key>. Maks 500 kB."
+    },
+    "addon_whitelist_per_product": {
+      "status": "done",
+      "description": "Hvert produkt (Speaker + RentalProduct) har en valgfri allowedAddons-liste i admin. Undefined = vis alle addons. Tom liste = ingen addons vises. BookingFlow filtrerer addons baseret på det valgte produkt."
+    },
+    "remove_reset_button": {
+      "status": "done",
+      "description": "Nulstil til standard-knap fjernet fra /admin/produkter."
+    }
+  },
+  "booking_improvements": {
+    "multi_product_cart": {
+      "status": "done",
+      "description": "Kunden kan tilføje et produkt til kurven fra step 3 (Tilvalg) og derefter vælge et nyt produkt fra step 1 — med samme dato. Kurven vises i step 3 og step 4 (prisopsummering). Alle produkter sendes med i booking-API-kaldet (cartItems-felt)."
+    }
   }
 }

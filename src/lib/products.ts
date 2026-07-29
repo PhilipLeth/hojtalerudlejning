@@ -28,6 +28,8 @@ export interface Speaker {
   sizeClass: SizeClass;
   weight: string;
   hidden?: boolean;
+  /** Addon IDs shown to the customer during booking. Undefined = show all. */
+  allowedAddons?: string[];
   da: SpeakerText;
   en: SpeakerText;
 }
@@ -53,6 +55,11 @@ export interface RentalProduct {
   image: string;
   name_da: string;
   name_en: string;
+  desc_da?: string;
+  desc_en?: string;
+  hidden?: boolean;
+  /** Addon IDs shown to the customer during booking. Undefined = show all. */
+  allowedAddons?: string[];
 }
 
 export const speakers: Speaker[] = [
@@ -210,12 +217,51 @@ export const addons: Addon[] = [
 
 /** Standalone rental products (lys, av) — bookable via /?product=ID#book */
 export const rentalProducts: RentalProduct[] = [
-  { id: "discokugle", category: "lys", price: 250, image: "/images/product-discokugle.png", name_da: "Discokugle", name_en: "Disco ball" },
-  { id: "lyskaeder", category: "lys", price: 200, image: "/images/product-lyskaeder.svg", name_da: "Lyskæder", name_en: "Fairy lights" },
-  { id: "projektor", category: "av", price: 500, image: "/images/product-projektor.png", name_da: "Projektor", name_en: "Projector" },
-  { id: "skaerm_55", category: "av", price: 600, image: "/images/product-skaerm.png", name_da: '55" Storskærm', name_en: '55" Screen' },
-  { id: "traadloes_mikrofon", category: "av", price: 300, image: "/images/product-mikrofon.png", name_da: "Trådløs mikrofon", name_en: "Wireless mic" },
-  { id: "headset", category: "av", price: 350, image: "/images/product-headset.png", name_da: "Trådløst headset", name_en: "Wireless headset" },
+  { id: "discokugle", category: "lys", price: 250, image: "/images/product-discokugle.png", name_da: "Discokugle", name_en: "Disco ball", desc_da: "Roterende discokugle med LED-lys og farver.", desc_en: "Rotating disco ball with LED lights." },
+  { id: "lyskaeder", category: "lys", price: 200, image: "/images/product-lyskaeder.svg", name_da: "Lyskæder", name_en: "Fairy lights", desc_da: "10m lyskæde — varm hvid eller farvet.", desc_en: "10m fairy lights — warm white or coloured." },
+  { id: "projektor", category: "av", price: 500, image: "/images/product-projektor.png", name_da: "Projektor", name_en: "Projector", desc_da: "Full HD projektor til præsentationer og film.", desc_en: "Full HD projector for presentations and film." },
+  { id: "skaerm_55", category: "av", price: 600, image: "/images/product-skaerm.png", name_da: '55" Storskærm', name_en: '55" Screen', desc_da: "55\" LED-skærm på gulvstativ.", desc_en: '55" LED screen on floor stand.' },
+  { id: "traadloes_mikrofon", category: "av", price: 300, image: "/images/product-mikrofon.png", name_da: "Trådløs mikrofon", name_en: "Wireless mic", desc_da: "Professionel håndholdt mikrofon.", desc_en: "Professional handheld microphone." },
+  { id: "headset", category: "av", price: 350, image: "/images/product-headset.png", name_da: "Trådløst headset", name_en: "Wireless headset", desc_da: "Headset-mikrofon til præsentationer.", desc_en: "Headset mic for presentations." },
+];
+
+/** Navigation categories — single source of truth used by BurgerMenu and admin */
+export interface NavLink { href: string; label: string }
+export interface NavCategory { id: string; title: string; href: string; links: NavLink[] }
+
+export const NAV_CATEGORIES: NavCategory[] = [
+  {
+    id: "lyd",
+    title: "Lyd & Højtalere",
+    href: "/lej-hojtaler",
+    links: [
+      { href: "/soundboks-4", label: "Soundboks 4" },
+      { href: "/mackie-thump-go", label: "Mackie Thump GO" },
+      { href: "/hojtalerpakke-lille", label: "Højtalerpakke lille" },
+      { href: "/hojtalerpakke-normal", label: "Højtalerpakke normal" },
+    ],
+  },
+  {
+    id: "lys",
+    title: "Lys & Effekter",
+    href: "/festlys",
+    links: [
+      { href: "/festlys", label: "Festlys & lysbar" },
+      { href: "/discokugle", label: "Discokugle" },
+      { href: "/lyskaeder", label: "Lyskæder" },
+      { href: "/roegmaskine", label: "Røgmaskine" },
+    ],
+  },
+  {
+    id: "av",
+    title: "AV-udstyr",
+    links: [
+      { href: "/projektor", label: "Projektor" },
+      { href: "/skaerm", label: "Storskærm" },
+      { href: "/traadloes-mikrofon", label: "Trådløs mikrofon" },
+      { href: "/headset-mikrofon", label: "Headset-mikrofon" },
+    ],
+  },
 ];
 
 /** Price multiplier by number of rental days — flat price regardless of duration */

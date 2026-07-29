@@ -4,9 +4,14 @@ import { useState, useEffect, useCallback } from "react";
 import {
   speakers as defaultSpeakers,
   addons as defaultAddons,
+  rentalProducts as defaultRentals,
   type Speaker,
   type Addon,
+  type RentalProduct,
+  type ProductCategory,
 } from "@/lib/products";
+import ImageField from "@/components/admin/ImageField";
+import CreateProductModal, { type ProductType } from "@/components/admin/CreateProductModal";
 
 const inputStyle: React.CSSProperties = {
   width: "100%",
@@ -26,6 +31,53 @@ const labelStyle: React.CSSProperties = {
   color: "#666",
   marginBottom: "4px",
 };
+
+function AllowedAddonsField({
+  allAddons,
+  value,
+  onChange,
+}: {
+  allAddons: Addon[];
+  value: string[] | undefined;
+  onChange: (v: string[] | undefined) => void;
+}) {
+  // undefined = all addons shown (default). Empty array = none shown.
+  const allChecked = value === undefined;
+  const selected = value ?? [];
+
+  const toggle = (id: string) => {
+    if (allChecked) {
+      // was "all" — now exclude this one
+      onChange(allAddons.map((a) => a.id).filter((aid) => aid !== id));
+    } else {
+      const next = selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id];
+      onChange(next.length === allAddons.length ? undefined : next);
+    }
+  };
+
+  return (
+    <div style={{ gridColumn: "1 / -1" }}>
+      <p style={labelStyle}>Tilvalg der vises til kunden</p>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "4px" }}>
+        {allAddons.map((a) => {
+          const checked = allChecked || selected.includes(a.id);
+          return (
+            <label key={a.id} style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "13px", cursor: "pointer", padding: "4px 10px", border: `1px solid ${checked ? "#0070f3" : "#ddd"}`, borderRadius: "20px", background: checked ? "#e8f0fe" : "#fff", color: checked ? "#0070f3" : "#555" }}>
+              <input type="checkbox" checked={checked} onChange={() => toggle(a.id)} style={{ accentColor: "#0070f3" }} />
+              {a.da.label}
+            </label>
+          );
+        })}
+        <button type="button" onClick={() => onChange(undefined)} style={{ fontSize: "12px", color: "#888", background: "none", border: "none", cursor: "pointer", padding: "4px 8px", textDecoration: "underline" }}>
+          Vælg alle
+        </button>
+      </div>
+      {!allChecked && selected.length === 0 && (
+        <p style={{ fontSize: "12px", color: "#dc3545", marginTop: "4px" }}>Ingen tilvalg vises ved booking af dette produkt</p>
+      )}
+    </div>
+  );
+}
 
 function Field({
   label,
@@ -52,16 +104,29 @@ function Field({
   );
 }
 
+const navLink: React.CSSProperties = {
+  padding: "8px 16px",
+  fontSize: "14px",
+  background: "#f0f0f0",
+  border: "1px solid #ddd",
+  borderRadius: "6px",
+  textDecoration: "none",
+  color: "#111",
+};
+
 export default function AdminProdukterPage() {
   const [secret, setSecret] = useState("");
   const [inputSecret, setInputSecret] = useState("");
   const [speakers, setSpeakers] = useState<Speaker[]>(defaultSpeakers);
   const [addons, setAddons] = useState<Addon[]>(defaultAddons);
+  const [rentals, setRentals] = useState<RentalProduct[]>(defaultRentals);
   const [isCustom, setIsCustom] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [showCreate, setShowCreate] = useState(false);
+  const [highlightId, setHighlightId] = useState<string | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("admin_secret");
@@ -77,16 +142,19 @@ export default function AdminProdukterPage() {
       if (Array.isArray(data.speakers) && data.speakers.length) {
         setSpeakers(data.speakers);
         setAddons(Array.isArray(data.addons) && data.addons.length ? data.addons : defaultAddons);
+        setRentals(Array.isArray(data.rentalProducts) && data.rentalProducts.length ? data.rentalProducts : defaultRentals);
         setIsCustom(true);
       } else {
         setSpeakers(defaultSpeakers);
         setAddons(defaultAddons);
+        setRentals(defaultRentals);
         setIsCustom(false);
       }
     } catch {
       setError("Kunne ikke hente produkter — viser standard-kataloget");
       setSpeakers(defaultSpeakers);
       setAddons(defaultAddons);
+      setRentals(defaultRentals);
     } finally {
       setLoading(false);
     }
@@ -121,6 +189,51 @@ export default function AdminProdukterPage() {
       prev.map((a, idx) => (idx === i ? { ...a, [loc]: { ...a[loc], [field]: value } } : a))
     );
   };
+  const updateRental = (i: number, patch: Partial<RentalProduct>) => {
+    setRentals((prev) => prev.map((r, idx) => (idx === i ? { ...r, ...patch } : r)));
+  };
+
+  const existingIds = new Set([
+    ...speakers.map((s) => s.id),
+    ...addons.map((a) => a.id),
+    ...rentals.map((r) => r.id),
+  ]);
+
+  const handleCreate = (type: ProductType, product: Speaker | RentalProduct | Addon) => {
+    if (type === "speaker") {
+      setSpeakers((prev) => [...prev, product as Speaker]);
+    } else if (type === "rental") {
+      setRentals((prev) => [...prev, product as RentalProduct]);
+    } else {
+      setAddons((prev) => [...prev, product as Addon]);
+    }
+    setHighlightId(product.id);
+    setMessage(`Produkt oprettet — husk at klikke "Gem ændringer" for at publicere.`);
+    setError("");
+  };
+
+  useEffect(() => {
+    if (!highlightId) return;
+    const el = document.querySelector(`[data-product-id="${highlightId}"]`);
+    if (el instanceof HTMLDetailsElement) {
+      el.open = true;
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    setHighlightId(null);
+  }, [highlightId, speakers, rentals, addons]);
+
+  const removeSpeaker = (i: number) => {
+    if (!confirm(`Slet højtaler "${speakers[i].da.name}"?`)) return;
+    setSpeakers((prev) => prev.filter((_, idx) => idx !== i));
+  };
+  const removeRental = (i: number) => {
+    if (!confirm(`Slet produkt "${rentals[i].name_da}"?`)) return;
+    setRentals((prev) => prev.filter((_, idx) => idx !== i));
+  };
+  const removeAddon = (i: number) => {
+    if (!confirm(`Slet tilvalg "${addons[i].da.label}"?`)) return;
+    setAddons((prev) => prev.filter((_, idx) => idx !== i));
+  };
 
   const save = async () => {
     setSaving(true);
@@ -130,7 +243,7 @@ export default function AdminProdukterPage() {
       const res = await fetch(`/api/products?secret=${encodeURIComponent(secret)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ speakers, addons }),
+        body: JSON.stringify({ speakers, addons, rentalProducts: rentals }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -144,7 +257,7 @@ export default function AdminProdukterPage() {
       setIsCustom(true);
       setMessage("Gemt! Ændringerne er live med det samme.");
     } catch {
-      setError("Netvaerksfejl");
+      setError("Netværksfejl");
     } finally {
       setSaving(false);
     }
@@ -168,10 +281,11 @@ export default function AdminProdukterPage() {
       }
       setSpeakers(defaultSpeakers);
       setAddons(defaultAddons);
+      setRentals(defaultRentals);
       setIsCustom(false);
       setMessage("Nulstillet til standard-kataloget.");
     } catch {
-      setError("Netvaerksfejl");
+      setError("Netværksfejl");
     } finally {
       setSaving(false);
     }
@@ -207,15 +321,15 @@ export default function AdminProdukterPage() {
             {isCustom ? "Live-katalog: redigeret i admin (gemt i KV)" : "Live-katalog: standard fra koden"}
           </p>
         </div>
-        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-          <a href="/admin" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Bookinger
-          </a>
-          <a href="/admin/lager" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Lager
-          </a>
-          <button onClick={reset} disabled={saving} style={{ padding: "8px 16px", fontSize: "14px", background: "#fff", border: "1px solid #dc3545", color: "#dc3545", borderRadius: "6px", cursor: "pointer" }}>
-            Nulstil til standard
+        <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
+          <a href="/admin" style={navLink}>Bookinger</a>
+          <a href="/admin/lager" style={navLink}>Lager</a>
+          <button
+            type="button"
+            onClick={() => setShowCreate(true)}
+            style={{ padding: "8px 16px", fontSize: "14px", fontWeight: 600, background: "#0070f3", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer" }}
+          >
+            + Opret produkt
           </button>
           <button onClick={save} disabled={saving || loading} style={{ padding: "8px 20px", fontSize: "14px", fontWeight: 600, background: "#28a745", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer" }}>
             {saving ? "Gemmer..." : "Gem ændringer"}
@@ -223,23 +337,37 @@ export default function AdminProdukterPage() {
         </div>
       </header>
 
-      <main style={{ maxWidth: "900px", margin: "0 auto", padding: "24px" }}>
+      <CreateProductModal
+        open={showCreate}
+        existingIds={existingIds}
+        onClose={() => setShowCreate(false)}
+        onCreate={handleCreate}
+      />
+
+      <main style={{ maxWidth: "960px", margin: "0 auto", padding: "24px" }}>
         {error && <div style={{ background: "#f8d7da", color: "#721c24", padding: "12px 16px", borderRadius: "8px", marginBottom: "16px" }}>{error}</div>}
         {message && <div style={{ background: "#d4edda", color: "#155724", padding: "12px 16px", borderRadius: "8px", marginBottom: "16px" }}>{message}</div>}
         {loading && <p style={{ textAlign: "center", color: "#888" }}>Henter produkter...</p>}
 
+        <p style={{ fontSize: "14px", color: "#666", marginBottom: "24px" }}>
+          Rediger pris, billeder og tekst pr. produkt. Billedstier er relative til sitet, fx <code>/images/product-party.png</code>.
+        </p>
+
         <h2 style={{ fontSize: "17px", margin: "8px 0 12px" }}>Højtalere ({speakers.length})</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "32px" }}>
           {speakers.map((sp, i) => (
-            <details key={sp.id} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: sp.hidden ? 0.55 : 1 }}>
-              <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: "15px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <details key={sp.id} data-product-id={sp.id} defaultOpen={i === 0} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: sp.hidden ? 0.55 : 1 }}>
+              <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: "15px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
                 <span>
                   {sp.da.name} <span style={{ color: "#888", fontWeight: 400 }}>({sp.id})</span>
                   {sp.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
                 </span>
-                <span style={{ color: "#0070f3" }}>{sp.price} kr</span>
+                <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <span style={{ color: "#0070f3" }}>{sp.price} kr</span>
+                  <button type="button" onClick={(e) => { e.preventDefault(); removeSpeaker(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
+                </span>
               </summary>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px", marginTop: "16px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", marginTop: "16px" }}>
                 <Field label="Pris (kr)" type="number" value={sp.price} onChange={(v) => updateSpeaker(i, { price: Number(v) || 0 })} />
                 <Field label="Vægt" value={sp.weight} onChange={(v) => updateSpeaker(i, { weight: v })} />
                 <div>
@@ -256,16 +384,17 @@ export default function AdminProdukterPage() {
                     <option value="stor">Stor</option>
                   </select>
                 </div>
-                <Field label="Produktbillede (sti)" value={sp.product} onChange={(v) => updateSpeaker(i, { product: v })} />
-                <Field label="Stemningsbillede (sti)" value={sp.mood} onChange={(v) => updateSpeaker(i, { mood: v })} />
+                <ImageField label="Produktbillede" value={sp.product} onChange={(v) => updateSpeaker(i, { product: v })} />
+                <ImageField label="Stemningsbillede" value={sp.mood} onChange={(v) => updateSpeaker(i, { mood: v })} />
                 <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", alignSelf: "end", paddingBottom: "8px" }}>
                   <input type="checkbox" checked={!!sp.hidden} onChange={(e) => updateSpeaker(i, { hidden: e.target.checked })} />
                   Skjul på siden
                 </label>
+                <AllowedAddonsField allAddons={addons} value={sp.allowedAddons} onChange={(v) => updateSpeaker(i, { allowedAddons: v })} />
               </div>
               {(["da", "en"] as const).map((loc) => (
                 <div key={loc} style={{ marginTop: "16px", borderTop: "1px solid #eee", paddingTop: "12px" }}>
-                  <p style={{ margin: "0 0 8px", fontSize: "13px", fontWeight: 700, color: "#444" }}>{loc === "da" ? "🇩🇰 Dansk" : "🇬🇧 Engelsk"}</p>
+                  <p style={{ margin: "0 0 8px", fontSize: "13px", fontWeight: 700, color: "#444" }}>{loc === "da" ? "Dansk" : "Engelsk"}</p>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px" }}>
                     <Field label="Navn" value={sp[loc].name} onChange={(v) => updateSpeakerText(i, loc, "name", v)} />
                     <Field label="Størrelse/model" value={sp[loc].size} onChange={(v) => updateSpeakerText(i, loc, "size", v)} />
@@ -281,20 +410,64 @@ export default function AdminProdukterPage() {
           ))}
         </div>
 
-        <h2 style={{ fontSize: "17px", margin: "8px 0 12px" }}>Tilvalg ({addons.length})</h2>
+        <h2 style={{ fontSize: "17px", margin: "8px 0 12px" }}>Lys, AV og øvrige produkter ({rentals.length})</h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "32px" }}>
+          {rentals.map((r, i) => (
+            <details key={r.id} data-product-id={r.id} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: r.hidden ? 0.55 : 1 }}>
+              <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: "15px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
+                <span>
+                  {r.name_da} <span style={{ color: "#888", fontWeight: 400 }}>({r.id})</span>
+                  {r.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
+                </span>
+                <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <span style={{ color: "#0070f3" }}>{r.price} kr</span>
+                  <button type="button" onClick={(e) => { e.preventDefault(); removeRental(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
+                </span>
+              </summary>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", marginTop: "16px" }}>
+                <Field label="Pris (kr)" type="number" value={r.price} onChange={(v) => updateRental(i, { price: Number(v) || 0 })} />
+                <div>
+                  <label style={labelStyle}>Kategori</label>
+                  <select value={r.category} onChange={(e) => updateRental(i, { category: e.target.value as ProductCategory })} style={inputStyle}>
+                    <option value="lys">Lys</option>
+                    <option value="av">AV</option>
+                    <option value="lyd">Lyd</option>
+                  </select>
+                </div>
+                <ImageField label="Produktbillede" value={r.image} onChange={(v) => updateRental(i, { image: v })} />
+                <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", alignSelf: "end", paddingBottom: "8px" }}>
+                  <input type="checkbox" checked={!!r.hidden} onChange={(e) => updateRental(i, { hidden: e.target.checked })} />
+                  Skjul på siden
+                </label>
+                <AllowedAddonsField allAddons={addons} value={r.allowedAddons} onChange={(v) => updateRental(i, { allowedAddons: v })} />
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginTop: "12px" }}>
+                <Field label="Navn (dansk)" value={r.name_da} onChange={(v) => updateRental(i, { name_da: v })} />
+                <Field label="Navn (engelsk)" value={r.name_en} onChange={(v) => updateRental(i, { name_en: v })} />
+                <Field label="Kort beskrivelse (dansk)" textarea value={r.desc_da ?? ""} onChange={(v) => updateRental(i, { desc_da: v })} />
+                <Field label="Kort beskrivelse (engelsk)" textarea value={r.desc_en ?? ""} onChange={(v) => updateRental(i, { desc_en: v })} />
+              </div>
+            </details>
+          ))}
+        </div>
+
+        <h2 style={{ fontSize: "17px", margin: "8px 0 12px" }}>Tilvalg / mersalg ({addons.length})</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {addons.map((a, i) => (
-            <details key={a.id} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: a.hidden ? 0.55 : 1 }}>
-              <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: "15px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <details key={a.id} data-product-id={a.id} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: a.hidden ? 0.55 : 1 }}>
+              <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: "15px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
                 <span>
                   {a.da.label} <span style={{ color: "#888", fontWeight: 400 }}>({a.id})</span>
                   {a.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
                 </span>
-                <span style={{ color: "#0070f3" }}>{a.price} kr</span>
+                <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <span style={{ color: "#0070f3" }}>{a.price} kr</span>
+                  <button type="button" onClick={(e) => { e.preventDefault(); removeAddon(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
+                </span>
               </summary>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px", marginTop: "16px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", marginTop: "16px" }}>
                 <Field label="Pris (kr)" type="number" value={a.price} onChange={(v) => updateAddon(i, { price: Number(v) || 0 })} />
-                <Field label="Billede (sti, tom = intet)" value={a.image ?? ""} onChange={(v) => updateAddon(i, { image: v || null })} />
+                <ImageField label="Billede (tom = intet)" value={a.image ?? ""} onChange={(v) => updateAddon(i, { image: v || null })} />
                 <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", alignSelf: "end", paddingBottom: "8px" }}>
                   <input type="checkbox" checked={!!a.hidden} onChange={(e) => updateAddon(i, { hidden: e.target.checked })} />
                   Skjul på siden
@@ -302,7 +475,7 @@ export default function AdminProdukterPage() {
               </div>
               {(["da", "en"] as const).map((loc) => (
                 <div key={loc} style={{ marginTop: "16px", borderTop: "1px solid #eee", paddingTop: "12px" }}>
-                  <p style={{ margin: "0 0 8px", fontSize: "13px", fontWeight: 700, color: "#444" }}>{loc === "da" ? "🇩🇰 Dansk" : "🇬🇧 Engelsk"}</p>
+                  <p style={{ margin: "0 0 8px", fontSize: "13px", fontWeight: 700, color: "#444" }}>{loc === "da" ? "Dansk" : "Engelsk"}</p>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "12px" }}>
                     <Field label="Navn" value={a[loc].label} onChange={(v) => updateAddonText(i, loc, "label", v)} />
                     <Field label="Beskrivelse" value={a[loc].desc} onChange={(v) => updateAddonText(i, loc, "desc", v)} />
@@ -312,10 +485,6 @@ export default function AdminProdukterPage() {
             </details>
           ))}
         </div>
-
-        <p style={{ marginTop: "24px", fontSize: "13px", color: "#888" }}>
-          Ændringer gemmes i Cloudflare KV og slår igennem på hele sitet med det samme — booking-flow, forside, priser og sammenligningstabel (dansk + engelsk). &quot;Nulstil til standard&quot; sletter admin-kataloget og går tilbage til koden.
-        </p>
       </main>
     </div>
   );

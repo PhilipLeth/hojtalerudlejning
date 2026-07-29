@@ -22,7 +22,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
     const raw = await context.env.BOOKINGS.get(KV_KEY);
     if (!raw) {
-      return new Response(JSON.stringify({ speakers: null, addons: null }), {
+      return new Response(JSON.stringify({ speakers: null, addons: null, rentalProducts: null }), {
         status: 200,
         headers: corsHeaders,
       });
@@ -46,6 +46,7 @@ interface SaveBody {
   action?: "reset";
   speakers?: ProductLike[];
   addons?: ProductLike[];
+  rentalProducts?: ProductLike[];
 }
 
 function isValidList(list: unknown): boolean {
@@ -94,7 +95,19 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       );
     }
 
-    const catalog = JSON.stringify({ speakers: body.speakers, addons: body.addons });
+    const rentalProducts = Array.isArray(body.rentalProducts) ? body.rentalProducts : [];
+    if (rentalProducts.length && !isValidList(rentalProducts)) {
+      return new Response(
+        JSON.stringify({ error: "rentalProducts must have id (string) and price (number) per item" }),
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
+    const catalog = JSON.stringify({
+      speakers: body.speakers,
+      addons: body.addons,
+      rentalProducts: rentalProducts.length ? rentalProducts : undefined,
+    });
     await context.env.BOOKINGS.put(KV_KEY, catalog);
 
     return new Response(JSON.stringify({ ok: true }), {

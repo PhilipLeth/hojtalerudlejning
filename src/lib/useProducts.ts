@@ -4,14 +4,17 @@ import { useEffect, useState } from "react";
 import {
   speakers as defaultSpeakers,
   addons as defaultAddons,
+  rentalProducts as defaultRentals,
   cheapestSpeakerPrice,
   type Speaker,
   type Addon,
-} from "./products";
+  type RentalProduct,
+} from "@/lib/products";
 
 export interface Catalog {
   speakers: Speaker[];
   addons: Addon[];
+  rentalProducts: RentalProduct[];
   /** Cheapest visible speaker price (hero, sticky bar, meta) */
   startPrice: number;
 }
@@ -19,6 +22,7 @@ export interface Catalog {
 interface CatalogResponse {
   speakers?: Speaker[] | null;
   addons?: Addon[] | null;
+  rentalProducts?: RentalProduct[] | null;
 }
 
 function visible<T extends { hidden?: boolean }>(list: T[]): T[] {
@@ -36,6 +40,7 @@ export function useProducts(): Catalog {
   const [catalog, setCatalog] = useState<Catalog>(() => ({
     speakers: visible(defaultSpeakers),
     addons: visible(defaultAddons),
+    rentalProducts: visible(defaultRentals),
     startPrice: cheapestSpeakerPrice(),
   }));
 
@@ -52,7 +57,11 @@ export function useProducts(): Catalog {
         Array.isArray(data.addons) && data.addons.length
           ? visible(data.addons)
           : visible(defaultAddons);
-      setCatalog({ speakers, addons, startPrice: cheapestSpeakerPrice(speakers) });
+      const rentalProducts =
+        Array.isArray(data.rentalProducts) && data.rentalProducts.length
+          ? visible(data.rentalProducts)
+          : visible(defaultRentals);
+      setCatalog({ speakers, addons, rentalProducts, startPrice: cheapestSpeakerPrice(speakers) });
     };
 
     if (cached) {

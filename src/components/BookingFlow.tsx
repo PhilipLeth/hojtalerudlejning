@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback, useRef, FormEvent } from "react";
 import { type Locale, t } from "@/lib/i18n";
 
-import { dayMultiplier, isSummerSale, applyDiscount, rentalProducts } from "@/lib/products";
+import { dayMultiplier, isSummerSale, applyDiscount } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 
 /* ───── Helpers ───── */
@@ -207,8 +207,17 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
     () => catalog.addons.map((ad) => ({ ...ad, ...ad[locale] })),
     [catalog.addons, locale]
   );
+  const rentalProducts = catalog.rentalProducts;
   const lysAddon = addons.find((a) => a.id === "lys");
   const rogAddon = addons.find((a) => a.id === "rog");
+
+  // Multi-product cart: items added before the current selection
+  interface CartItem {
+    productId: string;
+    name: string;
+    price: number;
+  }
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const [step, setStep] = useState(1);
   const [speaker, setSpeaker] = useState<string | null>(null);
@@ -273,7 +282,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
       setSpeaker(product);
       setStep(2);
     }
-  }, [speakers]);
+  }, [speakers, rentalProducts]);
 
   // Fetch availability for selected date range (step 2 validation)
   const checkDateAvailability = useCallback(async (pickup: Date, ret: Date) => {
@@ -319,6 +328,10 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   const selectedSpeaker = speakers.find((sp) => sp.id === speaker);
   const selectedRental = rentalProducts.find((p) => p.id === speaker);
   const isRentalOnly = !!selectedRental;
+
+  // Filter addons by the product's allowedAddons list (undefined = show all)
+  const allowedAddonIds = selectedSpeaker?.allowedAddons ?? selectedRental?.allowedAddons;
+  const visibleAddons = allowedAddonIds ? addons.filter((a) => allowedAddonIds.includes(a.id)) : addons;
   const rentalName = selectedRental
     ? locale === "en"
       ? selectedRental.name_en
@@ -341,8 +354,9 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
     .filter((a) => selectedAddons.includes(a.id))
     .reduce((sum, a) => sum + a.price, 0);
   const addonsPrice = summer ? applyDiscount(addonsBasePrice) : addonsBasePrice;
-  const total = speakerPrice + addonsPrice;
-  const totalBeforeDiscount = summer ? speakerBasePrice + addonsBasePrice : total;
+  const cartTotal = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const total = speakerPrice + addonsPrice + cartTotal;
+  const totalBeforeDiscount = summer ? speakerBasePrice + addonsBasePrice + cartTotal : total;
 
   function formatDate(d: Date) {
     return `${s.dayNames[d.getDay()]} ${d.getDate()}. ${s.monthNames[d.getMonth()].toLowerCase().slice(0, 3)}`;
@@ -390,6 +404,25 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
     setStep((st) => Math.max(st - 1, 1));
   }
 
+  function addCurrentToCart() {
+    if (!speaker || speaker === "effects-only") return;
+    const name = selectedSpeaker
+      ? selectedSpeaker.name
+      : selectedRental
+        ? (locale === "en" ? selectedRental.name_en : selectedRental.name_da)
+        : speaker;
+    setCartItems((prev) => [...prev, { productId: speaker, name, price: speakerPrice }]);
+    // Reset current selection, keep dates
+    setSpeaker(null);
+    setSelectedAddons([]);
+    setDeliveryAddress("");
+    setStep(1);
+  }
+
+  function removeCartItem(idx: number) {
+    setCartItems((prev) => prev.filter((_, i) => i !== idx));
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSubmitting(true);
@@ -417,6 +450,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
           addonIds: addons
             .filter((a) => selectedAddons.includes(a.id))
             .map((a) => a.id),
+          cartItems: cartItems.map((item) => ({ name: item.name, price: item.price, productId: item.productId })),
           deliveryAddress: hasDelivery ? deliveryAddress : undefined,
           total,
           locale,
@@ -861,7 +895,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
             <p className="text-center text-sm text-white/50">{s.step3Desc}</p>
 
             <div className="mt-6 space-y-3">
-              {addons.map((a) => {
+              {visibleAddons.map((a) => {
                 const selected = selectedAddons.includes(a.id);
                 const locked = false;
                 return (
@@ -924,14 +958,34 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
               })}
             </div>
 
+            {/* Cart: already added items */}
+            {cartItems.length > 0 && (
+              <div className="glass rounded-xl p-4">
+                <p className="text-xs text-white/40 mb-2">{locale === "en" ? "Already in cart:" : "Allerede i kurven:"}</p>
+                {cartItems.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between text-sm py-1">
+                    <span className="text-white/70">{item.name}</span>
+                    <span className="flex items-center gap-3">
+                      <span className="text-brand-400">{item.price} kr</span>
+                      <button type="button" onClick={() => removeCartItem(idx)} className="text-white/30 hover:text-red-400 text-xs">✕</button>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <PriceSummary />
 
-            <a
-              href="/#produkter"
-              className="block text-center text-sm text-brand-400 transition hover:text-brand-300"
-            >
-              {locale === "en" ? "+ Add more products" : "+ Tilføj flere produkter"}
-            </a>
+            {/* Add another product to cart */}
+            {!isRentalOnly && !isEffectsOnly && (
+              <button
+                type="button"
+                onClick={addCurrentToCart}
+                className="w-full rounded-xl border border-dashed border-white/20 py-3 text-sm text-white/50 transition hover:border-brand-500/40 hover:text-brand-400"
+              >
+                {locale === "en" ? "+ Add another product" : "+ Tilføj et produkt mere"}
+              </button>
+            )}
 
             <div className="flex gap-3 pt-2">
               <button onClick={prevStep} className="flex-1 rounded-xl border border-white/10 py-3 font-medium transition hover:bg-white/5">
@@ -1008,6 +1062,12 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                   {summerLabel.banner}
                 </div>
               )}
+              {cartItems.map((item, idx) => (
+                <div key={idx} className="flex justify-between text-sm text-white/50">
+                  <span>{item.name}</span>
+                  <span>{item.price} kr</span>
+                </div>
+              ))}
               {selectedSpeaker && (
                 <div className="flex justify-between text-sm text-white/50">
                   <span>{selectedSpeaker.name}{s.speakerSuffix} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>

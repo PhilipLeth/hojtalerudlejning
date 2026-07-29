@@ -24,13 +24,58 @@ const GRID: Array<{
 ];
 
 export default function ProductGrid() {
-  // Live prices from catalog when available
-  const { speakers, addons } = useProducts();
+  const { speakers, addons, rentalProducts } = useProducts();
+
+  const gridIds = new Set(GRID.map((g) => g.id));
+
+  const extraFromCatalog = [
+    ...speakers
+      .filter((s) => !gridIds.has(s.id))
+      .map((s) => ({
+        id: s.id,
+        href: `/?product=${s.id}#book`,
+        name: s.da.name,
+        price: s.price,
+        image: s.product,
+      })),
+    ...rentalProducts
+      .filter((r) => !gridIds.has(r.id))
+      .map((r) => ({
+        id: r.id,
+        href: `/?product=${r.id}#book`,
+        name: r.name_da,
+        price: r.price,
+        image: r.image,
+      })),
+  ];
+
+  const allProducts = [...GRID, ...extraFromCatalog];
+
   const priceFor = (id: string, fallback: number) => {
     const sp = speakers.find((s) => s.id === id);
     if (sp) return sp.price;
     const ad = addons.find((a) => a.id === id);
     if (ad) return ad.price;
+    const rental = rentalProducts.find((p) => p.id === id);
+    if (rental) return rental.price;
+    return fallback;
+  };
+  const nameFor = (id: string, fallback: string) => {
+    const sp = speakers.find((s) => s.id === id);
+    if (sp) return sp.da.name;
+    const ad = addons.find((a) => a.id === id);
+    if (ad) return ad.da.label;
+    const rental = rentalProducts.find((p) => p.id === id);
+    if (rental) return rental.name_da;
+    return fallback;
+  };
+  const imageFor = (id: string, fallback: string) => {
+    const sp = speakers.find((s) => s.id === id);
+    if (sp) return sp.product;
+    const ad = addons.find((a) => a.id === id);
+    if (ad?.image) return ad.image;
+    const rental = rentalProducts.find((p) => p.id === id);
+    if (rental) return rental.image;
     return fallback;
   };
 
@@ -38,12 +83,14 @@ export default function ProductGrid() {
     <section id="produkter" className="relative z-20 mx-auto max-w-6xl px-4 py-16 sm:py-24">
       <h2 className="mb-2 text-center text-3xl font-bold sm:text-4xl">Produkter</h2>
       <p className="mx-auto mb-10 max-w-lg text-center text-white/50">
-        Vælg produkt og book online — 5 dages leje til samme pris.
+        Vælg produkt og book online — én pris for op til 5 dages leje.
       </p>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {GRID.map((p) => {
+        {allProducts.map((p) => {
           const price = priceFor(p.id, p.price);
+          const name = nameFor(p.id, p.name);
+          const image = imageFor(p.id, p.image);
           return (
             <article
               key={p.id}
@@ -56,13 +103,13 @@ export default function ProductGrid() {
                   </span>
                 )}
                 <img
-                  src={p.image}
-                  alt={p.name}
+                  src={image}
+                  alt={name}
                   className="mx-auto h-40 w-full object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </Link>
               <div className="flex flex-1 flex-col p-5">
-                <h3 className="text-lg font-semibold text-white">{p.name}</h3>
+                <h3 className="text-lg font-semibold text-white">{name}</h3>
                 <p className="mt-1 text-xl font-bold text-brand-400">
                   {price} kr<span className="text-sm font-normal text-white/40">/weekend</span>
                 </p>

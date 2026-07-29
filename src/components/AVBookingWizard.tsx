@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { rentalProducts, applyDiscount, isSummerSale } from "@/lib/products";
+import { applyDiscount, isSummerSale } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 
 interface EventType {
@@ -31,14 +31,14 @@ const PRODUCT_INFO: Record<string, { name: string; href: string }> = {
 
 function ProductCard({ id, badge }: { id: string; badge?: string }) {
   const summer = isSummerSale();
+  const { speakers, rentalProducts } = useProducts();
   const rental = rentalProducts.find((p) => p.id === id);
-  const { speakers } = useProducts();
   const speaker = speakers.find((sp) => sp.id === id);
 
   const info = speaker
     ? { name: speaker.da.name, href: `/?product=${id}#book`, price: speaker.price, image: speaker.product }
     : rental && PRODUCT_INFO[id]
-      ? { ...PRODUCT_INFO[id], price: rental.price, image: rental.image }
+      ? { ...PRODUCT_INFO[id], name: rental.name_da, price: rental.price, image: rental.image }
       : null;
   if (!info) return null;
 

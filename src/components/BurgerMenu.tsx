@@ -2,42 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
-const NAV_SECTIONS = [
-  {
-    title: "Lyd & Højtalere",
-    href: "/lej-hojtaler",
-    links: [
-      { href: "/soundboks-4", label: "Soundboks 4" },
-      { href: "/mackie-thump-go", label: "Mackie Thump GO" },
-      { href: "/hojtalerpakke-lille", label: "Højtalerpakke lille" },
-      { href: "/hojtalerpakke-normal", label: "Højtalerpakke normal" },
-      { href: "/lej-hojtaler", label: "Lej højtalere" },
-      { href: "/soundboks-alternativ", label: "Soundboks-alternativ" },
-    ],
-  },
-  {
-    title: "Lys & Effekter",
-    href: "/festlys",
-    links: [
-      { href: "/festlys", label: "Festlys & lysbar" },
-      { href: "/discokugle", label: "Discokugle" },
-      { href: "/lyskaeder", label: "Lyskæder" },
-      { href: "/roegmaskine", label: "Røgmaskine" },
-    ],
-  },
-  {
-    title: "AV-udstyr",
-    href: "/av-udstyr",
-    links: [
-      { href: "/av-udstyr", label: "AV-udstyr til events" },
-      { href: "/projektor", label: "Projektor" },
-      { href: "/skaerm", label: "Storskærm" },
-      { href: "/traadloes-mikrofon", label: "Trådløs mikrofon" },
-      { href: "/headset-mikrofon", label: "Headset-mikrofon" },
-    ],
-  },
-];
+import { NAV_CATEGORIES } from "@/lib/products";
 
 export default function BurgerMenu() {
   const [open, setOpen] = useState(false);
@@ -95,15 +60,11 @@ export default function BurgerMenu() {
             Lejhøjtaler.dk
           </Link>
 
-          {NAV_SECTIONS.map((section) => (
-            <div key={section.title} className="mb-6">
-              <Link
-                href={section.href}
-                onClick={() => setOpen(false)}
-                className="mb-2 block text-xs font-semibold uppercase tracking-widest text-white/30 transition hover:text-brand-400"
-              >
+          {NAV_CATEGORIES.map((section) => (
+            <div key={section.id} className="mb-6">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-white/30">
                 {section.title}
-              </Link>
+              </p>
               <ul className="space-y-1">
                 {section.links.map((link) => (
                   <li key={link.href}>
