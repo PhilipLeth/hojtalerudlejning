@@ -22,7 +22,7 @@ keywords:
 | **Raekkevide** | 3-5 meter | 15-30+ meter |
 | **Mikrofon** | Sjaldent | Ja, via mixer |
 | **Gaester** | Op til 15 | Op til 100+ |
-| **Pris (leje)** | -- | Fra 400 kr/weekend |
+| **Pris (leje)** | -- | Fra 395 kr/weekend |
 
 ### Hvornaar er en Bluetooth-hojtaler nok?
 
@@ -70,4 +70,4 @@ Vi gennemgaar altid setupmet med dig, naar du henter udstyret. Du faar ogsaa en 
 
 ## Book dit musikanlaeg
 
-Lej et komplet musikanlaeg til din fest fra 400 kr/weekend. [Book nu](/#book) og hent paa Vesterbro.
+Lej et komplet musikanlaeg til din fest fra 395 kr/weekend. [Book nu](/#book) og hent paa Vesterbro.

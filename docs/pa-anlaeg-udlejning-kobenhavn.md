@@ -1,6 +1,6 @@
 ---
 title: "PA-anlaeg udlejning i Kobenhavn -- hvad skal du vide?"
-description: "Alt om PA-anlaeg udlejning i Kobenhavn. Hvad er et PA-system, hvornaar har du brug for det, og hvad koster det? Lej fra 400 kr/weekend."
+description: "Alt om PA-anlaeg udlejning i Kobenhavn. Hvad er et PA-system, hvornaar har du brug for det, og hvad koster det? Lej fra 395 kr/weekend."
 date: "2026-06-12"
 keywords:
   - PA-anlaeg udlejning
@@ -51,7 +51,7 @@ Vi holder til paa Vesterbro i Kobenhavn. Du henter udstyret fredag og afleverer 
 
 ## Hvad koster det?
 
-Vores priser starter fra **400 kr for en weekend**. Det inkluderer alt udstyr, kabler og stativer. Ingen skjulte gebyrer.
+Vores priser starter fra **395 kr for en weekend**. Det inkluderer alt udstyr, kabler og stativer. Ingen skjulte gebyrer.
 
 For flerdagsleje ganges prisen med antal dage (fredag-mandag taeller som 1 weekend).
 

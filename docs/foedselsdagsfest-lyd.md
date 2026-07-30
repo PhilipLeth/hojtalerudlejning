@@ -64,4 +64,4 @@ Kort opsummeret:
 
 ## Book lyd til din foedselsdag
 
-Fra 400 kr/weekend faar du en hojtaler, der lofter din foedselsdag. [Book din hojtaler nu](/#book) -- det tager under 2 minutter.
+Fra 395 kr/weekend faar du en hojtaler, der lofter din foedselsdag. [Book din hojtaler nu](/#book) -- det tager under 2 minutter.

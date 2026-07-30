@@ -1,6 +1,6 @@
 ---
 title: "Hvilken hojtaler skal du leje til din fest?"
-description: "Guide til at vaelge den rigtige hojtaler til din fest. Party-pakke til 40 personer eller Festival-pakke til 100+. Se priser og book fra 400 kr."
+description: "Guide til at vaelge den rigtige hojtaler til din fest. Party-pakke til 40 personer eller Festival-pakke til 100+. Se priser og book fra 395 kr."
 date: "2026-06-12"
 keywords:
   - hojtaler til fest
@@ -24,7 +24,7 @@ Vores Party-pakke bestaar af en kraftig aktiv hojtaler paa 12", som leverer klar
 - Aux-kabel og Bluetooth-forbindelse
 - Alle nodvendige kabler
 
-Prisen starter fra 400 kr for en weekend (hent fredag, aflever mandag).
+Prisen starter fra 395 kr for en weekend (hent fredag, aflever mandag).
 
 ## Festival-pakke: op til 100+ personer
 

@@ -1,6 +1,6 @@
 ---
 title: "Lyd til havefest -- guide til den perfekte udendors lyd"
-description: "Saadan faar du den bedste lyd til din havefest. Tips til hojtaler-placering, lydniveau og nabohensyn. Lej hojtaler fra 400 kr."
+description: "Saadan faar du den bedste lyd til din havefest. Tips til hojtaler-placering, lydniveau og nabohensyn. Lej hojtaler fra 395 kr."
 date: "2026-06-11"
 keywords:
   - lyd til havefest
@@ -57,4 +57,4 @@ Udendors lyd og lys sammen lofter enhver havefest. Vores lys-pakke med LED-spots
 
 ## Book din havefest-lyd
 
-Lej hojtaler og PA-anlaeg til din havefest fra 400 kr/weekend. Hent paa Vesterbro, aflever mandag. [Book din hojtaler nu](/#book).
+Lej hojtaler og PA-anlaeg til din havefest fra 395 kr/weekend. Hent paa Vesterbro, aflever mandag. [Book din hojtaler nu](/#book).

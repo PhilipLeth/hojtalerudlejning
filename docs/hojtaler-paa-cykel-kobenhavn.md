@@ -1,6 +1,6 @@
 ---
 title: "Lej en højtaler du kan tage med på cyklen i København"
-description: "Vores lille højtalerpakke vejer kun 12 kg og passer i en bæretaske. Perfekt til københavnere uden bil. Hent på cykel i København K eller få levering for 500 kr."
+description: "Vores lille højtalerpakke vejer kun 12 kg og passer i en bæretaske. Perfekt til københavnere uden bil. Hent på cykel i København K eller få levering for 495 kr."
 date: "2025-06-05"
 keywords:
   - højtaler cykel
@@ -31,11 +31,11 @@ Professionel lyd behøver ikke betyde tung logistik. Det var faktisk en af grund
 
 Afhentning foregår på vores adresse: **Halvtolv 9, 1. th, 1436 København K**. Adressen ligger centralt, og der er altid gratis parkering i én time lige ved døren, hvis du alligevel kommer i bil.
 
-De fleste henter fredag mellem kl. 14 og 18 og afleverer mandag kl. 15-17. Du møder op, betaler med MobilePay eller kontant, og får tasken med ud ad døren. Ingen kontrakter, ingen depositum, ingen ventetid.
+De fleste henter fredag mellem kl. 14 og 18 og afleverer mandag kl. 15-17. Du møder op, betaler med MobilePay eller kontant, og får tasken med ud ad døren. Ingen kontrakter, ingen ventetid.
 
 ## Ikke til at cykle? Vi leverer
 
-Er du ikke til at cykle med udstyr, kører vi det ud til dig. **Levering i Storkøbenhavn koster 500 kr.** Vi bringer udstyret til din dør og henter det igen efter din lejeperiode. Har du brug for at vi sætter det op også, klarer vi det for 500 kr. ekstra.
+Er du ikke til at cykle med udstyr, kører vi det ud til dig. **Levering i Storkøbenhavn koster 495 kr.** Vi bringer udstyret til din dør og henter det igen efter din lejeperiode. Har du brug for at vi sætter det op også, klarer vi det for 495 kr. ekstra.
 
 Leveringen er oplagt hvis du lejer den store pakke med PA-anlæg og subwoofer, som er for tung til cyklen. Men den lille pakke? Den er lavet til at cykle med.
 
@@ -47,9 +47,9 @@ Her er et par gode råd når du henter udstyret på cykel:
 - **Tag det roligt.** 12 kg ændrer balancen en smule, men det svarer til en stor indkøbspose. De fleste vænner sig til det med det samme.
 - **Planlæg ruten.** Halvtolv 9 ligger i indre København med gode cykelstier i alle retninger. Det er nemt at komme til fra Nørrebro, Vesterbro, Frederiksberg og Amager.
 
-## Fra 400 kr. for en hel weekend
+## Fra 395 kr. for en hel weekend
 
-Prisen for den lille højtalerpakke starter fra **400 kr.** for en weekend. Alle kabler er inkluderet, og der er ingen skjulte gebyrer. Du betaler først ved afhentning.
+Prisen for den lille højtalerpakke starter fra **395 kr.** for en weekend. Alle kabler er inkluderet, og der er ingen skjulte gebyrer. Du betaler først ved afhentning.
 
 Det er billigere end de fleste alternativer - og du slipper for at bøvle med batterier, dyre lejeaftaler eller tungt udstyr du ikke kan transportere.
 

@@ -25,21 +25,21 @@ Det er en situation de fleste københavnere kan genkende. Du vil bare have god m
 
 Lydudlejning i København skulle gøres ordentligt. Billigt, simpelt og tilpasset det liv folk faktisk lever i en storby.
 
-Frederik kendte branchen indefra. Han vidste hvad professionelt lydudstyr kostede, og han vidste at marginen mellem indkøbspris og udlejningspris hos de store aktører var enorm. Der var plads til en service der gav folk professionel lyd til en fair pris - uden depositum, uden lange kontrakter og uden at man skulle have en bil for at hente udstyret.
+Frederik kendte branchen indefra. Han vidste hvad professionelt lydudstyr kostede, og han vidste at marginen mellem indkøbspris og udlejningspris hos de store aktører var enorm. Der var plads til en service der gav folk professionel lyd til en fair pris - uden lange kontrakter og uden at man skulle have en bil for at hente udstyret.
 
 ## Designet til København
 
 København er en cykelby. De fleste af vores kunder har ikke bil, og det skal de heller ikke have brug for. Derfor blev lejhøjtaler.dk bygget op omkring et simpelt princip: udstyret skal kunne transporteres på en cykel.
 
-Vores lille højtalerpakke vejer kun 12 kg og kommer i en polstret bæretaske. To kompakte højtalere med alle kabler inkluderet - klar til at smide bag på cyklen og køre hjem. For dem der lejer den store pakke eller bare foretrækker at slippe for transporten, tilbyder vi levering i Storkøbenhavn for 500 kr.
+Vores lille højtalerpakke vejer kun 12 kg og kommer i en polstret bæretaske. To kompakte højtalere med alle kabler inkluderet - klar til at smide bag på cyklen og køre hjem. For dem der lejer den store pakke eller bare foretrækker at slippe for transporten, tilbyder vi levering i Storkøbenhavn for 495 kr.
 
 Afhentning foregår på Halvtolv 9 i København K, hvor der altid er gratis parkering i én time. De fleste henter fredag eftermiddag og afleverer mandag - en hel weekends lyd for én fast pris.
 
 ## Hvad vi tror på
 
-Vi har bevidst skåret alt det unødvendige væk. Ingen lange kontrakter. Ingen skjulte gebyrer. Intet depositum. Du booker online på tre minutter, møder op i København K, betaler når du henter - og så er du klar.
+Vi har bevidst skåret alt det unødvendige væk. Ingen lange kontrakter. Ingen skjulte gebyrer. Du booker online på tre minutter, møder op i København K, betaler når du henter - og så er du klar.
 
-Vi tror på at lyd til fest i København ikke behøver at koste en formue. Vores priser starter fra **400 kr.** for en komplet højtalerpakke med kabler inkluderet. Sammenlign det med hvad andre opkræver, og du vil hurtigt se forskellen.
+Vi tror på at lyd til fest i København ikke behøver at koste en formue. Vores priser starter fra **395 kr.** for en komplet højtalerpakke med kabler inkluderet. Sammenlign det med hvad andre opkræver, og du vil hurtigt se forskellen.
 
 ## Mere end bare højtalere
 

@@ -1,6 +1,6 @@
 ---
-title: "Billig hojtaler leje i Kobenhavn fra 400 kr"
-description: "Lej en hojtaler billigt i Kobenhavn fra 400 kr/weekend. Se priserne, hvad der er inkluderet, og hvorfor leje slaar kob."
+title: "Billig hojtaler leje i Kobenhavn fra 395 kr"
+description: "Lej en hojtaler billigt i Kobenhavn fra 395 kr/weekend. Se priserne, hvad der er inkluderet, og hvorfor leje slaar kob."
 date: "2026-06-10"
 keywords:
   - billig hojtaler leje
@@ -9,7 +9,7 @@ keywords:
   - billig PA udlejning
 ---
 
-# Billig hojtaler leje i Kobenhavn fra 400 kr
+# Billig hojtaler leje i Kobenhavn fra 395 kr
 
 Du skal holde fest, men du har ikke brug for at eje et PA-anlaeg. Du skal bruge det en aften -- maaske to. Her er det, du behoever at vide om priser paa hojtaler-leje i Kobenhavn.
 
@@ -17,7 +17,7 @@ Du skal holde fest, men du har ikke brug for at eje et PA-anlaeg. Du skal bruge 
 
 | Pakke | Weekend-pris | Inkluderer |
 |-------|-------------|------------|
-| Party | 400 kr | 1 aktiv 12" hojtaler, kabler, Bluetooth |
+| Party | 395 kr | 1 aktiv 12" hojtaler, kabler, Bluetooth |
 | Festival | 1.200 kr | 2 toppe, subwoofer, mixer, stativer, kabler |
 | Lys-pakke | Tillaeg | LED-spots, roegmaskine |
 
@@ -77,4 +77,4 @@ Det betyder lavere overhead og lavere priser for dig.
 3. Faa bekraeftelse med det samme
 4. Hent paa Vesterbro, Kobenhavn
 
-[Book din hojtaler nu](/#book) -- fra 400 kr/weekend.
+[Book din hojtaler nu](/#book) -- fra 395 kr/weekend.
