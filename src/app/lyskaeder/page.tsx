@@ -4,9 +4,9 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Lej Lyskæder København | Fra 200 kr | Lejhøjtaler.dk",
+  title: "Lej Lyskæder København | Fra 195 kr | Lejhøjtaler.dk",
   description:
-    "Lej lyskæde i København fra 200 kr/weekend. 10m lyskæde — vælg mellem varm hvid eller farvet. Perfekt til havefest, bryllup og fødselsdag. Ingen depositum.",
+    "Lej lyskæde i København fra 195 kr/weekend. 10m lyskæde — vælg mellem varm hvid eller farvet. Perfekt til havefest, bryllup og fødselsdag. Betal ved afhentning.",
   keywords: [
     "lej lyskæder",
     "lyskæder udlejning",
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/lyskaeder" },
   openGraph: {
-    title: "Lej Lyskæder København | Fra 200 kr",
+    title: "Lej Lyskæder København | Fra 195 kr",
     description:
-      "Lej lyskæde i København fra 200 kr. 10m lyskæde — varm hvid eller farvet. Book online.",
+      "Lej lyskæde i København fra 195 kr. 10m lyskæde — varm hvid eller farvet. Book online.",
     url: "https://lejhojtaler.dk/lyskaeder",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -64,13 +64,13 @@ export default function LyskaederPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Ingen depositum
+            København · Betal ved afhentning · Ring 50 15 07 31
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej lyskæder i København
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 200 kr.
+              fra 195 kr.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
@@ -114,7 +114,7 @@ export default function LyskaederPage() {
             <div>
               <h2 className="mb-4 text-3xl font-bold">Lyskæder</h2>
               <p className="mb-6 text-3xl font-bold text-brand-400">
-                200 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                195 kr<span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="space-y-3 text-white/60">
                 <li className="flex items-start gap-3">
@@ -152,13 +152,13 @@ export default function LyskaederPage() {
                 href="/lej-hojtaler"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se højtalere – fra 399 kr
+                Se højtalere – fra 395 kr
               </Link>
               <Link
                 href="/discokugle"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se discokugle – 250 kr
+                Se discokugle – 245 kr
               </Link>
             </div>
           </div>
@@ -173,7 +173,7 @@ export default function LyskaederPage() {
             Klar til stemningslys til festen?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 200 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 195 kr/weekend.
           </p>
           <a
             href="/?product=lyskaeder#book"

@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import BurgerMenu from "@/components/BurgerMenu";
 import TopBar from "@/components/TopBar";
+import SiteHeader from "@/components/SiteHeader";
 import "./globals.css";
 
 const GTM_ID = "GTM-M52R25VF";
 const GA_ID = "G-QDXW7S53GF";
 
 export const metadata: Metadata = {
-  title: "Lej Højtaler København | Fra 350 kr/weekend | Lejhøjtaler.dk",
+  title: "Lej Højtaler København | Fra 345 kr/weekend | Lejhøjtaler.dk",
   description:
-    "Lej højtaler i København fra 350 kr/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje — hent fredag, aflever mandag. Book online på 2 min.",
+    "Lej højtaler i København fra 345 kr/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje — hent fredag, aflever mandag. Book online på 2 min.",
   keywords: [
     "lej højtaler københavn",
     "højtalerudlejning københavn",
@@ -25,9 +26,9 @@ export const metadata: Metadata = {
     "lejhojtaler",
   ],
   openGraph: {
-    title: "Lej Højtaler København | Fra 350 kr/weekend | Lejhøjtaler.dk",
+    title: "Lej Højtaler København | Fra 345 kr/weekend | Lejhøjtaler.dk",
     description:
-      "Lej højtaler og PA-anlæg til din fest i København. Lydudstyr udlejning fra 350 kr/weekend. Festudstyr til leje — book online på 2 minutter.",
+      "Lej højtaler og PA-anlæg til din fest i København. Lydudstyr udlejning fra 345 kr/weekend. Festudstyr til leje — book online på 2 minutter.",
     url: "https://lejhojtaler.dk",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -79,6 +80,7 @@ export default function RootLayout({
         </noscript>
         <TopBar />
         <BurgerMenu />
+        <SiteHeader />
         {children}
       </body>
     </html>

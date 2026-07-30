@@ -5,9 +5,9 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Lej Røgmaskine København | Fra 250 kr | Lejhøjtaler.dk",
+  title: "Lej Røgmaskine København | Fra 245 kr | Lejhøjtaler.dk",
   description:
-    "Lej røgmaskine i København fra 250 kr/weekend. Inkl. røgvæske og fjernbetjening. Ingen depositum. Kombiner med lyd og lys til komplet festpakke.",
+    "Lej røgmaskine i København fra 245 kr/weekend. Inkl. røgvæske og fjernbetjening. Betal ved afhentning. Kombiner med lyd og lys til komplet festpakke.",
   keywords: [
     "lej røgmaskine københavn",
     "røgmaskine udlejning",
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/roegmaskine" },
   openGraph: {
-    title: "Lej Røgmaskine København | Fra 250 kr",
+    title: "Lej Røgmaskine København | Fra 245 kr",
     description:
-      "Lej røgmaskine i København fra 250 kr. Inkl. røgvæske og fjernbetjening. Book online.",
+      "Lej røgmaskine i København fra 245 kr. Inkl. røgvæske og fjernbetjening. Book online.",
     url: "https://lejhojtaler.dk/roegmaskine",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -66,13 +66,13 @@ export default function RoegmaskinePage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Ingen depositum
+            København · Betal ved afhentning · Ring 50 15 07 31
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej røgmaskine i København
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 250 kr.
+              fra 245 kr.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
@@ -103,7 +103,7 @@ export default function RoegmaskinePage() {
             <div>
               <h2 className="mb-4 text-3xl font-bold">Røgmaskine</h2>
               <p className="mb-6 text-3xl font-bold text-brand-400">
-                250 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                245 kr<span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="space-y-3 text-white/60">
                 <li className="flex items-start gap-3">
@@ -120,7 +120,7 @@ export default function RoegmaskinePage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Ingen depositum – betal kun lejen</span>
+                  <span>Betal ved afhentning – betal kun lejen</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
@@ -145,13 +145,13 @@ export default function RoegmaskinePage() {
                 href="/lej-hojtaler"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se højtalere – fra 399 kr
+                Se højtalere – fra 395 kr
               </Link>
               <Link
                 href="/festlys"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se festlys – fra 500 kr
+                Se festlys – fra 495 kr
               </Link>
             </div>
           </div>
@@ -166,7 +166,7 @@ export default function RoegmaskinePage() {
             Klar til røg på dansegulvet?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 250 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 245 kr/weekend.
           </p>
           <a
             href="/?product=rog#book"

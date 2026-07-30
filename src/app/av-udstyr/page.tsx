@@ -6,7 +6,7 @@ import AVBookingWizard from "@/components/AVBookingWizard";
 export const metadata: Metadata = {
   title: "Lej AV-udstyr København | Projektor, Skærm, Mikrofon | Lejhøjtaler.dk",
   description:
-    "Lej AV-udstyr i København. Projektor fra 500 kr, storskærm fra 600 kr, trådløs mikrofon fra 300 kr. Perfekt til præsentationer, konferencer og events.",
+    "Lej AV-udstyr i København. Projektor fra 495 kr, storskærm fra 595 kr, trådløs mikrofon fra 295 kr. Perfekt til præsentationer, konferencer og events.",
   keywords: [
     "lej av-udstyr",
     "av udstyr udlejning",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej AV-udstyr København | Projektor, Skærm, Mikrofon | Lejhøjtaler.dk",
     description:
-      "Projektor fra 500 kr, storskærm fra 600 kr, trådløs mikrofon fra 300 kr. Book online.",
+      "Projektor fra 495 kr, storskærm fra 595 kr, trådløs mikrofon fra 295 kr. Book online.",
     url: "https://lejhojtaler.dk/av-udstyr",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -65,7 +65,7 @@ export default function AVUdstyrPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Ingen depositum
+            København · Betal ved afhentning · Ring 50 15 07 31
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej AV-udstyr

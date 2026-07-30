@@ -5,9 +5,9 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Lyd til Fest København | Fra 399 kr | Lejhøjtaler.dk",
+  title: "Lyd til Fest København | Fra 395 kr | Lejhøjtaler.dk",
   description:
-    "Lyd til din fest i København fra 399 kr/weekend. Havefest, fødselsdag eller firmaevent. Ingen depositum, kabler inkluderet. Book online på 2 minutter.",
+    "Lyd til din fest i København fra 395 kr/weekend. Havefest, fødselsdag eller firmaevent. Betal ved afhentning, kabler inkluderet. Book online på 2 minutter.",
   keywords: [
     "lyd til fest københavn",
     "festlyd leje",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/festlyd" },
   openGraph: {
-    title: "Lyd til Fest København | Fra 399 kr",
+    title: "Lyd til Fest København | Fra 395 kr",
     description:
-      "Lyd til din fest i København fra 399 kr. Havefest, fødselsdag eller firmaevent. Book online.",
+      "Lyd til din fest i København fra 395 kr. Havefest, fødselsdag eller firmaevent. Book online.",
     url: "https://lejhojtaler.dk/festlyd",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -67,7 +67,7 @@ export default function FestlydPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Fra 399 kr/weekend
+            København · Fra 395 kr/weekend
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lyd til din fest
@@ -77,7 +77,7 @@ export default function FestlydPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Havefest, fødselsdag eller firmaevent – fra 399 kr.
+            Havefest, fødselsdag eller firmaevent – fra 395 kr.
           </p>
           <a
             href="/#book"
@@ -113,7 +113,7 @@ export default function FestlydPage() {
               <div className="rounded-xl bg-brand-500/10 p-3 text-center">
                 <p className="text-xs font-medium text-brand-400">Anbefalet</p>
                 <p className="text-lg font-bold text-white">Party-pakke</p>
-                <p className="text-xl font-bold text-brand-400">399 kr</p>
+                <p className="text-xl font-bold text-brand-400">395 kr</p>
               </div>
             </div>
 
@@ -131,7 +131,7 @@ export default function FestlydPage() {
               <div className="rounded-xl bg-brand-500/10 p-3 text-center">
                 <p className="text-xs font-medium text-brand-400">Anbefalet</p>
                 <p className="text-lg font-bold text-white">Festival-pakke</p>
-                <p className="text-xl font-bold text-brand-400">700 kr</p>
+                <p className="text-xl font-bold text-brand-400">695 kr</p>
               </div>
             </div>
 
@@ -149,7 +149,7 @@ export default function FestlydPage() {
               <div className="rounded-xl bg-brand-500/10 p-3 text-center">
                 <p className="text-xs font-medium text-brand-400">Alt inkluderet</p>
                 <p className="text-lg font-bold text-white">Festival + lys + røg</p>
-                <p className="text-xl font-bold text-brand-400">1.450 kr</p>
+                <p className="text-xl font-bold text-brand-400">1.435 kr</p>
               </div>
             </div>
           </div>
@@ -169,7 +169,7 @@ export default function FestlydPage() {
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  Ingen depositum
+                  Betal ved afhentning
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
@@ -203,7 +203,7 @@ export default function FestlydPage() {
             Klar til festlyd?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 399 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 395 kr/weekend.
           </p>
           <a
             href="/#book"

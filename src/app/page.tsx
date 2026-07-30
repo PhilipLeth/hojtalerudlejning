@@ -30,7 +30,7 @@ export default function Home() {
             legalName: "Scharling Studio",
             taxID: "DK40994904",
             description:
-              "Højtalerudlejning i København. Lej højtaler, PA-anlæg, batterihøjtaler og lydudstyr til fest, event og party. Billig levering i hele København. Festudstyr til leje fra 350 kr/weekend.",
+              "Højtalerudlejning i København. Lej højtaler, PA-anlæg, batterihøjtaler og lydudstyr til fest, event og party. Billig levering i hele København. Festudstyr til leje fra 345 kr/weekend.",
             url: "https://lejhojtaler.dk",
             address: {
               "@type": "PostalAddress",

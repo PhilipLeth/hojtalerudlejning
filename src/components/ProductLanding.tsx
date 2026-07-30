@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LivePrice from "@/components/LivePrice";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
@@ -59,13 +60,13 @@ export default function ProductLanding({
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Ingen depositum
+            København · Betal ved afhentning · Ring 50 15 07 31
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             {headline}
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra {price} kr.
+              <LivePrice productId={productId} fallback={price} />
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">{sub}</p>
@@ -93,7 +94,7 @@ export default function ProductLanding({
             <div>
               <h2 className="mb-4 text-3xl font-bold">{name}</h2>
               <p className="mb-6 text-3xl font-bold text-brand-400">
-                {price} kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" /><span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="space-y-3 text-white/60">
                 {bullets.map((b) => (
@@ -122,7 +123,7 @@ export default function ProductLanding({
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Klar til at booke?</h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. {price} kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" />/weekend.
           </p>
           <a
             href={bookHref}

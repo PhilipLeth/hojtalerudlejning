@@ -117,9 +117,9 @@ export default function OmPage() {
                 </p>
                 <p>
                   Er du ikke til at cykle med udstyr, k&oslash;rer vi det ud til
-                  dig. Levering i Stork&oslash;benhavn koster 500 kr. - og har du
+                  dig. Levering i Stork&oslash;benhavn koster 495 kr. - og har du
                   brug for at vi s&aelig;tter det op ogs&aring;, klarer vi det for
-                  500 kr. ekstra.
+                  495 kr. ekstra.
                 </p>
               </div>
             </section>
@@ -132,7 +132,7 @@ export default function OmPage() {
               <div className="space-y-4 text-sm leading-relaxed text-white/70">
                 <p>
                   Vi har bevidst sk&aring;ret alt det un&oslash;dvendige v&aelig;k.
-                  Ingen lange kontrakter. Ingen skjulte gebyrer. Intet depositum. Du
+                  Ingen lange kontrakter. Ingen skjulte gebyrer. Betal ved afhentning. Du
                   booker online p&aring; tre minutter, m&oslash;der op i
                   K&oslash;benhavn K, betal n&aring;r du henter - og s&aring; er du
                   klar.

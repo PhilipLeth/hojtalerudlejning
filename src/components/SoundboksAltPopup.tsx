@@ -46,7 +46,7 @@ export default function SoundboksAltPopup() {
           Overvej Mackie Thump GO
         </h2>
         <p className="mb-6 text-sm text-white/50">
-          Billigere batterihøjtaler — mobil, let at tage med, og ofte nok til de fleste fester. Fra 350 kr.
+          Billigere batterihøjtaler — mobil, let at tage med, og ofte nok til de fleste fester. Fra 345 kr.
         </p>
         <Link
           href="/mackie-thump-go"

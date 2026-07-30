@@ -115,9 +115,9 @@ export default function AboutPageEn() {
                 </p>
                 <p>
                   If you&rsquo;d rather not cycle with equipment, we&rsquo;ll
-                  deliver it to you. Delivery in greater Copenhagen costs 500 DKK
+                  deliver it to you. Delivery in greater Copenhagen costs 495 DKK
                   &ndash; and if you need us to set it up too, we&rsquo;ll do it
-                  for an additional 500 DKK.
+                  or 795 DKK including setup.
                 </p>
               </div>
             </section>
@@ -130,13 +130,13 @@ export default function AboutPageEn() {
               <div className="space-y-4 text-sm leading-relaxed text-white/70">
                 <p>
                   We&rsquo;ve deliberately cut away everything unnecessary. No
-                  long contracts. No hidden fees. No deposit. You book online in
+                  long contracts. No hidden fees — you pay at pickup. You book online in
                   three minutes, show up in Copenhagen K, pay when you pick up
                   &ndash; and you&rsquo;re good to go.
                 </p>
                 <p>
                   We believe that sound for a party in Copenhagen doesn&rsquo;t
-                  have to cost a fortune. Our prices start from 399 DKK for a
+                  have to cost a fortune. Our prices start from 395 DKK for a
                   complete speaker package with all cables included. Compare that
                   with what others charge, and you&rsquo;ll quickly see the
                   difference.

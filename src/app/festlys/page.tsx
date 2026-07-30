@@ -1,13 +1,13 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
 
 export const metadata: Metadata = {
   title: "Lej Festlys og Røgmaskine København | Lejhøjtaler.dk",
   description:
-    "Lej festlys og røgmaskine i København. Lysbar fra 500 kr, røgmaskine fra 250 kr. Ingen depositum. Kombiner med lyd til komplet festpakke fra 1.100 kr.",
+    "Lej festlys i København: lysbar fra 495 kr, røgmaskine fra 245 kr, discokugle og lyskæder. Kombiner med lyd til komplet festpakke fra 1.135 kr. Betal ved afhentning.",
   keywords: [
     "lej festlys københavn",
     "festlys udlejning",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Festlys og Røgmaskine København | Lejhøjtaler.dk",
     description:
-      "Lysbar fra 500 kr, røgmaskine fra 250 kr. Ingen depositum. Book online.",
+      "Lysbar fra 495 kr, røgmaskine fra 245 kr, discokugle og lyskæder. Book online.",
     url: "https://lejhojtaler.dk/festlys",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -67,7 +67,7 @@ export default function FestlysPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Ingen depositum
+            København · Betal ved afhentning · Ring 50 15 07 31
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej festlys og røgmaskine
@@ -77,7 +77,7 @@ export default function FestlysPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Lysbar fra 500 kr. · Røgmaskine fra 250 kr.
+            Lysbar fra 495 kr. · Røgmaskine fra 245 kr. · Lyskæder fra 195 kr.
           </p>
           <a
             href="/?product=lys#book"
@@ -95,67 +95,24 @@ export default function FestlysPage() {
             Lys og røg til din fest
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Skab den perfekte stemning med professionelt festlys og røgmaskine.
+            Skab den perfekte stemning med lysbar, røgmaskine, discokugle og lyskæder.
           </p>
 
-          <div className="grid gap-6 sm:grid-cols-2">
-            {/* Lysbar */}
-            <div className="glass rounded-2xl p-8">
-              <div className="mb-4 overflow-hidden rounded-xl">
-                <Image
-                  src="/images/product-lys.png"
-                  alt="LED-lysbar til fest"
-                  width={600}
-                  height={400}
-                  className="w-full object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-bold text-white">Lysbar</h3>
-              <p className="mt-1 text-sm text-white/50">
-                LED-lysbar med farveeffekter · Lydreaktiv · Nem opsætning
-              </p>
-              <p className="mt-4 text-3xl font-bold text-brand-400">
-                500 kr<span className="text-lg font-normal text-white/40">/weekend</span>
-              </p>
-              <ul className="mt-4 space-y-2 text-sm text-white/60">
-                <li>• Professionelle farveeffekter</li>
-                <li>• Reagerer på musikken</li>
-                <li>• Nem opsætning – plug and play</li>
-              </ul>
-            </div>
-
-            {/* Røgmaskine */}
-            <div className="glass rounded-2xl p-8">
-              <div className="mb-4 overflow-hidden rounded-xl">
-                <Image
-                  src="/images/product-rog.png"
-                  alt="Røgmaskine til fest"
-                  width={600}
-                  height={400}
-                  className="w-full object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-bold text-white">Røgmaskine</h3>
-              <p className="mt-1 text-sm text-white/50">
-                Inkl. røgvæske · Fjernbetjening · Klar på 5 min.
-              </p>
-              <p className="mt-4 text-3xl font-bold text-brand-400">
-                250 kr<span className="text-lg font-normal text-white/40">/weekend</span>
-              </p>
-              <ul className="mt-4 space-y-2 text-sm text-white/60">
-                <li>• Røgvæske inkluderet</li>
-                <li>• Fjernbetjening medfølger</li>
-                <li>• Varmer op på 5 minutter</li>
-              </ul>
-            </div>
-          </div>
+          <CategoryProductGrid
+            items={[
+              { id: "lys", href: "/?product=lys#book" },
+              { id: "rog", href: "/roegmaskine" },
+              { id: "discokugle", href: "/discokugle" },
+              { id: "lyskaeder", href: "/lyskaeder" },
+            ]}
+          />
         </section>
 
         {/* Upsell */}
         <section className="mx-auto max-w-3xl px-4 pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">
-              Kombiner med lyd – komplet festpakke fra 1.100 kr
+              Kombiner med lyd – komplet festpakke fra 1.135 kr
             </h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
               Lej højtalere, lys og røgmaskine samlet. Alt hvad du skal bruge til den perfekte fest.
@@ -163,15 +120,15 @@ export default function FestlysPage() {
             <div className="mb-6 grid gap-4 sm:grid-cols-3">
               <div className="glass rounded-xl p-4 text-center">
                 <p className="text-lg font-bold text-white">Party-højtaler</p>
-                <p className="text-xl font-bold text-brand-400">399 kr</p>
+                <p className="text-xl font-bold text-brand-400">395 kr</p>
               </div>
               <div className="glass rounded-xl p-4 text-center">
                 <p className="text-lg font-bold text-white">Lysbar</p>
-                <p className="text-xl font-bold text-brand-400">500 kr</p>
+                <p className="text-xl font-bold text-brand-400">495 kr</p>
               </div>
               <div className="glass rounded-xl p-4 text-center">
                 <p className="text-lg font-bold text-white">Røgmaskine</p>
-                <p className="text-xl font-bold text-brand-400">250 kr</p>
+                <p className="text-xl font-bold text-brand-400">245 kr</p>
               </div>
             </div>
             <Link

@@ -4,14 +4,14 @@ import Link from "next/link";
 
 const USPS = [
   { title: "5 dages leje", desc: "Én pris for op til 5 dage" },
-  { title: "Billig levering", desc: "500 kr i hele København" },
+  { title: "Billig levering", desc: "Fra 495 kr i hele København" },
   { title: "Alle kabler inkl.", desc: "Klar til plug-and-play" },
 ];
 
 /** Forside hero: logo + brand + USP'er */
 export default function HomeHero() {
   return (
-    <section className="relative overflow-hidden px-4 pb-8 pt-16 sm:pt-20">
+    <section className="relative overflow-hidden px-4 pb-8 pt-6 sm:pt-8">
       <div
         className="fixed inset-0 bg-cover bg-center opacity-40"
         style={{ backgroundImage: "url(/images/hero.png)" }}
@@ -29,7 +29,7 @@ export default function HomeHero() {
           </h1>
         </Link>
         <p className="mt-4 text-sm font-medium uppercase tracking-[0.2em] text-brand-400">
-          København · Ingen depositum
+          København · Betal ved afhentning
         </p>
         <p className="mx-auto mt-4 max-w-md text-lg text-white/55">
           Lej højtalere, lys og AV — book online på 2 min. Betal ved afhentning.

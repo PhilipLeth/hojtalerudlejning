@@ -5,10 +5,11 @@ import { usePathname } from "next/navigation";
 import { isSummerSale } from "@/lib/products";
 
 const messages = [
-  "Billig levering i hele København fra 500 kr",
+  "Billig levering i hele København fra 495 kr",
   "Lej op til 5 dage til samme pris",
   "Til private fester & professionelle events",
-  "Ingen depositum. Betal ved afhentning",
+  "Betal først ved afhentning — MobilePay eller kontant",
+  "Ring 50 15 07 31 — vi svarer gerne",
   "Alle kabler inkluderet",
 ];
 

@@ -4,9 +4,9 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Lej Headset-Mikrofon København | Fra 350 kr | Lejhøjtaler.dk",
+  title: "Lej Headset-Mikrofon København | Fra 345 kr | Lejhøjtaler.dk",
   description:
-    "Lej trådløst headset-mikrofon i København fra 350 kr/weekend. Hands-free mikrofon til præsentationer og konferencer. Ingen depositum.",
+    "Lej trådløst headset-mikrofon i København fra 345 kr/weekend. Hands-free mikrofon til præsentationer og konferencer. Betal ved afhentning.",
   keywords: [
     "lej headset mikrofon",
     "headset mikrofon udlejning",
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/headset-mikrofon" },
   openGraph: {
-    title: "Lej Headset-Mikrofon København | Fra 350 kr",
+    title: "Lej Headset-Mikrofon København | Fra 345 kr",
     description:
-      "Lej trådløst headset-mikrofon i København fra 350 kr/weekend. Hands-free mikrofon til præsentationer og konferencer. Ingen depositum.",
+      "Lej trådløst headset-mikrofon i København fra 345 kr/weekend. Hands-free mikrofon til præsentationer og konferencer. Betal ved afhentning.",
     url: "https://lejhojtaler.dk/headset-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -63,13 +63,13 @@ export default function HeadsetMikrofonPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Ingen depositum
+            København · Betal ved afhentning · Ring 50 15 07 31
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej headset-mikrofon
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 350 kr.
+              fra 345 kr.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
@@ -100,7 +100,7 @@ export default function HeadsetMikrofonPage() {
             <div>
               <h2 className="mb-4 text-3xl font-bold">Trådløst headset-mikrofon</h2>
               <p className="mb-6 text-3xl font-bold text-brand-400">
-                350 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                345 kr<span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="space-y-3 text-white/60">
                 <li className="flex items-start gap-3">
@@ -146,13 +146,13 @@ export default function HeadsetMikrofonPage() {
                 href="/tradlos-mikrofon"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se trådløs mikrofon – fra 300 kr
+                Se trådløs mikrofon – fra 295 kr
               </Link>
               <Link
                 href="/projektor"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se projektor – fra 500 kr
+                Se projektor – fra 495 kr
               </Link>
             </div>
           </div>
@@ -167,7 +167,7 @@ export default function HeadsetMikrofonPage() {
             Klar til hands-free præsentation?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 350 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 345 kr/weekend.
           </p>
           <a
             href="/?product=headset#book"

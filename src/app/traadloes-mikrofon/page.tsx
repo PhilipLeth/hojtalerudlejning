@@ -4,9 +4,9 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Lej Trådløs Mikrofon København | Fra 300 kr | Lejhøjtaler.dk",
+  title: "Lej Trådløs Mikrofon København | Fra 295 kr | Lejhøjtaler.dk",
   description:
-    "Lej trådløs mikrofon i København fra 300 kr/weekend. Professionel trådløs håndholdt mikrofon til taler og events. Ingen depositum.",
+    "Lej trådløs mikrofon i København fra 295 kr/weekend. Professionel trådløs håndholdt mikrofon til taler og events. Betal ved afhentning.",
   keywords: [
     "lej trådløs mikrofon",
     "mikrofon udlejning",
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/traadloes-mikrofon" },
   openGraph: {
-    title: "Lej Trådløs Mikrofon København | Fra 300 kr",
+    title: "Lej Trådløs Mikrofon København | Fra 295 kr",
     description:
-      "Lej trådløs mikrofon i København fra 300 kr. Professionel håndholdt mikrofon til taler og events. Book online.",
+      "Lej trådløs mikrofon i København fra 295 kr. Professionel håndholdt mikrofon til taler og events. Book online.",
     url: "https://lejhojtaler.dk/traadloes-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -64,13 +64,13 @@ export default function TraadloesMikrofonPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Ingen depositum
+            København · Betal ved afhentning · Ring 50 15 07 31
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej trådløs mikrofon
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 300 kr.
+              fra 295 kr.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
@@ -101,7 +101,7 @@ export default function TraadloesMikrofonPage() {
             <div>
               <h2 className="mb-4 text-3xl font-bold">Trådløs mikrofon</h2>
               <p className="mb-6 text-3xl font-bold text-brand-400">
-                300 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                295 kr<span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="space-y-3 text-white/60">
                 <li className="flex items-start gap-3">
@@ -122,7 +122,7 @@ export default function TraadloesMikrofonPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Ingen depositum – betal kun lejen</span>
+                  <span>Betal ved afhentning – betal kun lejen</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
@@ -147,13 +147,13 @@ export default function TraadloesMikrofonPage() {
                 href="/headset"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se headset – 350 kr
+                Se headset – 345 kr
               </Link>
               <Link
                 href="/lej-hojtaler"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se højtalere – fra 399 kr
+                Se højtalere – fra 395 kr
               </Link>
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function TraadloesMikrofonPage() {
             Klar til at blive hørt?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 300 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 295 kr/weekend.
           </p>
           <a
             href="/?product=traadloes_mikrofon#book"

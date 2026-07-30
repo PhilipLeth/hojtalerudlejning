@@ -338,7 +338,8 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
       : selectedRental.name_da
     : null;
   const hasLights = selectedAddons.includes("lys");
-  const hasDelivery = selectedAddons.includes("levering");
+  const DELIVERY_IDS = ["levering", "levering_opsaetning"];
+  const hasDelivery = selectedAddons.some((id) => DELIVERY_IDS.includes(id));
 
   const summer = isSummerSale();
   const summerLabel = t[locale].summer;
@@ -388,10 +389,15 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   }
 
   function toggleAddon(id: string) {
-    setSelectedAddons((prev) =>
-      prev.includes(id) ? prev.filter((a) => a !== id) : [...prev, id]
-    );
-    if (id === "levering" && selectedAddons.includes("levering")) {
+    setSelectedAddons((prev) => {
+      if (prev.includes(id)) return prev.filter((a) => a !== id);
+      // De to leveringsvarianter udelukker hinanden
+      if (DELIVERY_IDS.includes(id)) {
+        return [...prev.filter((a) => !DELIVERY_IDS.includes(a)), id];
+      }
+      return [...prev, id];
+    });
+    if (DELIVERY_IDS.includes(id) && selectedAddons.includes(id)) {
       setDeliveryAddress("");
     }
   }
@@ -590,7 +596,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
               <img src={isEffectsOnly ? (hasLights ? "/images/product-lys.png" : "/images/product-rog.png") : selectedRental?.image ?? selectedSpeaker?.product} alt={isEffectsOnly ? (hasLights ? "Lys-pakke med LED-lamper og centereffekt" : "Røgmaskine til fest") : rentalName ?? `${selectedSpeaker?.name ?? "Højtalerpakke"}`} className="h-16 w-16 object-contain rounded-lg" />
               <div>
                 <p className="font-semibold">{isEffectsOnly ? s.effectsOnlyLabel : isRentalOnly ? rentalName : `${selectedSpeaker?.name}${s.speakerSuffix}`}</p>
-                <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && a.id !== "levering").map((a) => a.label).join(" + ") : isRentalOnly ? "" : `${selectedSpeaker?.size} — ${selectedSpeaker?.capacity}`}</p>
+                <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id)).map((a) => a.label).join(" + ") : isRentalOnly ? "" : `${selectedSpeaker?.size} — ${selectedSpeaker?.capacity}`}</p>
               </div>
             </div>
 
@@ -942,7 +948,7 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
                     </button>
 
                     {/* Delivery address field */}
-                    {a.id === "levering" && selected && (
+                    {DELIVERY_IDS.includes(a.id) && selected && (
                       <div className="px-2 pt-3">
                         <input
                           type="text"

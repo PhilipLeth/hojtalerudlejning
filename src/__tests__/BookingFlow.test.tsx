@@ -26,16 +26,16 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
     render(<BookingFlow />);
     expect(screen.getByText("Vælg højtalere")).toBeInTheDocument();
     expect(screen.getByText("Lille højtalerpakke")).toBeInTheDocument();
-    expect(screen.getByText("Soundboks Mix")).toBeInTheDocument();
+    expect(screen.getAllByText("Soundboks 4").length).toBeGreaterThan(0);
     expect(screen.getByText("Stor højtalerpakke")).toBeInTheDocument();
   });
 
   it("shows prices for all speakers", () => {
     render(<BookingFlow />);
     // Original prices shown as strikethrough during summer sale, or as main price outside sale
-    expect(screen.getByText("399,-")).toBeInTheDocument();
-    expect(screen.getByText("600,-")).toBeInTheDocument();
-    expect(screen.getByText("700,-")).toBeInTheDocument();
+    expect(screen.getByText("395,-")).toBeInTheDocument();
+    expect(screen.getByText("595,-")).toBeInTheDocument();
+    expect(screen.getByText("695,-")).toBeInTheDocument();
   });
 
   it("shows effects-only section with lys and røg", () => {
@@ -43,15 +43,15 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
     expect(screen.getByText("Uden højtalere?")).toBeInTheDocument();
     expect(screen.getByText("Lys-pakke")).toBeInTheDocument();
     expect(screen.getByText("Røgmaskine")).toBeInTheDocument();
-    expect(screen.getByText("Fra 500,-")).toBeInTheDocument();
-    expect(screen.getByText("Fra 250,-")).toBeInTheDocument();
+    expect(screen.getByText("Fra 495,-")).toBeInTheDocument();
+    expect(screen.getByText("Fra 245,-")).toBeInTheDocument();
   });
 
   it("renders in English when locale=en", () => {
     render(<BookingFlow locale="en" />);
     expect(screen.getByText("Choose speakers")).toBeInTheDocument();
     expect(screen.getByText("Small Speaker Package")).toBeInTheDocument();
-    expect(screen.getByText("Soundboks Mix")).toBeInTheDocument();
+    expect(screen.getAllByText("Soundboks 4").length).toBeGreaterThan(0);
     expect(screen.getByText("Large Speaker Package")).toBeInTheDocument();
     expect(screen.getByText("Without speakers?")).toBeInTheDocument();
   });
@@ -67,7 +67,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
 
   it("advances to step 2 in effects-only mode when clicking lys", async () => {
     render(<BookingFlow />);
-    const lysButton = screen.getByText("Fra 500,-").closest("button")!;
+    const lysButton = screen.getByText("Fra 495,-").closest("button")!;
     fireEvent.click(lysButton);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
@@ -76,7 +76,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
 
   it("advances to step 2 in effects-only mode when clicking røg", async () => {
     render(<BookingFlow />);
-    const rogButton = screen.getByText("Fra 250,-").closest("button")!;
+    const rogButton = screen.getByText("Fra 245,-").closest("button")!;
     fireEvent.click(rogButton);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();

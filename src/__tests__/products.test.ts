@@ -7,31 +7,31 @@ describe("Products data", () => {
     expect(speakers.map((s) => s.id)).toEqual(["thumpgo", "party", "soundboks", "festival"]);
   });
 
-  it("thump go is 350 kr", () => {
-    expect(speakers.find((s) => s.id === "thumpgo")!.price).toBe(350);
+  it("thump go is 345 kr", () => {
+    expect(speakers.find((s) => s.id === "thumpgo")!.price).toBe(345);
   });
 
-  it("party speaker is 399 kr", () => {
-    expect(speakers.find((s) => s.id === "party")!.price).toBe(399);
+  it("party speaker is 395 kr", () => {
+    expect(speakers.find((s) => s.id === "party")!.price).toBe(395);
   });
 
-  it("soundboks mix is 600 kr", () => {
-    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(600);
+  it("soundboks mix is 595 kr", () => {
+    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(595);
   });
 
-  it("festival speaker is 700 kr", () => {
-    expect(speakers.find((s) => s.id === "festival")!.price).toBe(700);
+  it("festival speaker is 695 kr", () => {
+    expect(speakers.find((s) => s.id === "festival")!.price).toBe(695);
   });
 
   it("startPrice matches cheapest speaker", () => {
     const cheapest = Math.min(...speakers.map((s) => s.price));
     expect(startPrice).toBe(cheapest);
-    expect(startPrice).toBe(350);
+    expect(startPrice).toBe(345);
   });
 
   it("cheapestSpeakerPrice ignores hidden speakers", () => {
     const list = speakers.map((s) => (s.id === "thumpgo" ? { ...s, hidden: true } : s));
-    expect(cheapestSpeakerPrice(list)).toBe(399);
+    expect(cheapestSpeakerPrice(list)).toBe(395);
   });
 
   it("all speakers have product and mood images", () => {
@@ -80,21 +80,22 @@ describe("Addons data", () => {
     expect(ids).toContain("levering");
   });
 
-  it("lys is 500 kr", () => {
-    expect(addons.find((a) => a.id === "lys")!.price).toBe(500);
+  it("lys is 495 kr", () => {
+    expect(addons.find((a) => a.id === "lys")!.price).toBe(495);
   });
 
-  it("rog is 250 kr", () => {
-    expect(addons.find((a) => a.id === "rog")!.price).toBe(250);
+  it("rog is 245 kr", () => {
+    expect(addons.find((a) => a.id === "rog")!.price).toBe(245);
   });
 
-  it("levering is 500 kr", () => {
-    expect(addons.find((a) => a.id === "levering")!.price).toBe(500);
+  it("levering is 495 kr, levering_opsaetning 795 kr", () => {
+    expect(addons.find((a) => a.id === "levering")!.price).toBe(495);
+    expect(addons.find((a) => a.id === "levering_opsaetning")!.price).toBe(795);
   });
 
   it("all addons except levering have an image", () => {
     for (const a of addons) {
-      if (a.id === "levering") {
+      if (a.id === "levering" || a.id === "levering_opsaetning") {
         expect(a.image).toBeNull();
       } else {
         expect(a.image).toMatch(/^\/images\/product-.+\.(png|svg)$/);
@@ -141,14 +142,14 @@ describe("Day multiplier pricing", () => {
     expect(Math.round(399 * dayMultiplier[5])).toBe(399);
   });
 
-  it("festival speaker weekend = 700 kr", () => {
-    expect(Math.round(700 * dayMultiplier[3])).toBe(700);
+  it("festival speaker weekend = 695 kr", () => {
+    expect(Math.round(695 * dayMultiplier[3])).toBe(695);
   });
 
-  it("festival speaker + lys + rog weekend = 1450 kr", () => {
-    const speaker = 700 * dayMultiplier[3];
-    const lys = 500;
-    const rog = 250;
-    expect(Math.round(speaker + lys + rog)).toBe(1450);
+  it("festival speaker + lys + rog weekend = 1435 kr", () => {
+    const speaker = 695 * dayMultiplier[3];
+    const lys = 495;
+    const rog = 245;
+    expect(Math.round(speaker + lys + rog)).toBe(1435);
   });
 });

@@ -5,9 +5,9 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Lej Højtalere København | Fra 350 kr/weekend | Lejhøjtaler.dk",
+  title: "Lej Højtalere København | Fra 345 kr/weekend | Lejhøjtaler.dk",
   description:
-    "Lej højtalere i København fra 350 kr/weekend. Batterihøjtalere (Mackie Thump GO, Soundboks 4) og PA-pakker. Ingen depositum, kabler inkluderet. Book online.",
+    "Lej højtalere i København fra 345 kr/weekend. Batterihøjtalere (Mackie Thump GO, Soundboks 4) og PA-pakker. Betal ved afhentning, kabler inkluderet. Book online.",
   keywords: [
     "lej højtalere københavn",
     "lej højtaler",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/lej-hojtaler" },
   openGraph: {
-    title: "Lej Højtalere København | Fra 350 kr/weekend",
+    title: "Lej Højtalere København | Fra 345 kr/weekend",
     description:
-      "Lej højtalere i København fra 350 kr/weekend. Batterihøjtalere og PA-pakker. Ingen depositum. Book online.",
+      "Lej højtalere i København fra 345 kr/weekend. Batterihøjtalere og PA-pakker. Betal ved afhentning. Book online.",
     url: "https://lejhojtaler.dk/lej-hojtaler",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -67,7 +67,7 @@ export default function LejHojtalerPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Ingen depositum
+            København · Betal ved afhentning · Ring 50 15 07 31
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej højtalere
@@ -77,7 +77,7 @@ export default function LejHojtalerPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Batterihøjtalere og PA-pakker fra 350 kr — ingen depositum, betal ved afhentning.
+            Batterihøjtalere og PA-pakker fra 345 kr — book online, betal først ved afhentning.
           </p>
           <a
             href="/#book"
@@ -103,9 +103,9 @@ export default function LejHojtalerPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-white">Ingen depositum</h3>
+              <h3 className="font-semibold text-white">Betal ved afhentning</h3>
               <p className="mt-2 text-sm text-white/50">
-                Du betaler kun lejen. Ingen skjulte gebyrer eller depositum.
+                Du betaler kun lejen. Ingen skjulte gebyrer — betal først ved afhentning.
               </p>
             </div>
             <div className="glass rounded-2xl p-6 text-center">
@@ -147,13 +147,13 @@ export default function LejHojtalerPage() {
                 href="/festlys"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se festlys – fra 500 kr
+                Se festlys – fra 495 kr
               </Link>
               <Link
                 href="/roegmaskine"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se røgmaskine – fra 250 kr
+                Se røgmaskine – fra 245 kr
               </Link>
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function LejHojtalerPage() {
             Klar til at leje højtalere?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 350 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 345 kr/weekend.
           </p>
           <a
             href="/#book"

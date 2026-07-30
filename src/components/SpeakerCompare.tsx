@@ -76,7 +76,7 @@ export default function SpeakerCompare({
                     <tr key={sp.id} className="border-b border-white/5 last:border-0 transition hover:bg-white/[0.02]">
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-3">
-                          <img src={sp.product} alt={text.name} className="h-12 w-12 shrink-0 rounded-lg bg-[#0d0c12] object-contain p-1" />
+                          <img src={sp.product} alt={text.name} className="h-16 w-16 shrink-0 rounded-lg bg-[#0d0c12] object-contain p-1" />
                           <div>
                             <p className="font-semibold text-white">{text.name}</p>
                             <p className="text-xs text-white/40">{text.size}</p>
@@ -114,6 +114,51 @@ export default function SpeakerCompare({
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Store produktkort under tabellen */}
+      <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
+        {groups.flatMap((g) => g.items).map((sp) => {
+          const text = sp[locale];
+          const href = bookLinks === "booking" ? `/?product=${sp.id}#book` : "#book";
+          return (
+            <article
+              key={`card-${sp.id}`}
+              className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:border-brand-500/40"
+            >
+              <a href={href} className="relative block bg-[#0d0c12] p-6">
+                {sp.power === "batteri" && (
+                  <span className="absolute left-4 top-4 rounded-full bg-green-500/15 px-2.5 py-0.5 text-[11px] font-bold text-green-400">
+                    🔋 {c.noPower}
+                  </span>
+                )}
+                <img
+                  src={sp.product}
+                  alt={text.name}
+                  className="mx-auto h-44 w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                />
+              </a>
+              <div className="flex flex-1 flex-col p-5">
+                <h3 className="text-xl font-semibold text-white">{text.name}</h3>
+                <p className="mt-1 text-sm text-white/50">
+                  {text.size} &mdash; {text.capacity}
+                </p>
+                <p className="mt-2 text-sm text-white/40">{text.desc}</p>
+                <div className="mt-4 flex items-center justify-between">
+                  <p className="text-2xl font-bold text-brand-400">
+                    {sp.price},-<span className="ml-1 text-xs font-normal text-white/40">{c.perWeekend}</span>
+                  </p>
+                  <a
+                    href={href}
+                    className="rounded-full bg-brand-500 px-6 py-2.5 text-sm font-semibold text-black transition hover:bg-brand-400 active:scale-95"
+                  >
+                    {c.book}
+                  </a>
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

@@ -4,9 +4,9 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Lej Discokugle København | Fra 250 kr | Lejhøjtaler.dk",
+  title: "Lej Discokugle København | Fra 245 kr | Lejhøjtaler.dk",
   description:
-    "Lej discokugle i København fra 250 kr/weekend. Roterende discokugle med LED-lys og farver. Plug-and-play. Ingen depositum. Book online.",
+    "Lej discokugle i København fra 245 kr/weekend. Roterende discokugle med LED-lys og farver. Plug-and-play. Betal ved afhentning. Book online.",
   keywords: [
     "lej discokugle",
     "discokugle udlejning",
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/discokugle" },
   openGraph: {
-    title: "Lej Discokugle København | Fra 250 kr",
+    title: "Lej Discokugle København | Fra 245 kr",
     description:
-      "Lej discokugle i København fra 250 kr/weekend. Roterende discokugle med LED-lys og farver. Book online.",
+      "Lej discokugle i København fra 245 kr/weekend. Roterende discokugle med LED-lys og farver. Book online.",
     url: "https://lejhojtaler.dk/discokugle",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -63,13 +63,13 @@ export default function DiscokuglePage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Ingen depositum
+            København · Betal ved afhentning · Ring 50 15 07 31
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej discokugle i København
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 250 kr.
+              fra 245 kr.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
@@ -100,7 +100,7 @@ export default function DiscokuglePage() {
             <div>
               <h2 className="mb-4 text-3xl font-bold">Discokugle</h2>
               <p className="mb-6 text-3xl font-bold text-brand-400">
-                250 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                245 kr<span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="space-y-3 text-white/60">
                 <li className="flex items-start gap-3">
@@ -117,7 +117,7 @@ export default function DiscokuglePage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Ingen depositum</span>
+                  <span>Betal ved afhentning</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
@@ -142,13 +142,13 @@ export default function DiscokuglePage() {
                 href="/roegmaskine"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se røgmaskine – 250 kr
+                Se røgmaskine – 245 kr
               </Link>
               <Link
                 href="/festlys"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se festlys – fra 500 kr
+                Se festlys – fra 495 kr
               </Link>
             </div>
           </div>
@@ -163,7 +163,7 @@ export default function DiscokuglePage() {
             Klar til discostemning?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 250 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 245 kr/weekend.
           </p>
           <a
             href="/?product=discokugle#book"

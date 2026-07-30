@@ -4,9 +4,9 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Lej Projektor København | Fra 500 kr | Lejhøjtaler.dk",
+  title: "Lej Projektor København | Fra 495 kr | Lejhøjtaler.dk",
   description:
-    "Lej projektor i København fra 500 kr/weekend. Full HD projektor til præsentationer, film og events. HDMI inkluderet. Ingen depositum.",
+    "Lej projektor i København fra 495 kr/weekend. Full HD projektor til præsentationer, film og events. HDMI inkluderet. Betal ved afhentning.",
   keywords: [
     "lej projektor",
     "projektor udlejning",
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/projektor" },
   openGraph: {
-    title: "Lej Projektor København | Fra 500 kr",
+    title: "Lej Projektor København | Fra 495 kr",
     description:
-      "Lej projektor i København fra 500 kr/weekend. Full HD projektor til præsentationer, film og events. Book online.",
+      "Lej projektor i København fra 495 kr/weekend. Full HD projektor til præsentationer, film og events. Book online.",
     url: "https://lejhojtaler.dk/projektor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -63,13 +63,13 @@ export default function ProjektorPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Ingen depositum
+            København · Betal ved afhentning · Ring 50 15 07 31
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej projektor i København
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 500 kr.
+              fra 495 kr.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
@@ -100,7 +100,7 @@ export default function ProjektorPage() {
             <div>
               <h2 className="mb-4 text-3xl font-bold">Projektor</h2>
               <p className="mb-6 text-3xl font-bold text-brand-400">
-                500 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                495 kr<span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="space-y-3 text-white/60">
                 <li className="flex items-start gap-3">
@@ -121,7 +121,7 @@ export default function ProjektorPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Ingen depositum</span>
+                  <span>Betal ved afhentning</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
@@ -146,13 +146,13 @@ export default function ProjektorPage() {
                 href="/storskærm"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se storskærm – fra 600 kr
+                Se storskærm – fra 595 kr
               </Link>
               <Link
                 href="/mikrofon"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se trådløs mikrofon – fra 300 kr
+                Se trådløs mikrofon – fra 295 kr
               </Link>
             </div>
           </div>
@@ -167,7 +167,7 @@ export default function ProjektorPage() {
             Klar til den store præsentation?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 500 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 495 kr/weekend.
           </p>
           <a
             href="/?product=projektor#book"

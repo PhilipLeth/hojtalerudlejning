@@ -129,7 +129,7 @@ export const t = {
     },
     howItWorks: {
       title: "Sådan lejer du en højtaler i København",
-      subtitle: "At leje en højtaler behøver ikke være besværligt. Hos os booker du online, henter dit lydudstyr på vores adresse i indre København og afleverer igen efter festen. Ingen depositum, ingen lange kontrakter.",
+      subtitle: "At leje en højtaler behøver ikke være besværligt. Hos os booker du online, henter dit lydudstyr på vores adresse i indre København og afleverer igen efter festen. Betal først ved afhentning — ingen lange kontrakter.",
       subtitle2: "Vi udlejer PA-anlæg og festudstyr til private fester, firmaarrangementer og events i hele Københavnsområdet. Vores højtalere leveres med alle kabler, så du kan tilslutte din telefon med det samme og komme i gang.",
       steps: [
         {
@@ -293,7 +293,7 @@ export const t = {
     },
     howItWorks: {
       title: "How to rent a speaker in Copenhagen",
-      subtitle: "Renting a speaker doesn't have to be complicated. With us, you book online, pick up your sound equipment at our address in central Copenhagen and return it after the party. No deposit, no long contracts.",
+      subtitle: "Renting a speaker doesn't have to be complicated. With us, you book online, pick up your sound equipment at our address in central Copenhagen and return it after the party. Pay at pickup — no long contracts.",
       subtitle2: "We rent out PA systems and party equipment for private parties, corporate events and events across the Copenhagen area. Our speakers come with all cables, so you can connect your phone right away and get started.",
       steps: [
         {

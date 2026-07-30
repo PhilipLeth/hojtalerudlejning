@@ -50,19 +50,19 @@ const useCases = [
 const packages = [
   {
     name: "Firmafest-pakke",
-    price: "fra 1.150",
+    price: "fra 1.145",
     items: ["Stor højtalerpakke (2× 12\" EV)", "Lys-pakke (2 LED + centereffekt)", "Røgmaskine", "Alle kabler"],
     note: "Op til 100 gæster",
   },
   {
     name: "Konference-pakke",
-    price: "fra 1.200",
+    price: "fra 1.195",
     items: ["55\" skærm med stativ", "Trådløs mikrofon", "Lille højtalerpakke (2× 10\")", "HDMI + alle kabler"],
     note: "Op til 50 deltagere",
   },
   {
     name: "Storskærm-pakke",
-    price: "fra 1.700",
+    price: "fra 1.695",
     items: ["75\" skærm med stativ", "Trådløs mikrofon", "Stor højtalerpakke (2× 12\" EV)", "HDMI + alle kabler"],
     note: "50–100+ deltagere",
   },
@@ -142,7 +142,7 @@ export default function ErhvervPage() {
           Populære erhvervspakker
         </h2>
         <p className="mx-auto mb-12 max-w-xl text-center text-white/50">
-          Faste priser, ingen overraskelser. Levering og opsætning i København fra 500 kr.
+          Faste priser, ingen overraskelser. Levering og opsætning i København fra 495 kr.
         </p>
         <div className="grid gap-6 sm:grid-cols-3">
           {packages.map((pkg) => (
@@ -191,7 +191,7 @@ export default function ErhvervPage() {
             <p className="mt-1 text-sm text-white/50">Levering mulig i KBH</p>
           </div>
           <div className="glass rounded-2xl p-6">
-            <p className="text-3xl font-bold text-brand-400">Ingen depositum</p>
+            <p className="text-3xl font-bold text-brand-400">Betal ved afhentning</p>
             <p className="mt-1 text-sm text-white/50">Betal ved afhentning</p>
           </div>
         </div>

@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Lej PA-anlæg og Lydudstyr København | Lejhøjtaler.dk",
   description:
-    "Lej PA-anlæg og professionelt lydudstyr i København fra 399 kr/weekend. Festival-pakke med 2 højtalere, mixer, mikrofon og stativer. Ingen depositum.",
+    "Lej PA-anlæg og professionelt lydudstyr i København fra 395 kr/weekend. Festival-pakke med 2 højtalere, mixer, mikrofon og stativer. Betal ved afhentning.",
   keywords: [
     "lej PA-anlæg københavn",
     "PA anlæg udlejning",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej PA-anlæg og Lydudstyr København | Lejhøjtaler.dk",
     description:
-      "Professionelt lydudstyr fra 399 kr/weekend. Ingen depositum. Book online.",
+      "Professionelt lydudstyr fra 395 kr/weekend. Betal ved afhentning. Book online.",
     url: "https://lejhojtaler.dk/lydudstyr",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -77,7 +77,7 @@ export default function LydudstyrPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Professionelt lydudstyr fra 399 kr.
+            Professionelt lydudstyr fra 395 kr.
           </p>
           <a
             href="/#book"
@@ -110,7 +110,7 @@ export default function LydudstyrPage() {
             </div>
             <div>
               <p className="mb-4 text-3xl font-bold text-brand-400">
-                700 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                695 kr<span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <h3 className="mb-4 text-xl font-bold text-white">Inkluderet i pakken</h3>
               <ul className="space-y-3 text-white/60">
@@ -136,7 +136,7 @@ export default function LydudstyrPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Ingen depositum</span>
+                  <span>Betal ved afhentning</span>
                 </li>
               </ul>
             </div>
@@ -155,7 +155,7 @@ export default function LydudstyrPage() {
                   Til fester med op til 40 gæster er Party-pakken det oplagte valg. To kompakte højtalere i bæretaske – nem transport og stærk lyd.
                 </p>
                 <p className="text-2xl font-bold text-brand-400">
-                  399 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                  395 kr<span className="text-lg font-normal text-white/40">/weekend</span>
                 </p>
               </div>
               <div className="overflow-hidden rounded-xl">
@@ -180,7 +180,7 @@ export default function LydudstyrPage() {
             Klar til professionel lyd?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 399 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 395 kr/weekend.
           </p>
           <a
             href="/#book"

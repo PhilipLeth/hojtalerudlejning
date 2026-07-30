@@ -2,14 +2,14 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Lej Højtalerpakke Lille København | Fra 399 kr | Lejhøjtaler.dk",
+  title: "Lej Højtalerpakke Lille København | Fra 395 kr | Lejhøjtaler.dk",
   description:
-    "Lej lille højtalerpakke i København fra 399 kr/weekend. 2× 10\" Alto med Bluetooth. Kabler og taske inkluderet. Book online.",
+    "Lej lille højtalerpakke i København fra 395 kr/weekend. 2× 10\" Alto med Bluetooth. Kabler og taske inkluderet. Book online.",
   keywords: ["lille højtalerpakke", "lej højtaler pakke", "alto højtaler leje", "højtalerudlejning københavn"],
   alternates: { canonical: "https://lejhojtaler.dk/hojtalerpakke-lille" },
   openGraph: {
-    title: "Lej Højtalerpakke Lille | Fra 399 kr",
-    description: "2× 10\" Alto højtalere fra 399 kr/weekend. Book online.",
+    title: "Lej Højtalerpakke Lille | Fra 395 kr",
+    description: "2× 10\" Alto højtalere fra 395 kr/weekend. Book online.",
     url: "https://lejhojtaler.dk/hojtalerpakke-lille",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -22,7 +22,7 @@ export default function HojtalerpakkeLillePage() {
     <ProductLanding
       slug="hojtalerpakke-lille"
       name="Højtalerpakke lille"
-      price={399}
+      price={395}
       headline="Lej højtalerpakke lille i København"
       sub={'To kompakte 10" Alto højtalere med Bluetooth - klar til cyklen.'}
       image="/images/product-party.png"

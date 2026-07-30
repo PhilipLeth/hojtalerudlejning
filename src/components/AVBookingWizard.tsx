@@ -27,6 +27,10 @@ const PRODUCT_INFO: Record<string, { name: string; href: string }> = {
   skaerm_55: { name: '55" Storskærm', href: "/skaerm" },
   traadloes_mikrofon: { name: "Trådløs mikrofon", href: "/traadloes-mikrofon" },
   headset: { name: "Trådløst headset", href: "/headset-mikrofon" },
+  headset_pro: { name: "Trådløst headset PRO", href: "/?product=headset_pro#book" },
+  haandholdt_mikrofon: { name: "Håndholdt mikrofon (kabel)", href: "/?product=haandholdt_mikrofon#book" },
+  laerred_160: { name: "Lærred 160 cm", href: "/?product=laerred_160#book" },
+  projektor_pro: { name: "Projektor Pro (5000 lumen)", href: "/?product=projektor_pro#book" },
 };
 
 function ProductCard({ id, badge }: { id: string; badge?: string }) {
