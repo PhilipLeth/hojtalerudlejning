@@ -62,9 +62,13 @@ export default function BurgerMenu() {
 
           {NAV_CATEGORIES.map((section) => (
             <div key={section.id} className="mb-6">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-white/30">
+              <Link
+                href={section.href}
+                onClick={() => setOpen(false)}
+                className="mb-2 block text-xs font-semibold uppercase tracking-widest text-white/30 transition hover:text-brand-400"
+              >
                 {section.title}
-              </p>
+              </Link>
               <ul className="space-y-1">
                 {section.links.map((link) => (
                   <li key={link.href}>

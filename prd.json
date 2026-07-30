@@ -102,7 +102,10 @@
       "name_da": "Lyskæder",
       "description_da": "10m lyskæde — vælg mellem almindelig varm hvid eller farvet. Perfekt til havefest, bryllup, fødselsdag.",
       "price_dkk": 200,
-      "variants": ["varm hvid", "farvet"],
+      "variants": [
+        "varm hvid",
+        "farvet"
+      ],
       "includes": [
         "1x 10m lyskæde (varm hvid eller farvet)",
         "Kabelstrips til ophæng"
@@ -184,45 +187,45 @@
       "image": "/images/product-rog.png",
       "status": "live"
     },
-  {
-    "id": "mikrofon",
-    "name_da": "Trådløs mikrofon",
-    "description_da": "Professionel håndholdt mikrofon til taler og karaoke",
-    "price_dkk": 300,
-    "image": "/images/product-mikrofon.png",
-    "status": "live"
-  },
-  {
-    "id": "batteri",
-    "name_da": "Ekstra batteri",
-    "description_da": "Ekstra batteri til batterihøjtaler",
-    "price_dkk": 150,
-    "image": "/images/product-thumpgo.svg",
-    "status": "live"
-  },
-  {
-    "id": "stativer",
-    "name_da": "Højtalerstativer",
-    "description_da": "2 professionelle stativer — løfter lyden op i øjenhøjde",
-    "price_dkk": 100,
-    "image": "/images/product-stativer.png",
-    "status": "live"
-  },
-  {
-    "id": "taske",
-    "name_da": "Bæretaske",
-    "description_da": "Polstret sportstaske til sikker transport på cykel eller i bil",
-    "price_dkk": 100,
-    "image": "/images/product-taske.png",
-    "status": "live"
-  },
-  {
-    "id": "levering",
-    "name_da": "Billig levering, opsætning & afhentning i hele København",
-    "price_dkk": 500,
-    "image": null,
-    "status": "live"
-  }
+    {
+      "id": "mikrofon",
+      "name_da": "Trådløs mikrofon",
+      "description_da": "Professionel håndholdt mikrofon til taler og karaoke",
+      "price_dkk": 300,
+      "image": "/images/product-mikrofon.png",
+      "status": "live"
+    },
+    {
+      "id": "batteri",
+      "name_da": "Ekstra batteri",
+      "description_da": "Ekstra batteri til batterihøjtaler",
+      "price_dkk": 150,
+      "image": "/images/product-thumpgo.svg",
+      "status": "live"
+    },
+    {
+      "id": "stativer",
+      "name_da": "Højtalerstativer",
+      "description_da": "2 professionelle stativer — løfter lyden op i øjenhøjde",
+      "price_dkk": 100,
+      "image": "/images/product-stativer.png",
+      "status": "live"
+    },
+    {
+      "id": "taske",
+      "name_da": "Bæretaske",
+      "description_da": "Polstret sportstaske til sikker transport på cykel eller i bil",
+      "price_dkk": 100,
+      "image": "/images/product-taske.png",
+      "status": "live"
+    },
+    {
+      "id": "levering",
+      "name_da": "Billig levering, opsætning & afhentning i hele København",
+      "price_dkk": 500,
+      "image": null,
+      "status": "live"
+    }
   ],
   "pricing_rules": {
     "base": "Én pris for 1–5 dages leje (max 5 dage)",
@@ -804,6 +807,90 @@
       "description": "Bind alt produktdata (navn, beskrivelse, pris, billede, status/synlighed, includes) op på backend i stedet for hardcodede arrays i src/lib/products.ts og i18n.ts. Gem produkter i Cloudflare KV, udstil dem via et public API-endpoint (fx GET /api/products) og et admin-endpoint til CRUD. Byg redigerings-UI i /admin (opret, redigér, skjul/vis, slet). Frontend (forside, BookingFlow, alle landingssider, /en) skal læse produkter derfra alle steder, så priser og tekster kan rettes i admin uden deploy. Hardcodede data bruges kun som fallback/seed.",
       "priority": "high",
       "status": "done"
+    },
+    {
+      "id": "logo-header-alle-sider",
+      "title": "Logo/navn 'Lejhøjtaler' fast i toppen af ALLE sider — klik går til forsiden",
+      "description": "Der mangler en nem vej tilbage til forsiden. Lav en fælles header-komponent med logo (/images/logo-lejhojtaler.png) + navnet LejHøjtaler.dk, som ligger øverst på alle sider (forside, alle produkt-/kategorisider, blog, om, lejevilkår, /en). Klik på logo/navn navigerer altid til forsiden. Skal spille sammen med USP-topbar og burger-menu uden z-index-problemer.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "kategorisider-til-annoncer",
+      "title": "Undersider til alle produktkategorier (annoncerne rammer kategorier)",
+      "description": "Annoncerne er rettet mod produktkategorier — ikke specifikke produkter — så hver kategori skal have sin egen underside/landingsside: højtalere/lyd, lys & effekter, røg (ny kategori), AV-udstyr, mikrofoner osv. Hver kategoriside viser alle produkter i kategorien med billede, pris og Book-CTA.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "tabel-produkter-stoerre",
+      "title": "Højtaler-tabellen: produkterne skal være større eller listes under tabellen",
+      "description": "Sammenligningstabellen for højtalerne er god og skal beholdes, men produkterne er for små i den. Enten: gør produktvisningen i tabellen større (større billeder/kort), eller vis tabellen som overblik og list produkterne som store kort nedenunder med billede, beskrivelse, pris og Book-knap.",
+      "priority": "medium",
+      "status": "todo"
+    },
+    {
+      "id": "lys-kategori-mangler-lyskaede",
+      "title": "Kategorisiden 'Lys og effekter' mangler lyskæde",
+      "description": "Kategorisiden for lys & effekter viser kun lysbar og røgmaskine. Tilføj lyskæden (10m, varm hvid eller farvet) — og tjek at ALLE lys-produkter i kataloget vises (discokugle, lysshow osv. når de er live).",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "kategori-roeg-low-fog",
+      "title": "Ny kategori 'Røg' + low fog-maskine (røggulv med is)",
+      "description": "Opret 'Røg' som selvstændig produktkategori (egen kategoriside, jf. kategorisider-til-annoncer) med den almindelige røgmaskine OG en ny low fog-maskine, der laver et gulv af røg vha. is. Indkøbspris er kun 1.400 kr, så den skal anskaffes og oprettes som produkt. Produktbillede er allerede lavet (spørg Philip om filen). Lejepris fastsættes efter 95-reglen, fx 295-395 kr.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "fix-billede-upload-no-file",
+      "title": "Bug: billede-upload i admin siger 'no file'",
+      "description": "Når man prøver at uploade et nyt billede til et produkt i /admin/produkter, fejler det med 'no file'. Find fejlen i ImageField/upload-endpointet (felt-navn i FormData, manglende multipart-parsing i Pages Function, eller manglende body). Upload skal ende med en brugbar billed-URL på produktet.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "fjern-ingen-depositum",
+      "title": "Fjern 'Ingen depositum' fra al markedsføring",
+      "description": "'Ingen depositum' bejler for meget til tyveknægtene. Fjern det fra USP-topbar, hero, kategorisider/ads-landingssider, FAQ, /kobenhavn, blog og engelske sider. Depositum-info må gerne stå neutralt i lejevilkår, men det skal ikke bruges som salgsargument.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "fremhaev-telefonnummer",
+      "title": "Fremhæv telefonnummeret tydeligere",
+      "description": "Folk vil gerne ringe og tjekke at vi er ægte (erfaring fra LA). Gør telefonnummeret tydeligt og klikbart på alle sider: i den nye header ved logoet, i hero, i sticky book-bar og i footer. Overvej 'Ring og hør: XX XX XX XX' som fast element.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "priser-ender-paa-95",
+      "title": "Alle priser skal ende på 95",
+      "description": "Justér alle produkt- og tilvalgspriser så de ender på 95: fx 500 → 495, 150 → 145, 350 → 345, 399 → 395, 700 → 695, 250 → 245, 100 → 95, 200 → 195, 600 → 595. Opdater defaults i src/lib/products.ts, KV-kataloget via /admin/produkter, JSON-LD-priser, metadata ('fra X kr') og alle hardcodede priser på landingssider.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "kommentarfelt-booking",
+      "title": "Kommentarfelt ved booking",
+      "description": "Sørg for at der er et frit kommentarfelt i booking-flowet (fx ved kontaktoplysninger), hvor kunden kan skrive ønsket tidspunkt, special-kabler, spørgsmål osv. Feltet skal med i booking-payload, bekræftelsesmails og admin-visningen. Fandtes i det gamle flow — tjek at det har overlevet forside-redesignet.",
+      "priority": "medium",
+      "status": "todo"
+    },
+    {
+      "id": "levering-med-uden-opsaetning",
+      "title": "Opsætning koster ekstra: levering 495,- / levering + opsætning dyrere",
+      "description": "Split leverings-tilvalget i to: 'Levering i København' til 495 kr og 'Levering + opsætning i København' til en højere pris (fx 795 kr, ender på 95). Opdater tilvalg i products.ts/KV-katalog, booking-flow, FAQ, /kobenhavn og alle steder leveringsprisen nævnes.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "nye-produkter-mikrofon-fog-laerred-projektor-headset",
+      "title": "Opret nye produkter: håndholdt mikrofon, low fog, lærred 160 cm, projektor pro, headset pro",
+      "description": "Opret følgende produkter i kataloget (defaults + admin) med billeder, beskrivelser og priser efter 95-reglen: 1) Almindelig håndholdt mikrofon (med kabel), 2) Low fog machine (røggulv med is — se kategori-roeg-low-fog, billede findes), 3) Lærred 160 cm (til projektor), 4) Projektor Pro 5000 lumen (pro-version af eksisterende projektor), 5) Trådløst headset PRO (den almindelige version findes allerede — der skal både være pro og almindelig).",
+      "priority": "high",
+      "status": "todo"
     }
   ],
   "status": {

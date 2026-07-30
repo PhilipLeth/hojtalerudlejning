@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "description": "Statiske assets bypasser Pages Functions",
+  "include": ["/*"],
+  "exclude": [
+    "/_next/static/*",
+    "/images/*",
+    "/*.js",
+    "/*.css",
+    "/*.svg",
+    "/*.png",
+    "/*.jpg",
+    "/*.webp",
+    "/*.ico",
+    "/*.woff2",
+    "/favicon.ico",
+    "/icon.svg",
+    "/sitemap.xml",
+    "/robots.txt"
+  ]
+}

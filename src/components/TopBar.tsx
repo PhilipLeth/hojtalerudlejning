@@ -17,10 +17,10 @@ export default function TopBar() {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
   const summer = isSummerSale();
-
-  if (pathname?.startsWith("/admin")) return null;
+  const isAdmin = pathname?.startsWith("/admin");
 
   useEffect(() => {
+    if (isAdmin) return;
     const interval = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
@@ -29,7 +29,9 @@ export default function TopBar() {
       }, 300);
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isAdmin]);
+
+  if (isAdmin) return null;
 
   return (
     <div className={`fixed top-0 left-0 right-0 z-40 text-sm font-semibold py-2 px-4 ${

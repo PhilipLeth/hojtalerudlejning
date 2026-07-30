@@ -50,7 +50,12 @@ export default function ImageField({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-    if (file) handleFile(file);
+    if (!file) return;
+    if (file.size > 500_000) {
+      setUploadError("Filen er for stor — max 500 kB");
+      return;
+    }
+    handleFile(file);
   };
 
   return (
@@ -88,7 +93,12 @@ export default function ImageField({
               <polyline points="17 8 12 3 7 8"/>
               <line x1="12" y1="3" x2="12" y2="15"/>
             </svg>
-            Klik eller træk billede hertil
+            <span>
+              Klik eller træk billede hertil
+              <span style={{ display: "block", fontSize: "11px", color: "#aaa", marginTop: "4px" }}>
+                Max 500 kB · JPG, PNG, WebP
+              </span>
+            </span>
           </>
         )}
       </div>
@@ -100,7 +110,12 @@ export default function ImageField({
         style={{ display: "none" }}
         onChange={(e) => {
           const file = e.target.files?.[0];
-          if (file) handleFile(file);
+          if (!file) return;
+          if (file.size > 500_000) {
+            setUploadError("Filen er for stor — max 500 kB");
+            return;
+          }
+          handleFile(file);
           e.target.value = "";
         }}
       />

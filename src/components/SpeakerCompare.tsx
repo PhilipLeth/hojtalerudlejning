@@ -21,7 +21,14 @@ function PowerIcon({ power }: { power: PowerType }) {
   );
 }
 
-export default function SpeakerCompare({ locale = "da" }: { locale?: Locale }) {
+export default function SpeakerCompare({
+  locale = "da",
+  bookLinks = "hash",
+}: {
+  locale?: Locale;
+  /** hash = #book (forside), booking = /?product=ID#book (undersider) */
+  bookLinks?: "hash" | "booking";
+}) {
   const c = t[locale].compare;
   const summer = isSummerSale();
   const { speakers } = useProducts();
@@ -94,7 +101,7 @@ export default function SpeakerCompare({ locale = "da" }: { locale?: Locale }) {
                       </td>
                       <td className="px-3 py-4 text-right">
                         <a
-                          href="#book"
+                          href={bookLinks === "booking" ? `/?product=${sp.id}#book` : "#book"}
                           className="inline-block rounded-full bg-brand-500 px-4 py-2 text-xs font-semibold text-black transition hover:bg-brand-400 active:scale-95"
                         >
                           {c.book}

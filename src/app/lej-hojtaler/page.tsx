@@ -1,13 +1,13 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import SpeakerCompare from "@/components/SpeakerCompare";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Lej Højtalere København | Fra 399 kr/weekend | Lejhøjtaler.dk",
+  title: "Lej Højtalere København | Fra 350 kr/weekend | Lejhøjtaler.dk",
   description:
-    "Lej højtalere i København fra 399 kr/weekend. Party-pakke til 40 pers. eller Festival-pakke til 100 pers. Ingen depositum, kabler inkluderet. Book online.",
+    "Lej højtalere i København fra 350 kr/weekend. Batterihøjtalere (Mackie Thump GO, Soundboks 4) og PA-pakker. Ingen depositum, kabler inkluderet. Book online.",
   keywords: [
     "lej højtalere københavn",
     "lej højtaler",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/lej-hojtaler" },
   openGraph: {
-    title: "Lej Højtalere København | Fra 399 kr/weekend",
+    title: "Lej Højtalere København | Fra 350 kr/weekend",
     description:
-      "Lej højtalere i København fra 399 kr/weekend. Ingen depositum, kabler inkluderet. Book online.",
+      "Lej højtalere i København fra 350 kr/weekend. Batterihøjtalere og PA-pakker. Ingen depositum. Book online.",
     url: "https://lejhojtaler.dk/lej-hojtaler",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -77,7 +77,7 @@ export default function LejHojtalerPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Fra 399 kr. – ingen depositum, betal ved afhentning.
+            Batterihøjtalere og PA-pakker fra 350 kr — ingen depositum, betal ved afhentning.
           </p>
           <a
             href="/#book"
@@ -89,73 +89,7 @@ export default function LejHojtalerPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        {/* Side-by-side comparison */}
-        <section className="mx-auto max-w-4xl px-4 py-24">
-          <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
-            Vælg den rigtige pakke til din fest
-          </h2>
-          <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            To pakker – én til den intime fest, én til det store arrangement.
-          </p>
-
-          <div className="grid gap-6 sm:grid-cols-2">
-            {/* Party */}
-            <div className="glass rounded-2xl p-8">
-              <div className="mb-4 overflow-hidden rounded-xl">
-                <Image
-                  src="/images/product-party.png"
-                  alt="Party-højtalerpakke til op til 40 personer"
-                  width={600}
-                  height={400}
-                  className="w-full object-cover"
-                />
-              </div>
-              <div className="mb-2 inline-block rounded-full bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-400">
-                Op til 40 pers.
-              </div>
-              <h3 className="text-xl font-bold text-white">Party-pakke</h3>
-              <p className="mt-1 text-sm text-white/50">
-                2× 10&quot; Alto TS410 · 12 kg total · Kabler inkluderet
-              </p>
-              <p className="mt-4 text-3xl font-bold text-brand-400">
-                399 kr<span className="text-lg font-normal text-white/40">/weekend</span>
-              </p>
-              <ul className="mt-4 space-y-2 text-sm text-white/60">
-                <li>• Perfekt til lejlighed, gårdhave, privat fest</li>
-                <li>• Passer i taske – nem at tage på cyklen</li>
-                <li>• Hent fredag, aflever mandag</li>
-              </ul>
-            </div>
-
-            {/* Festival */}
-            <div className="glass rounded-2xl p-8">
-              <div className="mb-4 overflow-hidden rounded-xl">
-                <Image
-                  src="/images/product-festival.png"
-                  alt="Festival-højtalerpakke til 40-100 personer"
-                  width={600}
-                  height={400}
-                  className="w-full object-cover"
-                />
-              </div>
-              <div className="mb-2 inline-block rounded-full bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-400">
-                40–100 pers.
-              </div>
-              <h3 className="text-xl font-bold text-white">Festival-pakke</h3>
-              <p className="mt-1 text-sm text-white/50">
-                2× 12&quot; EV ZLX-12BT · Bluetooth · Kabler inkluderet
-              </p>
-              <p className="mt-4 text-3xl font-bold text-brand-400">
-                700 kr<span className="text-lg font-normal text-white/40">/weekend</span>
-              </p>
-              <ul className="mt-4 space-y-2 text-sm text-white/60">
-                <li>• Til større rum, fester og udendørs events</li>
-                <li>• Kraftig, klar lyd med Bluetooth</li>
-                <li>• Hent fredag, aflever mandag</li>
-              </ul>
-            </div>
-          </div>
-        </section>
+        <SpeakerCompare bookLinks="booking" />
 
         {/* USP section */}
         <section className="mx-auto max-w-4xl px-4 pb-24">
@@ -234,7 +168,7 @@ export default function LejHojtalerPage() {
             Klar til at leje højtalere?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 399 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 350 kr/weekend.
           </p>
           <a
             href="/#book"

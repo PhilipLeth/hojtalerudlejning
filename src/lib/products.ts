@@ -255,6 +255,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
   {
     id: "av",
     title: "AV-udstyr",
+    href: "/av-udstyr",
     links: [
       { href: "/projektor", label: "Projektor" },
       { href: "/skaerm", label: "Storskærm" },

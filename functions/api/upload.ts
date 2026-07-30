@@ -19,36 +19,72 @@ export const onRequestOptions: PagesFunction<Env> = async () =>
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const secret = new URL(context.request.url).searchParams.get("secret") ?? "";
   if (secret !== context.env.ADMIN_SECRET) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...cors, "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { ...cors, "Content-Type": "application/json" },
+    });
   }
 
   let formData: FormData;
   try {
     formData = await context.request.formData();
-  } catch {
-    return new Response(JSON.stringify({ error: "Invalid form data" }), { status: 400, headers: { ...cors, "Content-Type": "application/json" } });
+  } catch (err) {
+    console.error("[upload] formData parse failed:", err);
+    return new Response(JSON.stringify({ error: "Invalid form data" }), {
+      status: 400,
+      headers: { ...cors, "Content-Type": "application/json" },
+    });
   }
 
-  const file = formData.get("file");
-  if (!(file instanceof File)) {
-    return new Response(JSON.stringify({ error: "No file" }), { status: 400, headers: { ...cors, "Content-Type": "application/json" } });
+  // Workers kan returnere File eller Blob — ikke altid instanceof File
+  const entry = formData.get("file");
+  if (!entry || typeof entry === "string") {
+    console.error("[upload] No file in formData. Keys:", [...formData.keys()]);
+    return new Response(JSON.stringify({ error: "No file" }), {
+      status: 400,
+      headers: { ...cors, "Content-Type": "application/json" },
+    });
   }
 
-  if (file.size > MAX_BYTES) {
-    return new Response(JSON.stringify({ error: `Filen er for stor (maks 500 kB)` }), { status: 413, headers: { ...cors, "Content-Type": "application/json" } });
+  const blob = entry as Blob;
+  const fileName =
+    "name" in entry && typeof (entry as File).name === "string"
+      ? (entry as File).name
+      : "upload.jpg";
+
+  if (blob.size > MAX_BYTES) {
+    return new Response(JSON.stringify({ error: `Filen er for stor (maks 500 kB)` }), {
+      status: 413,
+      headers: { ...cors, "Content-Type": "application/json" },
+    });
   }
 
-  const buf = await file.arrayBuffer();
+  if (blob.size === 0) {
+    return new Response(JSON.stringify({ error: "Filen er tom" }), {
+      status: 400,
+      headers: { ...cors, "Content-Type": "application/json" },
+    });
+  }
+
+  const buf = await blob.arrayBuffer();
   const bytes = new Uint8Array(buf);
+
+  // Base64-encode uden String.fromCharCode-stack-overflow på store filer
   let binary = "";
-  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
+  }
   const b64 = btoa(binary);
 
-  const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
+  const ext = fileName.split(".").pop()?.toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
   const key = `img_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-  const value = JSON.stringify({ mime: file.type || "image/jpeg", data: b64 });
+  const mime = blob.type || "image/jpeg";
+  const value = JSON.stringify({ mime, data: b64 });
 
-  await context.env.BOOKINGS.put(`image:${key}`, value, { expirationTtl: 60 * 60 * 24 * 365 * 5 }); // 5 years
+  // KV max TTL er ~1 år hvis sat — gem uden expiry så billeder ikke forsvinder
+  await context.env.BOOKINGS.put(`image:${key}`, value);
+  console.log("[upload] Saved", key, "size=", blob.size, "mime=", mime);
 
   return new Response(JSON.stringify({ url: `/api/image/${key}` }), {
     status: 200,
