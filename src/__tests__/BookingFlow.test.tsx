@@ -178,7 +178,8 @@ describe("BookingFlow - Step 3: Addons", () => {
       expect(screen.getByText("Røgmaskine")).toBeInTheDocument();
       expect(screen.getByText("Højtalerstativer")).toBeInTheDocument();
       expect(screen.getByText("Bæretaske")).toBeInTheDocument();
-      expect(screen.getByText("Levering + opsætning")).toBeInTheDocument();
+      expect(screen.getByText("Levering i København")).toBeInTheDocument();
+      expect(screen.getByText("Levering + opsætning i København")).toBeInTheDocument();
     }
   });
 });
