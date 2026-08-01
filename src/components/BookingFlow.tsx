@@ -1182,8 +1182,8 @@ export default function BookingFlow({
                 />
                 <span className="text-sm text-white/60">
                   {locale === "en"
-                    ? "Send me tips, offers and news about upcoming features"
-                    : "Send mig tips, tilbud og nyheder om kommende features"}
+                    ? "Send me deals and news about new gear for rent"
+                    : "Send mig tilbud og nyt om udstyr til leje"}
                 </span>
               </label>
             </div>
