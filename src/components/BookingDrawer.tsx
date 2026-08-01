@@ -58,9 +58,14 @@ export default function BookingDrawer({ locale = "da" }: { locale?: Locale }) {
 
   return (
     <div
-      className={`fixed inset-0 z-50 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-50 duration-300 ${
         open ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
+      style={{
+        visibility: open ? "visible" : "hidden",
+        transitionProperty: "opacity, visibility",
+        transitionDuration: "300ms",
+      }}
       aria-hidden={!open}
     >
       {/* Backdrop */}
