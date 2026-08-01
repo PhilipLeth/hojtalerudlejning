@@ -834,6 +834,35 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
               </div>
               <p className="text-center text-xs text-white/30">{s.effectsOnlyDesc}</p>
             </div>
+
+            {/* Andet udstyr (lys, AV m.m.) — så alle produkter kan vælges direkte */}
+            {rentalProducts.length > 0 && (
+              <div className="space-y-2 pt-2">
+                <p className="text-center text-sm text-white/40">{s.otherEquipmentTitle}</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {rentalProducts.map((rp) => (
+                    <button
+                      key={rp.id}
+                      onClick={() => {
+                        setSpeaker(rp.id);
+                        nextStep();
+                      }}
+                      className={`rounded-xl border p-3 text-center transition active:scale-[0.98] ${
+                        speaker === rp.id
+                          ? "border-brand-500 bg-brand-500/10"
+                          : "border-white/15 border-dashed hover:border-brand-500/40 hover:bg-white/[0.02]"
+                      }`}
+                    >
+                      <img src={rp.image} alt={locale === "en" ? rp.name_en : rp.name_da} className="mx-auto h-16 w-16 object-contain rounded-lg" />
+                      <p className="mt-2 text-sm font-medium text-white/70">
+                        {locale === "en" ? rp.name_en : rp.name_da}
+                      </p>
+                      <p className="text-sm text-brand-400">{rp.price},-</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 

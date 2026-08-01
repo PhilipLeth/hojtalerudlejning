@@ -7,7 +7,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 export const metadata: Metadata = {
   title: "Lej Røgmaskine & Low Fog København | Røggulv med is | Lejhøjtaler.dk",
   description:
-    "Lej røg til festen i København: klassisk røgmaskine fra 245 kr eller low fog-maskine der laver et gulv af røg med is — 'dansen på skyer'-effekten til bryllup og fest. Betal ved afhentning.",
+    "Lej røg til festen i København: klassisk røgmaskine fra 245 kr inkl. røgvæske. Low fog-maskine (røggulv med is) er på vej. Betal ved afhentning.",
   keywords: [
     "lej røgmaskine",
     "low fog maskine leje",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Røgmaskine & Low Fog København | Lejhøjtaler.dk",
     description:
-      "Klassisk røgmaskine fra 245 kr eller low fog-røggulv til bryllup og fest. Book online.",
+      "Klassisk røgmaskine fra 245 kr inkl. røgvæske. Book online.",
     url: "https://lejhojtaler.dk/roeg",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -66,8 +66,8 @@ export default function RoegPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Klassisk røgmaskine til lysshowet — eller low fog-maskinen, der lægger
-            et flot tæppe af røg hen over gulvet. Perfekt til brudevals og dansegulv.
+            Klassisk røgmaskine der fylder rummet og gør lysshowet 10x federe.
+            Inkl. røgvæske og fjernbetjening — klar på 5 minutter.
           </p>
           <a
             href="#produkter"
@@ -85,16 +85,13 @@ export default function RoegPage() {
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
             Den klassiske røgmaskine fylder rummet og gør lysshowet 10x federe.
-            Low fog-maskinen bruger is, så røgen lægger sig som et gulvtæppe af
-            skyer uden at stige til vejrs — kendt fra bryllupper og musikvideoer.
+            Perfekt sammen med lysbar eller discokugle.
           </p>
 
-          <CategoryProductGrid
-            items={[
-              { id: "rog", href: "/roegmaskine" },
-              { id: "low_fog", tag: "Ny" },
-            ]}
-          />
+          <CategoryProductGrid items={[{ id: "rog", href: "/roegmaskine" }]} />
+          <p className="mt-8 text-center text-sm text-white/40">
+            Low fog-maskine (røggulv med is — &quot;dansen på skyer&quot;) er på vej. Ring 50 15 07 31 og hør nærmere.
+          </p>
         </section>
 
         {/* Upsell */}

@@ -240,7 +240,7 @@ export const rentalProducts: RentalProduct[] = [
   { id: "haandholdt_mikrofon", category: "av", price: 95, image: "/images/product-mikrofon.png", name_da: "Håndholdt mikrofon (kabel)", name_en: "Handheld microphone (wired)", desc_da: "Almindelig håndholdt mikrofon med kabel — til taler og sang.", desc_en: "Standard wired handheld microphone — for speeches and vocals." },
   { id: "laerred_160", category: "av", price: 195, image: "/images/product-laerred.png", name_da: "Lærred 160 cm", name_en: "Projector screen 160 cm", desc_da: "160 cm lærred på stativ — perfekt til projektor.", desc_en: "160 cm projector screen on stand." },
   { id: "projektor_pro", category: "av", price: 795, image: "/images/product-projektor.png", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor — skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector — sharp even in daylight." },
-  { id: "low_fog", category: "roeg", price: 295, image: "/images/product-lowfog.png", name_da: "Low fog-maskine (røggulv)", name_en: "Low fog machine (fog floor)", desc_da: "Laver et flot gulv af røg vha. is — 'dansen på skyer'-effekten fra bryllupper og musikvideoer.", desc_en: "Creates a floor of low-lying fog using ice — the 'dancing on clouds' effect." },
+  { id: "low_fog", category: "roeg", price: 295, hidden: true, image: "/images/product-lowfog.png", name_da: "Low fog-maskine (røggulv)", name_en: "Low fog machine (fog floor)", desc_da: "Laver et flot gulv af røg vha. is — 'dansen på skyer'-effekten fra bryllupper og musikvideoer.", desc_en: "Creates a floor of low-lying fog using ice — the 'dancing on clouds' effect." },
 ];
 
 /** Navigation categories — single source of truth used by BurgerMenu and admin */
@@ -274,8 +274,8 @@ export const NAV_CATEGORIES: NavCategory[] = [
     title: "Røg",
     href: "/roeg",
     links: [
+      { href: "/roeg", label: "Røg til fest" },
       { href: "/roegmaskine", label: "Røgmaskine" },
-      { href: "/roeg", label: "Low fog (røggulv)" },
     ],
   },
   {

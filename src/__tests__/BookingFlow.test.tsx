@@ -33,9 +33,9 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
   it("shows prices for all speakers", () => {
     render(<BookingFlow />);
     // Original prices shown as strikethrough during summer sale, or as main price outside sale
-    expect(screen.getByText("395,-")).toBeInTheDocument();
-    expect(screen.getByText("595,-")).toBeInTheDocument();
-    expect(screen.getByText("695,-")).toBeInTheDocument();
+    expect(screen.getAllByText("395,-").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("595,-").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("695,-").length).toBeGreaterThan(0);
   });
 
   it("shows effects-only section with lys and røg", () => {

@@ -336,7 +336,7 @@ const DEFAULT_CATALOG: CatalogRaw = {
     { id: "haandholdt_mikrofon", category: "av", price: 95, image: "/images/product-mikrofon.png", name_da: "Håndholdt mikrofon (kabel)", desc_da: "Almindelig håndholdt mikrofon med kabel." },
     { id: "laerred_160", category: "av", price: 195, image: "/images/product-laerred.png", name_da: "Lærred 160 cm", desc_da: "160 cm lærred på stativ." },
     { id: "projektor_pro", category: "av", price: 795, image: "/images/product-projektor.png", name_da: "Projektor Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor — skarp i dagslys." },
-    { id: "low_fog", category: "roeg", price: 295, image: "/images/product-lowfog.png", name_da: "Low fog-maskine", desc_da: "Røggulv med is." },
+    { id: "low_fog", category: "roeg", price: 295, hidden: true, image: "/images/product-lowfog.png", name_da: "Low fog-maskine", desc_da: "Røggulv med is." },
   ],
   addons: [
     { id: "lys", price: 495, image: "/images/product-lys.png", da: { label: "Lys-pakke", desc: "2 farvede lamper + centereffekt." } },

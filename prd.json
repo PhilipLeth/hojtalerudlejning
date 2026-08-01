@@ -176,7 +176,8 @@
       "description_da": "Laver et gulv af røg vha. is — 'dansen på skyer'. Indkøbspris 1.400 kr.",
       "price_dkk": 295,
       "image": "/images/product-lowfog.png",
-      "status": "live"
+      "status": "planned",
+      "hidden": true
     },
     {
       "id": "haandholdt_mikrofon",
@@ -695,11 +696,11 @@
       },
       "receiving": {
         "method": "Cloudflare Email Routing",
-        "rule": "info@lejhojtaler.dk → frederik.scharling.dj@gmail.com (allerede oprettet)",
-        "destination": "frederik.scharling.dj@gmail.com",
-        "status_note": "Email Routing enabled men status misconfigured/locked pga. manglende SPF TXT på root (v=spf1 include:_spf.mx.cloudflare.net ~all). Tilføj SPF i Cloudflare DNS.",
-        "catch_all": "disabled/drop — kun info@ videresendes; andre adresser droppes",
-        "needed_for": "Svar, password-reset, DBA/Meta-verifikation; NOTIFY_EMAIL kan pege på info@ eller direkte på Gmail"
+        "rule": "info@lejhojtaler.dk → frederik.scharling.dj@gmail.com; marketing@lejhojtaler.dk → philipleth@gmail.com",
+        "destination": "frederik.scharling.dj@gmail.com (info@); philipleth@gmail.com (marketing@)",
+        "status_note": "Email Routing enabled men status misconfigured/locked pga. manglende SPF TXT på root (v=spf1 include:_spf.mx.cloudflare.net ~all). Tilføj SPF i Cloudflare DNS — ellers lander mail ikke.",
+        "catch_all": "disabled/drop — kun info@ og marketing@ videresendes; andre adresser droppes",
+        "needed_for": "Svar, password-reset, konto-oprettelse (DBA/Meta); NOTIFY_EMAIL kan pege på info@ eller direkte på Gmail"
       },
       "transactional_sending": {
         "provider": "Resend",
@@ -1156,7 +1157,11 @@
         "status": "skipped"
       }
     },
-    "already_live": ["Google Ads (Search)", "Search Console", "Google Business Profile"],
+    "already_live": [
+      "Google Ads (Search)",
+      "Search Console",
+      "Google Business Profile"
+    ],
     "admin_ui": "/admin/kanaler"
   },
   "admin_improvements": {
