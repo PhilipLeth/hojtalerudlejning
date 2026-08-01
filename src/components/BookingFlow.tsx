@@ -194,7 +194,8 @@ function LightBar() {
 
 /* ───── Component ───── */
 
-export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
+export default function BookingFlow({ locale = "da", variant = "inline" }: { locale?: Locale; variant?: "inline" | "drawer" }) {
+  const inDrawer = variant === "drawer";
   const s = t[locale].booking;
 
   // Live catalog (admin-editable) localized for the current locale
@@ -236,6 +237,13 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   const [availSelected, setAvailSelected] = useState<AvailabilityData | null>(null);
   const [soldOutMsg, setSoldOutMsg] = useState("");
   const preselected = useRef(false);
+
+  // Drawer: scroll altid til toppen når man skifter step
+  useEffect(() => {
+    if (inDrawer) {
+      document.getElementById("booking-drawer-scroll")?.scrollTo({ top: 0 });
+    }
+  }, [step, inDrawer]);
 
   // Fetch availability for the next 8 weekends on mount (overview for step 1)
   useEffect(() => {
@@ -550,18 +558,21 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
     ];
 
     return (
-      <section id="book" className="relative overflow-hidden">
-        {speakers.map((sd) => (
-          <div
-            key={sd.id}
-            className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
-            style={{ backgroundImage: `url(${sd.mood})`, opacity: speaker === sd.id ? 0.5 : 0 }}
-          />
-        ))}
-        <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
+      <section id={inDrawer ? undefined : "book"} className="relative overflow-hidden">
+        {!inDrawer && (
+          <>
+            {speakers.map((sd) => (
+              <div
+                key={sd.id}
+                className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
+                style={{ backgroundImage: `url(${sd.mood})`, opacity: speaker === sd.id ? 0.5 : 0 }}
+              />
+            ))}
+            <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
+          </>
+        )}
 
-
-        <div className="relative z-20 mx-auto max-w-lg px-4 py-16">
+        <div className={inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-6" : "relative z-20 mx-auto max-w-lg px-4 py-16"}>
           {/* Success header */}
           <div className="text-center mb-8">
             <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20">
@@ -665,26 +676,30 @@ export default function BookingFlow({ locale = "da" }: { locale?: Locale }) {
   }
 
   return (
-    <section id="book" className="relative">
-      {/* ── Fixed mood background ── */}
-      <div
-        className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
-        style={{ backgroundImage: "url(/images/hero.png)", opacity: speaker === null ? 0.5 : 0 }}
-      />
-      {speakers.map((sd) => (
-        <div
-          key={sd.id}
-          className="fixed inset-0 bg-cover bg-center transition-opacity duration-700 ease-in-out"
-          style={{ backgroundImage: `url(${sd.mood})`, opacity: speaker === sd.id ? 0.5 : 0 }}
-        />
-      ))}
-      <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
+    <section id={inDrawer ? undefined : "book"} className="relative">
+      {!inDrawer && (
+        <>
+          {/* ── Fixed mood background ── */}
+          <div
+            className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
+            style={{ backgroundImage: "url(/images/hero.png)", opacity: speaker === null ? 0.5 : 0 }}
+          />
+          {speakers.map((sd) => (
+            <div
+              key={sd.id}
+              className="fixed inset-0 bg-cover bg-center transition-opacity duration-700 ease-in-out"
+              style={{ backgroundImage: `url(${sd.mood})`, opacity: speaker === sd.id ? 0.5 : 0 }}
+            />
+          ))}
+          <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/50 via-[#07060b]/60 to-[#07060b]/90" />
+        </>
+      )}
 
       {hasLights && <LightBar />}
 
 
       {/* ── Content ── */}
-      <div className="relative z-20 mx-auto max-w-lg px-4 py-24">
+      <div className={inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-4 pb-16" : "relative z-20 mx-auto max-w-lg px-4 py-24"}>
         {/* Progress */}
         <div className="mb-8 flex items-center justify-center gap-2">
           {[1, 2, 3, 4].map((st) => (

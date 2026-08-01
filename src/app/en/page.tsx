@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import BookingFlow from "@/components/BookingFlow";
+import BookingDrawer from "@/components/BookingDrawer";
 import Hero from "@/components/Hero";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import Testimonials from "@/components/Testimonials";
@@ -44,7 +44,7 @@ export default function EnHome() {
   return (
     <main className="min-h-screen" lang="en">
       <Hero locale="en" />
-      <BookingFlow locale="en" />
+      <BookingDrawer locale="en" />
       <SpeakerCompare locale="en" />
       <Testimonials locale="en" />
       <HowItWorks locale="en" />

@@ -11,38 +11,47 @@ export default function StickyBookBar() {
   const price = summer ? applyDiscount(startPrice) : startPrice;
 
   useEffect(() => {
+    // Booking ligger i en drawer nu — vis baren når man er scrollet forbi hero
+    // (eller efter 400px hvis der ikke findes en hero-sektion på siden)
     const hero = document.querySelector<HTMLElement>("section.hero-section");
     const book = document.getElementById("book");
-    if (!hero || !book) return;
 
-    let pastHero = false;
-    let inBook = false;
+    if (hero) {
+      let pastHero = false;
+      let inBook = false;
+      const update = () => setVisible(pastHero && !inBook);
 
-    const update = () => setVisible(pastHero && !inBook);
+      const heroObs = new IntersectionObserver(
+        ([e]) => {
+          pastHero = !e.isIntersecting;
+          update();
+        },
+        { threshold: 0 }
+      );
+      heroObs.observe(hero);
 
-    const heroObs = new IntersectionObserver(
-      ([e]) => {
-        pastHero = !e.isIntersecting;
-        update();
-      },
-      { threshold: 0 }
-    );
+      let bookObs: IntersectionObserver | null = null;
+      if (book) {
+        bookObs = new IntersectionObserver(
+          ([e]) => {
+            inBook = e.isIntersecting;
+            update();
+          },
+          { threshold: 0.15 }
+        );
+        bookObs.observe(book);
+      }
 
-    const bookObs = new IntersectionObserver(
-      ([e]) => {
-        inBook = e.isIntersecting;
-        update();
-      },
-      { threshold: 0.15 }
-    );
+      return () => {
+        heroObs.disconnect();
+        bookObs?.disconnect();
+      };
+    }
 
-    heroObs.observe(hero);
-    bookObs.observe(book);
-
-    return () => {
-      heroObs.disconnect();
-      bookObs.disconnect();
-    };
+    const onScroll = () => setVisible(window.scrollY > 400);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (

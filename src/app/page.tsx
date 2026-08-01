@@ -1,4 +1,4 @@
-import BookingFlow from "@/components/BookingFlow";
+import BookingDrawer from "@/components/BookingDrawer";
 import HomeHero from "@/components/HomeHero";
 import ProductGrid from "@/components/ProductGrid";
 import Testimonials from "@/components/Testimonials";
@@ -12,8 +12,8 @@ export default function Home() {
     <main className="min-h-screen">
       <HomeHero />
       <ProductGrid />
-      {/* BookingFlow: bruges ved /?product=ID#book fra produktsider */}
-      <BookingFlow />
+      {/* Booking åbner i drawer ved #book / ?product=ID */}
+      <BookingDrawer />
       <Testimonials />
       <HowItWorks />
       <FAQ />
