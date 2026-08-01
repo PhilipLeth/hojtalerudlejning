@@ -23,7 +23,7 @@ const ICONS = {
 } as const;
 
 const USPS: Array<{ icon: keyof typeof ICONS; text: string; href?: string }> = [
-  { icon: "truck", text: "Billig levering i hele København" },
+  { icon: "truck", text: "Levering i hele København fra 495 kr" },
   { icon: "calendar", text: "Op til 5 dage — samme pris" },
   { icon: "wallet", text: "Betal først ved afhentning" },
 ];
