@@ -11,6 +11,7 @@ import BookingFlow from "@/components/BookingFlow";
  */
 export default function BookingDrawer({ locale = "da" }: { locale?: Locale }) {
   const [open, setOpen] = useState(false);
+  const [summary, setSummary] = useState({ count: 0, total: 0 });
 
   const close = useCallback(() => {
     setOpen(false);
@@ -57,6 +58,30 @@ export default function BookingDrawer({ locale = "da" }: { locale?: Locale }) {
   }, [open, close]);
 
   return (
+    <>
+      {/* Kurv-fane i højre side når draweren er pakket væk */}
+      <button
+        onClick={() => setOpen(true)}
+        aria-label={locale === "en" ? "Open cart" : "Åbn kurv"}
+        className={`fixed right-0 top-1/2 z-40 -translate-y-1/2 rounded-l-2xl bg-brand-500 px-2.5 py-4 text-black shadow-[0_2px_16px_rgba(0,0,0,0.4)] transition-transform duration-300 ${
+          !open && summary.count > 0 ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <span className="flex flex-col items-center gap-1.5">
+          <span className="relative">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="9" cy="21" r="1.5" />
+              <circle cx="19" cy="21" r="1.5" />
+              <path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L21.5 7H6" />
+            </svg>
+            <span className="absolute -right-2 -top-2 flex h-4.5 min-w-[18px] items-center justify-center rounded-full bg-black px-1 text-[10px] font-bold text-brand-400" style={{ height: "18px" }}>
+              {summary.count}
+            </span>
+          </span>
+          <span className="text-[11px] font-bold [writing-mode:vertical-rl]">{summary.total},-</span>
+        </span>
+      </button>
+
     <div
       className={`fixed inset-0 z-50 duration-300 ${
         open ? "opacity-100" : "pointer-events-none opacity-0"
@@ -111,9 +136,10 @@ export default function BookingDrawer({ locale = "da" }: { locale?: Locale }) {
 
         {/* Scrollbart indhold */}
         <div id="booking-drawer-scroll" className="flex-1 overflow-y-auto overscroll-contain">
-          <BookingFlow locale={locale} variant="drawer" />
+          <BookingFlow locale={locale} variant="drawer" onSummaryChange={setSummary} />
         </div>
       </div>
     </div>
+    </>
   );
 }

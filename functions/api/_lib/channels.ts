@@ -29,7 +29,7 @@ export const CHANNEL_DEFS: ChannelDef[] = [
     id: "guloggratis",
     name: "GulogGratis",
     type: "auto_feed",
-    description: "Samme produktfeed via erhvervskonto / partner (Koongo)",
+    description: "Samme eget XML-feed via GulogGratis erhvervskonto (ingen Koongo/Avecdo)",
     setupUrl: "https://www.guloggratis.dk/",
   },
   {

@@ -1056,6 +1056,27 @@
       "description": "Byg IKKE Merchant Center Shopping-feed. Udlejning ≠ køb. Brug Search Ads + GBP (live).",
       "priority": "low",
       "status": "done"
+    },
+    {
+      "id": "booking-drawer-stabilt-flow",
+      "title": "Booking i drawer — stabilt flow uden scroll-hop",
+      "description": "Erstat den scroll-forankrede #book-sektion med en drawer. Åbner ved #book og /?product=ID, siden scroller aldrig, steps starter fra toppen, Escape/backdrop lukker. Se booking_drawer-sektionen.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "drawer-som-kurv",
+      "title": "Draweren fungerer som kurv og pakkes ind til højre",
+      "description": "Draweren er kurven: flere produkter, løbende total, linjer kan fjernes. Når den klikkes væk pakkes den ind som gul kurv-fane i højre side (ikon + antal + total) så længe kurven ikke er tom — klik åbner igen med state bevaret. Kunden kan frit gå tilbage til shoppen.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "tilvalg-kompakt-soeg-skip",
+      "title": "Tilvalg: kompakt på én skærm + søgning + spring over",
+      "description": "Tilvalgs-steppet viser kun hvad der kan være på skærmen (kompakte rækker). Simpel søgefunktion filtrerer tilvalg og matcher resten af sortimentet, så brugeren inspireres til relevante tilvalg — resultater lægges direkte i kurven. 'Spring tilvalg over' går direkte til kontaktoplysninger.",
+      "priority": "high",
+      "status": "done"
     }
   ],
   "status": {
@@ -1083,7 +1104,9 @@
       "Google Search Console + Business Profile opsat",
       "Google Shopping bevidst skippet",
       "Kanal-distribution: produktfeed XML/CSV live",
-      "Admin /admin/kanaler + Run setup (ingen auto-mail)"
+      "Admin /admin/kanaler + Run setup (ingen auto-mail)",
+      "Booking-drawer med kurv-funktion: stabil (ingen scroll-hop), pakkes ind til gul kurv-fane i højre side, state bevares",
+      "Tilvalgs-step: kompakt liste på én skærm, søgning på tværs af sortimentet, spring-over"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1130,9 +1153,10 @@
       },
       "guloggratis": {
         "goal": "Produkter synlige på GulogGratis",
-        "method": "Erhvervsfeed + XML",
+        "method": "Eget XML-feed (ingen Koongo/Avecdo — det er kun mellemled til Shopify-shops uden feed)",
         "url": "https://lejhojtaler.dk/api/feeds/products?format=xml",
-        "status": "infra_ready_connect_pending"
+        "status": "infra_ready_connect_pending",
+        "note": "Koongo/Avecdo unødvendigt. Vi hoster allerede feedet. Log ind på Gul&Gratis erhverv og pege på vores URL — eller manuel CSV hvis de ikke har direkte feed-import."
       },
       "meta_catalog": {
         "goal": "Produkter i Meta Catalog til ads",
@@ -1183,5 +1207,31 @@
       "status": "done",
       "description": "Kunden kan tilføje et produkt til kurven fra step 3 (Tilvalg) og derefter vælge et nyt produkt fra step 1 — med samme dato. Kurven vises i step 3 og step 4 (prisopsummering). Alle produkter sendes med i booking-API-kaldet (cartItems-felt)."
     }
+  },
+  "booking_drawer": {
+    "beskrivelse": "Booking/checkout bor i en drawer der fungerer som kurv. Den erstatter den gamle scroll-forankrede #book-sektion (som gav ustabile scroll-hop når steps skiftede højde).",
+    "aabning": {
+      "triggers": [
+        "Klik på #book (alle Book-knapper, sticky-bar, burger-menu)",
+        "/?product=ID#book fra produktsider, kategorisider og annoncer (produktet forudvælges og der startes på datovalg)"
+      ],
+      "adfaerd": "Siden scroller ALDRIG — draweren glider ind fra højre (fuld skærm på mobil, max-w-lg panel på desktop). Baggrundsscroll låses. Hvert step starter fra toppen af panelet."
+    },
+    "kurv": {
+      "princip": "Draweren ER kurven. Flere produkter kan lægges i kurven ('+ Tilføj et produkt mere' går tilbage til produktvalg med datoerne bevaret). Kurvlinjer kan fjernes enkeltvis. Total vises løbende.",
+      "pakkes_ind": "Når draweren klikkes væk (X, backdrop, Escape) pakkes den ind til højre: en gul kurv-fane i højre side (kurv-ikon + antal + total) vises så længe der ligger noget i kurven. Klik på fanen åbner draweren igen med al state bevaret. Tom kurv = ingen fane.",
+      "tilbage_til_shop": "Kunden kan altid lukke draweren og shoppe videre — intet mistes."
+    },
+    "steps": [
+      "1. Produktvalg: højtalere + effekter + 'Andet udstyr'-grid (alle rentals) — fuld produktvælger",
+      "2. Datovalg: kalender + chip der viser hvad man booker (klik = skift produkt)",
+      "3. Tilvalg: KOMPAKT liste der passer på én skærm (små rækker: checkbox, thumbnail, navn, pris). Simpel søgefunktion øverst der filtrerer tilvalg OG matcher resten af sortimentet (højtalere/rentals) — resultater kan lægges direkte i kurven som ekstra produkter. 'Spring tilvalg over'-link går direkte til kontaktoplysninger.",
+      "4. Kontaktoplysninger: navn, email, telefon, kommentarfelt, nyhedsbrev, ordreoversigt, Send booking"
+    ],
+    "komponenter": {
+      "BookingDrawer": "src/components/BookingDrawer.tsx — overlay, panel, kurv-fane, åbne/lukke-logik (hash + ?product), scroll-lås",
+      "BookingFlow": "src/components/BookingFlow.tsx — selve flowet med variant='drawer' (ingen fixed mood-baggrunde) og onSummaryChange-callback der leverer antal+total til kurv-fanen"
+    },
+    "status": "live"
   }
 }
