@@ -180,6 +180,7 @@ export default function AdminPage() {
         <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
           <a href="/admin/lager" style={navLink}>Lager</a>
           <a href="/admin/produkter" style={navLink}>Produkter</a>
+          <a href="/admin/kanaler" style={navLink}>Kanaler</a>
           <a href="/admin/nyhedsbrev" style={navLink}>Nyhedsbrev</a>
           <a href="/admin/lejeseddel" style={navLink}>Lejeseddel</a>
           <button onClick={fetchBookings} disabled={loading} style={{ ...navLink, cursor: "pointer", border: "none" as React.CSSProperties["border"] }}>

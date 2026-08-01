@@ -66,7 +66,7 @@ export const speakers: Speaker[] = [
   {
     id: "thumpgo",
     price: 345,
-    product: "/images/product-thumpgo.svg",
+    product: "/images/product-thumpgo.png",
     mood: "/images/mood-party.png",
     power: "batteri",
     sizeClass: "lille",
@@ -189,7 +189,7 @@ export const addons: Addon[] = [
   {
     id: "batteri",
     price: 145,
-    image: "/images/product-thumpgo.svg",
+    image: "/images/product-thumpgo.png",
     da: { label: "Ekstra batteri", desc: "Ekstra batteri til batterihøjtaler — mere spilletid uden strøm" },
     en: { label: "Extra battery", desc: "Extra battery for battery speakers — more playtime without power" },
   },

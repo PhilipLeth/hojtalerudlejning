@@ -13,7 +13,7 @@ const GRID: Array<{
   tag?: string;
 }> = [
   { id: "soundboks", href: "/soundboks-4", name: "Soundboks 4", price: 600, image: "/images/product-soundboks.png", tag: "Populær" },
-  { id: "thumpgo", href: "/mackie-thump-go", name: "Mackie Thump GO", price: 350, image: "/images/product-thumpgo.svg", tag: "Batteri" },
+  { id: "thumpgo", href: "/mackie-thump-go", name: "Mackie Thump GO", price: 350, image: "/images/product-thumpgo.png", tag: "Batteri" },
   { id: "party", href: "/hojtalerpakke-lille", name: "Højtalerpakke lille", price: 399, image: "/images/product-party.png" },
   { id: "festival", href: "/hojtalerpakke-normal", name: "Højtalerpakke normal", price: 700, image: "/images/product-festival.png" },
   { id: "lys", href: "/festlys", name: "Lysbar", price: 500, image: "/images/product-lys.png" },
