@@ -56,7 +56,7 @@ function ProductCard({ id, badge }: { id: string; badge?: string }) {
           {badge}
         </span>
       )}
-      <img src={info.image} alt={info.name} className="mx-auto h-24 w-24 object-contain transition-transform duration-300 group-hover:scale-110" />
+      <img src={info.image} alt="" className="mx-auto h-24 w-24 object-contain transition-transform duration-300 group-hover:scale-110" />
       <p className="mt-3 font-semibold text-white">{info.name}</p>
       <p className={`text-sm font-bold ${summer ? "text-amber-400" : "text-brand-400"}`}>
         {summer && <span className="mr-1 font-normal text-white/30 line-through">{info.price},-</span>}
@@ -119,9 +119,11 @@ export default function AVBookingWizard() {
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {Object.keys(PRODUCT_INFO).map((id) => (
-            <ProductCard key={id} id={id} />
-          ))}
+          {Object.keys(PRODUCT_INFO)
+            .filter((id) => rentalProducts.find((r) => r.id === id)?.category === "av")
+            .map((id) => (
+              <ProductCard key={id} id={id} />
+            ))}
         </div>
       )}
     </section>
