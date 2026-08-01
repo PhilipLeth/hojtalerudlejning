@@ -68,6 +68,7 @@ function ProductCard({ id, badge }: { id: string; badge?: string }) {
 
 export default function AVBookingWizard() {
   const [eventType, setEventType] = useState<EventType | null>(null);
+  const { rentalProducts } = useProducts();
 
   return (
     <section id="av-book" className="mx-auto max-w-4xl px-4 py-24">
