@@ -13,7 +13,7 @@
   "tech_stack": {
     "framework": "Next.js 15 (App Router, static export)",
     "styling": "Tailwind CSS (brand: #ffd600, dark theme #07060b)",
-    "email": "SendGrid (info@lejhojtaler.dk) + Resend til booking-udsendelse",
+    "email": "info@lejhojtaler.dk (domæne/afsendelse via SendGrid). Booking-udsendelse i app: Resend. SendGrid er IKKE en indbakke.",
     "storage": "Cloudflare KV (bookings)",
     "deployment": "Cloudflare Pages (speaker-rental.pages.dev)",
     "analytics": "Google Analytics 4 (G-QDXW7S53GF) + GTM (GTM-M52R25VF) + Google Ads conversion tracking"
@@ -175,7 +175,7 @@
       "name_da": "Low fog-maskine (røggulv)",
       "description_da": "Laver et gulv af røg vha. is — 'dansen på skyer'. Indkøbspris 1.400 kr.",
       "price_dkk": 295,
-      "image": "/images/product-lowfog.svg",
+      "image": "/images/product-lowfog.png",
       "status": "live"
     },
     {
@@ -191,7 +191,7 @@
       "category": "av",
       "name_da": "Lærred 160 cm",
       "price_dkk": 195,
-      "image": "/images/product-laerred.svg",
+      "image": "/images/product-laerred.png",
       "status": "live"
     },
     {
@@ -685,25 +685,40 @@
     }
   },
   "email_flow": {
-    "policy": "Én fælles adresse — ingen ekstra aliases til marketing/kanaler. Alle eksterne konti (DBA, GulogGratis, Meta, Hygglo, Google) oprettes på info@lejhojtaler.dk.",
-    "primary": "info@lejhojtaler.dk",
-    "provider": "SendGrid (domæne + afsendelse opsat) + Resend til transactional booking-mails",
-    "sendgrid": {
-      "status": "live",
-      "domain": "lejhojtaler.dk",
-      "from": "info@lejhojtaler.dk",
-      "note": "Brug info@ til al forretningskommunikation og konto-oprettelse. Undgå at oprette marketing@, kanaler@, ads@ osv."
+    "policy": "Én fælles adresse til konti og menneskelig kommunikation: info@lejhojtaler.dk. Ingen ekstra aliases.",
+    "primary_inbox": "info@lejhojtaler.dk",
+    "architecture": {
+      "sendgrid": {
+        "role": "Typisk kun afsendelse / domain auth (SPF/DKIM). SendGrid har IKKE en Gmail-lignende indbakke — kun Inbound Parse (webhook) hvis MX peget derhen.",
+        "address": "info@lejhojtaler.dk",
+        "note": "Bruger har oprettet info@; tidligere videresend via Resend. Afklar hvor mail faktisk lander (videresend til privat mail / Workspace / Cloudflare Email Routing)."
+      },
+      "receiving": {
+        "method": "Cloudflare Email Routing",
+        "rule": "info@lejhojtaler.dk → frederik.scharling.dj@gmail.com (allerede oprettet)",
+        "destination": "frederik.scharling.dj@gmail.com",
+        "status_note": "Email Routing enabled men status misconfigured/locked pga. manglende SPF TXT på root (v=spf1 include:_spf.mx.cloudflare.net ~all). Tilføj SPF i Cloudflare DNS.",
+        "catch_all": "disabled/drop — kun info@ videresendes; andre adresser droppes",
+        "needed_for": "Svar, password-reset, DBA/Meta-verifikation; NOTIFY_EMAIL kan pege på info@ eller direkte på Gmail"
+      },
+      "transactional_sending": {
+        "provider": "Resend",
+        "from": "booking@lejhojtaler.dk",
+        "code": "functions/api/book.ts",
+        "status": "live — skift ikke midt i flow uden behov"
+      }
     },
+    "decision_2026_08": "Behold Resend til booking-mails. SendGrid ≠ indbakke. Sørg for at info@ videresendes et sted I faktisk læser mail.",
     "secrets": [
-      "SENDGRID_API_KEY",
       "RESEND_API_KEY",
-      "NOTIFY_EMAIL",
-      "ADMIN_SECRET"
+      "NOTIFY_EMAIL (sæt til info@lejhojtaler.dk)",
+      "ADMIN_SECRET",
+      "SENDGRID_API_KEY (kun hvis/når SendGrid bruges til send — ikke påkrævet for booking i dag)"
     ],
     "on_booking": {
-      "from": "booking@lejhojtaler.dk eller info@lejhojtaler.dk (afhænger af Resend-from)",
-      "to_owner": "Ny booking med alle detaljer til NOTIFY_EMAIL / info@. Reply-to sat til kundens email.",
-      "to_customer": "Bekræftelse med opsummering, afhentningsadresse, inkluderet udstyr."
+      "from": "Lejhøjtaler.dk <booking@lejhojtaler.dk> via Resend",
+      "to_owner": "NOTIFY_EMAIL (helst info@lejhojtaler.dk). Reply-to = kundens email.",
+      "to_customer": "Bekræftelse med opsummering, afhentning/levering, total."
     },
     "channel_accounts": {
       "email": "info@lejhojtaler.dk",
@@ -712,8 +727,7 @@
         "GulogGratis erhverv",
         "Meta Business Manager / Catalog",
         "Hygglo udlejer",
-        "Facebook Marketplace",
-        "Google (allerede via eksisterende login — hold ét firma-login)"
+        "Facebook Marketplace"
       ]
     }
   },
@@ -988,57 +1002,57 @@
     },
     {
       "id": "channel-run-setup",
-      "title": "Run setup: initialiser alle kanal-integrationer fra admin",
-      "description": "▶ Run setup på /admin/kanaler verificerer feed, sætter DBA/GulogGratis/Meta til ready, genererer Facebook CSV + Hygglo paste-pakke + e-mail-udkast til boost@dba.dk. Marker Connected/Live manuelt når produkter er synlige eksternt.",
+      "title": "Run setup: klar feed + tjekliste til at oprette produkter på kanalerne",
+      "description": "▶ Run setup på /admin/kanaler: verificerer feed, sætter DBA/GulogGratis/Meta til 'ready', viser trin 'log ind → indsæt feed-URL → produkter synkes'. Genererer også Facebook CSV-link + Hygglo paste-tekst. Sender INGEN emails. Marker Live i admin når produkter er synlige på kanalen.",
       "priority": "high",
       "status": "done"
     },
     {
       "id": "dba-boost-connect",
-      "title": "DBA Boost Connect: feed → synlige annoncer",
-      "description": "1) Tilmeld DBA Boost / Boost Connect (boost@dba.dk). 2) Peg Connect på https://lejhojtaler.dk/api/feeds/products.xml (eller CSV efter deres krav). 3) Map kategorier (lyd/lys/AV → DBA-kategorier). 4) Verificér at kerneprodukter (Soundboks, Thump GO, party, festival, lys, røg) dukker op som virksomhedsannoncer på DBA. 5) Dokumentér i admin hvilke produkter er synket.",
+      "title": "DBA: opret produkter via Boost Connect feed",
+      "description": "Mål: produkter fra kataloget skal være synlige som DBA-annoncer. Fremgangsmåde: 1) Log ind på boost.dba.dk med info@lejhojtaler.dk 2) Aktivér Boost Connect 3) Indsæt https://lejhojtaler.dk/api/feeds/products?format=xml 4) Verificér at Soundboks, Thump GO, party, festival, lys, røg m.fl. er synlige 5) Sæt kanal-status Live i /admin/kanaler. Ingen mail til DBA nødvendig hvis selvbetjening virker.",
       "priority": "high",
       "status": "pending"
     },
     {
       "id": "guloggratis-feed",
-      "title": "GulogGratis: virksomhedsfeed / partner-sync",
-      "description": "Opsæt GulogGratis erhvervs-/virksomhedskonto. Forbind samme produktfeed (direkte eller via Koongo/avecdo). Map felter, verificér at produkter vises live. Opdater /admin/kanaler-status når synk er bekræftet.",
+      "title": "GulogGratis: opret produkter via feed",
+      "description": "Mål: samme produkter synlige på GulogGratis. Log ind med info@ → erhvervsfeed/import → indsæt XML-feed-URL → verificér → status Live i admin.",
       "priority": "high",
       "status": "pending"
     },
     {
       "id": "meta-catalog-feed",
-      "title": "Meta Product Catalog: feed til Ads (ikke primært Marketplace)",
-      "description": "Opret Meta Business Manager + Commerce/Catalog. Tilslut products.csv/xml som katalog-feed. Brug kataloget til Meta Ads / retargeting (Dynamic Ads hvis muligt). Facebook Marketplace-listning er separat (semi-manuel CSV) — se task facebook-marketplace-csv. Verificér at produkter kan ses i Catalog Manager.",
+      "title": "Meta Catalog: opret produkter via CSV-feed (til ads)",
+      "description": "Mål: produkter i Meta Product Catalog til Meta Ads/retargeting. Log ind business.facebook.com med info@ → katalog → datafeed → CSV-URL https://lejhojtaler.dk/api/feeds/products?format=csv → verificér i Catalog Manager → Live i admin. (Marketplace er separat semi-task.)",
       "priority": "high",
       "status": "pending"
     },
     {
       "id": "facebook-marketplace-csv",
-      "title": "Facebook Marketplace: semi-auto via bulk CSV",
-      "description": "I /admin/kanaler: generér Facebook Marketplace bulk-upload CSV (titel, pris, beskrivelse, kategori, lokation København) fra valgte produkter. Workflow: download CSV → upload i Marketplace 'Create multiple listings' → vedhæft billeder manuelt. Dokumentér trin i admin-UI.",
+      "title": "Facebook Marketplace: opret listings via bulk CSV",
+      "description": "Download format=facebook CSV fra feed → upload i Marketplace 'Create multiple listings' → vedhæft billeder → Live i admin. Ingen automatisk API.",
       "priority": "medium",
       "status": "pending"
     },
     {
       "id": "hygglo-paste-pakke",
-      "title": "Hygglo: paste-pakke + senere browser-script",
-      "description": "Fase A: /admin/kanaler genererer klar Hygglo-tekst pr. produkt (titel, beskrivelse, 1/3/7-dagspris, afhentningssted Halvtolv 9). Fase B (valgfri): Playwright/Cursor Browser MCP forudfylder 'Opret opslag' — menneske klikker Publish. Ingen officiel Hygglo-API.",
+      "title": "Hygglo: opret opslag via paste-pakke",
+      "description": "Kopiér paste-tekst fra /admin/kanaler (efter Run) → opret opslag på Hygglo.dk → Live i admin. Ingen officiel API. Valgfri senere: browser-script.",
       "priority": "medium",
       "status": "pending"
     },
     {
       "id": "lager-pause-kanaler",
-      "title": "Lager-aware: udsolgt → pause feed/ads",
-      "description": "Når inventory for et produkt er 0 for kommende periode (eller total 0): sæt availability=out of stock i feed, markér kanal-status 'pause' i admin, og (senere) pause Google/Meta ads for det produkt via script/API. Undgå bookinger der ikke kan opfyldes.",
+      "title": "Lager-aware: udsolgt → out of stock i feed",
+      "description": "Når inventory=0: availability=out of stock i feed (allerede delvist via inventory KV). Senere: pause Google/Meta ads. Markér pause i admin.",
       "priority": "medium",
       "status": "pending"
     },
     {
       "id": "google-shopping-skip",
-      "title": "Google Shopping / Merchant feed: bevidst skip for udlejning",
-      "description": "BESLUTNING: Byg IKKE Google Merchant Center Shopping-feed til lejeprodukter. Shopping er lavet til køb/ejerskab — weekend-lejepriser afvises ofte (service vs product, destination mismatch, prispolitik). Bliv på Google Search Ads + GBP + Search Console (allerede live). Genbesøg kun hvis I begynder at sælge fysisk hardware.",
+      "title": "Google Shopping: bevidst skip for udlejning",
+      "description": "Byg IKKE Merchant Center Shopping-feed. Udlejning ≠ køb. Brug Search Ads + GBP (live).",
       "priority": "low",
       "status": "done"
     }
@@ -1059,43 +1073,91 @@
       "Exit-intent popup, sticky book-bar",
       "15 Google Ads annoncegrupper live med landingssider",
       "Sitemap opdateret med alle nye sider",
-      "Mackie Thump GO batterihøjtaler (350 kr) tilføjet som produkt og fremhævet på forsiden (da + en)",
-      "Sammenligningstabel på forsiden: mobil/batteri vs. kabel-anlæg, lille og stor i begge (Thump GO, Soundboks, Alto, EV)",
-      "Billig levering i København fremhævet: TopBar, hero, FAQ, /kobenhavn, JSON-LD",
-      "75\" skærm (skaerm_75) fjernet",
-      "Produktkatalog backend-drevet: /api/products (KV) + admin-editor /admin/produkter — priser, tekster (da/en), billeder og synlighed kan redigeres uden deploy",
-      "AVBookingWizard-komponent oprettet (manglede i repo — build var brudt)",
-      "Book-knapper på produktsider linker til /?product=ID#book (lyskæder, discokugle, AV, lys, røg, soundboks)",
-      "Lysshow-pakke fjernet (side, menu, katalog)",
-      "Exit-popup fjernet (Faa/paa + poppede hele tiden)",
-      "Ny forside: logo + USP'er + produktgrid med Book",
-      "Produktsider: /soundboks-4, /mackie-thump-go, /hojtalerpakke-lille, /hojtalerpakke-normal",
-      "Soundboks-popup → Mackie Thump GO",
-      "Mersalg: mikrofon + ekstra batteri tilføjet som addons",
-      "Juli-/summer-rabat deaktiveret",
-      "Google Search Console opsat",
-      "Google Business Profile opsat",
-      "Google Shopping bevidst skippet (udlejning ≠ Merchant Center)"
+      "Mackie Thump GO batterihøjtaler tilføjet",
+      "Sammenligningstabel mobil/batteri vs. kabel",
+      "Billig levering i København fremhævet",
+      "75\" skærm fjernet",
+      "Produktkatalog backend-drevet (KV + /admin/produkter)",
+      "Ny forside + produktsider + mersalg + summer-rabat væk",
+      "Google Search Console + Business Profile opsat",
+      "Google Shopping bevidst skippet",
+      "Kanal-distribution: produktfeed XML/CSV live",
+      "Admin /admin/kanaler + Run setup (ingen auto-mail)"
     ],
     "pending": [
-      "DBA Boost Connect → synlige annoncer (send feed-URL efter Run setup)",
-      "GulogGratis virksomhedsfeed (peg på XML efter Run setup)",
-      "Meta Product Catalog feed (CSV efter Run setup)",
-      "Facebook Marketplace bulk-CSV upload (semi)",
-      "Hygglo paste → live opslag (semi)",
-      "Lager-aware pause af feed/ads"
+      "DBA: log ind → feed-URL → produkter synlige som annoncer",
+      "GulogGratis: log ind → feed-URL → produkter synlige",
+      "Meta Catalog: log ind → CSV-feed → produkter i katalog",
+      "Facebook Marketplace: upload CSV + billeder",
+      "Hygglo: paste → opslag live",
+      "Lager-aware pause (udsolgt i feed/ads)"
     ]
   },
   "channel_distribution": {
-    "account_email": "info@lejhojtaler.dk",
-    "account_email_note": "Alle kanal-konti oprettes på info@ — ingen ekstra mailadresser. SendGrid er opsat på lejhojtaler.dk.",
-    "google_shopping": {
-      "decision": "skip",
-      "reason": "Merchant Center/Shopping er bygget til køb af varer. Weekend-leje afvises typisk (service, pris, destination). Brug Search Ads + GBP i stedet."
+    "purpose": "Publicér de samme produkter fra backend-kataloget på eksterne markedspladser, så kunder kan finde dem uden for lejhojtaler.dk — og booke via link tilbage til sitet.",
+    "what_we_build": {
+      "summary": "Ét katalog (KV) → ét produktfeed → kanalerne opretter/synker produkter fra feedet (eller semi-manuel CSV/paste hvor der ikke findes feed).",
+      "not_this": [
+        "Vi sender ikke emails til DBA/Meta for at få produkter oprettet",
+        "Vi har ikke magisk API-push til alle danske portaler",
+        "Vi opretter ikke Google Shopping-annoncer (skip for udlejning)",
+        "Vi opretter ikke ekstra email-adresser — kun info@lejhojtaler.dk"
+      ],
+      "this": [
+        "Live feed med alle synlige produkter: /api/feeds/products?format=xml|csv|facebook",
+        "Admin-oversigt /admin/kanaler med status pr. kanal",
+        "Run setup: gør feed klar + viser konkrete 'opret produkter'-trin pr. kanal",
+        "Efter I har logget ind udefra og peget på feedet, dukker produkterne op dér"
+      ]
     },
-    "primary_auto": ["DBA Boost Connect", "GulogGratis feed", "Meta Catalog"],
-    "semi_auto": ["Facebook Marketplace CSV", "Hygglo paste/browser"],
-    "already_live": ["Google Ads", "Search Console", "Google Business Profile"]
+    "flow": [
+      "1. Produkter redigeres i /admin/produkter (KV)",
+      "2. Feed opdateres automatisk på /api/feeds/products",
+      "3. Run setup på /admin/kanaler (valgfrit — klarer status + paste-pakker)",
+      "4. Én gang pr. kanal: log ind med info@ → indsæt feed-URL (eller upload CSV / paste til Hygglo)",
+      "5. Kanalen opretter produkterne; markér Live i admin",
+      "6. Kundelink i annoncer peger på /?product=ID#book"
+    ],
+    "account_email": "info@lejhojtaler.dk",
+    "account_email_note": "SendGrid opsat. Alle kanal-konti på info@ — ingen ekstra aliases.",
+    "channels": {
+      "dba": {
+        "goal": "Produkter synlige som DBA-annoncer",
+        "method": "Boost Connect + XML-feed",
+        "url": "https://lejhojtaler.dk/api/feeds/products?format=xml",
+        "status": "infra_ready_connect_pending"
+      },
+      "guloggratis": {
+        "goal": "Produkter synlige på GulogGratis",
+        "method": "Erhvervsfeed + XML",
+        "url": "https://lejhojtaler.dk/api/feeds/products?format=xml",
+        "status": "infra_ready_connect_pending"
+      },
+      "meta_catalog": {
+        "goal": "Produkter i Meta Catalog til ads",
+        "method": "CSV-feed",
+        "url": "https://lejhojtaler.dk/api/feeds/products?format=csv",
+        "status": "infra_ready_connect_pending"
+      },
+      "facebook_marketplace": {
+        "goal": "Listings på Marketplace",
+        "method": "Semi: bulk CSV + manuelle billeder",
+        "url": "https://lejhojtaler.dk/api/feeds/products?format=facebook",
+        "status": "infra_ready_connect_pending"
+      },
+      "hygglo": {
+        "goal": "Opslag på Hygglo",
+        "method": "Semi: paste-tekst fra admin (ingen API)",
+        "status": "infra_ready_connect_pending"
+      },
+      "google_shopping": {
+        "goal": "Ingen",
+        "method": "Skip — passer ikke til udlejning",
+        "status": "skipped"
+      }
+    },
+    "already_live": ["Google Ads (Search)", "Search Console", "Google Business Profile"],
+    "admin_ui": "/admin/kanaler"
   },
   "admin_improvements": {
     "image_upload": {

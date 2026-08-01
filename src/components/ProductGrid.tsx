@@ -19,7 +19,7 @@ const GRID: Array<{
   { id: "lys", href: "/festlys", name: "Lysbar", price: 500, image: "/images/product-lys.png" },
   { id: "rog", href: "/roegmaskine", name: "Røgmaskine", price: 250, image: "/images/product-rog.png" },
   { id: "discokugle", href: "/discokugle", name: "Discokugle", price: 250, image: "/images/product-discokugle.png" },
-  { id: "lyskaeder", href: "/lyskaeder", name: "Lyskæder", price: 200, image: "/images/product-lyskaeder.svg" },
+  { id: "lyskaeder", href: "/lyskaeder", name: "Lyskæder", price: 200, image: "/images/product-lyskaeder.png" },
   { id: "projektor", href: "/projektor", name: "Projektor", price: 500, image: "/images/product-projektor.png" },
 ];
 

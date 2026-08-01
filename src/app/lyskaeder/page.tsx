@@ -92,7 +92,7 @@ export default function LyskaederPage() {
             <div className="space-y-4">
               <div className="overflow-hidden rounded-2xl">
                 <img
-                  src="/images/product-lyskaeder.svg"
+                  src="/images/product-lyskaeder.png"
                   alt="Lyskæde med varmt hvidt lys til leje i København"
                   width={600}
                   height={400}
@@ -102,7 +102,7 @@ export default function LyskaederPage() {
               </div>
               <div className="overflow-hidden rounded-2xl">
                 <img
-                  src="/images/product-lyskaeder-farvet.svg"
+                  src="/images/product-lyskaeder-farvet.png"
                   alt="Farvet lyskæde til leje i København"
                   width={600}
                   height={400}

@@ -320,19 +320,23 @@ export async function loadCatalog(kv: KVNamespace): Promise<CatalogRaw | null> {
 /** Seed catalog when KV er tom — spejler src/lib/products.ts */
 const DEFAULT_CATALOG: CatalogRaw = {
   speakers: [
-    { id: "thumpgo", price: 345, product: "/images/product-thumpgo.svg", da: { name: "Mackie Thump GO", desc: "Batteridrevet 8\" højtaler med Bluetooth." } },
+    { id: "thumpgo", price: 345, product: "/images/product-thumpgo.png", da: { name: "Mackie Thump GO", desc: "Batteridrevet 8\" højtaler med Bluetooth." } },
     { id: "party", price: 395, product: "/images/product-party.png", da: { name: "Lille højtalerpakke", desc: "2× 10\" Alto — passer i bæretaske." } },
     { id: "soundboks", price: 595, product: "/images/product-soundboks.png", da: { name: "Soundboks 4", desc: "Batteridrevet Soundboks 4 med kraftig bas." } },
     { id: "festival", price: 695, product: "/images/product-festival.png", da: { name: "Stor højtalerpakke", desc: "2× 12\" EV — klar til større events." } },
   ],
   rentalProducts: [
     { id: "discokugle", category: "lys", price: 245, image: "/images/product-discokugle.png", name_da: "Discokugle", desc_da: "Roterende discokugle med LED." },
-    { id: "lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.svg", name_da: "Lyskæder", desc_da: "10m lyskæde." },
+    { id: "lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.png", name_da: "Lyskæder", desc_da: "10m lyskæde." },
     { id: "projektor", category: "av", price: 495, image: "/images/product-projektor.png", name_da: "Projektor", desc_da: "Full HD projektor." },
     { id: "skaerm_55", category: "av", price: 595, image: "/images/product-skaerm.png", name_da: '55" Storskærm', desc_da: "55\" LED-skærm." },
     { id: "traadloes_mikrofon", category: "av", price: 295, image: "/images/product-mikrofon.png", name_da: "Trådløs mikrofon", desc_da: "Håndholdt trådløs mikrofon." },
     { id: "headset", category: "av", price: 345, image: "/images/product-headset.png", name_da: "Trådløst headset", desc_da: "Headset-mikrofon." },
-    { id: "low_fog", category: "roeg", price: 295, image: "/images/product-lowfog.svg", name_da: "Low fog-maskine", desc_da: "Røggulv med is." },
+    { id: "headset_pro", category: "av", price: 495, image: "/images/product-headset.png", name_da: "Trådløst headset PRO", desc_da: "Professionelt headset i broadcast-kvalitet." },
+    { id: "haandholdt_mikrofon", category: "av", price: 95, image: "/images/product-mikrofon.png", name_da: "Håndholdt mikrofon (kabel)", desc_da: "Almindelig håndholdt mikrofon med kabel." },
+    { id: "laerred_160", category: "av", price: 195, image: "/images/product-laerred.png", name_da: "Lærred 160 cm", desc_da: "160 cm lærred på stativ." },
+    { id: "projektor_pro", category: "av", price: 795, image: "/images/product-projektor.png", name_da: "Projektor Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor — skarp i dagslys." },
+    { id: "low_fog", category: "roeg", price: 295, image: "/images/product-lowfog.png", name_da: "Low fog-maskine", desc_da: "Røggulv med is." },
   ],
   addons: [
     { id: "lys", price: 495, image: "/images/product-lys.png", da: { label: "Lys-pakke", desc: "2 farvede lamper + centereffekt." } },
