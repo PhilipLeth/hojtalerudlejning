@@ -32,7 +32,7 @@ export default function HomeHero() {
           København · Betal ved afhentning
         </p>
         <p className="mx-auto mt-4 max-w-md text-lg text-white/55">
-          Lej højtalere, lys og AV — book online på 2 min. Betal ved afhentning.
+          Lej højtalere, lys og AV, book online på 2 min. Betal ved afhentning.
         </p>
 
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
