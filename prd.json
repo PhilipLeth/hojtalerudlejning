@@ -812,7 +812,12 @@
       "/skaerm",
       "/traadloes-mikrofon",
       "/headset-mikrofon"
-    ]
+    ],
+    "structured_data": {
+      "Product": "Alle produktsider (via ProductLanding) + /en: pris, InStock, priceValidUntil, aggregateRating (5.0/4 anmeldelser, matcher synlige testimonials) og OfferShippingDetails (levering 495 kr, region København/DK)",
+      "LocalBusiness": "Forside: telefon, priceRange 95-1195 kr, logo, aggregateRating, adresse, åbningstider",
+      "øvrige": "FAQPage, BreadcrumbList, Article (blog), metadataBase sat så OG-billeder resolver korrekt"
+    }
   },
   "design": {
     "logo": "/images/logo-lejhojtaler.png",

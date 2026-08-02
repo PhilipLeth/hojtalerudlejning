@@ -9,6 +9,7 @@ const GTM_ID = "GTM-M52R25VF";
 const GA_ID = "G-QDXW7S53GF";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://lejhojtaler.dk"),
   title: "Lej Højtaler København | Fra 345 kr/weekend | Lejhøjtaler.dk",
   description:
     "Lej højtaler i København fra 345 kr/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje — hent fredag, aflever mandag. Book online på 2 min.",

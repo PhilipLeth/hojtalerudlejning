@@ -35,6 +35,48 @@ export default function ProductLanding({
   const bookHref = `/?product=${productId}#book`;
   const cta = bookLabel ?? `Book ${name} nu`;
 
+  // Product-schema med ratings + leveringspris (rich results i Google)
+  const productLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${name} udlejning`,
+    description: sub,
+    image: `https://lejhojtaler.dk${image}`,
+    brand: { "@type": "Brand", name: "Lejhøjtaler.dk" },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      reviewCount: "4",
+      bestRating: "5",
+    },
+    offers: {
+      "@type": "Offer",
+      price: String(price),
+      priceCurrency: "DKK",
+      priceValidUntil: "2027-12-31",
+      availability: "https://schema.org/InStock",
+      url: `https://lejhojtaler.dk/${slug}`,
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: "495",
+          currency: "DKK",
+        },
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "DK",
+          addressRegion: "København",
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 1, unitCode: "DAY" },
+          transitTime: { "@type": "QuantitativeValue", minValue: 0, maxValue: 1, unitCode: "DAY" },
+        },
+      },
+    },
+  };
+
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -49,6 +91,10 @@ export default function ProductLanding({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
       />
 
       <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
