@@ -112,10 +112,10 @@ export default function BurgerMenu() {
 
           {/* Phone */}
           <a
-            href="tel:+4550150731"
+            href="tel:+4531132852"
             className="mt-4 block text-center text-sm text-white/40 transition hover:text-brand-400"
           >
-            Ring 50 15 07 31
+            Ring 31 13 28 52
           </a>
         </div>
       </nav>

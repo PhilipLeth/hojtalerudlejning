@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const PHONE_DISPLAY = "50 15 07 31";
-const PHONE_HREF = "tel:+4550150731";
+const PHONE_DISPLAY = "31 13 28 52";
+const PHONE_HREF = "tel:+4531132852";
 
 /**
  * Fælles header på alle sider (undtagen admin): LejHøjtaler-logo/navn der

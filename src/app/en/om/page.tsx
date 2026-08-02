@@ -115,9 +115,8 @@ export default function AboutPageEn() {
                 </p>
                 <p>
                   If you&rsquo;d rather not cycle with equipment, we&rsquo;ll
-                  deliver it to you. Delivery in greater Copenhagen costs 495 DKK
-                  &ndash; and if you need us to set it up too, we&rsquo;ll do it
-                  or 795 DKK including setup.
+                  deliver it to you. Delivery + setup in greater Copenhagen is
+                  495 DKK. Drop-off only (no setup) is 295 DKK.
                 </p>
               </div>
             </section>

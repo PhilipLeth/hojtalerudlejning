@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { speakers, addons, dayMultiplier, startPrice, cheapestSpeakerPrice } from "@/lib/products";
+import { speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice } from "@/lib/products";
 
 describe("Products data", () => {
   it("has four speaker packages", () => {
@@ -88,9 +88,16 @@ describe("Addons data", () => {
     expect(addons.find((a) => a.id === "rog")!.price).toBe(245);
   });
 
-  it("levering is 495 kr, levering_opsaetning 795 kr", () => {
-    expect(addons.find((a) => a.id === "levering")!.price).toBe(495);
-    expect(addons.find((a) => a.id === "levering_opsaetning")!.price).toBe(795);
+  it("levering is 295 kr, levering_opsaetning 495 kr", () => {
+    expect(addons.find((a) => a.id === "levering")!.price).toBe(295);
+    expect(addons.find((a) => a.id === "levering_opsaetning")!.price).toBe(495);
+  });
+
+  it("fest-klar packages exist with lys discount on Plus", () => {
+    const fest = rentalProducts.find((p) => p.id === "pakke_fest_klar")!;
+    const plus = rentalProducts.find((p) => p.id === "pakke_fest_klar_plus")!;
+    expect(fest.price).toBe(1090); // Soundboks 595 + opsætning 495
+    expect(plus.price).toBe(1485); // + lys 495 − 100 rabat
   });
 
   it("all addons except levering have an image", () => {

@@ -29,7 +29,7 @@ export default function Home() {
             name: "Scharling Studio / Lejhøjtaler.dk",
             legalName: "Scharling Studio",
             taxID: "DK40994904",
-            telephone: "+4550150731",
+            telephone: "+4531132852",
             priceRange: "95-1195 kr",
             image: "https://lejhojtaler.dk/images/logo-lejhojtaler.png",
             aggregateRating: {

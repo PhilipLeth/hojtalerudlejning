@@ -77,7 +77,7 @@ export default function StickyBookBar() {
       <span className="h-5 w-px bg-black/20" />
 
       <a
-        href="tel:+4550150731"
+        href="tel:+4531132852"
         className="flex items-center gap-1.5 font-semibold text-black text-sm"
       >
         <svg
@@ -92,7 +92,7 @@ export default function StickyBookBar() {
             clipRule="evenodd"
           />
         </svg>
-        50 15 07 31
+        31 13 28 52
       </a>
     </div>
   );

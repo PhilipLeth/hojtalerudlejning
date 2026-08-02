@@ -198,11 +198,14 @@ export default function BookingFlow({
   locale = "da",
   variant = "inline",
   onSummaryChange,
+  urlTick = 0,
 }: {
   locale?: Locale;
   variant?: "inline" | "drawer";
   /** Kurv-summary til drawer-fanen: antal produkter + total */
   onSummaryChange?: (summary: { count: number; total: number }) => void;
+  /** Bumpes når URL ændres (soft-nav) så ?product= preselectes igen */
+  urlTick?: number;
 }) {
   const inDrawer = variant === "drawer";
   const s = t[locale].booking;
@@ -268,9 +271,9 @@ export default function BookingFlow({
       .catch(() => {});
   }, []);
 
-  // Preselect product from ?product=ID (ads landing Book-knapper) — once
+  // Preselect product from ?product=ID — re-runs on soft-nav (urlTick)
   useEffect(() => {
-    if (preselected.current || typeof window === "undefined") return;
+    if (typeof window === "undefined") return;
     const product = new URLSearchParams(window.location.search).get("product");
     if (!product) return;
 
@@ -293,14 +296,18 @@ export default function BookingFlow({
       return;
     }
 
-    // Standalone rental products (lyskæder, discokugle, AV, …)
+    // Standalone rental products (lyskæder, discokugle, AV, Fest-klar, …)
     if (rentalProducts.some((p) => p.id === product)) {
       console.log("[booking] Preselect rental:", product);
       preselected.current = true;
       setSpeaker(product);
       setStep(2);
+      return;
     }
-  }, [speakers, rentalProducts]);
+
+    // Product not in catalog yet (KV race) — wait for next catalog update
+    console.log("[booking] Product not found yet, waiting:", product);
+  }, [speakers, rentalProducts, urlTick]);
 
   // Fetch availability for selected date range (step 2 validation)
   const checkDateAvailability = useCallback(async (pickup: Date, ret: Date) => {

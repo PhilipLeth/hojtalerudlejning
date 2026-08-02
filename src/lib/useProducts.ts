@@ -29,6 +29,23 @@ function visible<T extends { hidden?: boolean }>(list: T[]): T[] {
   return list.filter((p) => !p.hidden);
 }
 
+/** Keep admin catalog, but add any new default rentals (e.g. Fest-klar) missing in KV. */
+function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
+  const ids = new Set(fromKv.map((p) => p.id));
+  const missing = defaultRentals.filter((d) => !ids.has(d.id));
+  return missing.length ? [...missing, ...fromKv] : fromKv;
+}
+
+/** Sync levering-priser fra defaults (marketing: opsætning = 495). */
+function mergeAddons(fromKv: Addon[]): Addon[] {
+  return fromKv.map((a) => {
+    if (a.id !== "levering" && a.id !== "levering_opsaetning") return a;
+    const d = defaultAddons.find((x) => x.id === a.id);
+    if (!d) return a;
+    return { ...a, price: d.price, da: d.da, en: d.en };
+  });
+}
+
 let cached: CatalogResponse | null = null;
 
 /**
@@ -55,11 +72,11 @@ export function useProducts(): Catalog {
           : visible(defaultSpeakers);
       const addons =
         Array.isArray(data.addons) && data.addons.length
-          ? visible(data.addons)
+          ? visible(mergeAddons(data.addons))
           : visible(defaultAddons);
       const rentalProducts =
         Array.isArray(data.rentalProducts) && data.rentalProducts.length
-          ? visible(data.rentalProducts)
+          ? visible(mergeRentals(data.rentalProducts))
           : visible(defaultRentals);
       setCatalog({ speakers, addons, rentalProducts, startPrice: cheapestSpeakerPrice(speakers) });
     };

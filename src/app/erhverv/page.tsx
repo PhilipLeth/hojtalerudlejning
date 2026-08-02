@@ -102,10 +102,10 @@ export default function ErhvervPage() {
               Se pakker
             </a>
             <a
-              href="tel:+4550150731"
+              href="tel:+4531132852"
               className="rounded-full border border-white/20 px-8 py-4 text-lg font-medium transition hover:bg-white/5"
             >
-              Ring 50 15 07 31
+              Ring 31 13 28 52
             </a>
           </div>
         </div>
@@ -174,7 +174,7 @@ export default function ErhvervPage() {
             Book erhvervspakke
           </a>
           <p className="mt-3 text-sm text-white/40">
-            Eller ring til os på <a href="tel:+4550150731" className="text-brand-400 hover:underline">50 15 07 31</a> for en skræddersyet løsning
+            Eller ring til os på <a href="tel:+4531132852" className="text-brand-400 hover:underline">31 13 28 52</a> for en skræddersyet løsning
           </p>
         </div>
       </section>

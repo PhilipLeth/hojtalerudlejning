@@ -235,7 +235,7 @@ export default function LejeseddelPage() {
         <table className="rental-table">
           <tbody>
             <tr><td>Udlejer:</td><td>Scharling Studio (lejhøjtaler.dk) — CVR 40994904</td></tr>
-            <tr><td>Kontakt:</td><td>50 15 07 31 / hey@lejhojtaler.dk</td></tr>
+            <tr><td>Kontakt:</td><td>31 13 28 52 / hey@lejhojtaler.dk</td></tr>
           </tbody>
         </table>
         <table className="rental-table">

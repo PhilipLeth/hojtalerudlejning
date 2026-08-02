@@ -202,20 +202,20 @@ export const addons: Addon[] = [
   },
   {
     id: "levering",
-    price: 495,
+    price: 295,
     image: null,
     da: {
       label: "Levering i København",
-      desc: "Vi bringer udstyret ud og henter det igen efter festen",
+      desc: "Vi bringer udstyret ud og henter det igen — uden opsætning",
     },
     en: {
       label: "Delivery in Copenhagen",
-      desc: "We deliver the equipment and collect it again after the party",
+      desc: "We deliver and collect the equipment — without setup",
     },
   },
   {
     id: "levering_opsaetning",
-    price: 795,
+    price: 495,
     image: null,
     da: {
       label: "Levering + opsætning i København",
@@ -230,6 +230,29 @@ export const addons: Addon[] = [
 
 /** Standalone rental products (lys, av) — bookable via /?product=ID#book */
 export const rentalProducts: RentalProduct[] = [
+  // Fest-klar: Soundboks + levering/opsætning. Plus = + lys med ~100 kr rabat.
+  {
+    id: "pakke_fest_klar",
+    category: "lyd",
+    price: 1090,
+    image: "/images/product-soundboks.png",
+    name_da: "Fest-klar",
+    name_en: "Party-ready",
+    desc_da: "Soundboks 4 + levering og opsætning i København. Vi sætter op — I tænder festen.",
+    desc_en: "Soundboks 4 + delivery and setup in Copenhagen. We set up — you start the party.",
+    allowedAddons: ["rog", "mikrofon", "stativer", "batteri", "taske"],
+  },
+  {
+    id: "pakke_fest_klar_plus",
+    category: "lyd",
+    price: 1485,
+    image: "/images/mood-party.png",
+    name_da: "Fest-klar Plus",
+    name_en: "Party-ready Plus",
+    desc_da: "Soundboks 4 + lys-pakke + levering og opsætning. Spar 100 kr på lyset.",
+    desc_en: "Soundboks 4 + light package + delivery and setup. Save 100 DKK on lights.",
+    allowedAddons: ["rog", "mikrofon", "stativer", "batteri", "taske"],
+  },
   { id: "discokugle", category: "lys", price: 245, image: "/images/product-discokugle.png", name_da: "Discokugle", name_en: "Disco ball", desc_da: "Roterende discokugle med LED-lys og farver.", desc_en: "Rotating disco ball with LED lights." },
   { id: "lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.png", name_da: "Lyskæder", name_en: "Fairy lights", desc_da: "10m lyskæde — varm hvid eller farvet.", desc_en: "10m fairy lights — warm white or coloured." },
   { id: "projektor", category: "av", price: 495, image: "/images/product-projektor.png", name_da: "Projektor", name_en: "Projector", desc_da: "Full HD projektor til præsentationer og film.", desc_en: "Full HD projector for presentations and film." },
@@ -256,6 +279,8 @@ export const NAV_CATEGORIES: NavCategory[] = [
     title: "Lyd & Højtalere",
     href: "/lej-hojtaler",
     links: [
+      { href: "/?product=pakke_fest_klar#book", label: "Fest-klar" },
+      { href: "/?product=pakke_fest_klar_plus#book", label: "Fest-klar Plus" },
       { href: "/soundboks-4", label: "Soundboks 4" },
       { href: "/mackie-thump-go", label: "Mackie Thump GO" },
       { href: "/hojtalerpakke-lille", label: "Højtalerpakke lille" },

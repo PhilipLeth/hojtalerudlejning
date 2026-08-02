@@ -4,7 +4,10 @@
   "business": {
     "name": "Scharling Studio",
     "cvr": "40994904",
-    "address": "Halvtolv 9, 1. th, 1436 København K"
+    "address": "Halvtolv 9, 1. th, 1436 København K",
+    "phone": "31 13 28 52",
+    "phone_e164": "+4531132852",
+    "phone_note": "BRUG ALTID DETTE NUMMER. 50 15 07 31 var forkert og må aldrig bruges."
   },
   "domains": {
     "da": "lejhojtaler.dk",
@@ -251,6 +254,33 @@
         "traadloes_mikrofon"
       ],
       "status": "live"
+    },
+    {
+      "id": "pakke_fest_klar",
+      "category": "lyd",
+      "name_da": "Fest-klar",
+      "description_da": "Soundboks 4 + levering og opsætning i København.",
+      "price_dkk": 1090,
+      "image": "/images/product-soundboks.png",
+      "bundle_of": [
+        "soundboks",
+        "levering_opsaetning"
+      ],
+      "status": "live"
+    },
+    {
+      "id": "pakke_fest_klar_plus",
+      "category": "lyd",
+      "name_da": "Fest-klar Plus",
+      "description_da": "Soundboks 4 + lys-pakke + levering/opsætning — spar 100 kr på lyset.",
+      "price_dkk": 1485,
+      "image": "/images/mood-party.png",
+      "bundle_of": [
+        "soundboks",
+        "lys",
+        "levering_opsaetning"
+      ],
+      "status": "live"
     }
   ],
   "addons": [
@@ -305,14 +335,14 @@
     {
       "id": "levering",
       "name_da": "Levering i København (uden opsætning)",
-      "price_dkk": 495,
+      "price_dkk": 295,
       "image": null,
       "status": "live"
     },
     {
       "id": "levering_opsaetning",
       "name_da": "Levering + opsætning i København",
-      "price_dkk": 795,
+      "price_dkk": 495,
       "image": null,
       "status": "live"
     }
@@ -759,8 +789,8 @@
     ],
     "on_booking": {
       "from": "Lejhøjtaler.dk <booking@lejhojtaler.dk> via Resend",
-      "to_owner": "NOTIFY_EMAIL (helst info@lejhojtaler.dk). Reply-to = kundens email.",
-      "to_customer": "Bekræftelse med opsummering, afhentning/levering, total."
+      "to_owner": "NOTIFY_EMAIL (helst info@lejhojtaler.dk). Reply-to = kundens email. Inkl. note om hvilket upsell der blev tilbudt.",
+      "to_customer": "Bekræftelse + én kontekstuel upsell (30% rabat) — se fulfillment_and_upsell."
     },
     "channel_accounts": {
       "email": "info@lejhojtaler.dk",
@@ -770,6 +800,99 @@
         "Meta Business Manager / Catalog",
         "Hygglo udlejer",
         "Facebook Marketplace"
+      ]
+    }
+  },
+  "fulfillment_and_upsell": {
+    "goal": "Frederik kører ud + opsætter billigt. Luk flere komplette aftaler uden forhandling eller hustle-følelse.",
+    "decisions": {
+      "fixed_prices_not_bids": "Faste priser i booking for levering/opsætning. Ingen 'giv et bud'-mail efter booking — opleves useriøst og skaber friktion.",
+      "packages_plus_addons": "Anbefalede pakker (ét klik) + carded tilvalg (levering / levering+opsætning) i flowet.",
+      "one_upsell_per_booking": "Én upsell i bekræftelsesmailen, kontekstuel ift. hvad der allerede er booket, 30% rabat. Accept: svar JA på mailen."
+    },
+    "delivery_addons": {
+      "levering": {
+        "id": "levering",
+        "label_da": "Levering i København",
+        "price_dkk": 295,
+        "includes": "Udbringning + afhentning efter festen (uden opsætning)"
+      },
+      "levering_opsaetning": {
+        "id": "levering_opsaetning",
+        "label_da": "Levering + opsætning i København",
+        "price_dkk": 495,
+        "includes": "Udbringning, opsætning klar til brug, afhentning",
+        "positioning": "Primært push — billig komplet løsning, Frederiks kerneydelse. Matcher marketing (495 inkl. opsætning)."
+      }
+    },
+    "recommended_packages": [
+      {
+        "id": "diy",
+        "name_da": "DIY / Afhentning",
+        "includes": "Valgt udstyr, afhentning Halvtolv 9",
+        "delivery": "ingen",
+        "note": "Billigste. Default hvis kunden ikke vælger levering."
+      },
+      {
+        "id": "pakke_fest_klar",
+        "name_da": "Fest-klar",
+        "product_id": "pakke_fest_klar",
+        "price_dkk": 1090,
+        "includes": "Soundboks 4 + levering + opsætning",
+        "breakdown": "595 + 495",
+        "note": "Live som rental product. Book: /?product=pakke_fest_klar#book"
+      },
+      {
+        "id": "pakke_fest_klar_plus",
+        "name_da": "Fest-klar Plus",
+        "product_id": "pakke_fest_klar_plus",
+        "price_dkk": 1485,
+        "includes": "Soundboks 4 + lys-pakke + levering + opsætning",
+        "breakdown": "595 + 495 + 495 − 100 lys-rabat",
+        "note": "Live. Spar 100 kr på lyset vs. enkeltvis."
+      }
+    ],
+    "post_booking_upsell": {
+      "status": "live",
+      "code": "functions/api/book.ts",
+      "timing": "I samme bekræftelsesmail (ikke separat kampagne-kaskade)",
+      "discount_pct": 30,
+      "accept": "Kunden svarer JA (eller produktnavn) på bekræftelsesmailen → I tilføjer manuelt og bekræfter pris",
+      "rules_priority": [
+        {
+          "if": "Har lyd/højtaler, mangler lys",
+          "offer": "lys",
+          "list_price_dkk": 495,
+          "why": "Største komplementære lift til fest"
+        },
+        {
+          "if": "Har lys (addon eller rental), mangler røg",
+          "offer": "rog",
+          "list_price_dkk": 245,
+          "why": "Røg gør lys 10x — naturligt næste skridt"
+        },
+        {
+          "if": "Har udstyr men ingen levering/opsætning",
+          "offer": "levering_opsaetning",
+          "list_price_dkk": 495,
+          "why": "Få Frederik på vejen — luk opsætningsaftaler"
+        },
+        {
+          "if": "Har kun levering (uden opsætning)",
+          "offer": "upgrade_opsaetning",
+          "note": "Upgrade til levering+opsætning: forskel 200 kr (495−295), 30% → 140 kr",
+          "why": "Lav barriere for opsætning når bilen allerede kører"
+        },
+        {
+          "if": "Allerede komplet (lys+røg+opsætning) eller intet relevant",
+          "offer": null,
+          "why": "Ingen upsell — undgå spam"
+        }
+      ],
+      "excluded": [
+        "Ingen bud/auktion på levering",
+        "Ingen random slushice hvis ikke i katalog/lager",
+        "Max ét tilbud pr. booking-mail"
       ]
     }
   },
@@ -872,6 +995,20 @@
     "note": "Alle 15 annoncegrupper er live. Alle landingssider er deployed."
   },
   "tasks": [
+    {
+      "id": "post-booking-upsell",
+      "title": "Kontekstuel upsell i booking-bekræftelse (30%)",
+      "description": "Bekræftelsesmail tilbyder ét produkt baseret på booking: højtaler→lys, lys→røg, ingen levering→levering+opsætning, kun levering→upgrade opsætning. Accept via svar JA. Se fulfillment_and_upsell. Implementeret i functions/api/book.ts.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "fest-klar-pakke-synlighed",
+      "title": "Synliggør Fest-klar (levering+opsætning) på landings",
+      "description": "pakke_fest_klar (1090) og pakke_fest_klar_plus (1485, −100 på lys) er produkter. Levering+opsætning = 495 kr, kun levering = 295 kr. Menu-links under Lyd. Hvis KV-katalog er gemt i admin: tilføj pakkerne eller reset defaults.",
+      "priority": "medium",
+      "status": "done"
+    },
     {
       "id": "forside-produktgrid-flow",
       "title": "Ny forside: logo + USP'er + produktgrid + Book-flow",

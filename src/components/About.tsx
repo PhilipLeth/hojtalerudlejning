@@ -62,9 +62,8 @@ export default function About() {
             </p>
             <p>
               Er du ikke til at cykle med udstyr, k&oslash;rer vi det ud til
-              dig. Levering i Stork&oslash;benhavn koster 495 kr. - og har du
-              brug for at vi s&aelig;tter det op ogs&aring;, klarer vi det for
-              495 kr. ekstra.
+              dig. Levering + opsætning i Stork&oslash;benhavn koster 495 kr.
+              Skal vi kun k&oslash;re ud uden at s&aelig;tte op, er det 295 kr.
             </p>
           </div>
         </div>

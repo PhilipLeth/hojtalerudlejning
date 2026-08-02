@@ -67,7 +67,7 @@ export default function FestlysPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Betal ved afhentning · Ring 50 15 07 31
+            København · Betal ved afhentning · Ring 31 13 28 52
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej festlys og røgmaskine

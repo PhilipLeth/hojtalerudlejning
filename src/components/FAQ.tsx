@@ -21,7 +21,7 @@ const faqs = [
   {
     question: "Kan I levere udstyret?",
     answer:
-      "Ja — vi er baseret på Holmen og leverer billigt i hele København. Levering og afhentning koster 495 kr, og for 795 kr sætter vi også det hele op klar til brug. Skriv din adresse i bookingflowet, så klarer vi resten.",
+      "Ja — vi er baseret på Holmen og leverer billigt i hele København. Levering + opsætning koster 495 kr (kun udbringning uden opsætning: 295 kr). Skriv din adresse i bookingflowet, så klarer vi resten.",
   },
   {
     question: "Kan jeg leje en højtaler uden strøm?",
@@ -31,7 +31,7 @@ const faqs = [
   {
     question: "Kan jeg ringe og høre mere?",
     answer:
-      "Selvfølgelig! Ring til os på 50 15 07 31 — vi svarer gerne på spørgsmål om udstyr, levering eller din booking. Du betaler først ved afhentning med MobilePay eller kontant.",
+      "Selvfølgelig! Ring til os på 31 13 28 52 — vi svarer gerne på spørgsmål om udstyr, levering eller din booking. Du betaler først ved afhentning med MobilePay eller kontant.",
   },
   {
     question: "Hvad hvis noget går i stykker?",
