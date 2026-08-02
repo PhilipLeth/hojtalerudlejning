@@ -16,7 +16,8 @@ export const onRequestOptions: PagesFunction<Env> = async () => {
 
 interface UpdateBody {
   id: string;
-  status: string;
+  status?: string;
+  action?: "delete";
 }
 
 const VALID_STATUSES = ["ny", "bekraeftet", "afhentet", "afleveret"];
@@ -34,6 +35,28 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   try {
     const body: UpdateBody = await context.request.json();
+
+    // Slet booking (kræver eksplicit action)
+    if (body.action === "delete") {
+      if (!body.id || !body.id.startsWith("booking_")) {
+        return new Response(JSON.stringify({ error: "Invalid booking id" }), {
+          status: 400,
+          headers: corsHeaders,
+        });
+      }
+      const existing = await context.env.BOOKINGS.get(body.id);
+      if (!existing) {
+        return new Response(JSON.stringify({ error: "Booking not found" }), {
+          status: 404,
+          headers: corsHeaders,
+        });
+      }
+      await context.env.BOOKINGS.delete(body.id);
+      return new Response(JSON.stringify({ ok: true, deleted: body.id }), {
+        status: 200,
+        headers: corsHeaders,
+      });
+    }
 
     if (!body.id || !body.status) {
       return new Response(JSON.stringify({ error: "Missing id or status" }), {

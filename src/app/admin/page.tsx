@@ -120,6 +120,23 @@ export default function AdminPage() {
     finally { setUpdating(null); }
   };
 
+  const deleteBooking = async (id: string, name: string) => {
+    // Dobbelt-tjek mod fejlklik: bekræft + skriv SLET
+    if (!confirm(`Slet bookingen fra "${name}"?\n\nDette fjerner den permanent og kan ikke fortrydes.`)) return;
+    const typed = prompt(`Skriv SLET for at bekræfte sletning af "${name}":`);
+    if (typed?.trim().toUpperCase() !== "SLET") return;
+    setUpdating(id);
+    try {
+      const res = await fetch(`/api/bookings-update?secret=${encodeURIComponent(secret)}`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, action: "delete" }),
+      });
+      if (res.ok) setBookings((prev) => prev.filter((b) => b.id !== id));
+      else { const data = await res.json(); alert(data.error || "Sletning fejlede"); }
+    } catch { alert("Netværksfejl"); }
+    finally { setUpdating(null); }
+  };
+
   const getNextStatus = (current: string) => {
     const idx = STATUS_FLOW.indexOf(current);
     return idx >= 0 && idx < STATUS_FLOW.length - 1 ? STATUS_FLOW[idx + 1] : null;
@@ -235,22 +252,23 @@ export default function AdminPage() {
                 <span style={{ fontWeight: 600, fontSize: "14px" }}>{label}</span>
                 <span style={{ color: "#aaa", fontSize: "12px" }}>{group.length} booking{group.length !== 1 ? "er" : ""}</span>
               </div>
-              <BookingTable bookings={group} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} updating={updating} getNextStatus={getNextStatus} secret={secret} />
+              <BookingTable bookings={group} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} updating={updating} getNextStatus={getNextStatus} secret={secret} />
             </div>
           ))
         ) : (
-          <BookingTable bookings={filtered} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} updating={updating} getNextStatus={getNextStatus} secret={secret} />
+          <BookingTable bookings={filtered} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} updating={updating} getNextStatus={getNextStatus} secret={secret} />
         )}
       </main>
     </div>
   );
 }
 
-function BookingTable({ bookings, expanded, setExpanded, updateStatus, updating, getNextStatus, secret }: {
+function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBooking, updating, getNextStatus, secret }: {
   bookings: Booking[];
   expanded: string | null;
   setExpanded: (id: string | null) => void;
   updateStatus: (id: string, status: string) => void;
+  deleteBooking: (id: string, name: string) => void;
   updating: string | null;
   getNextStatus: (s: string) => string | null;
   secret: string;
@@ -306,6 +324,9 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, updating,
                       <a href="/admin/lejeseddel" onClick={() => sessionStorage.setItem("lejeseddel_booking", JSON.stringify(b))} style={{ padding: "4px 10px", fontSize: "11px", background: "#f0f0f0", color: "#555", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", whiteSpace: "nowrap" }}>
                         Print
                       </a>
+                      <button onClick={() => deleteBooking(b.id, b.name)} disabled={updating === b.id} title="Slet booking" style={{ padding: "4px 10px", fontSize: "11px", background: "#fff", color: "#dc3545", border: "1px solid #dc3545", borderRadius: "6px", cursor: "pointer", whiteSpace: "nowrap", opacity: updating === b.id ? 0.6 : 1 }}>
+                        Slet
+                      </button>
                     </div>
                   </td>
                 </tr>
