@@ -198,14 +198,11 @@ export default function BookingFlow({
   locale = "da",
   variant = "inline",
   onSummaryChange,
-  urlTick = 0,
 }: {
   locale?: Locale;
   variant?: "inline" | "drawer";
   /** Kurv-summary til drawer-fanen: antal produkter + total */
   onSummaryChange?: (summary: { count: number; total: number }) => void;
-  /** Bumpes når URL ændres (soft-nav) så ?product= preselectes igen */
-  urlTick?: number;
 }) {
   const inDrawer = variant === "drawer";
   const s = t[locale].booking;
@@ -271,9 +268,9 @@ export default function BookingFlow({
       .catch(() => {});
   }, []);
 
-  // Preselect product from ?product=ID — re-runs on soft-nav (urlTick)
+  // Preselect product from ?product=ID (works on /book and legacy redirects)
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (preselected.current || typeof window === "undefined") return;
     const product = new URLSearchParams(window.location.search).get("product");
     if (!product) return;
 
@@ -305,9 +302,8 @@ export default function BookingFlow({
       return;
     }
 
-    // Product not in catalog yet (KV race) — wait for next catalog update
     console.log("[booking] Product not found yet, waiting:", product);
-  }, [speakers, rentalProducts, urlTick]);
+  }, [speakers, rentalProducts]);
 
   // Fetch availability for selected date range (step 2 validation)
   const checkDateAvailability = useCallback(async (pickup: Date, ret: Date) => {

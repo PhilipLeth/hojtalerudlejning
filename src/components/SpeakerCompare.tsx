@@ -26,7 +26,7 @@ export default function SpeakerCompare({
   bookLinks = "hash",
 }: {
   locale?: Locale;
-  /** hash = #book (forside), booking = /?product=ID#book (undersider) */
+  /** hash = #book (forside), booking = /book?product=ID (undersider) */
   bookLinks?: "hash" | "booking";
 }) {
   const c = t[locale].compare;
@@ -101,7 +101,7 @@ export default function SpeakerCompare({
                       </td>
                       <td className="px-3 py-4 text-right">
                         <a
-                          href={bookLinks === "booking" ? `/?product=${sp.id}#book` : "#book"}
+                          href={bookLinks === "booking" ? `/book?product=${sp.id}` : "/book"}
                           className="inline-block rounded-full bg-brand-500 px-4 py-2 text-xs font-semibold text-black transition hover:bg-brand-400 active:scale-95"
                         >
                           {c.book}
@@ -120,13 +120,13 @@ export default function SpeakerCompare({
       <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
         {groups.flatMap((g) => g.items).map((sp) => {
           const text = sp[locale];
-          const href = bookLinks === "booking" ? `/?product=${sp.id}#book` : "#book";
+          const href = bookLinks === "booking" ? `/book?product=${sp.id}` : "/book";
           return (
             <article
               key={`card-${sp.id}`}
               className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:border-brand-500/40"
             >
-              <a href={href} className="relative block bg-[#0d0c12] p-6">
+              <a href={sp.page ?? href} className="relative block bg-[#0d0c12] p-6">
                 {sp.power === "batteri" && (
                   <span className="absolute left-4 top-4 rounded-full bg-green-500/15 px-2.5 py-0.5 text-[11px] font-bold text-green-400">
                     🔋 {c.noPower}
@@ -148,12 +148,22 @@ export default function SpeakerCompare({
                   <p className="text-2xl font-bold text-brand-400">
                     {sp.price},-<span className="ml-1 text-xs font-normal text-white/40">{c.perWeekend}</span>
                   </p>
-                  <a
-                    href={href}
-                    className="rounded-full bg-brand-500 px-6 py-2.5 text-sm font-semibold text-black transition hover:bg-brand-400 active:scale-95"
-                  >
-                    {c.book}
-                  </a>
+                  <div className="flex gap-2">
+                    <a
+                      href={href}
+                      className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-brand-400 active:scale-95"
+                    >
+                      {c.book}
+                    </a>
+                    {sp.page && (
+                      <a
+                        href={sp.page}
+                        className="rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white/70 transition hover:border-brand-500/40 hover:text-brand-400"
+                      >
+                        Info
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </article>

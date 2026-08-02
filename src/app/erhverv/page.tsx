@@ -168,7 +168,7 @@ export default function ErhvervPage() {
         </div>
         <div className="mt-12 text-center">
           <a
-            href="/#book"
+            href="/book"
             className="inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book erhvervspakke

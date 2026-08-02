@@ -1,4 +1,4 @@
-import BookingDrawer from "@/components/BookingDrawer";
+import BookingRedirect from "@/components/BookingRedirect";
 import HomeHero from "@/components/HomeHero";
 import ProductGrid from "@/components/ProductGrid";
 import Testimonials from "@/components/Testimonials";
@@ -12,8 +12,8 @@ export default function Home() {
     <main className="min-h-screen">
       <HomeHero />
       <ProductGrid />
-      {/* Booking åbner i drawer ved #book / ?product=ID */}
-      <BookingDrawer />
+      {/* Old /?product=#book → /book (browser-safe) */}
+      <BookingRedirect />
       <Testimonials />
       <HowItWorks />
       <FAQ />

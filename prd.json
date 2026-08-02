@@ -840,7 +840,7 @@
         "price_dkk": 1090,
         "includes": "Soundboks 4 + levering + opsætning",
         "breakdown": "595 + 495",
-        "note": "Live som rental product. Book: /?product=pakke_fest_klar#book"
+        "note": "Live. Produktside /fest-klar · Book: /book?product=pakke_fest_klar"
       },
       {
         "id": "pakke_fest_klar_plus",
@@ -849,7 +849,7 @@
         "price_dkk": 1485,
         "includes": "Soundboks 4 + lys-pakke + levering + opsætning",
         "breakdown": "595 + 495 + 495 − 100 lys-rabat",
-        "note": "Live. Spar 100 kr på lyset vs. enkeltvis."
+        "note": "Live. Produktside /fest-klar-plus · Book: /book?product=pakke_fest_klar_plus"
       }
     ],
     "post_booking_upsell": {
@@ -914,6 +914,8 @@
     "sitemap_paths": [
       "/",
       "/soundboks-4",
+      "/fest-klar",
+      "/fest-klar-plus",
       "/mackie-thump-go",
       "/hojtalerpakke-lille",
       "/hojtalerpakke-normal",
@@ -1005,7 +1007,21 @@
     {
       "id": "fest-klar-pakke-synlighed",
       "title": "Synliggør Fest-klar (levering+opsætning) på landings",
-      "description": "pakke_fest_klar (1090) og pakke_fest_klar_plus (1485, −100 på lys) er produkter. Levering+opsætning = 495 kr, kun levering = 295 kr. Menu-links under Lyd. Hvis KV-katalog er gemt i admin: tilføj pakkerne eller reset defaults.",
+      "description": "pakke_fest_klar (1090) og pakke_fest_klar_plus (1485). Booking via dedikeret /book?product=ID (ikke drawer/hash). Legacy /?product=#book redirectes.",
+      "priority": "medium",
+      "status": "done"
+    },
+    {
+      "id": "booking-page-not-drawer",
+      "title": "Booking er en rigtig side (/book) — ikke drawer-hack",
+      "description": "Alle Book-CTA'er peger på /book eller /book?product=ID. Virker i alle browsere uden pushState. Gamle links med #book redirectes via BookingRedirect.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "product-card-contents-hover",
+      "title": "Produktkort: hover viser indhold (contents)",
+      "description": "Nyt felt contents: string[] på speakers/rentals/addons. Forside-kort fader billede og viser 'Inkluderet'-liste. Redigeres i /admin/produkter (én linje pr. ting). Gemmes i KV products_catalog.",
       "priority": "medium",
       "status": "done"
     },

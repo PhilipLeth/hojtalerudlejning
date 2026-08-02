@@ -76,7 +76,7 @@ export default function DiscokuglePage() {
             Roterende discokugle med LED-lys og farver. Klar på 2 min.
           </p>
           <a
-            href="/?product=discokugle#book"
+            href="/book?product=discokugle"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book discokugle nu
@@ -166,7 +166,7 @@ export default function DiscokuglePage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 245 kr/weekend.
           </p>
           <a
-            href="/?product=discokugle#book"
+            href="/book?product=discokugle"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book discokugle nu

@@ -27,13 +27,13 @@ const PRODUCT_INFO: Record<string, { name: string; href: string }> = {
   skaerm_55: { name: '55" Storskærm', href: "/skaerm" },
   traadloes_mikrofon: { name: "Trådløs mikrofon", href: "/traadloes-mikrofon" },
   headset: { name: "Trådløst headset", href: "/headset-mikrofon" },
-  headset_pro: { name: "Trådløst headset PRO", href: "/?product=headset_pro#book" },
-  haandholdt_mikrofon: { name: "Håndholdt mikrofon (kabel)", href: "/?product=haandholdt_mikrofon#book" },
-  laerred_160: { name: "Lærred 160 cm", href: "/?product=laerred_160#book" },
-  projektor_pro: { name: "Projektor Pro (5000 lumen)", href: "/?product=projektor_pro#book" },
-  pakke_praesentation: { name: "Præsentationspakken", href: "/?product=pakke_praesentation#book" },
-  pakke_konference: { name: "Konferencepakken", href: "/?product=pakke_konference#book" },
-  pakke_tale_musik: { name: "Tale & musik-pakken", href: "/?product=pakke_tale_musik#book" },
+  headset_pro: { name: "Trådløst headset PRO", href: "/book?product=headset_pro" },
+  haandholdt_mikrofon: { name: "Håndholdt mikrofon (kabel)", href: "/book?product=haandholdt_mikrofon" },
+  laerred_160: { name: "Lærred 160 cm", href: "/book?product=laerred_160" },
+  projektor_pro: { name: "Projektor Pro (5000 lumen)", href: "/book?product=projektor_pro" },
+  pakke_praesentation: { name: "Præsentationspakken", href: "/book?product=pakke_praesentation" },
+  pakke_konference: { name: "Konferencepakken", href: "/book?product=pakke_konference" },
+  pakke_tale_musik: { name: "Tale & musik-pakken", href: "/book?product=pakke_tale_musik" },
 };
 
 const PACKAGES = [
@@ -49,29 +49,44 @@ function ProductCard({ id, badge }: { id: string; badge?: string }) {
   const speaker = speakers.find((sp) => sp.id === id);
 
   const info = speaker
-    ? { name: speaker.da.name, href: `/?product=${id}#book`, price: speaker.price, image: speaker.product }
+    ? { name: speaker.da.name, href: `/book?product=${id}`, price: speaker.price, image: speaker.product, page: speaker.page }
     : rental && PRODUCT_INFO[id]
-      ? { ...PRODUCT_INFO[id], name: rental.name_da, price: rental.price, image: rental.image }
+      ? { ...PRODUCT_INFO[id], name: rental.name_da, price: rental.price, image: rental.image, page: rental.page }
       : null;
   if (!info) return null;
 
   return (
-    <a
-      href={info.href}
-      className="glass group relative overflow-hidden rounded-2xl p-4 text-center transition hover:border-white/20 active:scale-[0.98]"
-    >
+    <article className="glass group relative flex flex-col overflow-hidden rounded-2xl p-4 text-center transition hover:border-white/20">
       {badge && (
-        <span className="absolute top-3 left-3 rounded-full bg-brand-500 px-2.5 py-0.5 text-[11px] font-bold text-black">
+        <span className="absolute top-3 left-3 z-10 rounded-full bg-brand-500 px-2.5 py-0.5 text-[11px] font-bold text-black">
           {badge}
         </span>
       )}
-      <img src={info.image} alt="" className="mx-auto h-24 w-24 object-contain transition-transform duration-300 group-hover:scale-110" />
-      <p className="mt-3 font-semibold text-white">{info.name}</p>
-      <p className={`text-sm font-bold ${summer ? "text-amber-400" : "text-brand-400"}`}>
-        {summer && <span className="mr-1 font-normal text-white/30 line-through">{info.price},-</span>}
-        {summer ? applyDiscount(info.price) : info.price},-
-      </p>
-    </a>
+      <a href={info.page ?? info.href} className="block">
+        <img src={info.image} alt="" className="mx-auto h-24 w-24 object-contain transition-transform duration-300 group-hover:scale-110" />
+        <p className="mt-3 font-semibold text-white">{info.name}</p>
+        <p className={`text-sm font-bold ${summer ? "text-amber-400" : "text-brand-400"}`}>
+          {summer && <span className="mr-1 font-normal text-white/30 line-through">{info.price},-</span>}
+          {summer ? applyDiscount(info.price) : info.price},-
+        </p>
+      </a>
+      <div className="mt-3 flex justify-center gap-2">
+        <a
+          href={`/book?product=${id}`}
+          className="rounded-full bg-brand-500 px-4 py-1.5 text-xs font-semibold text-black transition hover:bg-brand-400 active:scale-95"
+        >
+          Book
+        </a>
+        {info.page && (
+          <a
+            href={info.page}
+            className="rounded-full border border-white/15 px-4 py-1.5 text-xs font-semibold text-white/70 transition hover:border-brand-500/40 hover:text-brand-400"
+          >
+            Info
+          </a>
+        )}
+      </div>
+    </article>
   );
 }
 

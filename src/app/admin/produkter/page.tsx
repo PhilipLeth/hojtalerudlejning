@@ -392,6 +392,19 @@ export default function AdminProdukterPage() {
                   Skjul på siden
                 </label>
                 <AllowedAddonsField allAddons={addons} value={sp.allowedAddons} onChange={(v) => updateSpeaker(i, { allowedAddons: v })} />
+                <Field
+                  label="Indhold (én linje pr. ting — hover på kort)"
+                  textarea
+                  value={(sp.contents ?? []).join("\n")}
+                  onChange={(v) =>
+                    updateSpeaker(i, {
+                      contents: v
+                        .split("\n")
+                        .map((s) => s.trim())
+                        .filter(Boolean),
+                    })
+                  }
+                />
               </div>
               {(["da", "en"] as const).map((loc) => (
                 <div key={loc} style={{ marginTop: "16px", borderTop: "1px solid #eee", paddingTop: "12px" }}>
@@ -442,6 +455,21 @@ export default function AdminProdukterPage() {
                 </label>
                 <AllowedAddonsField allAddons={addons} value={r.allowedAddons} onChange={(v) => updateRental(i, { allowedAddons: v })} />
               </div>
+              <div style={{ marginTop: "12px" }}>
+                <Field
+                  label="Indhold (én linje pr. ting — hover på kort)"
+                  textarea
+                  value={(r.contents ?? []).join("\n")}
+                  onChange={(v) =>
+                    updateRental(i, {
+                      contents: v
+                        .split("\n")
+                        .map((s) => s.trim())
+                        .filter(Boolean),
+                    })
+                  }
+                />
+              </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginTop: "12px" }}>
                 <Field label="Navn (dansk)" value={r.name_da} onChange={(v) => updateRental(i, { name_da: v })} />
                 <Field label="Navn (engelsk)" value={r.name_en} onChange={(v) => updateRental(i, { name_en: v })} />
@@ -473,6 +501,21 @@ export default function AdminProdukterPage() {
                   <input type="checkbox" checked={!!a.hidden} onChange={(e) => updateAddon(i, { hidden: e.target.checked })} />
                   Skjul på siden
                 </label>
+              </div>
+              <div style={{ marginTop: "12px" }}>
+                <Field
+                  label="Indhold (én linje pr. ting — hover på kort)"
+                  textarea
+                  value={(a.contents ?? []).join("\n")}
+                  onChange={(v) =>
+                    updateAddon(i, {
+                      contents: v
+                        .split("\n")
+                        .map((s) => s.trim())
+                        .filter(Boolean),
+                    })
+                  }
+                />
               </div>
               {(["da", "en"] as const).map((loc) => (
                 <div key={loc} style={{ marginTop: "16px", borderTop: "1px solid #eee", paddingTop: "12px" }}>

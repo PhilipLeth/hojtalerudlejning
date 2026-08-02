@@ -77,7 +77,7 @@ export default function LyskaederPage() {
             10m lyskæde — vælg mellem almindelig varm hvid eller farvet. Perfekt til enhver fest.
           </p>
           <a
-            href="/?product=lyskaeder#book"
+            href="/book?product=lyskaeder"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book lyskæder nu
@@ -176,7 +176,7 @@ export default function LyskaederPage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 195 kr/weekend.
           </p>
           <a
-            href="/?product=lyskaeder#book"
+            href="/book?product=lyskaeder"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book lyskæder nu

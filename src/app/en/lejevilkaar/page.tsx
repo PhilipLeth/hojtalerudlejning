@@ -81,7 +81,7 @@ export default function RentalTermsEn() {
       {/* Header */}
       <div className="mx-auto max-w-3xl px-4 pt-16 pb-8">
         <Link
-          href="/en#book"
+          href="/en/book"
           className="inline-flex items-center gap-2 text-sm text-brand-400 hover:text-brand-300 transition mb-8"
         >
           <svg
@@ -132,7 +132,7 @@ export default function RentalTermsEn() {
         {/* CTA */}
         <div className="text-center pt-8">
           <Link
-            href="/en#book"
+            href="/en/book"
             className="inline-flex rounded-xl bg-brand-500 px-8 py-3.5 font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book now

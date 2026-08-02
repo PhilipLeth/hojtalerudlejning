@@ -80,7 +80,7 @@ export default function LydudstyrPage() {
             Professionelt lydudstyr fra 395 kr.
           </p>
           <a
-            href="/#book"
+            href="/book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book lydudstyr nu
@@ -183,7 +183,7 @@ export default function LydudstyrPage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 395 kr/weekend.
           </p>
           <a
-            href="/#book"
+            href="/book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book lydudstyr nu

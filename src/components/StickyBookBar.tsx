@@ -68,7 +68,7 @@ export default function StickyBookBar() {
         <span className="rounded-full bg-black/20 px-2 py-0.5 text-xs font-bold text-white">-25%</span>
       )}
       <a
-        href="#book"
+        href="/book"
         className="font-semibold text-black text-base"
       >
         Book fra {summer && <span className="line-through opacity-60 mr-1">{startPrice}</span>}{price} kr

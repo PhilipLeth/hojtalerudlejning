@@ -33,16 +33,34 @@ function visible<T extends { hidden?: boolean }>(list: T[]): T[] {
 function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
   const ids = new Set(fromKv.map((p) => p.id));
   const missing = defaultRentals.filter((d) => !ids.has(d.id));
-  return missing.length ? [...missing, ...fromKv] : fromKv;
+  const merged = fromKv.map((p) => {
+    if (p.contents?.length) return p;
+    const d = defaultRentals.find((x) => x.id === p.id);
+    return d?.contents?.length ? { ...p, contents: d.contents } : p;
+  });
+  return missing.length ? [...missing, ...merged] : merged;
 }
 
-/** Sync levering-priser fra defaults (marketing: opsætning = 495). */
+/** Sync levering-priser + contents fra defaults. */
 function mergeAddons(fromKv: Addon[]): Addon[] {
   return fromKv.map((a) => {
-    if (a.id !== "levering" && a.id !== "levering_opsaetning") return a;
     const d = defaultAddons.find((x) => x.id === a.id);
-    if (!d) return a;
-    return { ...a, price: d.price, da: d.da, en: d.en };
+    let next = a;
+    if (a.id === "levering" || a.id === "levering_opsaetning") {
+      if (d) next = { ...next, price: d.price, da: d.da, en: d.en };
+    }
+    if (!next.contents?.length && d?.contents?.length) {
+      next = { ...next, contents: d.contents };
+    }
+    return next;
+  });
+}
+
+function mergeSpeakers(fromKv: Speaker[]): Speaker[] {
+  return fromKv.map((s) => {
+    if (s.contents?.length) return s;
+    const d = defaultSpeakers.find((x) => x.id === s.id);
+    return d?.contents?.length ? { ...s, contents: d.contents } : s;
   });
 }
 
@@ -68,7 +86,7 @@ export function useProducts(): Catalog {
       if (cancelled) return;
       const speakers =
         Array.isArray(data.speakers) && data.speakers.length
-          ? visible(data.speakers)
+          ? visible(mergeSpeakers(data.speakers))
           : visible(defaultSpeakers);
       const addons =
         Array.isArray(data.addons) && data.addons.length

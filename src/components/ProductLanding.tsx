@@ -2,6 +2,7 @@ import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import { bookHref as toBook } from "@/lib/bookUrl";
 
 export interface ProductLandingProps {
   slug: string;
@@ -12,7 +13,7 @@ export interface ProductLandingProps {
   image: string;
   imageAlt: string;
   bullets: string[];
-  /** Booking product id for /?product=ID#book */
+  /** Booking product id for /book?product=ID */
   productId: string;
   bookLabel?: string;
   /** Optional extra section under product detail */
@@ -32,7 +33,7 @@ export default function ProductLanding({
   bookLabel,
   children,
 }: ProductLandingProps) {
-  const bookHref = `/?product=${productId}#book`;
+  const bookHref = toBook(productId);
   const cta = bookLabel ?? `Book ${name} nu`;
 
   // Product-schema med ratings + leveringspris (rich results i Google)

@@ -77,7 +77,7 @@ export default function SkaermPage() {
             55&quot; LED-skærm på gulvstativ. Fungerer i dagslys — skarpere end projektor.
           </p>
           <a
-            href="/?product=skaerm_55#book"
+            href="/book?product=skaerm_55"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book storskærm nu
@@ -171,7 +171,7 @@ export default function SkaermPage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 595 kr/weekend.
           </p>
           <a
-            href="/?product=skaerm_55#book"
+            href="/book?product=skaerm_55"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book storskærm nu

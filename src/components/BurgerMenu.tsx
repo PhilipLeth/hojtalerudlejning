@@ -103,7 +103,7 @@ export default function BurgerMenu() {
 
           {/* CTA */}
           <a
-            href="/#book"
+            href="/book"
             onClick={() => setOpen(false)}
             className="mt-8 block rounded-full bg-brand-500 px-6 py-3 text-center font-semibold text-black transition hover:bg-brand-400"
           >

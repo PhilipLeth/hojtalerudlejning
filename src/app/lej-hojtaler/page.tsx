@@ -80,7 +80,7 @@ export default function LejHojtalerPage() {
             Batterihøjtalere og PA-pakker fra 345 kr — book online, betal først ved afhentning.
           </p>
           <a
-            href="/#book"
+            href="/book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book højtaler nu
@@ -171,7 +171,7 @@ export default function LejHojtalerPage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag. Fra 345 kr/weekend.
           </p>
           <a
-            href="/#book"
+            href="/book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book højtaler nu

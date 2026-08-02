@@ -21,6 +21,8 @@ export interface SpeakerText {
 
 export interface Speaker {
   id: string;
+  /** Produktside (Info-knap) */
+  page?: string;
   price: number;
   product: string;
   mood: string;
@@ -30,6 +32,8 @@ export interface Speaker {
   hidden?: boolean;
   /** Addon IDs shown to the customer during booking. Undefined = show all. */
   allowedAddons?: string[];
+  /** Hvad er med i pakken — vist ved hover på produktkort */
+  contents?: string[];
   da: SpeakerText;
   en: SpeakerText;
 }
@@ -41,15 +45,21 @@ export interface AddonText {
 
 export interface Addon {
   id: string;
+  /** Produktside (Info-knap) */
+  page?: string;
   price: number;
   image: string | null;
   hidden?: boolean;
+  /** Hvad er med — vist ved hover på produktkort */
+  contents?: string[];
   da: AddonText;
   en: AddonText;
 }
 
 export interface RentalProduct {
   id: string;
+  /** Produktside (Info-knap) */
+  page?: string;
   category: ProductCategory;
   price: number;
   image: string;
@@ -60,17 +70,21 @@ export interface RentalProduct {
   hidden?: boolean;
   /** Addon IDs shown to the customer during booking. Undefined = show all. */
   allowedAddons?: string[];
+  /** Hvad er med i pakken — vist ved hover på produktkort */
+  contents?: string[];
 }
 
 export const speakers: Speaker[] = [
   {
     id: "thumpgo",
+    page: "/mackie-thump-go",
     price: 345,
     product: "/images/product-thumpgo.png",
     mood: "/images/mood-party.png",
     power: "batteri",
     sizeClass: "lille",
     weight: "10 kg",
+    contents: ["Mackie Thump GO 8\"", "Oplader", "AUX-kabel", "Bluetooth"],
     da: {
       name: "Mackie Thump GO",
       size: '8" batterihøjtaler',
@@ -88,12 +102,14 @@ export const speakers: Speaker[] = [
   },
   {
     id: "party",
+    page: "/hojtalerpakke-lille",
     price: 395,
     product: "/images/product-party.png",
     mood: "/images/mood-party.png",
     power: "kabel",
     sizeClass: "lille",
     weight: "12 kg",
+    contents: ['2× Alto 10" højtalere', "Bluetooth", "AUX + strømkabler", "USB-C / iPhone-adapter", "Bæretaske"],
     da: {
       name: "Lille højtalerpakke",
       size: '2× 10" Alto',
@@ -111,12 +127,14 @@ export const speakers: Speaker[] = [
   },
   {
     id: "soundboks",
+    page: "/soundboks-4",
     price: 595,
     product: "/images/product-soundboks.png",
     mood: "/images/mood-party.png",
     power: "batteri",
     sizeClass: "stor",
     weight: "11 kg",
+    contents: ["Soundboks 4", "Oplader", "AUX-kabel", "Bluetooth"],
     da: {
       name: "Soundboks 4",
       size: "Soundboks 4",
@@ -134,12 +152,14 @@ export const speakers: Speaker[] = [
   },
   {
     id: "festival",
+    page: "/hojtalerpakke-normal",
     price: 695,
     product: "/images/product-festival.png",
     mood: "/images/mood-festival.png",
     power: "kabel",
     sizeClass: "stor",
     weight: "2× 16 kg",
+    contents: ['2× EV 12" højtalere', "2× stativer", "Bluetooth", "AUX + strømkabler", "USB-C / iPhone-adapter"],
     da: {
       name: "Stor højtalerpakke",
       size: '2× 12" EV',
@@ -160,15 +180,19 @@ export const speakers: Speaker[] = [
 export const addons: Addon[] = [
   {
     id: "lys",
+    page: "/festlys",
     price: 495,
     image: "/images/product-lys.png",
+    contents: ["2× farvede LED-lamper", "Centereffekt", "Stativ", "Strøm + DMX/kabler"],
     da: { label: "Lys-pakke", desc: "2 farvede lamper + centereffekt på stativ" },
     en: { label: "Light package", desc: "2 coloured lamps + centre effect on stand" },
   },
   {
     id: "rog",
+    page: "/roegmaskine",
     price: 245,
     image: "/images/product-rog.png",
+    contents: ["Røgmaskine", "Røgvæske", "Strømkabel"],
     da: { label: "Røgmaskine", desc: "Kompakt røgmaskine inkl. røgvæske — gør lyset 10x federe" },
     en: { label: "Fog machine", desc: "Compact fog machine incl. fluid — makes the lights 10x better" },
   },
@@ -228,7 +252,7 @@ export const addons: Addon[] = [
   },
 ];
 
-/** Standalone rental products (lys, av) — bookable via /?product=ID#book */
+/** Standalone rental products (lys, av) — bookable via /book?product=ID */
 export const rentalProducts: RentalProduct[] = [
   // Fest-klar: Soundboks + levering/opsætning. Plus = + lys med ~100 kr rabat.
   {
@@ -240,6 +264,7 @@ export const rentalProducts: RentalProduct[] = [
     name_en: "Party-ready",
     desc_da: "Soundboks 4 + levering og opsætning i København. Vi sætter op — I tænder festen.",
     desc_en: "Soundboks 4 + delivery and setup in Copenhagen. We set up — you start the party.",
+    contents: ["Soundboks 4", "Oplader + AUX", "Levering i København", "Opsætning på stedet", "Afhentning efter festen"],
     allowedAddons: ["rog", "mikrofon", "stativer", "batteri", "taske"],
   },
   {
@@ -251,22 +276,23 @@ export const rentalProducts: RentalProduct[] = [
     name_en: "Party-ready Plus",
     desc_da: "Soundboks 4 + lys-pakke + levering og opsætning. Spar 100 kr på lyset.",
     desc_en: "Soundboks 4 + light package + delivery and setup. Save 100 DKK on lights.",
+    contents: ["Soundboks 4", "Lys-pakke (2 lamper + effekt)", "Oplader + AUX + lys-kabler", "Levering + opsætning", "Afhentning efter festen"],
     allowedAddons: ["rog", "mikrofon", "stativer", "batteri", "taske"],
   },
-  { id: "discokugle", category: "lys", price: 245, image: "/images/product-discokugle.png", name_da: "Discokugle", name_en: "Disco ball", desc_da: "Roterende discokugle med LED-lys og farver.", desc_en: "Rotating disco ball with LED lights." },
-  { id: "lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.png", name_da: "Lyskæder", name_en: "Fairy lights", desc_da: "10m lyskæde — varm hvid eller farvet.", desc_en: "10m fairy lights — warm white or coloured." },
-  { id: "projektor", category: "av", price: 495, image: "/images/product-projektor.png", name_da: "Projektor", name_en: "Projector", desc_da: "Full HD projektor til præsentationer og film.", desc_en: "Full HD projector for presentations and film." },
-  { id: "skaerm_55", category: "av", price: 595, image: "/images/product-skaerm.png", name_da: '55" Storskærm', name_en: '55" Screen', desc_da: "55\" LED-skærm på gulvstativ.", desc_en: '55" LED screen on floor stand.' },
-  { id: "traadloes_mikrofon", category: "av", price: 295, image: "/images/product-mikrofon.png", name_da: "Trådløs mikrofon", name_en: "Wireless mic", desc_da: "Professionel håndholdt mikrofon.", desc_en: "Professional handheld microphone." },
-  { id: "headset", category: "av", price: 345, image: "/images/product-headset.png", name_da: "Trådløst headset", name_en: "Wireless headset", desc_da: "Headset-mikrofon til præsentationer.", desc_en: "Headset mic for presentations." },
-  { id: "headset_pro", category: "av", price: 495, image: "/images/product-headset.png", name_da: "Trådløst headset PRO", name_en: "Wireless headset PRO", desc_da: "Professionelt headset i broadcast-kvalitet — til konferencer og scener.", desc_en: "Professional broadcast-quality headset — for conferences and stages." },
-  { id: "haandholdt_mikrofon", category: "av", price: 95, image: "/images/product-mikrofon.png", name_da: "Håndholdt mikrofon (kabel)", name_en: "Handheld microphone (wired)", desc_da: "Almindelig håndholdt mikrofon med kabel — til taler og sang.", desc_en: "Standard wired handheld microphone — for speeches and vocals." },
-  { id: "laerred_160", category: "av", price: 195, image: "/images/product-laerred.png", name_da: "Lærred 160 cm", name_en: "Projector screen 160 cm", desc_da: "160 cm lærred på stativ — perfekt til projektor.", desc_en: "160 cm projector screen on stand." },
-  { id: "projektor_pro", category: "av", price: 795, image: "/images/product-projektor.png", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor — skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector — sharp even in daylight." },
-  { id: "pakke_praesentation", category: "av", price: 695, image: "/images/product-projektor.png", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen — spar 90 kr.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation — save 90 kr." },
-  { id: "pakke_konference", category: "av", price: 1195, image: "/images/product-skaerm.png", name_da: "Konferencepakken", name_en: "Conference bundle", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke. Klar til konference — spar 140 kr.", desc_en: "55\" screen + wireless headset + small speaker package. Conference-ready — save 140 kr." },
-  { id: "pakke_tale_musik", category: "av", price: 895, image: "/images/product-festival.png", name_da: "Tale & musik-pakken", name_en: "Speech & music bundle", desc_da: "Stor højtalerpakke + trådløs mikrofon. Taler og musik til events — spar 95 kr.", desc_en: "Large speaker package + wireless mic. Speeches and music for events — save 95 kr." },
-  { id: "low_fog", category: "roeg", price: 295, hidden: true, image: "/images/product-lowfog.png", name_da: "Low fog-maskine (røggulv)", name_en: "Low fog machine (fog floor)", desc_da: "Laver et flot gulv af røg vha. is — 'dansen på skyer'-effekten fra bryllupper og musikvideoer.", desc_en: "Creates a floor of low-lying fog using ice — the 'dancing on clouds' effect." },
+  { id: "discokugle", page: "/discokugle", category: "lys", price: 245, image: "/images/product-discokugle.png", name_da: "Discokugle", name_en: "Disco ball", desc_da: "Roterende discokugle med LED-lys og farver.", desc_en: "Rotating disco ball with LED lights.", contents: ["Discokugle m. motor", "LED-lys", "Stativ/ophæng", "Strømkabel"] },
+  { id: "lyskaeder", page: "/lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.png", name_da: "Lyskæder", name_en: "Fairy lights", desc_da: "10m lyskæde — varm hvid eller farvet.", desc_en: "10m fairy lights — warm white or coloured.", contents: ["10m lyskæde", "Strømforsyning", "Varm hvid eller farvet"] },
+  { id: "projektor", page: "/projektor", category: "av", price: 495, image: "/images/product-projektor.png", name_da: "Projektor", name_en: "Projector", desc_da: "Full HD projektor til præsentationer og film.", desc_en: "Full HD projector for presentations and film.", contents: ["Full HD projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
+  { id: "skaerm_55", page: "/skaerm", category: "av", price: 595, image: "/images/product-skaerm.png", name_da: '55" Storskærm', name_en: '55" Screen', desc_da: "55\" LED-skærm på gulvstativ.", desc_en: '55" LED screen on floor stand.', contents: ['55" LED-skærm', "Gulvstativ", "HDMI-kabel", "Strømkabel"] },
+  { id: "traadloes_mikrofon", page: "/traadloes-mikrofon", category: "av", price: 295, image: "/images/product-mikrofon.png", name_da: "Trådløs mikrofon", name_en: "Wireless mic", desc_da: "Professionel håndholdt mikrofon.", desc_en: "Professional handheld microphone.", contents: ["Trådløs håndholdt mic", "Modtager", "Kabelforbindelse til højtaler"] },
+  { id: "headset", page: "/headset-mikrofon", category: "av", price: 345, image: "/images/product-headset.png", name_da: "Trådløst headset", name_en: "Wireless headset", desc_da: "Headset-mikrofon til præsentationer.", desc_en: "Headset mic for presentations.", contents: ["Headset-mikrofon", "Bodypack + modtager", "Kabelforbindelse"] },
+  { id: "headset_pro", category: "av", price: 495, image: "/images/product-headset.png", name_da: "Trådløst headset PRO", name_en: "Wireless headset PRO", desc_da: "Professionelt headset i broadcast-kvalitet — til konferencer og scener.", desc_en: "Professional broadcast-quality headset — for conferences and stages.", contents: ["PRO headset-mikrofon", "Bodypack + modtager", "Kabelforbindelse"] },
+  { id: "haandholdt_mikrofon", category: "av", price: 95, image: "/images/product-mikrofon.png", name_da: "Håndholdt mikrofon (kabel)", name_en: "Handheld microphone (wired)", desc_da: "Almindelig håndholdt mikrofon med kabel — til taler og sang.", desc_en: "Standard wired handheld microphone — for speeches and vocals.", contents: ["Håndholdt mic", "XLR/kabel"] },
+  { id: "laerred_160", category: "av", price: 195, image: "/images/product-laerred.png", name_da: "Lærred 160 cm", name_en: "Projector screen 160 cm", desc_da: "160 cm lærred på stativ — perfekt til projektor.", desc_en: "160 cm projector screen on stand.", contents: ["160 cm lærred", "Stativ"] },
+  { id: "projektor_pro", category: "av", price: 795, image: "/images/product-projektor.png", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor — skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector — sharp even in daylight.", contents: ["5000 lumen projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
+  { id: "pakke_praesentation", category: "av", price: 695, image: "/images/product-projektor.png", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen — spar 90 kr.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation — save 90 kr.", contents: ["Full HD projektor", "Lærred 160 cm", "Håndholdt mic + kabel", "HDMI + strøm"] },
+  { id: "pakke_konference", category: "av", price: 1195, image: "/images/product-skaerm.png", name_da: "Konferencepakken", name_en: "Conference bundle", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke. Klar til konference — spar 140 kr.", desc_en: "55\" screen + wireless headset + small speaker package. Conference-ready — save 140 kr.", contents: ['55" skærm + stativ', "Trådløst headset", '2× 10" højtalere', "Kabler + adapter"] },
+  { id: "pakke_tale_musik", category: "av", price: 895, image: "/images/product-festival.png", name_da: "Tale & musik-pakken", name_en: "Speech & music bundle", desc_da: "Stor højtalerpakke + trådløs mikrofon. Taler og musik til events — spar 95 kr.", desc_en: "Large speaker package + wireless mic. Speeches and music for events — save 95 kr.", contents: ['2× 12" højtalere + stativer', "Trådløs mikrofon", "Alle kabler"] },
+  { id: "low_fog", category: "roeg", price: 295, hidden: true, image: "/images/product-lowfog.png", name_da: "Low fog-maskine (røggulv)", name_en: "Low fog machine (fog floor)", desc_da: "Laver et flot gulv af røg vha. is — 'dansen på skyer'-effekten fra bryllupper og musikvideoer.", desc_en: "Creates a floor of low-lying fog using ice — the 'dancing on clouds' effect.", contents: ["Low fog-maskine", "Røgvæske", "Is-bakke / instruks"] },
 ];
 
 /** Navigation categories — single source of truth used by BurgerMenu and admin */
@@ -279,8 +305,8 @@ export const NAV_CATEGORIES: NavCategory[] = [
     title: "Lyd & Højtalere",
     href: "/lej-hojtaler",
     links: [
-      { href: "/?product=pakke_fest_klar#book", label: "Fest-klar" },
-      { href: "/?product=pakke_fest_klar_plus#book", label: "Fest-klar Plus" },
+      { href: "/fest-klar", label: "Fest-klar" },
+      { href: "/fest-klar-plus", label: "Fest-klar Plus" },
       { href: "/soundboks-4", label: "Soundboks 4" },
       { href: "/mackie-thump-go", label: "Mackie Thump GO" },
       { href: "/hojtalerpakke-lille", label: "Højtalerpakke lille" },
