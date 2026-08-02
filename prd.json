@@ -210,6 +210,47 @@
       "price_dkk": 495,
       "image": "/images/product-headset.png",
       "status": "live"
+    },
+    {
+      "id": "pakke_praesentation",
+      "category": "av",
+      "name_da": "Præsentationspakken",
+      "description_da": "Projektor + lærred 160 cm + håndholdt mikrofon — spar 90 kr ift. enkeltpriser.",
+      "price_dkk": 695,
+      "image": "/images/product-projektor.png",
+      "bundle_of": [
+        "projektor",
+        "laerred_160",
+        "haandholdt_mikrofon"
+      ],
+      "status": "live"
+    },
+    {
+      "id": "pakke_konference",
+      "category": "av",
+      "name_da": "Konferencepakken",
+      "description_da": "55\" storskærm + trådløst headset + lille højtalerpakke — spar 140 kr.",
+      "price_dkk": 1195,
+      "image": "/images/product-skaerm.png",
+      "bundle_of": [
+        "skaerm_55",
+        "headset",
+        "party"
+      ],
+      "status": "live"
+    },
+    {
+      "id": "pakke_tale_musik",
+      "category": "av",
+      "name_da": "Tale & musik-pakken",
+      "description_da": "Stor højtalerpakke + trådløs mikrofon — spar 95 kr.",
+      "price_dkk": 895,
+      "image": "/images/product-festival.png",
+      "bundle_of": [
+        "festival",
+        "traadloes_mikrofon"
+      ],
+      "status": "live"
     }
   ],
   "addons": [
@@ -488,7 +529,7 @@
     "av_udstyr": {
       "path": "/av-udstyr",
       "ads_group": "AG 10 - AV-udstyr",
-      "description": "Hovedlanding for AV-udstyr med event-type anbefalinger. Produktgrid med alle 4 AV-produkter.",
+      "description": "AV-landing med event-wizard. Default-visning: 3 pakker (kombinér og spar) + AV-produkter enkeltvis + højtalere til lyden. Pakker er rigtige produkter i kataloget (bookbare, admin-redigerbare, med i feeds).",
       "event_type_wizard": true,
       "status": "live"
     },

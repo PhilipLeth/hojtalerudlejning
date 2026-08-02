@@ -244,6 +244,80 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
               message: `Meta Commerce / Catalog:\n1) business.facebook.com med info@lejhojtaler.dk\n2) Opret katalog → Data sources → Feed\n3) CSV-URL:\n${doc.feedCsvUrl}\n4) Produkter oprettes i kataloget (til ads)`,
             },
           ],
+          // Copy-paste mails — kun hvor selvbetjening ikke rækker
+          emailDrafts: [
+            {
+              channel: "dba",
+              to: "boost@dba.dk",
+              subject: "Boost Connect — produktfeed til Lejhøjtaler.dk",
+              body: `Hej DBA Boost,
+
+Vi driver Lejhøjtaler.dk (udlejning af Soundboks, festlys m.m. i København) og ønsker at tilslutte Boost Connect / automatiske virksomhedsannoncer.
+
+Firma: Scharling Studio
+CVR: 40994904
+Web: https://lejhojtaler.dk
+Kontakt: info@lejhojtaler.dk
+
+Vi har et live XML-produktfeed (${items.length} produkter):
+${doc.feedXmlUrl}
+
+Kan I aktivere Boost Connect på vores konto og pege på feedet ovenfor? Vi sender gerne ekstra info hvis I mangler noget.
+
+Venlig hilsen
+Frederik Scharling
+Lejhøjtaler.dk
+Halvtolv 9, 1. th, 1436 København K`,
+            },
+            {
+              channel: "guloggratis",
+              to: "support@guloggratis.dk",
+              subject: "Erhvervsaftale + produktfeed — Lejhøjtaler.dk",
+              body: `Hej Gul&Gratis,
+
+Vi vil gerne have en erhvervsaftale og synke vores produkter via eget produktfeed (uden Koongo/Avecdo).
+
+Firma: Scharling Studio / Lejhøjtaler.dk
+CVR: 40994904
+Web: https://lejhojtaler.dk
+Kontakt: info@lejhojtaler.dk
+Branche: Udlejning af festudstyr (højtalere, lys, AV)
+
+XML-feed:
+${doc.feedXmlUrl}
+
+CSV-feed (hvis I foretrækker det):
+${doc.feedCsvUrl}
+
+Kan I bekræfte, hvordan vi tilslutter feedet direkte, og sende tilbud på erhvervsannoncering?
+
+Venlig hilsen
+Frederik Scharling
+Lejhøjtaler.dk
+Halvtolv 9, 1. th, 1436 København K
+Tlf. kan oplyses ved behov`,
+            },
+            {
+              channel: "hygglo",
+              to: "hej@hygglo.dk",
+              subject: "Udlejningsannoncer — Lejhøjtaler.dk",
+              body: `Hej Hygglo,
+
+Vi udlejer Soundboks, festlys og AV i København via Lejhøjtaler.dk og vil gerne oprette/optimere udlejningsopslag hos jer.
+
+Firma: Scharling Studio
+CVR: 40994904
+Web: https://lejhojtaler.dk
+Kontakt: info@lejhojtaler.dk
+
+Har I mulighed for bulk-import eller partner-setup? Ellers opretter vi manuelt. Produktfeed til reference:
+${doc.feedXmlUrl}
+
+Venlig hilsen
+Frederik Scharling
+Lejhøjtaler.dk`,
+            },
+          ],
         }),
         { status: 200, headers: cors }
       );

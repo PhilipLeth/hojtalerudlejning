@@ -72,6 +72,9 @@ export default function AdminKanalerPage() {
   const [steps, setSteps] = useState<Array<{ channelId: string; title: string; done: boolean; action: string }>>([]);
   const [pastePack, setPastePack] = useState<Array<{ id: string; title: string; paste: string }>>([]);
   const [emails, setEmails] = useState<Array<{ channel: string; email?: string; message: string }>>([]);
+  const [emailDrafts, setEmailDrafts] = useState<
+    Array<{ channel: string; to: string; subject: string; body: string }>
+  >([]);
   const [expandedPaste, setExpandedPaste] = useState<string | null>(null);
 
   useEffect(() => {
@@ -136,7 +139,8 @@ export default function AdminKanalerPage() {
       );
       setSteps(json.steps || []);
       setPastePack(json.pastePack || []);
-        setEmails(json.nextExternal || []);
+      setEmails(json.nextExternal || []);
+      setEmailDrafts(json.emailDrafts || []);
       setMessage(
         `Setup kørt: ${json.productCount} produkter klar i feed. Log ind på DBA/GulogGratis/Meta og indsæt feed-URL — så oprettes produkterne dér.`
       );
@@ -344,7 +348,7 @@ export default function AdminKanalerPage() {
           <section style={{ background: "#fff", borderRadius: "10px", padding: "16px 20px", marginBottom: "16px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
             <h2 style={{ margin: "0 0 4px", fontSize: "15px" }}>Opret produkter på kanalerne</h2>
             <p style={{ margin: "0 0 12px", fontSize: "13px", color: "#888" }}>
-              Ingen mail nødvendig. Log ind med info@lejhojtaler.dk, indsæt feed-URL — produkterne oprettes via sync.
+              Prøv selvbetjening først. Brug mailudkast nedenfor hvis Boost/erhverv kræver kontakt.
             </p>
             {emails.map((e) => (
               <div key={e.channel} style={{ marginBottom: "12px", padding: "12px", background: "#fafafa", borderRadius: "8px" }}>
@@ -355,6 +359,36 @@ export default function AdminKanalerPage() {
                 </button>
               </div>
             ))}
+          </section>
+        )}
+
+        {emailDrafts.length > 0 && (
+          <section style={{ background: "#fff", borderRadius: "10px", padding: "16px 20px", marginBottom: "16px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+            <h2 style={{ margin: "0 0 4px", fontSize: "15px" }}>Mailudkast</h2>
+            <p style={{ margin: "0 0 12px", fontSize: "13px", color: "#888" }}>
+              Send fra info@lejhojtaler.dk. Meta kræver ingen mail (selvbetjening).
+            </p>
+            {emailDrafts.map((d) => {
+              const full = `Til: ${d.to}\nEmne: ${d.subject}\n\n${d.body}`;
+              return (
+                <div key={d.channel} style={{ marginBottom: "12px", padding: "12px", background: "#fafafa", borderRadius: "8px" }}>
+                  <div style={{ fontWeight: 600, marginBottom: "4px", fontSize: "13px" }}>{d.channel}</div>
+                  <div style={{ fontSize: "12px", color: "#555", marginBottom: "8px" }}>
+                    <strong>Til:</strong> {d.to}
+                    <br />
+                    <strong>Emne:</strong> {d.subject}
+                  </div>
+                  <pre style={{ margin: "0 0 8px", whiteSpace: "pre-wrap", fontSize: "12px", fontFamily: "inherit" }}>{d.body}</pre>
+                  <button
+                    type="button"
+                    onClick={() => copy(full)}
+                    style={{ padding: "6px 12px", fontSize: "12px", border: "1px solid #ddd", borderRadius: "6px", background: "#fff", cursor: "pointer" }}
+                  >
+                    Kopiér mail
+                  </button>
+                </div>
+              );
+            })}
           </section>
         )}
 

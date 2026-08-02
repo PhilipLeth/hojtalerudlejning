@@ -31,7 +31,16 @@ const PRODUCT_INFO: Record<string, { name: string; href: string }> = {
   haandholdt_mikrofon: { name: "Håndholdt mikrofon (kabel)", href: "/?product=haandholdt_mikrofon#book" },
   laerred_160: { name: "Lærred 160 cm", href: "/?product=laerred_160#book" },
   projektor_pro: { name: "Projektor Pro (5000 lumen)", href: "/?product=projektor_pro#book" },
+  pakke_praesentation: { name: "Præsentationspakken", href: "/?product=pakke_praesentation#book" },
+  pakke_konference: { name: "Konferencepakken", href: "/?product=pakke_konference#book" },
+  pakke_tale_musik: { name: "Tale & musik-pakken", href: "/?product=pakke_tale_musik#book" },
 };
+
+const PACKAGES = [
+  { id: "pakke_praesentation", badge: "Spar 90,-" },
+  { id: "pakke_konference", badge: "Spar 140,-" },
+  { id: "pakke_tale_musik", badge: "Spar 95,-" },
+];
 
 function ProductCard({ id, badge }: { id: string; badge?: string }) {
   const summer = isSummerSale();
@@ -68,7 +77,7 @@ function ProductCard({ id, badge }: { id: string; badge?: string }) {
 
 export default function AVBookingWizard() {
   const [eventType, setEventType] = useState<EventType | null>(null);
-  const { rentalProducts } = useProducts();
+  const { rentalProducts, speakers } = useProducts();
 
   return (
     <section id="av-book" className="mx-auto max-w-4xl px-4 py-24">
@@ -119,12 +128,39 @@ export default function AVBookingWizard() {
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {Object.keys(PRODUCT_INFO)
-            .filter((id) => rentalProducts.find((r) => r.id === id)?.category === "av")
-            .map((id) => (
-              <ProductCard key={id} id={id} />
-            ))}
+        <div className="space-y-10">
+          {/* Pakker der kombinerer produkterne */}
+          <div>
+            <h3 className="mb-4 text-xl font-bold text-white">Pakker — kombinér og spar</h3>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {PACKAGES.map((pk) => (
+                <ProductCard key={pk.id} id={pk.id} badge={pk.badge} />
+              ))}
+            </div>
+          </div>
+
+          {/* Enkeltprodukter */}
+          <div>
+            <h3 className="mb-4 text-lg font-semibold text-white/70">AV-udstyr enkeltvis</h3>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {Object.keys(PRODUCT_INFO)
+                .filter((id) => !id.startsWith("pakke_"))
+                .filter((id) => rentalProducts.find((r) => r.id === id)?.category === "av")
+                .map((id) => (
+                  <ProductCard key={id} id={id} />
+                ))}
+            </div>
+          </div>
+
+          {/* Højtalere til lyden */}
+          <div>
+            <h3 className="mb-4 text-lg font-semibold text-white/70">Højtalere til lyden</h3>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {speakers.map((sp) => (
+                <ProductCard key={sp.id} id={sp.id} />
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </section>
