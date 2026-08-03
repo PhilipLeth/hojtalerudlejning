@@ -12,3 +12,4 @@ next-env.d.ts
 publish-gtm.py
 setup-ga4.py
 setup-gtm-ga4.py
+.dev.vars

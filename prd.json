@@ -1347,6 +1347,69 @@
       "description": "Lille festpakke: lille Alto-sæt + lyseffekt (790 kr). Stor festpakke: store højtalere + lys til 100 pers. (1090 kr). To tydelige priser; levering/opsætning tilvælges separat i booking.",
       "priority": "high",
       "status": "done"
+    },
+    {
+      "id": "stripe-1-secrets",
+      "title": "Stripe: nøgler og miljø (DONE)",
+      "description": "STRIPE_SECRET_KEY sat som Cloudflare Pages secret (production) og i .dev.vars (gitignored). Publishable key dokumenteret i stripe-sektionen. Live-nøgler skiftes ind i stripe-9.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "stripe-2-payment-intent",
+      "title": "Stripe: create-payment-intent endpoint",
+      "description": "functions/api/stripe/create-payment-intent.ts: modtager booking-udkast (produkt-id'er, datoer), beregner totalen server-side ud fra kataloget (KV/defaults — stol aldrig på klientens beløb), opretter PaymentIntent i DKK med metadata (booking-info) og returnerer client_secret. Idempotency-key pr. booking.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "stripe-3-payment-element",
+      "title": "Stripe: Payment Element i booking-flowet",
+      "description": "Nyt betalingstrin i BookingFlow: kunden vælger 'Betal nu (kort/MobilePay)' eller 'Betal ved afhentning'. Ved online-betaling mountes Payment Element (loader @stripe/stripe-js med publishable key), confirmPayment ved 'Send booking'. MobilePay aktiveres som betalingsmetode i Stripe-dashboardet.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "stripe-4-webhook",
+      "title": "Stripe: webhook med signaturverifikation",
+      "description": "functions/api/stripe/webhook.ts: verificér stripe-signature (STRIPE_WEBHOOK_SECRET som ny CF-secret), håndtér payment_intent.succeeded → markér booking 'betalt' i KV + send kvittering/booking-mail, payment_intent.payment_failed → notifikation. Webhook-endpoint registreres i Stripe-dashboardet.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "stripe-5-admin-betaling",
+      "title": "Stripe: betalingsstatus i admin",
+      "description": "Admin-bookinglisten viser betalingsstatus (Betalt online / Betales ved afhentning / Fejlet) + link til betalingen i Stripe-dashboardet. Slet-flowet skal advare hvis bookingen er betalt (refundér først).",
+      "priority": "medium",
+      "status": "todo"
+    },
+    {
+      "id": "stripe-6-invoicing",
+      "title": "Stripe Invoicing til erhvervskunder",
+      "description": "Knap i admin på en booking: 'Send faktura' → opretter Stripe-kunde (CVR/EAN-felt?) + faktura med bookinglinjerne og sender den. Bruges til /erhverv-segmentet, der vil betale på faktura.",
+      "priority": "medium",
+      "status": "todo"
+    },
+    {
+      "id": "stripe-7-tax",
+      "title": "Stripe Tax: 25% dansk moms",
+      "description": "Aktivér Stripe Tax i dashboardet med DK-momsregistrering. Priser er tax-inclusive (25%). automatic_tax på PaymentIntents/fakturaer så moms fremgår korrekt af kvitteringer og rapporter.",
+      "priority": "medium",
+      "status": "todo"
+    },
+    {
+      "id": "stripe-8-tests",
+      "title": "Stripe: tests af endpoints",
+      "description": "Vitest-tests af create-payment-intent (server-side prisberegning matcher kataloget, afviser manipulerede beløb) og webhook (signaturverifikation, statusopdatering i KV). E2E i testmode med kort 4242 4242 4242 4242.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "stripe-9-live",
+      "title": "Stripe: go-live tjekliste",
+      "description": "Skift til live-nøgler (CF-secret + publishable i frontend), aktivér kort + MobilePay i live-mode, sæt branding (logo/gul farve) i Stripe, kvitterings-emails på dansk, webhook-endpoint i live-mode, testkøb for 1 kr, opdatér lejevilkår med online-betaling.",
+      "priority": "high",
+      "status": "todo"
     }
   ],
   "status": {
@@ -1390,7 +1453,8 @@
       "Meta Catalog: log ind → CSV-feed → produkter i katalog",
       "Facebook Marketplace: upload CSV + billeder",
       "Hygglo: paste → opslag live",
-      "Lager-aware pause (udsolgt i feed/ads)"
+      "Lager-aware pause (udsolgt i feed/ads)",
+      "Stripe-integration (tasks stripe-2 til stripe-9): Payment Element, webhook, Invoicing, Tax"
     ]
   },
   "channel_distribution": {
@@ -1544,5 +1608,23 @@
       "BookingFlow": "src/components/BookingFlow.tsx — variant='drawer' + onSummaryChange + urlTick til preselect"
     },
     "status": "live"
+  },
+  "stripe": {
+    "status": "planlagt — nøgler verificeret og sat op",
+    "konto": "acct_1U0NwIItjp9LgZfx (DK, 'LejHojtaler.dk sandbox', TEST-mode)",
+    "produkter": [
+      "Payments",
+      "Invoicing",
+      "Tax"
+    ],
+    "valgt_integration": "Embedded components (Payment Element) — valgt i Stripe-wizard. Payment Element indlejres i booking-flowet, så betalingen matcher sitets design.",
+    "arkitektur": {
+      "frontend": "Payment Element i booking-steppet (statisk export — al Stripe-logik klientside + Pages Functions)",
+      "backend": "Cloudflare Pages Functions: create-payment-intent (beløb beregnes ALTID server-side ud fra kataloget — aldrig klientens total) + webhook med signaturverifikation",
+      "secrets": "STRIPE_SECRET_KEY er sat som Cloudflare Pages secret (production) og i .dev.vars (gitignored) til lokal udvikling. Publishable key (pk_test_...) er offentlig og må ligge i frontend. Secret key må ALDRIG i git.",
+      "betalingsmetoder": "Kort + MobilePay (Stripe understøtter MobilePay i DK — skal aktiveres i dashboard). 'Betal ved afhentning' bevares som alternativ.",
+      "moms": "Priser er DKK inkl. 25% moms (tax-inclusive). Stripe Tax aktiveres med DK-registrering."
+    },
+    "publishable_key_test": "pk_test_51U0NwIItjp9LgZfxYMK5Lo1PhGDCwrQP29Cj1Nh607fGRPzYGQt2KKAgS7cJK9JEIR3YU1shC3aUf2QmfKyyoqSq006mWo9Vlz"
   }
 }
