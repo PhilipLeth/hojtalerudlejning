@@ -326,8 +326,8 @@ const DEFAULT_CATALOG: CatalogRaw = {
     { id: "festival", price: 695, product: "/images/product-festival.png", da: { name: "Stor højtalerpakke", desc: "2× 12\" EV — klar til større events." } },
   ],
   rentalProducts: [
-    { id: "pakke_fest_lille", category: "lyd", price: 790, image: "/images/product-party.png", name_da: "Lille festpakke", desc_da: "Lille højtalerpakke + lys-pakke — spar 100 kr." },
-    { id: "pakke_fest_stor", category: "lyd", price: 1090, image: "/images/product-festival.png", name_da: "Stor festpakke", desc_da: "Stor højtalerpakke + lys-pakke til 100 pers. — spar 100 kr." },
+    { id: "pakke_fest_lille", category: "lyd", price: 500, image: "/images/product-party.png", name_da: "Lille festpakke", desc_da: "Lille højtalerpakke + lys-pakke — spar 100 kr." },
+    { id: "pakke_fest_stor", category: "lyd", price: 1000, image: "/images/product-festival.png", name_da: "Stor festpakke", desc_da: "Stor højtalerpakke + lys-pakke til 100 pers. — spar 100 kr." },
     { id: "discokugle", category: "lys", price: 245, image: "/images/product-discokugle.png", name_da: "Discokugle", desc_da: "Roterende discokugle med LED." },
     { id: "lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.png", name_da: "Lyskæder", desc_da: "10m lyskæde." },
     { id: "projektor", category: "av", price: 495, image: "/images/product-projektor.png", name_da: "Projektor", desc_da: "Full HD projektor." },
@@ -344,6 +344,7 @@ const DEFAULT_CATALOG: CatalogRaw = {
     { id: "low_fog", category: "roeg", price: 295, hidden: true, image: "/images/product-lowfog.png", name_da: "Low fog-maskine", desc_da: "Røggulv med is." },
   ],
   addons: [
+    { id: "lyseffekt", price: 195, image: "/images/product-lys.png", da: { label: "Enkelt lyseffekt", desc: "1 LED-festlys — plug and play." } },
     { id: "lys", price: 495, image: "/images/product-lys.png", da: { label: "Lys-pakke", desc: "2 farvede lamper + centereffekt." } },
     { id: "rog", price: 245, image: "/images/product-rog.png", da: { label: "Røgmaskine", desc: "Kompakt røgmaskine inkl. væske." } },
   ],

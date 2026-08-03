@@ -3,14 +3,14 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Lille festpakke | Højtalere + lys | 790 kr | Lejhøjtaler.dk",
+  title: "Lille festpakke | Højtalere + lys | 500 kr | Lejhøjtaler.dk",
   description:
-    "Lille festpakke: 2× Alto 10\" højtalere + lys-pakke for 790 kr — spar 100 kr. Lyd og lys til op til 40 personer. Levering og opsætning kan tilvælges. Book online.",
+    "Lille festpakke: 2× Alto 10\" højtalere + enkelt lyseffekt for 500 kr — spar 90 kr. Lyd og lys til op til 40 personer. Levering og opsætning kan tilvælges. Book online.",
   keywords: ["festpakke", "lej festpakke", "højtaler og lys leje", "lille festpakke københavn", "fest lyd og lys"],
   alternates: { canonical: "https://lejhojtaler.dk/festpakke-lille" },
   openGraph: {
-    title: "Lille festpakke | Højtalere + lys | 790 kr",
-    description: "2× Alto 10\" højtalere + lys-pakke — lyd og lys til op til 40 pers. Spar 100 kr.",
+    title: "Lille festpakke | Højtalere + lys | 500 kr",
+    description: "2× Alto 10\" højtalere + enkelt lyseffekt — lyd og lys til op til 40 pers. Spar 100 kr.",
     url: "https://lejhojtaler.dk/festpakke-lille",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -23,9 +23,9 @@ export default function FestpakkeLillePage() {
     <ProductLanding
       slug="festpakke-lille"
       name="Lille festpakke"
-      price={790}
+      price={500}
       headline="Lille festpakke — lyd og lys"
-      sub="2× Alto 10&quot; højtalere + lys-pakke. Alt til den lille fest — spar 100 kr."
+      sub="2× Alto 10&quot; højtalere + lys-pakke. Alt til den lille fest — spar 90 kr."
       image="/images/product-party.png"
       imageAlt="Lille festpakke med Alto højtalere og lyseffekt"
       productId="pakke_fest_lille"
@@ -47,7 +47,7 @@ export default function FestpakkeLillePage() {
             href="/festpakke-stor"
             className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
           >
-            Se Stor festpakke – 1090 kr
+            Se Stor festpakke – 1.000 kr
           </Link>
         </div>
       </section>

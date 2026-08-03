@@ -258,8 +258,8 @@
       "id": "pakke_fest_lille",
       "category": "lyd",
       "name_da": "Lille festpakke",
-      "description_da": "Soundboks 4 + levering og opsætning i København.",
-      "price_dkk": 1090,
+      "description_da": "Lille højtalerpakke + enkelt lyseffekt — 500 kr (spar 90). Rund mental pris.",
+      "price_dkk": 500,
       "image": "/images/product-soundboks.png",
       "bundle_of": [
         "soundboks",
@@ -271,8 +271,8 @@
       "id": "pakke_fest_stor",
       "category": "lyd",
       "name_da": "Stor festpakke",
-      "description_da": "Soundboks 4 + lys-pakke + levering/opsætning — spar 100 kr på lyset.",
-      "price_dkk": 1485,
+      "description_da": "Stor højtalerpakke + lys-pakke — 1.000 kr (spar 190). Rund mental pris.",
+      "price_dkk": 1000,
       "image": "/images/mood-party.png",
       "bundle_of": [
         "soundboks",
@@ -344,6 +344,14 @@
       "price_dkk": 495,
       "image": null,
       "status": "live"
+    },
+    {
+      "id": "lyseffekt",
+      "name_da": "Enkelt lyseffekt",
+      "description_da": "1 LED-festlys på fod — bruges i Lille festpakke (500 kr) og som tilvalg.",
+      "price_dkk": 195,
+      "image": "/images/product-lys.png",
+      "status": "live"
     }
   ],
   "pricing_rules": {
@@ -351,7 +359,8 @@
     "day_multipliers": "Ingen — fast pris uanset lejeperiode",
     "max_rental_days": 5,
     "summer_sale": null,
-    "note": "Juli-rabat / summer sale er fjernet — ingen sæsonrabat."
+    "note": "Juli-rabat / summer sale er fjernet — ingen sæsonrabat.",
+    "bundles_note": "Festpakker bruger runde mentale priser (500/1.000) og bryder bevidst 95-reglen."
   },
   "opening_hours": {
     "friday": "14:00-18:00 (afhentning)",

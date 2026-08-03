@@ -93,15 +93,15 @@ describe("Addons data", () => {
     expect(addons.find((a) => a.id === "levering_opsaetning")!.price).toBe(495);
   });
 
-  it("festpakker are lyd+lys bundles with 100 kr discount (no setup included)", () => {
+  it("festpakker har runde mentale priser: 500 og 1.000 kr (uden opsætning)", () => {
     const lille = rentalProducts.find((p) => p.id === "pakke_fest_lille")!;
     const stor = rentalProducts.find((p) => p.id === "pakke_fest_stor")!;
-    expect(lille.bundle?.parts.map((x) => x.productId)).toEqual(["party", "lys"]);
-    expect(lille.price).toBe(790); // 395 + 495 - 100
-    expect(lille.bundle?.discount).toBe(100);
+    expect(lille.bundle?.parts.map((x) => x.productId)).toEqual(["party", "lyseffekt"]);
+    expect(lille.price).toBe(500); // 395 + 195 - 90
+    expect(lille.bundle?.discount).toBe(90);
     expect(stor.bundle?.parts.map((x) => x.productId)).toEqual(["festival", "lys"]);
-    expect(stor.price).toBe(1090); // 695 + 495 - 100
-    expect(stor.bundle?.discount).toBe(100);
+    expect(stor.price).toBe(1000); // 695 + 495 - 190
+    expect(stor.bundle?.discount).toBe(190);
     // Levering/opsætning er tilvalg — ikke en del af pakken
     for (const p of [lille, stor]) {
       expect(p.bundle!.parts.map((x) => x.productId)).not.toContain("levering_opsaetning");
