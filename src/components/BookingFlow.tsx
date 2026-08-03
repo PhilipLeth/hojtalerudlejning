@@ -355,7 +355,7 @@ export default function BookingFlow({
       : selectedRental.name_da
     : null;
   const hasLights = selectedAddons.includes("lys");
-  const DELIVERY_IDS = ["levering", "levering_opsaetning"];
+  const DELIVERY_IDS = ["levering_opsaetning"];
   const hasDelivery = selectedAddons.some((id) => DELIVERY_IDS.includes(id));
 
   const summer = isSummerSale();

@@ -132,24 +132,25 @@ export default function ProjektorPage() {
           </div>
         </section>
 
-        {/* Upsell */}
+        {/* Upsell — projektor + lærred (ikke storskærm; de ekskluderer hinanden) */}
         <section className="mx-auto max-w-3xl px-4 pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">
-              Kombiner med storskærm og mikrofon
+              Kombiner med lærred og mikrofon
             </h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
-              Projektoren er perfekt sammen med en storskærm og trådløs mikrofon. Skab den komplette præsentation.
+              Projektoren hører sammen med et lærred — ikke en LED-storskærm.
+              Tilføj lærred og trådløs mikrofon, så er præsentationen komplet.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Link
-                href="/storskærm"
+                href="/?product=laerred_160#book"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se storskærm – fra 595 kr
+                Book lærred 160 cm – 195 kr
               </Link>
               <Link
-                href="/mikrofon"
+                href="/traadloes-mikrofon"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
                 Se trådløs mikrofon – fra 295 kr
