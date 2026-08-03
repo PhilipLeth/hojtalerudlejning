@@ -874,7 +874,7 @@ export default function BookingFlow({
               <div className="space-y-2 pt-2">
                 <p className="text-center text-sm text-white/40">{s.otherEquipmentTitle}</p>
                 <div className="grid grid-cols-2 gap-3">
-                  {rentalProducts.map((rp) => (
+                  {rentalProducts.filter((rp) => !rp.bundle).map((rp) => (
                     <button
                       key={rp.id}
                       onClick={() => {

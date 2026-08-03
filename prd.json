@@ -1006,15 +1006,15 @@
     },
     {
       "id": "fest-klar-pakke-synlighed",
-      "title": "Synliggør Fest-klar (levering+opsætning) på landings",
-      "description": "pakke_fest_klar (1090) og pakke_fest_klar_plus (1485). Booking via dedikeret /book?product=ID (ikke drawer/hash). Legacy /?product=#book redirectes.",
+      "title": "Fest-klar som bundles (separat grid)",
+      "description": "pakke_fest_klar / _plus har bundle{parts,discount,usecase}. Vises i BundleGrid (forside + /lej-hojtaler), ikke i almindeligt ProductGrid. Plus: Spar 100 kr. Book via /book?product=ID.",
       "priority": "medium",
       "status": "done"
     },
     {
       "id": "booking-page-not-drawer",
       "title": "Booking er en rigtig side (/book) — ikke drawer-hack",
-      "description": "Alle Book-CTA'er peger på /book eller /book?product=ID. Virker i alle browsere uden pushState. Gamle links med #book redirectes via BookingRedirect.",
+      "description": "BookingDrawer fjernet: pushState/#book var skrøbeligt på mobil/Safari. Alle Book-CTA'er → /book. Legacy #book → BookingRedirect.",
       "priority": "high",
       "status": "done"
     },
@@ -1428,7 +1428,7 @@
       "4. Kontaktoplysninger: navn, email, telefon, kommentarfelt, nyhedsbrev, ordreoversigt, Send booking"
     ],
     "komponenter": {
-      "BookingDrawer": "src/components/BookingDrawer.tsx — overlay, panel, kurv-fane, åbne/lukke-logik (hash + ?product), scroll-lås",
+      "BookingDrawer": "FJERNET — erstattet af /book + BookingFlow. Årsag: pushState/#book var ustabil.",
       "BookingFlow": "src/components/BookingFlow.tsx — selve flowet med variant='drawer' (ingen fixed mood-baggrunde) og onSummaryChange-callback der leverer antal+total til kurv-fanen"
     },
     "status": "live"

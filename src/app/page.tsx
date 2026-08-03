@@ -1,5 +1,6 @@
 import BookingRedirect from "@/components/BookingRedirect";
 import HomeHero from "@/components/HomeHero";
+import BundleGrid from "@/components/BundleGrid";
 import ProductGrid from "@/components/ProductGrid";
 import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <HomeHero />
+      <BundleGrid />
       <ProductGrid />
       {/* Old /?product=#book → /book (browser-safe) */}
       <BookingRedirect />

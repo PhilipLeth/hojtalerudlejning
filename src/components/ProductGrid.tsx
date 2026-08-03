@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { bookHref } from "@/lib/bookUrl";
+import { isBundleProduct } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 
-/** Forside produktgrid — sorteret efter popularitet, Book → produktside */
+/** Forside produktgrid — sorteret efter popularitet. Bundles (Fest-klar) bor i BundleGrid. */
 const GRID: Array<{
   id: string;
   href: string;
@@ -14,8 +15,6 @@ const GRID: Array<{
   tag?: string;
 }> = [
   { id: "soundboks", href: "/soundboks-4", name: "Soundboks 4", price: 600, image: "/images/product-soundboks.png", tag: "Populær" },
-  { id: "pakke_fest_klar", href: "/fest-klar", name: "Fest-klar", price: 1090, image: "/images/product-soundboks.png", tag: "Opsætning" },
-  { id: "pakke_fest_klar_plus", href: "/fest-klar-plus", name: "Fest-klar Plus", price: 1485, image: "/images/mood-party.png", tag: "Komplet" },
   { id: "thumpgo", href: "/mackie-thump-go", name: "Mackie Thump GO", price: 350, image: "/images/product-thumpgo.png", tag: "Batteri" },
   { id: "party", href: "/hojtalerpakke-lille", name: "Højtalerpakke lille", price: 399, image: "/images/product-party.png" },
   { id: "festival", href: "/hojtalerpakke-normal", name: "Højtalerpakke normal", price: 700, image: "/images/product-festival.png" },
@@ -42,7 +41,7 @@ export default function ProductGrid() {
         image: s.product,
       })),
     ...rentalProducts
-      .filter((r) => !gridIds.has(r.id))
+      .filter((r) => !gridIds.has(r.id) && !isBundleProduct(r))
       .map((r) => ({
         id: r.id,
         href: bookHref(r.id),

@@ -34,9 +34,16 @@ function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
   const ids = new Set(fromKv.map((p) => p.id));
   const missing = defaultRentals.filter((d) => !ids.has(d.id));
   const merged = fromKv.map((p) => {
-    if (p.contents?.length) return p;
     const d = defaultRentals.find((x) => x.id === p.id);
-    return d?.contents?.length ? { ...p, contents: d.contents } : p;
+    let next = p;
+    if (!next.contents?.length && d?.contents?.length) {
+      next = { ...next, contents: d.contents };
+    }
+    // Bundle-meta fra defaults hvis KV mangler dem (ældre katalog)
+    if (!next.bundle?.parts?.length && d?.bundle?.parts?.length) {
+      next = { ...next, bundle: d.bundle, page: next.page ?? d.page };
+    }
+    return next;
   });
   return missing.length ? [...missing, ...merged] : merged;
 }

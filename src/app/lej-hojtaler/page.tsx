@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import SpeakerCompare from "@/components/SpeakerCompare";
+import BundleGrid from "@/components/BundleGrid";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
@@ -89,6 +90,7 @@ export default function LejHojtalerPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
+        <BundleGrid />
         <SpeakerCompare bookLinks="booking" />
 
         {/* USP section */}

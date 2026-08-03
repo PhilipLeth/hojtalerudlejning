@@ -56,6 +56,23 @@ export interface Addon {
   en: AddonText;
 }
 
+/** Del af en sammensat pakke (bundle) — listes visuelt med + og rabat */
+export interface BundlePart {
+  productId: string;
+  label_da: string;
+  label_en: string;
+  /** Listepris for denne del (til “spar X”-beregning) */
+  price: number;
+}
+
+export interface ProductBundle {
+  parts: BundlePart[];
+  /** Rabat i kr vs sum af parts (0 = convenience-pakke uden prisrabat) */
+  discount: number;
+  usecase_da: string;
+  usecase_en: string;
+}
+
 export interface RentalProduct {
   id: string;
   /** Produktside (Info-knap) */
@@ -72,6 +89,17 @@ export interface RentalProduct {
   allowedAddons?: string[];
   /** Hvad er med i pakken — vist ved hover på produktkort */
   contents?: string[];
+  /** Sammensat produkt — vises i BundleGrid, ikke i almindeligt produktgrid */
+  bundle?: ProductBundle;
+}
+
+export function isBundleProduct(p: RentalProduct): boolean {
+  return !!p.bundle?.parts?.length;
+}
+
+export function bundleListPrice(p: RentalProduct): number {
+  if (!p.bundle?.parts?.length) return p.price;
+  return p.bundle.parts.reduce((sum, part) => sum + part.price, 0);
 }
 
 export const speakers: Speaker[] = [
@@ -254,9 +282,10 @@ export const addons: Addon[] = [
 
 /** Standalone rental products (lys, av) — bookable via /book?product=ID */
 export const rentalProducts: RentalProduct[] = [
-  // Fest-klar: Soundboks + levering/opsætning. Plus = + lys med ~100 kr rabat.
+  // Fest-klar bundles — ikke almindelige produkter; se BundleGrid
   {
     id: "pakke_fest_klar",
+    page: "/fest-klar",
     category: "lyd",
     price: 1090,
     image: "/images/product-soundboks.png",
@@ -266,9 +295,19 @@ export const rentalProducts: RentalProduct[] = [
     desc_en: "Soundboks 4 + delivery and setup in Copenhagen. We set up — you start the party.",
     contents: ["Soundboks 4", "Oplader + AUX", "Levering i København", "Opsætning på stedet", "Afhentning efter festen"],
     allowedAddons: ["rog", "mikrofon", "stativer", "batteri", "taske"],
+    bundle: {
+      discount: 0,
+      usecase_da: "Til dig der vil have lyd klar til festen — uden at slæbe eller sætte op selv.",
+      usecase_en: "For when you want sound ready for the party — without carrying or setting up yourself.",
+      parts: [
+        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 595 },
+        { productId: "levering_opsaetning", label_da: "Levering + opsætning", label_en: "Delivery + setup", price: 495 },
+      ],
+    },
   },
   {
     id: "pakke_fest_klar_plus",
+    page: "/fest-klar-plus",
     category: "lyd",
     price: 1485,
     image: "/images/mood-party.png",
@@ -278,6 +317,16 @@ export const rentalProducts: RentalProduct[] = [
     desc_en: "Soundboks 4 + light package + delivery and setup. Save 100 DKK on lights.",
     contents: ["Soundboks 4", "Lys-pakke (2 lamper + effekt)", "Oplader + AUX + lys-kabler", "Levering + opsætning", "Afhentning efter festen"],
     allowedAddons: ["rog", "mikrofon", "stativer", "batteri", "taske"],
+    bundle: {
+      discount: 100,
+      usecase_da: "Komplet fest-look: lyd + lys + opsætning. Produkterne passer perfekt sammen — og du sparer 100 kr.",
+      usecase_en: "Complete party look: sound + lights + setup. They go perfectly together — and you save 100 DKK.",
+      parts: [
+        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 595 },
+        { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
+        { productId: "levering_opsaetning", label_da: "Levering + opsætning", label_en: "Delivery + setup", price: 495 },
+      ],
+    },
   },
   { id: "discokugle", page: "/discokugle", category: "lys", price: 245, image: "/images/product-discokugle.png", name_da: "Discokugle", name_en: "Disco ball", desc_da: "Roterende discokugle med LED-lys og farver.", desc_en: "Rotating disco ball with LED lights.", contents: ["Discokugle m. motor", "LED-lys", "Stativ/ophæng", "Strømkabel"] },
   { id: "lyskaeder", page: "/lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.png", name_da: "Lyskæder", name_en: "Fairy lights", desc_da: "10m lyskæde — varm hvid eller farvet.", desc_en: "10m fairy lights — warm white or coloured.", contents: ["10m lyskæde", "Strømforsyning", "Varm hvid eller farvet"] },

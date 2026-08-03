@@ -93,11 +93,19 @@ describe("Addons data", () => {
     expect(addons.find((a) => a.id === "levering_opsaetning")!.price).toBe(495);
   });
 
-  it("fest-klar packages exist with lys discount on Plus", () => {
+  it("fest-klar are bundles with parts + Plus discount", () => {
     const fest = rentalProducts.find((p) => p.id === "pakke_fest_klar")!;
     const plus = rentalProducts.find((p) => p.id === "pakke_fest_klar_plus")!;
-    expect(fest.price).toBe(1090); // Soundboks 595 + opsætning 495
-    expect(plus.price).toBe(1485); // + lys 495 − 100 rabat
+    expect(fest.bundle?.parts.map((x) => x.productId)).toEqual(["soundboks", "levering_opsaetning"]);
+    expect(fest.price).toBe(1090);
+    expect(fest.bundle?.discount).toBe(0);
+    expect(plus.bundle?.parts.map((x) => x.productId)).toEqual([
+      "soundboks",
+      "lys",
+      "levering_opsaetning",
+    ]);
+    expect(plus.price).toBe(1485);
+    expect(plus.bundle?.discount).toBe(100);
   });
 
   it("all addons except levering have an image", () => {

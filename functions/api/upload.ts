@@ -77,8 +77,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
   const b64 = btoa(binary);
 
-  const ext = fileName.split(".").pop()?.toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
-  const key = `img_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+  // VIGTIGT: ingen fil-endelse i nøglen — stier med endelse (fx .png) behandles
+  // som statiske assets af Pages-routeren og rammer aldrig denne funktion.
+  const key = `img_${Date.now()}_${Math.random().toString(36).slice(2)}`;
   const mime = blob.type || "image/jpeg";
   const value = JSON.stringify({ mime, data: b64 });
 
