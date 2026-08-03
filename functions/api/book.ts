@@ -218,10 +218,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   // Save booking to KV
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substring(2, 8);
+  const key = `booking_${timestamp}_${random}`;
   try {
-    const timestamp = Date.now();
-    const random = Math.random().toString(36).substring(2, 8);
-    const key = `booking_${timestamp}_${random}`;
     const booking = {
       ...data,
       id: key,
@@ -237,7 +237,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     // Don't fail the booking if KV save fails — emails were already sent
   }
 
-  return new Response(JSON.stringify({ ok: true, upsell: upsell?.id ?? null }), {
+  return new Response(JSON.stringify({ ok: true, bookingId: key, upsell: upsell?.id ?? null }), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });

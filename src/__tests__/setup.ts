@@ -1,5 +1,8 @@
 import "@testing-library/jest-dom/vitest";
 
+// Gem den ægte fetch (stripe-api.test.ts skal bruge den mod Stripe testmode)
+(globalThis as any).__realFetch = global.fetch;
+
 // Mock fetch globally
 global.fetch = vi.fn(() =>
   Promise.resolve({

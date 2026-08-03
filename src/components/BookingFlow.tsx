@@ -5,6 +5,7 @@ import { type Locale, t } from "@/lib/i18n";
 
 import { dayMultiplier, isSummerSale, applyDiscount } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
+import { loadStripe } from "@stripe/stripe-js";
 
 /* ───── Helpers ───── */
 
@@ -242,6 +243,8 @@ export default function BookingFlow({
   const [form, setForm] = useState({ name: "", email: "", phone: "", comment: "" });
   const [newsletter, setNewsletter] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [payMethod, setPayMethod] = useState<"pickup" | "online">("pickup");
+  const [checkoutSecret, setCheckoutSecret] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
 
@@ -484,11 +487,13 @@ export default function BookingFlow({
           total,
           locale,
           newsletter,
+          paymentChoice: payMethod,
           ...form,
         }),
       });
 
       if (!res.ok) throw new Error(s.bookingFailed);
+      const bookResult = await res.json().catch(() => ({}));
       // Subscribe to newsletter if checked
       if (newsletter && form.email) {
         fetch("/api/newsletter", {
@@ -506,6 +511,27 @@ export default function BookingFlow({
           booking_product: isEffectsOnly ? "effects-only" : speaker,
         });
       }
+      if (payMethod === "online") {
+        // Online-betaling: opret Checkout Session (beløb beregnes server-side)
+        const itemIds: string[] = [
+          ...(!isEffectsOnly && speaker ? [speaker] : []),
+          ...selectedAddons,
+          ...cartItems.map((c) => c.productId),
+        ];
+        const payRes = await fetch("/api/stripe/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: itemIds.map((id) => ({ id })),
+            bookingId: bookResult.bookingId,
+            locale,
+          }),
+        });
+        if (!payRes.ok) throw new Error("payment");
+        const { clientSecret } = await payRes.json();
+        setCheckoutSecret(clientSecret);
+        return;
+      }
       setDone(true);
     } catch {
       setError(s.errorRetry);
@@ -513,6 +539,32 @@ export default function BookingFlow({
       setSubmitting(false);
     }
   }
+
+  // Mount Stripe Embedded Checkout når client secret er klar
+  useEffect(() => {
+    if (!checkoutSecret) return;
+    let checkout: { destroy: () => void } | null = null;
+    let cancelled = false;
+    (async () => {
+      try {
+        const cfg = await fetch("/api/stripe/config").then((r) => r.json());
+        const stripe = await loadStripe(cfg.publishableKey);
+        if (!stripe || cancelled) return;
+        checkout = await (stripe as any).createEmbeddedCheckoutPage({ clientSecret: checkoutSecret });
+        if (cancelled) { checkout.destroy(); return; }
+        checkout.mount("#stripe-checkout");
+        document.getElementById("booking-drawer-scroll")?.scrollTo({ top: 0 });
+      } catch (err) {
+        console.error("[stripe] embedded checkout mount failed:", err);
+        setError(s.errorRetry);
+        setCheckoutSecret(null);
+      }
+    })();
+    return () => {
+      cancelled = true;
+      checkout?.destroy();
+    };
+  }, [checkoutSecret, s.errorRetry]);
 
   /* ── Price Summary (reused) ── */
   function PriceSummary() {
@@ -1154,8 +1206,25 @@ export default function BookingFlow({
           </div>
         )}
 
+        {/* Stripe Embedded Checkout */}
+        {checkoutSecret && (
+          <div className="space-y-4">
+            <h2 className="text-center text-2xl font-bold">{locale === "en" ? "Payment" : "Betaling"}</h2>
+            <p className="text-center text-sm text-white/50">
+              {locale === "en" ? "Card or MobilePay — secured by Stripe" : "Kort eller MobilePay — sikret af Stripe"}
+            </p>
+            <div id="stripe-checkout" className="overflow-hidden rounded-2xl bg-white" />
+            <button
+              onClick={() => { setCheckoutSecret(null); setSubmitting(false); }}
+              className="w-full py-1 text-center text-sm text-white/40 underline underline-offset-4 transition hover:text-white/70"
+            >
+              {locale === "en" ? "Back (pay at pickup instead)" : "Tilbage (betal ved afhentning i stedet)"}
+            </button>
+          </div>
+        )}
+
         {/* Step 4: Contact + Submit */}
-        {step === 4 && (
+        {!checkoutSecret && step === 4 && (
           <form onSubmit={handleSubmit} className="space-y-4">
             <h2 className="text-center text-2xl font-bold">{s.step4Title}</h2>
             <p className="text-center text-sm text-white/50">
@@ -1274,6 +1343,26 @@ export default function BookingFlow({
               </p>
             </div>
 
+            {/* Betalingsvalg */}
+            <div className="glass rounded-2xl p-4 space-y-2">
+              <p className="text-sm font-semibold text-white/70">{locale === "en" ? "Payment" : "Betaling"}</p>
+              {([
+                { id: "pickup" as const, label: locale === "en" ? "Pay at pickup (MobilePay or cash)" : "Betal ved afhentning (MobilePay eller kontant)" },
+                { id: "online" as const, label: locale === "en" ? "Pay now — card or MobilePay" : "Betal nu — kort eller MobilePay" },
+              ]).map((opt) => (
+                <label key={opt.id} className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition ${payMethod === opt.id ? "border-brand-500 bg-brand-500/10" : "border-white/10 hover:border-white/25"}`}>
+                  <input
+                    type="radio"
+                    name="paymethod"
+                    checked={payMethod === opt.id}
+                    onChange={() => setPayMethod(opt.id)}
+                    className="h-4 w-4 accent-[#ffd600]"
+                  />
+                  <span className="text-sm text-white/80">{opt.label}</span>
+                </label>
+              ))}
+            </div>
+
             {error && (
               <p className="rounded-xl bg-red-500/10 p-3 text-center text-sm text-red-400">
                 {error}
@@ -1293,7 +1382,7 @@ export default function BookingFlow({
                 disabled={submitting}
                 className="flex-1 rounded-xl bg-brand-500 py-3.5 font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-50"
               >
-                {submitting ? s.sending : s.sendBooking}
+                {submitting ? s.sending : payMethod === "online" ? (locale === "en" ? "Continue to payment" : "Videre til betaling") : s.sendBooking}
               </button>
             </div>
           </form>

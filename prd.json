@@ -1358,30 +1358,30 @@
     {
       "id": "stripe-2-checkout-session",
       "title": "Stripe: create-checkout-session endpoint (ui_mode: custom)",
-      "description": "functions/api/stripe/create-checkout-session.ts: Stripe best practice er Checkout Sessions API med ui_mode:'custom' bag Payment Element — IKKE rå PaymentIntents. Beregn totalen server-side ud fra kataloget (stol aldrig på klientens beløb), line_items fra booking, currency dkk, integration_identifier med 8 tilfældige bogstaver, og udelad ALTID payment_method_types (dynamic payment methods — MobilePay/kort styres fra dashboardet). Returnér client_secret.",
+      "description": "DONE — functions/api/stripe/create-checkout-session.ts (ui_mode: embedded_page, server-side priser via _lib/pricing.ts) | Oprindeligt: functions/api/stripe/create-checkout-session.ts: Stripe best practice er Checkout Sessions API med ui_mode:'custom' bag Payment Element — IKKE rå PaymentIntents. Beregn totalen server-side ud fra kataloget (stol aldrig på klientens beløb), line_items fra booking, currency dkk, integration_identifier med 8 tilfældige bogstaver, og udelad ALTID payment_method_types (dynamic payment methods — MobilePay/kort styres fra dashboardet). Returnér client_secret.",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "stripe-3-payment-element",
       "title": "Stripe: Payment Element i booking-flowet",
-      "description": "Nyt betalingstrin i BookingFlow: 'Betal nu (kort/MobilePay)' eller 'Betal ved afhentning'. Payment Element via @stripe/stripe-js oven på Checkout Session (ui_mode custom). MobilePay aktiveres i Stripe-dashboardet under Payment methods (koden må ikke hardcode metoder). CSP: hvis der tilføjes CSP-headers skal https://*.stripe.com med i script-src/frame-src/connect-src.",
+      "description": "DONE — betalingsvalg i booking-step 4 + Stripe Embedded Checkout mountes i draweren (createEmbeddedCheckoutPage). MobilePay skal aktiveres i Stripe-dashboard → Payment methods. | Oprindeligt: Nyt betalingstrin i BookingFlow: 'Betal nu (kort/MobilePay)' eller 'Betal ved afhentning'. Payment Element via @stripe/stripe-js oven på Checkout Session (ui_mode custom). MobilePay aktiveres i Stripe-dashboardet under Payment methods (koden må ikke hardcode metoder). CSP: hvis der tilføjes CSP-headers skal https://*.stripe.com med i script-src/frame-src/connect-src.",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "stripe-4-webhook",
       "title": "Stripe: webhook med signaturverifikation",
-      "description": "functions/api/stripe/webhook.ts: verificér stripe-signature (STRIPE_WEBHOOK_SECRET som ny CF-secret), håndtér payment_intent.succeeded → markér booking 'betalt' i KV + send kvittering/booking-mail, payment_intent.payment_failed → notifikation. Webhook-endpoint registreres i Stripe-dashboardet. Brug stripe.webhooks.constructEventAsync (Workers-runtime kræver async WebCrypto — sync-varianten virker ikke).",
+      "description": "DONE — functions/api/stripe/webhook.ts (constructEventAsync + SubtleCrypto). Webhook registreret i Stripe (we_1U0OGVItjp9LgZfx...), STRIPE_WEBHOOK_SECRET sat som CF-secret. | Oprindeligt: functions/api/stripe/webhook.ts: verificér stripe-signature (STRIPE_WEBHOOK_SECRET som ny CF-secret), håndtér payment_intent.succeeded → markér booking 'betalt' i KV + send kvittering/booking-mail, payment_intent.payment_failed → notifikation. Webhook-endpoint registreres i Stripe-dashboardet. Brug stripe.webhooks.constructEventAsync (Workers-runtime kræver async WebCrypto — sync-varianten virker ikke).",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "stripe-5-admin-betaling",
       "title": "Stripe: betalingsstatus i admin",
-      "description": "Admin-bookinglisten viser betalingsstatus (Betalt online / Betales ved afhentning / Fejlet) + link til betalingen i Stripe-dashboardet. Slet-flowet skal advare hvis bookingen er betalt (refundér først).",
+      "description": "DONE — 'Betalt online'-badge med beløb i admin-bookinglisten. | Oprindeligt: Admin-bookinglisten viser betalingsstatus (Betalt online / Betales ved afhentning / Fejlet) + link til betalingen i Stripe-dashboardet. Slet-flowet skal advare hvis bookingen er betalt (refundér først).",
       "priority": "medium",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "stripe-6-invoicing",
@@ -1400,9 +1400,9 @@
     {
       "id": "stripe-8-tests",
       "title": "Stripe: tests af endpoints",
-      "description": "Vitest-tests af create-payment-intent (server-side prisberegning matcher kataloget, afviser manipulerede beløb) og webhook (signaturverifikation, statusopdatering i KV). E2E i testmode med kort 4242 4242 4242 4242.",
+      "description": "DONE — src/__tests__/stripe-api.test.ts: 14 tests inkl. ÆGTE session-oprettelse mod Stripe testmode, prismanipulations-afvisning og webhook-signaturverifikation. | Oprindeligt: Vitest-tests af create-payment-intent (server-side prisberegning matcher kataloget, afviser manipulerede beløb) og webhook (signaturverifikation, statusopdatering i KV). E2E i testmode med kort 4242 4242 4242 4242.",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "stripe-9-live",
@@ -1610,7 +1610,7 @@
     "status": "live"
   },
   "stripe": {
-    "status": "planlagt — nøgler verificeret og sat op",
+    "status": "Payments LIVE i testmode. Udestående: MobilePay-aktivering i dashboard, Invoicing (stripe-6), Tax-registrering (stripe-7), go-live (stripe-9).",
     "konto": "acct_1U0NwIItjp9LgZfx (DK, 'LejHojtaler.dk sandbox', TEST-mode)",
     "produkter": [
       "Payments",

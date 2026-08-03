@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 
 interface Booking {
   id: string;
+  paid?: boolean;
+  paidAmount?: number;
   speaker: string;
   speakerSize: string;
   period: string;
@@ -315,6 +317,11 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                     <span style={{ display: "inline-block", padding: "3px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, background: colors.bg, color: colors.text, border: `1px solid ${colors.border}` }}>
                       {STATUS_LABELS[b.status] || b.status}
                     </span>
+                    {b.paid && (
+                      <span style={{ display: "inline-block", marginLeft: "6px", padding: "3px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, background: "#d1f7e3", color: "#0a7a43", border: "1px solid #28a745" }}>
+                        Betalt online{b.paidAmount ? ` · ${Math.round(b.paidAmount / 100)} kr` : ""}
+                      </span>
+                    )}
                     {b.reviewMailSentAt && (
                       <div style={{ fontSize: "10px", color: "#aaa", marginTop: "3px" }} title={`Anmeldelsesmail sendt ${new Date(b.reviewMailSentAt).toLocaleString("da-DK")}`}>
                         ⭐ Review-mail sendt
