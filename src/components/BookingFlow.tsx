@@ -908,7 +908,29 @@ export default function BookingFlow({
                     </p>
                   </div>
                 </div>
-                {(selectedRental?.contents?.length || selectedSpeaker?.contents?.length) ? (
+                {selectedRental?.bundle?.parts?.length ? (
+                  <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-white/10 pt-3">
+                    {selectedRental.bundle.parts.map((part, i) => {
+                      const partPage =
+                        catalog.speakers.find((x) => x.id === part.productId)?.page ??
+                        catalog.addons.find((x) => x.id === part.productId)?.page ??
+                        catalog.rentalProducts.find((x) => x.id === part.productId)?.page;
+                      const label = locale === "en" ? part.label_en : part.label_da;
+                      const chip = (
+                        <span className={`rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-white/85 ${partPage ? "transition hover:border-brand-500/50 hover:text-brand-400" : ""}`}>
+                          {label}
+                          <span className="ml-1 text-white/35">{part.price},-</span>
+                        </span>
+                      );
+                      return (
+                        <span key={part.productId} className="contents">
+                          {i > 0 && <span className="text-xs text-brand-400/80">+</span>}
+                          {partPage ? <a href={partPage}>{chip}</a> : chip}
+                        </span>
+                      );
+                    })}
+                  </div>
+                ) : (selectedRental?.contents?.length || selectedSpeaker?.contents?.length) ? (
                   <ul className="mt-3 grid grid-cols-1 gap-1.5 border-t border-white/10 pt-3 sm:grid-cols-2">
                     {(selectedRental?.contents ?? selectedSpeaker?.contents ?? []).map((item) => (
                       <li key={item} className="flex items-start gap-2 text-sm text-white/70">

@@ -11,7 +11,7 @@ import { useProducts } from "@/lib/useProducts";
 /** Sammensatte pakker (festpakker m.fl.) — separat fra almindeligt produktgrid */
 export default function BundleGrid() {
   const { rentalProducts } = useProducts();
-  const bundles = rentalProducts.filter(isBundleProduct);
+  const bundles = rentalProducts.filter(isBundleProduct).filter((p) => p.category === "lyd");
 
   if (bundles.length === 0) return null;
 
@@ -36,6 +36,11 @@ export default function BundleGrid() {
 }
 
 function BundleCard({ product: p }: { product: RentalProduct }) {
+  const { speakers, addons, rentalProducts } = useProducts();
+  const pageFor = (id: string): string | undefined =>
+    speakers.find((x) => x.id === id)?.page ??
+    addons.find((x) => x.id === id)?.page ??
+    rentalProducts.find((x) => x.id === id)?.page;
   const bundle = p.bundle!;
   const list = bundleListPrice(p);
   const savings = bundle.discount > 0 ? bundle.discount : Math.max(0, list - p.price);
@@ -63,15 +68,21 @@ function BundleCard({ product: p }: { product: RentalProduct }) {
       <div className="flex flex-1 flex-col gap-5 p-5 sm:p-6">
         {/* Delene i pakken */}
         <div className="flex flex-wrap items-center gap-2">
-          {bundle.parts.map((part, i) => (
-            <span key={part.productId} className="contents">
-              {i > 0 && <span className="text-brand-400/80">+</span>}
-              <span className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm text-white/85">
+          {bundle.parts.map((part, i) => {
+            const partPage = pageFor(part.productId);
+            const chip = (
+              <span className={`rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm text-white/85 ${partPage ? "transition hover:border-brand-500/50 hover:text-brand-400" : ""}`}>
                 {part.label_da}
                 <span className="ml-1.5 text-white/35">{part.price} kr</span>
               </span>
-            </span>
-          ))}
+            );
+            return (
+              <span key={part.productId} className="contents">
+                {i > 0 && <span className="text-brand-400/80">+</span>}
+                {partPage ? <Link href={partPage}>{chip}</Link> : chip}
+              </span>
+            );
+          })}
         </div>
 
         <div className="mt-auto flex flex-wrap items-end justify-between gap-4">
