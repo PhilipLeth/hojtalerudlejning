@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
 
 export const metadata: Metadata = {
   title: "Lej Lyskæder København | Fra 195 kr | Lejhøjtaler.dk",
@@ -86,56 +87,14 @@ export default function LyskaederPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        {/* Product detail */}
-        <section className="mx-auto max-w-4xl px-4 py-24">
-          <div className="grid gap-8 sm:grid-cols-2 items-center">
-            <div className="space-y-4">
-              <div className="overflow-hidden rounded-2xl">
-                <img
-                  src="/images/product-lyskaeder.png"
-                  alt="Lyskæde med varmt hvidt lys til leje i København"
-                  width={600}
-                  height={400}
-                  className="w-full object-cover"
-                />
-                <p className="mt-2 text-center text-sm text-white/50">Almindelig — varm hvid</p>
-              </div>
-              <div className="overflow-hidden rounded-2xl">
-                <img
-                  src="/images/product-lyskaeder-farvet.png"
-                  alt="Farvet lyskæde til leje i København"
-                  width={600}
-                  height={400}
-                  className="w-full object-cover"
-                />
-                <p className="mt-2 text-center text-sm text-white/50">Farvet</p>
-              </div>
-            </div>
-            <div>
-              <h2 className="mb-4 text-3xl font-bold">Lyskæder</h2>
-              <p className="mb-6 text-3xl font-bold text-brand-400">
-                195 kr<span className="text-lg font-normal text-white/40">/weekend</span>
-              </p>
-              <ul className="space-y-3 text-white/60">
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>10m lyskæde — vælg varm hvid eller farvet</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Kabelstrips til ophæng medfølger</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Perfekt til havefest og bryllup</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Hent fredag, aflever mandag</span>
-                </li>
-              </ul>
-            </div>
-          </div>
+        {/* Produkter — vælg varm hvid eller farvet */}
+        <section id="produkter" className="mx-auto max-w-4xl px-4 py-24">
+          <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Vælg din lyskæde</h2>
+          <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
+            To varianter — begge 10m med strømforsyning og kabelstrips til ophæng.
+            Perfekte til havefest, bryllup og fødselsdag.
+          </p>
+          <CategoryProductGrid items={[{ id: "lyskaeder" }, { id: "lyskaeder_farvet" }]} />
         </section>
 
         {/* Upsell */}

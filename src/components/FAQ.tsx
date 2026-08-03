@@ -21,7 +21,7 @@ const faqs = [
   {
     question: "Kan I levere udstyret?",
     answer:
-      "Ja — vi er baseret på Holmen og leverer billigt i hele København. Levering + opsætning koster 495 kr (kun udbringning uden opsætning: 295 kr). Skriv din adresse i bookingflowet, så klarer vi resten.",
+      "Ja — vi er baseret på Holmen og leverer billigt i hele København. Levering + opsætning koster 495 kr (vi sætter op og henter igen). Skriv din adresse i bookingflowet, så klarer vi resten.",
   },
   {
     question: "Kan jeg leje en højtaler uden strøm?",

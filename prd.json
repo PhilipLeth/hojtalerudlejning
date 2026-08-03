@@ -102,8 +102,8 @@
     {
       "id": "lyskaeder",
       "category": "lys",
-      "name_da": "Lyskæder",
-      "description_da": "10m lyskæde — vælg mellem almindelig varm hvid eller farvet. Perfekt til havefest, bryllup, fødselsdag.",
+      "name_da": "Lyskæde varm hvid",
+      "description_da": "10m lyskæde med varmt hvidt lys.",
       "price_dkk": 195,
       "variants": [
         "varm hvid",
@@ -113,7 +113,8 @@
         "1x 10m lyskæde (varm hvid eller farvet)",
         "Kabelstrips til ophæng"
       ],
-      "status": "planned"
+      "status": "planned",
+      "image": "/images/product-lyskaeder.png"
     },
     {
       "id": "projektor",
@@ -280,6 +281,35 @@
         "levering_opsaetning"
       ],
       "status": "live"
+    },
+    {
+      "id": "lyskaeder_farvet",
+      "category": "lys",
+      "name_da": "Lyskæde farvet",
+      "description_da": "10m lyskæde med farvede pærer.",
+      "price_dkk": 195,
+      "image": "/images/product-lyskaeder-farvet.png",
+      "status": "live"
+    },
+    {
+      "id": "traadloes_mikrofon_pro",
+      "category": "av",
+      "name_da": "Trådløs mikrofon PRO",
+      "description_da": "Shure BLX trådløs mikrofon — scenekvalitet til events og konferencer.",
+      "brand": "Shure",
+      "price_dkk": 495,
+      "image": "/images/product-mikrofon-pro.png",
+      "status": "live"
+    },
+    {
+      "id": "haandholdt_mikrofon_pro",
+      "category": "av",
+      "name_da": "Håndholdt mikrofon PRO (kabel)",
+      "description_da": "Shure Beta 58A med kabel — klassikeren til sang og taler.",
+      "brand": "Shure",
+      "price_dkk": 195,
+      "image": "/images/product-mikrofon-kabel-pro.png",
+      "status": "live"
     }
   ],
   "addons": [
@@ -336,7 +366,8 @@
       "name_da": "Levering i København (uden opsætning)",
       "price_dkk": 295,
       "image": null,
-      "status": "live"
+      "status": "removed",
+      "note": "Findes ikke — kun levering+opsætning 495"
     },
     {
       "id": "levering_opsaetning",
@@ -827,22 +858,20 @@
     "goal": "Frederik kører ud + opsætter billigt. Luk flere komplette aftaler uden forhandling eller hustle-følelse.",
     "decisions": {
       "fixed_prices_not_bids": "Faste priser i booking for levering/opsætning. Ingen 'giv et bud'-mail efter booking — opleves useriøst og skaber friktion.",
-      "packages_plus_addons": "Anbefalede pakker (ét klik) + carded tilvalg (levering / levering+opsætning) i flowet.",
+      "packages_plus_addons": "Anbefalede pakker (ét klik) + tilvalg levering+opsætning (495) i flowet. Levering uden opsætning findes IKKE.",
       "one_upsell_per_booking": "Én upsell i bekræftelsesmailen, kontekstuel ift. hvad der allerede er booket, 30% rabat. Accept: svar JA på mailen."
     },
     "delivery_addons": {
-      "levering": {
-        "id": "levering",
-        "label_da": "Levering i København",
-        "price_dkk": 295,
-        "includes": "Udbringning + afhentning efter festen (uden opsætning)"
-      },
       "levering_opsaetning": {
         "id": "levering_opsaetning",
         "label_da": "Levering + opsætning i København",
         "price_dkk": 495,
         "includes": "Udbringning, opsætning klar til brug, afhentning",
-        "positioning": "Primært push — billig komplet løsning, Frederiks kerneydelse. Matcher marketing (495 inkl. opsætning)."
+        "positioning": "Eneste leveringsydelse. DIY-afhentning er gratis alternativ."
+      },
+      "levering_uden_opsaetning": {
+        "status": "removed",
+        "note": "295 kr 'kun levering' findes ikke — fjernet 2026-08."
       }
     },
     "recommended_packages": [
@@ -896,12 +925,6 @@
           "offer": "levering_opsaetning",
           "list_price_dkk": 495,
           "why": "Få Frederik på vejen — luk opsætningsaftaler"
-        },
-        {
-          "if": "Har kun levering (uden opsætning)",
-          "offer": "upgrade_opsaetning",
-          "note": "Upgrade til levering+opsætning: forskel 200 kr (495−295), 30% → 140 kr",
-          "why": "Lav barriere for opsætning når bilen allerede kører"
         },
         {
           "if": "Allerede komplet (lys+røg+opsætning) eller intet relevant",
@@ -1194,8 +1217,8 @@
     },
     {
       "id": "levering-med-uden-opsaetning",
-      "title": "Opsætning koster ekstra: levering 495,- / levering + opsætning dyrere",
-      "description": "Split leverings-tilvalget i to: 'Levering i København' til 495 kr og 'Levering + opsætning i København' til en højere pris (fx 795 kr, ender på 95). Opdater tilvalg i products.ts/KV-katalog, booking-flow, FAQ, /kobenhavn og alle steder leveringsprisen nævnes.",
+      "title": "Kun levering+opsætning 495 — 'uden opsætning' findes ikke",
+      "description": "Fjernet addon 'levering' (295). Eneste leveringsydelse: levering_opsaetning 495. FAQ/About/om opdateret. KV stripper gammel levering via useProducts.",
       "priority": "high",
       "status": "done"
     },
@@ -1358,7 +1381,8 @@
       "Udsolgt-fix: ingen falsk udsolgt-markering i booking step 1; kun datospecifikt tjek i step 2. Soundboks-lager sat til 2.",
       "Udsolgt-oversigt i admin (/admin/udsolgt + /api/soldout) med fortid/fremtid pr. produkt",
       "Follow-up Google review-mail ved afleveret booking (+ '⭐ Review-mail sendt' i admin)",
-      "Festpakker omlagt til lyd+lys: Lille festpakke 790 kr (Alto + lys) og Stor festpakke 1090 kr (EV 12\" + lys, 100 pers.) — levering/opsætning som tilvalg"
+      "Festpakker omlagt til lyd+lys: Lille festpakke 790 kr (Alto + lys) og Stor festpakke 1090 kr (EV 12\" + lys, 100 pers.) — levering/opsætning som tilvalg",
+      "Lyskæder som 2 produkter (varm hvid + farvet) + Shure PRO-mikrofoner (trådløs 495 kr / håndholdt 195 kr) — alle 21 produktfotos i brug"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1488,6 +1512,11 @@
       "status": "done",
       "date": "2026-08-03",
       "description": "Pakkerne omlagt fra opsætnings-fokus (Fest-klar/Fest-klar Plus med Soundboks + levering/opsætning) til lyd+lys-fokus: Lille festpakke (party + lys, 790 kr) og Stor festpakke (festival + lys, 1090 kr, op til 100 pers.), begge med 100 kr rabat. Levering/opsætning er nu tilvalg i booking i stedet for del af pakkeprisen. Gamle URL'er /fest-klar og /fest-klar-plus redirecter 301 til de nye sider."
+    },
+    "billedgennemgang_2026_08": {
+      "status": "done",
+      "date": "2026-08-03",
+      "description": "Alle produktbilleder gennemgået visuelt 1:1 mod produkterne — alle mappings korrekte. Lyskæder splittet i to bookbare produkter (varm hvid + farvet, hver 195 kr, hver sit foto). To nye Shure PRO-mikrofonprodukter oprettet til de sidste to fotos fra Drive-zippen: Trådløs mikrofon PRO (BLX, 495 kr) og Håndholdt mikrofon PRO (Beta 58A, 195 kr). Alle 21 fotos fra zippen er nu i brug."
     }
   },
   "booking_drawer": {

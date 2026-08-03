@@ -71,13 +71,14 @@ describe("Products data", () => {
 });
 
 describe("Addons data", () => {
-  it("has lys, rog, stativer, taske, levering", () => {
+  it("has lys, rog, stativer, taske, levering_opsaetning — ikke levering uden opsætning", () => {
     const ids = addons.map((a) => a.id);
     expect(ids).toContain("lys");
     expect(ids).toContain("rog");
     expect(ids).toContain("stativer");
     expect(ids).toContain("taske");
-    expect(ids).toContain("levering");
+    expect(ids).toContain("levering_opsaetning");
+    expect(ids).not.toContain("levering");
   });
 
   it("lys is 495 kr", () => {
@@ -88,9 +89,9 @@ describe("Addons data", () => {
     expect(addons.find((a) => a.id === "rog")!.price).toBe(245);
   });
 
-  it("levering is 295 kr, levering_opsaetning 495 kr", () => {
-    expect(addons.find((a) => a.id === "levering")!.price).toBe(295);
+  it("levering_opsaetning is 495 kr (ingen levering-uden-opsætning)", () => {
     expect(addons.find((a) => a.id === "levering_opsaetning")!.price).toBe(495);
+    expect(addons.find((a) => a.id === "levering")).toBeUndefined();
   });
 
   it("festpakker har runde mentale priser: 500 og 1.000 kr (uden opsætning)", () => {
@@ -105,14 +106,32 @@ describe("Addons data", () => {
     // Levering/opsætning er tilvalg — ikke en del af pakken
     for (const p of [lille, stor]) {
       expect(p.bundle!.parts.map((x) => x.productId)).not.toContain("levering_opsaetning");
-      expect(p.allowedAddons).toContain("levering");
+      expect(p.allowedAddons).not.toContain("levering");
       expect(p.allowedAddons).toContain("levering_opsaetning");
     }
   });
 
-  it("all addons except levering have an image", () => {
+  it("lyskæder findes i to varianter med hver sit billede", () => {
+    const hvid = rentalProducts.find((p) => p.id === "lyskaeder")!;
+    const farvet = rentalProducts.find((p) => p.id === "lyskaeder_farvet")!;
+    expect(hvid.image).toBe("/images/product-lyskaeder.png");
+    expect(farvet.image).toBe("/images/product-lyskaeder-farvet.png");
+    expect(hvid.price).toBe(195);
+    expect(farvet.price).toBe(195);
+  });
+
+  it("PRO-mikrofoner findes med egne billeder (Shure)", () => {
+    const traadloesPro = rentalProducts.find((p) => p.id === "traadloes_mikrofon_pro")!;
+    const haandholdtPro = rentalProducts.find((p) => p.id === "haandholdt_mikrofon_pro")!;
+    expect(traadloesPro.image).toBe("/images/product-mikrofon-pro.png");
+    expect(traadloesPro.price).toBe(495);
+    expect(haandholdtPro.image).toBe("/images/product-mikrofon-kabel-pro.png");
+    expect(haandholdtPro.price).toBe(195);
+  });
+
+  it("all addons except levering_opsaetning have an image", () => {
     for (const a of addons) {
-      if (a.id === "levering" || a.id === "levering_opsaetning") {
+      if (a.id === "levering_opsaetning") {
         expect(a.image).toBeNull();
       } else {
         expect(a.image).toMatch(/^\/images\/product-.+\.(png|svg)$/);

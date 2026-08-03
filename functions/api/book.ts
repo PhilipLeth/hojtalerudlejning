@@ -47,8 +47,10 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
   const labels = (data.addons || []).map((a) => a.toLowerCase());
   const hasLys =
     ids.has("lys") ||
+    ids.has("lyseffekt") ||
     ids.has("discokugle") ||
     ids.has("lyskaeder") ||
+    ids.has("lyskaeder_farvet") ||
     // Festpakkerne indeholder lys-pakken
     ids.has("pakke_fest_lille") ||
     ids.has("pakke_fest_stor") ||
@@ -60,10 +62,7 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
   const hasSetup =
     ids.has("levering_opsaetning") ||
     labels.some((l) => l.includes("opsætning") || l.includes("opsatning"));
-  const hasDeliveryOnly =
-    ids.has("levering") ||
-    (!hasSetup && labels.some((l) => l.includes("levering")));
-  const hasDelivery = hasSetup || hasDeliveryOnly;
+  const hasDelivery = hasSetup;
 
   const speakerIds = new Set(["thumpgo", "party", "soundboks", "festival"]);
   const hasSpeaker =
@@ -106,18 +105,6 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
       id: "levering_opsaetning",
       title: "Levering + opsætning",
       blurb: "Vi kører ud, sætter alt op klar til brug og henter igen.",
-      listPrice: list,
-      offerPrice: offerPrice(list),
-    };
-  }
-
-  // 4) Delivery without setup → upgrade (495 − 295)
-  if (hasDeliveryOnly && !hasSetup) {
-    const list = 200;
-    return {
-      id: "upgrade_opsaetning",
-      title: "Opsætning (upgrade)",
-      blurb: "Vi er allerede på vej — tilføj opsætning, så står alt klar når gæsterne kommer.",
       listPrice: list,
       offerPrice: offerPrice(list),
     };

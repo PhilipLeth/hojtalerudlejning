@@ -48,19 +48,21 @@ function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
   return missing.length ? [...missing, ...merged] : merged;
 }
 
-/** Sync levering-priser + contents fra defaults. */
+/** Sync levering+opsætning pris + strip den gamle 'levering uden opsætning'. */
 function mergeAddons(fromKv: Addon[]): Addon[] {
-  return fromKv.map((a) => {
-    const d = defaultAddons.find((x) => x.id === a.id);
-    let next = a;
-    if (a.id === "levering" || a.id === "levering_opsaetning") {
-      if (d) next = { ...next, price: d.price, da: d.da, en: d.en };
-    }
-    if (!next.contents?.length && d?.contents?.length) {
-      next = { ...next, contents: d.contents };
-    }
-    return next;
-  });
+  return fromKv
+    .filter((a) => a.id !== "levering") // findes ikke længere — kun levering+opsætning
+    .map((a) => {
+      const d = defaultAddons.find((x) => x.id === a.id);
+      let next = a;
+      if (a.id === "levering_opsaetning" && d) {
+        next = { ...next, price: d.price, da: d.da, en: d.en };
+      }
+      if (!next.contents?.length && d?.contents?.length) {
+        next = { ...next, contents: d.contents };
+      }
+      return next;
+    });
 }
 
 function mergeSpeakers(fromKv: Speaker[]): Speaker[] {

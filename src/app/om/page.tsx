@@ -117,8 +117,8 @@ export default function OmPage() {
                 </p>
                 <p>
                   Er du ikke til at cykle med udstyr, k&oslash;rer vi det ud til
-                  dig. Levering + opsætning i Stork&oslash;benhavn koster 495 kr.
-                  Skal vi kun k&oslash;re ud uden at s&aelig;tte op, er det 295 kr.
+                  dig. Levering + opsætning i Stork&oslash;benhavn koster 495 kr
+                  — vi sætter op og henter igen.
                 </p>
               </div>
             </section>
