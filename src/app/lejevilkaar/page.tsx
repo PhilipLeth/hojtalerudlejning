@@ -63,7 +63,7 @@ Halvtolv 9, 1. th
 Afhentning: Fredag kl. 14:00–18:00
 Returnering: Mandag kl. 15:00–17:00
 
-Andre tidspunkter kan aftales ved booking. Udstyret leveres i en padded sportstaske med alle nødvendige kabler.`,
+Andre tidspunkter kan aftales ved booking. Udstyret leveres med alle nødvendige kabler.`,
   },
   {
     title: "9. Betaling",

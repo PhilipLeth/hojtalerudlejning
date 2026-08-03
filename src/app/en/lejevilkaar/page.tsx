@@ -63,7 +63,7 @@ Halvtolv 9, 1. th
 Pickup: Friday 2:00–6:00 PM
 Return: Monday 3:00–5:00 PM
 
-Other times can be arranged when booking. Equipment is delivered in a padded sports bag with all necessary cables.`,
+Other times can be arranged when booking. Equipment is delivered with all necessary cables.`,
   },
   {
     title: "9. Payment",

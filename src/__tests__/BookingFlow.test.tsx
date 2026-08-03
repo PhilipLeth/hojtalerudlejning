@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import BookingFlow from "@/components/BookingFlow";
@@ -195,7 +195,31 @@ describe("BookingFlow - Step 4: Form submission", () => {
 });
 
 describe("BookingFlow - Sold out handling", () => {
-  it("shows sold out badge when inventory is 0", async () => {
+  it("never marks products sold out in step 1 (availability is date-specific)", async () => {
+    // Fully booked somewhere in the coming period — must NOT disable step 1
+    (global.fetch as any).mockResolvedValue({
+      ok: true,
+      json: () =>
+        Promise.resolve({
+          inventory: { party: 1, festival: 1, soundboks: 1, lys: 2 },
+          booked: { party: 1, festival: 1, soundboks: 1, lys: 2 },
+          blocked_dates: [],
+        }),
+    });
+
+    render(<BookingFlow />);
+    await waitFor(() => {
+      expect(screen.queryByText("Udsolgt")).not.toBeInTheDocument();
+    });
+    const soundboksButton = screen.getAllByText("Soundboks 4")[0].closest("button")!;
+    expect(soundboksButton).not.toBeDisabled();
+    fireEvent.click(soundboksButton);
+    await waitFor(() => {
+      expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
+    });
+  });
+
+  it("blocks the selected period in step 2 when the product is sold out", async () => {
     (global.fetch as any).mockResolvedValue({
       ok: true,
       json: () =>
@@ -207,33 +231,60 @@ describe("BookingFlow - Sold out handling", () => {
     });
 
     render(<BookingFlow />);
+    fireEvent.click(screen.getByText("Lille højtalerpakke").closest("button")!);
     await waitFor(() => {
-      const soldOutBadge = screen.queryByText("Udsolgt");
-      // Sold out should appear for party since booked === inventory
-      if (soldOutBadge) {
-        expect(soldOutBadge).toBeInTheDocument();
-      }
+      expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
+
+    // Pick a pickup + return date in the current month view
+    const today = new Date();
+    const pickupDay = new Date(today);
+    pickupDay.setDate(pickupDay.getDate() + 1);
+    const returnDay = new Date(today);
+    returnDay.setDate(returnDay.getDate() + 3);
+
+    const clickDay = (d: Date) => {
+      const buttons = screen
+        .getAllByRole("button")
+        .filter((b) => b.textContent === d.getDate().toString() && !(b as HTMLButtonElement).disabled);
+      if (buttons.length > 0) fireEvent.click(buttons[0]);
+    };
+
+    // Only run the assertion when both days fall in the visible month
+    if (pickupDay.getMonth() === today.getMonth() && returnDay.getMonth() === today.getMonth()) {
+      clickDay(pickupDay);
+      clickDay(returnDay);
+      await waitFor(() => {
+        expect(
+          screen.getByText("Desværre udsolgt i denne periode — prøv andre datoer")
+        ).toBeInTheDocument();
+      });
+    }
+  });
+});
+
+describe("BookingFlow - Preselect via ?product=", () => {
+  afterEach(() => {
+    window.history.pushState({}, "", "/");
   });
 
-  it("shows few left badge when stock is low", async () => {
-    (global.fetch as any).mockResolvedValue({
-      ok: true,
-      json: () =>
-        Promise.resolve({
-          inventory: { party: 2, festival: 1, lys: 2 },
-          booked: { party: 1, festival: 0, lys: 0 },
-          blocked_dates: [],
-        }),
-    });
-
+  it("preselects pakke_tale_musik from /book?product=pakke_tale_musik without sold out message", async () => {
+    window.history.pushState({}, "", "/book?product=pakke_tale_musik");
     render(<BookingFlow />);
     await waitFor(() => {
-      const fewLeft = screen.queryByText("Få ledige");
-      if (fewLeft) {
-        expect(fewLeft).toBeInTheDocument();
-      }
+      expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
+    expect(screen.getByText("Tale & musik-pakken")).toBeInTheDocument();
+    expect(screen.queryByText(/udsolgt/i)).not.toBeInTheDocument();
+  });
+
+  it("preselects low_fog from /book?product=low_fog (nyligt aktiveret)", async () => {
+    window.history.pushState({}, "", "/book?product=low_fog");
+    render(<BookingFlow />);
+    await waitFor(() => {
+      expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
+    });
+    expect(screen.getByText("Low fog-maskine (røggulv)")).toBeInTheDocument();
   });
 });
 
@@ -254,13 +305,15 @@ describe("BookingFlow - Booking submission", () => {
       });
     global.fetch = mockFetch;
 
-    // The full submission flow requires calendar interaction
-    // Verify fetch is called for availability on mount
+    // Availability is date-specific: no availability call on mount / step 1 —
+    // it is first fetched when a date range is selected in step 2.
     render(<BookingFlow />);
+    fireEvent.click(screen.getByText("Lille højtalerpakke").closest("button")!);
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith(
-        expect.stringContaining("/api/availability")
-      );
+      expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
+    expect(mockFetch).not.toHaveBeenCalledWith(
+      expect.stringContaining("/api/availability")
+    );
   });
 });

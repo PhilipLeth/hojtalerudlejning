@@ -242,8 +242,9 @@ export default function BookingFlow({
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
 
-  // Availability state
-  const [availOverview, setAvailOverview] = useState<AvailabilityData | null>(null);
+  // Availability state — only checked for the selected dates (step 2).
+  // No overview check in step 1: a single booking somewhere in the coming
+  // weeks must not mark a product as sold out before dates are chosen.
   const [availSelected, setAvailSelected] = useState<AvailabilityData | null>(null);
   const [soldOutMsg, setSoldOutMsg] = useState("");
   const preselected = useRef(false);
@@ -254,19 +255,6 @@ export default function BookingFlow({
       document.getElementById("booking-drawer-scroll")?.scrollTo({ top: 0 });
     }
   }, [step, inDrawer]);
-
-  // Fetch availability for the next 8 weekends on mount (overview for step 1)
-  useEffect(() => {
-    const today = new Date();
-    const from = dateKey(today);
-    const future = new Date(today);
-    future.setDate(future.getDate() + 60);
-    const to = dateKey(future);
-    fetch(`/api/availability?from=${from}&to=${to}`)
-      .then((r) => r.json())
-      .then((data: AvailabilityData) => setAvailOverview(data))
-      .catch(() => {});
-  }, []);
 
   // Preselect product from ?product=ID (works on /book and legacy redirects)
   useEffect(() => {
@@ -683,7 +671,6 @@ export default function BookingFlow({
           <div className="glass rounded-2xl p-4 text-sm text-white/40">
             <p className="font-medium text-white/60 mb-2">{s.successIncluded}</p>
             <ul className="space-y-1">
-              <li>{s.successBag}</li>
               <li>{s.successCables}</li>
               {speaker === "festival" && <li>{s.successStands}</li>}
               {hasLights && <li>{s.successLightBar}</li>}
@@ -740,43 +727,23 @@ export default function BookingFlow({
 
             <div className="space-y-4">
               {speakers.map((sp) => {
-                const remaining = getRemaining(availOverview, sp.id);
-                const totalUnits = availOverview?.inventory[sp.id] ?? 1;
-                const isSoldOut = availOverview !== null && remaining <= 0;
-                const isLow = availOverview !== null && remaining > 0 && remaining < totalUnits;
-
                 return (
                   <button
                     key={sp.id}
-                    disabled={isSoldOut}
                     onClick={() => {
                       setSpeaker(sp.id);
                       nextStep();
                     }}
                     className={`group w-full overflow-hidden rounded-2xl text-left transition active:scale-[0.98] ${
-                      isSoldOut
-                        ? "glass opacity-50 cursor-not-allowed"
-                        : speaker === sp.id
-                          ? "glass-selected"
-                          : "glass hover:border-white/20"
+                      speaker === sp.id ? "glass-selected" : "glass hover:border-white/20"
                     }`}
                   >
                     <div className="relative h-48 overflow-hidden bg-[#0d0c12]">
                       <img
                         src={sp.product}
                         alt={sp.name}
-                        className={`h-full w-full object-contain p-4 transition-transform duration-500 ${isSoldOut ? "" : "group-hover:scale-110"}`}
+                        className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-110"
                       />
-                      {isSoldOut && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/60">
-                          <span className="rounded-full bg-red-500/90 px-4 py-1.5 text-sm font-bold text-white">{s.soldOut}</span>
-                        </div>
-                      )}
-                      {isLow && (
-                        <div className="absolute top-3 left-3">
-                          <span className="rounded-full bg-orange-500/90 px-3 py-1 text-xs font-bold text-white">{s.fewLeft}</span>
-                        </div>
-                      )}
                       <div className="absolute bottom-4 right-4 text-right">
                         {summer && (
                           <div className="flex items-center justify-end gap-2 mb-1">
@@ -816,37 +783,22 @@ export default function BookingFlow({
               <p className="text-center text-sm text-white/40">{s.effectsOnlyTitle}</p>
               <div className="grid grid-cols-2 gap-3">
                 {/* Lights only */}
-                {(() => {
-                  const lysRemaining = getRemaining(availOverview, "lys");
-                  const lysTotal = availOverview?.inventory.lys ?? 2;
-                  const lysSoldOut = availOverview !== null && lysRemaining <= 0;
-                  const lysLow = availOverview !== null && lysRemaining > 0 && lysRemaining < lysTotal;
-                  return (
-                    <button
-                      disabled={lysSoldOut}
-                      onClick={() => {
-                        setSpeaker("effects-only");
-                        setSelectedAddons(["lys"]);
-                        nextStep();
-                      }}
-                      className={`rounded-xl border border-dashed p-3 text-center transition active:scale-[0.98] ${
-                        lysSoldOut
-                          ? "border-white/10 opacity-50 cursor-not-allowed"
-                          : "border-white/15 hover:border-brand-500/40 hover:bg-white/[0.02]"
-                      }`}
-                    >
-                      <img src="/images/product-lys.png" alt="Lys-pakke med LED-lamper og centereffekt" className="mx-auto h-12 w-12 object-contain rounded-lg" />
-                      <p className="mt-2 text-sm font-medium text-white/70">
-                        {lysAddon?.label}
-                      </p>
-                      <p className={`text-sm ${summer ? "text-amber-400" : "text-brand-400"}`}>
-                        {summer ? <><span className="line-through text-white/30 mr-1">{s.fromShort} {lysAddon?.price ?? 500},-</span>{s.fromShort} {applyDiscount(lysAddon?.price ?? 500)},-</> : <>{s.fromShort} {lysAddon?.price ?? 500},-</>}
-                      </p>
-                      {lysSoldOut && <span className="mt-1 inline-block rounded-full bg-red-500/90 px-2 py-0.5 text-xs font-bold text-white">{s.soldOut}</span>}
-                      {lysLow && <span className="mt-1 inline-block rounded-full bg-orange-500/90 px-2 py-0.5 text-xs font-bold text-white">{s.fewLeft}</span>}
-                    </button>
-                  );
-                })()}
+                <button
+                  onClick={() => {
+                    setSpeaker("effects-only");
+                    setSelectedAddons(["lys"]);
+                    nextStep();
+                  }}
+                  className="rounded-xl border border-dashed border-white/15 p-3 text-center transition active:scale-[0.98] hover:border-brand-500/40 hover:bg-white/[0.02]"
+                >
+                  <img src="/images/product-lys.png" alt="Lys-pakke med LED-lamper og centereffekt" className="mx-auto h-12 w-12 object-contain rounded-lg" />
+                  <p className="mt-2 text-sm font-medium text-white/70">
+                    {lysAddon?.label}
+                  </p>
+                  <p className={`text-sm ${summer ? "text-amber-400" : "text-brand-400"}`}>
+                    {summer ? <><span className="line-through text-white/30 mr-1">{s.fromShort} {lysAddon?.price ?? 500},-</span>{s.fromShort} {applyDiscount(lysAddon?.price ?? 500)},-</> : <>{s.fromShort} {lysAddon?.price ?? 500},-</>}
+                  </p>
+                </button>
 
                 {/* Fog only */}
                 <button
@@ -923,6 +875,43 @@ export default function BookingFlow({
                     : (selectedSpeaker?.name ?? rentalName)}
                   <svg className="h-3.5 w-3.5 opacity-60" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </button>
+              </div>
+            )}
+
+            {/* Produktinfo: beskrivelse + indhold — især vigtigt for pakker */}
+            {(selectedRental || selectedSpeaker) && (
+              <div className="glass rounded-2xl p-4">
+                <div className="flex items-start gap-4">
+                  <img
+                    src={selectedSpeaker?.product ?? selectedRental?.image}
+                    alt=""
+                    className="h-20 w-20 shrink-0 rounded-xl bg-[#0d0c12] object-contain p-1"
+                  />
+                  <div className="min-w-0">
+                    <p className="text-sm text-white/60">
+                      {selectedSpeaker
+                        ? selectedSpeaker.desc
+                        : locale === "en"
+                          ? selectedRental?.desc_en ?? selectedRental?.desc_da
+                          : selectedRental?.desc_da}
+                    </p>
+                    <p className="mt-1.5 text-lg font-bold text-brand-400">
+                      {speakerPrice},-<span className="ml-1 text-xs font-normal text-white/40">{s.fromPerWeekend.replace("fra ", "").replace("from ", "")}</span>
+                    </p>
+                  </div>
+                </div>
+                {(selectedRental?.contents?.length || selectedSpeaker?.contents?.length) ? (
+                  <ul className="mt-3 grid grid-cols-1 gap-1.5 border-t border-white/10 pt-3 sm:grid-cols-2">
+                    {(selectedRental?.contents ?? selectedSpeaker?.contents ?? []).map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-sm text-white/70">
+                        <svg className="mt-0.5 h-4 w-4 shrink-0 text-brand-400" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
             )}
 

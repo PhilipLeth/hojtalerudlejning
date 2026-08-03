@@ -32,7 +32,7 @@ export default function NyhedsbrevPage() {
       }
       setSubscribers(data.subscribers || []);
     } catch {
-      setError("Netvaerksfejl");
+      setError("Netværksfejl");
     } finally {
       setLoading(false);
     }

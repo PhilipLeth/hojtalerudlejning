@@ -55,8 +55,8 @@ export const t = {
       total: "Total",
       paidAtPickup: "Betales ved afhentning",
       paidAtPickupFull: "Betales ved afhentning (MobilePay eller kontant)",
-      soldOutPeriod: "Desvaerre udsolgt i denne periode — proev andre datoer",
-      lightsSoldOutPeriod: "Lys-pakken er desvaerre udsolgt i denne periode",
+      soldOutPeriod: "Desværre udsolgt i denne periode — prøv andre datoer",
+      lightsSoldOutPeriod: "Lys-pakken er desværre udsolgt i denne periode",
       bookingFailed: "Booking fejlede",
       errorRetry: "Noget gik galt. Prøv igen eller ring til os.",
       calendarNudge: "Få anlæg tilbage de næste weekender — book hurtigt",
@@ -71,7 +71,7 @@ export const t = {
       formPhone: "Telefon",
       formComment: "Kommentar (valgfrit — f.eks. ønsket tidspunkt, special-kabler)",
       pickupAddress: "Hent på Halvtolv 9, København K",
-      pickupDesc: "Leveres i padded sportstaske med alle kabler (iPhone, USB-C, AUX).",
+      pickupDesc: "Leveres med alle kabler (iPhone, USB-C, AUX). Bæretaske kan tilkøbes.",
       pickupDesc2: "Mixere og lignende kan forespørges ved booking.",
       // Success page
       successTitle: "Booking modtaget!",
@@ -81,7 +81,6 @@ export const t = {
       successPickup: "Afhentning: Halvtolv 9, København K",
       successDelivery: "Levering til",
       successIncluded: "Inkluderet i din booking:",
-      successBag: "Padded sportstaske til transport",
       successCables: "Alle kabler (iPhone m/ USB-C adapter, AUX, strøm)",
       successStands: "Stativer",
       successLightBar: "Lys-bar med 2 LED-lamper + centereffekt på stativ",
@@ -142,7 +141,7 @@ export const t = {
         },
         {
           title: "2. Hent din højtaler",
-          text: "Hent på Halvtolv 9, København K i en padded sportstaske med alle kabler (iPhone, USB-C, AUX). Fredag kl. 14-18 eller efter aftale.",
+          text: "Hent på Halvtolv 9, København K — alle kabler følger med (iPhone, USB-C, AUX). Fredag kl. 14-18 eller efter aftale.",
         },
         {
           title: "3. Fest!",
@@ -239,7 +238,7 @@ export const t = {
       formPhone: "Phone",
       formComment: "Comment (optional — e.g. preferred time, special cables)",
       pickupAddress: "Pickup at Halvtolv 9, København K",
-      pickupDesc: "Delivered in a padded sports bag with all cables (iPhone, USB-C, AUX).",
+      pickupDesc: "Delivered with all cables (iPhone, USB-C, AUX). Carry bag available as add-on.",
       pickupDesc2: "Mixers and similar can be requested when booking.",
       // Success page
       successTitle: "Booking received!",
@@ -249,7 +248,6 @@ export const t = {
       successPickup: "Pickup: Halvtolv 9, København K",
       successDelivery: "Delivery to",
       successIncluded: "Included in your booking:",
-      successBag: "Padded sports bag for transport",
       successCables: "All cables (iPhone w/ USB-C adapter, AUX, power)",
       successStands: "Stands",
       successLightBar: "Light bar with 2 LED lamps + centre effect on stand",
@@ -310,7 +308,7 @@ export const t = {
         },
         {
           title: "2. Pick up your speaker",
-          text: "Pick up at Halvtolv 9, København K in a padded sports bag with all cables (iPhone, USB-C, AUX). Friday 2–6 PM or by appointment.",
+          text: "Pick up at Halvtolv 9, København K — all cables included (iPhone, USB-C, AUX). Friday 2–6 PM or by appointment.",
         },
         {
           title: "3. Party!",

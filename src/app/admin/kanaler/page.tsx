@@ -220,6 +220,7 @@ export default function AdminKanalerPage() {
           <a href="/admin" style={navLink}>Bookinger</a>
           <a href="/admin/produkter" style={navLink}>Produkter</a>
           <a href="/admin/lager" style={navLink}>Lager</a>
+          <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
           <button onClick={load} disabled={loading} style={{ ...navLink, border: "none", cursor: "pointer" }}>
             {loading ? "Henter..." : "Opdater"}
           </button>

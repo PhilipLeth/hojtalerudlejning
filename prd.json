@@ -176,11 +176,10 @@
       "id": "low_fog",
       "category": "roeg",
       "name_da": "Low fog-maskine (røggulv)",
-      "description_da": "Laver et gulv af røg vha. is — 'dansen på skyer'. Indkøbspris 1.400 kr.",
+      "description_da": "Laver et gulv af røg vha. is — 'dansen på skyer'. Indkøbspris 1.400 kr. Aktiveret 2026-08-03, vises på /roeg og kan bookes.",
       "price_dkk": 295,
       "image": "/images/product-lowfog.png",
-      "status": "planned",
-      "hidden": true
+      "status": "live"
     },
     {
       "id": "haandholdt_mikrofon",
@@ -728,7 +727,7 @@
     "bookings_update": {
       "path": "/api/bookings-update",
       "method": "POST",
-      "description": "Opdater booking-status",
+      "description": "Opdater booking-status eller slet (action=delete). Ved status=afleveret sendes automatisk follow-up anmeldelsesmail (Google review, Resend) — kun én gang pr. booking (reviewMailSentAt). Review-link: env GOOGLE_REVIEW_URL, fallback Google Maps-søgning.",
       "status": "live"
     },
     "availability": {
@@ -753,6 +752,12 @@
       "path": "/api/products",
       "method": "GET/POST",
       "description": "GET: public produktkatalog fra KV (null = brug defaults i koden). POST (ADMIN_SECRET): gem katalog eller action=reset.",
+      "status": "live"
+    },
+    "soldout": {
+      "path": "/api/soldout",
+      "method": "GET",
+      "description": "Admin (ADMIN_SECRET). Udsolgt-oversigt: per dag hvilke produkter der er/var udsolgt (bookinger >= lager) i valgfrit datointerval (default -60/+90 dage). Tæller ALLE bookinger, også afleverede, så historik er korrekt. Inkluderer blokerede datoer.",
       "status": "live"
     }
   },
@@ -801,6 +806,12 @@
         "Hygglo udlejer",
         "Facebook Marketplace"
       ]
+    },
+    "review_follow_up": {
+      "status": "live",
+      "trigger": "Booking markeres 'afleveret' i /admin",
+      "description": "Follow-up mail (Frederiks tekst, 2026-08-03) der beder om Google-anmeldelse — IKKE Trustpilot. Dansk/engelsk efter booking.locale. Sendes via Resend fra booking@lejhojtaler.dk. Sendes kun én gang (reviewMailSentAt på bookingen). Admin viser '⭐ Review-mail sendt'.",
+      "todo": "Sæt GOOGLE_REVIEW_URL (g.page/r/<id>/review fra Google Business Profile) som env var i Cloudflare Pages — indtil da bruges Google Maps-søgelink som fallback."
     }
   },
   "fulfillment_and_upsell": {
@@ -1276,6 +1287,20 @@
       "description": "Tilvalgs-steppet viser kun hvad der kan være på skærmen (kompakte rækker). Simpel søgefunktion filtrerer tilvalg og matcher resten af sortimentet, så brugeren inspireres til relevante tilvalg — resultater lægges direkte i kurven. 'Spring tilvalg over' går direkte til kontaktoplysninger.",
       "priority": "high",
       "status": "done"
+    },
+    {
+      "id": "udsolgt-oversigt",
+      "title": "Backend-oversigt over udsolgte dage",
+      "description": "/api/soldout + /admin/udsolgt viser hvornår produkter har været udsolgt (fortid) og bliver det (fremtid), så lageret kan justeres i tide. Politik: intet må fremstå udsolgt medmindre det reelt er.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "review-follow-up-mail",
+      "title": "Follow-up anmeldelsesmail (Google, ikke Trustpilot)",
+      "description": "Automatisk mail ved status=afleveret med link til Google-anmeldelse. Frederiks tekstudkast 2026-08-03. Mangler kun GOOGLE_REVIEW_URL env var.",
+      "priority": "high",
+      "status": "done"
     }
   ],
   "status": {
@@ -1305,7 +1330,11 @@
       "Kanal-distribution: produktfeed XML/CSV live",
       "Admin /admin/kanaler + Run setup (ingen auto-mail)",
       "Booking-drawer med kurv-funktion: stabil (ingen scroll-hop), pakkes ind til gul kurv-fane i højre side, state bevares",
-      "Tilvalgs-step: kompakt liste på én skærm, søgning på tværs af sortimentet, spring-over"
+      "Tilvalgs-step: kompakt liste på én skærm, søgning på tværs af sortimentet, spring-over",
+      "Rigtige produktfotos på alle produkter (erstatter SVG/AI-billeder) + low fog-maskine aktiveret og bookbar",
+      "Udsolgt-fix: ingen falsk udsolgt-markering i booking step 1; kun datospecifikt tjek i step 2. Soundboks-lager sat til 2.",
+      "Udsolgt-oversigt i admin (/admin/udsolgt + /api/soldout) med fortid/fremtid pr. produkt",
+      "Follow-up Google review-mail ved afleveret booking (+ '⭐ Review-mail sendt' i admin)"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1399,12 +1428,37 @@
     "remove_reset_button": {
       "status": "done",
       "description": "Nulstil til standard-knap fjernet fra /admin/produkter."
+    },
+    "soldout_overview": {
+      "status": "done",
+      "description": "/admin/udsolgt: oversigt over udsolgte dage (fortid + fremtid) pr. produkt med booked/total, blokerede datoer og opsummeringstabel. Datointerval kan vælges. Link i admin-nav."
     }
   },
   "booking_improvements": {
     "multi_product_cart": {
       "status": "done",
       "description": "Kunden kan tilføje et produkt til kurven fra step 3 (Tilvalg) og derefter vælge et nyt produkt fra step 1 — med samme dato. Kurven vises i step 3 og step 4 (prisopsummering). Alle produkter sendes med i booking-API-kaldet (cartItems-felt)."
+    },
+    "no_false_soldout": {
+      "status": "done",
+      "date": "2026-08-03",
+      "policy": "Vi viser ALDRIG 'Udsolgt' medmindre det reelt er udsolgt for de valgte datoer. Step 1 i booking viser ingen udsolgt-markering (den gamle 60-dages oversigtscheck markerede fejlagtigt produkter som udsolgt ved én enkelt booking). Tilgængelighed tjekkes kun datospecifikt i step 2."
+    },
+    "inventory_2026_08": {
+      "status": "done",
+      "description": "Soundboks lager sat op til 2 (KV 2026-08-03, Philips ønske). DEFAULT_INVENTORY i availability.ts + soldout.ts matcher KV: thumpgo 1, party 2, soundboks 2, festival 2, lys 2, rog 2, stativer 2, taske 1."
+    },
+    "taske_ikke_inkluderet": {
+      "status": "done",
+      "description": "Padded sportstaske fjernet fra 'inkluderet'-tekster (bekræftelsesmail, success-skærm, FAQ, lejevilkår, afhentningsinfo) — den er et betalt tilvalg (95 kr) og kan stadig bookes. Lille højtalerpakke inkluderer fortsat sin egen bæretaske."
+    },
+    "dansk_retskrivning": {
+      "status": "done",
+      "description": "Udsolgt-beskeder rettet til korrekt dansk med æ/ø ('Desværre udsolgt i denne periode — prøv andre datoer'). Admin-tekster (Netværksfejl, Årsag, Røgmaskine) ligeledes rettet."
+    },
+    "produktbilleder_2026_08": {
+      "status": "done",
+      "description": "19 nye produktfotos (Google Drive-zip 2026-08-03) skaleret til 1024px og komprimeret. Nye dedikerede billeder: product-projektor-pro.png, product-headset-pro.png, product-mikrofon-kabel.png. Ubrugte fotos (ingen matchende produkter): 'Håndholdt mikrofon pro', 'Trådløs mikrofon Pro'."
     }
   },
   "booking_drawer": {

@@ -7,7 +7,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 export const metadata: Metadata = {
   title: "Lej Røgmaskine & Low Fog København | Røggulv med is | Lejhøjtaler.dk",
   description:
-    "Lej røg til festen i København: klassisk røgmaskine fra 245 kr inkl. røgvæske. Low fog-maskine (røggulv med is) er på vej. Betal ved afhentning.",
+    "Lej røg til festen i København: klassisk røgmaskine fra 245 kr inkl. røgvæske, eller low fog-maskine (røggulv med is) til 'dansen på skyer'. Betal ved afhentning.",
   keywords: [
     "lej røgmaskine",
     "low fog maskine leje",
@@ -85,13 +85,11 @@ export default function RoegPage() {
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
             Den klassiske røgmaskine fylder rummet og gør lysshowet 10x federe.
-            Perfekt sammen med lysbar eller discokugle.
+            Low fog-maskinen laver et flot røggulv — &quot;dansen på skyer&quot;-effekten
+            fra bryllupper og musikvideoer.
           </p>
 
-          <CategoryProductGrid items={[{ id: "rog", href: "/roegmaskine" }]} />
-          <p className="mt-8 text-center text-sm text-white/40">
-            Low fog-maskine (røggulv med is — &quot;dansen på skyer&quot;) er på vej. Ring 31 13 28 52 og hør nærmere.
-          </p>
+          <CategoryProductGrid items={[{ id: "rog", href: "/roegmaskine" }, { id: "low_fog", tag: "Ny" }]} />
         </section>
 
         {/* Upsell */}

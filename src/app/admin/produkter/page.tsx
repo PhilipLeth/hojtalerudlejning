@@ -324,6 +324,7 @@ export default function AdminProdukterPage() {
         <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
           <a href="/admin" style={navLink}>Bookinger</a>
           <a href="/admin/lager" style={navLink}>Lager</a>
+          <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
           <a href="/admin/kanaler" style={navLink}>Kanaler</a>
           <button
             type="button"

@@ -11,7 +11,7 @@ const faqs = [
   {
     question: "Hvordan fungerer afhentning?",
     answer:
-      "Du henter udstyret på vores adresse i København K (Halvtolv 9, 1. th). Alt er pakket i en sportstaske klar til cyklen. Afhentning fredag kl. 14-18, aflevering mandag kl. 15-17.",
+      "Du henter udstyret på vores adresse i København K (Halvtolv 9, 1. th). Alle kabler følger med, og en bæretaske kan tilkøbes. Afhentning fredag kl. 14-18, aflevering mandag kl. 15-17.",
   },
   {
     question: "Hvad er inkluderet i prisen?",

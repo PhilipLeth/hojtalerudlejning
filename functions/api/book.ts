@@ -221,7 +221,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         <p style="margin:8px 0 0;font-size:20px;"><strong>Total: ${data.total} kr</strong></p>
         <p style="margin:0;font-size:12px;color:#888;">Betales ved afhentning (MobilePay eller kontant)</p>
       </div>
-      <p><strong>Inkluderet:</strong> Alle kabler (iPhone m/ USB-C adapter, AUX, strøm), padded sportstaske.</p>
+      <p><strong>Inkluderet:</strong> Alle kabler (iPhone m/ USB-C adapter, AUX, strøm).</p>
       ${upsell ? upsellCustomerHtml(upsell) : ""}
       <p style="margin-top:16px;color:#888;font-size:13px;">Ved spørgsmål er du velkommen til at svare på denne mail.</p>
       <p style="margin-top:8px;color:#bbb;font-size:12px;">Scharling Studio &middot; Halvtolv 9, 1. th &middot; 1436 København K &middot; CVR 40994904</p>

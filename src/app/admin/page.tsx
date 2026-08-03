@@ -18,6 +18,7 @@ interface Booking {
   status: string;
   createdAt: string;
   updatedAt?: string;
+  reviewMailSentAt?: string;
 }
 
 const STATUS_FLOW = ["ny", "bekraeftet", "afhentet", "afleveret"];
@@ -196,6 +197,7 @@ export default function AdminPage() {
         <h1 style={{ margin: 0, fontSize: "18px", fontWeight: 700 }}>Bookinger</h1>
         <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
           <a href="/admin/lager" style={navLink}>Lager</a>
+          <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
           <a href="/admin/produkter" style={navLink}>Produkter</a>
           <a href="/admin/kanaler" style={navLink}>Kanaler</a>
           <a href="/admin/nyhedsbrev" style={navLink}>Nyhedsbrev</a>
@@ -313,6 +315,11 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                     <span style={{ display: "inline-block", padding: "3px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, background: colors.bg, color: colors.text, border: `1px solid ${colors.border}` }}>
                       {STATUS_LABELS[b.status] || b.status}
                     </span>
+                    {b.reviewMailSentAt && (
+                      <div style={{ fontSize: "10px", color: "#aaa", marginTop: "3px" }} title={`Anmeldelsesmail sendt ${new Date(b.reviewMailSentAt).toLocaleString("da-DK")}`}>
+                        ⭐ Review-mail sendt
+                      </div>
+                    )}
                   </td>
                   <td style={tdStyle} onClick={(e) => e.stopPropagation()}>
                     <div style={{ display: "flex", gap: "6px", flexWrap: "nowrap" }}>

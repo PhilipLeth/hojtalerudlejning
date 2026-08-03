@@ -15,7 +15,7 @@ const PRODUCT_LABELS: Record<string, string> = {
   soundboks: "Soundboks",
   festival: "Festival",
   lys: "Lys",
-  rog: "Roegmaskine",
+  rog: "Røgmaskine",
   stativer: "Stativer",
   taske: "Taske",
 };
@@ -79,7 +79,7 @@ export default function LagerPage() {
         alert(data.error || "Kunne ikke gemme");
       }
     } catch {
-      alert("Netvaerksfejl");
+      alert("Netværksfejl");
     } finally {
       setSavingInventory(false);
     }
@@ -104,7 +104,7 @@ export default function LagerPage() {
         alert(data.error || "Kunne ikke blokere dato");
       }
     } catch {
-      alert("Netvaerksfejl");
+      alert("Netværksfejl");
     } finally {
       setBlockingSaving(false);
     }
@@ -121,7 +121,7 @@ export default function LagerPage() {
         setBlockedDates((prev) => prev.filter((b) => b.date !== date));
       }
     } catch {
-      alert("Netvaerksfejl");
+      alert("Netværksfejl");
     }
   };
 
@@ -136,6 +136,9 @@ export default function LagerPage() {
         <div style={{ display: "flex", gap: "12px" }}>
           <a href="/admin" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
             Bookinger
+          </a>
+          <a href="/admin/udsolgt" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
+            Udsolgt
           </a>
           <a href="/admin/produkter" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
             Produkter
@@ -203,7 +206,7 @@ export default function LagerPage() {
               />
             </div>
             <div>
-              <label style={{ display: "block", fontSize: "12px", color: "#888", marginBottom: "4px" }}>Aarsag</label>
+              <label style={{ display: "block", fontSize: "12px", color: "#888", marginBottom: "4px" }}>Årsag</label>
               <input
                 type="text"
                 value={blockReason}

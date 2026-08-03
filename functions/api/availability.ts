@@ -10,7 +10,7 @@ const corsHeaders = {
   "Content-Type": "application/json",
 };
 
-const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 1, soundboks: 1, festival: 1, lys: 2, rog: 1, stativer: 2, taske: 2 };
+const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 2, soundboks: 2, festival: 2, lys: 2, rog: 2, stativer: 2, taske: 1 };
 
 const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival"];
 
