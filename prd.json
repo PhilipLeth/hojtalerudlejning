@@ -1356,23 +1356,23 @@
       "status": "done"
     },
     {
-      "id": "stripe-2-payment-intent",
-      "title": "Stripe: create-payment-intent endpoint",
-      "description": "functions/api/stripe/create-payment-intent.ts: modtager booking-udkast (produkt-id'er, datoer), beregner totalen server-side ud fra kataloget (KV/defaults — stol aldrig på klientens beløb), opretter PaymentIntent i DKK med metadata (booking-info) og returnerer client_secret. Idempotency-key pr. booking.",
+      "id": "stripe-2-checkout-session",
+      "title": "Stripe: create-checkout-session endpoint (ui_mode: custom)",
+      "description": "functions/api/stripe/create-checkout-session.ts: Stripe best practice er Checkout Sessions API med ui_mode:'custom' bag Payment Element — IKKE rå PaymentIntents. Beregn totalen server-side ud fra kataloget (stol aldrig på klientens beløb), line_items fra booking, currency dkk, integration_identifier med 8 tilfældige bogstaver, og udelad ALTID payment_method_types (dynamic payment methods — MobilePay/kort styres fra dashboardet). Returnér client_secret.",
       "priority": "high",
       "status": "todo"
     },
     {
       "id": "stripe-3-payment-element",
       "title": "Stripe: Payment Element i booking-flowet",
-      "description": "Nyt betalingstrin i BookingFlow: kunden vælger 'Betal nu (kort/MobilePay)' eller 'Betal ved afhentning'. Ved online-betaling mountes Payment Element (loader @stripe/stripe-js med publishable key), confirmPayment ved 'Send booking'. MobilePay aktiveres som betalingsmetode i Stripe-dashboardet.",
+      "description": "Nyt betalingstrin i BookingFlow: 'Betal nu (kort/MobilePay)' eller 'Betal ved afhentning'. Payment Element via @stripe/stripe-js oven på Checkout Session (ui_mode custom). MobilePay aktiveres i Stripe-dashboardet under Payment methods (koden må ikke hardcode metoder). CSP: hvis der tilføjes CSP-headers skal https://*.stripe.com med i script-src/frame-src/connect-src.",
       "priority": "high",
       "status": "todo"
     },
     {
       "id": "stripe-4-webhook",
       "title": "Stripe: webhook med signaturverifikation",
-      "description": "functions/api/stripe/webhook.ts: verificér stripe-signature (STRIPE_WEBHOOK_SECRET som ny CF-secret), håndtér payment_intent.succeeded → markér booking 'betalt' i KV + send kvittering/booking-mail, payment_intent.payment_failed → notifikation. Webhook-endpoint registreres i Stripe-dashboardet.",
+      "description": "functions/api/stripe/webhook.ts: verificér stripe-signature (STRIPE_WEBHOOK_SECRET som ny CF-secret), håndtér payment_intent.succeeded → markér booking 'betalt' i KV + send kvittering/booking-mail, payment_intent.payment_failed → notifikation. Webhook-endpoint registreres i Stripe-dashboardet. Brug stripe.webhooks.constructEventAsync (Workers-runtime kræver async WebCrypto — sync-varianten virker ikke).",
       "priority": "high",
       "status": "todo"
     },
@@ -1393,7 +1393,7 @@
     {
       "id": "stripe-7-tax",
       "title": "Stripe Tax: 25% dansk moms",
-      "description": "Aktivér Stripe Tax i dashboardet med DK-momsregistrering. Priser er tax-inclusive (25%). automatic_tax på PaymentIntents/fakturaer så moms fremgår korrekt af kvitteringer og rapporter.",
+      "description": "VIGTIGSTE FALDGRUBE (fra Stripe best practices): automatic_tax uden aktiv registrering beregner INGEN moms uden fejl. Rækkefølge: 1) Opret DK-momsregistrering i Stripe (Tax Registrations — status 'Collecting'), 2) sæt tax_behavior: inclusive på priser (DKK-priser er inkl. 25% moms), 3) vælg product tax code fra Stripes officielle liste (gæt aldrig en txcd_), 4) FØRST DEREFTER automatic_tax: enabled på Checkout Sessions/fakturaer. Verificér med en testtransaktion at moms faktisk beregnes.",
       "priority": "medium",
       "status": "todo"
     },
@@ -1407,7 +1407,7 @@
     {
       "id": "stripe-9-live",
       "title": "Stripe: go-live tjekliste",
-      "description": "Skift til live-nøgler (CF-secret + publishable i frontend), aktivér kort + MobilePay i live-mode, sæt branding (logo/gul farve) i Stripe, kvitterings-emails på dansk, webhook-endpoint i live-mode, testkøb for 1 kr, opdatér lejevilkår med online-betaling.",
+      "description": "Skift til live-nøgler (CF-secret + publishable i frontend), aktivér kort + MobilePay i live-mode, sæt branding (logo/gul farve) i Stripe, kvitterings-emails på dansk, webhook-endpoint i live-mode, testkøb for 1 kr, opdatér lejevilkår med online-betaling. Brug en RESTRICTED key (rk_...) i stedet for sk_ til produktion — kun de permissions integrationen bruger.",
       "priority": "high",
       "status": "todo"
     }
@@ -1625,6 +1625,14 @@
       "betalingsmetoder": "Kort + MobilePay (Stripe understøtter MobilePay i DK — skal aktiveres i dashboard). 'Betal ved afhentning' bevares som alternativ.",
       "moms": "Priser er DKK inkl. 25% moms (tax-inclusive). Stripe Tax aktiveres med DK-registrering."
     },
-    "publishable_key_test": "pk_test_51U0NwIItjp9LgZfxYMK5Lo1PhGDCwrQP29Cj1Nh607fGRPzYGQt2KKAgS7cJK9JEIR3YU1shC3aUf2QmfKyyoqSq006mWo9Vlz"
+    "publishable_key_test": "pk_test_51U0NwIItjp9LgZfxYMK5Lo1PhGDCwrQP29Cj1Nh607fGRPzYGQt2KKAgS7cJK9JEIR3YU1shC3aUf2QmfKyyoqSq006mWo9Vlz",
+    "best_practices_noter": [
+      "Checkout Sessions (ui_mode: custom) + Payment Element — ikke rå PaymentIntents",
+      "Udelad altid payment_method_types → dynamic payment methods (MobilePay styres i dashboard)",
+      "Stripe Tax kræver aktiv DK-registrering FØR automatic_tax slås til — ellers opkræves ingen moms, uden fejl",
+      "Webhook: constructEventAsync i Workers-runtime + signaturverifikation",
+      "Produktion: restricted key (rk_) frem for secret key (sk_)",
+      "Kilde: stripe-best-practices skill (API-version 2026-07-29.dahlia)"
+    ]
   }
 }
