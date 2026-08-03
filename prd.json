@@ -255,9 +255,9 @@
       "status": "live"
     },
     {
-      "id": "pakke_fest_klar",
+      "id": "pakke_fest_lille",
       "category": "lyd",
-      "name_da": "Fest-klar",
+      "name_da": "Lille festpakke",
       "description_da": "Soundboks 4 + levering og opsætning i København.",
       "price_dkk": 1090,
       "image": "/images/product-soundboks.png",
@@ -268,9 +268,9 @@
       "status": "live"
     },
     {
-      "id": "pakke_fest_klar_plus",
+      "id": "pakke_fest_stor",
       "category": "lyd",
-      "name_da": "Fest-klar Plus",
+      "name_da": "Stor festpakke",
       "description_da": "Soundboks 4 + lys-pakke + levering/opsætning — spar 100 kr på lyset.",
       "price_dkk": 1485,
       "image": "/images/mood-party.png",
@@ -394,22 +394,22 @@
     }
   },
   "produktflow": {
-    "description": "Booking-flow via egne produktsider (vigtigt for ads: hvert produkt = egen landingpage).",
+    "description": "Book åbner kurv-drawer; Info/billede går til produktside (ads-landing). Se også booking_drawer.",
     "steps": [
       {
         "step": 1,
         "action": "Klik Book på produktkort",
-        "result": "Bruger kommer til produktsiden med mere info om produktet"
+        "result": "Kurv-drawer åbner med produktet forudvalgt (/?product=ID#book)"
       },
       {
         "step": 2,
-        "action": "Klik Book igen på produktsiden",
-        "result": "Bruger kommer til side hvor afhentnings- og afleveringsdato vælges"
+        "action": "Klik Info / produktbillede",
+        "result": "Bruger går til produktsiden (ads-landing) med mere info"
       },
       {
         "step": 3,
-        "action": "Før checkout: mulighed for 'Tilføj flere produkter'",
-        "result": "Bruger sendes tilbage til forsiden for at booke yderligere produkter, inden den samlede ordre gennemføres"
+        "action": "I drawer: dato → tilvalg → evt. tilføj flere → checkout",
+        "result": "Draweren er kurven; kan lukkes til gul fane og shoppe videre"
       }
     ],
     "mersalg": {
@@ -845,22 +845,22 @@
         "note": "Billigste. Default hvis kunden ikke vælger levering."
       },
       {
-        "id": "pakke_fest_klar",
-        "name_da": "Fest-klar",
-        "product_id": "pakke_fest_klar",
-        "price_dkk": 1090,
-        "includes": "Soundboks 4 + levering + opsætning",
-        "breakdown": "595 + 495",
-        "note": "Live. Produktside /fest-klar · Book: /book?product=pakke_fest_klar"
+        "id": "pakke_fest_lille",
+        "name_da": "Lille festpakke",
+        "product_id": "pakke_fest_lille",
+        "price_dkk": 790,
+        "includes": "Lille højtalerpakke (2× Alto 10\") + lys-pakke",
+        "breakdown": "395 + 495 − 100 rabat",
+        "note": "Live. Produktside /festpakke-lille · Book: /book?product=pakke_fest_lille. Levering/opsætning er tilvalg, ikke del af pakken."
       },
       {
-        "id": "pakke_fest_klar_plus",
-        "name_da": "Fest-klar Plus",
-        "product_id": "pakke_fest_klar_plus",
-        "price_dkk": 1485,
-        "includes": "Soundboks 4 + lys-pakke + levering + opsætning",
-        "breakdown": "595 + 495 + 495 − 100 lys-rabat",
-        "note": "Live. Produktside /fest-klar-plus · Book: /book?product=pakke_fest_klar_plus"
+        "id": "pakke_fest_stor",
+        "name_da": "Stor festpakke",
+        "product_id": "pakke_fest_stor",
+        "price_dkk": 1090,
+        "includes": "Stor højtalerpakke (2× EV 12\" + stativer) + lys-pakke — op til 100 pers.",
+        "breakdown": "695 + 495 − 100 rabat",
+        "note": "Live. Produktside /festpakke-stor · Book: /book?product=pakke_fest_stor. Levering/opsætning er tilvalg, ikke del af pakken."
       }
     ],
     "post_booking_upsell": {
@@ -925,8 +925,8 @@
     "sitemap_paths": [
       "/",
       "/soundboks-4",
-      "/fest-klar",
-      "/fest-klar-plus",
+      "/festpakke-lille",
+      "/festpakke-stor",
       "/mackie-thump-go",
       "/hojtalerpakke-lille",
       "/hojtalerpakke-normal",
@@ -1017,15 +1017,22 @@
     },
     {
       "id": "fest-klar-pakke-synlighed",
-      "title": "Fest-klar som bundles (separat grid)",
-      "description": "pakke_fest_klar / _plus har bundle{parts,discount,usecase}. Vises i BundleGrid (forside + /lej-hojtaler), ikke i almindeligt ProductGrid. Plus: Spar 100 kr. Book via /book?product=ID.",
+      "title": "Lille festpakke som bundles (separat grid)",
+      "description": "pakke_fest_lille / _plus har bundle{parts,discount,usecase}. Vises i BundleGrid (forside + /lej-hojtaler), ikke i almindeligt ProductGrid. Plus: Spar 100 kr. Book via /book?product=ID.",
       "priority": "medium",
       "status": "done"
     },
     {
       "id": "booking-page-not-drawer",
-      "title": "Booking er en rigtig side (/book) — ikke drawer-hack",
-      "description": "BookingDrawer fjernet: pushState/#book var skrøbeligt på mobil/Safari. Alle Book-CTA'er → /book. Legacy #book → BookingRedirect.",
+      "title": "REVERTED — booking er drawer-kurv igen (prd booking_drawer)",
+      "description": "Fejlslutning at erstatte drawer med /book. Genoprettet: Book → /?product=ID#book åbner kurv-drawer. Info → produktside. /book er alias der redirecter til drawer. Se booking_drawer.",
+      "priority": "high",
+      "status": "cancelled"
+    },
+    {
+      "id": "drawer-restored-2026-08",
+      "title": "Kurv-drawer genoprettet iht. booking_drawer",
+      "description": "BookingDrawer i root layout. Book-CTA → /?product=ID#book. Info → produktside. Gul kurv-fane når kurv ikke er tom. /book redirecter til drawer.",
       "priority": "high",
       "status": "done"
     },
@@ -1301,6 +1308,13 @@
       "description": "Automatisk mail ved status=afleveret med link til Google-anmeldelse. Frederiks tekstudkast 2026-08-03. Mangler kun GOOGLE_REVIEW_URL env var.",
       "priority": "high",
       "status": "done"
+    },
+    {
+      "id": "festpakker-lyd-lys",
+      "title": "Festpakker med fokus på lyd + lys (ikke opsætning)",
+      "description": "Lille festpakke: lille Alto-sæt + lyseffekt (790 kr). Stor festpakke: store højtalere + lys til 100 pers. (1090 kr). To tydelige priser; levering/opsætning tilvælges separat i booking.",
+      "priority": "high",
+      "status": "done"
     }
   ],
   "status": {
@@ -1334,7 +1348,8 @@
       "Rigtige produktfotos på alle produkter (erstatter SVG/AI-billeder) + low fog-maskine aktiveret og bookbar",
       "Udsolgt-fix: ingen falsk udsolgt-markering i booking step 1; kun datospecifikt tjek i step 2. Soundboks-lager sat til 2.",
       "Udsolgt-oversigt i admin (/admin/udsolgt + /api/soldout) med fortid/fremtid pr. produkt",
-      "Follow-up Google review-mail ved afleveret booking (+ '⭐ Review-mail sendt' i admin)"
+      "Follow-up Google review-mail ved afleveret booking (+ '⭐ Review-mail sendt' i admin)",
+      "Festpakker omlagt til lyd+lys: Lille festpakke 790 kr (Alto + lys) og Stor festpakke 1090 kr (EV 12\" + lys, 100 pers.) — levering/opsætning som tilvalg"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1459,6 +1474,11 @@
     "produktbilleder_2026_08": {
       "status": "done",
       "description": "19 nye produktfotos (Google Drive-zip 2026-08-03) skaleret til 1024px og komprimeret. Nye dedikerede billeder: product-projektor-pro.png, product-headset-pro.png, product-mikrofon-kabel.png. Ubrugte fotos (ingen matchende produkter): 'Håndholdt mikrofon pro', 'Trådløs mikrofon Pro'."
+    },
+    "festpakker_2026_08": {
+      "status": "done",
+      "date": "2026-08-03",
+      "description": "Pakkerne omlagt fra opsætnings-fokus (Fest-klar/Fest-klar Plus med Soundboks + levering/opsætning) til lyd+lys-fokus: Lille festpakke (party + lys, 790 kr) og Stor festpakke (festival + lys, 1090 kr, op til 100 pers.), begge med 100 kr rabat. Levering/opsætning er nu tilvalg i booking i stedet for del af pakkeprisen. Gamle URL'er /fest-klar og /fest-klar-plus redirecter 301 til de nye sider."
     }
   },
   "booking_drawer": {
@@ -1482,8 +1502,8 @@
       "4. Kontaktoplysninger: navn, email, telefon, kommentarfelt, nyhedsbrev, ordreoversigt, Send booking"
     ],
     "komponenter": {
-      "BookingDrawer": "FJERNET — erstattet af /book + BookingFlow. Årsag: pushState/#book var ustabil.",
-      "BookingFlow": "src/components/BookingFlow.tsx — selve flowet med variant='drawer' (ingen fixed mood-baggrunde) og onSummaryChange-callback der leverer antal+total til kurv-fanen"
+      "BookingDrawer": "src/components/BookingDrawer.tsx — i root layout. Åbner ved #book / ?product= / /book-alias. Gul kurv-fane til højre.",
+      "BookingFlow": "src/components/BookingFlow.tsx — variant='drawer' + onSummaryChange + urlTick til preselect"
     },
     "status": "live"
   }

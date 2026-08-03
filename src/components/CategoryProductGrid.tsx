@@ -6,7 +6,7 @@ import { useProducts } from "@/lib/useProducts";
 export interface CategoryItem {
   /** Produkt-id i kataloget (speaker, addon eller rentalProduct) */
   id: string;
-  /** Link — produktside hvis den findes, ellers /book?product=ID */
+  /** Link — produktside hvis den findes, ellers /?product=ID#book */
   href?: string;
   tag?: string;
 }
@@ -37,8 +37,8 @@ export default function CategoryProductGrid({
         price: sp.price,
         image: sp.product,
         contents: sp.contents ?? [],
-        href: `/book?product=${sp.id}`,
-        page: sp.page ?? (item.href && !item.href.startsWith("/book") ? item.href : undefined),
+        href: `/?product=${sp.id}#book`,
+        page: sp.page ?? (item.href && !item.href.includes("#book") && !item.href.startsWith("/book") ? item.href : undefined),
       };
     }
     const ad = addons.find((p) => p.id === item.id);
@@ -50,8 +50,8 @@ export default function CategoryProductGrid({
         price: ad.price,
         image: ad.image ?? "/images/product-lys.png",
         contents: ad.contents ?? [],
-        href: `/book?product=${ad.id}`,
-        page: ad.page ?? (item.href && !item.href.startsWith("/book") ? item.href : undefined),
+        href: `/?product=${ad.id}#book`,
+        page: ad.page ?? (item.href && !item.href.includes("#book") && !item.href.startsWith("/book") ? item.href : undefined),
       };
     }
     const r = rentalProducts.find((p) => p.id === item.id);
@@ -63,8 +63,8 @@ export default function CategoryProductGrid({
         price: r.price,
         image: r.image,
         contents: r.contents ?? [],
-        href: `/book?product=${r.id}`,
-        page: r.page ?? (item.href && !item.href.startsWith("/book") ? item.href : undefined),
+        href: `/?product=${r.id}#book`,
+        page: r.page ?? (item.href && !item.href.includes("#book") && !item.href.startsWith("/book") ? item.href : undefined),
       };
     }
     return null;

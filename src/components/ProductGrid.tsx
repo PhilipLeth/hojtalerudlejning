@@ -5,24 +5,24 @@ import { bookHref } from "@/lib/bookUrl";
 import { isBundleProduct } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 
-/** Forside produktgrid — sorteret efter popularitet. Bundles (Fest-klar) bor i BundleGrid. */
+/** Forside produktgrid. Book → kurv-drawer. Info → produktside. */
 const GRID: Array<{
   id: string;
-  href: string;
+  page?: string;
   name: string;
   price: number;
   image: string;
   tag?: string;
 }> = [
-  { id: "soundboks", href: "/soundboks-4", name: "Soundboks 4", price: 600, image: "/images/product-soundboks.png", tag: "Populær" },
-  { id: "thumpgo", href: "/mackie-thump-go", name: "Mackie Thump GO", price: 350, image: "/images/product-thumpgo.png", tag: "Batteri" },
-  { id: "party", href: "/hojtalerpakke-lille", name: "Højtalerpakke lille", price: 399, image: "/images/product-party.png" },
-  { id: "festival", href: "/hojtalerpakke-normal", name: "Højtalerpakke normal", price: 700, image: "/images/product-festival.png" },
-  { id: "lys", href: "/festlys", name: "Lysbar", price: 500, image: "/images/product-lys.png" },
-  { id: "rog", href: "/roegmaskine", name: "Røgmaskine", price: 250, image: "/images/product-rog.png" },
-  { id: "discokugle", href: "/discokugle", name: "Discokugle", price: 250, image: "/images/product-discokugle.png" },
-  { id: "lyskaeder", href: "/lyskaeder", name: "Lyskæder", price: 200, image: "/images/product-lyskaeder.png" },
-  { id: "projektor", href: "/projektor", name: "Projektor", price: 500, image: "/images/product-projektor.png" },
+  { id: "soundboks", page: "/soundboks-4", name: "Soundboks 4", price: 600, image: "/images/product-soundboks.png", tag: "Populær" },
+  { id: "thumpgo", page: "/mackie-thump-go", name: "Mackie Thump GO", price: 350, image: "/images/product-thumpgo.png", tag: "Batteri" },
+  { id: "party", page: "/hojtalerpakke-lille", name: "Højtalerpakke lille", price: 399, image: "/images/product-party.png" },
+  { id: "festival", page: "/hojtalerpakke-normal", name: "Højtalerpakke normal", price: 700, image: "/images/product-festival.png" },
+  { id: "lys", page: "/festlys", name: "Lysbar", price: 500, image: "/images/product-lys.png" },
+  { id: "rog", page: "/roegmaskine", name: "Røgmaskine", price: 250, image: "/images/product-rog.png" },
+  { id: "discokugle", page: "/discokugle", name: "Discokugle", price: 250, image: "/images/product-discokugle.png" },
+  { id: "lyskaeder", page: "/lyskaeder", name: "Lyskæder", price: 200, image: "/images/product-lyskaeder.png" },
+  { id: "projektor", page: "/projektor", name: "Projektor", price: 500, image: "/images/product-projektor.png" },
 ];
 
 export default function ProductGrid() {
@@ -35,7 +35,7 @@ export default function ProductGrid() {
       .filter((s) => !gridIds.has(s.id))
       .map((s) => ({
         id: s.id,
-        href: bookHref(s.id),
+        page: s.page,
         name: s.da.name,
         price: s.price,
         image: s.product,
@@ -44,7 +44,7 @@ export default function ProductGrid() {
       .filter((r) => !gridIds.has(r.id) && !isBundleProduct(r))
       .map((r) => ({
         id: r.id,
-        href: bookHref(r.id),
+        page: r.page,
         name: r.name_da,
         price: r.price,
         image: r.image,
@@ -80,6 +80,15 @@ export default function ProductGrid() {
     if (rental) return rental.image;
     return fallback;
   };
+  const pageFor = (id: string, fallback?: string) => {
+    const sp = speakers.find((s) => s.id === id);
+    if (sp?.page) return sp.page;
+    const ad = addons.find((a) => a.id === id);
+    if (ad?.page) return ad.page;
+    const rental = rentalProducts.find((p) => p.id === id);
+    if (rental?.page) return rental.page;
+    return fallback;
+  };
   const contentsFor = (id: string): string[] => {
     const sp = speakers.find((s) => s.id === id);
     if (sp?.contents?.length) return sp.contents;
@@ -102,13 +111,15 @@ export default function ProductGrid() {
           const price = priceFor(p.id, p.price);
           const name = nameFor(p.id, p.name);
           const image = imageFor(p.id, p.image);
+          const page = pageFor(p.id, p.page);
           const contents = contentsFor(p.id);
+          const book = bookHref(p.id);
           return (
             <article
               key={p.id}
               className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:border-brand-500/40"
             >
-              <Link href={p.href} className="relative block h-52 overflow-hidden bg-[#0d0c12] p-6">
+              <Link href={page ?? book} className="relative block h-52 overflow-hidden bg-[#0d0c12] p-6">
                 {p.tag && (
                   <span className="absolute left-4 top-4 z-20 rounded-full bg-brand-500 px-2.5 py-0.5 text-[11px] font-bold text-black">
                     {p.tag}
@@ -142,14 +153,14 @@ export default function ProductGrid() {
                 </p>
                 <div className="mt-4 flex gap-2">
                   <Link
-                    href={`/book?product=${p.id}`}
+                    href={book}
                     className="flex-1 rounded-full bg-brand-500 py-3 text-center text-sm font-semibold text-black transition hover:bg-brand-400 active:scale-[0.98]"
                   >
                     Book
                   </Link>
-                  {!p.href.startsWith("/book") && (
+                  {page && (
                     <Link
-                      href={p.href}
+                      href={page}
                       className="flex-1 rounded-full border border-white/15 py-3 text-center text-sm font-semibold text-white/70 transition hover:border-brand-500/40 hover:text-brand-400"
                     >
                       Info

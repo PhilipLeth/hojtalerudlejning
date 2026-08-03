@@ -206,7 +206,7 @@ export default function CreateProductModal({ open, existingIds, onClose, onCreat
             required
           />
           <p style={{ margin: "4px 0 0", fontSize: "12px", color: "#888" }}>
-            Booking: /book?product={id || "..."}
+            Booking: /?product={id || "..."}#book
           </p>
         </div>
 

@@ -29,7 +29,7 @@ function visible<T extends { hidden?: boolean }>(list: T[]): T[] {
   return list.filter((p) => !p.hidden);
 }
 
-/** Keep admin catalog, but add any new default rentals (e.g. Fest-klar) missing in KV. */
+/** Keep admin catalog, but add any new default rentals (e.g. festpakker) missing in KV. */
 function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
   const ids = new Set(fromKv.map((p) => p.id));
   const missing = defaultRentals.filter((d) => !ids.has(d.id));

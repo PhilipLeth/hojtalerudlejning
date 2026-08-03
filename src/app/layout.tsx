@@ -3,6 +3,7 @@ import Script from "next/script";
 import BurgerMenu from "@/components/BurgerMenu";
 import TopBar from "@/components/TopBar";
 import SiteHeader from "@/components/SiteHeader";
+import BookingDrawer from "@/components/BookingDrawer";
 import "./globals.css";
 
 const GTM_ID = "GTM-M52R25VF";
@@ -83,6 +84,7 @@ export default function RootLayout({
         <BurgerMenu />
         <SiteHeader />
         {children}
+        <BookingDrawer />
       </body>
     </html>
   );

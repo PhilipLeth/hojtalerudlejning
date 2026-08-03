@@ -80,7 +80,7 @@ export default function FestlysPage() {
             Lysbar fra 495 kr. · Røgmaskine fra 245 kr. · Lyskæder fra 195 kr.
           </p>
           <a
-            href="/book?product=lys"
+            href="/?product=lys#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book festlys nu
@@ -100,7 +100,7 @@ export default function FestlysPage() {
 
           <CategoryProductGrid
             items={[
-              { id: "lys", href: "/book?product=lys" },
+              { id: "lys", href: "/?product=lys#book" },
               { id: "rog", href: "/roegmaskine" },
               { id: "discokugle", href: "/discokugle" },
               { id: "lyskaeder", href: "/lyskaeder" },
@@ -152,7 +152,7 @@ export default function FestlysPage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag.
           </p>
           <a
-            href="/book?product=lys"
+            href="/?product=lys#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book festlys nu

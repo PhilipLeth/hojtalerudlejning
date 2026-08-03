@@ -26,7 +26,7 @@ export default function SpeakerCompare({
   bookLinks = "hash",
 }: {
   locale?: Locale;
-  /** hash = #book (forside), booking = /book?product=ID (undersider) */
+  /** hash = #book (forside), booking = /?product=ID#book (undersider) */
   bookLinks?: "hash" | "booking";
 }) {
   const c = t[locale].compare;
@@ -101,7 +101,7 @@ export default function SpeakerCompare({
                       </td>
                       <td className="px-3 py-4 text-right">
                         <a
-                          href={bookLinks === "booking" ? `/book?product=${sp.id}` : "/book"}
+                          href={bookLinks === "booking" ? `/?product=${sp.id}#book` : "/#book"}
                           className="inline-block rounded-full bg-brand-500 px-4 py-2 text-xs font-semibold text-black transition hover:bg-brand-400 active:scale-95"
                         >
                           {c.book}
@@ -120,7 +120,7 @@ export default function SpeakerCompare({
       <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
         {groups.flatMap((g) => g.items).map((sp) => {
           const text = sp[locale];
-          const href = bookLinks === "booking" ? `/book?product=${sp.id}` : "/book";
+          const href = bookLinks === "booking" ? `/?product=${sp.id}#book` : "/#book";
           return (
             <article
               key={`card-${sp.id}`}

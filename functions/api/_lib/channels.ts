@@ -326,8 +326,8 @@ const DEFAULT_CATALOG: CatalogRaw = {
     { id: "festival", price: 695, product: "/images/product-festival.png", da: { name: "Stor højtalerpakke", desc: "2× 12\" EV — klar til større events." } },
   ],
   rentalProducts: [
-    { id: "pakke_fest_klar", category: "lyd", price: 1090, image: "/images/product-soundboks.png", name_da: "Fest-klar", desc_da: "Soundboks 4 + levering og opsætning." },
-    { id: "pakke_fest_klar_plus", category: "lyd", price: 1485, image: "/images/mood-party.png", name_da: "Fest-klar Plus", desc_da: "Soundboks 4 + lys + levering/opsætning — spar 100 kr på lyset." },
+    { id: "pakke_fest_lille", category: "lyd", price: 790, image: "/images/product-party.png", name_da: "Lille festpakke", desc_da: "Lille højtalerpakke + lys-pakke — spar 100 kr." },
+    { id: "pakke_fest_stor", category: "lyd", price: 1090, image: "/images/product-festival.png", name_da: "Stor festpakke", desc_da: "Stor højtalerpakke + lys-pakke til 100 pers. — spar 100 kr." },
     { id: "discokugle", category: "lys", price: 245, image: "/images/product-discokugle.png", name_da: "Discokugle", desc_da: "Roterende discokugle med LED." },
     { id: "lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.png", name_da: "Lyskæder", desc_da: "10m lyskæde." },
     { id: "projektor", category: "av", price: 495, image: "/images/product-projektor.png", name_da: "Projektor", desc_da: "Full HD projektor." },

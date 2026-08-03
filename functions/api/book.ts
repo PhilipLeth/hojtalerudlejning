@@ -49,6 +49,9 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
     ids.has("lys") ||
     ids.has("discokugle") ||
     ids.has("lyskaeder") ||
+    // Festpakkerne indeholder lys-pakken
+    ids.has("pakke_fest_lille") ||
+    ids.has("pakke_fest_stor") ||
     labels.some((l) => l.includes("lys") || l.includes("disco"));
   const hasRog =
     ids.has("rog") ||
@@ -65,51 +68,12 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
   const speakerIds = new Set(["thumpgo", "party", "soundboks", "festival"]);
   const hasSpeaker =
     (data.speakerId && speakerIds.has(data.speakerId)) ||
-    ids.has("pakke_fest_klar") ||
-    ids.has("pakke_fest_klar_plus") ||
+    ids.has("pakke_fest_lille") ||
+    ids.has("pakke_fest_stor") ||
     (data.speakerId !== "effects-only" &&
       !!data.speaker &&
       !String(data.speaker).toLowerCase().includes("kun effekter") &&
       !String(data.speaker).toLowerCase().includes("effects only"));
-
-  // Fest-klar packages already include delivery+setup (+ lys on Plus)
-  if (ids.has("pakke_fest_klar_plus")) {
-    if (!hasRog) {
-      const list = 245;
-      return {
-        id: "rog",
-        title: "Røgmaskine",
-        blurb: "Røg får lyset til at se 10× federe ud.",
-        listPrice: list,
-        offerPrice: offerPrice(list),
-      };
-    }
-    return null;
-  }
-  if (ids.has("pakke_fest_klar")) {
-    // Treat as having setup; offer lys if missing
-    if (!hasLys) {
-      const list = 495;
-      return {
-        id: "lys",
-        title: "Lys-pakke",
-        blurb: "Gør festen komplet — vores lys-pakke passer til din Fest-klar.",
-        listPrice: list,
-        offerPrice: offerPrice(list),
-      };
-    }
-    if (hasLys && !hasRog) {
-      const list = 245;
-      return {
-        id: "rog",
-        title: "Røgmaskine",
-        blurb: "Røg får lyset til at se 10× federe ud.",
-        listPrice: list,
-        offerPrice: offerPrice(list),
-      };
-    }
-    return null;
-  }
 
   // 1) Speaker without light → lys
   if (hasSpeaker && !hasLys) {

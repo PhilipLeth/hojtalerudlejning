@@ -268,8 +268,8 @@ describe("BookingFlow - Preselect via ?product=", () => {
     window.history.pushState({}, "", "/");
   });
 
-  it("preselects pakke_tale_musik from /book?product=pakke_tale_musik without sold out message", async () => {
-    window.history.pushState({}, "", "/book?product=pakke_tale_musik");
+  it("preselects pakke_tale_musik from /?product=pakke_tale_musik#book without sold out message", async () => {
+    window.history.pushState({}, "", "/?product=pakke_tale_musik#book");
     render(<BookingFlow />);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
@@ -278,8 +278,8 @@ describe("BookingFlow - Preselect via ?product=", () => {
     expect(screen.queryByText(/udsolgt/i)).not.toBeInTheDocument();
   });
 
-  it("preselects low_fog from /book?product=low_fog (nyligt aktiveret)", async () => {
-    window.history.pushState({}, "", "/book?product=low_fog");
+  it("preselects low_fog from /?product=low_fog#book (nyligt aktiveret)", async () => {
+    window.history.pushState({}, "", "/?product=low_fog#book");
     render(<BookingFlow />);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();

@@ -77,7 +77,7 @@ export default function TraadloesMikrofonPage() {
             Professionel trådløs håndholdt mikrofon til taler, bryllup og events.
           </p>
           <a
-            href="/book?product=traadloes_mikrofon"
+            href="/?product=traadloes_mikrofon#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book mikrofon nu
@@ -171,7 +171,7 @@ export default function TraadloesMikrofonPage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 295 kr/weekend.
           </p>
           <a
-            href="/book?product=traadloes_mikrofon"
+            href="/?product=traadloes_mikrofon#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book mikrofon nu

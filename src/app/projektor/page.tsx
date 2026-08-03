@@ -76,7 +76,7 @@ export default function ProjektorPage() {
             Full HD projektor til præsentationer og film. HDMI — klar på 5 min.
           </p>
           <a
-            href="/book?product=projektor"
+            href="/?product=projektor#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book projektor nu
@@ -170,7 +170,7 @@ export default function ProjektorPage() {
             Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 495 kr/weekend.
           </p>
           <a
-            href="/book?product=projektor"
+            href="/?product=projektor#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book projektor nu

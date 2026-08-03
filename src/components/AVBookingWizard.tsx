@@ -27,13 +27,13 @@ const PRODUCT_INFO: Record<string, { name: string; href: string }> = {
   skaerm_55: { name: '55" Storskærm', href: "/skaerm" },
   traadloes_mikrofon: { name: "Trådløs mikrofon", href: "/traadloes-mikrofon" },
   headset: { name: "Trådløst headset", href: "/headset-mikrofon" },
-  headset_pro: { name: "Trådløst headset PRO", href: "/book?product=headset_pro" },
-  haandholdt_mikrofon: { name: "Håndholdt mikrofon (kabel)", href: "/book?product=haandholdt_mikrofon" },
-  laerred_160: { name: "Lærred 160 cm", href: "/book?product=laerred_160" },
-  projektor_pro: { name: "Projektor Pro (5000 lumen)", href: "/book?product=projektor_pro" },
-  pakke_praesentation: { name: "Præsentationspakken", href: "/book?product=pakke_praesentation" },
-  pakke_konference: { name: "Konferencepakken", href: "/book?product=pakke_konference" },
-  pakke_tale_musik: { name: "Tale & musik-pakken", href: "/book?product=pakke_tale_musik" },
+  headset_pro: { name: "Trådløst headset PRO", href: "/?product=headset_pro#book" },
+  haandholdt_mikrofon: { name: "Håndholdt mikrofon (kabel)", href: "/?product=haandholdt_mikrofon#book" },
+  laerred_160: { name: "Lærred 160 cm", href: "/?product=laerred_160#book" },
+  projektor_pro: { name: "Projektor Pro (5000 lumen)", href: "/?product=projektor_pro#book" },
+  pakke_praesentation: { name: "Præsentationspakken", href: "/?product=pakke_praesentation#book" },
+  pakke_konference: { name: "Konferencepakken", href: "/?product=pakke_konference#book" },
+  pakke_tale_musik: { name: "Tale & musik-pakken", href: "/?product=pakke_tale_musik#book" },
 };
 
 const PACKAGES = [
@@ -49,7 +49,7 @@ function ProductCard({ id, badge }: { id: string; badge?: string }) {
   const speaker = speakers.find((sp) => sp.id === id);
 
   const info = speaker
-    ? { name: speaker.da.name, href: `/book?product=${id}`, price: speaker.price, image: speaker.product, page: speaker.page }
+    ? { name: speaker.da.name, href: `/?product=${id}#book`, price: speaker.price, image: speaker.product, page: speaker.page }
     : rental && PRODUCT_INFO[id]
       ? { ...PRODUCT_INFO[id], name: rental.name_da, price: rental.price, image: rental.image, page: rental.page }
       : null;
@@ -72,7 +72,7 @@ function ProductCard({ id, badge }: { id: string; badge?: string }) {
       </a>
       <div className="mt-3 flex justify-center gap-2">
         <a
-          href={`/book?product=${id}`}
+          href={`/?product=${id}#book`}
           className="rounded-full bg-brand-500 px-4 py-1.5 text-xs font-semibold text-black transition hover:bg-brand-400 active:scale-95"
         >
           Book

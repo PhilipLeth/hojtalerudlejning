@@ -122,7 +122,7 @@ export default function KobenhavnPage() {
             Afhent i K&oslash;benhavn K eller f&aring; det leveret.
           </p>
           <a
-            href="/book"
+            href="/#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book h&oslash;jtaler nu
@@ -339,7 +339,7 @@ export default function KobenhavnPage() {
             Book online p&aring; 2 minutter. Hent fredag i K&oslash;benhavn K, aflever mandag. Fra 395 kr/weekend.
           </p>
           <a
-            href="/book"
+            href="/#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book h&oslash;jtaler nu

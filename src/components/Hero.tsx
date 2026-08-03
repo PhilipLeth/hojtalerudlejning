@@ -59,7 +59,7 @@ export default function Hero({ locale = "da" }: { locale?: Locale }) {
         </p>
 
         <a
-          href={locale === "en" ? "/en/book" : "/book"}
+          href={locale === "en" ? "/en#book" : "/#book"}
           className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
         >
           {s.cta}

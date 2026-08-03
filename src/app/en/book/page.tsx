@@ -1,23 +1,18 @@
-import type { Metadata } from "next";
-import BookingFlow from "@/components/BookingFlow";
-import Footer from "@/components/Footer";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Book equipment | Lejhøjtaler.dk",
-  description: "Book speakers, lights and AV for rent in Copenhagen.",
-  robots: { index: false, follow: true },
-};
+import { useEffect } from "react";
+import { bookHref } from "@/lib/bookUrl";
 
+/** /en/book er alias — send til /en med kurv-drawer. */
 export default function BookPageEn() {
+  useEffect(() => {
+    const product = new URLSearchParams(window.location.search).get("product");
+    window.location.replace(bookHref(product, "en"));
+  }, []);
+
   return (
-    <main className="min-h-screen bg-[#07060b]">
-      <div className="mx-auto max-w-lg px-4 pb-8 pt-6">
-        <a href="/en" className="mb-4 inline-block text-sm text-white/40 transition hover:text-brand-400">
-          ← Back to home
-        </a>
-        <BookingFlow locale="en" variant="inline" />
-      </div>
-      <Footer />
+    <main className="flex min-h-screen items-center justify-center bg-[#07060b] text-white/50">
+      Opening booking…
     </main>
   );
 }

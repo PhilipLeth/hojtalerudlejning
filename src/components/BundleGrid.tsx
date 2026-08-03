@@ -8,7 +8,7 @@ import {
 } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 
-/** Sammensatte pakker (Fest-klar m.fl.) — separat fra almindeligt produktgrid */
+/** Sammensatte pakker (festpakker m.fl.) — separat fra almindeligt produktgrid */
 export default function BundleGrid() {
   const { rentalProducts } = useProducts();
   const bundles = rentalProducts.filter(isBundleProduct);
@@ -22,8 +22,8 @@ export default function BundleGrid() {
       </p>
       <h2 className="mb-2 text-center text-3xl font-bold sm:text-4xl">Klar til festen</h2>
       <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-        Produkter der passer perfekt sammen — booket som én pakke med levering og opsætning.
-        Ofte med en lille rabat vs. at købe delene enkeltvis.
+        Lyd og lys der passer perfekt sammen — booket som én pakke med rabat
+        vs. at leje delene enkeltvis. Levering og opsætning kan tilvælges.
       </p>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -89,7 +89,7 @@ function BundleCard({ product: p }: { product: RentalProduct }) {
           </div>
           <div className="flex gap-2">
             <Link
-              href={`/book?product=${p.id}`}
+              href={`/?product=${p.id}#book`}
               className="rounded-full bg-brand-500 px-6 py-2.5 text-sm font-semibold text-black transition hover:bg-brand-400 active:scale-[0.98]"
             >
               Book pakke

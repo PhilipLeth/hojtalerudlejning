@@ -13,7 +13,7 @@ export interface ProductLandingProps {
   image: string;
   imageAlt: string;
   bullets: string[];
-  /** Booking product id for /book?product=ID */
+  /** Booking product id for /?product=ID#book */
   productId: string;
   bookLabel?: string;
   /** Optional extra section under product detail */

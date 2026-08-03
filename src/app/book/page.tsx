@@ -1,27 +1,18 @@
-import type { Metadata } from "next";
-import BookingFlow from "@/components/BookingFlow";
-import Footer from "@/components/Footer";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Book udstyr | Lejhøjtaler.dk",
-  description: "Book højtaler, lys og AV til leje i København. Vælg dato og tilvalg — betal ved afhentning.",
-  robots: { index: false, follow: true },
-};
+import { useEffect } from "react";
+import { bookHref } from "@/lib/bookUrl";
 
-/**
- * Dedicated booking page — always works in every browser.
- * Deep link: /book?product=pakke_fest_klar_plus
- */
+/** /book er alias — send til forsiden med kurv-drawer. */
 export default function BookPage() {
+  useEffect(() => {
+    const product = new URLSearchParams(window.location.search).get("product");
+    window.location.replace(bookHref(product, "da"));
+  }, []);
+
   return (
-    <main className="min-h-screen bg-[#07060b]">
-      <div className="mx-auto max-w-lg px-4 pb-8 pt-6">
-        <a href="/" className="mb-4 inline-block text-sm text-white/40 transition hover:text-brand-400">
-          ← Til forsiden
-        </a>
-        <BookingFlow locale="da" variant="inline" />
-      </div>
-      <Footer />
+    <main className="flex min-h-screen items-center justify-center bg-[#07060b] text-white/50">
+      Åbner booking…
     </main>
   );
 }

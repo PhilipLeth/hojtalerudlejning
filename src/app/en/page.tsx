@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import BookingRedirect from "@/components/BookingRedirect";
 import Hero from "@/components/Hero";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import Testimonials from "@/components/Testimonials";
@@ -44,7 +43,6 @@ export default function EnHome() {
   return (
     <main className="min-h-screen" lang="en">
       <Hero locale="en" />
-      <BookingRedirect locale="en" />
       <SpeakerCompare locale="en" />
       <Testimonials locale="en" />
       <HowItWorks locale="en" />
@@ -119,7 +117,7 @@ export default function EnHome() {
                 shippingRate: { "@type": "MonetaryAmount", value: "495", currency: "DKK" },
                 shippingDestination: { "@type": "DefinedRegion", addressCountry: "DK", addressRegion: "Copenhagen" },
               },
-              url: "https://lejhojtaler.dk/en/book",
+              url: "https://lejhojtaler.dk/en#book",
               description: "From 345 DKK/weekend (Fri-Mon). Speaker rental Copenhagen.",
             },
           }),
@@ -153,7 +151,7 @@ export default function EnHome() {
                 shippingRate: { "@type": "MonetaryAmount", value: "495", currency: "DKK" },
                 shippingDestination: { "@type": "DefinedRegion", addressCountry: "DK", addressRegion: "Copenhagen" },
               },
-              url: "https://lejhojtaler.dk/en/book",
+              url: "https://lejhojtaler.dk/en#book",
               description: "From 695 DKK/weekend (Fri-Mon). PA system rental Copenhagen.",
             },
           }),
@@ -187,7 +185,7 @@ export default function EnHome() {
                 shippingRate: { "@type": "MonetaryAmount", value: "495", currency: "DKK" },
                 shippingDestination: { "@type": "DefinedRegion", addressCountry: "DK", addressRegion: "Copenhagen" },
               },
-              url: "https://lejhojtaler.dk/en/book",
+              url: "https://lejhojtaler.dk/en#book",
               description: "495 DKK add-on. Party equipment rental Copenhagen.",
             },
           }),
