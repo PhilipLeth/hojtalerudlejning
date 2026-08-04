@@ -267,42 +267,77 @@ export default function BookingFlow({
     preselected.current = false;
   }, [urlTick]);
 
-  // Preselect product from ?product=ID — re-runs on soft-nav (urlTick)
+  /**
+   * Læg det aktuelle valg (produkt + tilvalg) i kurven i stedet for at smide
+   * det væk — bruges når kunden vælger endnu et produkt. Levering beholdes
+   * som valgt tilvalg (gælder hele ordren).
+   */
+  const stashSelectionToCart = useCallback(() => {
+    setCartItems((prev) => {
+      const items = [...prev];
+      const priceOf = (base: number) => (isSummerSale() ? applyDiscount(base) : base);
+
+      if (speaker && speaker !== "effects-only") {
+        const sp = speakers.find((x) => x.id === speaker);
+        const rp = rentalProducts.find((x) => x.id === speaker);
+        const name = sp?.name ?? (rp ? (locale === "en" ? rp.name_en : rp.name_da) : speaker);
+        items.push({ productId: speaker, name, price: priceOf(sp?.price ?? rp?.price ?? 0) });
+      }
+      // Valgte tilvalg følger med i kurven (undtagen levering — den gælder ordren)
+      for (const a of addons) {
+        if (selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id)) {
+          items.push({ productId: a.id, name: a.label, price: priceOf(a.price) });
+        }
+      }
+      return items;
+    });
+    setSpeaker(null);
+    setSelectedAddons((prev) => prev.filter((id) => DELIVERY_IDS.includes(id)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [speaker, selectedAddons, addons, speakers, rentalProducts, locale]);
+
+  // Preselect product from ?product=ID — re-runs on soft-nav (urlTick).
+  // Er der allerede et produkt i gang, lægges det i kurven først, så
+  // "book endnu en ting" aldrig smider det første valg væk.
   useEffect(() => {
     if (preselected.current || typeof window === "undefined") return;
     const product = new URLSearchParams(window.location.search).get("product");
     if (!product) return;
 
+    const hasCurrent = !!speaker;
+
     // Lys / røg as effects-only
     if (product === "lys" || product === "rog") {
       console.log("[booking] Preselect effects-only:", product);
       preselected.current = true;
+      if (speaker === "effects-only" && selectedAddons.includes(product)) {
+        setStep(2);
+        return;
+      }
+      if (hasCurrent) stashSelectionToCart();
       setSpeaker("effects-only");
-      setSelectedAddons([product]);
+      setSelectedAddons((prev) => [...prev.filter((id) => DELIVERY_IDS.includes(id)), product]);
       setStep(2);
       return;
     }
 
-    // Speakers
-    if (speakers.some((sp) => sp.id === product)) {
-      console.log("[booking] Preselect speaker:", product);
+    // Speakers + standalone rental products (lyskæder, discokugle, AV, festpakker, …)
+    if (speakers.some((sp) => sp.id === product) || rentalProducts.some((p) => p.id === product)) {
+      console.log("[booking] Preselect product:", product);
       preselected.current = true;
-      setSpeaker(product);
-      setStep(2);
-      return;
-    }
-
-    // Standalone rental products (lyskæder, discokugle, AV, festpakker, …)
-    if (rentalProducts.some((p) => p.id === product)) {
-      console.log("[booking] Preselect rental:", product);
-      preselected.current = true;
+      if (speaker === product) {
+        setStep(2);
+        return;
+      }
+      if (hasCurrent) stashSelectionToCart();
       setSpeaker(product);
       setStep(2);
       return;
     }
 
     console.log("[booking] Product not found yet, waiting:", product);
-  }, [speakers, rentalProducts, urlTick]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [speakers, rentalProducts, urlTick, speaker, selectedAddons, stashSelectionToCart]);
 
   // Fetch availability for selected date range (step 2 validation)
   const checkDateAvailability = useCallback(async (pickup: Date, ret: Date) => {
@@ -438,16 +473,8 @@ export default function BookingFlow({
 
   function addCurrentToCart() {
     if (!speaker || speaker === "effects-only") return;
-    const name = selectedSpeaker
-      ? selectedSpeaker.name
-      : selectedRental
-        ? (locale === "en" ? selectedRental.name_en : selectedRental.name_da)
-        : speaker;
-    setCartItems((prev) => [...prev, { productId: speaker, name, price: speakerPrice }]);
-    // Reset current selection, keep dates
-    setSpeaker(null);
-    setSelectedAddons([]);
-    setDeliveryAddress("");
+    // Produkt + valgte tilvalg ryger i kurven; levering + adresse beholdes (gælder ordren)
+    stashSelectionToCart();
     setStep(1);
   }
 

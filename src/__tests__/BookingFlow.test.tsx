@@ -285,6 +285,44 @@ describe("BookingFlow - Preselect via ?product=", () => {
     });
     expect(screen.getByText("Low fog-maskine (røggulv)")).toBeInTheDocument();
   });
+
+  it("beholder første produkt i kurven når man booker endnu et via ?product=", async () => {
+    const onSummary = vi.fn();
+    window.history.pushState({}, "", "/?product=soundboks#book");
+    const { rerender } = render(<BookingFlow onSummaryChange={onSummary} urlTick={0} />);
+    await waitFor(() => {
+      expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
+    });
+
+    // Kunden klikker "Book" på et andet produkt → nyt ?product= + urlTick bump
+    window.history.pushState({}, "", "/?product=projektor#book");
+    rerender(<BookingFlow onSummaryChange={onSummary} urlTick={1} />);
+
+    await waitFor(() => {
+      const last = onSummary.mock.calls.at(-1)?.[0];
+      // Soundboks (595) ligger nu i kurven + projektor (495) er valgt
+      expect(last?.count).toBe(2);
+      expect(last?.total).toBe(595 + 495);
+    });
+  });
+
+  it("stabler ikke dubletter når samme produkt bookes igen", async () => {
+    const onSummary = vi.fn();
+    window.history.pushState({}, "", "/?product=soundboks#book");
+    const { rerender } = render(<BookingFlow onSummaryChange={onSummary} urlTick={0} />);
+    await waitFor(() => {
+      expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
+    });
+
+    window.history.pushState({}, "", "/?product=soundboks#book");
+    rerender(<BookingFlow onSummaryChange={onSummary} urlTick={1} />);
+
+    await waitFor(() => {
+      const last = onSummary.mock.calls.at(-1)?.[0];
+      expect(last?.count).toBe(1);
+      expect(last?.total).toBe(595);
+    });
+  });
 });
 
 describe("BookingFlow - Booking submission", () => {

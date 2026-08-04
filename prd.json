@@ -1445,7 +1445,8 @@
       "Udsolgt-oversigt i admin (/admin/udsolgt + /api/soldout) med fortid/fremtid pr. produkt",
       "Follow-up Google review-mail ved afleveret booking (+ '⭐ Review-mail sendt' i admin)",
       "Festpakker omlagt til lyd+lys: Lille festpakke 790 kr (Alto + lys) og Stor festpakke 1090 kr (EV 12\" + lys, 100 pers.) — levering/opsætning som tilvalg",
-      "Lyskæder som 2 produkter (varm hvid + farvet) + Shure PRO-mikrofoner (trådløs 495 kr / håndholdt 195 kr) — alle 21 produktfotos i brug"
+      "Lyskæder som 2 produkter (varm hvid + farvet) + Shure PRO-mikrofoner (trådløs 495 kr / håndholdt 195 kr) — alle 21 produktfotos i brug",
+      "Kurv-fix: første produkt bevares i kurven når kunden booker endnu et produkt via Book-knapperne"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1581,6 +1582,11 @@
       "status": "done",
       "date": "2026-08-03",
       "description": "Alle produktbilleder gennemgået visuelt 1:1 mod produkterne — alle mappings korrekte. Lyskæder splittet i to bookbare produkter (varm hvid + farvet, hver 195 kr, hver sit foto). To nye Shure PRO-mikrofonprodukter oprettet til de sidste to fotos fra Drive-zippen: Trådløs mikrofon PRO (BLX, 495 kr) og Håndholdt mikrofon PRO (Beta 58A, 195 kr). Alle 21 fotos fra zippen er nu i brug."
+    },
+    "kurv_bevarer_produkter": {
+      "status": "done",
+      "date": "2026-08-04",
+      "description": "Bugfix: Valgte kunden produkt A og klikkede derefter Book på produkt B (?product=B), blev A overskrevet og forsvandt fra kurven. Nu lægges det igangværende valg (produkt + tilvalg) automatisk i kurven, før det nye produkt vælges. Samme produkt to gange stabler ikke dubletter. '+ Tilføj et produkt mere' bevarer nu også valgte tilvalg (lægges i kurven) og levering/adresse (gælder hele ordren)."
     }
   },
   "booking_drawer": {
