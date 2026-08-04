@@ -11,6 +11,7 @@ import {
   type ProductCategory,
 } from "@/lib/products";
 import ImageField from "@/components/admin/ImageField";
+import VideoField from "@/components/admin/VideoField";
 import CreateProductModal, { type ProductType } from "@/components/admin/CreateProductModal";
 
 const inputStyle: React.CSSProperties = {
@@ -388,6 +389,7 @@ export default function AdminProdukterPage() {
                 </div>
                 <ImageField label="Produktbillede" value={sp.product} onChange={(v) => updateSpeaker(i, { product: v })} />
                 <ImageField label="Stemningsbillede" value={sp.mood} onChange={(v) => updateSpeaker(i, { mood: v })} />
+                <VideoField label="Produktvideo (instruktion/demo)" value={sp.video ?? ""} onChange={(v) => updateSpeaker(i, { video: v || undefined })} />
                 <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", alignSelf: "end", paddingBottom: "8px" }}>
                   <input type="checkbox" checked={!!sp.hidden} onChange={(e) => updateSpeaker(i, { hidden: e.target.checked })} />
                   Skjul på siden
@@ -450,6 +452,7 @@ export default function AdminProdukterPage() {
                   </select>
                 </div>
                 <ImageField label="Produktbillede" value={r.image} onChange={(v) => updateRental(i, { image: v })} />
+                <VideoField label="Produktvideo (instruktion/demo)" value={r.video ?? ""} onChange={(v) => updateRental(i, { video: v || undefined })} />
                 <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", alignSelf: "end", paddingBottom: "8px" }}>
                   <input type="checkbox" checked={!!r.hidden} onChange={(e) => updateRental(i, { hidden: e.target.checked })} />
                   Skjul på siden

@@ -100,7 +100,7 @@ export default function FestlysPage() {
 
           <CategoryProductGrid
             items={[
-              { id: "lys", href: "/?product=lys#book" },
+              { id: "lys", href: "/lys-pakke" },
               { id: "rog", href: "/roegmaskine" },
               { id: "discokugle", href: "/discokugle" },
               { id: "lyskaeder", href: "/lyskaeder" },

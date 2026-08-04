@@ -30,6 +30,8 @@ export interface Speaker {
   sizeClass: SizeClass;
   weight: string;
   hidden?: boolean;
+  /** Produktvideo (instruktion/demo) — vist med play-knap i produkt-hero */
+  video?: string;
   /** Addon IDs shown to the customer during booking. Undefined = show all. */
   allowedAddons?: string[];
   /** Hvad er med i pakken — vist ved hover på produktkort */
@@ -50,6 +52,8 @@ export interface Addon {
   price: number;
   image: string | null;
   hidden?: boolean;
+  /** Produktvideo (instruktion/demo) — vist med play-knap i produkt-hero */
+  video?: string;
   /** Hvad er med — vist ved hover på produktkort */
   contents?: string[];
   da: AddonText;
@@ -85,6 +89,8 @@ export interface RentalProduct {
   desc_da?: string;
   desc_en?: string;
   hidden?: boolean;
+  /** Produktvideo (instruktion/demo) — vist med play-knap i produkt-hero */
+  video?: string;
   /** Addon IDs shown to the customer during booking. Undefined = show all. */
   allowedAddons?: string[];
   /** Hvad er med i pakken — vist ved hover på produktkort */
@@ -216,7 +222,7 @@ export const addons: Addon[] = [
   },
   {
     id: "lys",
-    page: "/festlys",
+    page: "/lys-pakke",
     price: 495,
     image: "/images/product-lys.png",
     contents: ["2× farvede LED-lamper", "Centereffekt", "Stativ", "Strøm + DMX/kabler"],
@@ -366,6 +372,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
     href: "/festlys",
     links: [
       { href: "/festlys", label: "Festlys & lysbar" },
+      { href: "/lys-pakke", label: "Lys-pakke" },
       { href: "/discokugle", label: "Discokugle" },
       { href: "/lyskaeder", label: "Lyskæder" },
     ],

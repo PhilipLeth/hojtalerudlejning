@@ -799,6 +799,24 @@
       "method": "GET",
       "description": "Admin (ADMIN_SECRET). Udsolgt-oversigt: per dag hvilke produkter der er/var udsolgt (bookinger >= lager) i valgfrit datointerval (default -60/+90 dage). Tæller ALLE bookinger, også afleverede, så historik er korrekt. Inkluderer blokerede datoer.",
       "status": "live"
+    },
+    "upload": {
+      "path": "/api/upload",
+      "method": "POST",
+      "description": "Admin (ADMIN_SECRET). Billede-upload → R2 (bucket lejhojtaler-media, binding MEDIA). Max 10 MB, kun image/*. Returnerer /api/image/<key>. Gamle billeder i KV serveres stadig som fallback af /api/image/[key].",
+      "status": "live"
+    },
+    "upload_video": {
+      "path": "/api/upload-video",
+      "method": "POST",
+      "description": "Admin (ADMIN_SECRET). Video-upload (rå body, ikke multipart) → R2. Max 100 MB, MP4/WebM/MOV. Streames direkte til R2. Returnerer /api/video/<key>.",
+      "status": "live"
+    },
+    "video_serve": {
+      "path": "/api/video/[key]",
+      "method": "GET",
+      "description": "Public. Serverer produktvideoer fra R2 med Range-support (206) så <video> kan spole/streame.",
+      "status": "live"
     }
   },
   "email_flow": {
@@ -1014,7 +1032,13 @@
       "RESEND_API_KEY",
       "NOTIFY_EMAIL",
       "ADMIN_SECRET"
-    ]
+    ],
+    "r2": {
+      "bucket": "lejhojtaler-media",
+      "binding": "MEDIA",
+      "keys": "img/<key> (billeder), vid/<key> (videoer)",
+      "note": "Oprettet 2026-08-04 til medie-uploads fra admin. Bindes via wrangler.toml."
+    }
   },
   "google_ads": {
     "customer_id": "3936363454",
@@ -1410,6 +1434,13 @@
       "description": "DONE 4/8-2026 — Live-nøgler i CF-secrets, live-webhook registreret (we_1U0dNVIz9ZM7fQt9BZIInymF), verificeret i browser: cs_live-sessioner, ingen TEST MODE-badge. UDESTÅR: (1) MobilePay skal aktiveres i live-dashboard → Payment methods (kort/Klarna/Apple Pay er aktive), (2) skift sk_live til restricted key (rk_) og rul den nuværende sk_live — den har været delt i chat, (3) rigtig prøvebetaling 95 kr + refusion.",
       "priority": "high",
       "status": "done"
+    },
+    {
+      "id": "produktvideoer",
+      "title": "Video på produkter med play-knap i hero",
+      "description": "Admin kan uploade instruktions-/demovideoer pr. produkt (R2). Produktsider viser play-ikon over produktbilledet; klik åbner videomodal med streaming (Range).",
+      "priority": "medium",
+      "status": "done"
     }
   ],
   "status": {
@@ -1446,7 +1477,8 @@
       "Follow-up Google review-mail ved afleveret booking (+ '⭐ Review-mail sendt' i admin)",
       "Festpakker omlagt til lyd+lys: Lille festpakke 790 kr (Alto + lys) og Stor festpakke 1090 kr (EV 12\" + lys, 100 pers.) — levering/opsætning som tilvalg",
       "Lyskæder som 2 produkter (varm hvid + farvet) + Shure PRO-mikrofoner (trådløs 495 kr / håndholdt 195 kr) — alle 21 produktfotos i brug",
-      "Kurv-fix: første produkt bevares i kurven når kunden booker endnu et produkt via Book-knapperne"
+      "Kurv-fix: første produkt bevares i kurven når kunden booker endnu et produkt via Book-knapperne",
+      "Produktvideoer: upload fra admin (R2, max 100 MB) + play-knap i produkt-hero med videomodal. Billede-upload flyttet til R2 (max 10 MB, fixer 500 kB-afvisninger)"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1532,7 +1564,7 @@
   "admin_improvements": {
     "image_upload": {
       "status": "done",
-      "description": "ImageField bruger nu fil-upload (klik eller drag-and-drop) i stedet for manuel SVG-sti. Billeder gemmes i KV og serveres via /api/image/<key>. Maks 500 kB."
+      "description": "ImageField bruger nu fil-upload (klik eller drag-and-drop) i stedet for manuel SVG-sti. Billeder gemmes i KV og serveres via /api/image/<key>. Maks 500 kB. OPDATERET 2026-08-04: billeder gemmes nu i R2 (max 10 MB — KV's 500 kB-grænse afviste almindelige fotos); gamle KV-billeder serveres stadig."
     },
     "addon_whitelist_per_product": {
       "status": "done",
@@ -1545,6 +1577,11 @@
     "soldout_overview": {
       "status": "done",
       "description": "/admin/udsolgt: oversigt over udsolgte dage (fortid + fremtid) pr. produkt med booked/total, blokerede datoer og opsummeringstabel. Datointerval kan vælges. Link i admin-nav."
+    },
+    "produktvideoer": {
+      "status": "done",
+      "date": "2026-08-04",
+      "description": "Produkter (speakers + rentalProducts) har video?-felt. VideoField i /admin/produkter uploader MP4/WebM/MOV (max 100 MB) til R2. På produktsiderne viser ProductLanding en play-knap over produktbilledet når produktet har video — klik åbner modal med afspiller. Gemmes i kataloget (KV) som alle andre admin-redigeringer."
     }
   },
   "booking_improvements": {

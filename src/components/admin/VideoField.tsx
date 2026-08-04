@@ -2,6 +2,9 @@
 
 import { useRef, useState } from "react";
 
+const MAX_BYTES = 100_000_000; // 100 MB
+const ALLOWED = ["video/mp4", "video/webm", "video/quicktime"];
+
 const labelStyle: React.CSSProperties = {
   display: "block",
   fontSize: "12px",
@@ -10,7 +13,8 @@ const labelStyle: React.CSSProperties = {
   marginBottom: "4px",
 };
 
-export default function ImageField({
+/** Video-upload til produkter (instruktioner/demo). Rå body → R2 via /api/upload-video. */
+export default function VideoField({
   label,
   value,
   onChange,
@@ -25,14 +29,22 @@ export default function ImageField({
 
   const handleFile = async (file: File) => {
     setUploadError("");
+    if (!ALLOWED.includes(file.type)) {
+      setUploadError("Kun video — MP4, WebM eller MOV");
+      return;
+    }
+    if (file.size > MAX_BYTES) {
+      setUploadError("Videoen er for stor — max 100 MB");
+      return;
+    }
     setUploading(true);
     try {
       const secret = localStorage.getItem("admin_secret") ?? "";
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch(`/api/upload?secret=${encodeURIComponent(secret)}`, {
+      // Rå body (ikke multipart) så filen streames direkte til R2
+      const res = await fetch(`/api/upload-video?secret=${encodeURIComponent(secret)}`, {
         method: "POST",
-        body: fd,
+        headers: { "Content-Type": file.type },
+        body: file,
       });
       const data = await res.json();
       if (!res.ok) {
@@ -47,24 +59,16 @@ export default function ImageField({
     }
   };
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (!file) return;
-    if (file.size > 10_000_000) {
-      setUploadError("Filen er for stor — max 10 MB");
-      return;
-    }
-    handleFile(file);
-  };
-
   return (
     <div>
       <label style={labelStyle}>{label}</label>
 
-      {/* Drop zone / upload button */}
       <div
-        onDrop={handleDrop}
+        onDrop={(e) => {
+          e.preventDefault();
+          const file = e.dataTransfer.files[0];
+          if (file) handleFile(file);
+        }}
         onDragOver={(e) => e.preventDefault()}
         onClick={() => inputRef.current?.click()}
         style={{
@@ -74,7 +78,6 @@ export default function ImageField({
           textAlign: "center",
           cursor: "pointer",
           background: "#fafafa",
-          transition: "border-color 0.15s",
           fontSize: "13px",
           color: "#888",
           minHeight: "60px",
@@ -85,18 +88,16 @@ export default function ImageField({
         }}
       >
         {uploading ? (
-          <span>Uploader...</span>
+          <span>Uploader video... (kan tage et øjeblik)</span>
         ) : (
           <>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-              <polyline points="17 8 12 3 7 8"/>
-              <line x1="12" y1="3" x2="12" y2="15"/>
+              <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
             <span>
-              Klik eller træk billede hertil
+              Klik eller træk video hertil
               <span style={{ display: "block", fontSize: "11px", color: "#aaa", marginTop: "4px" }}>
-                Max 10 MB · JPG, PNG, WebP
+                Max 100 MB · MP4, WebM, MOV
               </span>
             </span>
           </>
@@ -106,16 +107,11 @@ export default function ImageField({
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
+        accept="video/mp4,video/webm,video/quicktime"
         style={{ display: "none" }}
         onChange={(e) => {
           const file = e.target.files?.[0];
-          if (!file) return;
-          if (file.size > 10_000_000) {
-            setUploadError("Filen er for stor — max 10 MB");
-            return;
-          }
-          handleFile(file);
+          if (file) handleFile(file);
           e.target.value = "";
         }}
       />
@@ -124,17 +120,22 @@ export default function ImageField({
         <p style={{ color: "#dc3545", fontSize: "12px", margin: "4px 0 0" }}>{uploadError}</p>
       )}
 
-      {/* Preview */}
       {value && (
         <div style={{ marginTop: "8px", display: "flex", alignItems: "center", gap: "10px" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <video
             src={value}
-            alt=""
-            style={{ maxHeight: "56px", maxWidth: "80px", objectFit: "contain", borderRadius: "6px", border: "1px solid #eee" }}
-            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+            style={{ maxHeight: "56px", maxWidth: "100px", borderRadius: "6px", border: "1px solid #eee", background: "#000" }}
+            muted
+            playsInline
           />
           <span style={{ fontSize: "12px", color: "#888", wordBreak: "break-all", flex: 1 }}>{value}</span>
+          <button
+            type="button"
+            onClick={() => onChange("")}
+            style={{ padding: "2px 10px", fontSize: "12px", background: "#fff", border: "1px solid #ddd", borderRadius: "4px", cursor: "pointer", color: "#c0392b" }}
+          >
+            Fjern
+          </button>
         </div>
       )}
     </div>

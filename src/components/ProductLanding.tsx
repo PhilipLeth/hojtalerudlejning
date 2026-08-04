@@ -1,5 +1,6 @@
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
+import ProductVideo from "@/components/ProductVideo";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
@@ -129,7 +130,7 @@ export default function ProductLanding({
       <main className="relative z-20 bg-[#07060b]">
         <section className="mx-auto max-w-4xl px-4 py-24">
           <div className="grid items-center gap-8 sm:grid-cols-2">
-            <div className="overflow-hidden rounded-2xl bg-[#0d0c12]">
+            <div className="relative overflow-hidden rounded-2xl bg-[#0d0c12]">
               <img
                 src={image}
                 alt={imageAlt}
@@ -137,6 +138,8 @@ export default function ProductLanding({
                 height={400}
                 className="w-full object-contain p-6"
               />
+              {/* Play-knap når produktet har video i kataloget (uploades i admin) */}
+              <ProductVideo productId={productId} name={name} />
             </div>
             <div>
               <h2 className="mb-4 text-3xl font-bold">{name}</h2>
