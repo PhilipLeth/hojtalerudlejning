@@ -206,3 +206,17 @@ describe("Day multiplier pricing", () => {
     expect(Math.round(speaker + lys + rog)).toBe(1435);
   });
 });
+
+describe("Katalog-merge: nye tilvalg overlever et gammelt KV-katalog", () => {
+  it("mergeAddons tilføjer tilvalg der mangler i KV (fx subwoofer)", async () => {
+    const { addons: defaults } = await import("@/lib/products");
+    // Simulér et KV-katalog gemt før subwooferen fandtes
+    const kvCatalog = defaults.filter((a) => a.id !== "subwoofer");
+    expect(kvCatalog.some((a) => a.id === "subwoofer")).toBe(false);
+
+    const { mergeAddonsForTest } = await import("@/lib/useProducts");
+    const merged = mergeAddonsForTest(kvCatalog);
+    expect(merged.some((a) => a.id === "subwoofer")).toBe(true);
+    expect(merged.find((a) => a.id === "subwoofer")!.price).toBe(295);
+  });
+});

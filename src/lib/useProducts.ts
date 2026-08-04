@@ -48,9 +48,13 @@ function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
   return missing.length ? [...missing, ...merged] : merged;
 }
 
-/** Sync levering+opsætning pris + strip den gamle 'levering uden opsætning'. */
+/** Eksporteret til test — se mergeAddons */
+export const mergeAddonsForTest = (fromKv: Addon[]): Addon[] => mergeAddons(fromKv);
+
+/** Sync levering+opsætning pris, strip den gamle 'levering uden opsætning',
+ *  og tilføj tilvalg der er kommet til i koden efter kataloget blev gemt. */
 function mergeAddons(fromKv: Addon[]): Addon[] {
-  return fromKv
+  const merged = fromKv
     .filter((a) => a.id !== "levering") // findes ikke længere — kun levering+opsætning
     .map((a) => {
       const d = defaultAddons.find((x) => x.id === a.id);
@@ -63,6 +67,11 @@ function mergeAddons(fromKv: Addon[]): Addon[] {
       }
       return next;
     });
+  // Nye tilvalg tilføjet i koden (fx subwoofer) skal også dukke op selvom
+  // kataloget i KV blev gemt før — samme princip som mergeRentals.
+  const ids = new Set(merged.map((a) => a.id));
+  const missing = defaultAddons.filter((d) => !ids.has(d.id));
+  return missing.length ? [...merged, ...missing] : merged;
 }
 
 function mergeSpeakers(fromKv: Speaker[]): Speaker[] {
