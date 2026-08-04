@@ -243,7 +243,7 @@ export default function BookingFlow({
   const [form, setForm] = useState({ name: "", email: "", phone: "", comment: "" });
   const [newsletter, setNewsletter] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [payMethod, setPayMethod] = useState<"pickup" | "online">("pickup");
+  const [payMethod, setPayMethod] = useState<"pickup" | "online">("online");
   const [checkoutSecret, setCheckoutSecret] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -605,7 +605,7 @@ export default function BookingFlow({
         )}
         {selectedSpeaker && (
           <div className="flex justify-between text-sm text-white/50">
-            <span>{selectedSpeaker.name}{s.speakerSuffix} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
+            <span>{selectedSpeaker.name}{s.speakerSuffix}</span>
             <span>
               {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
               {speakerPrice} kr
@@ -614,7 +614,7 @@ export default function BookingFlow({
         )}
         {isRentalOnly && rentalName && (
           <div className="flex justify-between text-sm text-white/50">
-            <span>{rentalName} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
+            <span>{rentalName}</span>
             <span>
               {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
               {speakerPrice} kr
@@ -639,7 +639,7 @@ export default function BookingFlow({
             {total} kr
           </span>
         </div>
-        <p className="mt-1 text-right text-xs text-white/30">{s.paidAtPickup}</p>
+        <p className="mt-1 text-right text-xs text-white/30">{payMethod === "online" ? (locale === "en" ? "Paid online now" : "Betales online nu") : s.paidAtPickup}</p>
       </div>
     );
   }
@@ -1046,7 +1046,7 @@ export default function BookingFlow({
               </div>
               {pickupDate && returnDate && !isEffectsOnly && (
                 <div className="flex justify-between mt-3 pt-3 border-t border-white/10">
-                  <span className="text-white/50">{s.price} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
+                  <span className="text-white/50">{s.price} — {locale === "en" ? "whole rental" : "hele lejeperioden"} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
                   <span className="text-brand-400 font-bold">{speakerPrice} kr</span>
                 </div>
               )}
@@ -1238,7 +1238,7 @@ export default function BookingFlow({
           <div className="space-y-4">
             <h2 className="text-center text-2xl font-bold">{locale === "en" ? "Payment" : "Betaling"}</h2>
             <p className="text-center text-sm text-white/50">
-              {locale === "en" ? "Card or MobilePay — secured by Stripe" : "Kort eller MobilePay — sikret af Stripe"}
+              {locale === "en" ? "Pay securely with card — powered by Stripe" : "Betal sikkert med kort — sikret af Stripe"}
             </p>
             <div id="stripe-checkout" className="overflow-hidden rounded-2xl bg-white" />
             <button
@@ -1322,7 +1322,7 @@ export default function BookingFlow({
               ))}
               {selectedSpeaker && (
                 <div className="flex justify-between text-sm text-white/50">
-                  <span>{selectedSpeaker.name}{s.speakerSuffix} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
+                  <span>{selectedSpeaker.name}{s.speakerSuffix}</span>
                   <span>
                     {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
                     {speakerPrice} kr
@@ -1331,7 +1331,7 @@ export default function BookingFlow({
               )}
               {isRentalOnly && rentalName && (
                 <div className="flex justify-between text-sm text-white/50">
-                  <span>{rentalName} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
+                  <span>{rentalName}</span>
                   <span>
                     {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
                     {speakerPrice} kr
@@ -1364,9 +1364,8 @@ export default function BookingFlow({
                   {total} kr
                 </span>
               </div>
-              <p className="mt-1 flex items-center justify-end gap-1.5 text-xs text-white/30">
-                <span className="inline-flex items-center rounded-full bg-[#5A78FF]/15 px-1.5 py-0.5 text-[10px] font-semibold text-[#7B93FF]">MobilePay</span>
-                {s.paidAtPickup}
+              <p className="mt-1 text-right text-xs text-white/30">
+                {payMethod === "online" ? (locale === "en" ? "Paid securely online" : "Betales sikkert online") : s.paidAtPickup}
               </p>
             </div>
 
@@ -1374,8 +1373,8 @@ export default function BookingFlow({
             <div className="glass rounded-2xl p-4 space-y-2">
               <p className="text-sm font-semibold text-white/70">{locale === "en" ? "Payment" : "Betaling"}</p>
               {([
-                { id: "pickup" as const, label: locale === "en" ? "Pay at pickup (MobilePay or cash)" : "Betal ved afhentning (MobilePay eller kontant)" },
-                { id: "online" as const, label: locale === "en" ? "Pay now — card or MobilePay" : "Betal nu — kort eller MobilePay" },
+                { id: "online" as const, label: locale === "en" ? "Pay now with card" : "Betal nu med kort" },
+                { id: "pickup" as const, label: locale === "en" ? "Pay at pickup" : "Betal ved afhentning" },
               ]).map((opt) => (
                 <label key={opt.id} className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition ${payMethod === opt.id ? "border-brand-500 bg-brand-500/10" : "border-white/10 hover:border-white/25"}`}>
                   <input

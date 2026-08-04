@@ -67,7 +67,7 @@ Andre tidspunkter kan aftales ved booking. Udstyret leveres med alle nødvendige
   },
   {
     title: "9. Betaling",
-    content: `Betaling sker ved afhentning via MobilePay eller kontant. Der betales ikke forud online. Prisen er den totalpris, der fremgår af bookingbekræftelsen.`,
+    content: `Betaling sker online med kort ved booking (via Stripe) eller ved afhentning efter aftale. Prisen er den totalpris, der fremgår af bookingbekræftelsen.`,
   },
   {
     title: "10. Persondatapolitik",

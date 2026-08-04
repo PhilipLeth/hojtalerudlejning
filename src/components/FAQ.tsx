@@ -31,7 +31,7 @@ const faqs = [
   {
     question: "Kan jeg ringe og høre mere?",
     answer:
-      "Selvfølgelig! Ring til os på 31 13 28 52 — vi svarer gerne på spørgsmål om udstyr, levering eller din booking. Du betaler først ved afhentning med MobilePay eller kontant.",
+      "Selvfølgelig! Ring til os på 31 13 28 52 — vi svarer gerne på spørgsmål om udstyr, levering eller din booking. Du kan betale sikkert online med kort, eller vælge at betale ved afhentning.",
   },
   {
     question: "Hvad hvis noget går i stykker?",

@@ -67,7 +67,7 @@ Other times can be arranged when booking. Equipment is delivered with all necess
   },
   {
     title: "9. Payment",
-    content: `Payment is made at pickup via MobilePay or cash. No online prepayment is required. The price is the total price shown in the booking confirmation.`,
+    content: `Payment is made online by card at booking (via Stripe) or at pickup by arrangement. The price is the total price shown in the booking confirmation.`,
   },
   {
     title: "10. Privacy policy",
