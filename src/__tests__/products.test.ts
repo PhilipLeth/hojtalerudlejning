@@ -129,6 +129,23 @@ describe("Addons data", () => {
     expect(haandholdtPro.price).toBe(195);
   });
 
+  it("subwoofer findes som tilvalg med Behringer 12\" og egen produktside", () => {
+    const sub = addons.find((a) => a.id === "subwoofer")!;
+    expect(sub).toBeDefined();
+    expect(sub.price).toBe(295);
+    expect(sub.page).toBe("/subwoofer");
+    expect(sub.image).toBe("/images/product-subwoofer.png");
+    expect(sub.da.label).toContain("Subwoofer");
+    expect(sub.contents?.join(" ")).toContain("Behringer");
+  });
+
+  it("subwoofer kan tilvælges på begge festpakker (whitelistede tilvalg)", () => {
+    for (const id of ["pakke_fest_lille", "pakke_fest_stor"]) {
+      const pakke = rentalProducts.find((p) => p.id === id)!;
+      expect(pakke.allowedAddons).toContain("subwoofer");
+    }
+  });
+
   it("all addons except levering_opsaetning have an image", () => {
     for (const a of addons) {
       if (a.id === "levering_opsaetning") {

@@ -19,7 +19,7 @@ const corsHeaders = {
 };
 
 // Skal matche DEFAULT_INVENTORY i availability.ts
-const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 2, soundboks: 2, festival: 2, lys: 2, rog: 2, stativer: 2, taske: 1 };
+const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 2, soundboks: 2, festival: 2, lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 1 };
 
 const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival"];
 
@@ -38,6 +38,7 @@ const ADDON_NAME_TO_ID: Record<string, string> = {
   rog: "rog", "røg": "rog", roegmaskine: "rog", "røgmaskine": "rog", "smoke": "rog",
   stativer: "stativer", stativ: "stativer",
   taske: "taske", baeretaske: "taske", "bæretaske": "taske",
+  subwoofer: "subwoofer", sub: "subwoofer",
 };
 
 function addDays(iso: string, days: number): string {

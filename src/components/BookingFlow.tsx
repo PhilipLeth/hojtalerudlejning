@@ -306,9 +306,10 @@ export default function BookingFlow({
 
     const hasCurrent = !!speaker;
 
-    // Lys / røg as effects-only
-    if (product === "lys" || product === "rog") {
-      console.log("[booking] Preselect effects-only:", product);
+    // Tilvalg bookes uden højtaler (lys, røg, subwoofer, stativer …)
+    const addonMatch = addons.find((a) => a.id === product && !DELIVERY_IDS.includes(a.id));
+    if (addonMatch) {
+      console.log("[booking] Preselect addon:", product);
       preselected.current = true;
       if (speaker === "effects-only" && selectedAddons.includes(product)) {
         setStep(2);
@@ -337,7 +338,7 @@ export default function BookingFlow({
 
     console.log("[booking] Product not found yet, waiting:", product);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [speakers, rentalProducts, urlTick, speaker, selectedAddons, stashSelectionToCart]);
+  }, [speakers, rentalProducts, addons, urlTick, speaker, selectedAddons, stashSelectionToCart]);
 
   // Fetch availability for selected date range (step 2 validation)
   const checkDateAvailability = useCallback(async (pickup: Date, ret: Date) => {
@@ -395,6 +396,17 @@ export default function BookingFlow({
   const hasLights = selectedAddons.includes("lys");
   const DELIVERY_IDS = ["levering_opsaetning"];
   const hasDelivery = selectedAddons.some((id) => DELIVERY_IDS.includes(id));
+
+  // Bookes ét enkelt tilvalg uden højtaler (fx subwoofer eller røgmaskine),
+  // vis produktets eget navn/billede i stedet for den generiske "Kun effekter"
+  const soloAddons = addons.filter((a) => selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id));
+  const effectsLabel = soloAddons.length === 1 ? soloAddons[0].label : s.effectsOnlyLabel;
+  const effectsImage =
+    soloAddons.length === 1 && soloAddons[0].image
+      ? soloAddons[0].image
+      : hasLights
+        ? "/images/product-lys.png"
+        : "/images/product-rog.png";
 
   const summer = isSummerSale();
   const summerLabel = t[locale].summer;
@@ -698,9 +710,9 @@ export default function BookingFlow({
           <div className="glass rounded-2xl overflow-hidden mb-4">
             {/* Product preview */}
             <div className="flex items-center gap-4 bg-white/[0.02] p-4">
-              <img src={isEffectsOnly ? (hasLights ? "/images/product-lys.png" : "/images/product-rog.png") : selectedRental?.image ?? selectedSpeaker?.product} alt={isEffectsOnly ? (hasLights ? "Lys-pakke med LED-lamper og centereffekt" : "Røgmaskine til fest") : rentalName ?? `${selectedSpeaker?.name ?? "Højtalerpakke"}`} className="h-16 w-16 object-contain rounded-lg" />
+              <img src={isEffectsOnly ? effectsImage : selectedRental?.image ?? selectedSpeaker?.product} alt={isEffectsOnly ? effectsLabel : rentalName ?? `${selectedSpeaker?.name ?? "Højtalerpakke"}`} className="h-16 w-16 object-contain rounded-lg" />
               <div>
-                <p className="font-semibold">{isEffectsOnly ? s.effectsOnlyLabel : isRentalOnly ? rentalName : `${selectedSpeaker?.name}${s.speakerSuffix}`}</p>
+                <p className="font-semibold">{isEffectsOnly ? effectsLabel : isRentalOnly ? rentalName : `${selectedSpeaker?.name}${s.speakerSuffix}`}</p>
                 <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id)).map((a) => a.label).join(" + ") : isRentalOnly ? "" : `${selectedSpeaker?.size} — ${selectedSpeaker?.capacity}`}</p>
               </div>
             </div>
@@ -954,11 +966,11 @@ export default function BookingFlow({
                   onClick={() => setStep(1)}
                   className="flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-4 py-1.5 text-sm font-semibold text-brand-400 transition hover:bg-brand-500/20"
                 >
-                  {(selectedSpeaker?.product || selectedRental?.image) && (
-                    <img src={selectedSpeaker?.product ?? selectedRental?.image} alt="" className="h-6 w-6 rounded object-contain" />
+                  {(selectedSpeaker?.product || selectedRental?.image || isEffectsOnly) && (
+                    <img src={isEffectsOnly ? effectsImage : (selectedSpeaker?.product ?? selectedRental?.image)} alt="" className="h-6 w-6 rounded object-contain" />
                   )}
                   {isEffectsOnly
-                    ? s.effectsOnlyLabel
+                    ? effectsLabel
                     : (selectedSpeaker?.name ?? rentalName)}
                   <svg className="h-3.5 w-3.5 opacity-60" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </button>

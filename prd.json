@@ -417,6 +417,17 @@
       "price_dkk": 195,
       "image": "/images/product-lys.png",
       "status": "live"
+    },
+    {
+      "id": "subwoofer",
+      "name_da": "Subwoofer 12\"",
+      "description_da": "Behringer 12\" aktiv subwoofer — giver festen den dybe bas. Tilvælges til alle højtalerpakker.",
+      "brand": "Behringer",
+      "price_dkk": 295,
+      "image": "/images/product-subwoofer.png",
+      "page": "/subwoofer",
+      "status": "live",
+      "note": "Placeholder-illustration som billede indtil rigtigt foto uploades via /admin/produkter."
     }
   ],
   "pricing_rules": {
@@ -1480,6 +1491,13 @@
       "description": "Admin kan uploade instruktions-/demovideoer pr. produkt (R2). Produktsider viser play-ikon over produktbilledet; klik åbner videomodal med streaming (Range).",
       "priority": "medium",
       "status": "done"
+    },
+    {
+      "id": "subwoofer-produkt",
+      "title": "Subwoofer 12\" som tilvalg til højtalerpakkerne",
+      "description": "Behringer 12\" aktiv sub, 295 kr/weekend. Tilvalg i booking + egen produktside /subwoofer. Mangler rigtigt produktfoto (upload via admin).",
+      "priority": "medium",
+      "status": "done"
     }
   ],
   "status": {
@@ -1518,7 +1536,8 @@
       "Lyskæder som 2 produkter (varm hvid + farvet) + Shure PRO-mikrofoner (trådløs 495 kr / håndholdt 195 kr) — alle 21 produktfotos i brug",
       "Kurv-fix: første produkt bevares i kurven når kunden booker endnu et produkt via Book-knapperne",
       "Produktvideoer: upload fra admin (R2, max 100 MB) + play-knap i produkt-hero med videomodal. Billede-upload flyttet til R2 (max 10 MB, fixer 500 kB-afvisninger)",
-      "Billed-upload ENDELIG fixet: compatibility_date + rå body-upload — verificeret mod ægte Cloudflare-runtime"
+      "Billed-upload ENDELIG fixet: compatibility_date + rå body-upload — verificeret mod ægte Cloudflare-runtime",
+      "Subwoofer 12\" (Behringer) oprettet som tilvalg + produktside; Book-knap på tilvalg virker nu generelt"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1664,6 +1683,16 @@
       "status": "done",
       "date": "2026-08-04",
       "description": "Bugfix: Valgte kunden produkt A og klikkede derefter Book på produkt B (?product=B), blev A overskrevet og forsvandt fra kurven. Nu lægges det igangværende valg (produkt + tilvalg) automatisk i kurven, før det nye produkt vælges. Samme produkt to gange stabler ikke dubletter. '+ Tilføj et produkt mere' bevarer nu også valgte tilvalg (lægges i kurven) og levering/adresse (gælder hele ordren)."
+    },
+    "subwoofer_2026_08": {
+      "status": "done",
+      "date": "2026-08-04",
+      "description": "Nyt produkt: Behringer 12\" aktiv subwoofer, 295 kr. Oprettet som tilvalg (addon id 'subwoofer') så den kan tilvælges sammen med enhver højtalerpakke i booking-step 3, og whitelisted på begge festpakker. Egen produktside /subwoofer, kort på forsiden med 'Ny'-badge, i burger-menuen under Lyd, i sitemap og i produktfeedet. Lager: standard 1 stk (redigerbart i /admin/lager) — availability.ts talte tidligere kun bookinger for produkter i sin booked-liste, så subwoofer er tilføjet der og i udsolgt-oversigten."
+    },
+    "tilvalg_book_knap": {
+      "status": "done",
+      "date": "2026-08-04",
+      "description": "Book-knappen på tilvalgs-produktkort virkede kun for lys og røg (hardkodet). Nu preselecter ?product=<addon-id> ethvert tilvalg, og booking viser tilvalgets eget navn/billede i stedet for den generiske 'Kun effekter' når der kun er valgt ét tilvalg."
     }
   },
   "booking_drawer": {

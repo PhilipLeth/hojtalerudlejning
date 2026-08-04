@@ -32,6 +32,7 @@ const PRODUCT_LABELS: Record<string, string> = {
   rog: "Røgmaskine",
   stativer: "Stativer",
   taske: "Bæretaske",
+  subwoofer: "Subwoofer 12\"",
 };
 
 function label(id: string): string {

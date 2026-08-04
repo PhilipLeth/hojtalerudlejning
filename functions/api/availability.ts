@@ -10,7 +10,7 @@ const corsHeaders = {
   "Content-Type": "application/json",
 };
 
-const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 2, soundboks: 2, festival: 2, lys: 2, rog: 2, stativer: 2, taske: 1 };
+const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 2, soundboks: 2, festival: 2, lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 1 };
 
 const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival"];
 
@@ -56,7 +56,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     }
 
     // Count overlapping bookings per product
-    const booked: Record<string, number> = { thumpgo: 0, party: 0, soundboks: 0, festival: 0, lys: 0, rog: 0, stativer: 0, taske: 0 };
+    const booked: Record<string, number> = { thumpgo: 0, party: 0, soundboks: 0, festival: 0, lys: 0, rog: 0, stativer: 0, taske: 0, subwoofer: 0 };
 
     // Map addon display names to product IDs
     const addonNameToId: Record<string, string> = {
@@ -64,6 +64,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       rog: "rog", "røg": "rog", roegmaskine: "rog", "røgmaskine": "rog", "smoke": "rog",
       stativer: "stativer", stativ: "stativer",
       taske: "taske", baeretaske: "taske", "bæretaske": "taske",
+      subwoofer: "subwoofer", sub: "subwoofer",
     };
 
     const list = await context.env.BOOKINGS.list({ prefix: "booking_" });

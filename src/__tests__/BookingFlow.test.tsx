@@ -286,6 +286,17 @@ describe("BookingFlow - Preselect via ?product=", () => {
     expect(screen.getByText("Low fog-maskine (røggulv)")).toBeInTheDocument();
   });
 
+  it("Book-knap på et tilvalg (subwoofer) preselecter det og viser produktets navn", async () => {
+    window.history.pushState({}, "", "/?product=subwoofer#book");
+    render(<BookingFlow />);
+    await waitFor(() => {
+      expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
+    });
+    // Viser tilvalgets eget navn, ikke den generiske "Kun effekter"
+    expect(screen.getByText('Subwoofer 12"')).toBeInTheDocument();
+    expect(screen.queryByText("Kun effekter")).not.toBeInTheDocument();
+  });
+
   it("beholder første produkt i kurven når man booker endnu et via ?product=", async () => {
     const onSummary = vi.fn();
     window.history.pushState({}, "", "/?product=soundboks#book");

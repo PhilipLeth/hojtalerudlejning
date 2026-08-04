@@ -239,6 +239,15 @@ export const addons: Addon[] = [
     en: { label: "Fog machine", desc: "Compact fog machine incl. fluid — makes the lights 10x better" },
   },
   {
+    id: "subwoofer",
+    page: "/subwoofer",
+    price: 295,
+    image: "/images/product-subwoofer.png",
+    contents: ["Behringer 12\" aktiv subwoofer", "Strømkabel", "Signalkabel til højtalere"],
+    da: { label: "Subwoofer 12\"", desc: "Behringer 12\" aktiv sub — giver festen den dybe bas" },
+    en: { label: "Subwoofer 12\"", desc: "Behringer 12\" powered sub — adds the deep bass" },
+  },
+  {
     id: "stativer",
     price: 95,
     image: "/images/product-stativer.png",
@@ -296,7 +305,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Lille højtalerpakke + enkelt lyseffekt. Lyd og lys til op til 40 pers. — spar 90 kr.",
     desc_en: "Small speaker package + single light effect. Sound and lights for up to 40 people — save 90 DKK.",
     contents: ['2× Alto 10" højtalere', "1 LED-lyseffekt", "Bluetooth + alle kabler", "Bæretaske"],
-    allowedAddons: ["rog", "stativer", "mikrofon", "levering_opsaetning"],
+    allowedAddons: ["subwoofer", "rog", "stativer", "mikrofon", "levering_opsaetning"],
     bundle: {
       discount: 90,
       usecase_da: "Lyd og lys til den lille fest — op til 40 pers. Kompakt sæt, klar på 10 minutter.",
@@ -318,7 +327,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Stor højtalerpakke + lys-pakke. Lyd og lys til op til 100 pers. — spar 190 kr.",
     desc_en: "Large speaker package + light package. Sound and lights for up to 100 people — save 190 DKK.",
     contents: ['2× EV 12" højtalere', "2× stativer", "Lys-pakke (2 lamper + centereffekt)", "Bluetooth + alle kabler"],
-    allowedAddons: ["rog", "mikrofon", "levering_opsaetning"],
+    allowedAddons: ["subwoofer", "rog", "mikrofon", "levering_opsaetning"],
     bundle: {
       discount: 190,
       usecase_da: "Lyd og lys til den store fest — op til 100 pers. med de store højtalere.",
@@ -410,6 +419,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
       { href: "/mackie-thump-go", label: "Mackie Thump GO" },
       { href: "/hojtalerpakke-lille", label: "Højtalerpakke lille" },
       { href: "/hojtalerpakke-normal", label: "Højtalerpakke normal" },
+      { href: "/subwoofer", label: "Subwoofer 12\"" },
     ],
   },
   {

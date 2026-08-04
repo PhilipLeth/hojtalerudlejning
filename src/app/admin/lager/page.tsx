@@ -8,7 +8,7 @@ interface BlockedDate {
   products: string[];
 }
 
-const PRODUCT_IDS = ["thumpgo", "party", "soundboks", "festival", "lys", "rog", "stativer", "taske"];
+const PRODUCT_IDS = ["thumpgo", "party", "soundboks", "festival", "lys", "rog", "stativer", "taske", "subwoofer"];
 const PRODUCT_LABELS: Record<string, string> = {
   thumpgo: "Thump GO",
   party: "Party",
@@ -18,6 +18,7 @@ const PRODUCT_LABELS: Record<string, string> = {
   rog: "Røgmaskine",
   stativer: "Stativer",
   taske: "Taske",
+  subwoofer: "Subwoofer 12\"",
 };
 
 export default function LagerPage() {
