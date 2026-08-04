@@ -310,6 +310,40 @@
       "price_dkk": 195,
       "image": "/images/product-mikrofon-kabel-pro.png",
       "status": "live"
+    },
+    {
+      "id": "karaoke",
+      "category": "av",
+      "name_da": "Karaokemaskine",
+      "description_da": "Singing Machine (Elgiganten #1008036) med indbygget skærm, 2 trådløse mikrofoner, festlys, HDMI + Bluetooth.",
+      "price_dkk": 295,
+      "image": "/images/product-karaoke.png",
+      "status": "live"
+    },
+    {
+      "id": "pakke_karaoke",
+      "category": "av",
+      "name_da": "Karaokepakken",
+      "description_da": "Karaokemaskine + 55\" storskærm — 795 kr (spar 95).",
+      "price_dkk": 795,
+      "bundle_of": [
+        "karaoke",
+        "skaerm_55"
+      ],
+      "status": "live"
+    },
+    {
+      "id": "pakke_karaoke_fest",
+      "category": "av",
+      "name_da": "Karaoke-festpakken",
+      "description_da": "Karaokemaskine + 55\" storskærm + store højtalere — 1.395 kr (spar 190).",
+      "price_dkk": 1395,
+      "bundle_of": [
+        "karaoke",
+        "skaerm_55",
+        "festival"
+      ],
+      "status": "live"
     }
   ],
   "addons": [
@@ -633,6 +667,11 @@
     "roeg": {
       "path": "/roeg",
       "description": "Kategoriside for røg: røgmaskine + low fog-maskine (røggulv med is).",
+      "status": "live"
+    },
+    "karaoke": {
+      "path": "/karaoke",
+      "description": "Kategoriside: karaokemaskine, karaokepakker (m. storskærm/store højtalere), storskærm, store højtalere, projektor.",
       "status": "live"
     }
   },

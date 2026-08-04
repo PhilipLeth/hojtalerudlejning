@@ -345,6 +345,52 @@ export const rentalProducts: RentalProduct[] = [
   { id: "pakke_praesentation", page: "/pakke-praesentation", category: "av", price: 695, image: "/images/product-projektor.png", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen — spar 90 kr.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation — save 90 kr.", contents: ["Full HD projektor", "Lærred 160 cm", "Håndholdt mic + kabel", "HDMI + strøm"], bundle: { discount: 90, usecase_da: "Alt til præsentationen — projektor, lærred og mikrofon.", usecase_en: "Everything for your presentation.", parts: [ { productId: "projektor", label_da: "Projektor", label_en: "Projector", price: 495 }, { productId: "laerred_160", label_da: "Lærred 160 cm", label_en: "Screen 160 cm", price: 195 }, { productId: "haandholdt_mikrofon", label_da: "Håndholdt mikrofon", label_en: "Wired mic", price: 95 } ] } },
   { id: "pakke_konference", page: "/pakke-konference", category: "av", price: 1195, image: "/images/product-skaerm.png", name_da: "Konferencepakken", name_en: "Conference bundle", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke. Klar til konference — spar 140 kr.", desc_en: "55\" screen + wireless headset + small speaker package. Conference-ready — save 140 kr.", contents: ['55" skærm + stativ', "Trådløst headset", '2× 10" højtalere', "Kabler + adapter"], bundle: { discount: 140, usecase_da: "Klar til konference — skærm, headset og lyd.", usecase_en: "Conference-ready — screen, headset and sound.", parts: [ { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 345 }, { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speakers", price: 395 } ] } },
   { id: "pakke_tale_musik", page: "/pakke-tale-musik", category: "av", price: 895, image: "/images/product-festival.png", name_da: "Tale & musik-pakken", name_en: "Speech & music bundle", desc_da: "Stor højtalerpakke + trådløs mikrofon. Taler og musik til events — spar 95 kr.", desc_en: "Large speaker package + wireless mic. Speeches and music for events — save 95 kr.", contents: ['2× 12" højtalere + stativer', "Trådløs mikrofon", "Alle kabler"], bundle: { discount: 95, usecase_da: "Taler og musik til events.", usecase_en: "Speeches and music for events.", parts: [ { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speakers", price: 695 }, { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 295 } ] } },
+  { id: "karaoke", page: "/karaoke-maskine", category: "av", price: 295, image: "/images/product-karaoke.png", name_da: "Karaokemaskine", name_en: "Karaoke machine", desc_da: "Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys — tilslut TV via HDMI.", desc_en: "Singing Machine with built-in screen, 2 wireless mics and party lights — HDMI for your TV.", contents: ["Singing Machine karaoke-maskine", "2 trådløse mikrofoner", "Indbygget skærm + festlys", "HDMI-kabel + Bluetooth"] },
+  {
+    id: "pakke_karaoke",
+    page: "/pakke-karaoke",
+    category: "av",
+    price: 795,
+    image: "/images/product-karaoke.png",
+    name_da: "Karaokepakken",
+    name_en: "Karaoke bundle",
+    desc_da: "Karaokemaskine + 55\" storskærm, så alle kan synge med — spar 95 kr.",
+    desc_en: "Karaoke machine + 55\" screen so everyone can sing along — save 95 kr.",
+    contents: ["Singing Machine + 2 trådløse mikrofoner", '55" LED-skærm på gulvstativ', "HDMI + alle kabler"],
+    allowedAddons: ["rog", "lyseffekt", "levering", "levering_opsaetning"],
+    bundle: {
+      discount: 95,
+      usecase_da: "Karaoke på storskærm — teksterne står knivskarpt for hele festen.",
+      usecase_en: "Karaoke on the big screen — lyrics sharp for the whole party.",
+      parts: [
+        { productId: "karaoke", label_da: "Karaokemaskine", label_en: "Karaoke machine", price: 295 },
+        { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 },
+      ],
+    },
+  },
+  {
+    id: "pakke_karaoke_fest",
+    page: "/pakke-karaoke-fest",
+    category: "av",
+    price: 1395,
+    image: "/images/product-karaoke.png",
+    name_da: "Karaoke-festpakken",
+    name_en: "Karaoke party bundle",
+    desc_da: "Karaokemaskine + 55\" storskærm + store højtalere — karaoke til op til 100 pers. Spar 190 kr.",
+    desc_en: "Karaoke machine + 55\" screen + large speakers — karaoke for up to 100 people. Save 190 kr.",
+    contents: ["Singing Machine + 2 trådløse mikrofoner", '55" LED-skærm på gulvstativ', '2× 12" højtalere + stativer', "Alle kabler"],
+    allowedAddons: ["rog", "lyseffekt", "lys", "levering", "levering_opsaetning"],
+    bundle: {
+      discount: 190,
+      usecase_da: "Fuld karaoke-fest: storskærm til teksterne og store højtalere til lyden.",
+      usecase_en: "Full karaoke party: big screen for lyrics, large speakers for the sound.",
+      parts: [
+        { productId: "karaoke", label_da: "Karaokemaskine", label_en: "Karaoke machine", price: 295 },
+        { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 },
+        { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speakers", price: 695 },
+      ],
+    },
+  },
   { id: "low_fog", page: "/roeg", category: "roeg", price: 295, image: "/images/product-lowfog.png", name_da: "Low fog-maskine (røggulv)", name_en: "Low fog machine (fog floor)", desc_da: "Laver et flot gulv af røg vha. is — 'dansen på skyer'-effekten fra bryllupper og musikvideoer.", desc_en: "Creates a floor of low-lying fog using ice — the 'dancing on clouds' effect.", contents: ["Low fog-maskine", "Røgvæske", "Is-bakke / instruks"] },
 ];
 
@@ -375,6 +421,15 @@ export const NAV_CATEGORIES: NavCategory[] = [
       { href: "/lys-pakke", label: "Lys-pakke" },
       { href: "/discokugle", label: "Discokugle" },
       { href: "/lyskaeder", label: "Lyskæder" },
+    ],
+  },
+  {
+    id: "karaoke",
+    title: "Karaoke",
+    href: "/karaoke",
+    links: [
+      { href: "/karaoke", label: "Karaoke & underholdning" },
+      { href: "/karaoke-maskine", label: "Karaokemaskine" },
     ],
   },
   {
