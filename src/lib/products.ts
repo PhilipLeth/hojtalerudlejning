@@ -1,4 +1,4 @@
-/* ───── Single source of truth for all product data ─────
+/* ───── Single source of truth for all product data (v2 — cache-rotation 4/8) ─────
  *
  * These arrays are the DEFAULT catalog (fallback/seed).
  * The live catalog can be overridden from /admin/produkter and is stored in
