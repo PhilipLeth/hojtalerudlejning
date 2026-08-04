@@ -19,7 +19,9 @@ export default function SiteHeader() {
 
   return (
     <header className="relative z-30 pt-9">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+      {/* pr-16 indtil xl: burger-knappen ligger fixed i højre side (top-12 right-4)
+          og må ikke dække telefonnummeret. Fra xl er indholdet centreret fri af den. */}
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 pr-16 xl:pr-4">
         <Link
           href={isEn ? "/en" : "/"}
           className="group flex items-center gap-2"
