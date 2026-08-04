@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Lej Storskærm København | Fra 595 kr | Lejhøjtaler.dk",
   description:
-    "Lej 55\" LED-storskærm i København fra 595 kr/weekend. Skærm på gulvstativ til præsentationer og events. Fungerer i dagslys. Betal ved afhentning.",
+    "Lej 55\" LED-storskærm i København fra 595 kr/weekend. Skærm på 3-fod stativ til præsentationer og events. Fungerer i dagslys. Betal ved afhentning.",
   keywords: [
     "lej storskærm",
     "skærm udlejning",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Storskærm København | Fra 595 kr",
     description:
-      "Lej 55\" LED-storskærm i København fra 595 kr/weekend. Gulvstativ inkluderet. Book online.",
+      "Lej 55\" LED-storskærm i København fra 595 kr/weekend. 3-fod stativ inkluderet. Book online.",
     url: "https://lejhojtaler.dk/skaerm",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -74,7 +74,7 @@ export default function SkaermPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            55&quot; LED-skærm på gulvstativ. Fungerer i dagslys — skarpere end projektor.
+            55&quot; LED-skærm på 3-fod stativ. Fungerer i dagslys — skarpere end projektor.
           </p>
           <a
             href="/?product=skaerm_55#book"
@@ -110,7 +110,7 @@ export default function SkaermPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Gulvstativ inkluderet</span>
+                  <span>3-fod stativ inkluderet</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>

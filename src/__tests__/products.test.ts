@@ -146,6 +146,60 @@ describe("Addons data", () => {
     }
   });
 
+  it("karaokemaskinen koster 695 kr (2 mics + skærm)", () => {
+    const k = rentalProducts.find((p) => p.id === "karaoke")!;
+    expect(k.price).toBe(695);
+    expect(k.contents?.join(" ")).toContain("2 trådløse mikrofoner");
+  });
+
+  it("32\" skærm findes med 3-fod stativ, og 55\" er også 3-fod", () => {
+    const s32 = rentalProducts.find((p) => p.id === "skaerm_32")!;
+    const s55 = rentalProducts.find((p) => p.id === "skaerm_55")!;
+    expect(s32.price).toBe(395);
+    expect(s32.image).toBe("/images/product-skaerm-32.png");
+    expect(s32.contents).toContain("3-fod stativ");
+    expect(s55.contents).toContain("3-fod stativ");
+    expect(s55.contents).not.toContain("Gulvstativ");
+    expect(s55.desc_da).toContain("3-fod");
+  });
+
+  it("karaokepakkerne har stærke rabatter og korrekt sum af dele", () => {
+    const lille = rentalProducts.find((p) => p.id === "pakke_karaoke")!;
+    const fest = rentalProducts.find((p) => p.id === "pakke_karaoke_fest")!;
+
+    // Karaokepakken: 695 + 395 = 1090 → 900 (spar 190)
+    expect(lille.bundle!.parts.map((x) => x.productId)).toEqual(["karaoke", "skaerm_32"]);
+    const lilleSum = lille.bundle!.parts.reduce((s, x) => s + x.price, 0);
+    expect(lilleSum).toBe(1090);
+    expect(lille.price).toBe(900);
+    expect(lille.bundle!.discount).toBe(190);
+    expect(lilleSum - lille.price).toBe(lille.bundle!.discount);
+
+    // Festpakken: 695 + 595 + 695 = 1985 → 1500 (spar 485)
+    expect(fest.bundle!.parts.map((x) => x.productId)).toEqual(["karaoke", "skaerm_55", "festival"]);
+    const festSum = fest.bundle!.parts.reduce((s, x) => s + x.price, 0);
+    expect(festSum).toBe(1985);
+    expect(fest.price).toBe(1500);
+    expect(fest.bundle!.discount).toBe(485);
+    expect(festSum - fest.price).toBe(fest.bundle!.discount);
+  });
+
+  it("bundle-dele matcher de faktiske produktpriser (ingen forældede tal)", () => {
+    const priceOf = (id: string) =>
+      rentalProducts.find((p) => p.id === id)?.price ??
+      speakers.find((p) => p.id === id)?.price ??
+      addons.find((p) => p.id === id)?.price;
+    for (const p of rentalProducts) {
+      for (const part of p.bundle?.parts ?? []) {
+        const actual = priceOf(part.productId);
+        expect(
+          actual,
+          `${p.id} → ${part.productId} står til ${part.price} men koster ${actual}`
+        ).toBe(part.price);
+      }
+    }
+  });
+
   it("all addons except levering_opsaetning have an image", () => {
     for (const a of addons) {
       if (a.id === "levering_opsaetning") {

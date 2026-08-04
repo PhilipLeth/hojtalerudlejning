@@ -134,7 +134,7 @@
       "id": "skaerm",
       "category": "av",
       "name_da": "Storskærm",
-      "description_da": "55\" LED-skærm på gulvstativ. Fungerer i dagslys — skarpere end projektor.",
+      "description_da": "55\" LED-skærm på 3-fod stativ — justerbar højde.",
       "price_dkk": 595,
       "includes": [
         "55\" LED-skærm",
@@ -315,8 +315,8 @@
       "id": "karaoke",
       "category": "av",
       "name_da": "Karaokemaskine",
-      "description_da": "Singing Machine (Elgiganten #1008036) med indbygget skærm, 2 trådløse mikrofoner, festlys, HDMI + Bluetooth.",
-      "price_dkk": 295,
+      "description_da": "Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys — tilslut TV via HDMI.",
+      "price_dkk": 695,
       "image": "/images/product-karaoke.png",
       "status": "live"
     },
@@ -324,8 +324,8 @@
       "id": "pakke_karaoke",
       "category": "av",
       "name_da": "Karaokepakken",
-      "description_da": "Karaokemaskine + 55\" storskærm — 795 kr (spar 95).",
-      "price_dkk": 795,
+      "description_da": "Karaokemaskine + 32\" skærm på 3-fod stativ. Spar 190 kr (list 1.090 kr).",
+      "price_dkk": 900,
       "bundle_of": [
         "karaoke",
         "skaerm_55"
@@ -336,14 +336,25 @@
       "id": "pakke_karaoke_fest",
       "category": "av",
       "name_da": "Karaoke-festpakken",
-      "description_da": "Karaokemaskine + 55\" storskærm + store højtalere — 1.395 kr (spar 190).",
-      "price_dkk": 1395,
+      "description_da": "Karaokemaskine + 55\" storskærm + store højtalere. Spar 485 kr (list 1.985 kr).",
+      "price_dkk": 1500,
       "bundle_of": [
         "karaoke",
         "skaerm_55",
         "festival"
       ],
       "status": "live"
+    },
+    {
+      "id": "skaerm_32",
+      "category": "av",
+      "name_da": "32\" Skærm",
+      "description_da": "32\" LED-skærm på 3-fod stativ — kompakt og nem at flytte. Perfekt til karaoke.",
+      "price_dkk": 395,
+      "image": "/images/product-skaerm-32.png",
+      "page": "/skaerm-32",
+      "status": "live",
+      "note": "Placeholder-illustration indtil rigtigt foto uploades via /admin/produkter."
     }
   ],
   "addons": [
@@ -1498,6 +1509,13 @@
       "description": "Behringer 12\" aktiv sub, 295 kr/weekend. Tilvalg i booking + egen produktside /subwoofer. Mangler rigtigt produktfoto (upload via admin).",
       "priority": "medium",
       "status": "done"
+    },
+    {
+      "id": "karaoke-pakkefokus",
+      "title": "Karaoke: højere maskinpris og stærke pakkerabatter",
+      "description": "Maskine 695 kr. Pakker: 900 kr (spar 190) og 1.500 kr (spar 485). Ny 32\" skærm på 3-fod stativ til 395 kr. /karaoke leder med pakkerne.",
+      "priority": "high",
+      "status": "done"
     }
   ],
   "status": {
@@ -1537,7 +1555,8 @@
       "Kurv-fix: første produkt bevares i kurven når kunden booker endnu et produkt via Book-knapperne",
       "Produktvideoer: upload fra admin (R2, max 100 MB) + play-knap i produkt-hero med videomodal. Billede-upload flyttet til R2 (max 10 MB, fixer 500 kB-afvisninger)",
       "Billed-upload ENDELIG fixet: compatibility_date + rå body-upload — verificeret mod ægte Cloudflare-runtime",
-      "Subwoofer 12\" (Behringer) oprettet som tilvalg + produktside; Book-knap på tilvalg virker nu generelt"
+      "Subwoofer 12\" (Behringer) oprettet som tilvalg + produktside; Book-knap på tilvalg virker nu generelt",
+      "Karaoke omlagt til pakkefokus: maskine 695 kr, pakker 900/1.500 kr med 190/485 kr rabat + ny 32\" skærm på 3-fod stativ"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1693,6 +1712,16 @@
       "status": "done",
       "date": "2026-08-04",
       "description": "Book-knappen på tilvalgs-produktkort virkede kun for lys og røg (hardkodet). Nu preselecter ?product=<addon-id> ethvert tilvalg, og booking viser tilvalgets eget navn/billede i stedet for den generiske 'Kun effekter' når der kun er valgt ét tilvalg."
+    },
+    "karaoke_prissaetning_2026_08": {
+      "status": "done",
+      "date": "2026-08-04",
+      "description": "Karaokemaskinen hævet 295 → 695 kr (den indeholder 2 trådløse mikrofoner, indbygget skærm og festlys). Strategien er nu pakkefokus med stærke rabatter: Karaokepakken 900 kr (maskine 695 + 32\" skærm 395 = 1.090, spar 190) og Karaoke-festpakken 1.500 kr (maskine + 55\" skærm + store højtalere = 1.985, spar 485). /karaoke leder nu med pakkerne og viser eksplicit besparelsen; enkeltdele er flyttet ned som sekundært valg."
+    },
+    "skaerm_3fod_2026_08": {
+      "status": "done",
+      "date": "2026-08-04",
+      "description": "Nyt produkt: 32\" skærm på 3-fod stativ, 395 kr (/skaerm-32) — indgår i Karaokepakken. 55\" storskærm er rettet fra gulvstativ til 3-fod stativ i tekst, indhold og billede. Begge skærmbilleder er placeholder-illustrationer indtil rigtige fotos uploades."
     }
   },
   "booking_drawer": {

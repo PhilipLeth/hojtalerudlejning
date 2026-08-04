@@ -27,7 +27,7 @@ export default function Page() {
       image="/images/product-skaerm.png"
       imageAlt="Konferencepakke med storskærm, headset og højtalere"
       productId="pakke_konference"
-      bullets={["55\" LED-skærm på gulvstativ", "Trådløst headset", "2× 10\" højtalere med Bluetooth", "Alle kabler og adaptere", "Spar 140 kr ift. enkeltpriser"]}
+      bullets={["55\" LED-skærm på 3-fod stativ", "Trådløst headset", "2× 10\" højtalere med Bluetooth", "Alle kabler og adaptere", "Spar 140 kr ift. enkeltpriser"]}
     />
   );
 }

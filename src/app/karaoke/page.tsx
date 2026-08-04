@@ -7,7 +7,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 export const metadata: Metadata = {
   title: "Lej Karaoke København | Maskine, storskærm & lyd | Lejhøjtaler.dk",
   description:
-    "Lej karaoke i København: Singing Machine med 2 trådløse mikrofoner fra 295 kr, karaokepakker med 55\" storskærm og store højtalere. Betal online. Book på 2 min.",
+    "Lej karaoke i København: Karaokepakken med maskine + skærm fra 900 kr — spar op til 485 kr på pakkerne. Singing Machine med 2 trådløse mikrofoner. Book på 2 min.",
   keywords: [
     "lej karaoke",
     "karaoke maskine leje",
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/karaoke" },
   openGraph: {
-    title: "Lej Karaoke København | Fra 295 kr | Lejhøjtaler.dk",
-    description: "Singing Machine + trådløse mikrofoner fra 295 kr. Pakker med storskærm og store højtalere. Book online.",
+    title: "Lej Karaoke København | Pakker fra 900 kr — spar op til 485 kr",
+    description: "Karaokepakker fra 900 kr — spar op til 485 kr. Maskine, skærm og store højtalere. Book online.",
     url: "https://lejhojtaler.dk/karaoke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -54,38 +54,72 @@ export default function KaraokePage() {
             Lej karaoke til festen
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 295 kr.
+              pakker fra 900 kr.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys.
-            Tilføj storskærm og store højtalere, så hele festen kan synge med.
+            Singing Machine med 2 trådløse mikrofoner, skærm til teksterne og festlys.
+            Book en pakke og spar op til 485 kr i forhold til enkeltpriserne.
           </p>
           <a
-            href="#produkter"
+            href="#pakker"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Se karaoke-udstyret
+            Se karaokepakkerne
           </a>
         </div>
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        <section id="produkter" className="mx-auto max-w-4xl px-4 py-24">
-          <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Karaoke & underholdning</h2>
+        {/* Pakker først — det er her kunden sparer mest */}
+        <section id="pakker" className="mx-auto max-w-4xl px-4 py-20 sm:py-24">
+          <p className="mb-2 text-center text-xs font-semibold uppercase tracking-[0.2em] text-brand-400">
+            Spar op til 485 kr
+          </p>
+          <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Karaokepakkerne</h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Maskinen klarer det hele selv — eller byg op med 55&quot; storskærm til teksterne,
-            store højtalere til lyden og projektor til kæmpelærredet.
+            Maskine, skærm til teksterne og lyd der kan følge med — samlet til én pris.
+            Det er markant billigere end at leje delene hver for sig.
           </p>
 
           <CategoryProductGrid
             items={[
-              { id: "karaoke", tag: "Ny" },
-              { id: "pakke_karaoke", tag: "Spar 95,-" },
-              { id: "pakke_karaoke_fest", tag: "Spar 190,-" },
+              { id: "pakke_karaoke", tag: "Spar 190,-" },
+              { id: "pakke_karaoke_fest", tag: "Spar 485,-" },
+            ]}
+          />
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl border border-brand-500/25 bg-brand-500/[0.06] p-5">
+              <p className="text-sm font-semibold text-brand-400">Karaokepakken · 900 kr</p>
+              <p className="mt-1 text-sm text-white/50">
+                Maskine (695) + 32&quot; skærm (395) = 1.090 kr hver for sig.
+                <span className="font-semibold text-white/80"> Du sparer 190 kr.</span>
+              </p>
+            </div>
+            <div className="rounded-2xl border border-brand-500/25 bg-brand-500/[0.06] p-5">
+              <p className="text-sm font-semibold text-brand-400">Karaoke-festpakken · 1.500 kr</p>
+              <p className="mt-1 text-sm text-white/50">
+                Maskine (695) + 55&quot; skærm (595) + store højtalere (695) = 1.985 kr hver for sig.
+                <span className="font-semibold text-white/80"> Du sparer 485 kr.</span>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Enkeltdele */}
+        <section id="produkter" className="mx-auto max-w-4xl px-4 pb-24">
+          <h2 className="mb-4 text-center text-2xl font-bold sm:text-3xl">Eller lej delene enkeltvis</h2>
+          <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
+            Har du allerede skærm eller højtalere? Så lej bare det du mangler.
+          </p>
+
+          <CategoryProductGrid
+            items={[
+              { id: "karaoke" },
+              { id: "skaerm_32", tag: "Ny" },
               { id: "skaerm_55" },
               { id: "festival" },
-              { id: "projektor" },
             ]}
           />
         </section>
