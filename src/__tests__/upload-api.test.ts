@@ -173,6 +173,37 @@ describe("Admin billede-upload (/api/upload → R2)", () => {
     const res = await uploadPost({ request, env: { BOOKINGS: kv, MEDIA: r2, ADMIN_SECRET: SECRET } } as any);
     expect(res.status).toBe(200);
   });
+
+  it("rå body-upload (nyt ImageField) virker og bevarer bytes + mime", async () => {
+    // Sådan uploader ImageField nu — immun over for formData/compat-dato-bugs
+    const bytes = new Uint8Array(4096).map((_, i) => i % 256);
+    const request = new Request(`https://lejhojtaler.dk/api/upload?secret=${SECRET}`, {
+      method: "POST",
+      headers: { "Content-Type": "image/webp" },
+      body: bytes,
+    });
+    const res = await uploadPost({ request, env: { BOOKINGS: kv, MEDIA: r2, ADMIN_SECRET: SECRET } } as any);
+    expect(res.status).toBe(200);
+    const { url } = await res.json();
+    const key = url.replace("/api/image/", "");
+
+    const getRes = await imageGet({ params: { key }, env: { BOOKINGS: kv, MEDIA: r2 } } as any);
+    expect(getRes.status).toBe(200);
+    expect(getRes.headers.get("Content-Type")).toBe("image/webp");
+    const back = new Uint8Array(await getRes.arrayBuffer());
+    expect(back.length).toBe(4096);
+    expect([...back.slice(0, 10)]).toEqual([...bytes.slice(0, 10)]);
+  });
+
+  it("rå body-upload afviser over 10 MB (413)", async () => {
+    const request = new Request(`https://lejhojtaler.dk/api/upload?secret=${SECRET}`, {
+      method: "POST",
+      headers: { "Content-Type": "image/jpeg" },
+      body: new Uint8Array(11_000_000),
+    });
+    const res = await uploadPost({ request, env: { BOOKINGS: kv, MEDIA: r2, ADMIN_SECRET: SECRET } } as any);
+    expect(res.status).toBe(413);
+  });
 });
 
 function videoContext(

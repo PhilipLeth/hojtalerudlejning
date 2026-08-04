@@ -28,11 +28,12 @@ export default function ImageField({
     setUploading(true);
     try {
       const secret = localStorage.getItem("admin_secret") ?? "";
-      const fd = new FormData();
-      fd.append("file", file);
+      // Rå body (ikke multipart) — produktionens formData-parsing har historisk
+      // konverteret filer til strings ("No file"-fejlen)
       const res = await fetch(`/api/upload?secret=${encodeURIComponent(secret)}`, {
         method: "POST",
-        body: fd,
+        headers: { "Content-Type": file.type || "image/jpeg" },
+        body: file,
       });
       const data = await res.json();
       if (!res.ok) {

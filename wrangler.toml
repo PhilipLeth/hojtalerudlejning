@@ -1,5 +1,9 @@
 name = "speaker-rental"
 pages_build_output_dir = "out"
+# Uden moderne compat-dato konverterer formData() fil-parts til strings i
+# produktion ("No file"-buggen i billed-upload) — lokal wrangler bruger en ny
+# dato som default, så fejlen sås aldrig lokalt.
+compatibility_date = "2026-08-01"
 
 [[kv_namespaces]]
 binding = "BOOKINGS"

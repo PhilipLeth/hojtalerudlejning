@@ -27,28 +27,38 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     });
   }
 
-  let formData: FormData;
-  try {
-    formData = await context.request.formData();
-  } catch (err) {
-    console.error("[upload] formData parse failed:", err);
-    return new Response(JSON.stringify({ error: "Invalid form data" }), {
-      status: 400,
-      headers: { ...cors, "Content-Type": "application/json" },
-    });
-  }
+  const reqType = (context.request.headers.get("Content-Type") || "").split(";")[0].trim();
 
-  // Workers kan returnere File eller Blob — ikke altid instanceof File
-  const entry = formData.get("file");
-  if (!entry || typeof entry === "string") {
-    console.error("[upload] No file in formData. Keys:", [...formData.keys()]);
-    return new Response(JSON.stringify({ error: "No file" }), {
-      status: 400,
-      headers: { ...cors, "Content-Type": "application/json" },
-    });
-  }
+  let blob: Blob;
+  if (reqType.startsWith("image/")) {
+    // Rå body (nyt ImageField) — immun over for formData/compat-dato-problemer
+    blob = await context.request.blob();
+    blob = new Blob([blob], { type: reqType });
+  } else {
+    // Multipart-fallback (ældre admin-klienter). OBS: kræver moderne
+    // compatibility_date — ellers konverteres fil-parts til strings.
+    let formData: FormData;
+    try {
+      formData = await context.request.formData();
+    } catch (err) {
+      console.error("[upload] formData parse failed:", err);
+      return new Response(JSON.stringify({ error: "Invalid form data" }), {
+        status: 400,
+        headers: { ...cors, "Content-Type": "application/json" },
+      });
+    }
 
-  const blob = entry as Blob;
+    // Workers kan returnere File eller Blob — ikke altid instanceof File
+    const entry = formData.get("file");
+    if (!entry || typeof entry === "string") {
+      console.error("[upload] No file in formData. Keys:", [...formData.keys()]);
+      return new Response(JSON.stringify({ error: "No file" }), {
+        status: 400,
+        headers: { ...cors, "Content-Type": "application/json" },
+      });
+    }
+    blob = entry as Blob;
+  }
 
   if (blob.size > MAX_BYTES) {
     return new Response(JSON.stringify({ error: "Filen er for stor (maks 10 MB)" }), {

@@ -1478,7 +1478,8 @@
       "Festpakker omlagt til lyd+lys: Lille festpakke 790 kr (Alto + lys) og Stor festpakke 1090 kr (EV 12\" + lys, 100 pers.) — levering/opsætning som tilvalg",
       "Lyskæder som 2 produkter (varm hvid + farvet) + Shure PRO-mikrofoner (trådløs 495 kr / håndholdt 195 kr) — alle 21 produktfotos i brug",
       "Kurv-fix: første produkt bevares i kurven når kunden booker endnu et produkt via Book-knapperne",
-      "Produktvideoer: upload fra admin (R2, max 100 MB) + play-knap i produkt-hero med videomodal. Billede-upload flyttet til R2 (max 10 MB, fixer 500 kB-afvisninger)"
+      "Produktvideoer: upload fra admin (R2, max 100 MB) + play-knap i produkt-hero med videomodal. Billede-upload flyttet til R2 (max 10 MB, fixer 500 kB-afvisninger)",
+      "Billed-upload ENDELIG fixet: compatibility_date + rå body-upload — verificeret mod ægte Cloudflare-runtime"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1564,7 +1565,7 @@
   "admin_improvements": {
     "image_upload": {
       "status": "done",
-      "description": "ImageField bruger nu fil-upload (klik eller drag-and-drop) i stedet for manuel SVG-sti. Billeder gemmes i KV og serveres via /api/image/<key>. Maks 500 kB. OPDATERET 2026-08-04: billeder gemmes nu i R2 (max 10 MB — KV's 500 kB-grænse afviste almindelige fotos); gamle KV-billeder serveres stadig."
+      "description": "ImageField bruger nu fil-upload (klik eller drag-and-drop) i stedet for manuel SVG-sti. Billeder gemmes i KV og serveres via /api/image/<key>. Maks 500 kB. OPDATERET 2026-08-04: billeder gemmes nu i R2 (max 10 MB — KV's 500 kB-grænse afviste almindelige fotos); gamle KV-billeder serveres stadig. ROOT CAUSE fundet 2026-08-04: Pages-projektet manglede compatibility_date, så formData() konverterede fil-parts til strings i produktion ('No file') — virkede lokalt fordi wrangler bruger ny dato. Fix: compatibility_date=2026-08-01 i wrangler.toml + ImageField sender nu rå body (som video). Verificeret end-to-end mod preview-deployment (byte-identisk retur, multipart og rå body)."
     },
     "addon_whitelist_per_product": {
       "status": "done",
