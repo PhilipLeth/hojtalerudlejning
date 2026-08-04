@@ -167,12 +167,12 @@ describe("Addons data", () => {
     const lille = rentalProducts.find((p) => p.id === "pakke_karaoke")!;
     const fest = rentalProducts.find((p) => p.id === "pakke_karaoke_fest")!;
 
-    // Karaokepakken: 695 + 395 = 1090 → 900 (spar 190)
-    expect(lille.bundle!.parts.map((x) => x.productId)).toEqual(["karaoke", "skaerm_32"]);
+    // Karaokepakken: maskine 695 + 32" skærm 395 + lille højtalerpakke 395 = 1485 → 1100 (spar 385)
+    expect(lille.bundle!.parts.map((x) => x.productId)).toEqual(["karaoke", "skaerm_32", "party"]);
     const lilleSum = lille.bundle!.parts.reduce((s, x) => s + x.price, 0);
-    expect(lilleSum).toBe(1090);
-    expect(lille.price).toBe(900);
-    expect(lille.bundle!.discount).toBe(190);
+    expect(lilleSum).toBe(1485);
+    expect(lille.price).toBe(1100);
+    expect(lille.bundle!.discount).toBe(385);
     expect(lilleSum - lille.price).toBe(lille.bundle!.discount);
 
     // Festpakken: 695 + 595 + 695 = 1985 → 1500 (spar 485)
@@ -182,6 +182,14 @@ describe("Addons data", () => {
     expect(fest.price).toBe(1500);
     expect(fest.bundle!.discount).toBe(485);
     expect(festSum - fest.price).toBe(fest.bundle!.discount);
+  });
+
+  it("karaokepakkerne indeholder højtalere — lille sæt i den lille, stort i den store", () => {
+    const lille = rentalProducts.find((p) => p.id === "pakke_karaoke")!;
+    const fest = rentalProducts.find((p) => p.id === "pakke_karaoke_fest")!;
+    expect(lille.bundle!.parts.map((x) => x.productId)).toContain("party");
+    expect(fest.bundle!.parts.map((x) => x.productId)).toContain("festival");
+    expect(lille.contents?.join(" ")).toContain("Alto");
   });
 
   it("bundle-dele matcher de faktiske produktpriser (ingen forældede tal)", () => {

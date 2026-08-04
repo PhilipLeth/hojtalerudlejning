@@ -48,15 +48,15 @@ export default function Page() {
         <div className="glass rounded-2xl p-8 text-center">
           <h2 className="mb-3 text-2xl font-bold">Skal den bruges til karaoke?</h2>
           <p className="mx-auto mb-6 max-w-md text-white/50">
-            Så får du den billigere i Karaokepakken sammen med maskinen — 900 kr i stedet
-            for 1.090 kr.
+            Så får du den billigere i Karaokepakken sammen med maskine og højtalere —
+            1.100 kr i stedet for 1.485 kr.
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/pakke-karaoke"
               className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
             >
-              Se Karaokepakken – spar 190 kr
+              Se Karaokepakken – spar 385 kr
             </Link>
             <Link
               href="/skaerm"

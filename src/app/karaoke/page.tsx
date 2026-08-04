@@ -7,7 +7,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 export const metadata: Metadata = {
   title: "Lej Karaoke København | Maskine, storskærm & lyd | Lejhøjtaler.dk",
   description:
-    "Lej karaoke i København: Karaokepakken med maskine + skærm fra 900 kr — spar op til 485 kr på pakkerne. Singing Machine med 2 trådløse mikrofoner. Book på 2 min.",
+    "Lej karaoke i København: Karaokepakker med maskine, skærm og højtalere fra 1.100 kr — spar op til 485 kr. Singing Machine med 2 trådløse mikrofoner. Book på 2 min.",
   keywords: [
     "lej karaoke",
     "karaoke maskine leje",
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/karaoke" },
   openGraph: {
-    title: "Lej Karaoke København | Pakker fra 900 kr — spar op til 485 kr",
-    description: "Karaokepakker fra 900 kr — spar op til 485 kr. Maskine, skærm og store højtalere. Book online.",
+    title: "Lej Karaoke København | Pakker fra 1.100 kr — spar op til 485 kr",
+    description: "Karaokepakker fra 1.100 kr — spar op til 485 kr. Maskine, skærm og højtalere. Book online.",
     url: "https://lejhojtaler.dk/karaoke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -54,7 +54,7 @@ export default function KaraokePage() {
             Lej karaoke til festen
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              pakker fra 900 kr.
+              pakker fra 1.100 kr.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
@@ -84,17 +84,17 @@ export default function KaraokePage() {
 
           <CategoryProductGrid
             items={[
-              { id: "pakke_karaoke", tag: "Spar 190,-" },
+              { id: "pakke_karaoke", tag: "Spar 385,-" },
               { id: "pakke_karaoke_fest", tag: "Spar 485,-" },
             ]}
           />
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-brand-500/25 bg-brand-500/[0.06] p-5">
-              <p className="text-sm font-semibold text-brand-400">Karaokepakken · 900 kr</p>
+              <p className="text-sm font-semibold text-brand-400">Karaokepakken · 1.100 kr</p>
               <p className="mt-1 text-sm text-white/50">
-                Maskine (695) + 32&quot; skærm (395) = 1.090 kr hver for sig.
-                <span className="font-semibold text-white/80"> Du sparer 190 kr.</span>
+                Maskine (695) + 32&quot; skærm (395) + lille højtalerpakke (395) = 1.485 kr
+                hver for sig.<span className="font-semibold text-white/80"> Du sparer 385 kr.</span>
               </p>
             </div>
             <div className="rounded-2xl border border-brand-500/25 bg-brand-500/[0.06] p-5">

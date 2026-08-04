@@ -346,7 +346,7 @@ const DEFAULT_CATALOG: CatalogRaw = {
     { id: "pakke_konference", category: "av", price: 1195, image: "/images/product-skaerm.png", name_da: "Konferencepakken", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke — spar 140 kr." },
     { id: "pakke_tale_musik", category: "av", price: 895, image: "/images/product-festival.png", name_da: "Tale & musik-pakken", desc_da: "Stor højtalerpakke + trådløs mikrofon — spar 95 kr." },
     { id: "karaoke", category: "av", price: 695, image: "/images/product-karaoke.png", name_da: "Karaokemaskine", desc_da: "Singing Machine m. skærm, 2 trådløse mikrofoner og festlys." },
-    { id: "pakke_karaoke", category: "av", price: 900, image: "/images/product-karaoke.png", name_da: "Karaokepakken", desc_da: "Karaokemaskine + 32\" skærm på stativ — spar 190 kr." },
+    { id: "pakke_karaoke", category: "av", price: 1100, image: "/images/product-karaoke.png", name_da: "Karaokepakken", desc_da: "Karaokemaskine + 32\" skærm + lille højtalerpakke — spar 385 kr." },
     { id: "pakke_karaoke_fest", category: "av", price: 1500, image: "/images/product-karaoke.png", name_da: "Karaoke-festpakken", desc_da: "Karaokemaskine + 55\" storskærm + store højtalere — spar 485 kr." },
     { id: "low_fog", category: "roeg", price: 295, hidden: true, image: "/images/product-lowfog.png", name_da: "Low fog-maskine", desc_da: "Røggulv med is." },
   ],

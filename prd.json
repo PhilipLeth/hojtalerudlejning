@@ -324,8 +324,8 @@
       "id": "pakke_karaoke",
       "category": "av",
       "name_da": "Karaokepakken",
-      "description_da": "Karaokemaskine + 32\" skærm på 3-fod stativ. Spar 190 kr (list 1.090 kr).",
-      "price_dkk": 900,
+      "description_da": "Karaokemaskine + 32\" skærm på 3-fod stativ + lille højtalerpakke (2× Alto 10\"). Spar 385 kr (list 1.485 kr).",
+      "price_dkk": 1100,
       "bundle_of": [
         "karaoke",
         "skaerm_55"
@@ -1556,7 +1556,7 @@
       "Produktvideoer: upload fra admin (R2, max 100 MB) + play-knap i produkt-hero med videomodal. Billede-upload flyttet til R2 (max 10 MB, fixer 500 kB-afvisninger)",
       "Billed-upload ENDELIG fixet: compatibility_date + rå body-upload — verificeret mod ægte Cloudflare-runtime",
       "Subwoofer 12\" (Behringer) oprettet som tilvalg + produktside; Book-knap på tilvalg virker nu generelt",
-      "Karaoke omlagt til pakkefokus: maskine 695 kr, pakker 900/1.500 kr med 190/485 kr rabat + ny 32\" skærm på 3-fod stativ"
+      "Karaoke omlagt til pakkefokus: maskine 695 kr; Karaokepakken 1.100 kr (m. lille højtalersæt, spar 385) og Karaoke-festpakken 1.500 kr (spar 485) + ny 32\" skærm på 3-fod stativ"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1716,7 +1716,7 @@
     "karaoke_prissaetning_2026_08": {
       "status": "done",
       "date": "2026-08-04",
-      "description": "Karaokemaskinen hævet 295 → 695 kr (den indeholder 2 trådløse mikrofoner, indbygget skærm og festlys). Strategien er nu pakkefokus med stærke rabatter: Karaokepakken 900 kr (maskine 695 + 32\" skærm 395 = 1.090, spar 190) og Karaoke-festpakken 1.500 kr (maskine + 55\" skærm + store højtalere = 1.985, spar 485). /karaoke leder nu med pakkerne og viser eksplicit besparelsen; enkeltdele er flyttet ned som sekundært valg."
+      "description": "Karaokemaskinen hævet 295 → 695 kr (2 trådløse mikrofoner, indbygget skærm, festlys). Pakkefokus med stærke rabatter og parallel opbygning — begge pakker indeholder maskine + skærm + højtalere: Karaokepakken 1.100 kr (maskine 695 + 32\" skærm 395 + lille højtalerpakke 395 = 1.485, spar 385, op til 40 pers.) og Karaoke-festpakken 1.500 kr (maskine + 55\" skærm + stor højtalerpakke = 1.985, spar 485, op til 100 pers.). /karaoke leder med pakkerne og viser besparelsen som regnestykke; enkeltdele er sekundære."
     },
     "skaerm_3fod_2026_08": {
       "status": "done",
