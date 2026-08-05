@@ -356,7 +356,7 @@ const DEFAULT_CATALOG: CatalogRaw = {
     { id: "lyseffekt", price: 195, image: "/images/product-lys.png", da: { label: "Enkelt lyseffekt", desc: "1 LED-festlys — plug and play." } },
     { id: "lys", price: 495, image: "/images/product-lys.png", da: { label: "Lys-pakke", desc: "2 farvede lamper + centereffekt." } },
     { id: "rog", price: 245, image: "/images/product-rog.png", da: { label: "Røgmaskine", desc: "Kompakt røgmaskine inkl. væske." } },
-    { id: "subwoofer", price: 295, image: "/images/product-subwoofer.png", da: { label: "Subwoofer 12\"", desc: "Behringer 12\" aktiv sub — dyb bas til festen." } },
+    { id: "subwoofer", price: 295, image: "/images/product-subwoofer-v2.png", da: { label: "Subwoofer 12\"", desc: "Behringer 12\" aktiv sub — dyb bas til festen." } },
   ],
 };
 

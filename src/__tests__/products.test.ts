@@ -144,7 +144,7 @@ describe("Addons data", () => {
     expect(sub).toBeDefined();
     expect(sub.price).toBe(295);
     expect(sub.page).toBe("/subwoofer");
-    expect(sub.image).toBe("/images/product-subwoofer.png");
+    expect(sub.image).toBe("/images/product-subwoofer-v2.png");
     expect(sub.da.label).toContain("Subwoofer");
     expect(sub.contents?.join(" ")).toContain("Behringer");
   });

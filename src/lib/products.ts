@@ -257,7 +257,7 @@ export const addons: Addon[] = [
     page: "/subwoofer",
     youtubeUrl: "https://www.youtube.com/watch?v=C9J1G7KQIHA",
     price: 295,
-    image: "/images/product-subwoofer.png",
+    image: "/images/product-subwoofer-v2.png",
     contents: ["Behringer 12\" aktiv subwoofer", "Strømkabel", "Signalkabel til højtalere"],
     da: { label: "Subwoofer 12\"", desc: "Behringer 12\" aktiv sub — giver festen den dybe bas" },
     en: { label: "Subwoofer 12\"", desc: "Behringer 12\" powered sub — adds the deep bass" },

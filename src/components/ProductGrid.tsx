@@ -18,7 +18,7 @@ const GRID: Array<{
   { id: "thumpgo", page: "/mackie-thump-go", name: "Mackie Thump GO", price: 350, image: "/images/product-thumpgo.png", tag: "Batteri" },
   { id: "party", page: "/hojtalerpakke-lille", name: "Højtalerpakke lille", price: 399, image: "/images/product-party.png" },
   { id: "festival", page: "/hojtalerpakke-normal", name: "Højtalerpakke normal", price: 700, image: "/images/product-festival.png" },
-  { id: "subwoofer", page: "/subwoofer", name: "Subwoofer 12\"", price: 295, image: "/images/product-subwoofer.png", tag: "Ny" },
+  { id: "subwoofer", page: "/subwoofer", name: "Subwoofer 12\"", price: 295, image: "/images/product-subwoofer-v2.png", tag: "Ny" },
   { id: "lys", page: "/lys-pakke", name: "Lys-pakke", price: 495, image: "/images/product-lys.png" },
   { id: "rog", page: "/roegmaskine", name: "Røgmaskine", price: 250, image: "/images/product-rog.png" },
   { id: "discokugle", page: "/discokugle", name: "Discokugle", price: 250, image: "/images/product-discokugle.png" },
