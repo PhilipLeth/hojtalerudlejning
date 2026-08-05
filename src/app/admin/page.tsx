@@ -22,10 +22,29 @@ interface Booking {
   updatedAt?: string;
   reviewMailSentAt?: string;
   communications?: Array<{ type: string; label: string; to?: string; sentAt: string; note?: string }>;
+  /** Sat af Stripe-webhook ved gennemført online betaling */
+  paid?: boolean;
+  paidAmount?: number;
+  paidAt?: string;
+  /** Kundens valg ved booking: "online" eller "pickup" */
+  paymentChoice?: string;
+  /** Admin har kvitteret for kontant/MobilePay ved afhentning */
+  paidManual?: boolean;
+  /** Admin har set anmeldelsen komme ind */
+  reviewDone?: boolean;
 }
 
 const STATUS_FLOW = ["ny", "bekraeftet", "afhentet", "afleveret"];
-const STATUS_LABELS: Record<string, string> = { ny: "Ny", bekraeftet: "Bekræftet", afhentet: "Afhentet", afleveret: "Afleveret" };
+// Ids beholdes uændret (gamle bookinger i KV bruger dem) — kun visningen ændres
+const STATUS_LABELS: Record<string, string> = { ny: "Ny", bekraeftet: "Bekræftet", afhentet: "Udleveret", afleveret: "Returneret" };
+
+/** Betalingsstatus udledt af Stripe-webhook, kundens valg og admins kvittering */
+function paymentState(b: Booking): { label: string; bg: string; text: string; border: string } {
+  if (b.paid) return { label: "Betalt online", bg: "#d4edda", text: "#155724", border: "#28a745" };
+  if (b.paidManual) return { label: "Betalt v. afhentning", bg: "#d4edda", text: "#155724", border: "#28a745" };
+  if (b.paymentChoice === "online") return { label: "Online — afventer", bg: "#fff3cd", text: "#856404", border: "#ffc107" };
+  return { label: "Betales v. afhentning", bg: "#f0f0f0", text: "#555", border: "#ccc" };
+}
 const STATUS_COLORS: Record<string, { bg: string; text: string; border: string }> = {
   ny: { bg: "#fff3cd", text: "#856404", border: "#ffc107" },
   bekraeftet: { bg: "#cce5ff", text: "#004085", border: "#4dabf7" },
@@ -139,6 +158,24 @@ export default function AdminPage() {
       else { const data = await res.json(); alert(data.error || "Sletning fejlede"); }
     } catch { alert("Netværksfejl"); }
     finally { setUpdating(null); }
+  };
+
+  const setFlag = async (id: string, flag: "paidManual" | "reviewDone", value: boolean) => {
+    setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, [flag]: value } : b)));
+    try {
+      const res = await fetch(`/api/bookings-update?secret=${encodeURIComponent(secret)}`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, action: "set_flag", flag, value }),
+      });
+      if (!res.ok) {
+        setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, [flag]: !value } : b)));
+        const data = await res.json();
+        alert(data.error || "Kunne ikke gemme");
+      }
+    } catch {
+      setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, [flag]: !value } : b)));
+      alert("Netværksfejl");
+    }
   };
 
   const getNextStatus = (current: string) => {
@@ -293,6 +330,8 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
             <th style={thStyle}>Periode</th>
             <th style={thStyle}>Total</th>
             <th style={thStyle}>Status</th>
+            <th style={thStyle}>Betaling</th>
+            <th style={thStyle} title="Kunden har lagt en anmeldelse">⭐</th>
             <th style={thStyle}>Handling</th>
           </tr>
         </thead>
@@ -330,6 +369,43 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                     )}
                   </td>
                   <td style={tdStyle} onClick={(e) => e.stopPropagation()}>
+                    {(() => {
+                      const p = paymentState(b);
+                      return (
+                        <span style={{ display: "inline-block", padding: "3px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, background: p.bg, color: p.text, border: `1px solid ${p.border}`, whiteSpace: "nowrap" }}>
+                          {p.label}
+                        </span>
+                      );
+                    })()}
+                    {!b.paid && (
+                      <label style={{ display: "flex", alignItems: "center", gap: "4px", marginTop: "4px", fontSize: "11px", color: "#888", cursor: "pointer" }}>
+                        <input
+                          type="checkbox"
+                          checked={!!b.paidManual}
+                          onChange={(e) => setFlag(b.id, "paidManual", e.target.checked)}
+                        />
+                        Modtaget
+                      </label>
+                    )}
+                    {b.paidAt && (
+                      <div style={{ fontSize: "10px", color: "#aaa", marginTop: "2px" }}>
+                        {new Date(b.paidAt).toLocaleDateString("da-DK")}
+                      </div>
+                    )}
+                  </td>
+                  <td style={{ ...tdStyle, textAlign: "center" }} onClick={(e) => e.stopPropagation()}>
+                    <input
+                      type="checkbox"
+                      checked={!!b.reviewDone}
+                      onChange={(e) => setFlag(b.id, "reviewDone", e.target.checked)}
+                      title={b.reviewMailSentAt ? `Anmeldelsesmail sendt ${new Date(b.reviewMailSentAt).toLocaleDateString("da-DK")}` : "Anmeldelsesmail endnu ikke sendt"}
+                      style={{ width: "16px", height: "16px", cursor: "pointer" }}
+                    />
+                    {b.reviewMailSentAt && !b.reviewDone && (
+                      <div style={{ fontSize: "9px", color: "#aaa", marginTop: "2px" }}>mail sendt</div>
+                    )}
+                  </td>
+                  <td style={tdStyle} onClick={(e) => e.stopPropagation()}>
                     <div style={{ display: "flex", gap: "6px", flexWrap: "nowrap" }}>
                       {nextStatus && (
                         <button onClick={() => updateStatus(b.id, nextStatus)} disabled={updating === b.id} style={{ padding: "4px 10px", fontSize: "11px", fontWeight: 600, background: STATUS_COLORS[nextStatus].border, color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer", whiteSpace: "nowrap", opacity: updating === b.id ? 0.6 : 1 }}>
@@ -347,7 +423,7 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                 </tr>
                 {isExpanded && (
                   <tr key={`${b.id}-detail`}>
-                    <td colSpan={6} style={{ padding: "0 12px 16px", background: "#fafffe", borderBottom: "1px solid #eee" }}>
+                    <td colSpan={8} style={{ padding: "0 12px 16px", background: "#fafffe", borderBottom: "1px solid #eee" }}>
                       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "8px 24px", fontSize: "13px", paddingTop: "12px" }}>
                         <div><strong>Email:</strong> <a href={`mailto:${b.email}`} style={{ color: "#0070f3" }}>{b.email}</a></div>
                         <div><strong>Telefon:</strong> <a href={`tel:${b.phone}`} style={{ color: "#0070f3" }}>{b.phone}</a></div>

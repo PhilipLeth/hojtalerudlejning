@@ -5,6 +5,7 @@ import { type Locale, t } from "@/lib/i18n";
 
 import { dayMultiplier, isSummerSale, applyDiscount } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
+import { trackPurchase } from "@/lib/analytics";
 import { loadStripe } from "@stripe/stripe-js";
 
 /* ───── Helpers ───── */
@@ -542,13 +543,21 @@ export default function BookingFlow({
           body: JSON.stringify({ email: form.email }),
         }).catch(() => {});
       }
-      // Push conversion event to GTM dataLayer
-      if (typeof window !== "undefined" && (window as any).dataLayer) {
-        (window as any).dataLayer.push({
-          event: "booking_complete",
-          booking_value: total,
-          booking_currency: "DKK",
-          booking_product: isEffectsOnly ? "effects-only" : speaker,
+      // Konvertering: ved afhentningsbetaling er bookingen gennemført her.
+      // Ved online betaling sporer vi først på kvitteringssiden, når Stripe
+      // har bekræftet betalingen — ellers tælles afbrudte betalinger med.
+      const purchaseItems = [
+        ...(selectedSpeaker ? [{ id: selectedSpeaker.id, name: selectedSpeaker.name, price: speakerPrice }] : []),
+        ...(selectedRental ? [{ id: selectedRental.id, name: rentalName ?? selectedRental.id, price: speakerPrice }] : []),
+        ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ id: a.id, name: a.label, price: a.price })),
+        ...cartItems.map((ci) => ({ id: ci.productId, name: ci.name, price: ci.price })),
+      ];
+      if (payMethod !== "online") {
+        trackPurchase({
+          transactionId: bookResult.bookingId ?? `booking_${Date.now()}`,
+          value: total,
+          items: purchaseItems,
+          paymentMethod: "pickup",
         });
       }
       if (payMethod === "online") {

@@ -224,9 +224,11 @@ export const speakers: Speaker[] = [
 export const addons: Addon[] = [
   {
     id: "lyseffekt",
+    page: "/enkelt-lyseffekt",
     youtubeUrl: "https://www.youtube.com/watch?v=XhecuXfY0vo",
     price: 195,
     image: "/images/product-lys.png",
+    contents: ["1× LED-festlys på fod", "Strømkabel", "Automatiske farveeffekter"],
     da: { label: "Enkelt lyseffekt", desc: "1 LED-festlys på fod — plug and play farveeffekt" },
     en: { label: "Single light effect", desc: "1 LED party light — plug and play colour effect" },
   },
@@ -314,7 +316,7 @@ export const rentalProducts: RentalProduct[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=0VN2Q2bMufA",
     category: "lyd",
     price: 500,
-    image: "/images/product-party.png",
+    image: "/images/product-pakke-fest-lille.png",
     name_da: "Lille festpakke",
     name_en: "Small party package",
     desc_da: "Lille højtalerpakke + enkelt lyseffekt. Lyd og lys til op til 40 pers. — spar 90 kr.",
@@ -337,7 +339,7 @@ export const rentalProducts: RentalProduct[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0",
     category: "lyd",
     price: 1000,
-    image: "/images/product-festival.png",
+    image: "/images/product-pakke-fest-stor.png",
     name_da: "Stor festpakke",
     name_en: "Large party package",
     desc_da: "Stor højtalerpakke + lys-pakke. Lyd og lys til op til 100 pers. — spar 190 kr.",
@@ -448,6 +450,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
     href: "/festlys",
     links: [
       { href: "/festlys", label: "Festlys & lysbar" },
+      { href: "/enkelt-lyseffekt", label: "Enkelt lyseffekt" },
       { href: "/lys-pakke", label: "Lys-pakke" },
       { href: "/discokugle", label: "Discokugle" },
       { href: "/lyskaeder", label: "Lyskæder" },

@@ -1082,6 +1082,17 @@
         "ae_oe_aa_transskription": "BEKRÆFTET: æ/ø/å-transskriptionen rammer IKKE kun slugs. Frontmatter-title og -description samt brødteksten bruger 'hojtaler', 'Kobenhavn', 'PA-anlaeg', 'foedselsdag', 'udendors', 'saadan', 'vaelger', 'goer'. Frontmatter-title feeder både <title> (blog/[slug]/page.tsx:17) og <h1> (linje 115). Vi taber eksakt match på præcis det ord kunderne skriver. Ramte filer: billig-hojtaler-leje, festlys-guide, foedselsdagsfest-lyd, hojtaler-til-fest, lyd-til-havefest, musikanlaeg-til-fest, pa-anlaeg-udlejning-kobenhavn. Slugs beholdes (URL-equity) — kun synlig tekst rettes.",
         "manglende_lejlighedssider": "Årshjulets søgninger med købsintention har ingen landingsside: konfirmation, polterabend, studenterkørsel, bryllup, julefrokost, nytår. 'Lyd til havefest' og 'Lyd til fødselsdag' findes kun som blogindlæg der besvarer et spørgsmål — de skal konverteres til landingssider der sælger en pakke med pris og bookingknap. Nye sider tager 3-6 mdr om at rangere, så forårssiderne (konfirmation, polterabend, studenterkørsel, bryllup) bygges NU, ikke i marts."
       }
+    },
+    "analytics_konvertering_fix": {
+      "date": "2026-08-05",
+      "problem": "GA4 registrerede ingen konverteringer trods reelle bookinger.",
+      "aarsager": [
+        "Koden pushede kun til dataLayer HVIS window.dataLayer allerede fandtes — var GTM ikke loadet endnu (afterInteractive/adblocker), forsvandt eventet tavst uden fejl.",
+        "Der blev kun sendt et custom dataLayer-event ('booking_complete'), som først når GA4 hvis GTM er sat op med trigger + GA4-tag. Der blev aldrig kaldt gtag('event','purchase'), så GA4 så aldrig en konvertering.",
+        "Online betaling sporede FØR betalingen (afbrudte betalinger ville tælle med) og eventet gik tabt ved redirect til Stripe. Kvitteringssiden /book/tak havde ingen tracking overhovedet."
+      ],
+      "loesning": "Ny src/lib/analytics.ts med trackPurchase(): initialiserer dataLayer hvis den mangler, sender GA4's standard purchase-event via gtag (virker uden GTM-opsætning), beholder booking_complete til eksisterende triggers, og deduplikerer på booking-id via sessionStorage. Afhentningsbetaling spores ved indsendelse; online betaling spores først på /book/tak når Stripe har bekræftet. 5 regressionstests.",
+      "husk": "Marker 'purchase' som nøglebegivenhed i GA4 (Admin → Begivenheder), hvis det ikke sker automatisk. Data er 24-48 timer om at vise sig."
     }
   },
   "design": {
@@ -1583,6 +1594,20 @@
       "description": "De 4 testimonials er ægte (fra tidligere udlejning). Rating sættes tilbage på højtalerpakker, lys og røg — ikke blankt på alle 20 produkter.",
       "priority": "medium",
       "status": "done"
+    },
+    {
+      "id": "ga4-konvertering-fix",
+      "title": "GA4 registrerede ingen konverteringer",
+      "description": "Tre fejl: tavs dataLayer-guard, intet gtag purchase-event, og online betaling sporet før Stripe bekræftede. Rettet med src/lib/analytics.ts + tracking på kvitteringssiden.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "ordrestatus-betaling-review",
+      "title": "Betalingsstatus, udleveret/returneret og review-flueben i ordreoverblik",
+      "description": "Betalingsbadge fra Stripe + manuel kvittering, omdøbte statuslabels og ⭐-checkmark pr. ordre.",
+      "priority": "high",
+      "status": "done"
     }
   ],
   "status": {
@@ -1629,7 +1654,9 @@
       "Intern styleguide fjernet fra bloggen (301 til /blog) + æ/ø/å rettet i alle blogtitler, beskrivelser og brødtekst",
       "8 lejlighedssider live: konfirmation, polterabend, studenterkørsel, bryllup, julefrokost, nytår, havefest, fødselsdag — med anbefalet pakke, pris, bookingknap og FAQ-schema",
       "GDPR: privatlivspolitik, oplysningstekst ved checkout, nyhedsbrev som aktivt tilvalg, footer-links",
-      "Kommunikationslog pr. booking i admin"
+      "Kommunikationslog pr. booking i admin",
+      "GA4-konverteringer virker: purchase-event sendes både via gtag og dataLayer, online betaling spores først når Stripe bekræfter",
+      "Ordreoverblik med betalingsstatus, Udleveret/Returneret og review-flueben"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1737,6 +1764,10 @@
     "kommunikationslog": {
       "status": "done",
       "description": "Hver booking har nu et communications-array i KV. Bookingbekræftelsen logges ved oprettelse (inkl. hvilket upsell-tilbud der blev vist), anmeldelsesmailen logges når status sættes til afleveret. Admin viser 'Sendte mails' med type, tidspunkt og modtager i detaljevisningen. Ældre bookinger uden log falder tilbage til reviewMailSentAt."
+    },
+    "ordrestatus_2026_08_05": {
+      "status": "done",
+      "description": "Ordreoverblikket viser nu tre ting mere: (1) Betalingsstatus — 'Betalt online' sættes automatisk af Stripe-webhooken, 'Online — afventer' hvis kunden valgte online men ikke gennemførte, 'Betales v. afhentning' ellers; admin kan sætte flueben 'Modtaget' når der betales kontant/MobilePay. (2) Statuslabels omdøbt til Udleveret og Returneret (interne ids afhentet/afleveret uændret, så gamle bookinger virker). (3) ⭐-kolonne hvor admin kan markere at kunden har lagt en anmeldelse; viser 'mail sendt' indtil da. Flag gemmes via ny action=set_flag på /api/bookings-update."
     }
   },
   "booking_improvements": {

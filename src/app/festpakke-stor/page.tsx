@@ -26,7 +26,7 @@ export default function FestpakkeStorPage() {
       price={1000}
       headline="Stor festpakke — lyd og lys til 100 pers."
       sub="2× EV 12&quot; højtalere + stativer + lys-pakke. Fuld fest — spar 190 kr."
-      image="/images/product-festival.png"
+      image="/images/product-pakke-fest-stor.png"
       imageAlt="Stor festpakke med store EV højtalere og lyseffekt"
       productId="pakke_fest_stor"
       bullets={[

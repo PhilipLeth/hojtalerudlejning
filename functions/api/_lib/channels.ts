@@ -326,8 +326,8 @@ const DEFAULT_CATALOG: CatalogRaw = {
     { id: "festival", price: 695, product: "/images/product-festival.png", da: { name: "Stor højtalerpakke", desc: "2× 12\" EV — klar til større events." } },
   ],
   rentalProducts: [
-    { id: "pakke_fest_lille", category: "lyd", price: 500, image: "/images/product-party.png", name_da: "Lille festpakke", desc_da: "Lille højtalerpakke + lys-pakke — spar 100 kr." },
-    { id: "pakke_fest_stor", category: "lyd", price: 1000, image: "/images/product-festival.png", name_da: "Stor festpakke", desc_da: "Stor højtalerpakke + lys-pakke til 100 pers. — spar 100 kr." },
+    { id: "pakke_fest_lille", category: "lyd", price: 500, image: "/images/product-pakke-fest-lille.png", name_da: "Lille festpakke", desc_da: "Lille højtalerpakke + lys-pakke — spar 100 kr." },
+    { id: "pakke_fest_stor", category: "lyd", price: 1000, image: "/images/product-pakke-fest-stor.png", name_da: "Stor festpakke", desc_da: "Stor højtalerpakke + lys-pakke til 100 pers. — spar 100 kr." },
     { id: "discokugle", category: "lys", price: 245, image: "/images/product-discokugle.png", name_da: "Discokugle", desc_da: "Roterende discokugle med LED." },
     { id: "lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.png", name_da: "Lyskæde varm hvid", desc_da: "10m lyskæde med varmt hvidt lys." },
     { id: "lyskaeder_farvet", category: "lys", price: 195, image: "/images/product-lyskaeder-farvet.png", name_da: "Lyskæde farvet", desc_da: "10m lyskæde med farvede pærer." },

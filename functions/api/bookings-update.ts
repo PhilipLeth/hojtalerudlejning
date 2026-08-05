@@ -63,8 +63,14 @@ export const onRequestOptions: PagesFunction<Env> = async () => {
 interface UpdateBody {
   id: string;
   status?: string;
-  action?: "delete";
+  action?: "delete" | "set_flag";
+  /** set_flag: hvilket felt der slås til/fra */
+  flag?: "paidManual" | "reviewDone";
+  value?: boolean;
 }
+
+/** Felter admin kan slå til/fra direkte i ordreoverblikket */
+const VALID_FLAGS = ["paidManual", "reviewDone"] as const;
 
 const VALID_STATUSES = ["ny", "bekraeftet", "afhentet", "afleveret"];
 
@@ -99,6 +105,33 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       }
       await context.env.BOOKINGS.delete(body.id);
       return new Response(JSON.stringify({ ok: true, deleted: body.id }), {
+        status: 200,
+        headers: corsHeaders,
+      });
+    }
+
+    // Slå betalings- eller anmeldelsesflueben til/fra
+    if (body.action === "set_flag") {
+      if (!body.flag || !VALID_FLAGS.includes(body.flag)) {
+        return new Response(JSON.stringify({ error: `Invalid flag. Must be one of: ${VALID_FLAGS.join(", ")}` }), {
+          status: 400,
+          headers: corsHeaders,
+        });
+      }
+      const existingFlag = await context.env.BOOKINGS.get(body.id);
+      if (!existingFlag) {
+        return new Response(JSON.stringify({ error: "Booking not found" }), {
+          status: 404,
+          headers: corsHeaders,
+        });
+      }
+      const bookingFlag = JSON.parse(existingFlag);
+      const on = body.value !== false;
+      bookingFlag[body.flag] = on;
+      bookingFlag[`${body.flag}At`] = on ? new Date().toISOString() : null;
+      bookingFlag.updatedAt = new Date().toISOString();
+      await context.env.BOOKINGS.put(body.id, JSON.stringify(bookingFlag));
+      return new Response(JSON.stringify({ ok: true, booking: bookingFlag }), {
         status: 200,
         headers: corsHeaders,
       });

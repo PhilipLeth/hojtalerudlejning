@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { trackPurchase } from "@/lib/analytics";
 
 type State =
   | { kind: "loading" }
@@ -24,6 +25,13 @@ export default function PaymentResult() {
       .then((d) => {
         if (d.status === "complete" && d.paymentStatus === "paid") {
           setState({ kind: "paid", amount: typeof d.amount === "number" ? d.amount : null });
+          // Konvertering sendes FØRST her — når Stripe har bekræftet betalingen.
+          // transactionId = booking-id, så GA4 deduplikerer ved genindlæsning.
+          trackPurchase({
+            transactionId: d.bookingId ?? sessionId,
+            value: typeof d.amount === "number" ? d.amount / 100 : 0,
+            paymentMethod: "online",
+          });
         } else if (d.status === "open") {
           setState({ kind: "open" });
         } else {
