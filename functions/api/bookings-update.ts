@@ -6,9 +6,12 @@ interface Env {
   GOOGLE_REVIEW_URL?: string;
 }
 
-// Fallback hvis GOOGLE_REVIEW_URL ikke er sat: åbner virksomheden i Google Maps
+// Fallback hvis GOOGLE_REVIEW_URL ikke er sat. Adressen er med, så Google lander
+// direkte på virksomhedsprofilen frem for en resultatliste — kunden skal så kun
+// klikke "Skriv en anmeldelse". Sæt GOOGLE_REVIEW_URL (g.page/r/…/review) for
+// at springe det ekstra klik over.
 const GOOGLE_REVIEW_FALLBACK =
-  "https://www.google.com/maps/search/?api=1&query=Lejh%C3%B8jtaler.dk+K%C3%B8benhavn";
+  "https://www.google.com/maps/search/?api=1&query=Lejh%C3%B8jtaler.dk%2C%20Halvtolv%209%2C%201436%20K%C3%B8benhavn";
 
 function reviewMailHtml(name: string, reviewUrl: string, locale?: string): { subject: string; html: string } {
   if (locale === "en") {
