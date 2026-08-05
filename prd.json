@@ -1983,7 +1983,18 @@
       "TELEFONNUMMER FORKERT: profilen viser 50 15 07 31, men det korrekte er 31 13 28 52. Alle der ringer fra Google når et forkert nummer.",
       "KATEGORI FORKERT: står som 'Teltudlejning'. Primærkategori er en af de stærkeste lokale rankingfaktorer — skal være udlejning af lyd-/festudstyr.",
       "BESKRIVELSE lover slush ice-maskine, fadølsanlæg og personale til eventpakker, som ikke findes i kataloget."
-    ]
+    ],
+    "kategori_anbefaling": {
+      "vurdering": "'Music shop' (Musikbutik) er en dårlig primærkategori — den signalerer detailsalg af instrumenter/musikvarer, ikke udlejning. Google bruger primærkategorien til at afgøre hvilke søgninger man overhovedet vises på; en butikskategori matcher ikke 'lej højtaler' eller 'højtaler udlejning'.",
+      "primaer_anbefalet": "Audio visual equipment rental service (DK: Udlejning af AV-udstyr)",
+      "sekundaere_anbefalet": [
+        "Party equipment rental service (Udlejning af festudstyr)",
+        "Equipment rental agency (Udlejningsfirma)",
+        "Stage lighting equipment supplier — kun hvis lys skal vægtes"
+      ],
+      "advarsel": "Vælg kun kategorier I reelt leverer på. Den nuværende 'Teltudlejning' giver forkerte opkald — samme fælde som fx 'DJ service' eller 'Event planner', hvis I ikke tilbyder det.",
+      "note": "Primærkategori kan give midlertidig udsving i placeringer i 1-2 uger efter skift. Op til 9 sekundære kategorier kan tilføjes."
+    }
   },
   "task_overblik": {
     "opdateret": "2026-08-05",
