@@ -1,73 +1,73 @@
 ---
-title: "Musikanlaeg til fest -- saadan vaelger du rigtigt"
-description: "Forskellen paa en Bluetooth-hojtaler og et rigtigt musikanlaeg til fest. Guide til at vaelge det rigtige PA-system til din fest."
+title: "Musikanlæg til fest – sådan vælger du rigtigt"
+description: "Forskellen på en Bluetooth-højtaler og et rigtigt musikanlæg til fest. Guide til at vælge det rigtige PA-system til din fest."
 date: "2026-06-10"
 keywords:
-  - musikanlaeg til fest
-  - musikanlaeg udlejning
-  - lej musikanlaeg
-  - PA anlaeg fest
+  - musikanlæg til fest
+  - musikanlæg udlejning
+  - lej musikanlæg
+  - PA anlæg fest
 ---
 
-# Musikanlaeg til fest -- saadan vaelger du rigtigt
+# Musikanlæg til fest – sådan vælger du rigtigt
 
-"Kan vi ikke bare bruge en Bluetooth-hojtaler?" Det spoergsmaal har vi hoert mange gange. Og svaret er: det kommer an paa festen. Her forklarer vi forskellen mellem en Bluetooth-hojtaler og et rigtigt musikanlaeg, saa du kan traefe det rigtige valg.
+"Kan vi ikke bare bruge en Bluetooth-højtaler?" Det spørgsmål har vi hørt mange gange. Og svaret er: det kommer an på festen. Her forklarer vi forskellen mellem en Bluetooth-højtaler og et rigtigt musikanlæg, så du kan træffe det rigtige valg.
 
-## Bluetooth-hojtaler vs. PA-anlaeg
+## Bluetooth-højtaler vs. PA-anlæg
 
-| | Bluetooth-hojtaler | PA-anlaeg |
+| | Bluetooth-højtaler | PA-anlæg |
 |---|---|---|
-| **Lydtryk** | Lavt-middel | Hoejt |
-| **Bass** | Begraenset | Dyb, ren bas via subwoofer |
-| **Raekkevide** | 3-5 meter | 15-30+ meter |
+| **Lydtryk** | Lavt-middel | Højt |
+| **Bass** | Begrænset | Dyb, ren bas via subwoofer |
+| **Rækkevide** | 3-5 meter | 15-30+ meter |
 | **Mikrofon** | Sjaldent | Ja, via mixer |
-| **Gaester** | Op til 15 | Op til 100+ |
-| **Pris (leje)** | -- | Fra 395 kr/weekend |
+| **Gæster** | Op til 15 | Op til 100+ |
+| **Pris (leje)** | – | Fra 395 kr/weekend |
 
-### Hvornaar er en Bluetooth-hojtaler nok?
+### Hvornår er en Bluetooth-højtaler nok?
 
 - Stille baggrundslyd til middag for 8-15 personer
 - En hyggelig aften i stuen
-- Musik i koekkenet, mens du laver mad
+- Musik i køkkenet, mens du laver mad
 
-### Hvornaar har du brug for et musikanlaeg?
+### Hvornår har du brug for et musikanlæg?
 
-- Fester med 20+ gaester, hvor musikken skal overdoeve snak
-- Udendors -- haven, terrassen, stranden
-- Naar der skal danses -- du har brug for bas
-- Taler og mikrofon -- konfirmation, bryllup, firmafest
-- DJ-setup -- en DJ kan ikke arbejde med en JBL Flip
+- Fester med 20+ gæster, hvor musikken skal overdøve snak
+- Udendørs – haven, terrassen, stranden
+- Når der skal danses – du har brug for bas
+- Taler og mikrofon – konfirmation, bryllup, firmafest
+- DJ-setup – en DJ kan ikke arbejde med en JBL Flip
 
-## Hvad er et musikanlaeg?
+## Hvad er et musikanlæg?
 
-Et musikanlaeg til fest bestaar typisk af:
+Et musikanlæg til fest består typisk af:
 
-1. **Toppe (hojtalere):** Aktive hojtalere paa stativer, der haandterer mellemtone og diskant. "Aktive" betyder, at forstaerkeren er indbygget -- du skal bare tilslutte stroem.
+1. **Toppe (højtalere):** Aktive højtalere på stativer, der håndterer mellemtone og diskant. "Aktive" betyder, at forstærkeren er indbygget – du skal bare tilslutte strøm.
 
-2. **Subwoofer:** En separat bas-hojtaler, der giver de dybe toner. Subwooferen staar paa gulvet, da bas ikke er retningsbestemt.
+2. **Subwoofer:** En separat bas-højtaler, der giver de dybe toner. Subwooferen står på gulvet, da bas ikke er retningsbestemt.
 
 3. **Mixer:** Et lille mixerbord, der lader dig tilslutte flere lydkilder (telefon, laptop, mikrofon) og styre lydniveauet.
 
-4. **Kabler:** XLR-kabler mellem mixer og hojtalere, stroemkabler, og et aux-kabel eller Bluetooth til din telefon.
+4. **Kabler:** XLR-kabler mellem mixer og højtalere, strømkabler, og et aux-kabel eller Bluetooth til din telefon.
 
-## Saadan setter du det op
+## Sådan setter du det op
 
-Det lyder maaske kompliceret, men det tager under 10 minutter:
+Det lyder måske kompliceret, men det tager under 10 minutter:
 
-1. Stil toppene paa stativer i hver sin side af "dansegulvet"
-2. Placer subwooferen paa gulvet mellem dem
-3. Tilslut kabler fra mixer til hojtalere
+1. Stil toppene på stativer i hver sin side af "dansegulvet"
+2. Placer subwooferen på gulvet mellem dem
+3. Tilslut kabler fra mixer til højtalere
 4. Tilslut din telefon via Bluetooth eller aux
-5. Taend det hele og juster lydniveauet
+5. Tænd det hele og juster lydniveauet
 
-Vi gennemgaar altid setupmet med dig, naar du henter udstyret. Du faar ogsaa en kort skriftlig guide med.
+Vi gennemgår altid setupmet med dig, når du henter udstyret. Du får også en kort skriftlig guide med.
 
 ## Hyppige fejl
 
-- **For lavt lydniveau ved start:** Start lavt, men vaer klar til at skrue op, naar gaesterne er der. Snak overdoever hurtigt musikken.
-- **Subwooferen paa et bord:** Subwooferen skal staa paa gulvet. Paa et bord vibrerer alt.
-- **Alle kabler i gangzonen:** Laeg kablerne langs vaeggen eller tape dem ned, saa ingen snubler.
+- **For lavt lydniveau ved start:** Start lavt, men vær klar til at skrue op, når gæsterne er der. Snak overdøver hurtigt musikken.
+- **Subwooferen på et bord:** Subwooferen skal stå på gulvet. På et bord vibrerer alt.
+- **Alle kabler i gangzonen:** Læg kablerne langs væggen eller tape dem ned, så ingen snubler.
 
-## Book dit musikanlaeg
+## Book dit musikanlæg
 
-Lej et komplet musikanlaeg til din fest fra 395 kr/weekend. [Book nu](/#book) og hent paa Vesterbro.
+Lej et komplet musikanlæg til din fest fra 395 kr/weekend. [Book nu](/#book) og hent på Vesterbro.

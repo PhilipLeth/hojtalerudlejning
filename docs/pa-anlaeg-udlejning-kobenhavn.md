@@ -1,65 +1,65 @@
 ---
-title: "PA-anlaeg udlejning i Kobenhavn -- hvad skal du vide?"
-description: "Alt om PA-anlaeg udlejning i Kobenhavn. Hvad er et PA-system, hvornaar har du brug for det, og hvad koster det? Lej fra 395 kr/weekend."
+title: "PA-anlæg udlejning i København – hvad skal du vide?"
+description: "Alt om PA-anlæg udlejning i København. Hvad er et PA-system, hvornår har du brug for det, og hvad koster det? Lej fra 395 kr/weekend."
 date: "2026-06-12"
 keywords:
-  - PA-anlaeg udlejning
-  - PA anlaeg leje kobenhavn
+  - PA-anlæg udlejning
+  - PA anlæg leje københavn
   - lydudstyr udlejning
   - PA system leje
 ---
 
-# PA-anlaeg udlejning i Kobenhavn -- hvad skal du vide?
+# PA-anlæg udlejning i København – hvad skal du vide?
 
-Hvis du er ved at planlaegge en fest, et firmaevent eller en havefest i Kobenhavn, er du maaske stodt paa begrebet "PA-anlaeg". Men hvad er det egentlig, og hvornaar har du brug for et? Her faar du svar.
+Hvis du er ved at planlægge en fest, et firmaevent eller en havefest i København, er du måske stodt på begrebet "PA-anlæg". Men hvad er det egentlig, og hvornår har du brug for et? Her får du svar.
 
-## Hvad er et PA-anlaeg?
+## Hvad er et PA-anlæg?
 
-PA staar for "Public Address" -- altsaa et lydsystem designet til at projicere lyd til et publikum. I modsaetning til en Bluetooth-hojtaler er et PA-anlaeg bygget til at levere klar, kraftig lyd i store rum og udendors.
+PA står for "Public Address" – altså et lydsystem designet til at projicere lyd til et publikum. I modsætning til en Bluetooth-højtaler er et PA-anlæg bygget til at levere klar, kraftig lyd i store rum og udendørs.
 
-Et typisk PA-anlaeg bestaar af:
+Et typisk PA-anlæg består af:
 
-- **Toppe** (hojttalere paa stativer) der haandterer mellemtone og diskant
+- **Toppe** (højttalere på stativer) der håndterer mellemtone og diskant
 - **Subwoofer** der tager sig af de dybe toner
 - **Mixer** der lader dig styre lydniveauet og tilslutte mikrofon, computer, telefon osv.
 - **Kabler og stativer**
 
-## Hvornaar har du brug for et PA-anlaeg?
+## Hvornår har du brug for et PA-anlæg?
 
-En Bluetooth-hojtaler kan klare baggrundslyd til 10-15 personer i en stue. Men saa snart du overstiger det, begynder du at mangle lydtryk:
+En Bluetooth-højtaler kan klare baggrundslyd til 10-15 personer i en stue. Men så snart du overstiger det, begynder du at mangle lydtryk:
 
-- **Fest med 30+ gaester** -- musik skal overdoeve snak
-- **Udendors arrangementer** -- lyden spredes hurtigt i det fri
-- **Events med taler** -- du har brug for en mikrofon og mixer
-- **DJ-setup** -- en DJ skal bruge monitorer og hoejt lydtryk
+- **Fest med 30+ gæster** – musik skal overdøve snak
+- **Udendørs arrangementer** – lyden spredes hurtigt i det fri
+- **Events med taler** – du har brug for en mikrofon og mixer
+- **DJ-setup** – en DJ skal bruge monitorer og højt lydtryk
 
-## Hvad faar du hos os?
+## Hvad får du hos os?
 
-Naar du lejer PA-anlaeg hos Lejhojtaler.dk, faar du alt hvad du skal bruge:
+Når du lejer PA-anlæg hos Lejhøjtaler.dk, får du alt hvad du skal bruge:
 
-- Aktive hojtalere (ingen separat forstaerker nodvendig)
+- Aktive højtalere (ingen separat forstærker nodvendig)
 - Subwoofer til dyb, ren bas
 - Mixer med mikrofon-indgang
 - Alle kabler og stativer
 - Simpel Bluetooth-tilslutning til din telefon
 
-Du skal ikke vaere lydtekniker. Systemet er plug-and-play: stil det op, tilslut din telefon, og tryk play.
+Du skal ikke være lydtekniker. Systemet er plug-and-play: stil det op, tilslut din telefon, og tryk play.
 
 ## Afhentning og levering
 
-Vi holder til paa Vesterbro i Kobenhavn. Du henter udstyret fredag og afleverer det mandag -- saa du har det hele weekenden. Vi gennemgaar altid setupmet med dig ved afhentning, saa du foeler dig tryg.
+Vi holder til på Vesterbro i København. Du henter udstyret fredag og afleverer det mandag – så du har det hele weekenden. Vi gennemgår altid setupmet med dig ved afhentning, så du føler dig tryg.
 
 ## Hvad koster det?
 
 Vores priser starter fra **395 kr for en weekend**. Det inkluderer alt udstyr, kabler og stativer. Ingen skjulte gebyrer.
 
-For flerdagsleje ganges prisen med antal dage (fredag-mandag taeller som 1 weekend).
+For flerdagsleje ganges prisen med antal dage (fredag-mandag tæller som 1 weekend).
 
-## Saadan booker du
+## Sådan booker du
 
-1. Gaa til vores [booking-side](/#book)
-2. Vaelg din pakke og dato
-3. Du faar en bekraeftelse med det samme
-4. Hent udstyret paa Vesterbro
+1. Gå til vores [booking-side](/#book)
+2. Vælg din pakke og dato
+3. Du får en bekræftelse med det samme
+4. Hent udstyret på Vesterbro
 
-Hele processen tager under 2 minutter. [Book dit PA-anlaeg nu](/#book).
+Hele processen tager under 2 minutter. [Book dit PA-anlæg nu](/#book).

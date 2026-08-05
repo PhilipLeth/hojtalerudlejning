@@ -154,7 +154,17 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           }),
         });
         if (res.ok) {
-          booking.reviewMailSentAt = new Date().toISOString();
+          const sentAt = new Date().toISOString();
+          booking.reviewMailSentAt = sentAt;
+          booking.communications = [
+            ...(Array.isArray(booking.communications) ? booking.communications : []),
+            {
+              type: "anmeldelse",
+              label: "Anmeldelsesmail (Google)",
+              to: booking.email,
+              sentAt,
+            },
+          ];
         } else {
           console.error("Review mail failed:", await res.text());
         }

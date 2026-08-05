@@ -18,6 +18,11 @@ export interface ProductLandingProps {
   /** Booking product id for /?product=ID#book */
   productId: string;
   bookLabel?: string;
+  /**
+   * Sæt kun på produkter som de synlige anmeldelser rent faktisk handler om.
+   * Må ikke sættes blankt på hele kataloget — se prd.json → seo.reviews_policy.
+   */
+  reviewed?: { ratingValue: string; reviewCount: string };
   /** Optional extra section under product detail */
   children?: React.ReactNode;
 }
@@ -33,6 +38,7 @@ export default function ProductLanding({
   bullets,
   productId,
   bookLabel,
+  reviewed,
   children,
 }: ProductLandingProps) {
   const bookHref = toBook(productId);
@@ -46,9 +52,19 @@ export default function ProductLanding({
     description: sub,
     image: `https://lejhojtaler.dk${image}`,
     brand: { "@type": "Brand", name: "Lejhøjtaler.dk" },
-    // BEMÆRK: ingen aggregateRating/review her med vilje. Structured data må kun
-    // indeholde ægte kundeanmeldelser af det konkrete produkt (Googles regler +
-    // markedsføringsloven). Tilføj først når vi har rigtige anmeldelser pr. produkt.
+    // aggregateRating sættes KUN via reviewed-proppen, og kun på produkter som
+    // de synlige anmeldelser faktisk handler om. Aldrig blankt på hele kataloget
+    // (Googles regler om spammy structured markup).
+    ...(reviewed
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: reviewed.ratingValue,
+            reviewCount: reviewed.reviewCount,
+            bestRating: "5",
+          },
+        }
+      : {}),
     offers: {
       "@type": "Offer",
       price: String(price),

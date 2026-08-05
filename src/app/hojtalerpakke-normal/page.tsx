@@ -28,6 +28,7 @@ export default function HojtalerpakkeNormalPage() {
       image="/images/product-festival.png"
       imageAlt="Normal højtalerpakke til leje i København"
       productId="festival"
+      reviewed={{ ratingValue: "5.0", reviewCount: "1" }}
       bullets={[
         '2× 12" EV aktive højtalere',
         "40–100 personer",

@@ -26,19 +26,32 @@ const SRC = join(process.cwd(), "src");
 describe("Structured data — ingen opdigtede anmeldelser", () => {
   const files = readAll(SRC).filter((f) => !f.includes("__tests__"));
 
-  it("ingen aggregateRating i nogen JSON-LD", () => {
+  it("aggregateRating findes kun via ProductLandings kontrollerede opt-in", () => {
     const offenders = files.filter((f) => {
+      if (f.endsWith("components/ProductLanding.tsx")) return false; // opt-in via reviewed-prop
       const c = readFileSync(f, "utf8");
-      // Tillad ordet i kommentarer (fx forklaringen i ProductLanding)
       return /aggregateRating\s*:/.test(c);
     });
-    expect(offenders, `aggregateRating fundet i:\n${offenders.join("\n")}`).toEqual([]);
+    expect(offenders, `aggregateRating hårdkodet i:\n${offenders.join("\n")}`).toEqual([]);
   });
 
-  it("ingen Review/AggregateRating schema-typer", () => {
+  it("kun produkter anmeldelserne handler om har rating (ikke hele kataloget)", () => {
+    const landingPages = files.filter(
+      (f) => f.includes("/app/") && f.endsWith("page.tsx") && readFileSync(f, "utf8").includes("<ProductLanding")
+    );
+    const withRating = landingPages.filter((f) => readFileSync(f, "utf8").includes("reviewed="));
+    // De 4 testimonials nævner: lille + stor højtalerpakke. Resten må ikke have rating.
+    expect(withRating.length).toBeGreaterThan(0);
+    expect(withRating.length).toBeLessThan(landingPages.length / 2);
+    for (const f of withRating) {
+      expect(f).toMatch(/hojtalerpakke-(lille|normal)/);
+    }
+  });
+
+  it("ingen individuelle Review-objekter (vi har ikke anmeldelser pr. produkt)", () => {
     const offenders = files.filter((f) => {
       const c = readFileSync(f, "utf8");
-      return /"@type":\s*"(Review|AggregateRating)"/.test(c);
+      return /"@type":\s*"Review"/.test(c);
     });
     expect(offenders, `Review-schema fundet i:\n${offenders.join("\n")}`).toEqual([]);
   });

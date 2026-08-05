@@ -241,7 +241,8 @@ export default function BookingFlow({
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", comment: "" });
-  const [newsletter, setNewsletter] = useState(true);
+  // GDPR: markedsføringssamtykke skal være aktivt tilvalg — må ikke være forudkrydset
+  const [newsletter, setNewsletter] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [payMethod, setPayMethod] = useState<"pickup" | "online">("online");
   const [checkoutSecret, setCheckoutSecret] = useState<string | null>(null);
@@ -1312,10 +1313,42 @@ export default function BookingFlow({
                 />
                 <span className="text-sm text-white/60">
                   {locale === "en"
-                    ? "Send me deals and news about new gear for rent"
-                    : "Send mig tilbud og nyt om udstyr til leje"}
+                    ? "Send me deals and news about new gear for rent (optional)"
+                    : "Send mig tilbud og nyt om udstyr til leje (valgfrit)"}
                 </span>
               </label>
+
+              {/* GDPR art. 13: oplysningspligt ved indsamling af personoplysninger */}
+              <p className="px-1 text-xs leading-relaxed text-white/35">
+                {locale === "en" ? (
+                  <>
+                    We use your name, email and phone number to process your booking and send
+                    you a confirmation. Read how we handle your data in our{" "}
+                    <a href="/privatlivspolitik" target="_blank" rel="noopener noreferrer" className="text-brand-400 underline underline-offset-2 hover:text-brand-300">
+                      privacy policy
+                    </a>
+                    . By booking you accept our{" "}
+                    <a href="/lejevilkaar" target="_blank" rel="noopener noreferrer" className="text-brand-400 underline underline-offset-2 hover:text-brand-300">
+                      rental terms
+                    </a>
+                    .
+                  </>
+                ) : (
+                  <>
+                    Vi bruger dit navn, din e-mail og dit telefonnummer til at behandle din
+                    booking og sende dig en bekræftelse. Læs hvordan vi behandler dine
+                    oplysninger i vores{" "}
+                    <a href="/privatlivspolitik" target="_blank" rel="noopener noreferrer" className="text-brand-400 underline underline-offset-2 hover:text-brand-300">
+                      privatlivspolitik
+                    </a>
+                    . Når du booker, accepterer du vores{" "}
+                    <a href="/lejevilkaar" target="_blank" rel="noopener noreferrer" className="text-brand-400 underline underline-offset-2 hover:text-brand-300">
+                      lejevilkår
+                    </a>
+                    .
+                  </>
+                )}
+              </p>
             </div>
 
             {/* Order summary */}

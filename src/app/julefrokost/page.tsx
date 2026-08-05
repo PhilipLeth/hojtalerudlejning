@@ -1,0 +1,36 @@
+import { Metadata } from "next";
+import OccasionLanding from "@/components/OccasionLanding";
+
+export const metadata: Metadata = {
+  title: "Lyd og karaoke til julefrokost | Fra 1.100 kr | Lejhøjtaler.dk",
+  description: "Lej lyd og karaoke til julefrokosten i København fra 1.100 kr. Karaokemaskine med 2 mikrofoner, skærm og højtalere. Book online — betal ved afhentning.",
+  keywords: ["lyd til julefrokost", "karaoke til julefrokost", "højtaler julefrokost leje", "musikanlæg firmajulefrokost", "underholdning julefrokost"],
+  alternates: { canonical: "https://lejhojtaler.dk/julefrokost" },
+  openGraph: {
+    title: "Lyd og karaoke til julefrokost | Fra 1.100 kr | Lejhøjtaler.dk",
+    description: "Lej lyd og karaoke til julefrokosten i København fra 1.100 kr. Karaokemaskine med 2 mikrofoner, skærm og højtalere. Book online — betal ved afhentning.",
+    url: "https://lejhojtaler.dk/julefrokost",
+    siteName: "Lejhøjtaler.dk",
+    locale: "da_DK",
+    type: "website",
+  },
+};
+
+export default function Page() {
+  return (
+    <OccasionLanding
+      slug="julefrokost"
+      headline={"Lyd til julefrokost"}
+      headlinePrice={"fra 1.100 kr."}
+      intro={"Karaoke er det, der får kollegerne op fra stolene. Maskine, skærm til teksterne og højtalere der kan følge med — samlet til én pris."}
+      primaryProductId="pakke_karaoke"
+      primaryName={"Karaokepakken"}
+      primaryPrice={1100}
+      primaryWhy={"Singing Machine med to trådløse mikrofoner, 32\" skærm på stativ til teksterne og to Alto-højtalere. Alt hvad der skal til, for at afdelingen synger med — og I sparer 385 kr i forhold til at leje delene hver for sig."}
+      gridItems={[{"id": "pakke_karaoke", "tag": "Spar 385,-"}, {"id": "pakke_karaoke_fest", "tag": "Spar 485,-"}, {"id": "karaoke"}, {"id": "lyseffekt"}]}
+      tips={[{"title": "Karaoke redder julefrokosten", "text": "Der er altid en periode efter maden, hvor stemningen falder. Karaoke er det, der får folk op igen — og det virker på tværs af aldersgrupper."}, {"title": "Book november i god tid", "text": "November og starten af december er årets travleste periode. Fredage og lørdage bliver booket flere uger i forvejen."}, {"title": "Tjek lokalets strøm", "text": "Karaokemaskine, skærm og højtalere trækker tilsammen ikke meget, men de skal have adgang til to stikkontakter. Sig til, hvis I mangler forlængerledning."}, {"title": "Lys gør det til en fest", "text": "En enkelt lyseffekt til 195 kr ændrer et kontorlokale eller en kantine til et festlokale på fem minutter."}]}
+      faq={[{"q": "Hvad er forskellen på de to karaokepakker?", "a": "Karaokepakken til 1.100 kr har 32\" skærm og små højtalere og passer til op til 40 personer. Karaoke-festpakken til 1.500 kr har 55\" skærm og store højtalere og klarer op til 100 personer."}, {"q": "Skal vi bruge internet til karaoke?", "a": "Ja, hvis I vil bruge YouTube-karaoke via skærmen. Maskinen har også indbyggede sange og Bluetooth, så I kan streame fra en telefon."}, {"q": "Kan vi leje det til firmaets adresse?", "a": "Ja. Levering og opsætning i København koster 495 kr, og vi henter igen efter frokosten — også hvis det bliver sent."}, {"q": "Hvor mange mikrofoner er der med?", "a": "To trådløse mikrofoner følger med karaokemaskinen, så I kan synge duet uden at sende den samme mikrofon rundt."}]}
+      related={[{"href": "/karaoke", "label": "Alt om karaoke"}, {"href": "/nytaar", "label": "Lyd til nytårsfest"}, {"href": "/erhverv", "label": "Udlejning til erhverv"}]}
+    />
+  );
+}

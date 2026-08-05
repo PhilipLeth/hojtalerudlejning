@@ -17,9 +17,9 @@ Bag lejhøjtaler.dk står Frederik Scharling, der har arbejdet med lyd, events o
 
 ## Fødselsdagsfesten der startede det hele
 
-Det gik op for ham en lørdag i maj, da han skulle holde fødselsdagsfest for sin kæreste i deres lejlighed. Ikke noget stort - 20 venner, god mad og ordentlig musik. Han spurgte rundt efter en Soundboks. Den ene ven havde udlånt den videre. Den anden boede i Valby og kunne ikke aflevere den i tide. Da han endelig fik fat i én, løb batteriet ud efter 20 minutter.
+Det gik op for ham en lørdag i maj, da han skulle holde fødselsdagsfest for sin kæreste i deres lejlighed. Ikke noget stort - 20 venner, god mad og ordentlig musik. Han spurgte rundt efter en Soundboks. Den ene ven havde udlånt den videre. Den anden bøde i Valby og kunne ikke aflevere den i tide. Da han endelig fik fat i én, løb batteriet ud efter 20 minutter.
 
-Det er en situation de fleste københavnere kan genkende. Du vil bare have god musik til din fest, men vejen dertil er fyldt med bøvl: venner der ikke kan låne ud, udlejningsfirmaer med høje priser og lange kontrakter, eller batterihøjtalere der ikke holder en hel aften.
+Det er en situation de fleste københavnere kan genkende. Du vil bare have god musik til din fest, men vejen dertil er fyldt med bøvl: venner der ikke kan låne ud, udlejningsfirmær med høje priser og lange kontrakter, eller batterihøjtalere der ikke holder en hel aften.
 
 ## Dagen efter var beslutningen taget
 

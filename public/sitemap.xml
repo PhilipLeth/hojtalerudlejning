@@ -147,4 +147,13 @@
   <url><loc>https://lejhojtaler.dk/pakke-karaoke-fest</loc></url>
   <url><loc>https://lejhojtaler.dk/subwoofer</loc></url>
   <url><loc>https://lejhojtaler.dk/skaerm-32</loc></url>
+  <url><loc>https://lejhojtaler.dk/konfirmation</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lejhojtaler.dk/polterabend</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lejhojtaler.dk/studenterkoersel</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lejhojtaler.dk/bryllup</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lejhojtaler.dk/julefrokost</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lejhojtaler.dk/nytaar</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lejhojtaler.dk/havefest</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lejhojtaler.dk/foedselsdag</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://lejhojtaler.dk/privatlivspolitik</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>

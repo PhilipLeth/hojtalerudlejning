@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 
 const USPS = [
   { title: "5 dages leje", desc: "Én pris for op til 5 dage" },
@@ -20,19 +19,19 @@ export default function HomeHero() {
       <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-brand-500/10 blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-3xl text-center">
-        <Link href="/" className="inline-block group">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-            <span className="bg-gradient-to-r from-brand-400 to-brand-500 bg-clip-text text-transparent transition group-hover:from-brand-300 group-hover:to-brand-400">
-              LejHøjtaler
-            </span>
-            <span className="text-white/35">.dk</span>
-          </h1>
-        </Link>
+        {/* H1 bærer hovedkeywordet — brandnavnet er sekundært (folk søger ikke på brandet) */}
+        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+          <span className="bg-gradient-to-r from-brand-400 to-brand-500 bg-clip-text text-transparent">
+            Lej højtalere
+          </span>
+          <span className="block text-white/90">i København</span>
+        </h1>
         <p className="mt-4 text-sm font-medium uppercase tracking-[0.2em] text-brand-400">
-          København · Betal ved afhentning
+          Lejhøjtaler.dk · Betal ved afhentning
         </p>
         <p className="mx-auto mt-4 max-w-md text-lg text-white/55">
-          Lej højtalere, lys og AV, book online på 2 min. Betal ved afhentning.
+          Højtalere, festlys og AV-udstyr til leje — book online på 2 minutter.
+          Hent i København K eller få det leveret.
         </p>
 
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">

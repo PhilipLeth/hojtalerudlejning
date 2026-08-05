@@ -28,6 +28,7 @@ export default function HojtalerpakkeLillePage() {
       image="/images/product-party.png"
       imageAlt="Lille højtalerpakke til leje i København"
       productId="party"
+      reviewed={{ ratingValue: "5.0", reviewCount: "2" }}
       bullets={[
         '2× 10" Alto med Bluetooth',
         "Op til 40 personer",

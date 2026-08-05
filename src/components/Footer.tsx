@@ -76,7 +76,7 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
           {locale === "da" ? "Ring" : "Call"} 31 13 28 52
         </a>
       </p>
-      <p className="mt-4 flex items-center justify-center gap-4">
+      <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
         <Link href={s.aboutHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
           {s.about}
         </Link>
@@ -85,6 +85,9 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
         </Link>
         <Link href={s.termsHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
           {s.terms}
+        </Link>
+        <Link href={s.privacyHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
+          {s.privacy}
         </Link>
       </p>
       <p className="mt-5 text-white/40 text-xs">{newsletterLabel}</p>

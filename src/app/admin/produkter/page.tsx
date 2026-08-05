@@ -86,12 +86,14 @@ function Field({
   onChange,
   textarea,
   type,
+  placeholder,
 }: {
   label: string;
   value: string | number;
   onChange: (v: string) => void;
   textarea?: boolean;
   type?: string;
+  placeholder?: string;
 }) {
   return (
     <div>
@@ -99,7 +101,7 @@ function Field({
       {textarea ? (
         <textarea rows={2} value={String(value)} onChange={(e) => onChange(e.target.value)} style={{ ...inputStyle, resize: "vertical" }} />
       ) : (
-        <input type={type || "text"} value={value} onChange={(e) => onChange(e.target.value)} style={inputStyle} />
+        <input type={type || "text"} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} style={inputStyle} />
       )}
     </div>
   );

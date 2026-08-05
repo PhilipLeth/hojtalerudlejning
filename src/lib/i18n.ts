@@ -163,9 +163,11 @@ export const t = {
       about: "Om os",
       blog: "Blog",
       terms: "Lejevilkår",
+      privacy: "Privatlivspolitik",
       aboutHref: "/om",
       blogHref: "/blog",
       termsHref: "/lejevilkaar",
+      privacyHref: "/privatlivspolitik",
     },
   },
   en: {
@@ -330,9 +332,11 @@ export const t = {
       about: "About us",
       blog: "Blog",
       terms: "Rental terms",
+      privacy: "Privacy policy",
       aboutHref: "/en/om",
       blogHref: "/en/blog",
       termsHref: "/en/lejevilkaar",
+      privacyHref: "/privatlivspolitik",
     },
   },
 } as const;

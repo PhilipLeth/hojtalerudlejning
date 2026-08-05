@@ -222,14 +222,26 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const random = Math.random().toString(36).substring(2, 8);
   const key = `booking_${timestamp}_${random}`;
   try {
+    const sentAt = new Date(timestamp).toISOString();
     const booking = {
       ...data,
       id: key,
       status: "ny",
-      createdAt: new Date(timestamp).toISOString(),
+      createdAt: sentAt,
       upsellOffered: upsell
         ? { id: upsell.id, offerPrice: upsell.offerPrice, listPrice: upsell.listPrice }
         : null,
+      // Kommunikationslog: hver udgående mail til kunden gemmes her, så admin
+      // kan se præcis hvad en given kunde har modtaget og hvornår.
+      communications: [
+        {
+          type: "booking_bekraeftelse",
+          label: "Bookingbekræftelse",
+          to: data.email,
+          sentAt,
+          ...(upsell ? { note: `Inkl. tilbud: ${upsell.title} @ ${upsell.offerPrice} kr` } : {}),
+        },
+      ],
     };
     await context.env.BOOKINGS.put(key, JSON.stringify(booking));
   } catch (e) {

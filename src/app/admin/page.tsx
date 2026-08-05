@@ -21,6 +21,7 @@ interface Booking {
   createdAt: string;
   updatedAt?: string;
   reviewMailSentAt?: string;
+  communications?: Array<{ type: string; label: string; to?: string; sentAt: string; note?: string }>;
 }
 
 const STATUS_FLOW = ["ny", "bekraeftet", "afhentet", "afleveret"];
@@ -353,6 +354,31 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                         <div><strong>Dage:</strong> {b.days}</div>
                         {b.deliveryAddress && <div><strong>Levering:</strong> {b.deliveryAddress}</div>}
                         {b.comment && <div style={{ gridColumn: "1 / -1" }}><strong>Kommentar:</strong> {b.comment}</div>}
+                        <div style={{ gridColumn: "1 / -1" }}>
+                          <strong>Sendte mails:</strong>
+                          {(b.communications?.length ?? 0) === 0 ? (
+                            <span style={{ color: "#aaa" }}>
+                              {" "}
+                              {b.reviewMailSentAt
+                                ? `Anmeldelsesmail sendt ${new Date(b.reviewMailSentAt).toLocaleString("da-DK")}`
+                                : "Ingen registreret (booking fra før loggen blev indført)"}
+                            </span>
+                          ) : (
+                            <ul style={{ margin: "6px 0 0", paddingLeft: "18px" }}>
+                              {b.communications!.map((m, i) => (
+                                <li key={i} style={{ fontSize: "12px", color: "#555", marginBottom: "2px" }}>
+                                  <span style={{ fontWeight: 600 }}>{m.label}</span>
+                                  {" · "}
+                                  {new Date(m.sentAt).toLocaleString("da-DK")}
+                                  {m.to ? ` · ${m.to}` : ""}
+                                  {m.note ? (
+                                    <span style={{ color: "#888" }}> · {m.note}</span>
+                                  ) : null}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
                         <div style={{ gridColumn: "1 / -1", fontSize: "11px", color: "#aaa" }}>ID: {b.id}</div>
                       </div>
                     </td>

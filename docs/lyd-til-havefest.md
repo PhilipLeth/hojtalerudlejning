@@ -1,60 +1,60 @@
 ---
-title: "Lyd til havefest -- guide til den perfekte udendors lyd"
-description: "Saadan faar du den bedste lyd til din havefest. Tips til hojtaler-placering, lydniveau og nabohensyn. Lej hojtaler fra 395 kr."
+title: "Lyd til havefest – guide til den perfekte udendørs lyd"
+description: "Sådan får du den bedste lyd til din havefest. Tips til højtaler-placering, lydniveau og nabohensyn. Lej højtaler fra 395 kr."
 date: "2026-06-11"
 keywords:
   - lyd til havefest
-  - hojtaler havefest
-  - udendors fest lyd
-  - anlaeg til havefest
+  - højtaler havefest
+  - udendørs fest lyd
+  - anlæg til havefest
 ---
 
-# Lyd til havefest -- guide til den perfekte udendors lyd
+# Lyd til havefest – guide til den perfekte udendørs lyd
 
-Havefester er fantastiske. Men udendors lyd er en helt anden disciplin end indendors. Lyden spredes i alle retninger, vinden baerer den vaek, og naboerne kan hoere alt. Her faar du konkrete tips til at faa den bedste lyd til din havefest.
+Havefester er fantastiske. Men udendørs lyd er en helt anden disciplin end indendors. Lyden spredes i alle retninger, vinden bærer den væk, og nabørne kan høre alt. Her får du konkrete tips til at få den bedste lyd til din havefest.
 
-## Hvorfor er udendors lyd svaerere?
+## Hvorfor er udendørs lyd sværere?
 
-Indendors hjaelper vaegge, loft og gulv med at reflektere lyden tilbage til dig. Udendors har du ingen af de refleksioner. Resultatet er, at du har brug for mere lydtryk for at opnaa den samme oplevede lydstyrke.
+Indendors hjælper vægge, loft og gulv med at reflektere lyden tilbage til dig. Udendørs har du ingen af de refleksioner. Resultatet er, at du har brug for mere lydtryk for at opnå den samme oplevede lydstyrke.
 
-En Bluetooth-hojtaler, der fylder en stue perfekt, forsvinder fuldstaendig i en have. Du har brug for et rigtigt lydsystem.
+En Bluetooth-højtaler, der fylder en stue perfekt, forsvinder fuldstændig i en have. Du har brug for et rigtigt lydsystem.
 
-## Vaelg den rigtige pakke
+## Vælg den rigtige pakke
 
-- **Lille have, under 30 gaester:** Vores Party-pakke kan klare det, saerligt hvis du placerer hojtaleren klogt (se nedenfor).
-- **Stor have, 30+ gaester:** Festival-pakken er et must. Stereo-lyd og subwoofer sikrer, at alle kan hoere musikken.
+- **Lille have, under 30 gæster:** Vores Party-pakke kan klare det, særligt hvis du placerer højtaleren klogt (se nedenfor).
+- **Stor have, 30+ gæster:** Festival-pakken er et must. Stereo-lyd og subwoofer sikrer, at alle kan høre musikken.
 
-## 5 tips til perfekt udendors lyd
+## 5 tips til perfekt udendørs lyd
 
-### 1. Placer hojtaleren hoejt
+### 1. Placer højtaleren højt
 
-Stil hojtaleren paa et stativ, saa lyden skyder hen over hovedhoejde. Lyd der rammer gaesternes orer direkte er langt mere effektiv end lyd, der skyder langs jorden.
+Stil højtaleren på et stativ, så lyden skyder hen over hovedhøjde. Lyd der rammer gæsternes orer direkte er langt mere effektiv end lyd, der skyder langs jorden.
 
-### 2. Peg hojtaleren mod gaesterne
+### 2. Peg højtaleren mod gæsterne
 
-Ret hojtaleren direkte mod det omraade, hvor gaesterne opholder sig. Undgaa at pege den mod hegn eller aabne omraader, hvor lyden bare forsvinder.
+Ret højtaleren direkte mod det område, hvor gæsterne opholder sig. Undgå at pege den mod hegn eller åbne områder, hvor lyden bare forsvinder.
 
-### 3. Placer hojtaleren bag "scenen"
+### 3. Placer højtaleren bag "scenen"
 
-Hvis du har et danseomraade eller et centralt samlingssted, saa placer hojtaleren bag det -- saa musikken kommer bag fra og fylder pladsen.
+Hvis du har et danseområde eller et centralt samlingssted, så placer højtaleren bag det – så musikken kommer bag fra og fylder pladsen.
 
 ### 4. Husk subwooferen
 
-Bass forsvinder hurtigt udendors. En subwoofer goer en enorm forskel for den samlede lydoplevelse. Den kan staa paa jorden -- bassen er ikke retningsbestemt paa samme maade som mellemtoner.
+Bass forsvinder hurtigt udendørs. En subwoofer gør en enorm forskel for den samlede lydoplevelse. Den kan stå på jorden – bassen er ikke retningsbestemt på samme måde som mellemtoner.
 
-### 5. Taenk paa naboerne
+### 5. Tænk på nabørne
 
 Det her er vigtigt. Gode nabo-regler:
 
-- **Hold musikken lav foer kl. 18** og skaer ned igen **efter kl. 22**
-- **Informer naboerne paa forhaand** -- en venlig sms eller en seddel i opgangen goer undervaerker
-- **Peg hojtaleren vaek fra naboer** -- retningen har overraskende stor betydning
-- **Undgaa overdreven bas sent paa aftenen** -- bas baerer laengere end mellemtoner
+- **Hold musikken lav før kl. 18** og skær ned igen **efter kl. 22**
+- **Informer nabørne på forhånd** – en venlig sms eller en seddel i opgangen gør underværker
+- **Peg højtaleren væk fra nabør** – retningen har overraskende stor betydning
+- **Undgå overdreven bas sent på aftenen** – bas bærer længere end mellemtoner
 
 ## Kombiner med festlys
 
-Udendors lyd og lys sammen lofter enhver havefest. Vores lys-pakke med LED-spots og rogmaskine giver den rigtige stemning, naar solen gaar ned. [Se vores lys-pakke](/#book).
+Udendørs lyd og lys sammen lofter enhver havefest. Vores lys-pakke med LED-spots og rogmaskine giver den rigtige stemning, når solen går ned. [Se vores lys-pakke](/#book).
 
 ## Book din havefest-lyd
 
-Lej hojtaler og PA-anlaeg til din havefest fra 395 kr/weekend. Hent paa Vesterbro, aflever mandag. [Book din hojtaler nu](/#book).
+Lej højtaler og PA-anlæg til din havefest fra 395 kr/weekend. Hent på Vesterbro, aflever mandag. [Book din højtaler nu](/#book).
