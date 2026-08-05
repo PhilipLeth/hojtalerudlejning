@@ -227,10 +227,10 @@ export const addons: Addon[] = [
     page: "/enkelt-lyseffekt",
     youtubeUrl: "https://www.youtube.com/watch?v=XhecuXfY0vo",
     price: 195,
-    image: "/images/product-lys.png",
-    contents: ["1× LED-festlys på fod", "Strømkabel", "Automatiske farveeffekter"],
-    da: { label: "Enkelt lyseffekt", desc: "1 LED-festlys på fod — plug and play farveeffekt" },
-    en: { label: "Single light effect", desc: "1 LED party light — plug and play colour effect" },
+    image: "/images/product-lyseffekt.png",
+    contents: ["1× LED-par-lys (uden stativ)", "Strømkabel", "Automatiske farveeffekter"],
+    da: { label: "Enkelt lyseffekt", desc: "1 LED-par-lys med farveeffekter — leveres uden stativ, plug and play" },
+    en: { label: "Single light effect", desc: "1 LED par light with colour effects — comes without a stand, plug and play" },
   },
   {
     id: "lys",
@@ -449,7 +449,6 @@ export const NAV_CATEGORIES: NavCategory[] = [
     title: "Lys & Effekter",
     href: "/festlys",
     links: [
-      { href: "/festlys", label: "Festlys & lysbar" },
       { href: "/enkelt-lyseffekt", label: "Enkelt lyseffekt" },
       { href: "/lys-pakke", label: "Lys-pakke" },
       { href: "/discokugle", label: "Discokugle" },

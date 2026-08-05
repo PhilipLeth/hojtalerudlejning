@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Enkelt Lyseffekt København | 195 kr",
     description:
-      "1 LED-festlys på fod — plug and play farveeffekt til din fest. Book online, betal ved afhentning.",
+      "1 LED-par-lys (uden stativ) — plug and play farveeffekt til din fest. Book online, betal ved afhentning.",
     url: "https://lejhojtaler.dk/enkelt-lyseffekt",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -31,12 +31,12 @@ export default function Page() {
       name="Enkelt lyseffekt"
       price={195}
       headline="Lej enkelt lyseffekt i København"
-      sub="1 LED-festlys på fod — plug and play farveeffekt der sætter stemning på få minutter."
-      image="/images/product-lys.png"
+      sub="1 LED-par-lys (uden stativ) — plug and play farveeffekt der sætter stemning på få minutter."
+      image="/images/product-lyseffekt.png"
       imageAlt="Enkelt LED-festlys til leje i København"
       productId="lyseffekt"
       bullets={[
-        "1 LED-festlys på fod med automatiske farveeffekter",
+        "1 LED-par-lys (uden stativ) med automatiske farveeffekter",
         "Plug and play — tilslut strøm og den kører",
         "Perfekt til stuer, festlokaler og havefest op til ca. 40 personer",
         "Kombiner med højtalerpakke eller vælg den i lille festpakke",
