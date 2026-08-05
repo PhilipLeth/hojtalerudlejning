@@ -1170,8 +1170,8 @@
     },
     {
       "id": "booking-page-not-drawer",
-      "title": "REVERTED — booking er drawer-kurv igen (prd booking_drawer)",
-      "description": "Fejlslutning at erstatte drawer med /book. Genoprettet: Book → /?product=ID#book åbner kurv-drawer. Info → produktside. /book er alias der redirecter til drawer. Se booking_drawer.",
+      "title": "AFVIST — booking forbliver drawer-kurv (må ikke laves om til side)",
+      "description": "Det var en fejlslutning at erstatte drawer med en /book-side. Rullet tilbage: Book-knapper → /?product=ID#book åbner kurv-draweren, Info → produktside, og /book er kun et alias der redirecter til draweren. Bekræftet af ejer 5. aug 2026: booking SKAL være drawer. Denne opgave må ikke genåbnes.",
       "priority": "high",
       "status": "cancelled"
     },
@@ -1880,7 +1880,8 @@
       "BookingDrawer": "src/components/BookingDrawer.tsx — i root layout. Åbner ved #book / ?product= / /book-alias. Gul kurv-fane til højre.",
       "BookingFlow": "src/components/BookingFlow.tsx — variant='drawer' + onSummaryChange + urlTick til preselect"
     },
-    "status": "live"
+    "status": "live",
+    "besluttet": "Bekræftet af ejer 5. august 2026: booking er og forbliver en drawer-kurv. /book er kun et alias."
   },
   "stripe": {
     "status": "LIVE I PRODUKTION (4/8-2026). Konto acct_1U0NvxIz9ZM7fQt9, charges+payouts enabled. Dev-miljø (.dev.vars) kører fortsat testmode. MobilePay-aktivering i live-dashboard udestår.",
@@ -1987,12 +1988,15 @@
   "task_overblik": {
     "opdateret": "2026-08-05",
     "antal_opgaver_i_alt": 67,
-    "aabne": [
+    "bygget_og_deployet": 58,
+    "afvist": [
       {
         "id": "booking-page-not-drawer",
         "title": "REVERTED — booking er drawer-kurv igen (prd booking_drawer)",
-        "status": "cancelled"
-      },
+        "hvorfor": "Fejlslutning at erstatte drawer med /book. Genoprettet: Book → /?product=ID#book åbner kurv-drawer. Info → produktside. /book er alias der redirecter til drawer"
+      }
+    ],
+    "aabne": [
       {
         "id": "dba-boost-connect",
         "title": "DBA: opret produkter via Boost Connect feed",
@@ -2034,6 +2038,6 @@
         "status": "todo"
       }
     ],
-    "note": "Alle opgaver med status 'done' er bygget, testet og deployet. Åbne punkter kræver handling fra ejer (se google_business_profile)."
+    "note": "'cancelled' betyder afvist/rullet tilbage — IKKE åbent arbejde. Booking er og forbliver en drawer-kurv, se booking_drawer-sektionen."
   }
 }
