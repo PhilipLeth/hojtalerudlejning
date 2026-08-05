@@ -8,23 +8,38 @@ import {
 } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 
-/** Sammensatte pakker (festpakker m.fl.) — separat fra almindeligt produktgrid */
-export default function BundleGrid() {
+/**
+ * Sammensatte pakker vist som tilbudskort — samme kort som på forsiden.
+ * Uden props: alle lyd-pakker (forsiden). Med `ids`: netop de pakker,
+ * i den rækkefølge de er angivet (fx karaokepakkerne på /karaoke).
+ */
+export default function BundleGrid({
+  ids,
+  eyebrow = "Pakker",
+  title = "Klar til festen",
+  subtitle = "Lyd og lys der passer perfekt sammen — booket som én pakke med rabat vs. at leje delene enkeltvis. Levering og opsætning kan tilvælges.",
+}: {
+  ids?: string[];
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+} = {}) {
   const { rentalProducts } = useProducts();
-  const bundles = rentalProducts.filter(isBundleProduct).filter((p) => p.category === "lyd");
+  const bundles = ids
+    ? ids
+        .map((id) => rentalProducts.find((p) => p.id === id))
+        .filter((p): p is RentalProduct => !!p && isBundleProduct(p))
+    : rentalProducts.filter(isBundleProduct).filter((p) => p.category === "lyd");
 
   if (bundles.length === 0) return null;
 
   return (
     <section id="pakker" className="relative z-20 mx-auto max-w-6xl px-4 py-14 sm:py-20">
       <p className="mb-2 text-center text-xs font-semibold uppercase tracking-[0.2em] text-brand-400">
-        Pakker
+        {eyebrow}
       </p>
-      <h2 className="mb-2 text-center text-3xl font-bold sm:text-4xl">Klar til festen</h2>
-      <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-        Lyd og lys der passer perfekt sammen — booket som én pakke med rabat
-        vs. at leje delene enkeltvis. Levering og opsætning kan tilvælges.
-      </p>
+      <h2 className="mb-2 text-center text-3xl font-bold sm:text-4xl">{title}</h2>
+      <p className="mx-auto mb-10 max-w-xl text-center text-white/50">{subtitle}</p>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {bundles.map((p) => (

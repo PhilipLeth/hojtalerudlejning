@@ -438,7 +438,7 @@
       "image": "/images/product-subwoofer.png",
       "page": "/subwoofer",
       "status": "live",
-      "note": "Placeholder-illustration som billede indtil rigtigt foto uploades via /admin/produkter."
+      "photo": "Rigtigt Behringer-produktfoto lagt på den gule studiebaggrund (5. aug 2026) — erstatter placeholder-illustrationen."
     }
   ],
   "pricing_rules": {
@@ -1608,6 +1608,20 @@
       "description": "Betalingsbadge fra Stripe + manuel kvittering, omdøbte statuslabels og ⭐-checkmark pr. ordre.",
       "priority": "high",
       "status": "done"
+    },
+    {
+      "id": "tilbudskort-paa-karaoke",
+      "title": "Genbrug forsidens tilbudskort på /karaoke",
+      "description": "BundleGrid udvidet med ids/eyebrow/title/subtitle så karaokepakkerne vises som tilbudskort med dele og besparelse.",
+      "priority": "medium",
+      "status": "done"
+    },
+    {
+      "id": "subwoofer-rigtigt-foto",
+      "title": "Rigtigt Behringer-foto på subwooferen",
+      "description": "Produktfoto lagt på den gule studiebaggrund, erstatter illustrationen.",
+      "priority": "medium",
+      "status": "done"
     }
   ],
   "status": {
@@ -1656,7 +1670,9 @@
       "GDPR: privatlivspolitik, oplysningstekst ved checkout, nyhedsbrev som aktivt tilvalg, footer-links",
       "Kommunikationslog pr. booking i admin",
       "GA4-konverteringer virker: purchase-event sendes både via gtag og dataLayer, online betaling spores først når Stripe bekræfter",
-      "Ordreoverblik med betalingsstatus, Udleveret/Returneret og review-flueben"
+      "Ordreoverblik med betalingsstatus, Udleveret/Returneret og review-flueben",
+      "Karaokepakkerne vises nu som forsidens tilbudskort med dele og besparelse",
+      "Rigtigt Behringer-produktfoto på subwooferen (lagt på den gule studiebaggrund)"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1830,6 +1846,14 @@
       "status": "done",
       "date": "2026-08-04",
       "description": "Nyt produkt: 32\" skærm på 3-fod stativ, 395 kr (/skaerm-32) — indgår i Karaokepakken. 55\" storskærm er rettet fra gulvstativ til 3-fod stativ i tekst, indhold og billede. Begge skærmbilleder er placeholder-illustrationer indtil rigtige fotos uploades."
+    },
+    "tilbudskort_karaoke_2026_08_05": {
+      "status": "done",
+      "description": "BundleGrid (tilbudskortene fra forsiden) kan nu genbruges med en ids-liste plus egen eyebrow/title/subtitle. /karaoke bruger dem til de to karaokepakker, så delene listes med + og 'Spar X kr'-badge direkte på kortet — samme visuelle sprog som forsiden. De to manuelle forklaringsbokse er fjernet, da kortet nu selv viser regnestykket."
+    },
+    "subwoofer_foto_2026_08_05": {
+      "status": "done",
+      "description": "Placeholder-illustrationen af subwooferen er erstattet af et rigtigt Behringer-produktfoto. Den hvide baggrund er fjernet og produktet lagt på samme gule studiebaggrund med blød gulvskygge som de øvrige produktfotos."
     }
   },
   "booking_drawer": {
@@ -1959,5 +1983,57 @@
       "KATEGORI FORKERT: står som 'Teltudlejning'. Primærkategori er en af de stærkeste lokale rankingfaktorer — skal være udlejning af lyd-/festudstyr.",
       "BESKRIVELSE lover slush ice-maskine, fadølsanlæg og personale til eventpakker, som ikke findes i kataloget."
     ]
+  },
+  "task_overblik": {
+    "opdateret": "2026-08-05",
+    "antal_opgaver_i_alt": 67,
+    "aabne": [
+      {
+        "id": "booking-page-not-drawer",
+        "title": "REVERTED — booking er drawer-kurv igen (prd booking_drawer)",
+        "status": "cancelled"
+      },
+      {
+        "id": "dba-boost-connect",
+        "title": "DBA: opret produkter via Boost Connect feed",
+        "status": "pending"
+      },
+      {
+        "id": "guloggratis-feed",
+        "title": "GulogGratis: opret produkter via feed",
+        "status": "pending"
+      },
+      {
+        "id": "meta-catalog-feed",
+        "title": "Meta Catalog: opret produkter via CSV-feed (til ads)",
+        "status": "pending"
+      },
+      {
+        "id": "facebook-marketplace-csv",
+        "title": "Facebook Marketplace: opret listings via bulk CSV",
+        "status": "pending"
+      },
+      {
+        "id": "hygglo-paste-pakke",
+        "title": "Hygglo: opret opslag via paste-pakke",
+        "status": "pending"
+      },
+      {
+        "id": "lager-pause-kanaler",
+        "title": "Lager-aware: udsolgt → out of stock i feed",
+        "status": "pending"
+      },
+      {
+        "id": "stripe-6-invoicing",
+        "title": "Stripe Invoicing til erhvervskunder",
+        "status": "todo"
+      },
+      {
+        "id": "stripe-7-tax",
+        "title": "Stripe Tax: 25% dansk moms",
+        "status": "todo"
+      }
+    ],
+    "note": "Alle opgaver med status 'done' er bygget, testet og deployet. Åbne punkter kræver handling fra ejer (se google_business_profile)."
   }
 }
