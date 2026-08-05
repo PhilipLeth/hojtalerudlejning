@@ -62,13 +62,20 @@ function BundleCard({ product: p }: { product: RentalProduct }) {
 
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-brand-500/25 bg-gradient-to-br from-brand-500/[0.08] via-white/[0.03] to-transparent transition hover:border-brand-500/50">
-      <div className="relative h-48 overflow-hidden sm:h-56">
+      {/* Hele billedfeltet er klikbart → produktside (ellers direkte til booking).
+          object-contain så produktet ikke beskæres, og kun en let gradient
+          nederst så teksten kan læses uden at mudre billedet til. */}
+      <Link
+        href={p.page ?? `/?product=${p.id}#book`}
+        aria-label={`Se ${p.name_da}`}
+        className="relative block h-48 overflow-hidden bg-[#0d0c12] sm:h-56"
+      >
         <img
           src={p.image}
           alt={p.name_da}
-          className="h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-105"
+          className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0d0c12] via-[#0d0c12]/40 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#0d0c12] via-[#0d0c12]/70 to-transparent" />
         {savings > 0 && (
           <span className="absolute right-4 top-4 rounded-full bg-brand-500 px-3 py-1 text-xs font-bold text-black">
             Spar {savings} kr
@@ -78,7 +85,7 @@ function BundleCard({ product: p }: { product: RentalProduct }) {
           <h3 className="text-2xl font-bold text-white">{p.name_da}</h3>
           <p className="mt-1 text-sm text-white/70">{bundle.usecase_da}</p>
         </div>
-      </div>
+      </Link>
 
       <div className="flex flex-1 flex-col gap-5 p-5 sm:p-6">
         {/* Delene i pakken */}

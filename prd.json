@@ -1622,6 +1622,13 @@
       "description": "Produktfoto lagt på den gule studiebaggrund, erstatter illustrationen.",
       "priority": "medium",
       "status": "done"
+    },
+    {
+      "id": "pakkebilleder-murky-og-klik",
+      "title": "Festpakke-kort: murky billeder og billede uden klik",
+      "description": "Composites genopbygget uden fritlægningsartefakter, kort viser dem nu uden opacity/beskæring, og billedet er blevet klikbart.",
+      "priority": "high",
+      "status": "done"
     }
   ],
   "status": {
@@ -1672,7 +1679,8 @@
       "GA4-konverteringer virker: purchase-event sendes både via gtag og dataLayer, online betaling spores først når Stripe bekræfter",
       "Ordreoverblik med betalingsstatus, Udleveret/Returneret og review-flueben",
       "Karaokepakkerne vises nu som forsidens tilbudskort med dele og besparelse",
-      "Rigtigt Behringer-produktfoto på subwooferen (lagt på den gule studiebaggrund)"
+      "Rigtigt Behringer-produktfoto på subwooferen (lagt på den gule studiebaggrund)",
+      "Festpakke-billeder genopbygget rene + billedfeltet på pakkekort er nu klikbart"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1854,6 +1862,10 @@
     "subwoofer_foto_2026_08_05": {
       "status": "done",
       "description": "Placeholder-illustrationen af subwooferen er erstattet af et rigtigt Behringer-produktfoto. Den hvide baggrund er fjernet og produktet lagt på samme gule studiebaggrund med blød gulvskygge som de øvrige produktfotos."
+    },
+    "pakkebilleder_og_klik_2026_08_05": {
+      "status": "done",
+      "description": "To fejl på festpakke-kortene. (1) Billederne var 'murky': composite-billederne var lavet med dårlig fritlægning der efterlod mørke haloer og forskudte spøgelseskopier, OG kortet viste dem med opacity-80, kraftig mørk gradient henover og object-cover der beskar produktet. Billederne er genopbygget uden fritlægning — hvert produktfoto beskæres om sit produkt og blendes ind med bløde kanter, så der ikke opstår artefakter. Kortet bruger nu object-contain, fuld opacitet og kun en let gradient nederst. Lille festpakke viser nu korrekt ÉN lyseffekt (ikke hele lysbaren). (2) Klik på billedet gjorde ingenting — img'et var ikke pakket ind i et link, kun knapperne var klikbare. Hele billedfeltet linker nu til produktsiden (eller booking hvis siden mangler)."
     }
   },
   "booking_drawer": {
