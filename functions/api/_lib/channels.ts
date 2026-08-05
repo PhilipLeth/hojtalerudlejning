@@ -331,6 +331,8 @@ const DEFAULT_CATALOG: CatalogRaw = {
     { id: "discokugle", category: "lys", price: 245, image: "/images/product-discokugle.png", name_da: "Discokugle", desc_da: "Roterende discokugle med LED." },
     { id: "lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.png", name_da: "Lyskæde varm hvid", desc_da: "10m lyskæde med varmt hvidt lys." },
     { id: "lyskaeder_farvet", category: "lys", price: 195, image: "/images/product-lyskaeder-farvet.png", name_da: "Lyskæde farvet", desc_da: "10m lyskæde med farvede pærer." },
+    { id: "uplight", category: "lys", price: 125, image: "/images/product-lys.png", name_da: "Uplight", desc_da: "Simpel LED uplight på gulv — plug and play." },
+    { id: "uplight_4", category: "lys", price: 395, image: "/images/product-lys.png", name_da: "Uplight 4-pak", desc_da: "4 LED uplights til vægge og hjørner — spar 105 kr." },
     { id: "traadloes_mikrofon_pro", category: "av", price: 495, image: "/images/product-mikrofon-pro.png", name_da: "Trådløs mikrofon PRO", desc_da: "Shure BLX trådløs mikrofon — scenekvalitet." },
     { id: "haandholdt_mikrofon_pro", category: "av", price: 195, image: "/images/product-mikrofon-kabel-pro.png", name_da: "Håndholdt mikrofon PRO (kabel)", desc_da: "Shure Beta 58A med kabel." },
     { id: "projektor", category: "av", price: 495, image: "/images/product-projektor.png", name_da: "Projektor", desc_da: "Full HD projektor." },

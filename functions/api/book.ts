@@ -51,6 +51,8 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
     ids.has("discokugle") ||
     ids.has("lyskaeder") ||
     ids.has("lyskaeder_farvet") ||
+    ids.has("uplight") ||
+    ids.has("uplight_4") ||
     // Festpakkerne indeholder lys-pakken
     ids.has("pakke_fest_lille") ||
     ids.has("pakke_fest_stor") ||

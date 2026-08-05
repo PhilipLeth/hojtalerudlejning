@@ -77,7 +77,7 @@ export default function FestlysPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Enkelt lyseffekt fra 195 kr. · Lys-pakke fra 495 kr. · Røgmaskine fra 245 kr.
+            Enkelt lyseffekt fra 195 kr. · Uplights fra 125 kr. · Lys-pakke fra 495 kr. · Røgmaskine fra 245 kr.
           </p>
           <a
             href="/?product=lys#book"
@@ -95,12 +95,14 @@ export default function FestlysPage() {
             Lys og røg til din fest
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Skab den perfekte stemning med enkelt lyseffekt, lys-pakke, røgmaskine, discokugle og lyskæder.
+            Skab den perfekte stemning med enkelt lyseffekt, uplights, lys-pakke, røgmaskine, discokugle og lyskæder.
           </p>
 
           <CategoryProductGrid
             items={[
               { id: "lyseffekt", href: "/enkelt-lyseffekt" },
+              { id: "uplight", href: "/uplights" },
+              { id: "uplight_4", href: "/uplights", tag: "Spar 105,-" },
               { id: "lys", href: "/lys-pakke" },
               { id: "rog", href: "/roegmaskine" },
               { id: "discokugle", href: "/discokugle" },

@@ -120,6 +120,16 @@ describe("Addons data", () => {
     expect(farvet.price).toBe(195);
   });
 
+  it("uplights: enkelt 125 kr og 4-pak 395 kr", () => {
+    const single = rentalProducts.find((p) => p.id === "uplight")!;
+    const pack = rentalProducts.find((p) => p.id === "uplight_4")!;
+    expect(single.price).toBe(125);
+    expect(pack.price).toBe(395);
+    expect(single.page).toBe("/uplights");
+    expect(pack.page).toBe("/uplights");
+    expect(pack.contents?.join(" ")).toContain("4×");
+  });
+
   it("PRO-mikrofoner findes med egne billeder (Shure)", () => {
     const traadloesPro = rentalProducts.find((p) => p.id === "traadloes_mikrofon_pro")!;
     const haandholdtPro = rentalProducts.find((p) => p.id === "haandholdt_mikrofon_pro")!;
