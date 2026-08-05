@@ -224,7 +224,6 @@ export const speakers: Speaker[] = [
 export const addons: Addon[] = [
   {
     id: "lyseffekt",
-    page: "/festlys",
     youtubeUrl: "https://www.youtube.com/watch?v=XhecuXfY0vo",
     price: 195,
     image: "/images/product-lys.png",

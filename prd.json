@@ -930,7 +930,8 @@
       "status": "live",
       "trigger": "Booking markeres 'afleveret' i /admin",
       "description": "Follow-up mail (Frederiks tekst, 2026-08-03) der beder om Google-anmeldelse — IKKE Trustpilot. Dansk/engelsk efter booking.locale. Sendes via Resend fra booking@lejhojtaler.dk. Sendes kun én gang (reviewMailSentAt på bookingen). Admin viser '⭐ Review-mail sendt'.",
-      "todo": "Sæt GOOGLE_REVIEW_URL (g.page/r/<id>/review fra Google Business Profile) som env var i Cloudflare Pages — indtil da bruges Google Maps-søgelink som fallback."
+      "todo": "Ingen — linket er sat både som default i koden (bookings-update.ts) og som GOOGLE_REVIEW_URL i Cloudflare Pages production (5. aug 2026).",
+      "review_url": "https://g.page/r/CbIkmN4b8vjGEBM/review → search.google.com/local/writereview?placeid=ChIJ9UxZq-xTUkYRsiSY3hvy-MY"
     }
   },
   "fulfillment_and_upsell": {
@@ -1917,5 +1918,15 @@
       "Footer-links til politik og vilkår"
     ],
     "implemented": "/privatlivspolitik (dataansvarlig, hvad vi indsamler, hjemmel pr. formål, opbevaringsperioder, databehandlere, rettigheder, klageadgang). Oplysningstekst + links til politik og lejevilkår i booking step 4. Nyhedsbrev ændret fra forudkrydset til aktivt tilvalg. Footer-links på både dansk og engelsk."
+  },
+  "google_business_profile": {
+    "status": "kræver rettelser fra ejer",
+    "place_id": "ChIJ9UxZq-xTUkYRsiSY3hvy-MY",
+    "review_url": "https://g.page/r/CbIkmN4b8vjGEBM/review",
+    "fejl_fundet_2026_08_05": [
+      "TELEFONNUMMER FORKERT: profilen viser 50 15 07 31, men det korrekte er 31 13 28 52. Alle der ringer fra Google når et forkert nummer.",
+      "KATEGORI FORKERT: står som 'Teltudlejning'. Primærkategori er en af de stærkeste lokale rankingfaktorer — skal være udlejning af lyd-/festudstyr.",
+      "BESKRIVELSE lover slush ice-maskine, fadølsanlæg og personale til eventpakker, som ikke findes i kataloget."
+    ]
   }
 }

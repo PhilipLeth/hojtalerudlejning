@@ -77,7 +77,7 @@ export default function FestlysPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Lysbar fra 495 kr. · Røgmaskine fra 245 kr. · Lyskæder fra 195 kr.
+            Enkelt lyseffekt fra 195 kr. · Lys-pakke fra 495 kr. · Røgmaskine fra 245 kr.
           </p>
           <a
             href="/?product=lys#book"
@@ -95,11 +95,12 @@ export default function FestlysPage() {
             Lys og røg til din fest
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Skab den perfekte stemning med lysbar, røgmaskine, discokugle og lyskæder.
+            Skab den perfekte stemning med enkelt lyseffekt, lys-pakke, røgmaskine, discokugle og lyskæder.
           </p>
 
           <CategoryProductGrid
             items={[
+              { id: "lyseffekt" },
               { id: "lys", href: "/lys-pakke" },
               { id: "rog", href: "/roegmaskine" },
               { id: "discokugle", href: "/discokugle" },
