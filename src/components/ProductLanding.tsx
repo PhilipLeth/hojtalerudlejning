@@ -1,6 +1,7 @@
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
 import ProductVideo from "@/components/ProductVideo";
+import ProductYouTube from "@/components/ProductYouTube";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
@@ -37,7 +38,7 @@ export default function ProductLanding({
   const bookHref = toBook(productId);
   const cta = bookLabel ?? `Book ${name} nu`;
 
-  // Product-schema med ratings + leveringspris (rich results i Google)
+  // Product-schema med pris, lagerstatus og leveringspris (rich results i Google)
   const productLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -45,12 +46,9 @@ export default function ProductLanding({
     description: sub,
     image: `https://lejhojtaler.dk${image}`,
     brand: { "@type": "Brand", name: "Lejhøjtaler.dk" },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: "4",
-      bestRating: "5",
-    },
+    // BEMÆRK: ingen aggregateRating/review her med vilje. Structured data må kun
+    // indeholde ægte kundeanmeldelser af det konkrete produkt (Googles regler +
+    // markedsføringsloven). Tilføj først når vi har rigtige anmeldelser pr. produkt.
     offers: {
       "@type": "Offer",
       price: String(price),
@@ -165,6 +163,8 @@ export default function ProductLanding({
             </div>
           </div>
         </section>
+
+        <ProductYouTube productId={productId} name={name} />
 
         {children}
 

@@ -105,7 +105,6 @@ export default function EnHome() {
               "@type": "Brand",
               name: "Lejhøjtaler.dk",
             },
-            aggregateRating: { "@type": "AggregateRating", ratingValue: "5.0", reviewCount: "4", bestRating: "5" },
             offers: {
               "@type": "Offer",
               price: "395",
@@ -139,7 +138,6 @@ export default function EnHome() {
               "@type": "Brand",
               name: "Lejhøjtaler.dk",
             },
-            aggregateRating: { "@type": "AggregateRating", ratingValue: "5.0", reviewCount: "4", bestRating: "5" },
             offers: {
               "@type": "Offer",
               price: "695",
@@ -173,7 +171,6 @@ export default function EnHome() {
               "@type": "Brand",
               name: "Lejhøjtaler.dk",
             },
-            aggregateRating: { "@type": "AggregateRating", ratingValue: "5.0", reviewCount: "4", bestRating: "5" },
             offers: {
               "@type": "Offer",
               price: "495",

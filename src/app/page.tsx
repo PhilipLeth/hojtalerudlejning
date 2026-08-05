@@ -31,12 +31,6 @@ export default function Home() {
             telephone: "+4531132852",
             priceRange: "95-1195 kr",
             image: "https://lejhojtaler.dk/images/logo-lejhojtaler.png",
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: "5.0",
-              reviewCount: "4",
-              bestRating: "5",
-            },
             description:
               "Højtalerudlejning i København. Lej højtaler, PA-anlæg, batterihøjtaler og lydudstyr til fest, event og party. Billig levering i hele København. Festudstyr til leje fra 345 kr/weekend.",
             url: "https://lejhojtaler.dk",

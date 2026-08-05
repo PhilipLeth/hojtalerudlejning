@@ -1064,7 +1064,16 @@
       "Product": "Alle produktsider (via ProductLanding) + /en: pris, InStock, priceValidUntil, aggregateRating (5.0/4 anmeldelser, matcher synlige testimonials) og OfferShippingDetails (levering 495 kr, region København/DK)",
       "LocalBusiness": "Forside: telefon, priceRange 95-1195 kr, logo, aggregateRating, adresse, åbningstider",
       "øvrige": "FAQPage, BreadcrumbList, Article (blog), metadataBase sat så OG-billeder resolver korrekt"
-    }
+    },
+    "reviews_policy": {
+      "status": "Ingen anmeldelses-markup — bevidst",
+      "date": "2026-08-05",
+      "description": "aggregateRating (5,0 / 4 anmeldelser) er fjernet fra alle 20 produktsider (ProductLanding), forsidens LocalBusiness og de tre Product-blokke på /en. Årsag: ratingen byggede på sitets testimonials, som ejeren har bekræftet ikke er ægte kundeanmeldelser. Falsk review-markup er i strid med Googles retningslinjer (spammy structured markup → risiko for manuel straf på hele domænet) og med markedsføringsloven/Omnibus-direktivet om falske forbrugeranmeldelser.",
+      "guard": "src/__tests__/structured-data.test.tsx fejler hvis aggregateRating eller Review-schema genindføres.",
+      "next": "Ægte Google-anmeldelser samles nu ind automatisk via review-mailen (sendes når booking markeres 'afleveret'). Når der er ægte anmeldelser af konkrete produkter, må aggregateRating/review tilføjes igen — kun for de produkter anmeldelserne handler om.",
+      "note_search_console": "Search Console-advarslerne 'Missing field aggregateRating/review' er valgfrie forbedringer, ikke fejl. Produktsiderne er fortsat valide og får rich results med pris, valuta, lagerstatus og leveringsomkostning."
+    },
+    "testimonials_warning": "De 4 testimonials i src/lib/i18n.ts (Caroline V., Rune K., Mikkel L., Matthew H.) er IKKE verificerede kundeanmeldelser. De vises stadig på forsiden og alle produktsider — bør erstattes af ægte anmeldelser eller fjernes/omskrives til neutrale udsagn."
   },
   "design": {
     "logo": "/images/logo-lejhojtaler.png",
@@ -1556,7 +1565,8 @@
       "Produktvideoer: upload fra admin (R2, max 100 MB) + play-knap i produkt-hero med videomodal. Billede-upload flyttet til R2 (max 10 MB, fixer 500 kB-afvisninger)",
       "Billed-upload ENDELIG fixet: compatibility_date + rå body-upload — verificeret mod ægte Cloudflare-runtime",
       "Subwoofer 12\" (Behringer) oprettet som tilvalg + produktside; Book-knap på tilvalg virker nu generelt",
-      "Karaoke omlagt til pakkefokus: maskine 695 kr; Karaokepakken 1.100 kr (m. lille højtalersæt, spar 385) og Karaoke-festpakken 1.500 kr (spar 485) + ny 32\" skærm på 3-fod stativ"
+      "Karaoke omlagt til pakkefokus: maskine 695 kr; Karaokepakken 1.100 kr (m. lille højtalersæt, spar 385) og Karaoke-festpakken 1.500 kr (spar 485) + ny 32\" skærm på 3-fod stativ",
+      "Fjernet opdigtet 5,0-rating fra al structured data (produktsider, forside, /en) + test der forhindrer at den genindføres"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1565,7 +1575,8 @@
       "Facebook Marketplace: upload CSV + billeder",
       "Hygglo: paste → opslag live",
       "Lager-aware pause (udsolgt i feed/ads)",
-      "Stripe-integration (tasks stripe-2 til stripe-9): Payment Element, webhook, Invoicing, Tax"
+      "Stripe-integration (tasks stripe-2 til stripe-9): Payment Element, webhook, Invoicing, Tax",
+      "Erstat de 4 opdigtede testimonials med ægte anmeldelser (indsamles nu via review-mailen) eller fjern dem — juridisk risiko efter markedsføringsloven/Omnibus"
     ]
   },
   "channel_distribution": {

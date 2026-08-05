@@ -32,6 +32,8 @@ export interface Speaker {
   hidden?: boolean;
   /** Produktvideo (instruktion/demo) — vist med play-knap i produkt-hero */
   video?: string;
+  /** YouTube-URL fra producenten — vist som ekstra info under produktbeskrivelsen */
+  youtubeUrl?: string;
   /** Addon IDs shown to the customer during booking. Undefined = show all. */
   allowedAddons?: string[];
   /** Hvad er med i pakken — vist ved hover på produktkort */
@@ -54,6 +56,8 @@ export interface Addon {
   hidden?: boolean;
   /** Produktvideo (instruktion/demo) — vist med play-knap i produkt-hero */
   video?: string;
+  /** YouTube-URL fra producenten — vist som ekstra info under produktbeskrivelsen */
+  youtubeUrl?: string;
   /** Hvad er med — vist ved hover på produktkort */
   contents?: string[];
   da: AddonText;
@@ -91,6 +95,8 @@ export interface RentalProduct {
   hidden?: boolean;
   /** Produktvideo (instruktion/demo) — vist med play-knap i produkt-hero */
   video?: string;
+  /** YouTube-URL fra producenten — vist som ekstra info under produktbeskrivelsen */
+  youtubeUrl?: string;
   /** Addon IDs shown to the customer during booking. Undefined = show all. */
   allowedAddons?: string[];
   /** Hvad er med i pakken — vist ved hover på produktkort */
@@ -112,6 +118,7 @@ export const speakers: Speaker[] = [
   {
     id: "thumpgo",
     page: "/mackie-thump-go",
+    youtubeUrl: "https://www.youtube.com/watch?v=0M7xZoiqn9U",
     price: 345,
     product: "/images/product-thumpgo.png",
     mood: "/images/mood-party.png",
