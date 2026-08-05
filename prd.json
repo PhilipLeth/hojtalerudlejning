@@ -1629,6 +1629,13 @@
       "description": "Composites genopbygget uden fritlægningsartefakter, kort viser dem nu uden opacity/beskæring, og billedet er blevet klikbart.",
       "priority": "high",
       "status": "done"
+    },
+    {
+      "id": "karaoke-pakkebilleder",
+      "title": "Scenebilleder til karaokepakkerne med skærm, maskine og højtalere",
+      "description": "Begge karaokepakker har nu et samlet produktbillede i stedet for kun maskinen.",
+      "priority": "medium",
+      "status": "done"
     }
   ],
   "status": {
@@ -1680,7 +1687,8 @@
       "Ordreoverblik med betalingsstatus, Udleveret/Returneret og review-flueben",
       "Karaokepakkerne vises nu som forsidens tilbudskort med dele og besparelse",
       "Rigtigt Behringer-produktfoto på subwooferen (lagt på den gule studiebaggrund)",
-      "Festpakke-billeder genopbygget rene + billedfeltet på pakkekort er nu klikbart"
+      "Festpakke-billeder genopbygget rene + billedfeltet på pakkekort er nu klikbart",
+      "Karaokepakkerne har fået scenebilleder med skærm, maskine og højtalere"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1866,6 +1874,10 @@
     "pakkebilleder_og_klik_2026_08_05": {
       "status": "done",
       "description": "To fejl på festpakke-kortene. (1) Billederne var 'murky': composite-billederne var lavet med dårlig fritlægning der efterlod mørke haloer og forskudte spøgelseskopier, OG kortet viste dem med opacity-80, kraftig mørk gradient henover og object-cover der beskar produktet. Billederne er genopbygget uden fritlægning — hvert produktfoto beskæres om sit produkt og blendes ind med bløde kanter, så der ikke opstår artefakter. Kortet bruger nu object-contain, fuld opacitet og kun en let gradient nederst. Lille festpakke viser nu korrekt ÉN lyseffekt (ikke hele lysbaren). (2) Klik på billedet gjorde ingenting — img'et var ikke pakket ind i et link, kun knapperne var klikbare. Hele billedfeltet linker nu til produktsiden (eller booking hvis siden mangler)."
+    },
+    "pakkebilleder_karaoke_2026_08_05": {
+      "status": "done",
+      "description": "Karaokepakkerne viste kun karaokemaskinen. Begge har nu et scenebillede med alle pakkens dele: skærm bagest til venstre, maskinen forrest i midten (det er den, pakken sælges på) og højtalerne til højre — fælles gulvlinje, individuelle bløde skygger. Karaokepakken: 32\" skærm + maskine + 2× Alto. Karaoke-festpakken: 55\" skærm + maskine + 2× EV. Fritlægning med hård tærskel så der ikke opstår haloer, og bredde/højde-begrænsning så intet beskæres af rammen."
     }
   },
   "booking_drawer": {

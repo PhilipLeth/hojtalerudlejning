@@ -1,10 +1,10 @@
 {
   "title": "Lejhøjtaler.dk — forslag til manglende annoncegrupper",
-  "version": "1.0-forslag",
+  "version": "2.0-bofu",
   "last_updated": "2026-08-05",
   "customer_id": "4410207627",
-  "notes": "Forslag, ikke deployet. Dækker de landingssider der i dag IKKE har en annoncegruppe i konto 441-020-7627. Skemaet matcher openocean-promo/ads.json, så det kan valideres med ads-export/ads_common.py og synces med sync_google_ads.py. Priser er hentet fra src/lib/products.ts pr. 5. aug 2026 — verificér før deploy.",
-  "strategy": "Kontoen har i dag 16 annoncegrupper, hvoraf kun 4 er ENABLED. Dækningshullet er ikke produkterne — det er anledningerne. Sider som /bryllup, /julefrokost og /karaoke har høj købsintention og ingen annoncer overhovedet. Anledningskampagnen er derfor prioritet 1.",
+  "notes": "Forslag, ikke deployet. KUN BOFU: hvert keyword indeholder et lejeverbum (lej/leje/udlejning). Exact match på hovedtermer, phrase på haler. Keywords uden lejeintention er fjernet — de rammer lige så ofte DJ-søgninger eller købsintention. Skemaet matcher openocean-promo/ads.json.",
+  "strategy": "Dækningshullet er anledningerne, men kun i deres BOFU-form. Sæsonbetonet: julefrokost (nov-dec), konfirmation (apr-maj), studenterkørsel (jun), nytår (dec) bør kun køre i sæson. Bemærk: uden virkende konverteringssporing kan ingen af disse grupper måles på booking-rate.",
   "campaigns": [
     {
       "id": "C01",
@@ -17,8 +17,22 @@
       "bid_ceiling_dkk": 12,
       "landing_page": "https://lejhojtaler.dk",
       "shared_negative_keywords": [
-        "sælg", "køb", "brugt", "reparation", "gratis", "job", "ledig stilling",
-        "dj", "band", "musiker", "teltudlejning", "borde og stole"
+        "anmeldelse",
+        "band",
+        "borde og stole",
+        "brugt",
+        "dj",
+        "gratis",
+        "job",
+        "køb",
+        "ledig stilling",
+        "musiker",
+        "pris ny",
+        "reparation",
+        "selv bygge",
+        "sælg",
+        "teltudlejning",
+        "test"
       ],
       "sitelinks": [
         {
@@ -52,15 +66,19 @@
           "name": "AG 16 - Bryllup",
           "landing_page": "https://lejhojtaler.dk/bryllup",
           "keywords": [
-            "\"lej højtaler bryllup\"",
-            "\"lyd til bryllup\"",
-            "\"højtaler til bryllup\"",
-            "\"lydanlæg bryllup leje\"",
-            "\"musikanlæg til bryllup\"",
-            "\"lej mikrofon til tale\"",
-            "\"bryllupsfest lyd københavn\""
+            "[lej højtaler bryllup]",
+            "[lej lydanlæg bryllup]",
+            "[højtaler udlejning bryllup]",
+            "\"lej højtaler til bryllup\"",
+            "\"lej mikrofon til bryllup\""
           ],
-          "negative_keywords": ["fotograf", "kage", "kjole", "lokale", "invitationer"],
+          "negative_keywords": [
+            "fotograf",
+            "kage",
+            "kjole",
+            "lokale",
+            "invitationer"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -92,14 +110,18 @@
           "name": "AG 17 - Fødselsdag",
           "landing_page": "https://lejhojtaler.dk/foedselsdag",
           "keywords": [
-            "\"højtaler til fødselsdag\"",
-            "\"lyd til fødselsdag\"",
-            "\"lej anlæg fødselsdag\"",
-            "\"musikanlæg fødselsdag leje\"",
-            "\"fest 30 års fødselsdag lyd\"",
-            "\"lej højtaler til rund fødselsdag\""
+            "[lej højtaler fødselsdag]",
+            "[højtaler udlejning fødselsdag]",
+            "\"lej højtaler til fødselsdag\"",
+            "\"lej anlæg til fødselsdag\""
           ],
-          "negative_keywords": ["gave", "kort", "sang", "børnefødselsdag", "kage"],
+          "negative_keywords": [
+            "gave",
+            "kort",
+            "sang",
+            "børnefødselsdag",
+            "kage"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -131,14 +153,16 @@
           "name": "AG 18 - Havefest",
           "landing_page": "https://lejhojtaler.dk/havefest",
           "keywords": [
-            "\"lyd til havefest\"",
-            "\"højtaler til havefest\"",
-            "\"lej anlæg til havefest\"",
-            "\"batteridrevet højtaler leje\"",
-            "\"højtaler uden strøm leje\"",
-            "\"lej lyskæder til havefest\""
+            "[lej højtaler havefest]",
+            "\"lej højtaler til havefest\"",
+            "\"lej anlæg til havefest\""
           ],
-          "negative_keywords": ["havemøbler", "telt", "grill", "pavillon"],
+          "negative_keywords": [
+            "havemøbler",
+            "telt",
+            "grill",
+            "pavillon"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -170,14 +194,19 @@
           "name": "AG 19 - Julefrokost",
           "landing_page": "https://lejhojtaler.dk/julefrokost",
           "keywords": [
-            "\"lyd til julefrokost\"",
-            "\"højtaler til julefrokost\"",
-            "\"lej anlæg julefrokost\"",
-            "\"julefrokost musikanlæg leje\"",
-            "\"lej mikrofon julefrokost\"",
-            "\"firmajulefrokost lyd københavn\""
+            "[lej højtaler julefrokost]",
+            "[lej lydanlæg julefrokost]",
+            "[højtaler udlejning julefrokost]",
+            "\"lej højtaler til julefrokost\"",
+            "\"lej anlæg til julefrokost\""
           ],
-          "negative_keywords": ["menu", "restaurant", "mad", "opskrift", "lokale"],
+          "negative_keywords": [
+            "menu",
+            "restaurant",
+            "mad",
+            "opskrift",
+            "lokale"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -209,13 +238,18 @@
           "name": "AG 20 - Konfirmation",
           "landing_page": "https://lejhojtaler.dk/konfirmation",
           "keywords": [
-            "\"lyd til konfirmation\"",
-            "\"højtaler til konfirmation\"",
-            "\"lej anlæg konfirmation\"",
-            "\"mikrofon til konfirmation\"",
-            "\"konfirmation musikanlæg leje\""
+            "[lej højtaler konfirmation]",
+            "\"lej højtaler til konfirmation\"",
+            "\"lej anlæg til konfirmation\"",
+            "\"lej mikrofon til konfirmation\""
           ],
-          "negative_keywords": ["gave", "tøj", "kjole", "invitation", "salme"],
+          "negative_keywords": [
+            "gave",
+            "tøj",
+            "kjole",
+            "invitation",
+            "salme"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -247,13 +281,16 @@
           "name": "AG 21 - Nytår",
           "landing_page": "https://lejhojtaler.dk/nytaar",
           "keywords": [
-            "\"lyd til nytårsfest\"",
-            "\"højtaler til nytår\"",
-            "\"lej anlæg nytårsaften\"",
-            "\"nytårsfest musikanlæg leje\"",
-            "\"lej festlys nytår\""
+            "[lej højtaler nytår]",
+            "\"lej højtaler til nytårsfest\"",
+            "\"lej anlæg til nytår\""
           ],
-          "negative_keywords": ["fyrværkeri", "menu", "opskrift", "restaurant"],
+          "negative_keywords": [
+            "fyrværkeri",
+            "menu",
+            "opskrift",
+            "restaurant"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -285,13 +322,17 @@
           "name": "AG 22 - Polterabend",
           "landing_page": "https://lejhojtaler.dk/polterabend",
           "keywords": [
-            "\"lyd til polterabend\"",
-            "\"højtaler til polterabend\"",
-            "\"lej højtaler polterabend\"",
-            "\"transportabel højtaler leje\"",
-            "\"bærbar højtaler udlejning\""
+            "[lej højtaler polterabend]",
+            "\"lej højtaler til polterabend\"",
+            "\"lej transportabel højtaler\""
           ],
-          "negative_keywords": ["ide", "leg", "aktivitet", "t-shirt", "udklædning"],
+          "negative_keywords": [
+            "ide",
+            "leg",
+            "aktivitet",
+            "t-shirt",
+            "udklædning"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -323,13 +364,18 @@
           "name": "AG 23 - Studenterkørsel",
           "landing_page": "https://lejhojtaler.dk/studenterkoersel",
           "keywords": [
-            "\"højtaler til studenterkørsel\"",
-            "\"lyd til studentervogn\"",
-            "\"lej højtaler studenterkørsel\"",
-            "\"anlæg til studentervogn leje\"",
-            "\"kraftig højtaler leje batteri\""
+            "[lej højtaler studenterkørsel]",
+            "[lej anlæg studentervogn]",
+            "\"lej højtaler til studentervogn\"",
+            "\"lej anlæg til studenterkørsel\""
           ],
-          "negative_keywords": ["hue", "lastbil", "chauffør", "vognmand", "menu"],
+          "negative_keywords": [
+            "hue",
+            "lastbil",
+            "chauffør",
+            "vognmand",
+            "menu"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -369,8 +415,26 @@
       "bid_ceiling_dkk": 12,
       "landing_page": "https://lejhojtaler.dk/karaoke",
       "shared_negative_keywords": [
-        "sælg", "køb", "brugt", "reparation", "gratis", "app", "youtube",
-        "sange", "sangbog", "bar", "download"
+        "anmeldelse",
+        "app",
+        "band",
+        "bar",
+        "brugt",
+        "dj",
+        "download",
+        "gratis",
+        "job",
+        "køb",
+        "ledig stilling",
+        "musiker",
+        "pris ny",
+        "reparation",
+        "sangbog",
+        "sange",
+        "selv bygge",
+        "sælg",
+        "test",
+        "youtube"
       ],
       "sitelinks": [
         {
@@ -404,14 +468,19 @@
           "name": "AG 24 - Karaoke",
           "landing_page": "https://lejhojtaler.dk/karaoke",
           "keywords": [
-            "\"lej karaoke københavn\"",
-            "\"karaoke udlejning\"",
-            "\"karaoke leje københavn\"",
-            "\"karaokeanlæg leje\"",
+            "[lej karaoke københavn]",
+            "[karaoke udlejning]",
+            "[karaoke leje københavn]",
             "\"lej karaoke til fest\"",
-            "\"karaoke til fest københavn\""
+            "\"lej karaokeanlæg\""
           ],
-          "negative_keywords": ["sange", "app", "youtube", "bar", "restaurant"],
+          "negative_keywords": [
+            "sange",
+            "app",
+            "youtube",
+            "bar",
+            "restaurant"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -443,13 +512,18 @@
           "name": "AG 25 - Karaokemaskine",
           "landing_page": "https://lejhojtaler.dk/karaoke-maskine",
           "keywords": [
-            "\"lej karaokemaskine\"",
-            "\"karaokemaskine udlejning\"",
+            "[lej karaokemaskine]",
+            "[karaokemaskine udlejning]",
             "\"karaokemaskine leje københavn\"",
-            "\"lej karaoke maskine til fest\"",
-            "\"karaoke maskine med mikrofon leje\""
+            "\"lej karaoke maskine til fest\""
           ],
-          "negative_keywords": ["børn", "legetøj", "sange", "app", "test"],
+          "negative_keywords": [
+            "børn",
+            "legetøj",
+            "sange",
+            "app",
+            "test"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -481,13 +555,16 @@
           "name": "AG 26 - Karaoke + fest",
           "landing_page": "https://lejhojtaler.dk/pakke-karaoke-fest",
           "keywords": [
-            "\"karaokepakke leje\"",
+            "[karaokepakke leje]",
             "\"lej karaoke og højtalere\"",
-            "\"karaoke og lys til fest leje\"",
-            "\"komplet karaoke fest pakke\"",
-            "\"karaoke pakke københavn\""
+            "\"lej karaoke pakke københavn\""
           ],
-          "negative_keywords": ["sange", "app", "bar", "restaurant"],
+          "negative_keywords": [
+            "sange",
+            "app",
+            "bar",
+            "restaurant"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -527,8 +604,25 @@
       "bid_ceiling_dkk": 15,
       "landing_page": "https://lejhojtaler.dk/festpakke-lille",
       "shared_negative_keywords": [
-        "sælg", "køb", "brugt", "reparation", "gratis", "telt", "borde",
-        "stole", "service", "catering"
+        "anmeldelse",
+        "band",
+        "borde",
+        "brugt",
+        "catering",
+        "dj",
+        "gratis",
+        "job",
+        "køb",
+        "ledig stilling",
+        "musiker",
+        "pris ny",
+        "reparation",
+        "selv bygge",
+        "service",
+        "stole",
+        "sælg",
+        "telt",
+        "test"
       ],
       "sitelinks": [
         {
@@ -562,13 +656,17 @@
           "name": "AG 27 - Lille festpakke",
           "landing_page": "https://lejhojtaler.dk/festpakke-lille",
           "keywords": [
-            "\"festpakke leje\"",
-            "\"lej festpakke københavn\"",
-            "\"lyd og lys pakke leje\"",
-            "\"komplet festudstyr leje\"",
-            "\"festudstyr pakke københavn\""
+            "[festpakke leje]",
+            "[lej festpakke københavn]",
+            "\"lej festudstyr pakke\"",
+            "\"komplet festudstyr leje\""
           ],
-          "negative_keywords": ["telt", "borde", "stole", "catering"],
+          "negative_keywords": [
+            "telt",
+            "borde",
+            "stole",
+            "catering"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -600,13 +698,17 @@
           "name": "AG 28 - Stor festpakke",
           "landing_page": "https://lejhojtaler.dk/festpakke-stor",
           "keywords": [
-            "\"stor festpakke leje\"",
-            "\"lej komplet festanlæg\"",
-            "\"lyd lys og røg pakke leje\"",
-            "\"festpakke stor fest københavn\"",
-            "\"alt til festen leje københavn\""
+            "[lej komplet festanlæg]",
+            "\"lej stor festpakke\"",
+            "\"lej lyd lys og røg pakke\""
           ],
-          "negative_keywords": ["telt", "borde", "stole", "catering", "koncert"],
+          "negative_keywords": [
+            "telt",
+            "borde",
+            "stole",
+            "catering",
+            "koncert"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -638,13 +740,17 @@
           "name": "AG 29 - Lille højtalerpakke",
           "landing_page": "https://lejhojtaler.dk/hojtalerpakke-lille",
           "keywords": [
-            "\"lej højtalerpakke\"",
-            "\"højtalerpakke leje københavn\"",
+            "[lej højtalerpakke]",
+            "[højtalerpakke leje københavn]",
             "\"lej to højtalere\"",
-            "\"højtalersæt leje\"",
+            "\"lej højtalersæt\"",
             "\"lej højtalere med stativ\""
           ],
-          "negative_keywords": ["hjemmebiograf", "bilstereo", "bluetooth"],
+          "negative_keywords": [
+            "hjemmebiograf",
+            "bilstereo",
+            "bluetooth"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -676,13 +782,16 @@
           "name": "AG 30 - Stor højtalerpakke",
           "landing_page": "https://lejhojtaler.dk/hojtalerpakke-normal",
           "keywords": [
-            "\"stor højtalerpakke leje\"",
-            "\"lej kraftige højtalere\"",
-            "\"PA pakke leje københavn\"",
-            "\"lej højtalere stor fest\"",
-            "\"lydanlæg pakke leje københavn\""
+            "[lej stor højtalerpakke]",
+            "[lej kraftige højtalere]",
+            "\"lej højtalere til stor fest\""
           ],
-          "negative_keywords": ["hjemmebiograf", "bilstereo", "koncert", "professionel"],
+          "negative_keywords": [
+            "hjemmebiograf",
+            "bilstereo",
+            "koncert",
+            "professionel"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -714,13 +823,16 @@
           "name": "AG 31 - Lyspakke",
           "landing_page": "https://lejhojtaler.dk/lys-pakke",
           "keywords": [
-            "\"lyspakke leje\"",
-            "\"lej lyspakke til fest\"",
-            "\"festlys pakke københavn\"",
-            "\"lej komplet lysanlæg\"",
-            "\"lys og røg pakke leje\""
+            "[lyspakke leje]",
+            "[lej lyspakke til fest]",
+            "\"lej komplet lysanlæg\""
           ],
-          "negative_keywords": ["lampe", "loftlampe", "julebelysning", "havelys"],
+          "negative_keywords": [
+            "lampe",
+            "loftlampe",
+            "julebelysning",
+            "havelys"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -752,13 +864,16 @@
           "name": "AG 32 - Konferencepakke",
           "landing_page": "https://lejhojtaler.dk/pakke-konference",
           "keywords": [
-            "\"lej udstyr til konference\"",
-            "\"konference av udstyr leje\"",
+            "[lej udstyr til konference]",
             "\"lej projektor og mikrofon\"",
-            "\"møde udstyr udlejning københavn\"",
-            "\"konferencepakke leje københavn\""
+            "\"lej konferenceudstyr københavn\""
           ],
-          "negative_keywords": ["lokale", "hotel", "catering", "tilmelding"],
+          "negative_keywords": [
+            "lokale",
+            "hotel",
+            "catering",
+            "tilmelding"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -790,13 +905,16 @@
           "name": "AG 33 - Præsentationspakke",
           "landing_page": "https://lejhojtaler.dk/pakke-praesentation",
           "keywords": [
-            "\"lej udstyr til præsentation\"",
-            "\"præsentationsudstyr leje\"",
-            "\"lej projektor og lærred\"",
-            "\"lej skærm og mikrofon\"",
-            "\"præsentation udstyr københavn leje\""
+            "[lej udstyr til præsentation]",
+            "[lej projektor og lærred]",
+            "\"lej skærm og mikrofon\""
           ],
-          "negative_keywords": ["skabelon", "powerpoint", "kursus", "lokale"],
+          "negative_keywords": [
+            "skabelon",
+            "powerpoint",
+            "kursus",
+            "lokale"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -827,17 +945,31 @@
     },
     {
       "id": "C04",
-      "name": "Lejhøjtaler — Erhverv & Geo",
+      "name": "Lejhøjtaler — Erhverv",
       "type": "search",
       "status": "PAUSED",
-      "objective": "Erhvervskunder og brede geo-søgninger. Højere ordreværdi og gentagne bookinger.",
+      "objective": "Erhvervskunder: højere ordreværdi, faktura/EAN og gentagne bookinger.",
       "daily_budget_dkk": 60,
       "bid_strategy": "Maximize clicks med CPC-loft indtil konverteringer måles",
       "bid_ceiling_dkk": 15,
       "landing_page": "https://lejhojtaler.dk/erhverv",
       "shared_negative_keywords": [
-        "sælg", "køb", "brugt", "reparation", "gratis", "job", "ledig stilling",
-        "privat", "billigst"
+        "anmeldelse",
+        "band",
+        "billigst",
+        "brugt",
+        "dj",
+        "gratis",
+        "job",
+        "køb",
+        "ledig stilling",
+        "musiker",
+        "pris ny",
+        "privat",
+        "reparation",
+        "selv bygge",
+        "sælg",
+        "test"
       ],
       "sitelinks": [
         {
@@ -871,13 +1003,17 @@
           "name": "AG 34 - Erhverv",
           "landing_page": "https://lejhojtaler.dk/erhverv",
           "keywords": [
-            "\"lydudstyr til firmaevent\"",
-            "\"lej højtaler til firma\"",
-            "\"udstyr til firmafest leje\"",
-            "\"av udlejning erhverv københavn\"",
-            "\"lej lydanlæg til receptionen\""
+            "[lej højtaler til firma]",
+            "\"lej lydudstyr til firmaevent\"",
+            "\"lej udstyr til firmafest\"",
+            "\"lej lydanlæg til reception\""
           ],
-          "negative_keywords": ["privat", "job", "praktik", "kursus"],
+          "negative_keywords": [
+            "privat",
+            "job",
+            "praktik",
+            "kursus"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -903,44 +1039,6 @@
               ]
             }
           ]
-        },
-        {
-          "id": "AG-kobenhavn",
-          "name": "AG 35 - København (bred geo)",
-          "landing_page": "https://lejhojtaler.dk/kobenhavn",
-          "keywords": [
-            "\"udlejning af lydudstyr københavn\"",
-            "\"lej festudstyr københavn\"",
-            "\"udstyr til fest leje københavn\"",
-            "\"lej lyd og lys københavn\"",
-            "\"festudlejning københavn\""
-          ],
-          "negative_keywords": ["telt", "borde", "stole", "hoppeborg", "toiletvogn"],
-          "ads": [
-            {
-              "type": "RSA",
-              "headlines": [
-                "Festudlejning i København",
-                "Lyd og lys fra 345 kr.",
-                "Afhentning i København K",
-                "Ingen depositum",
-                "Betal først ved afhentning",
-                "Gratis parkering",
-                "Højtaler i taske – tag cyklen",
-                "Alt udstyr inkluderet",
-                "Book online på 3 minutter",
-                "Levering i KBH for 495 kr.",
-                "Afhent fredag, aflever mandag",
-                "Lejhøjtaler.dk"
-              ],
-              "descriptions": [
-                "Lej lyd, lys og festudstyr i København fra 345 kr. Alt udstyr inkluderet.",
-                "Afhent i København K med gratis parkering, eller få leveret til døren.",
-                "Ingen depositum — du betaler først ved afhentning. Afhent fredag, aflever mandag.",
-                "Book online på under 3 minutter og få svar med det samme. Lejhøjtaler.dk"
-              ]
-            }
-          ]
         }
       ]
     },
@@ -955,8 +1053,21 @@
       "bid_ceiling_dkk": 10,
       "landing_page": "https://lejhojtaler.dk/lydudstyr",
       "shared_negative_keywords": [
-        "sælg", "køb", "brugt", "reparation", "gratis", "test", "anmeldelse",
-        "pris ny", "tilbud"
+        "anmeldelse",
+        "band",
+        "brugt",
+        "dj",
+        "gratis",
+        "job",
+        "køb",
+        "ledig stilling",
+        "musiker",
+        "pris ny",
+        "reparation",
+        "selv bygge",
+        "sælg",
+        "test",
+        "tilbud"
       ],
       "sitelinks": [
         {
@@ -990,13 +1101,17 @@
           "name": "AG 36 - Mackie Thump GO",
           "landing_page": "https://lejhojtaler.dk/mackie-thump-go",
           "keywords": [
-            "\"lej mackie thump go\"",
-            "\"mackie thump go leje\"",
-            "\"batteridrevet højtaler leje københavn\"",
+            "[lej mackie thump go]",
+            "[mackie thump go leje]",
             "\"lej højtaler med batteri\"",
-            "\"transportabel pa højtaler leje\""
+            "\"lej batteridrevet højtaler\""
           ],
-          "negative_keywords": ["manual", "test", "anmeldelse", "reservedele"],
+          "negative_keywords": [
+            "manual",
+            "test",
+            "anmeldelse",
+            "reservedele"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -1028,13 +1143,16 @@
           "name": "AG 37 - Subwoofer",
           "landing_page": "https://lejhojtaler.dk/subwoofer",
           "keywords": [
-            "\"lej subwoofer københavn\"",
-            "\"subwoofer udlejning\"",
-            "\"subwoofer leje til fest\"",
-            "\"lej bas til fest\"",
-            "\"aktiv subwoofer leje\""
+            "[lej subwoofer københavn]",
+            "[subwoofer udlejning]",
+            "\"lej subwoofer til fest\""
           ],
-          "negative_keywords": ["bil", "hjemmebiograf", "test", "anmeldelse"],
+          "negative_keywords": [
+            "bil",
+            "hjemmebiograf",
+            "test",
+            "anmeldelse"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -1066,13 +1184,16 @@
           "name": "AG 38 - Uplights",
           "landing_page": "https://lejhojtaler.dk/uplights",
           "keywords": [
-            "\"lej uplights\"",
-            "\"uplights leje københavn\"",
-            "\"lej led spots til fest\"",
-            "\"uplight udlejning\"",
-            "\"lej stemningslys til bryllup\""
+            "[lej uplights]",
+            "[uplights leje københavn]",
+            "\"lej uplight til fest\""
           ],
-          "negative_keywords": ["lampe", "havelys", "julebelysning", "køb"],
+          "negative_keywords": [
+            "lampe",
+            "havelys",
+            "julebelysning",
+            "køb"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -1104,13 +1225,17 @@
           "name": "AG 39 - Lærred",
           "landing_page": "https://lejhojtaler.dk/laerred-160",
           "keywords": [
-            "\"lej lærred københavn\"",
-            "\"lærred udlejning\"",
+            "[lej lærred københavn]",
+            "[lærred udlejning]",
             "\"lej projektorlærred\"",
-            "\"lærred til projektor leje\"",
-            "\"lej lærred til event\""
+            "\"lej lærred til projektor\""
           ],
-          "negative_keywords": ["maling", "kunst", "male", "billede"],
+          "negative_keywords": [
+            "maling",
+            "kunst",
+            "male",
+            "billede"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -1142,13 +1267,17 @@
           "name": "AG 40 - Håndholdt mikrofon",
           "landing_page": "https://lejhojtaler.dk/haandholdt-mikrofon",
           "keywords": [
-            "\"lej håndholdt mikrofon\"",
-            "\"håndholdt mikrofon leje københavn\"",
+            "[lej håndholdt mikrofon]",
             "\"lej mikrofon med kabel\"",
-            "\"mikrofon udlejning københavn\"",
             "\"lej mikrofon til sang\""
           ],
-          "negative_keywords": ["studio", "podcast", "usb", "test", "gaming"],
+          "negative_keywords": [
+            "studio",
+            "podcast",
+            "usb",
+            "test",
+            "gaming"
+          ],
           "ads": [
             {
               "type": "RSA",
@@ -1171,44 +1300,6 @@
                 "Til taler ved festen, sang eller oplæg. Passer til alle vores højtalersæt.",
                 "Ingen depositum — betal ved afhentning. Afhent fredag, aflever mandag.",
                 "Book online på under 3 minutter. Afhentning i KBH K med gratis parkering."
-              ]
-            }
-          ]
-        },
-        {
-          "id": "AG-lydudstyr",
-          "name": "AG 41 - Lydudstyr (bred)",
-          "landing_page": "https://lejhojtaler.dk/lydudstyr",
-          "keywords": [
-            "\"lej lydudstyr\"",
-            "\"lydudstyr udlejning københavn\"",
-            "\"udlejning af lydudstyr\"",
-            "\"lej lydgrej til fest\"",
-            "\"lydudstyr leje privat\""
-          ],
-          "negative_keywords": ["studio", "koncert", "professionel", "band", "turné"],
-          "ads": [
-            {
-              "type": "RSA",
-              "headlines": [
-                "Lej lydudstyr i KBH",
-                "Højtalere fra 345 kr.",
-                "Mikrofoner fra 295 kr.",
-                "Afhentning i København K",
-                "Ingen depositum",
-                "Betal først ved afhentning",
-                "Kabler og stativ inkluderet",
-                "Book online på 3 minutter",
-                "Levering i KBH for 495 kr.",
-                "Nem opsætning – ingen teknik",
-                "Alt udstyr inkluderet",
-                "Lejhøjtaler.dk"
-              ],
-              "descriptions": [
-                "Lej lydudstyr i København. Højtalere, mikrofoner, stativer og kabler.",
-                "Alt til privatfesten — ikke koncertgrej, men nok lyd til at festen kører.",
-                "Ingen depositum — betal ved afhentning. Afhent fredag, aflever mandag.",
-                "Afhent i København K med gratis parkering, eller få leveret for 495 kr."
               ]
             }
           ]
