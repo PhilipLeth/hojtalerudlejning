@@ -1284,6 +1284,9 @@ export default function BookingFlow({
               <input
                 required
                 type="text"
+                name="name"
+                id="booking-name"
+                autoComplete="name"
                 placeholder={s.formName}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -1292,6 +1295,10 @@ export default function BookingFlow({
               <input
                 required
                 type="email"
+                name="email"
+                id="booking-email"
+                autoComplete="email"
+                inputMode="email"
                 placeholder={s.formEmail}
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -1300,6 +1307,10 @@ export default function BookingFlow({
               <input
                 required
                 type="tel"
+                name="tel"
+                id="booking-phone"
+                autoComplete="tel"
+                inputMode="tel"
                 placeholder={s.formPhone}
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
@@ -1307,6 +1318,8 @@ export default function BookingFlow({
               />
               <textarea
                 rows={3}
+                name="comment"
+                id="booking-comment"
                 placeholder={s.formComment}
                 value={form.comment}
                 onChange={(e) => setForm({ ...form, comment: e.target.value })}
