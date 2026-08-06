@@ -1,5 +1,7 @@
 "use client";
 
+import WeekendUrgency from "@/components/WeekendUrgency";
+import { t } from "@/lib/i18n";
 
 const USPS = [
   { title: "5 dages leje", desc: "Én pris for op til 5 dage" },
@@ -34,6 +36,24 @@ export default function HomeHero() {
           Hent i København K eller få det leveret.
         </p>
 
+        <a
+          href="/#book"
+          className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
+        >
+          Book nu
+        </a>
+
+        {/* Live urgency (rigtige lagerdata) + telefon på én linje */}
+        <div className="mx-auto mt-5 flex flex-wrap items-center justify-center gap-3 text-sm text-white/50">
+          <WeekendUrgency locale="da" />
+          <a href="tel:+4531132852" className="inline-flex items-center gap-1 transition hover:text-brand-400">
+            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="shrink-0">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            {t.da.hero.phone}
+          </a>
+        </div>
+
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
           {USPS.map((u) => (
             <div
@@ -45,6 +65,11 @@ export default function HomeHero() {
             </div>
           ))}
         </div>
+
+        <p className="mt-6 text-sm text-white/45">
+          {t.da.hero.socialProof}
+          <span className="ml-1 text-xs text-white/25">{t.da.hero.socialProofFootnote}</span>
+        </p>
       </div>
     </section>
   );

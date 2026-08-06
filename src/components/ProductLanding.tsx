@@ -93,6 +93,36 @@ export default function ProductLanding({
     },
   };
 
+  // Produkt-specifik FAQ — navn og pris interpoleres, så indholdet er unikt pr. side
+  const faqs = [
+    {
+      q: `Hvad koster det at leje ${name}?`,
+      a: `Det koster fra ${price} kr for en hel weekend — hent fredag (14–18), aflever mandag (15–17). Én weekendpris dækker op til 5 dages leje, og alle kabler er inkluderet.`,
+    },
+    {
+      q: `Hvor henter jeg ${name}?`,
+      a: "Afhentning sker på Halvtolv 9, 1436 København K — nemt med cykel eller bil (gratis parkering i én time). Du kan også få det leveret i hele Storkøbenhavn for 495 kr inkl. opsætning og afhentning.",
+    },
+    {
+      q: "Hvordan betaler jeg?",
+      a: "Du kan betale sikkert online med kort, eller vælge at betale ved afhentning. Afbestilling er gratis frem til 24 timer før afhentning.",
+    },
+    {
+      q: `Er ${name} ledig til min dato?`,
+      a: "Vælg dine datoer i bookingflowet — så ser du med det samme, om der er ledigt. Booking tager 2 minutter, og du får bekræftelse på e-mail.",
+    },
+  ];
+
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -185,6 +215,24 @@ export default function ProductLanding({
         {children}
 
         <Testimonials />
+
+        <section className="mx-auto max-w-2xl px-4 pb-24">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+          />
+          <h2 className="mb-8 text-center text-3xl font-bold">Ofte stillede spørgsmål</h2>
+          <div className="space-y-4">
+            {faqs.map((f) => (
+              <details key={f.q} className="glass group rounded-2xl p-6">
+                <summary className="cursor-pointer list-none font-semibold text-white/90 transition group-open:text-brand-400">
+                  {f.q}
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed text-white/60">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
 
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Klar til at booke?</h2>

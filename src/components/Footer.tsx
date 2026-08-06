@@ -76,6 +76,11 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
           {locale === "da" ? "Ring" : "Call"} 31 13 28 52
         </a>
       </p>
+      <p className="mt-1">
+        <a href="mailto:booking@lejhojtaler.dk" className="text-white/40 hover:text-brand-400 transition">
+          booking@lejhojtaler.dk
+        </a>
+      </p>
       <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
         <Link href={s.aboutHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
           {s.about}

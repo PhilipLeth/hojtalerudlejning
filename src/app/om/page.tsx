@@ -18,6 +18,22 @@ export const metadata: Metadata = {
 };
 
 export default function OmPage() {
+  const personLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Frederik Scharling",
+    jobTitle: "Stifter",
+    description:
+      "Stifter af lejhøjtaler.dk med mere end 15 års erfaring med lyd, events og musikproduktion.",
+    knowsAbout: ["Lydudstyr", "PA-anlæg", "Eventproduktion", "Musikproduktion"],
+    worksFor: {
+      "@type": "Organization",
+      name: "Scharling Studio / Lejhøjtaler.dk",
+      url: "https://lejhojtaler.dk",
+    },
+    url: "https://lejhojtaler.dk/om",
+  };
+
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -42,6 +58,10 @@ export default function OmPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
       />
 
       <main className="min-h-screen bg-[#07060b] px-4 py-20">

@@ -29,6 +29,14 @@ export default function Home() {
             legalName: "Scharling Studio",
             taxID: "DK40994904",
             telephone: "+4531132852",
+            email: "booking@lejhojtaler.dk",
+            founder: {
+              "@type": "Person",
+              name: "Frederik Scharling",
+              url: "https://lejhojtaler.dk/om",
+            },
+            hasMap:
+              "https://www.google.com/maps/place/?q=place_id:ChIJ9UxZq-xTUkYRsiSY3hvy-MY",
             priceRange: "95-1195 kr",
             image: "https://lejhojtaler.dk/images/logo-lejhojtaler.png",
             description:
