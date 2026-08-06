@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Erhverv — Lyd, lys og AV til professionelle events | Lejhøjtaler.dk",
   description:
     "Professionelt udstyr til firmafester, konferencer, præsentationer og events i København. Højtalere, skærme, projektorer og mikrofoner til leje.",
+  alternates: { canonical: "https://lejhojtaler.dk/erhverv" },
 };
 
 const useCases = [
@@ -18,7 +19,7 @@ const useCases = [
   {
     title: "Konference & seminar",
     desc: "Skærm eller projektor med trådløs mikrofon og højtaler, så alle kan høre og se præsentationen.",
-    equipment: "75\" skærm + trådløs mikrofon + højtalere",
+    equipment: "55\" skærm + trådløs mikrofon + højtalere",
     icon: "🎤",
   },
   {
@@ -59,12 +60,6 @@ const packages = [
     price: "fra 1.195",
     items: ["55\" skærm med stativ", "Trådløs mikrofon", "Lille højtalerpakke (2× 10\")", "HDMI + alle kabler"],
     note: "Op til 50 deltagere",
-  },
-  {
-    name: "Storskærm-pakke",
-    price: "fra 1.695",
-    items: ["75\" skærm med stativ", "Trådløs mikrofon", "Stor højtalerpakke (2× 12\" EV)", "HDMI + alle kabler"],
-    note: "50–100+ deltagere",
   },
 ];
 
@@ -144,7 +139,7 @@ export default function ErhvervPage() {
         <p className="mx-auto mb-12 max-w-xl text-center text-white/50">
           Faste priser, ingen overraskelser. Levering og opsætning i København fra 495 kr.
         </p>
-        <div className="grid gap-6 sm:grid-cols-3">
+        <div className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
           {packages.map((pkg) => (
             <div
               key={pkg.name}
@@ -183,8 +178,8 @@ export default function ErhvervPage() {
       <section className="relative z-10 mx-auto max-w-4xl px-4 pb-20">
         <div className="grid gap-6 sm:grid-cols-3 text-center">
           <div className="glass rounded-2xl p-6">
-            <p className="text-3xl font-bold text-brand-400">500+</p>
-            <p className="mt-1 text-sm text-white/50">Erhvervsudlejninger</p>
+            <p className="text-3xl font-bold text-brand-400">1.000+</p>
+            <p className="mt-1 text-sm text-white/50">Udlejninger*</p>
           </div>
           <div className="glass rounded-2xl p-6">
             <p className="text-3xl font-bold text-brand-400">Samme dag</p>
@@ -192,9 +187,12 @@ export default function ErhvervPage() {
           </div>
           <div className="glass rounded-2xl p-6">
             <p className="text-3xl font-bold text-brand-400">Betal ved afhentning</p>
-            <p className="mt-1 text-sm text-white/50">Betal ved afhentning</p>
+            <p className="mt-1 text-sm text-white/50">Eller sikkert online med kort</p>
           </div>
         </div>
+        <p className="mt-4 text-center text-xs text-white/25">
+          *Fra Frederiks tidligere udlejningsvirksomhed
+        </p>
       </section>
 
       <Footer />
