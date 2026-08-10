@@ -1151,7 +1151,17 @@
       "AG 14 - Headset mikrofon",
       "AG 15 - Speaker Rental Copenhagen (EN)"
     ],
-    "note": "Alle 15 annoncegrupper er live. Alle landingssider er deployed."
+    "note": "Alle 15 annoncegrupper er live. Alle landingssider er deployed.",
+    "status_2026_08_10": {
+      "konto": "441-020-7627 (Lejhøjtaler)",
+      "sidste_7_dage": "322 visninger, 26 klik, 170 kr forbrug, gns. CPC 7 kr, 0 konverteringer",
+      "budgetudnyttelse": "~24 kr/dag mod 100 kr/dag budget — kun 5 af 47 annoncegrupper er tændt",
+      "blokering": "Konverteringssporingen når ikke frem til Google Ads. GA4-importen 'LejHojtaler.dk (web) purchase' står HIDDEN og tælles ikke; den eneste aktive handling er 'Køb' af typen WEBPAGE (auto-oprettet sidevisning), som ikke fanger bookinger. Selv all_conversions er tom. GA4-siden blev fixet 5. aug (se seo.analytics_konvertering_fix) — det sidste led mangler.",
+      "struktur": "De 7 kampagner fra 5. aug er REMOVED, indholdet konsolideret i én søgekampagne med 47 annoncegrupper.",
+      "klar_til_at_taende": "AG 16-23 (bryllup, fødselsdag, havefest, julefrokost, konfirmation, nytår, polterabend, studenterkørsel) peger allerede på de nye landingssider. AG 24-26 karaoke ligeledes.",
+      "spild": "Søgetermer fra Fyn, Odense og Smukfest — ~15 kr af 170 kr på klik uden for leveringsområdet. Mangler negative keywords eller strammere geo-targeting.",
+      "reelle_bookinger": "14 i KV i alt, 7 i august — men størstedelen af augustbookingerne er testbookinger. Reelle: 31. juli (395 kr) og 10. august (515 kr)."
+    }
   },
   "tasks": [
     {

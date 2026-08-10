@@ -4,6 +4,7 @@
  */
 import Stripe from "stripe";
 import { loadPriceTable, buildLineItems, type LineItemInput } from "../_lib/pricing";
+import { resolveDiscount, discountOre } from "../_lib/discounts";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -20,6 +21,29 @@ interface Body {
   items: LineItemInput[];
   bookingId?: string;
   locale?: string;
+  discountCode?: string;
+}
+
+/**
+ * Stripe-kupon for en procentsats, oprettet idempotent med deterministisk id
+ * (RABAT10, RABAT20, …), så checkout viser en synlig rabatlinje frem for
+ * stiltiende lavere stykpriser.
+ */
+async function getOrCreateCoupon(stripe: Stripe, pct: number): Promise<string> {
+  const id = `RABAT${pct}`;
+  try {
+    await stripe.coupons.retrieve(id);
+    return id;
+  } catch {
+    // findes ikke — opret. Taber vi et kapløb med en anden request, findes
+    // den nu, og det er lige så godt.
+    try {
+      await stripe.coupons.create({ id, percent_off: pct, duration: "once", name: `Rabat ${pct}%` });
+    } catch {
+      await stripe.coupons.retrieve(id);
+    }
+    return id;
+  }
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -46,6 +70,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     httpClient: Stripe.createFetchHttpClient(),
   });
 
+  // Rabatkode valideres server-side — en ukendt kode ignoreres frem for at
+  // fejle, så en tastefejl aldrig blokerer en betaling.
+  let discount: { code: string; pct: number } | null = null;
+  if (body.discountCode) {
+    discount = await resolveDiscount(context.env.BOOKINGS, body.discountCode);
+  }
+
   const origin = new URL(context.request.url).origin;
   const suffix = Array.from({ length: 8 }, () =>
     "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)]
@@ -59,9 +90,11 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       currency: "dkk",
       locale: body.locale === "en" ? "en" : "da",
       return_url: `${origin}/book/tak?session_id={CHECKOUT_SESSION_ID}`,
+      ...(discount ? { discounts: [{ coupon: await getOrCreateCoupon(stripe, discount.pct) }] } : {}),
       metadata: {
         bookingId: body.bookingId ?? "",
         source: "lejhojtaler-booking",
+        ...(discount ? { discountCode: discount.code, discountPct: String(discount.pct) } : {}),
       },
       // Dynamic payment methods: payment_method_types udelades bevidst —
       // kort/MobilePay styres i Stripe-dashboardet.
@@ -71,7 +104,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return json({
       clientSecret: session.client_secret,
       sessionId: session.id,
-      amount: totalOre,
+      amount: discount ? totalOre - discountOre(totalOre, discount.pct) : totalOre,
+      ...(discount ? { discount } : {}),
     });
   } catch (e) {
     console.error("[stripe] session create failed:", e);

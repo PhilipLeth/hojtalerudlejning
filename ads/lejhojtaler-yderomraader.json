@@ -1,0 +1,459 @@
+{
+  "title": "Lejhøjtaler.dk — yderområder",
+  "version": "1.0+kuraterede-keywords",
+  "last_updated": "2026-08-07",
+  "customer_id": "4410207627",
+  "notes": "Keywords er kuraterede søgefraser i PHRASE match — lejeordet i frasen ER kravet om lejeintention. Ingen konstruerede produktnavne-fraser. Synkroniseret med kontoen 7. aug 2026.",
+  "targeting": {
+    "language": "languageConstants/1009",
+    "geo": {
+      "geo_target_constants": [
+        "geoTargetConstants/1005015",
+        "geoTargetConstants/1005012",
+        "geoTargetConstants/1005009",
+        "geoTargetConstants/1005019",
+        "geoTargetConstants/1005025",
+        "geoTargetConstants/1005023",
+        "geoTargetConstants/1005020",
+        "geoTargetConstants/1005011",
+        "geoTargetConstants/9236357"
+      ],
+      "_cities": [
+        "Hellerup",
+        "Gentofte",
+        "Charlottenlund",
+        "Hvidovre",
+        "Rødovre",
+        "Lyngby",
+        "Kastrup (Amager)",
+        "Dragør (Amager)",
+        "Tårnby kommune (Amager)"
+      ]
+    },
+    "device_bid_modifiers": {},
+    "ad_schedule": []
+  },
+  "extensions": {
+    "sitelinks": [
+      {
+        "text": "Se alle pakker",
+        "final_url": "https://lejhojtaler.dk/festpakke-lille",
+        "description_line_1": "Lyd og lys samlet",
+        "description_line_2": "Spar op til 385 kr."
+      },
+      {
+        "text": "Book online",
+        "final_url": "https://lejhojtaler.dk/book",
+        "description_line_1": "Tager under 3 minutter",
+        "description_line_2": "Ingen depositum"
+      },
+      {
+        "text": "Lejevilkår",
+        "final_url": "https://lejhojtaler.dk/lejevilkaar",
+        "description_line_1": "Betal ved afhentning",
+        "description_line_2": "Fredag til mandag"
+      },
+      {
+        "text": "Om os",
+        "final_url": "https://lejhojtaler.dk/om",
+        "description_line_1": "Udlejning i København",
+        "description_line_2": "Gratis parkering"
+      }
+    ]
+  },
+  "campaigns": [
+    {
+      "id": "Y01",
+      "name": "Lejhøjtaler — Yderområder",
+      "type": "search",
+      "status": "PAUSED",
+      "objective": "Nære forstæder uden for Københavns kommune. Kunder der sagtens kan hente selv.",
+      "daily_budget_dkk": 50,
+      "bid_strategy": "Maximize clicks med CPC-loft indtil konverteringer måles",
+      "bid_ceiling_dkk": 12,
+      "landing_page": "https://lejhojtaler.dk",
+      "shared_negative_keywords": [
+        "anmeldelse",
+        "app",
+        "band",
+        "bar",
+        "billigst",
+        "borde",
+        "borde og stole",
+        "brugt",
+        "catering",
+        "dj",
+        "download",
+        "gratis",
+        "job",
+        "køb",
+        "ledig stilling",
+        "musiker",
+        "pris ny",
+        "privat",
+        "reparation",
+        "sangbog",
+        "sange",
+        "selv bygge",
+        "service",
+        "stole",
+        "sælg",
+        "telt",
+        "teltudlejning",
+        "test",
+        "youtube"
+      ],
+      "sitelinks": [
+        {
+          "text": "Se alle pakker",
+          "url": "https://lejhojtaler.dk/festpakke-lille",
+          "desc1": "Lyd og lys samlet",
+          "desc2": "Spar op til 385 kr."
+        },
+        {
+          "text": "Book online",
+          "url": "https://lejhojtaler.dk/book",
+          "desc1": "Tager under 3 minutter",
+          "desc2": "Ingen depositum"
+        },
+        {
+          "text": "Lejevilkår",
+          "url": "https://lejhojtaler.dk/lejevilkaar",
+          "desc1": "Betal ved afhentning",
+          "desc2": "Fredag til mandag"
+        },
+        {
+          "text": "Om os",
+          "url": "https://lejhojtaler.dk/om",
+          "desc1": "Udlejning i København",
+          "desc2": "Gratis parkering"
+        }
+      ],
+      "ad_groups": [
+        {
+          "id": "AG-yder-bryllup",
+          "name": "YDER - Bryllup",
+          "landing_page": "https://lejhojtaler.dk/bryllup",
+          "keywords": [
+            "\"lej højtaler bryllup\"",
+            "\"lej lydanlæg bryllup\"",
+            "\"højtaler udlejning bryllup\"",
+            "\"lej mikrofon bryllup\""
+          ],
+          "negative_keywords": [
+            "fotograf",
+            "kage",
+            "kjole",
+            "lokale",
+            "invitationer"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Lyd til jeres bryllup",
+                "Lej højtaler til bryllup",
+                "Bryllupslyd fra 395 kr.",
+                "Mikrofon til talerne",
+                "Afhentning i København K",
+                "Ingen depositum",
+                "Betal først ved afhentning",
+                "Alt udstyr inkluderet",
+                "Nem opsætning – ingen teknik",
+                "Book online på 3 minutter",
+                "Levering i KBH for 495 kr.",
+                "Lejhøjtaler.dk"
+              ],
+              "descriptions": [
+                "Lej højtalere og mikrofon til jeres bryllup i København. Fra 395 kr. Alt inkl.",
+                "Trådløs mikrofon til talerne og lyd til dansen. Ingen depositum — betal ved afhentning.",
+                "Afhent fredag, aflever mandag. Gratis parkering i København K, eller få leveret.",
+                "Kombiner lyd, lys og røg til den store aften. Book online på under 3 minutter."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "AG-yder-karaoke",
+          "name": "YDER - Karaoke",
+          "landing_page": "https://lejhojtaler.dk/karaoke",
+          "keywords": [
+            "\"karaoke udlejning\"",
+            "\"lej karaoke\"",
+            "\"karaoke leje\"",
+            "\"leje af karaoke\""
+          ],
+          "negative_keywords": [
+            "sange",
+            "app",
+            "youtube",
+            "bar",
+            "restaurant"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Lej karaoke i København",
+                "Karaokepakke 1.100 kr.",
+                "Maskine og højtalere med",
+                "Spar 385 kr. på pakken",
+                "Afhentning i København K",
+                "Ingen depositum",
+                "Betal først ved afhentning",
+                "To mikrofoner inkluderet",
+                "Book online på 3 minutter",
+                "Levering i KBH for 495 kr.",
+                "Klar til brug på 5 min.",
+                "Lejhøjtaler.dk"
+              ],
+              "descriptions": [
+                "Lej komplet karaoke i København. Maskine, højtalere og mikrofoner fra 1.100 kr.",
+                "Karaokepakken indeholder det lille højtalersæt — du sparer 385 kr. mod løsdele.",
+                "Ingen depositum, betal ved afhentning i KBH K. Gratis parkering på stedet.",
+                "Klar til brug på 5 minutter — tilslut telefonen og syng. Book online nu."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "AG-yder-lille-festpakke",
+          "name": "YDER - Lille festpakke",
+          "landing_page": "https://lejhojtaler.dk/festpakke-lille",
+          "keywords": [
+            "\"lej festudstyr\"",
+            "\"festudstyr leje\"",
+            "\"festpakke leje\"",
+            "\"lej festpakke\""
+          ],
+          "negative_keywords": [
+            "telt",
+            "borde",
+            "stole",
+            "catering"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Lille festpakke 500 kr.",
+                "Lyd og lys i én pakke",
+                "Alt til festen samlet",
+                "Billigere end løsdele",
+                "Afhentning i København K",
+                "Ingen depositum",
+                "Betal først ved afhentning",
+                "Alt udstyr inkluderet",
+                "Book online på 3 minutter",
+                "Levering i KBH for 495 kr.",
+                "Klar til brug på 10 min.",
+                "Lejhøjtaler.dk"
+              ],
+              "descriptions": [
+                "Lille festpakke med lyd og lys fra 500 kr. Alt udstyr og kabler inkluderet.",
+                "Billigere end at leje delene hver for sig. Nok til en fest derhjemme.",
+                "Ingen depositum — betal ved afhentning i KBH K. Gratis parkering på stedet.",
+                "Afhent fredag, aflever mandag. Book online på under 3 minutter."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "AG-yder-stor-festpakke",
+          "name": "YDER - Stor festpakke",
+          "landing_page": "https://lejhojtaler.dk/festpakke-stor",
+          "keywords": [
+            "\"lej festanlæg\"",
+            "\"lej stort anlæg fest\""
+          ],
+          "negative_keywords": [
+            "telt",
+            "borde",
+            "stole",
+            "catering",
+            "koncert"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Stor festpakke 1.000 kr.",
+                "Lyd, lys og røg samlet",
+                "Til den store fest",
+                "Billigere end løsdele",
+                "Afhentning i København K",
+                "Ingen depositum",
+                "Betal først ved afhentning",
+                "Alt udstyr inkluderet",
+                "Book online på 3 minutter",
+                "Levering i KBH for 495 kr.",
+                "Nem opsætning – ingen teknik",
+                "Lejhøjtaler.dk"
+              ],
+              "descriptions": [
+                "Stor festpakke med lyd, lys og røgmaskine fra 1.000 kr. Alt udstyr inkluderet.",
+                "Nok kraft til den store fest. Billigere end at leje delene hver for sig.",
+                "Ingen depositum — betal ved afhentning. Afhent fredag, aflever mandag.",
+                "Afhent i København K med gratis parkering, eller få leveret for 495 kr."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "AG-yder-mackie-thump-go",
+          "name": "YDER - Mackie Thump GO",
+          "landing_page": "https://lejhojtaler.dk/mackie-thump-go",
+          "keywords": [
+            "\"lej mackie thump go\"",
+            "\"batteridrevet højtaler leje\"",
+            "\"batterihøjtaler leje\"",
+            "\"lej højtaler med batteri\"",
+            "\"lej batterihøjtaler\""
+          ],
+          "negative_keywords": [],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Lej Mackie Thump GO",
+                "Batteridrevet højtaler",
+                "Fra 345 kr. i København",
+                "12 timers batteri",
+                "Afhentning i København K",
+                "Ingen depositum",
+                "Betal først ved afhentning",
+                "Book online på 3 minutter",
+                "Levering i KBH for 495 kr.",
+                "Alt udstyr inkluderet",
+                "Nem opsætning – ingen teknik"
+              ],
+              "descriptions": [
+                "Lej Mackie Thump GO i København fra 345 kr. Batteridrift — ingen kabler nødvendige.",
+                "Op til 12 timers spilletid. Perfekt til havefest, polterabend og studenterkørsel.",
+                "Højtaler i bæretaske, så den kan tages på cyklen. Ingen depositum ved booking.",
+                "Afhent i København K med gratis parkering, eller få leveret til døren for 495 kr."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "AG-yder-lille-højtalerpakke",
+          "name": "YDER - Lille højtalerpakke",
+          "landing_page": "https://lejhojtaler.dk/hojtalerpakke-lille",
+          "keywords": [
+            "\"lej højtalersæt\"",
+            "\"højtalersæt leje\"",
+            "\"lej to højtalere\""
+          ],
+          "negative_keywords": [
+            "hjemmebiograf",
+            "bilstereo",
+            "bluetooth"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Lille højtalerpakke 395",
+                "To højtalere med stativ",
+                "Nok lyd til 50 gæster",
+                "Afhentning i København K",
+                "Ingen depositum",
+                "Betal først ved afhentning",
+                "Kabler og stativ inkluderet",
+                "Alt udstyr inkluderet",
+                "Book online på 3 minutter",
+                "Levering i KBH for 495 kr.",
+                "Nem opsætning – ingen teknik",
+                "Lejhøjtaler.dk"
+              ],
+              "descriptions": [
+                "Lej lille højtalerpakke fra 395 kr. To højtalere, stativer og kabler inkl.",
+                "Nok lyd til en fest med op mod 50 gæster. Nem opsætning, ingen teknisk viden.",
+                "Ingen depositum — betal ved afhentning i KBH K. Gratis parkering på stedet.",
+                "Afhent fredag, aflever mandag. Book online på under 3 minutter."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "AG-yder-stor-højtalerpakke",
+          "name": "YDER - Stor højtalerpakke",
+          "landing_page": "https://lejhojtaler.dk/hojtalerpakke-normal",
+          "keywords": [
+            "\"lej store højtalere\"",
+            "\"store højtalere leje\"",
+            "\"lej kraftig højtaler\""
+          ],
+          "negative_keywords": [
+            "hjemmebiograf",
+            "bilstereo",
+            "koncert",
+            "professionel"
+          ],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Stor højtalerpakke 695",
+                "Kraftig lyd til festen",
+                "Til over 100 gæster",
+                "Afhentning i København K",
+                "Ingen depositum",
+                "Betal først ved afhentning",
+                "Kabler og stativ inkluderet",
+                "Alt udstyr inkluderet",
+                "Book online på 3 minutter",
+                "Levering i KBH for 495 kr.",
+                "Nem opsætning – ingen teknik",
+                "Lejhøjtaler.dk"
+              ],
+              "descriptions": [
+                "Lej stor højtalerpakke fra 695 kr. Kraftig lyd til fester over 100 gæster.",
+                "Stativer, kabler og alt tilbehør er med i prisen. Ingen skjulte gebyrer.",
+                "Ingen depositum — betal ved afhentning. Afhent fredag, aflever mandag.",
+                "Tilføj subwoofer for 295 kr. og få bassen med. Book online på 3 minutter."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "AG-yder-pa-anlæg",
+          "name": "YDER - PA-anlæg",
+          "landing_page": "https://lejhojtaler.dk/lydudstyr",
+          "keywords": [
+            "\"lej pa anlæg\"",
+            "\"leje af lydanlæg\"",
+            "\"lej lydanlæg\"",
+            "\"lej musikanlæg\""
+          ],
+          "negative_keywords": [],
+          "ads": [
+            {
+              "type": "RSA",
+              "headlines": [
+                "Lej PA-anlæg i KBH",
+                "Leje af PA anlæg",
+                "Komplet lydanlæg",
+                "Fra 395 kr.",
+                "Kabler inkluderet",
+                "Afhent fredag, aflever mandag",
+                "Klar til brug på 5 min.",
+                "Lejhøjtaler.dk",
+                "Afhentning i København K",
+                "Ingen depositum",
+                "Betal først ved afhentning"
+              ],
+              "descriptions": [
+                "Lej PA-anlæg i København fra 395 kr. Højtalere, stativer og kabler inkluderet.",
+                "Alt til privatfesten — nok lyd til at festen kører, uden koncertpriser.",
+                "Ingen depositum — betal ved afhentning. Afhent fredag, aflever mandag.",
+                "Afhent i København K med gratis parkering, eller få leveret for 495 kr."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

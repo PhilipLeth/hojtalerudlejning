@@ -246,6 +246,32 @@ export default function BookingFlow({
   const [newsletter, setNewsletter] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [payMethod, setPayMethod] = useState<"pickup" | "online">("online");
+  const [couponInput, setCouponInput] = useState("");
+  const [coupon, setCoupon] = useState<{ code: string; pct: number } | null>(null);
+  const [couponError, setCouponError] = useState(false);
+  const [couponChecking, setCouponChecking] = useState(false);
+
+  async function applyCoupon() {
+    const code = couponInput.trim();
+    if (!code) return;
+    setCouponChecking(true);
+    setCouponError(false);
+    try {
+      const res = await fetch(`/api/discount?code=${encodeURIComponent(code)}`);
+      const json: { valid: boolean; code?: string; pct?: number } = await res.json();
+      if (json.valid && json.code && json.pct) {
+        setCoupon({ code: json.code, pct: json.pct });
+      } else {
+        setCoupon(null);
+        setCouponError(true);
+      }
+    } catch {
+      setCoupon(null);
+      setCouponError(true);
+    } finally {
+      setCouponChecking(false);
+    }
+  }
   const [checkoutSecret, setCheckoutSecret] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -425,8 +451,11 @@ export default function BookingFlow({
     .reduce((sum, a) => sum + a.price, 0);
   const addonsPrice = summer ? applyDiscount(addonsBasePrice) : addonsBasePrice;
   const cartTotal = cartItems.reduce((sum, item) => sum + item.price, 0);
-  const total = speakerPrice + addonsPrice + cartTotal;
-  const totalBeforeDiscount = summer ? speakerBasePrice + addonsBasePrice + cartTotal : total;
+  const subtotal = speakerPrice + addonsPrice + cartTotal;
+  // Rabatkode: procenten kommer fra /api/discount og er kun til visning —
+  // ved onlinebetaling genberegner serveren alt og lægger Stripe-kuponen på.
+  const total = coupon ? Math.round(subtotal * (1 - coupon.pct / 100)) : subtotal;
+  const totalBeforeDiscount = summer ? speakerBasePrice + addonsBasePrice + cartTotal : subtotal;
 
   // Kurv-summary op til draweren (fane når draweren er pakket væk)
   const cartCount = cartItems.length + (speaker ? 1 : 0);
@@ -526,6 +555,7 @@ export default function BookingFlow({
           cartItems: cartItems.map((item) => ({ name: item.name, price: item.price, productId: item.productId })),
           deliveryAddress: hasDelivery ? deliveryAddress : undefined,
           total,
+          discountCode: coupon?.code,
           locale,
           newsletter,
           paymentChoice: payMethod,
@@ -574,6 +604,7 @@ export default function BookingFlow({
             items: itemIds.map((id) => ({ id })),
             bookingId: bookResult.bookingId,
             locale,
+            discountCode: coupon?.code,
           }),
         });
         if (!payRes.ok) throw new Error("payment");
@@ -654,10 +685,16 @@ export default function BookingFlow({
               </span>
             </div>
           ))}
+        {coupon && (
+          <div className="flex justify-between text-sm text-emerald-400">
+            <span>{coupon.code}</span>
+            <span>−{coupon.pct}%</span>
+          </div>
+        )}
         <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
           <span>{s.total}</span>
           <span className={summer ? "text-amber-400" : "text-brand-400"}>
-            {summer && <span className="text-sm line-through text-white/30 mr-2 font-normal">{totalBeforeDiscount} kr</span>}
+            {(summer || coupon) && <span className="text-sm line-through text-white/30 mr-2 font-normal">{totalBeforeDiscount} kr</span>}
             {total} kr
           </span>
         </div>
@@ -1424,10 +1461,49 @@ export default function BookingFlow({
                   {s.successDelivery}: {deliveryAddress}
                 </div>
               )}
+              {/* Rabatkode */}
+              <div className="mt-3 border-t border-white/10 pt-3">
+                {coupon ? (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-emerald-400">
+                      {coupon.code} · −{coupon.pct}% {s.discountApplied}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => { setCoupon(null); setCouponInput(""); }}
+                      className="text-white/40 hover:text-white/70"
+                      aria-label="Fjern rabatkode"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={couponInput}
+                      onChange={(e) => { setCouponInput(e.target.value); setCouponError(false); }}
+                      onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyCoupon(); } }}
+                      placeholder={s.discountPlaceholder}
+                      autoComplete="off"
+                      className="min-w-0 flex-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm placeholder-white/30 focus:border-brand-500 focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={applyCoupon}
+                      disabled={couponChecking || !couponInput.trim()}
+                      className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/70 transition hover:bg-white/5 disabled:opacity-40"
+                    >
+                      {couponChecking ? "…" : s.discountApply}
+                    </button>
+                  </div>
+                )}
+                {couponError && <p className="mt-1 text-xs text-red-400">{s.discountInvalid}</p>}
+              </div>
               <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
                 <span>{s.total}</span>
                 <span className={summer ? "text-amber-400" : "text-brand-400"}>
-                  {summer && <span className="text-sm line-through text-white/30 mr-2 font-normal">{totalBeforeDiscount} kr</span>}
+                  {(summer || coupon) && <span className="text-sm line-through text-white/30 mr-2 font-normal">{totalBeforeDiscount} kr</span>}
                   {total} kr
                 </span>
               </div>

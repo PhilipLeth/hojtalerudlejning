@@ -238,6 +238,8 @@ export default function AdminPage() {
         <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
           <a href="/admin/lager" style={navLink}>Lager</a>
           <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
+          <a href="/admin/ads" style={navLink}>Ads</a>
+          <a href="/admin/regler" style={navLink}>Regler</a>
           <a href="/admin/produkter" style={navLink}>Produkter</a>
           <a href="/admin/kanaler" style={navLink}>Kanaler</a>
           <a href="/admin/nyhedsbrev" style={navLink}>Nyhedsbrev</a>

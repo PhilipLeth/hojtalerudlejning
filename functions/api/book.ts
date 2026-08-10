@@ -1,3 +1,5 @@
+import { resolveDiscount } from "./_lib/discounts";
+
 interface Env {
   RESEND_API_KEY: string;
   NOTIFY_EMAIL: string;
@@ -15,6 +17,7 @@ interface BookingData {
   cartItems?: Array<{ name: string; price: number; productId?: string }>;
   deliveryAddress?: string;
   total: number;
+  discountCode?: string;
   name: string;
   email: string;
   phone: string;
@@ -137,6 +140,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   const data: BookingData = await context.request.json();
 
+  // Rabatkode valideres mod serverens liste — klientens ord alene tæller ikke.
+  const discount = data.discountCode
+    ? await resolveDiscount(context.env.BOOKINGS, data.discountCode)
+    : null;
+  const discountRow = discount
+    ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Rabatkode:</td><td>${discount.code} (−${discount.pct}%)</td></tr>`
+    : "";
+
   const addonsText =
     data.addons.length > 0 ? data.addons.join(", ") : "Ingen";
 
@@ -151,6 +162,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Dage:</td><td>${data.days}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Tilvalg:</td><td>${addonsText}</td></tr>
       ${data.deliveryAddress ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Leveringsadresse:</td><td>${data.deliveryAddress}</td></tr>` : ""}
+      ${discountRow}
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Total:</td><td><strong>${data.total} kr</strong></td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Upsell tilbudt:</td><td>${upsell ? `${upsell.title} @ ${upsell.offerPrice} kr (norm. ${upsell.listPrice})` : "Ingen"}</td></tr>
       <tr><td colspan="2" style="padding-top:12px;border-top:1px solid #ddd;"></td></tr>
@@ -171,6 +183,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         <p style="margin:4px 0;"><strong>Periode:</strong> ${data.period}</p>
         <p style="margin:4px 0;"><strong>Tilvalg:</strong> ${addonsText}</p>
         ${data.deliveryAddress ? `<p style="margin:4px 0;"><strong>Levering til:</strong> ${data.deliveryAddress}</p>` : `<p style="margin:4px 0;"><strong>Afhentning:</strong> Halvtolv 9, 1. th, København K</p>`}
+        ${discount ? `<p style="margin:4px 0;color:#1e7e34;"><strong>Rabat:</strong> ${discount.code} (−${discount.pct}%)</p>` : ""}
         <p style="margin:8px 0 0;font-size:20px;"><strong>Total: ${data.total} kr</strong></p>
         <p style="margin:0;font-size:12px;color:#888;">Betales ved afhentning (MobilePay eller kontant)</p>
       </div>
@@ -230,6 +243,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       id: key,
       status: "ny",
       createdAt: sentAt,
+      // Valideret server-side; null hvis koden var ukendt
+      discount: discount ?? null,
       upsellOffered: upsell
         ? { id: upsell.id, offerPrice: upsell.offerPrice, listPrice: upsell.listPrice }
         : null,
