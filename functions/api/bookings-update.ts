@@ -72,7 +72,7 @@ interface UpdateBody {
 /** Felter admin kan slå til/fra direkte i ordreoverblikket */
 const VALID_FLAGS = ["paidManual", "reviewDone"] as const;
 
-const VALID_STATUSES = ["ny", "bekraeftet", "afhentet", "afleveret"];
+const VALID_STATUSES = ["ny", "bekraeftet", "afhentet", "afleveret", "annulleret_kunde", "annulleret_admin"];
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const url = new URL(context.request.url);
@@ -184,6 +184,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           body: JSON.stringify({
             from: "Lejhøjtaler.dk <booking@lejhojtaler.dk>",
             to: [booking.email],
+            // Svar på anmeldelsesmailen skal kunne modtages — booking@ har
+            // ingen rute i Cloudflare
+            reply_to: "info@lejhojtaler.dk",
             subject: mail.subject,
             html: mail.html,
           }),

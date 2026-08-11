@@ -1646,6 +1646,13 @@
       "description": "Begge karaokepakker har nu et samlet produktbillede i stedet for kun maskinen.",
       "priority": "medium",
       "status": "done"
+    },
+    {
+      "id": "ordre-flere-produkter",
+      "title": "Ordre kunne reelt kun rumme ét produkt + foreslåede tilvalg",
+      "description": "Kurv-varer manglede i mails, og tilføj-knappen var skjult for lejeprodukter. Begge rettet + krydssalgsforslag uden søgning.",
+      "priority": "high",
+      "status": "done"
     }
   ],
   "status": {
@@ -1698,7 +1705,8 @@
       "Karaokepakkerne vises nu som forsidens tilbudskort med dele og besparelse",
       "Rigtigt Behringer-produktfoto på subwooferen (lagt på den gule studiebaggrund)",
       "Festpakke-billeder genopbygget rene + billedfeltet på pakkekort er nu klikbart",
-      "Karaokepakkerne har fået scenebilleder med skærm, maskine og højtalere"
+      "Karaokepakkerne har fået scenebilleder med skærm, maskine og højtalere",
+      "Bookingmails viser nu hele ordren, og alle produkttyper kan lægge flere varer i kurven (uplights til lyskæde m.m.)"
     ],
     "pending": [
       "DBA: log ind → feed-URL → produkter synlige som annoncer",
@@ -1888,6 +1896,14 @@
     "pakkebilleder_karaoke_2026_08_05": {
       "status": "done",
       "description": "Karaokepakkerne viste kun karaokemaskinen. Begge har nu et scenebillede med alle pakkens dele: skærm bagest til venstre, maskinen forrest i midten (det er den, pakken sælges på) og højtalerne til højre — fælles gulvlinje, individuelle bløde skygger. Karaokepakken: 32\" skærm + maskine + 2× Alto. Karaoke-festpakken: 55\" skærm + maskine + 2× EV. Fritlægning med hård tærskel så der ikke opstår haloer, og bredde/højde-begrænsning så intet beskæres af rammen."
+    },
+    "ordre_kunne_kun_rumme_et_produkt_2026_08_11": {
+      "status": "done",
+      "anledning": "Frederik, efter Agnes' booking 10. aug: 'Man kan ikke se hvad der konkret er i ordren' og 'kun kan booke et produkt + de tilvalg siden foreslår … derfor har hun kun booket lyskæden men skulle også have up-lights'.",
+      "fejl_1": "cartItems blev aldrig vist i hverken ejer- eller kundemailen — de blev kun brugt til at vælge upsell. En ordre med flere produkter så derfor ud som ét produkt. Nu bygges en ordreoversigt med alle linjer (hovedprodukt, kurv-varer, tilvalg) og total, som vises i begge mails, og emnelinjen siger '+ N mere' når der er flere varer.",
+      "fejl_2": "'+ Tilføj et produkt mere' var betinget af !isRentalOnly && !isEffectsOnly, så for et lejeprodukt som lyskæden var knappen skjult — kunden KUNNE ikke lægge uplights i kurven. Knappen vises nu for alle produkttyper, og addCurrentToCart afviser ikke længere effects-only.",
+      "fejl_3": "Resten af sortimentet blev kun vist hvis man skrev i søgefeltet. Nu vises der altid 'Tilføj mere til din ordre' med 6 forslag, sorteret så samme kategori kommer først (uplights foreslås til en lyskæde-booking).",
+      "test": "src/__tests__/order-completeness.test.tsx"
     }
   },
   "booking_drawer": {

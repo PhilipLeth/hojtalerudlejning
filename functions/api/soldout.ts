@@ -83,6 +83,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       // Uden for det forespurgte vindue
       if (ret <= from || pickup > to) continue;
 
+      // Annullerede bookinger optog aldrig noget — de skal heller ikke i historikken
+      if (String(booking.status || "").startsWith("annulleret")) continue;
+
       const ids = bookedProductIds(booking);
       if (!ids.length) continue;
 

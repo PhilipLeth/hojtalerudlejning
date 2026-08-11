@@ -8,6 +8,7 @@ import {
   normalizeCode,
   resolveDiscount,
   discountOre,
+  listCodes,
 } from "../../functions/api/_lib/discounts";
 
 /** Minimal KV-attrap — kun get() bruges af resolveDiscount. */
@@ -73,6 +74,34 @@ describe("resolveDiscount", () => {
   it("ugyldig JSON i KV vælter ikke opslaget", async () => {
     const kv = kvWith("{ikke json");
     expect(await resolveDiscount(kv, "venner")).toEqual({ code: "venner", pct: 20 });
+  });
+});
+
+describe("listCodes (admin-visning)", () => {
+  it("viser de tre standardkoder uden KV-data", async () => {
+    const codes = await listCodes(kvWith(null));
+    expect(codes.map((c) => c.code).sort()).toEqual(["genkoeb", "tatven", "venner"]);
+    expect(codes.every((c) => c.source === "standard" && c.active)).toBe(true);
+  });
+
+  it("viser en KV-kode som 'egen'", async () => {
+    const codes = await listCodes(kvWith(JSON.stringify({ sommerfest: 15 })));
+    const custom = codes.find((c) => c.code === "sommerfest");
+    expect(custom).toEqual({ code: "sommerfest", pct: 15, source: "egen", active: true });
+    expect(codes).toHaveLength(4);
+  });
+
+  it("en frakoblet standardkode vises som inaktiv — ikke som slettet", async () => {
+    const codes = await listCodes(kvWith(JSON.stringify({ venner: 0 })));
+    const venner = codes.find((c) => c.code === "venner");
+    expect(venner?.active).toBe(false);
+    expect(venner?.pct).toBe(20); // original procent vises stadig
+  });
+
+  it("et KV-override af en standardkode ændrer procenten men ikke typen", async () => {
+    const codes = await listCodes(kvWith(JSON.stringify({ venner: 25 })));
+    const venner = codes.find((c) => c.code === "venner");
+    expect(venner).toEqual({ code: "venner", pct: 25, source: "standard", active: true });
   });
 });
 

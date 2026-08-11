@@ -35,8 +35,17 @@ interface Booking {
 }
 
 const STATUS_FLOW = ["ny", "bekraeftet", "afhentet", "afleveret"];
+// Annullering ligger uden for det lineære flow — begge frigiver datoerne i kalenderen
+const CANCEL_STATUSES = ["annulleret_kunde", "annulleret_admin"];
 // Ids beholdes uændret (gamle bookinger i KV bruger dem) — kun visningen ændres
-const STATUS_LABELS: Record<string, string> = { ny: "Ny", bekraeftet: "Bekræftet", afhentet: "Udleveret", afleveret: "Returneret" };
+const STATUS_LABELS: Record<string, string> = {
+  ny: "Ny",
+  bekraeftet: "Bekræftet",
+  afhentet: "Udleveret",
+  afleveret: "Returneret",
+  annulleret_kunde: "Annulleret af kunde",
+  annulleret_admin: "Annulleret af admin",
+};
 
 /** Betalingsstatus udledt af Stripe-webhook, kundens valg og admins kvittering */
 function paymentState(b: Booking): { label: string; bg: string; text: string; border: string } {
@@ -50,6 +59,8 @@ const STATUS_COLORS: Record<string, { bg: string; text: string; border: string }
   bekraeftet: { bg: "#cce5ff", text: "#004085", border: "#4dabf7" },
   afhentet: { bg: "#d4edda", text: "#155724", border: "#28a745" },
   afleveret: { bg: "#e2e3e5", text: "#383d41", border: "#6c757d" },
+  annulleret_kunde: { bg: "#fdecea", text: "#c0392b", border: "#dc3545" },
+  annulleret_admin: { bg: "#f8d7da", text: "#721c24", border: "#dc3545" },
 };
 
 type FilterPeriod = "alle" | "7dage" | "maaned" | "kommende";
@@ -240,6 +251,7 @@ export default function AdminPage() {
           <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
           <a href="/admin/ads" style={navLink}>Ads</a>
           <a href="/admin/regler" style={navLink}>Regler</a>
+          <a href="/admin/rabatkoder" style={navLink}>Rabatkoder</a>
           <a href="/admin/produkter" style={navLink}>Produkter</a>
           <a href="/admin/kanaler" style={navLink}>Kanaler</a>
           <a href="/admin/nyhedsbrev" style={navLink}>Nyhedsbrev</a>
@@ -265,7 +277,7 @@ export default function AdminPage() {
           </div>
           <div style={{ width: "1px", height: "20px", background: "#eee" }} />
           <div style={{ display: "flex", gap: "4px" }}>
-            {["alle", ...STATUS_FLOW].map((s) => (
+            {["alle", ...STATUS_FLOW, ...CANCEL_STATUSES].map((s) => (
               <button key={s} onClick={() => setFilterStatus(s)} style={{ padding: "5px 12px", fontSize: "12px", fontWeight: filterStatus === s ? 700 : 400, background: filterStatus === s ? (STATUS_COLORS[s]?.bg ?? "#111") : "#f0f0f0", color: filterStatus === s ? (STATUS_COLORS[s]?.text ?? "#fff") : "#555", border: filterStatus === s ? `1px solid ${STATUS_COLORS[s]?.border ?? "#111"}` : "1px solid transparent", borderRadius: "20px", cursor: "pointer" }}>
                 {s === "alle" ? "Alle statusser" : STATUS_LABELS[s]}
               </button>
@@ -413,6 +425,23 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                         <button onClick={() => updateStatus(b.id, nextStatus)} disabled={updating === b.id} style={{ padding: "4px 10px", fontSize: "11px", fontWeight: 600, background: STATUS_COLORS[nextStatus].border, color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer", whiteSpace: "nowrap", opacity: updating === b.id ? 0.6 : 1 }}>
                           {updating === b.id ? "..." : STATUS_LABELS[nextStatus]}
                         </button>
+                      )}
+                      {b.status.startsWith("annulleret") ? (
+                        <button onClick={() => updateStatus(b.id, "ny")} disabled={updating === b.id} title="Fortryd annullering — bookingen optager sine datoer igen" style={{ padding: "4px 10px", fontSize: "11px", background: "#fff", color: "#004085", border: "1px solid #4dabf7", borderRadius: "6px", cursor: "pointer", whiteSpace: "nowrap", opacity: updating === b.id ? 0.6 : 1 }}>
+                          Genåbn
+                        </button>
+                      ) : (
+                        <select
+                          value=""
+                          onChange={(e) => { if (e.target.value) updateStatus(b.id, e.target.value); }}
+                          disabled={updating === b.id}
+                          title="Annullér booking — datoerne frigives i kalenderen"
+                          style={{ padding: "4px 6px", fontSize: "11px", background: "#fff", color: "#dc3545", border: "1px solid #dc3545", borderRadius: "6px", cursor: "pointer", opacity: updating === b.id ? 0.6 : 1 }}
+                        >
+                          <option value="" disabled>Annullér…</option>
+                          <option value="annulleret_kunde">Af kunde</option>
+                          <option value="annulleret_admin">Af admin</option>
+                        </select>
                       )}
                       <a href="/admin/lejeseddel" onClick={() => sessionStorage.setItem("lejeseddel_booking", JSON.stringify(b))} style={{ padding: "4px 10px", fontSize: "11px", background: "#f0f0f0", color: "#555", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", whiteSpace: "nowrap" }}>
                         Print

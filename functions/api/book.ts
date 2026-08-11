@@ -151,16 +151,41 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const addonsText =
     data.addons.length > 0 ? data.addons.join(", ") : "Ingen";
 
+  // Fuld ordreoversigt — kurv-varer blev tidligere slet ikke vist i mailen,
+  // så ordrer med flere produkter så ud som ét produkt.
+  const orderLines: Array<{ label: string; price?: number }> = [];
+  if (data.speaker && data.speakerId !== "effects-only") {
+    orderLines.push({
+      label: data.speakerSize && data.speakerSize !== "—" ? `${data.speaker} (${data.speakerSize})` : data.speaker,
+    });
+  }
+  for (const item of data.cartItems || []) {
+    orderLines.push({ label: item.name, price: item.price });
+  }
+  for (const a of data.addons || []) {
+    orderLines.push({ label: a });
+  }
+  const orderRowsHtml = orderLines.length
+    ? orderLines
+        .map(
+          (l) =>
+            `<tr><td style="padding:3px 12px 3px 0;">• ${l.label}</td><td style="text-align:right;white-space:nowrap;">${
+              typeof l.price === "number" ? `${l.price} kr` : ""
+            }</td></tr>`,
+        )
+        .join("")
+    : `<tr><td colspan="2" style="padding:3px 0;color:#888;">Ingen linjer registreret</td></tr>`;
+  const orderTableHtml = `<table style="border-collapse:collapse;width:100%;max-width:420px;font-family:sans-serif;font-size:14px;">${orderRowsHtml}<tr><td style="padding-top:8px;border-top:1px solid #ddd;font-weight:bold;">I alt</td><td style="padding-top:8px;border-top:1px solid #ddd;text-align:right;font-weight:bold;">${data.total} kr</td></tr></table>`;
+
   const upsell = pickUpsell(data);
   console.log("[book] upsell:", upsell?.id ?? "none", "addonIds:", data.addonIds);
 
   const ownerHtml = `
     <h2>Ny booking fra ${data.name}</h2>
     <table style="border-collapse:collapse;font-family:sans-serif;">
-      <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Højtaler:</td><td>${data.speaker} (${data.speakerSize})</td></tr>
+      <tr><td style="padding:4px 12px 4px 0;font-weight:bold;vertical-align:top;">Ordre:</td><td>${orderTableHtml}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Periode:</td><td>${data.period}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Dage:</td><td>${data.days}</td></tr>
-      <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Tilvalg:</td><td>${addonsText}</td></tr>
       ${data.deliveryAddress ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Leveringsadresse:</td><td>${data.deliveryAddress}</td></tr>` : ""}
       ${discountRow}
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Total:</td><td><strong>${data.total} kr</strong></td></tr>
@@ -179,9 +204,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       <p>Hej ${data.name},</p>
       <p>Vi har modtaget din booking og vender tilbage med bekræftelse hurtigst muligt.</p>
       <div style="background:#fffef0;padding:16px;border-radius:8px;margin:16px 0;">
-        <p style="margin:4px 0;"><strong>Højtaler:</strong> ${data.speaker} (${data.speakerSize})</p>
-        <p style="margin:4px 0;"><strong>Periode:</strong> ${data.period}</p>
-        <p style="margin:4px 0;"><strong>Tilvalg:</strong> ${addonsText}</p>
+        <p style="margin:4px 0 8px;"><strong>Din ordre:</strong></p>
+        ${orderTableHtml}
+        <p style="margin:12px 0 4px;"><strong>Periode:</strong> ${data.period}</p>
         ${data.deliveryAddress ? `<p style="margin:4px 0;"><strong>Levering til:</strong> ${data.deliveryAddress}</p>` : `<p style="margin:4px 0;"><strong>Afhentning:</strong> Halvtolv 9, 1. th, København K</p>`}
         ${discount ? `<p style="margin:4px 0;color:#1e7e34;"><strong>Rabat:</strong> ${discount.code} (−${discount.pct}%)</p>` : ""}
         <p style="margin:8px 0 0;font-size:20px;"><strong>Total: ${data.total} kr</strong></p>
@@ -201,12 +226,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       from: fromEmail,
       to: [NOTIFY_EMAIL],
       reply_to: data.email,
-      subject: `Ny booking: ${data.speaker} — ${data.period} — ${data.name}`,
+      subject: `Ny booking: ${data.speaker}${(data.cartItems?.length ?? 0) > 0 ? ` + ${data.cartItems!.length} mere` : ""} — ${data.period} — ${data.name}`,
       html: ownerHtml,
     },
     {
       from: fromEmail,
       to: [data.email],
+      // Kundesvar skal til info@ — booking@ er kun afsenderidentitet og har
+      // ingen modtage-rute i Cloudflare (svar dertil bouncer)
+      reply_to: "info@lejhojtaler.dk",
       subject: "Booking bekræftelse — Lejhøjtaler.dk",
       html: customerHtml,
     },

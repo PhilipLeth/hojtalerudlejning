@@ -104,6 +104,22 @@ function csvCell(s: string): string {
   return s;
 }
 
+/** Feed title shown on DBA/Meta — must read as rental, not sale */
+function rentalFeedTitle(title: string): string {
+  return `${title} — leje pr. weekend`;
+}
+
+/** Feed description — rental framing + explicit weekend price */
+function rentalDescription(productDesc: string, price: number, addon = false): string {
+  const body = productDesc.trim();
+  const priceLine = `Lejepris ${price} kr/weekend (op til 5 dage).`;
+  const suffix = "Afhentning København K. Book online.";
+  if (addon) {
+    return `Udlejning — ikke salg. Tilvalg til leje. ${body} ${priceLine} ${suffix}`.trim();
+  }
+  return `Udlejning — ikke salg. ${body} ${priceLine} ${suffix}`.trim();
+}
+
 /** Build feed items from KV catalog + inventory */
 export function buildFeedItems(
   catalog: CatalogRaw | null,
@@ -123,7 +139,7 @@ export function buildFeedItems(
     items.push({
       id,
       title: da.name || id,
-      description: `${da.desc || ""} Leje weekend, København. Book online.`.trim(),
+      description: rentalDescription(da.desc || "", Number(sp.price) || 0),
       price: Number(sp.price) || 0,
       image: absUrl(String(sp.product || ""), origin),
       link: `${origin}/?product=${encodeURIComponent(id)}#book`,
@@ -145,7 +161,7 @@ export function buildFeedItems(
     items.push({
       id,
       title: String(r.name_da || id),
-      description: `${String(r.desc_da || "")} Leje weekend, København. Book online.`.trim(),
+      description: rentalDescription(String(r.desc_da || ""), Number(r.price) || 0),
       price: Number(r.price) || 0,
       image: absUrl(String(r.image || ""), origin),
       link: `${origin}/?product=${encodeURIComponent(id)}#book`,
@@ -169,7 +185,7 @@ export function buildFeedItems(
     items.push({
       id,
       title: da.label || id,
-      description: `${da.desc || ""} Tilvalg / leje weekend, København.`.trim(),
+      description: rentalDescription(da.desc || "", Number(a.price) || 0, true),
       price: Number(a.price) || 0,
       image: absUrl(String(a.image || "/images/product-party.png"), origin),
       link: `${origin}/?product=${encodeURIComponent(id)}#book`,
@@ -187,14 +203,13 @@ export function toXml(items: FeedItem[]): string {
     .map(
       (i) => `  <item>
     <g:id>${escXml(i.id)}</g:id>
-    <g:title>${escXml(i.title)}</g:title>
+    <g:title>${escXml(rentalFeedTitle(i.title))}</g:title>
     <g:description>${escXml(i.description)}</g:description>
     <g:link>${escXml(i.link)}</g:link>
     <g:image_link>${escXml(i.image)}</g:image_link>
     <g:availability>${i.availability}</g:availability>
     <g:price>${i.price.toFixed(2)} DKK</g:price>
     <g:brand>${escXml(i.brand)}</g:brand>
-    <g:condition>used</g:condition>
     <g:product_type>${escXml(i.category)}</g:product_type>
     <g:custom_label_0>rental</g:custom_label_0>
     <g:custom_label_1>weekend</g:custom_label_1>
@@ -230,14 +245,14 @@ export function toCsv(items: FeedItem[]): string {
   const lines = items.map((i) =>
     [
       csvCell(i.id),
-      csvCell(i.title),
+      csvCell(rentalFeedTitle(i.title)),
       csvCell(i.description),
       csvCell(i.link),
       csvCell(i.image),
       csvCell(i.availability),
       csvCell(`${i.price} DKK`),
       csvCell(i.brand),
-      "used",
+      "rental",
       csvCell(i.category),
     ].join(",")
   );
@@ -249,10 +264,10 @@ export function toFacebookCsv(items: FeedItem[]): string {
   const header = ["Title", "Price", "Category", "Condition", "Description", "Location", "Product link"].join(",");
   const lines = items.map((i) =>
     [
-      csvCell(`${i.title} — leje weekend København`),
-      csvCell(String(i.price)),
+      csvCell(rentalFeedTitle(i.title)),
+      csvCell(`${i.price} kr/weekend`),
       csvCell("Electronics"),
-      csvCell("Used - Good"),
+      csvCell("For rent"),
       csvCell(i.description),
       csvCell("København K, Danmark"),
       csvCell(i.link),

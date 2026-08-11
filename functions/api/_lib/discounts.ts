@@ -53,3 +53,51 @@ export async function resolveDiscount(
 export function discountOre(totalOre: number, pct: number): number {
   return Math.round((totalOre * pct) / 100);
 }
+
+export interface CodeInfo {
+  code: string;
+  pct: number;
+  /** standard = hardcodet i koden; egen = oprettet i admin (KV) */
+  source: "standard" | "egen";
+  /** false når en standardkode er slået fra med 0 i KV */
+  active: boolean;
+}
+
+/** Læs det rå KV-map ({kode: pct}). Tomt objekt ved manglende/ugyldig data. */
+export async function loadCustomCodes(kv: KVNamespace): Promise<Record<string, number>> {
+  try {
+    const raw = await kv.get(DISCOUNT_CODES_KEY);
+    if (raw) return JSON.parse(raw) as Record<string, number>;
+  } catch {
+    // ugyldig JSON — behandl som tom, resolveDiscount gør det samme
+  }
+  return {};
+}
+
+/** Alle koder til admin-visning: standardkoder + egne, med status. */
+export async function listCodes(kv: KVNamespace): Promise<CodeInfo[]> {
+  const custom = await loadCustomCodes(kv);
+  const out: CodeInfo[] = [];
+
+  for (const [code, defaultPct] of Object.entries(DEFAULT_CODES)) {
+    const override = custom[code];
+    const pct = typeof override === "number" ? override : defaultPct;
+    out.push({
+      code,
+      pct: pct >= 1 && pct <= 99 ? Math.round(pct) : defaultPct,
+      source: "standard",
+      active: !(typeof override === "number" && (override < 1 || override > 99)),
+    });
+  }
+  for (const [code, pct] of Object.entries(custom)) {
+    if (code in DEFAULT_CODES) continue; // override, allerede vist ovenfor
+    if (typeof pct !== "number" || !Number.isFinite(pct)) continue;
+    out.push({
+      code,
+      pct: Math.round(pct),
+      source: "egen",
+      active: pct >= 1 && pct <= 99,
+    });
+  }
+  return out.sort((a, b) => a.code.localeCompare(b.code, "da"));
+}

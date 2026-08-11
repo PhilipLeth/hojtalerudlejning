@@ -74,6 +74,8 @@ export interface LoadedBooking {
   productIds: string[];
   total: number;
   cartItems: Array<{ name?: string; price?: number; productId?: string }>;
+  /** Server-valideret rabat, gemt af book.ts fra august 2026 */
+  discount?: { code: string; pct: number } | null;
 }
 
 /** Alle bookinger fra KV, normaliseret. Ugyldige datoer springes over. */
@@ -92,12 +94,16 @@ export async function loadBookings(kv: KVNamespace): Promise<LoadedBooking[]> {
     const pickup = String(booking.pickup || "").slice(0, 10);
     const ret = String(booking.returnDate || "").slice(0, 10);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(pickup) || !/^\d{4}-\d{2}-\d{2}$/.test(ret)) continue;
+    // Annullerede bookinger tæller ingen steder: hverken lager, omsætning
+    // eller rabatkode-forbrug — de blev aldrig til noget
+    if (String(booking.status || "").startsWith("annulleret")) continue;
     out.push({
       pickup,
       returnDate: ret,
       productIds: bookedProductIds(booking),
       total: Number(booking.total) || 0,
       cartItems: (booking.cartItems as LoadedBooking["cartItems"]) || [],
+      discount: (booking.discount as LoadedBooking["discount"]) ?? null,
     });
   }
   return out;

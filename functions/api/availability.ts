@@ -74,8 +74,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
       const booking = JSON.parse(value);
 
-      // Only count active bookings (not returned)
-      if (booking.status === "afleveret") continue;
+      // Only count active bookings — returned equipment is back, and a
+      // cancelled booking must release its dates immediately
+      if (booking.status === "afleveret" || String(booking.status || "").startsWith("annulleret")) continue;
 
       // Check date overlap: booking.pickup < query.to AND booking.returnDate > query.from
       const bookingPickup = booking.pickup;

@@ -40,8 +40,8 @@ export default function PrivatlivspolitikPage() {
               </p>
               <p>
                 Har du spørgsmål til vores behandling af dine oplysninger, kan du skrive til{" "}
-                <a href="mailto:booking@lejhojtaler.dk" className="text-brand-400 hover:underline">
-                  booking@lejhojtaler.dk
+                <a href="mailto:info@lejhojtaler.dk" className="text-brand-400 hover:underline">
+                  info@lejhojtaler.dk
                 </a>{" "}
                 eller ringe på{" "}
                 <a href="tel:+4531132852" className="text-brand-400 hover:underline">
@@ -129,8 +129,8 @@ export default function PrivatlivspolitikPage() {
               </ul>
               <p>
                 Skriv til{" "}
-                <a href="mailto:booking@lejhojtaler.dk" className="text-brand-400 hover:underline">
-                  booking@lejhojtaler.dk
+                <a href="mailto:info@lejhojtaler.dk" className="text-brand-400 hover:underline">
+                  info@lejhojtaler.dk
                 </a>
                 , så svarer vi inden for en måned.
               </p>

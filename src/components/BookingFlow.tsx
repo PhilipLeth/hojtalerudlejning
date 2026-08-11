@@ -515,7 +515,7 @@ export default function BookingFlow({
   }
 
   function addCurrentToCart() {
-    if (!speaker || speaker === "effects-only") return;
+    if (!speaker) return;
     // Produkt + valgte tilvalg ryger i kurven; levering + adresse beholdes (gælder ordren)
     stashSelectionToCart();
     setStep(1);
@@ -1208,22 +1208,46 @@ export default function BookingFlow({
                 })}
             </div>
 
-            {/* Søgeresultater fra resten af sortimentet -> direkte i kurven */}
-            {addonSearch.trim() && (
-              <div className="space-y-2">
-                {[
-                  ...speakers
-                    .filter((sp) => sp.id !== speaker)
-                    .filter((sp) => sp.name.toLowerCase().includes(addonSearch.trim().toLowerCase()))
-                    .map((sp) => ({ id: sp.id, name: sp.name, price: sp.price, image: sp.product })),
-                  ...rentalProducts
-                    .filter((rp) => rp.id !== speaker)
-                    .filter((rp) => (locale === "en" ? rp.name_en : rp.name_da).toLowerCase().includes(addonSearch.trim().toLowerCase()))
-                    .map((rp) => ({ id: rp.id, name: locale === "en" ? rp.name_en : rp.name_da, price: rp.price, image: rp.image })),
-                ]
-                  .filter((prod) => !cartItems.some((c) => c.productId === prod.id))
-                  .slice(0, 4)
-                  .map((prod) => (
+            {/* Resten af sortimentet — vises ALTID, ikke kun når man søger.
+                Tidligere skulle man gætte sig til at skrive i søgefeltet for at
+                finde fx uplights, så kunder bookede kun ét produkt. */}
+            {(() => {
+              const q = addonSearch.trim().toLowerCase();
+              const currentCategory =
+                selectedRental?.category ?? (selectedSpeaker ? "lyd" : undefined);
+              const pool = [
+                ...speakers
+                  .filter((sp) => sp.id !== speaker)
+                  .map((sp) => ({ id: sp.id, name: sp.name, price: sp.price, image: sp.product, category: "lyd" })),
+                ...rentalProducts
+                  .filter((rp) => rp.id !== speaker && !rp.bundle)
+                  .map((rp) => ({
+                    id: rp.id,
+                    name: locale === "en" ? rp.name_en : rp.name_da,
+                    price: rp.price,
+                    image: rp.image,
+                    category: rp.category,
+                  })),
+              ].filter((prod) => !cartItems.some((c) => c.productId === prod.id));
+
+              const matches = q
+                ? pool.filter((p) => p.name.toLowerCase().includes(q))
+                : // Uden søgning: samme kategori først — det er dér krydssalget ligger
+                  [...pool].sort((a, b) => {
+                    const rank = (x: typeof a) => (x.category === currentCategory ? 0 : 1);
+                    return rank(a) - rank(b);
+                  });
+              const shown = matches.slice(0, q ? 6 : 6);
+              if (!shown.length) return null;
+
+              return (
+                <div className="space-y-2">
+                  <p className="pt-1 text-sm text-white/40">
+                    {q
+                      ? locale === "en" ? "Search results" : "Søgeresultater"
+                      : locale === "en" ? "Add more to your order" : "Tilføj mere til din ordre"}
+                  </p>
+                  {shown.map((prod) => (
                     <button
                       key={prod.id}
                       onClick={() => {
@@ -1240,8 +1264,9 @@ export default function BookingFlow({
                       <p className="shrink-0 text-sm font-bold text-brand-400">+{prod.price},-</p>
                     </button>
                   ))}
-              </div>
-            )}
+                </div>
+              );
+            })()}
 
             {/* Cart: already added items */}
             {cartItems.length > 0 && (
@@ -1262,7 +1287,7 @@ export default function BookingFlow({
             <PriceSummary />
 
             {/* Add another product to cart */}
-            {!isRentalOnly && !isEffectsOnly && (
+            {!!speaker && (
               <button
                 type="button"
                 onClick={addCurrentToCart}
