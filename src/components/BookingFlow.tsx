@@ -6,6 +6,7 @@ import { type Locale, t } from "@/lib/i18n";
 import { dayMultiplier, isSummerSale, applyDiscount } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 import { trackPurchase } from "@/lib/analytics";
+import CapacityBadge, { capacityLevel } from "@/components/CapacityBadge";
 import { loadStripe } from "@stripe/stripe-js";
 
 /* ───── Helpers ───── */
@@ -910,9 +911,10 @@ export default function BookingFlow({
                           </span>
                         )}
                       </div>
-                      <p className="mt-1 text-sm text-white/50">
-                        {sp.size} &mdash; {sp.capacity}
-                      </p>
+                      <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-white/50">
+                        <span>{sp.size}</span>
+                        <CapacityBadge level={capacityLevel(sp.id)} label={sp.capacity} />
+                      </div>
                       <p className="mt-2 text-sm text-white/40">{sp.desc}</p>
                       <p className="mt-1 text-xs text-white/30">{sp.extra}</p>
                       <p className="mt-2 text-xs text-brand-400/70">

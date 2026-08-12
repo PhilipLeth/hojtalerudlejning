@@ -28,10 +28,11 @@ export default function HojtalerpakkeBasPage() {
       image="/images/product-festival-bas.png"
       imageAlt="Stor højtalerpakke med subwoofer til leje i København"
       productId="festival_bas"
+      capacity={{ level: 3, label: "50-100 pers." }}
       bullets={[
         '2× 12" EV aktive højtalere',
         '12" aktiv subwoofer med topstang',
-        "60–120 personer",
+        
         "Stativer og alle kabler inkl.",
         "Bluetooth",
         "Hent fredag, aflever mandag",

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CapacityBadge from "@/components/CapacityBadge";
 import LivePrice from "@/components/LivePrice";
 import ProductVideo from "@/components/ProductVideo";
 import ProductYouTube from "@/components/ProductYouTube";
@@ -23,6 +24,8 @@ export interface ProductLandingProps {
    * Må ikke sættes blankt på hele kataloget — se prd.json → seo.reviews_policy.
    */
   reviewed?: { ratingValue: string; reviewCount: string };
+  /** Kapacitets-ikon: personfigurer + interval (fx 30-50 pers.) */
+  capacity?: { level: 1 | 2 | 3; label: string };
   /** Optional extra section under product detail */
   children?: React.ReactNode;
 }
@@ -39,6 +42,7 @@ export default function ProductLanding({
   productId,
   bookLabel,
   reviewed,
+  capacity,
   children,
 }: ProductLandingProps) {
   const bookHref = toBook(productId);
@@ -132,6 +136,11 @@ export default function ProductLanding({
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">{sub}</p>
+          {capacity && (
+            <div className="mt-4 flex justify-center">
+              <CapacityBadge level={capacity.level} label={capacity.label} />
+            </div>
+          )}
           <a
             href={bookHref}
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"

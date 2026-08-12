@@ -29,9 +29,10 @@ export default function HojtalerpakkeNormalPage() {
       imageAlt="Stor højtalerpakke til leje i København"
       productId="festival"
       reviewed={{ ratingValue: "5.0", reviewCount: "1" }}
+      capacity={{ level: 2, label: "30-50 pers." }}
       bullets={[
         '2× 12" EV aktive højtalere',
-        "40–100 personer",
+        
         "Alle kabler inkl. — stativer kan tilkøbes (100 kr)",
         "Bluetooth",
         "Hent fredag, aflever mandag",
