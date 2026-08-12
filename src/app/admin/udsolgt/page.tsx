@@ -28,6 +28,7 @@ const PRODUCT_LABELS: Record<string, string> = {
   party: "Lille højtalerpakke",
   soundboks: "Soundboks 4",
   festival: "Stor højtalerpakke",
+  festival_bas: "Stor højtalerpakke + bas",
   lys: "Lys-pakke",
   rog: "Røgmaskine",
   stativer: "Stativer",

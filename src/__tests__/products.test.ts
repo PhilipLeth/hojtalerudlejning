@@ -2,9 +2,9 @@ import { describe, it, expect } from "vitest";
 import { speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice } from "@/lib/products";
 
 describe("Products data", () => {
-  it("has four speaker packages", () => {
-    expect(speakers).toHaveLength(4);
-    expect(speakers.map((s) => s.id)).toEqual(["thumpgo", "party", "soundboks", "festival"]);
+  it("has five speaker packages (incl. + bas fra 12. aug 2026)", () => {
+    expect(speakers).toHaveLength(5);
+    expect(speakers.map((s) => s.id)).toEqual(["thumpgo", "party", "soundboks", "festival", "festival_bas"]);
   });
 
   it("thump go is 345 kr", () => {
@@ -19,8 +19,8 @@ describe("Products data", () => {
     expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(595);
   });
 
-  it("festival speaker is 695 kr", () => {
-    expect(speakers.find((s) => s.id === "festival")!.price).toBe(695);
+  it("festival speaker is 495 kr (mellempakken, 12. aug 2026)", () => {
+    expect(speakers.find((s) => s.id === "festival")!.price).toBe(495);
   });
 
   it("startPrice matches cheapest speaker", () => {
@@ -94,15 +94,15 @@ describe("Addons data", () => {
     expect(addons.find((a) => a.id === "levering")).toBeUndefined();
   });
 
-  it("festpakker har runde mentale priser: 500 og 1.000 kr (uden opsætning)", () => {
+  it("festpakker ender på 95: 495 og 995 kr (uden opsætning)", () => {
     const lille = rentalProducts.find((p) => p.id === "pakke_fest_lille")!;
     const stor = rentalProducts.find((p) => p.id === "pakke_fest_stor")!;
     expect(lille.bundle?.parts.map((x) => x.productId)).toEqual(["party", "lyseffekt"]);
-    expect(lille.price).toBe(500); // 395 + 195 - 90
-    expect(lille.bundle?.discount).toBe(90);
+    expect(lille.price).toBe(495); // 395 + 195 - 95
+    expect(lille.bundle?.discount).toBe(95);
     expect(stor.bundle?.parts.map((x) => x.productId)).toEqual(["festival", "lys"]);
-    expect(stor.price).toBe(1000); // 695 + 495 - 190
-    expect(stor.bundle?.discount).toBe(190);
+    expect(stor.price).toBe(895); // 495 + 495 - 95
+    expect(stor.bundle?.discount).toBe(95);
     // Levering/opsætning er tilvalg — ikke en del af pakken
     for (const p of [lille, stor]) {
       expect(p.bundle!.parts.map((x) => x.productId)).not.toContain("levering_opsaetning");
@@ -185,12 +185,12 @@ describe("Addons data", () => {
     expect(lille.bundle!.discount).toBe(385);
     expect(lilleSum - lille.price).toBe(lille.bundle!.discount);
 
-    // Festpakken: 695 + 595 + 695 = 1985 → 1500 (spar 485)
+    // Festpakken: 695 + 595 + 495 = 1785 → 1500 (spar 285) — festival = 495 fra 12. aug
     expect(fest.bundle!.parts.map((x) => x.productId)).toEqual(["karaoke", "skaerm_55", "festival"]);
     const festSum = fest.bundle!.parts.reduce((s, x) => s + x.price, 0);
-    expect(festSum).toBe(1985);
+    expect(festSum).toBe(1785);
     expect(fest.price).toBe(1500);
-    expect(fest.bundle!.discount).toBe(485);
+    expect(fest.bundle!.discount).toBe(285);
     expect(festSum - fest.price).toBe(fest.bundle!.discount);
   });
 

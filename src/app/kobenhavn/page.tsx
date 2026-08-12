@@ -77,7 +77,7 @@ export default function KobenhavnPage() {
       "@type": "City",
       name: "København",
     },
-    priceRange: "399-695 DKK",
+    priceRange: "345-695 DKK",
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Friday"],
@@ -186,7 +186,7 @@ export default function KobenhavnPage() {
                 2&times; 12&quot; EV ZLX-12BT &middot; Bluetooth &middot; Kabler inkluderet
               </p>
               <p className="mt-4 text-3xl font-bold text-brand-400">
-                695 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                495 kr<span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="mt-4 space-y-2 text-sm text-white/60">
                 <li>&bull; Til st&oslash;rre rum, fester og udend&oslash;rs events</li>

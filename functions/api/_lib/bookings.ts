@@ -7,15 +7,16 @@
 
 /** Skal matche DEFAULT_INVENTORY i availability.ts */
 export const DEFAULT_INVENTORY: Record<string, number> = {
-  thumpgo: 1, party: 2, soundboks: 2, festival: 2,
+  thumpgo: 1, party: 2, soundboks: 2, festival: 2, festival_bas: 1,
   lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 1,
 };
 
-export const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival"];
+export const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival", "festival_bas"];
 
 export function speakerNameToId(name: string): string | null {
   const lower = name.toLowerCase();
   if (lower === "party" || lower.includes("lille højtalerpakke") || lower.includes("small speaker")) return "party";
+  if (lower.includes("+ bas") || lower.includes("+ bass") || lower.includes("med bas")) return "festival_bas";
   if (lower === "festival" || lower.includes("stor højtalerpakke") || lower.includes("large speaker")) return "festival";
   if (lower.includes("thump")) return "thumpgo";
   if (lower.includes("soundboks")) return "soundboks";

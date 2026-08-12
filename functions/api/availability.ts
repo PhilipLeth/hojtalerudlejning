@@ -10,14 +10,16 @@ const corsHeaders = {
   "Content-Type": "application/json",
 };
 
-const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 2, soundboks: 2, festival: 2, lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 1 };
+const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 2, soundboks: 2, festival: 2, festival_bas: 1, lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 1 };
 
-const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival"];
+const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival", "festival_bas"];
 
 // Map booking speaker names back to product IDs (fallback for old bookings without speakerId)
 function speakerNameToId(name: string): string | null {
   const lower = name.toLowerCase();
   if (lower === "party" || lower.includes("lille højtalerpakke") || lower.includes("small speaker")) return "party";
+  // "+ bas" skal matches FØR "stor højtalerpakke" — navnet indeholder begge
+  if (lower.includes("+ bas") || lower.includes("+ bass") || lower.includes("med bas")) return "festival_bas";
   if (lower === "festival" || lower.includes("stor højtalerpakke") || lower.includes("large speaker")) return "festival";
   if (lower.includes("thump")) return "thumpgo";
   if (lower.includes("soundboks")) return "soundboks";
@@ -56,7 +58,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     }
 
     // Count overlapping bookings per product
-    const booked: Record<string, number> = { thumpgo: 0, party: 0, soundboks: 0, festival: 0, lys: 0, rog: 0, stativer: 0, taske: 0, subwoofer: 0 };
+    const booked: Record<string, number> = { thumpgo: 0, party: 0, soundboks: 0, festival: 0, festival_bas: 0, lys: 0, rog: 0, stativer: 0, taske: 0, subwoofer: 0 };
 
     // Map addon display names to product IDs
     const addonNameToId: Record<string, string> = {

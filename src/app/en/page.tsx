@@ -140,7 +140,7 @@ export default function EnHome() {
             },
             offers: {
               "@type": "Offer",
-              price: "695",
+              price: "495",
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
                             availability: "https://schema.org/InStock",
@@ -150,7 +150,7 @@ export default function EnHome() {
                 shippingDestination: { "@type": "DefinedRegion", addressCountry: "DK", addressRegion: "Copenhagen" },
               },
               url: "https://lejhojtaler.dk/en#book",
-              description: "From 695 DKK/weekend (Fri-Mon). PA system rental Copenhagen.",
+              description: "From 495 DKK/weekend (Fri-Mon). PA system rental Copenhagen.",
             },
           }),
         }}

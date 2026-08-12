@@ -3,13 +3,13 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Lille festpakke | Højtalere + lys | 500 kr | Lejhøjtaler.dk",
+  title: "Lille festpakke | Højtalere + lys | 495 kr | Lejhøjtaler.dk",
   description:
-    "Lille festpakke: 2× Alto 10\" højtalere + enkelt lyseffekt for 500 kr — spar 90 kr. Lyd og lys til op til 40 personer. Levering og opsætning kan tilvælges. Book online.",
+    "Lille festpakke: 2× Alto 10\" højtalere + enkelt lyseffekt for 495 kr — spar 95 kr. Lyd og lys til op til 40 personer. Levering og opsætning kan tilvælges. Book online.",
   keywords: ["festpakke", "lej festpakke", "højtaler og lys leje", "lille festpakke københavn", "fest lyd og lys"],
   alternates: { canonical: "https://lejhojtaler.dk/festpakke-lille" },
   openGraph: {
-    title: "Lille festpakke | Højtalere + lys | 500 kr",
+    title: "Lille festpakke | Højtalere + lys | 495 kr",
     description: "2× Alto 10\" højtalere + enkelt lyseffekt — lyd og lys til op til 40 pers. Spar 100 kr.",
     url: "https://lejhojtaler.dk/festpakke-lille",
     siteName: "Lejhøjtaler.dk",
@@ -23,9 +23,9 @@ export default function FestpakkeLillePage() {
     <ProductLanding
       slug="festpakke-lille"
       name="Lille festpakke"
-      price={500}
+      price={495}
       headline="Lille festpakke — lyd og lys"
-      sub="2× Alto 10&quot; højtalere + lys-pakke. Alt til den lille fest — spar 90 kr."
+      sub="2× Alto 10&quot; højtalere + lys-pakke. Alt til den lille fest — spar 95 kr."
       image="/images/product-pakke-fest-lille.png"
       imageAlt="Lille festpakke med Alto højtalere og lyseffekt"
       productId="pakke_fest_lille"

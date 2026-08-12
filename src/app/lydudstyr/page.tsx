@@ -110,7 +110,7 @@ export default function LydudstyrPage() {
             </div>
             <div>
               <p className="mb-4 text-3xl font-bold text-brand-400">
-                695 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                495 kr<span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <h3 className="mb-4 text-xl font-bold text-white">Inkluderet i pakken</h3>
               <ul className="space-y-3 text-white/60">
