@@ -60,6 +60,27 @@ export default function BurgerMenu() {
             Lejhøjtaler.dk
           </Link>
 
+          {/* Pro-request øverst: firmafest, bryllup og større events skal kunne
+              komme direkte til os uden at gå gennem det almindelige bookingflow */}
+          <Link
+            href="/kontakt?emne=erhverv"
+            onClick={() => setOpen(false)}
+            className="mb-7 block rounded-2xl border border-brand-500/30 bg-brand-500/[0.07] p-4 transition hover:border-brand-500/60 hover:bg-brand-500/[0.12]"
+          >
+            <span className="flex items-center gap-2 text-sm font-semibold text-brand-400">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">
+                <path d="M4 4h16v12H5.17L4 17.17V4z" />
+              </svg>
+              Større arrangement?
+            </span>
+            <span className="mt-1 block text-sm text-white/55">
+              Firmafest, bryllup eller event — skriv til os, så får I et samlet tilbud.
+            </span>
+            <span className="mt-2 inline-block text-xs font-semibold text-white/70">
+              Send forespørgsel →
+            </span>
+          </Link>
+
           {NAV_CATEGORIES.map((section) => (
             <div key={section.id} className="mb-6">
               <Link
@@ -87,6 +108,9 @@ export default function BurgerMenu() {
 
           {/* Bottom links */}
           <div className="mt-8 border-t border-white/5 pt-6 space-y-1">
+            <Link href="/kontakt" onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
+              Kontakt
+            </Link>
             <Link href="/om" onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
               Om os
             </Link>

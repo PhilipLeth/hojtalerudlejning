@@ -1,11 +1,31 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
+
+/** Kendte emner fra ?emne= — styrer overskrift på mailen og hjælpetekst i formularen */
+const TOPICS: Record<string, { label: string; hint: string }> = {
+  erhverv: {
+    label: "Erhvervsforespørgsel",
+    hint: "Fortæl om arrangementet — dato, antal gæster, lokation og hvad I skal bruge. Så vender vi tilbage med et samlet tilbud.",
+  },
+  event: {
+    label: "Eventforespørgsel",
+    hint: "Fortæl om eventet — dato, antal gæster, lokation og hvad I skal bruge.",
+  },
+};
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", website: "" });
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState("");
+  const [topic, setTopic] = useState<{ key: string; label: string; hint: string } | null>(null);
+
+  // Emne kommer fra URL'en (fx /kontakt?emne=erhverv) — så et pro-request
+  // lander mærket i indbakken frem for som "endnu en kontaktformular"
+  useEffect(() => {
+    const key = new URLSearchParams(window.location.search).get("emne");
+    if (key && TOPICS[key]) setTopic({ key, ...TOPICS[key] });
+  }, []);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -15,7 +35,7 @@ export default function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, topic: topic?.label ?? "" }),
       });
       const json = (await res.json()) as { ok?: boolean; error?: string };
       if (!res.ok) {
@@ -48,6 +68,12 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3" aria-label="Kontaktformular">
+      {topic && (
+        <div className="rounded-xl border border-brand-500/30 bg-brand-500/[0.07] px-4 py-3">
+          <p className="text-sm font-semibold text-brand-400">{topic.label}</p>
+          <p className="mt-1 text-sm text-white/50">{topic.hint}</p>
+        </div>
+      )}
       <input
         required
         type="text"

@@ -30,12 +30,13 @@ export interface ContactInput {
   email?: unknown;
   phone?: unknown;
   message?: unknown;
+  topic?: unknown;
   /** Honeypot — skal være tom */
   website?: unknown;
 }
 
 export type ContactValidation =
-  | { ok: true; name: string; email: string; phone: string; message: string }
+  | { ok: true; name: string; email: string; phone: string; message: string; topic: string }
   | { ok: false; error: string }
   | { ok: false; honeypot: true };
 
@@ -48,12 +49,14 @@ export function validateContact(input: ContactInput): ContactValidation {
   const email = String(input.email ?? "").trim();
   const phone = String(input.phone ?? "").trim();
   const message = String(input.message ?? "").trim();
+  // Frit emne fra ?emne= — begrænses så det ikke kan misbruges i emnelinjen
+  const topic = String(input.topic ?? "").trim().slice(0, 40).replace(/[\r\n]/g, "");
 
   if (name.length < 2 || name.length > 100) return { ok: false, error: "Skriv dit navn" };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return { ok: false, error: "Ugyldig emailadresse" };
   if (message.length < 5) return { ok: false, error: "Skriv en besked" };
   if (message.length > 5000) return { ok: false, error: "Beskeden er for lang (maks 5000 tegn)" };
-  return { ok: true, name, email, phone, message };
+  return { ok: true, name, email, phone, message, topic };
 }
 
 function escapeHtml(s: string): string {
@@ -100,7 +103,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       from: "Lejhøjtaler.dk <booking@lejhojtaler.dk>",
       to: [NOTIFY_EMAIL],
       reply_to: v.email,
-      subject: `Kontaktformular: ${v.name}`,
+      subject: v.topic ? `${v.topic}: ${v.name}` : `Kontaktformular: ${v.name}`,
       html,
     }),
   });
