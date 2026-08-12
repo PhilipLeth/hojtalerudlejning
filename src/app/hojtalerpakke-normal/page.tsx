@@ -4,12 +4,12 @@ import ProductLanding from "@/components/ProductLanding";
 export const metadata: Metadata = {
   title: "Lej Stor Højtalerpakke København | Fra 495 kr | Lejhøjtaler.dk",
   description:
-    "Lej stor højtalerpakke i København fra 495 kr/weekend. 2× 12\" EV aktive højtalere med stativer. Book online.",
+    "Lej stor højtalerpakke i København fra 495 kr/weekend. 2× 12\" EV aktive højtalere. Stativer kan tilkøbes. Book online.",
   keywords: ["stor højtalerpakke", "lej PA anlæg", "EV højtaler leje", "højtalerudlejning københavn"],
   alternates: { canonical: "https://lejhojtaler.dk/hojtalerpakke-normal" },
   openGraph: {
     title: "Lej Stor Højtalerpakke | Fra 495 kr",
-    description: "2× 12\" EV højtalere med stativer fra 495 kr/weekend. Book online.",
+    description: "2× 12\" EV højtalere fra 495 kr/weekend. Book online.",
     url: "https://lejhojtaler.dk/hojtalerpakke-normal",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -32,7 +32,7 @@ export default function HojtalerpakkeNormalPage() {
       bullets={[
         '2× 12" EV aktive højtalere',
         "40–100 personer",
-        "Stativer og alle kabler inkl.",
+        "Alle kabler inkl. — stativer kan tilkøbes (100 kr)",
         "Bluetooth",
         "Hent fredag, aflever mandag",
       ]}

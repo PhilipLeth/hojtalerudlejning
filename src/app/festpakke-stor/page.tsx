@@ -5,12 +5,12 @@ import ProductLanding from "@/components/ProductLanding";
 export const metadata: Metadata = {
   title: "Stor festpakke | Højtalere + lys til 100 pers. | 895 kr | Lejhøjtaler.dk",
   description:
-    "Stor festpakke: 2× EV 12\" højtalere med stativer + lys-pakke for 895 kr — spar 95 kr. Lyd og lys til op til 100 personer. Levering og opsætning kan tilvælges. Book online.",
+    "Stor festpakke: 2× EV 12\" højtalere + lys-pakke for 895 kr — spar 95 kr. Lyd og lys til op til 100 personer. Levering og opsætning kan tilvælges. Book online.",
   keywords: ["stor festpakke", "lej festpakke", "højtaler og lys leje", "fest 100 personer lyd", "festpakke københavn"],
   alternates: { canonical: "https://lejhojtaler.dk/festpakke-stor" },
   openGraph: {
     title: "Stor festpakke | Højtalere + lys til 100 pers. | 895 kr",
-    description: "2× EV 12\" højtalere + stativer + lys-pakke — lyd og lys til op til 100 pers. Spar 100 kr.",
+    description: "2× EV 12\" højtalere + lys-pakke — lyd og lys til op til 100 pers. Spar 95 kr.",
     url: "https://lejhojtaler.dk/festpakke-stor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -25,13 +25,13 @@ export default function FestpakkeStorPage() {
       name="Stor festpakke"
       price={895}
       headline="Stor festpakke — lyd og lys til 100 pers."
-      sub="2× EV 12&quot; højtalere + stativer + lys-pakke. Fuld fest — spar 95 kr."
+      sub="2× EV 12&quot; højtalere + lys-pakke. Fuld fest — spar 95 kr."
       image="/images/product-pakke-fest-stor.png"
       imageAlt="Stor festpakke med store EV højtalere og lyseffekt"
       productId="pakke_fest_stor"
       bullets={[
         "2× EV 12\" aktive højtalere med Bluetooth (op til 100 pers.)",
-        "2× stativer inkluderet — lyden op i øjenhøjde",
+        "Stativer kan tilkøbes (100 kr) — lyden op i øjenhøjde",
         "Lys-pakke: 2 farvede lamper + centereffekt",
         "Spar 100 kr vs. at leje delene enkeltvis",
         "Levering og opsætning kan tilvælges i booking",

@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Lej PA-anlæg og Lydudstyr København | Lejhøjtaler.dk",
   description:
-    "Lej PA-anlæg og professionelt lydudstyr i København fra 395 kr/weekend. Festival-pakke med 2 højtalere, mixer, mikrofon og stativer. Betal ved afhentning.",
+    "Lej PA-anlæg og professionelt lydudstyr i København fra 395 kr/weekend. Festival-pakke med 2 højtalere — stativer og mikrofon kan tilkøbes. Betal ved afhentning.",
   keywords: [
     "lej PA-anlæg københavn",
     "PA anlæg udlejning",
@@ -128,11 +128,11 @@ export default function LydudstyrPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>2× højttalerstativer</span>
+                  <span>Alle kabler inkluderet</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  <span>Alle kabler inkluderet</span>
+                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">+</span>
+                  <span>Stativer kan tilkøbes (100 kr)</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>

@@ -203,20 +203,20 @@ export const speakers: Speaker[] = [
     power: "kabel",
     sizeClass: "stor",
     weight: "2× 16 kg",
-    contents: ['2× EV 12" højtalere', "2× stativer", "Bluetooth", "AUX + strømkabler", "USB-C / iPhone-adapter"],
+    contents: ['2× EV 12" højtalere', "Bluetooth", "AUX + strømkabler", "USB-C / iPhone-adapter"],
     da: {
       name: "Stor højtalerpakke",
       size: '2× 12" EV',
       capacity: "40–100 pers.",
       desc: 'To kraftige 12" aktive højtalere med Bluetooth. Klar lyd til større rum og udendørs arrangementer.',
-      extra: "Inkl. stativer og alle kabler som standard.",
+      extra: "Inkl. alle kabler. Stativer kan tilkøbes for 100 kr.",
     },
     en: {
       name: "Large Speaker Package",
       size: '2× 12" EV',
       capacity: "40–100 people",
       desc: 'Two powerful 12" active speakers with Bluetooth. Clear sound for larger rooms and outdoor events.',
-      extra: "Incl. stands and all cables as standard.",
+      extra: "Incl. all cables. Stands available as add-on for 100 kr.",
     },
   },
   {
@@ -370,7 +370,7 @@ export const rentalProducts: RentalProduct[] = [
     name_en: "Large party package",
     desc_da: "Stor højtalerpakke + lys-pakke. Lyd og lys til op til 100 pers. — spar 95 kr.",
     desc_en: "Large speaker package + light package. Sound and lights for up to 100 people — save 190 DKK.",
-    contents: ['2× EV 12" højtalere', "2× stativer", "Lys-pakke (2 lamper + centereffekt)", "Bluetooth + alle kabler"],
+    contents: ['2× EV 12" højtalere', "Lys-pakke (2 lamper + centereffekt)", "Bluetooth + alle kabler"],
     allowedAddons: ["subwoofer", "rog", "mikrofon", "levering_opsaetning"],
     bundle: {
       discount: 95,
@@ -400,7 +400,7 @@ export const rentalProducts: RentalProduct[] = [
   { id: "projektor_pro", page: "/projektor-pro", youtubeUrl: "https://www.youtube.com/watch?v=7FhRTCCKCm0", category: "av", price: 795, image: "/images/product-projektor-pro.png", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor — skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector — sharp even in daylight.", contents: ["5000 lumen projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
   { id: "pakke_praesentation", page: "/pakke-praesentation", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", price: 695, image: "/images/product-projektor.png", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen — spar 90 kr.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation — save 90 kr.", contents: ["Full HD projektor", "Lærred 160 cm", "Håndholdt mic + kabel", "HDMI + strøm"], bundle: { discount: 90, usecase_da: "Alt til præsentationen — projektor, lærred og mikrofon.", usecase_en: "Everything for your presentation.", parts: [ { productId: "projektor", label_da: "Projektor", label_en: "Projector", price: 495 }, { productId: "laerred_160", label_da: "Lærred 160 cm", label_en: "Screen 160 cm", price: 195 }, { productId: "haandholdt_mikrofon", label_da: "Håndholdt mikrofon", label_en: "Wired mic", price: 95 } ] } },
   { id: "pakke_konference", page: "/pakke-konference", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 1195, image: "/images/product-skaerm.png", name_da: "Konferencepakken", name_en: "Conference bundle", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke. Klar til konference — spar 140 kr.", desc_en: "55\" screen + wireless headset + small speaker package. Conference-ready — save 140 kr.", contents: ['55" skærm + stativ', "Trådløst headset", '2× 10" højtalere', "Kabler + adapter"], bundle: { discount: 140, usecase_da: "Klar til konference — skærm, headset og lyd.", usecase_en: "Conference-ready — screen, headset and sound.", parts: [ { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 345 }, { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speakers", price: 395 } ] } },
-  { id: "pakke_tale_musik", page: "/pakke-tale-musik", youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0", category: "av", price: 695, image: "/images/product-festival.png", name_da: "Tale & musik-pakken", name_en: "Speech & music bundle", desc_da: "Stor højtalerpakke + trådløs mikrofon. Taler og musik til events — spar 95 kr.", desc_en: "Large speaker package + wireless mic. Speeches and music for events — save 95 kr.", contents: ['2× 12" højtalere + stativer', "Trådløs mikrofon", "Alle kabler"], bundle: { discount: 95, usecase_da: "Taler og musik til events.", usecase_en: "Speeches and music for events.", parts: [ { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speakers", price: 495 }, { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 295 } ] } },
+  { id: "pakke_tale_musik", page: "/pakke-tale-musik", youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0", category: "av", price: 695, image: "/images/product-festival.png", name_da: "Tale & musik-pakken", name_en: "Speech & music bundle", desc_da: "Stor højtalerpakke + trådløs mikrofon. Taler og musik til events — spar 95 kr.", desc_en: "Large speaker package + wireless mic. Speeches and music for events — save 95 kr.", contents: ['2× 12" højtalere', "Trådløs mikrofon", "Alle kabler"], bundle: { discount: 95, usecase_da: "Taler og musik til events.", usecase_en: "Speeches and music for events.", parts: [ { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speakers", price: 495 }, { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 295 } ] } },
   { id: "karaoke", page: "/karaoke-maskine", youtubeUrl: "https://www.youtube.com/watch?v=_UaBe_xR3JY", category: "av", price: 695, image: "/images/product-karaoke.png", name_da: "Karaokemaskine", name_en: "Karaoke machine", desc_da: "Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys — tilslut TV via HDMI.", desc_en: "Singing Machine with built-in screen, 2 wireless mics and party lights — HDMI for your TV.", contents: ["Singing Machine karaoke-maskine", "2 trådløse mikrofoner", "Indbygget skærm + festlys", "HDMI-kabel + Bluetooth"] },
   {
     id: "pakke_karaoke",
@@ -437,7 +437,7 @@ export const rentalProducts: RentalProduct[] = [
     name_en: "Karaoke party bundle",
     desc_da: "Karaokemaskine + 55\" storskærm + store højtalere — karaoke til op til 100 pers. Spar 285 kr.",
     desc_en: "Karaoke machine + 55\" screen + large speakers — karaoke for up to 100 people. Save 285 kr.",
-    contents: ["Singing Machine + 2 trådløse mikrofoner", '55" LED-skærm på 3-fod stativ', '2× 12" højtalere + stativer', "Alle kabler"],
+    contents: ["Singing Machine + 2 trådløse mikrofoner", '55" LED-skærm på 3-fod stativ', '2× 12" højtalere', "Alle kabler"],
     allowedAddons: ["rog", "lyseffekt", "lys", "subwoofer", "levering_opsaetning"],
     bundle: {
       discount: 285,
