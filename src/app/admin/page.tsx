@@ -18,6 +18,7 @@ interface Booking {
   phone: string;
   comment: string;
   status: string;
+  company?: string;
   createdAt: string;
   updatedAt?: string;
   reviewMailSentAt?: string;
@@ -458,6 +459,7 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "8px 24px", fontSize: "13px", paddingTop: "12px" }}>
                         <div><strong>Email:</strong> <a href={`mailto:${b.email}`} style={{ color: "#0070f3" }}>{b.email}</a></div>
                         <div><strong>Telefon:</strong> <a href={`tel:${b.phone}`} style={{ color: "#0070f3" }}>{b.phone}</a></div>
+                        {b.company && <div><strong>Firma:</strong> {b.company}</div>}
                         <div><strong>Dage:</strong> {b.days}</div>
                         {b.deliveryAddress && <div><strong>Levering:</strong> {b.deliveryAddress}</div>}
                         {b.comment && <div style={{ gridColumn: "1 / -1" }}><strong>Kommentar:</strong> {b.comment}</div>}

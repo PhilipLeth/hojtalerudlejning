@@ -19,6 +19,7 @@ interface BookingData {
   total: number;
   discountCode?: string;
   name: string;
+  company?: string;
   email: string;
   phone: string;
   comment: string;
@@ -192,6 +193,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Upsell tilbudt:</td><td>${upsell ? `${upsell.title} @ ${upsell.offerPrice} kr (norm. ${upsell.listPrice})` : "Ingen"}</td></tr>
       <tr><td colspan="2" style="padding-top:12px;border-top:1px solid #ddd;"></td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Navn:</td><td>${data.name}</td></tr>
+      ${data.company ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Firma:</td><td>${data.company}</td></tr>` : ""}
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Email:</td><td>${data.email}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Telefon:</td><td>${data.phone}</td></tr>
       ${data.comment ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Kommentar:</td><td>${data.comment}</td></tr>` : ""}

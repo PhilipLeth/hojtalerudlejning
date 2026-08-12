@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 
 export const metadata: Metadata = {
-  title: "Lej Festlys og Røgmaskine København | Lejhøjtaler.dk",
+  title: "Lej Festlys, Diskokugle og Røgmaskine København | Lejhøjtaler.dk",
   description:
     "Lej festlys i København: lysbar fra 495 kr, røgmaskine fra 245 kr, discokugle og lyskæder. Kombiner med lyd til komplet festpakke fra 1.135 kr. Betal ved afhentning.",
   keywords: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/festlys" },
   openGraph: {
-    title: "Lej Festlys og Røgmaskine København | Lejhøjtaler.dk",
+    title: "Lej Festlys, Diskokugle og Røgmaskine København | Lejhøjtaler.dk",
     description:
       "Lysbar fra 495 kr, røgmaskine fra 245 kr, discokugle og lyskæder. Book online.",
     url: "https://lejhojtaler.dk/festlys",
@@ -70,7 +70,7 @@ export default function FestlysPage() {
             København · Betal ved afhentning · Ring 31 13 28 52
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Lej festlys og røgmaskine
+            Lej festlys, diskokugle og røgmaskine
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
               i København

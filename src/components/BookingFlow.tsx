@@ -241,7 +241,7 @@ export default function BookingFlow({
   const [returnDate, setReturnDate] = useState<Date | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [deliveryAddress, setDeliveryAddress] = useState("");
-  const [form, setForm] = useState({ name: "", email: "", phone: "", comment: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", comment: "", company: "" });
   // GDPR: markedsføringssamtykke skal være aktivt tilvalg — må ikke være forudkrydset
   const [newsletter, setNewsletter] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -1352,6 +1352,16 @@ export default function BookingFlow({
                 placeholder={s.formName}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              />
+              <input
+                type="text"
+                name="organization"
+                id="booking-company"
+                autoComplete="organization"
+                placeholder={s.formCompany}
+                value={form.company}
+                onChange={(e) => setForm({ ...form, company: e.target.value })}
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               />
               <input

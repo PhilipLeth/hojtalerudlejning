@@ -75,6 +75,18 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
           </svg>
           {locale === "da" ? "Ring" : "Call"} 31 13 28 52
         </a>
+        {" · "}
+        <a href="mailto:info@lejhojtaler.dk" className="inline-flex items-center gap-1.5 font-semibold text-brand-400 hover:text-brand-300 transition">
+          <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="shrink-0">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 7-10 6L2 7" />
+          </svg>
+          info@lejhojtaler.dk
+        </a>
+        {" · "}
+        <a href="/kontakt" className="font-semibold text-brand-400 hover:text-brand-300 transition">
+          {locale === "da" ? "Kontakt" : "Contact"}
+        </a>
       </p>
       <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
         <Link href={s.aboutHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
