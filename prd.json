@@ -1937,6 +1937,16 @@
         "Retur-underskrift (stand ved retur) bruger samme mekanik og kan tilføjes med type=retur på /api/handover",
         "Kvittering på mail til kunden efter underskrift"
       ]
+    },
+    "kolonner_2026_08_15": {
+      "status": "done",
+      "date": "2026-08-15",
+      "description": "Tabellen er skåret fra 8 til 5 kolonner: Kunde | Ordre & udstyr | Periode | Betaling & handling | ⭐. Udstyrssporet står i samme celle som varelinjerne (statussen er kvitteringen for netop de varer), og beløb, betalingsspor, depositum og handlingsknapper (Underskrift/Print/Slet) står samlet i betalingskolonnen. Perioden brydes over tre korte linjer (afhentning / → aflevering / antal dage) i stedet for én bred tekst."
+    },
+    "antal_pr_linje": {
+      "status": "done",
+      "date": "2026-08-15",
+      "description": "orderLines slår ens varer sammen til én linje med antal ('2× Lyskæde varm hvid'). To identiske linjer under hinanden kunne ikke skelnes fra en dublet — nu er det entydigt hvor mange stk. der skal med. I udfoldningen vises linjens beløb som antal × stykpris."
     }
   },
   "booking_improvements": {

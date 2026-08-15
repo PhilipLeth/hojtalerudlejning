@@ -138,8 +138,9 @@ function OrderSummary({ b, compact }: { b: Booking; compact?: boolean }) {
         <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
           {lines.map((l, i) => (
             <li key={i} style={{ fontSize: compact ? "12px" : "13px", padding: "1px 0", color: l.kind === "produkt" ? "#111" : "#555" }}>
-              <span style={{ color: "#bbb" }}>•</span> {l.label}
-              {typeof l.price === "number" && <span style={{ color: "#aaa" }}> · {l.price} kr</span>}
+              <span style={{ color: "#bbb" }}>•</span>{" "}
+              {l.qty > 1 && <strong>{l.qty}× </strong>}
+              {l.label}
             </li>
           ))}
         </ul>
@@ -149,6 +150,25 @@ function OrderSummary({ b, compact }: { b: Booking; compact?: boolean }) {
           ? `🚚 ${delivery.out && delivery.back ? "Vi leverer OG henter" : delivery.out ? "Vi leverer — kunden afleverer selv" : "Kunden henter — vi henter igen"}${delivery.address ? ` · ${delivery.address}` : " · ADRESSE MANGLER"}`
           : "🏠 Kunden henter og afleverer selv"}
       </div>
+    </div>
+  );
+}
+
+/**
+ * Lejeperioden i en smal kolonne. Bookingens period-tekst ("Fre 21. aug →
+ * Man 24. aug (3 dage)") fylder en halv skærm på én linje, så her brydes den
+ * i afhentning, aflevering og antal dage.
+ */
+function PeriodCell({ b }: { b: Booking }) {
+  const fmt = (d: Date) => d.toLocaleDateString("da-DK", { weekday: "short", day: "numeric", month: "short" });
+  const hasDates = !!b.pickup || !!b.returnDate;
+  const from = hasDates ? fmt(pickupDateFromBooking(b)) : (b.period || "").split("→")[0]?.trim();
+  const to = hasDates ? fmt(returnDateFromBooking(b)) : (b.period || "").split("→")[1]?.replace(/\(.*\)/, "").trim();
+  return (
+    <div style={{ fontSize: "12px", lineHeight: 1.35 }}>
+      <div style={{ fontWeight: 600 }}>{from || "—"}</div>
+      <div style={{ color: "#666" }}>→ {to || "—"}</div>
+      <div style={{ color: "#aaa", fontSize: "11px" }}>{b.days} {b.days === 1 ? "dag" : "dage"}</div>
     </div>
   );
 }
@@ -179,7 +199,11 @@ function OrderBreakdown({ b, priceOf }: { b: Booking; priceOf: (id?: string) => 
   const delivery = deliveryInfo(b);
   const deliveryPrice = priceOf(delivery?.id ?? undefined);
 
-  const priced = lines.map((l) => ({ ...l, kr: l.price ?? priceOf(l.productId) }));
+  // Prisen er pr. stk. — linjens beløb er antal × stykpris
+  const priced = lines.map((l) => {
+    const unit = l.price ?? priceOf(l.productId);
+    return { ...l, unit, kr: typeof unit === "number" ? unit * l.qty : undefined };
+  });
   const known = [...priced.map((l) => l.kr), deliveryPrice].filter((v): v is number => typeof v === "number");
   const sum = known.reduce((a, v) => a + v, 0);
   const allKnown = priced.every((l) => typeof l.kr === "number") && (!delivery || typeof deliveryPrice === "number");
@@ -196,6 +220,7 @@ function OrderBreakdown({ b, priceOf }: { b: Booking; priceOf: (id?: string) => 
       {priced.map((l, i) => (
         <div key={i} style={row}>
           <span style={{ fontWeight: l.kind === "produkt" ? 600 : 400 }}>
+            {l.qty > 1 ? `${l.qty}× ` : ""}
             {l.label}
             <span style={{ color: "#bbb", fontSize: "11px" }}>
               {" "}
@@ -204,6 +229,9 @@ function OrderBreakdown({ b, priceOf }: { b: Booking; priceOf: (id?: string) => 
           </span>
           <span style={{ whiteSpace: "nowrap", color: typeof l.kr === "number" ? "#111" : "#bbb" }}>
             {typeof l.kr === "number" ? `${l.kr} kr` : "—"}
+            {l.qty > 1 && typeof l.unit === "number" && (
+              <span style={{ color: "#aaa", fontSize: "11px" }}> ({l.qty} × {l.unit})</span>
+            )}
           </span>
         </div>
       ))}
@@ -759,7 +787,7 @@ function RowActions({ b, busy, deleteBooking, big }: {
         title="Gennemgå udstyret med kunden og få underskrift på mobilen"
         style={{ ...btn, background: b.handover ? "#d4edda" : "#111", color: b.handover ? "#155724" : "#fff", border: `1px solid ${b.handover ? "#28a745" : "#111"}`, fontWeight: 600 }}
       >
-        {b.handover ? "✍️ Underskrevet" : "✍️ Udlever"}
+        {b.handover ? "✍️ Underskrevet" : big ? "✍️ Udlever + underskrift" : "✍️ Underskrift"}
       </a>
       <a
         href="/admin/lejeseddel"
@@ -910,14 +938,11 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
       <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead style={{ background: "#fafafa" }}>
           <tr>
-            <th style={thStyle}>Navn</th>
-            <th style={thStyle}>Produkt</th>
-            <th style={thStyle}>Periode</th>
-            <th style={thStyle}>Total</th>
-            <th style={thStyle} title="Hvor udstyret er i forløbet">Udstyr</th>
-            <th style={thStyle} title="Leje og depositum">Betaling</th>
-            <th style={thStyle} title="Kunden har lagt en anmeldelse">⭐</th>
-            <th style={thStyle}>Handling</th>
+            <th style={{ ...thStyle, width: "170px" }}>Kunde</th>
+            <th style={thStyle} title="Hvad der er bestilt, og hvor udstyret er i forløbet">Ordre &amp; udstyr</th>
+            <th style={{ ...thStyle, width: "96px" }}>Periode</th>
+            <th style={{ ...thStyle, width: "230px" }} title="Beløb, betaling, depositum og handlinger">Betaling &amp; handling</th>
+            <th style={{ ...thStyle, width: "44px", textAlign: "center" }} title="Kunden har lagt en anmeldelse">⭐</th>
           </tr>
         </thead>
         <tbody>
@@ -939,16 +964,24 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                       <span style={{ color: "#0070f3" }}>{isExpanded ? "skjul ordre" : "vis ordre"}</span>
                     </div>
                   </td>
-                  <td style={{ ...tdStyle, minWidth: "220px" }}>
+                  {/* Ordren og udstyrssporet hører sammen: statussen er
+                      kvitteringen for præcis de varer der står lige over */}
+                  <td style={tdStyle}>
                     <OrderSummary b={b} compact />
+                    <div style={{ marginTop: "8px" }} onClick={(e) => e.stopPropagation()}>
+                      <EquipmentTrack b={b} issues={issues.filter((i) => i.track === "udstyr")} updateStatus={updateStatus} setFields={setFields} busy={busy} />
+                    </div>
                   </td>
-                  <td style={{ ...tdStyle, whiteSpace: "nowrap" }}>{b.period}</td>
-                  <td style={{ ...tdStyle, fontWeight: 700 }}>{b.total} kr</td>
-                  <td style={tdStyle} onClick={(e) => e.stopPropagation()}>
-                    <EquipmentTrack b={b} issues={issues.filter((i) => i.track === "udstyr")} updateStatus={updateStatus} setFields={setFields} busy={busy} />
+                  <td style={tdStyle}>
+                    <PeriodCell b={b} />
                   </td>
+                  {/* Beløb, betalingsspor og handlinger i én kolonne */}
                   <td style={tdStyle} onClick={(e) => e.stopPropagation()}>
+                    <div style={{ fontWeight: 800, fontSize: "15px", marginBottom: "4px" }}>{b.total} kr</div>
                     <PaymentTrack b={b} issues={issues.filter((i) => i.track === "betaling")} setFields={setFields} />
+                    <div style={{ marginTop: "8px" }}>
+                      <RowActions b={b} busy={busy} deleteBooking={deleteBooking} />
+                    </div>
                   </td>
                   <td style={{ ...tdStyle, textAlign: "center" }} onClick={(e) => e.stopPropagation()}>
                     <input
@@ -962,13 +995,10 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                       <div style={{ fontSize: "9px", color: "#aaa", marginTop: "2px" }}>mail sendt</div>
                     )}
                   </td>
-                  <td style={tdStyle} onClick={(e) => e.stopPropagation()}>
-                    <RowActions b={b} busy={busy} deleteBooking={deleteBooking} />
-                  </td>
                 </tr>
                 {isExpanded && (
                   <tr>
-                    <td colSpan={8} style={{ padding: "0 12px 16px", background: "#fafffe", borderBottom: "1px solid #eee" }}>
+                    <td colSpan={5} style={{ padding: "0 12px 16px", background: "#fafffe", borderBottom: "1px solid #eee" }}>
                       <BookingDetails b={b} today={today} />
                     </td>
                   </tr>

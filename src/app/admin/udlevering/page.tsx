@@ -229,7 +229,9 @@ export default function UdleveringPage() {
           signature,
           signerName,
           note,
-          items: lines.filter((l, i) => checked[`${i}-${l.label}`]).map((l) => l.label),
+          items: lines
+        .filter((l, i) => checked[`${i}-${l.label}`])
+        .map((l) => (l.qty > 1 ? `${l.qty}× ${l.label}` : l.label)),
         }),
       });
       const data = await res.json();
@@ -345,7 +347,10 @@ export default function UdleveringPage() {
                       onChange={(e) => setChecked((prev) => ({ ...prev, [key]: e.target.checked }))}
                       style={{ width: "22px", height: "22px" }}
                     />
-                    <span style={{ fontSize: "15px", fontWeight: l.kind === "produkt" ? 600 : 400 }}>{l.label}</span>
+                    <span style={{ fontSize: "15px", fontWeight: l.kind === "produkt" ? 600 : 400 }}>
+                      {l.qty > 1 && <strong>{l.qty}× </strong>}
+                      {l.label}
+                    </span>
                   </label>
                 );
               })}

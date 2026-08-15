@@ -60,6 +60,36 @@ describe("orderLines", () => {
   });
 });
 
+describe("Samme vare flere gange", () => {
+  it("bliver til én linje med antal — ikke to linjer man ikke kan skelne", () => {
+    // Kunden valgte en lyskæde som hovedprodukt og lagde én mere i kurven
+    const lines = orderLines({
+      speaker: "Lyskæde varm hvid",
+      speakerId: "lyskaeder",
+      speakerSize: "—",
+      addons: [],
+      cartItems: [
+        { name: "Lyskæde varm hvid", price: 195, productId: "lyskaeder" },
+        { name: "Soundboks 4", price: 595, productId: "soundboks" },
+      ],
+    });
+    expect(lines).toHaveLength(2);
+    expect(lines[0]).toMatchObject({ label: "Lyskæde varm hvid", qty: 2, price: 195 });
+    expect(lines[1]).toMatchObject({ label: "Soundboks 4", qty: 1 });
+  });
+
+  it("holder forskellige varer adskilt", () => {
+    const lines = orderLines({
+      speaker: "Soundboks 4",
+      speakerId: "soundboks",
+      addons: ["Lys-pakke"],
+      addonIds: ["lys"],
+      cartItems: [{ name: "Lyskæde varm hvid", price: 195, productId: "lyskaeder" }],
+    });
+    expect(lines.map((l) => l.qty)).toEqual([1, 1, 1]);
+  });
+});
+
 describe("deliveryInfo", () => {
   it("levering er én vej ud", () => {
     const d = deliveryInfo({ addons: ["Levering + opsætning"], addonIds: ["levering_ud"], deliveryAddress: "Nørrebrogade 1" });

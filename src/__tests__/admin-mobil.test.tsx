@@ -101,7 +101,7 @@ describe("Ordreoverblikket på mobil", () => {
   it("har en knap til udlevering med underskrift", async () => {
     render(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
-    const link = screen.getByText("✍️ Udlever").closest("a")!;
+    const link = screen.getByText("✍️ Udlever + underskrift").closest("a")!;
     expect(link.getAttribute("href")).toContain(`/admin/udlevering?id=${booking.id}`);
   });
 });
@@ -151,6 +151,46 @@ describe("Ordren foldes ud når man klikker på den", () => {
     fireEvent.click(screen.getByText("Julie Blegvad"));
     await waitFor(() => expect(screen.getByText("Ordrelinjer")).toBeInTheDocument());
     expect(screen.getByText("Total på ordren")).toBeInTheDocument();
+  });
+});
+
+describe("Tabellen på desktop", () => {
+  beforeEach(() => {
+    window.matchMedia = ((q: string) => ({
+      matches: false, media: q, addEventListener: () => {}, removeEventListener: () => {},
+      addListener: () => {}, removeListener: () => {}, onchange: null, dispatchEvent: () => false,
+    })) as any;
+    (global.fetch as any).mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ bookings: [booking] }),
+    });
+  });
+
+  it("har fem kolonner — udstyr hører under ordren, handlinger under betaling", async () => {
+    const { container } = render(<AdminPage />);
+    await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
+
+    const headers = [...container.querySelectorAll("th")].map((th) => th.textContent);
+    expect(headers).toEqual(["Kunde", "Ordre & udstyr", "Periode", "Betaling & handling", "⭐"]);
+
+    // Udstyrssporet står i samme celle som varelinjerne
+    const orderCell = screen.getByText(/Lyskæde varm hvid/).closest("td")!;
+    expect(orderCell.querySelector("select")).toBeTruthy();
+
+    // Beløb, betalingsvalg og handlingsknapper i én celle
+    const payCell = screen.getByText("1480 kr").closest("td")!;
+    expect(payCell.querySelector("select")).toBeTruthy();
+    expect(payCell.textContent).toContain("Print");
+    expect(payCell.textContent).toContain("Underskrift");
+  });
+
+  it("skriver perioden kompakt over tre linjer", async () => {
+    const { container } = render(<AdminPage />);
+    await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
+    // Ikke længere den brede "Fre 21. aug → Man 24. aug (3 dage)" på én linje
+    expect(screen.queryByText(booking.period)).not.toBeInTheDocument();
+    expect(screen.getByText("3 dage")).toBeInTheDocument();
+    expect(container.textContent).toMatch(/→ \w+\.? \d+\./);
   });
 });
 

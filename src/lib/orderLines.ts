@@ -43,6 +43,10 @@ function isEffectsOnly(b: OrderBooking): boolean {
 /**
  * Ordrens linjer i den rækkefølge de blev valgt: hovedprodukt, kurv, tilvalg.
  * Kørsels-tilvalg er ikke med — se deliveryInfo().
+ *
+ * Samme vare to gange bliver til én linje med antal. En kunde kan sagtens leje
+ * to lyskæder (produktet vælges som hovedprodukt og lægges i kurven igen), og
+ * to ens linjer under hinanden kunne ikke skelnes fra en dublet.
  */
 export function orderLines(b: OrderBooking): OrderLine[] {
   const lines: OrderLine[] = [];
@@ -66,7 +70,24 @@ export function orderLines(b: OrderBooking): OrderLine[] {
     lines.push({ label, qty: 1, productId: id, kind: "tilvalg" });
   });
 
-  return lines;
+  return mergeDuplicates(lines);
+}
+
+/** Slår ens varer sammen til én linje med antal — prisen er pr. stk. */
+function mergeDuplicates(lines: OrderLine[]): OrderLine[] {
+  const merged: OrderLine[] = [];
+  for (const line of lines) {
+    const key = line.productId || line.label;
+    const existing = merged.find((m) => (m.productId || m.label) === key);
+    if (existing) {
+      existing.qty += line.qty;
+      // Kurv-varer bærer selv prisen; hovedproduktet gør ikke — behold den vi har
+      if (existing.price === undefined) existing.price = line.price;
+    } else {
+      merged.push({ ...line });
+    }
+  }
+  return merged;
 }
 
 export interface DeliveryInfo {
