@@ -407,21 +407,6 @@
       "status": "live"
     },
     {
-      "id": "levering",
-      "name_da": "Levering i København (uden opsætning)",
-      "price_dkk": 295,
-      "image": null,
-      "status": "removed",
-      "note": "Findes ikke — kun levering+opsætning 495"
-    },
-    {
-      "id": "levering_opsaetning",
-      "name_da": "Levering + opsætning i København",
-      "price_dkk": 495,
-      "image": null,
-      "status": "live"
-    },
-    {
       "id": "lyseffekt",
       "name_da": "Enkelt lyseffekt",
       "description_da": "1 LED-festlys på fod — bruges i Lille festpakke (500 kr) og som tilvalg.",
@@ -439,6 +424,38 @@
       "page": "/subwoofer",
       "status": "live",
       "photo": "Rigtigt Behringer-produktfoto lagt på den gule studiebaggrund (5. aug 2026) — erstatter placeholder-illustrationen."
+    },
+    {
+      "id": "levering_ud",
+      "name_da": "Levering + opsætning",
+      "description_da": "Vi kører ud og sætter op klar til brug — kunden afleverer selv bagefter. Én vej.",
+      "price_dkk": 495,
+      "image": null,
+      "status": "live"
+    },
+    {
+      "id": "afhentning_retur",
+      "name_da": "Afhentning efter festen",
+      "description_da": "Kunden henter selv — vi henter udstyret igen bagefter. Én vej.",
+      "price_dkk": 495,
+      "image": null,
+      "status": "live"
+    },
+    {
+      "id": "levering_begge",
+      "name_da": "Levering + afhentning (begge veje)",
+      "description_da": "Vi leverer, sætter op og henter igen. Begge veje — 195 kr. billigere end to enkeltture.",
+      "price_dkk": 795,
+      "image": null,
+      "status": "live"
+    },
+    {
+      "id": "levering_opsaetning",
+      "name_da": "Levering + opsætning i København",
+      "price_dkk": 495,
+      "image": null,
+      "status": "removed",
+      "note": "Erstattet 15. aug 2026 af levering_ud / afhentning_retur / levering_begge. Gamle bookinger med dette id læses stadig som 'begge veje'."
     }
   ],
   "pricing_rules": {
@@ -447,7 +464,19 @@
     "max_rental_days": 5,
     "summer_sale": null,
     "note": "Juli-rabat / summer sale er fjernet — ingen sæsonrabat.",
-    "bundles_note": "Festpakker bruger runde mentale priser (500/1.000) og bryder bevidst 95-reglen."
+    "bundles_note": "Festpakker bruger runde mentale priser (500/1.000) og bryder bevidst 95-reglen.",
+    "levering": {
+      "model": "Levering (ud) og afhentning (retur) er to selvstændige ture og kan tilvælges hver for sig.",
+      "en_vej_dkk": 495,
+      "begge_veje_dkk": 795,
+      "ids": [
+        "levering_ud",
+        "afhentning_retur",
+        "levering_begge"
+      ],
+      "note": "Begge veje er ét selvstændigt produkt-id med sin egen pris — ikke to linjer der lægges sammen. Det holder Stripe-prisopslaget (functions/api/_lib/pricing.ts) simpelt: én pris pr. id, ingen kombinationsregler server-side.",
+      "ui": "Eget felt i bookingens tilvalgs-trin med fire valg (henter selv / levering / afhentning / begge veje), pris på hver linje. Adressen er påkrævet når der er valgt kørsel — ellers kan man ikke gå videre."
+    }
   },
   "opening_hours": {
     "friday": "14:00-18:00 (afhentning)",
@@ -1889,6 +1918,25 @@
     "ordrestatus_2026_08_05": {
       "status": "done",
       "description": "Ordreoverblikket viser nu tre ting mere: (1) Betalingsstatus — 'Betalt online' sættes automatisk af Stripe-webhooken, 'Online — afventer' hvis kunden valgte online men ikke gennemførte, 'Betales v. afhentning' ellers; admin kan sætte flueben 'Modtaget' når der betales kontant/MobilePay. (2) Statuslabels omdøbt til Udleveret og Returneret (interne ids afhentet/afleveret uændret, så gamle bookinger virker). (3) ⭐-kolonne hvor admin kan markere at kunden har lagt en anmeldelse; viser 'mail sendt' indtil da. Flag gemmes via ny action=set_flag på /api/bookings-update."
+    },
+    "mobil_admin_2026_08_15": {
+      "status": "done",
+      "date": "2026-08-15",
+      "description": "/admin skifter til kortvisning under 900 px (useIsMobile → matchMedia). Hvert kort viser: navn + sagsstatus, periode, klikbart telefonnummer, hele ordren, kørsel, et betalingsbanner (BETALT/IKKE BETALT + metode + depositum + beløb i stor skrift), udstyrs- og betalingsspor, og handlingsknapper. Nav og filter-chips scroller vandret i stedet for at brække layoutet; header er sticky. Desktop-tabellen er uændret bortset fra at Produkt-kolonnen nu viser ordrelinjerne."
+    },
+    "ordrelinjer_2026_08_15": {
+      "status": "done",
+      "date": "2026-08-15",
+      "description": "src/lib/orderLines.ts er nu eneste kilde til 'hvad er bestilt': hovedprodukt + kurv-varer + tilvalg, med kørsel trukket ud for sig. Bruges af admin (tabel og kort), lejesedlen og udleveringssiden. Fikser at lejesedlen skrev 'Højttaler (Lyskæde varm hvid — —)' og helt udelod kurv-varer. Klik på en booking (række eller kort) folder ordren ud med én linje pr. vare, pris pr. linje slået op i det live katalog via produkt-id, kørslen som egen linje med adresse, og ordrens total — med en note hvis linjerne ikke summer til totalen (rabatkode eller manuel justering)."
+    },
+    "udleveringskvittering": {
+      "status": "done",
+      "date": "2026-08-15",
+      "description": "Kunden skriver under på mobilen ved udlevering. /admin/udlevering?id=<booking> viser ordren som afkrydsningsliste, betalingsstatus, felt til bemærkninger om stand og et signature-canvas (pointer-events, touch-action none, devicePixelRatio-skaleret). Gemmes via POST /api/handover: underskriften (PNG data-URL, maks 400 kB) ligger i KV under handover_sig_<bookingId>, mens bookingen kun får metadata (signedAt, signerName, items, note) — ellers ville /api/bookings trække alle underskrifter med. Statussen sættes samtidig til 'afhentet' (Udleveret). Underskriften trykkes med på lejesedlen, og admin viser '✍️ Underskrevet' på bookingen.",
+      "aabent": [
+        "Retur-underskrift (stand ved retur) bruger samme mekanik og kan tilføjes med type=retur på /api/handover",
+        "Kvittering på mail til kunden efter underskrift"
+      ]
     }
   },
   "booking_improvements": {
@@ -2123,7 +2171,7 @@
     }
   },
   "task_overblik": {
-    "opdateret": "2026-08-12",
+    "opdateret": "2026-08-15",
     "antal_opgaver_i_alt": 79,
     "bygget_og_deployet": 58,
     "afvist": [

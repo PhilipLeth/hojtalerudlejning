@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import { LocationKicker } from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
   title: "Lej Storskærm København | Fra 595 kr | Lejhøjtaler.dk",
@@ -64,7 +65,7 @@ export default function SkaermPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Betal ved afhentning · Ring 31 13 28 52
+            <LocationKicker extra="Betal ved afhentning" />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej storskærm i København

@@ -63,8 +63,10 @@ function BundleCard({ product: p }: { product: RentalProduct }) {
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-brand-500/25 bg-gradient-to-br from-brand-500/[0.08] via-white/[0.03] to-transparent transition hover:border-brand-500/50">
       {/* Hele billedfeltet er klikbart → produktside (ellers direkte til booking).
-          object-contain så produktet ikke beskæres, og kun en let gradient
-          nederst så teksten kan læses uden at mudre billedet til. */}
+          Billeder med `cardImageCrop` er kvadratiske med luft over/under motivet
+          og beskæres derfor til hele kortets bredde; resten vises ubeskåret med
+          object-contain. Kun en let gradient nederst så teksten kan læses uden
+          at mudre billedet til. */}
       <Link
         href={p.page ?? `/?product=${p.id}#book`}
         aria-label={`Se ${p.name_da}`}
@@ -73,7 +75,8 @@ function BundleCard({ product: p }: { product: RentalProduct }) {
         <img
           src={p.image}
           alt={p.name_da}
-          className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
+          style={p.cardImageCrop ? { objectPosition: p.cardImageCrop } : undefined}
+          className={`h-full w-full transition duration-500 group-hover:scale-105 ${p.cardImageCrop ? "object-cover" : "object-contain"}`}
         />
         <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#0d0c12] via-[#0d0c12]/70 to-transparent" />
         {savings > 0 && (

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { trackPurchase } from "@/lib/analytics";
+import PhoneLink from "@/components/PhoneLink";
 
 type State =
   | { kind: "loading" }
@@ -78,7 +79,7 @@ export default function PaymentResult() {
         <h1 className="text-3xl font-bold">Betalingen blev ikke gennemført</h1>
         <p className="mt-3 text-white/60">
           Din booking er stadig registreret — du kan betale ved afhentning, eller ringe til os på{" "}
-          <a href="tel:+4531132852" className="text-brand-400">31 13 28 52</a>.
+          <PhoneLink className="text-brand-400" />.
         </p>
         <Link href="/" className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-3 font-semibold text-black transition hover:bg-brand-400">
           Til forsiden
@@ -92,7 +93,7 @@ export default function PaymentResult() {
       <h1 className="text-3xl font-bold">Kunne ikke bekræfte betalingen</h1>
       <p className="mt-3 text-white/60">
         Tjek din e-mail for en kvittering, eller ring til os på{" "}
-        <a href="tel:+4531132852" className="text-brand-400">31 13 28 52</a> — så finder vi ud af det.
+        <PhoneLink className="text-brand-400" /> — så finder vi ud af det.
       </p>
     </div>
   );

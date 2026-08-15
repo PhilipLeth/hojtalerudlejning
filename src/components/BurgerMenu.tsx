@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { NAV_CATEGORIES } from "@/lib/products";
+import PhoneLink from "@/components/PhoneLink";
 
 export default function BurgerMenu() {
   const [open, setOpen] = useState(false);
@@ -135,12 +136,10 @@ export default function BurgerMenu() {
           </a>
 
           {/* Phone */}
-          <a
-            href="tel:+4531132852"
+          <PhoneLink
             className="mt-4 block text-center text-sm text-white/40 transition hover:text-brand-400"
-          >
-            Ring 31 13 28 52
-          </a>
+            prefix="Ring"
+          />
         </div>
       </nav>
     </>

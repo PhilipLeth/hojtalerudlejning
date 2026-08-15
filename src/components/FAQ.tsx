@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 
 const faqs = [
   {
@@ -31,7 +32,7 @@ const faqs = [
   {
     question: "Kan jeg ringe og høre mere?",
     answer:
-      "Selvfølgelig! Ring til os på 31 13 28 52 — vi svarer gerne på spørgsmål om udstyr, levering eller din booking. Du kan betale sikkert online med kort, eller vælge at betale ved afhentning.",
+      "Selvfølgelig! Ring til os på PHONE — vi svarer gerne på spørgsmål om udstyr, levering eller din booking. Du kan betale sikkert online med kort, eller vælge at betale ved afhentning.",
   },
   {
     question: "Hvad hvis noget går i stykker?",
@@ -42,6 +43,7 @@ const faqs = [
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { display } = useSiteSettings();
 
   const toggle = (i: number) => {
     setOpenIndex(openIndex === i ? null : i);
@@ -87,7 +89,7 @@ export default function FAQ() {
                 }`}
               >
                 <p className="px-6 text-sm leading-relaxed text-white/70">
-                  {faq.answer}
+                  {faq.answer.replaceAll("PHONE", display)}
                 </p>
               </div>
             </div>
@@ -107,7 +109,7 @@ export default function FAQ() {
               name: faq.question,
               acceptedAnswer: {
                 "@type": "Answer",
-                text: faq.answer,
+                text: faq.answer.replaceAll("PHONE", display),
               },
             })),
           }),

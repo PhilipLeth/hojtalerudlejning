@@ -6,6 +6,9 @@ import {
   addons as defaultAddons,
   rentalProducts as defaultRentals,
   cheapestSpeakerPrice,
+  DELIVERY_ADDON_IDS,
+  LEGACY_DELIVERY_IDS,
+  type DeliveryAddonId,
   type Speaker,
   type Addon,
   type RentalProduct,
@@ -51,17 +54,19 @@ function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
 /** Eksporteret til test — se mergeAddons */
 export const mergeAddonsForTest = (fromKv: Addon[]): Addon[] => mergeAddons(fromKv);
 
-/** Sync levering+opsætning pris, strip den gamle 'levering uden opsætning',
- *  og tilføj tilvalg der er kommet til i koden efter kataloget blev gemt. */
+/** Strip de gamle kørsels-tilvalg, sync priser/tekster på de nuværende,
+ *  og tilføj tilvalg der er kommet til i koden efter kataloget blev gemt.
+ *  Kørslen (495 én vej / 795 begge veje) styres fra koden, så et gammelt
+ *  KV-katalog aldrig kan sende en booking af sted med forkert leveringspris. */
 function mergeAddons(fromKv: Addon[]): Addon[] {
   const merged = fromKv
-    .filter((a) => a.id !== "levering") // findes ikke længere — kun levering+opsætning
+    .filter((a) => !LEGACY_DELIVERY_IDS.includes(a.id)) // erstattet af levering_ud / afhentning_retur / levering_begge
     .map((a) => {
       const d = defaultAddons.find((x) => x.id === a.id);
-      let next = a;
-      if (a.id === "levering_opsaetning" && d) {
-        next = { ...next, price: d.price, da: d.da, en: d.en };
+      if (DELIVERY_ADDON_IDS.includes(a.id as DeliveryAddonId) && d) {
+        return { ...a, price: d.price, image: null, da: d.da, en: d.en };
       }
+      let next = a;
       if (!next.contents?.length && d?.contents?.length) {
         next = { ...next, contents: d.contents };
       }

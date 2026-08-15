@@ -71,14 +71,18 @@ describe("Products data", () => {
 });
 
 describe("Addons data", () => {
-  it("has lys, rog, stativer, taske, levering_opsaetning — ikke levering uden opsætning", () => {
+  it("has lys, rog, stativer, taske og de tre kørsels-tilvalg", () => {
     const ids = addons.map((a) => a.id);
     expect(ids).toContain("lys");
     expect(ids).toContain("rog");
     expect(ids).toContain("stativer");
     expect(ids).toContain("taske");
-    expect(ids).toContain("levering_opsaetning");
+    expect(ids).toContain("levering_ud");
+    expect(ids).toContain("afhentning_retur");
+    expect(ids).toContain("levering_begge");
+    // De gamle kørsels-ids findes ikke længere i kataloget
     expect(ids).not.toContain("levering");
+    expect(ids).not.toContain("levering_opsaetning");
   });
 
   it("lys is 495 kr", () => {
@@ -89,9 +93,22 @@ describe("Addons data", () => {
     expect(addons.find((a) => a.id === "rog")!.price).toBe(245);
   });
 
-  it("levering_opsaetning is 495 kr (ingen levering-uden-opsætning)", () => {
-    expect(addons.find((a) => a.id === "levering_opsaetning")!.price).toBe(495);
-    expect(addons.find((a) => a.id === "levering")).toBeUndefined();
+  it("kørsel: én vej 495 kr, begge veje 795 kr", () => {
+    expect(addons.find((a) => a.id === "levering_ud")!.price).toBe(495);
+    expect(addons.find((a) => a.id === "afhentning_retur")!.price).toBe(495);
+    expect(addons.find((a) => a.id === "levering_begge")!.price).toBe(795);
+    // Begge veje skal være billigere end to enkeltture — ellers er der ingen grund
+    // til at vælge den
+    expect(addons.find((a) => a.id === "levering_begge")!.price).toBeLessThan(495 * 2);
+  });
+
+  it("levering og afhentning er to selvstændige veje", async () => {
+    const { deliveryDirections } = await import("@/lib/products");
+    expect(deliveryDirections("levering_ud")).toEqual({ out: true, back: false });
+    expect(deliveryDirections("afhentning_retur")).toEqual({ out: false, back: true });
+    expect(deliveryDirections("levering_begge")).toEqual({ out: true, back: true });
+    // Gamle bookinger kørte altid begge veje
+    expect(deliveryDirections("levering_opsaetning")).toEqual({ out: true, back: true });
   });
 
   it("festpakker ender på 95: 495 og 995 kr (uden opsætning)", () => {
@@ -105,9 +122,11 @@ describe("Addons data", () => {
     expect(stor.bundle?.discount).toBe(95);
     // Levering/opsætning er tilvalg — ikke en del af pakken
     for (const p of [lille, stor]) {
-      expect(p.bundle!.parts.map((x) => x.productId)).not.toContain("levering_opsaetning");
+      expect(p.bundle!.parts.map((x) => x.productId)).not.toContain("levering_begge");
       expect(p.allowedAddons).not.toContain("levering");
-      expect(p.allowedAddons).toContain("levering_opsaetning");
+      expect(p.allowedAddons).toContain("levering_ud");
+      expect(p.allowedAddons).toContain("afhentning_retur");
+      expect(p.allowedAddons).toContain("levering_begge");
     }
   });
 
@@ -218,9 +237,9 @@ describe("Addons data", () => {
     }
   });
 
-  it("all addons except levering_opsaetning have an image", () => {
+  it("all addons except kørsel have an image", () => {
     for (const a of addons) {
-      if (a.id === "levering_opsaetning") {
+      if (["levering_ud", "afhentning_retur", "levering_begge"].includes(a.id)) {
         expect(a.image).toBeNull();
       } else {
         expect(a.image).toMatch(/^\/images\/product-.+\.(png|svg)$/);

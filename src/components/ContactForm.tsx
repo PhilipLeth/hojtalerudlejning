@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, FormEvent } from "react";
+import PhoneLink from "@/components/PhoneLink";
 
 /** Kendte emner fra ?emne= — styrer overskrift på mailen og hjælpetekst i formularen */
 const TOPICS: Record<string, { label: string; hint: string }> = {
@@ -57,7 +58,7 @@ export default function ContactForm() {
         <h2 className="mt-2 text-xl font-bold">Tak for din besked!</h2>
         <p className="mt-2 text-white/60">
           Vi svarer hurtigst muligt — som regel samme dag. Haster det, så ring{" "}
-          <a href="tel:+4531132852" className="text-brand-400 hover:underline">31 13 28 52</a>.
+          <PhoneLink className="text-brand-400 hover:underline" />.
         </p>
       </div>
     );

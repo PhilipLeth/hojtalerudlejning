@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { type Locale } from "@/lib/i18n";
 import BookingFlow from "@/components/BookingFlow";
+import PhoneLink from "@/components/PhoneLink";
 
 /** True when URL asks for booking drawer (#book, ?product=, or /book path) */
 function shouldOpenFromUrl(): boolean {
@@ -160,15 +161,11 @@ export default function BookingDrawer({ locale: localeProp }: { locale?: Locale 
               </span>
             </p>
             <div className="flex items-center gap-3">
-              <a
-                href="tel:+4531132852"
-                className="hidden items-center gap-1.5 text-sm font-semibold text-brand-400 transition hover:text-brand-300 sm:flex"
-              >
+              <PhoneLink className="hidden items-center gap-1.5 text-sm font-semibold text-brand-400 transition hover:text-brand-300 sm:flex">
                 <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="shrink-0">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
-                31 13 28 52
-              </a>
+              </PhoneLink>
               <button
                 onClick={close}
                 aria-label={locale === "en" ? "Close" : "Luk"}

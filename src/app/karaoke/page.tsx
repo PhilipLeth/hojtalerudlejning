@@ -4,6 +4,7 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import BundleGrid from "@/components/BundleGrid";
+import { LocationKicker } from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
   title: "Lej Karaoke København | Maskine, storskærm & lyd | Lejhøjtaler.dk",
@@ -49,7 +50,7 @@ export default function KaraokePage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Sikker onlinebetaling · Ring 31 13 28 52
+            <LocationKicker extra="Sikker onlinebetaling" />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Lej karaoke til festen

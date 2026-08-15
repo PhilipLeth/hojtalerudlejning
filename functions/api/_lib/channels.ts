@@ -178,8 +178,9 @@ export function buildFeedItems(
     if (a.hidden) continue;
     const id = String(a.id || "");
     if (!id || rentalIds.has(id)) continue;
-    // Only push merch-like addons that make sense as listings (skip levering)
-    if (id === "levering" || id === "levering_opsaetning") continue;
+    // Only push merch-like addons that make sense as listings — kørsel
+    // (levering/afhentning) er en ydelse, ikke noget man kan leje
+    if (/^(levering|afhentning_retur)/.test(id)) continue;
     const da = (a.da || {}) as Record<string, string>;
     const qty = inv[id];
     items.push({
@@ -341,8 +342,8 @@ const DEFAULT_CATALOG: CatalogRaw = {
     { id: "festival", price: 695, product: "/images/product-festival.png", da: { name: "Stor højtalerpakke", desc: "2× 12\" EV — klar til større events." } },
   ],
   rentalProducts: [
-    { id: "pakke_fest_lille", category: "lyd", price: 500, image: "/images/product-pakke-fest-lille.png", name_da: "Lille festpakke", desc_da: "Lille højtalerpakke + lys-pakke — spar 100 kr." },
-    { id: "pakke_fest_stor", category: "lyd", price: 1000, image: "/images/product-pakke-fest-stor.png", name_da: "Stor festpakke", desc_da: "Stor højtalerpakke + lys-pakke til 100 pers. — spar 100 kr." },
+    { id: "pakke_fest_lille", category: "lyd", price: 495, image: "/images/product-pakke-fest-lille.png", name_da: "Lille festpakke", desc_da: "Lille højtalerpakke + enkelt lyseffekt — spar 95 kr." },
+    { id: "pakke_fest_stor", category: "lyd", price: 895, image: "/images/product-pakke-fest-stor.png", name_da: "Stor festpakke", desc_da: "Stor højtalerpakke + lys-pakke til 100 pers. — spar 95 kr." },
     { id: "discokugle", category: "lys", price: 245, image: "/images/product-discokugle.png", name_da: "Discokugle", desc_da: "Roterende discokugle med LED." },
     { id: "lyskaeder", category: "lys", price: 195, image: "/images/product-lyskaeder.png", name_da: "Lyskæde varm hvid", desc_da: "10m lyskæde med varmt hvidt lys." },
     { id: "lyskaeder_farvet", category: "lys", price: 195, image: "/images/product-lyskaeder-farvet.png", name_da: "Lyskæde farvet", desc_da: "10m lyskæde med farvede pærer." },
@@ -368,7 +369,7 @@ const DEFAULT_CATALOG: CatalogRaw = {
     { id: "low_fog", category: "roeg", price: 295, hidden: true, image: "/images/product-lowfog.png", name_da: "Low fog-maskine", desc_da: "Røggulv med is." },
   ],
   addons: [
-    { id: "lyseffekt", price: 195, image: "/images/product-lys.png", da: { label: "Enkelt lyseffekt", desc: "1 LED-festlys — plug and play." } },
+    { id: "lyseffekt", price: 195, image: "/images/product-lyseffekt.png", da: { label: "Enkelt lyseffekt", desc: "1 LED-par-lys med farveeffekter — uden stativ, plug and play." } },
     { id: "lys", price: 495, image: "/images/product-lys.png", da: { label: "Lys-pakke", desc: "2 farvede lamper + centereffekt." } },
     { id: "rog", price: 245, image: "/images/product-rog.png", da: { label: "Røgmaskine", desc: "Kompakt røgmaskine inkl. væske." } },
     { id: "subwoofer", price: 295, image: "/images/product-subwoofer-v2.png", da: { label: "Subwoofer 12\"", desc: "Behringer 12\" aktiv sub — dyb bas til festen." } },

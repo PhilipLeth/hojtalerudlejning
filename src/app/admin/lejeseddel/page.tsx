@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { orderLines, deliveryInfo, type OrderBooking } from "@/lib/orderLines";
 
-interface Booking {
+interface Booking extends OrderBooking {
   id: string;
   speaker: string;
   speakerSize: string;
@@ -16,6 +17,10 @@ interface Booking {
   phone: string;
   comment: string;
   status: string;
+  /** Depositum registreret i ordreoverblikket — 0 betyder intet depositum */
+  depositAmount?: number;
+  /** Kundens underskrift ved udlevering (metadata — billedet hentes for sig) */
+  handover?: { signedAt: string; signerName?: string; note?: string; items?: string[] };
   createdAt: string;
 }
 
@@ -32,6 +37,7 @@ export default function LejeseddelPage() {
   const [payMethod, setPayMethod] = useState("MobilePay");
   const [pickupPlace, setPickupPlace] = useState("Halvtolv 9, 1057 København K");
   const [notes, setNotes] = useState("");
+  const [signatureImg, setSignatureImg] = useState<string | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("admin_secret");
@@ -76,6 +82,25 @@ export default function LejeseddelPage() {
     }
   }, []);
 
+  // Er der registreret et depositum på bookingen, er det dét der skal stå på
+  // sedlen — ellers beholdes standardbeløbet
+  useEffect(() => {
+    if (selected?.depositAmount !== undefined) setDeposit(String(selected.depositAmount));
+  }, [selected]);
+
+  // Underskriften fra udleveringen ligger for sig i KV — hentes kun for den
+  // booking der er valgt, så sedlen kan trykkes med kundens kvittering på
+  useEffect(() => {
+    setSignatureImg(null);
+    if (!selected || !secret) return;
+    let cancelled = false;
+    fetch(`/api/handover?secret=${encodeURIComponent(secret)}&id=${encodeURIComponent(selected.id)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (!cancelled && d?.signature) setSignatureImg(d.signature); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [selected, secret]);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputSecret.trim()) {
@@ -85,21 +110,20 @@ export default function LejeseddelPage() {
     }
   };
 
-  // Build equipment list from booking
+  /**
+   * Udstyrslisten er ordrens egne linjer — hovedprodukt, kurv-varer og tilvalg.
+   * Tidligere blev alt kaldt "Højttaler (...)", så en ordre på en lyskæde stod
+   * som "Højttaler (Lyskæde varm hvid — —)" og kurv-varer manglede helt.
+   */
   function getEquipmentRows(b: Booking) {
-    const rows: { item: string; qty: string }[] = [];
-    if (b.speaker && b.speaker !== "Kun effekter") {
-      rows.push({ item: `Højttaler (${b.speaker}${b.speakerSize ? ` — ${b.speakerSize}` : ""})`, qty: "1" });
-    }
-    if (b.addons) {
-      for (const a of b.addons) {
-        rows.push({ item: a, qty: "1" });
-      }
-    }
+    const rows: { item: string; qty: string }[] = orderLines(b).map((l) => ({
+      item: l.label,
+      qty: String(l.qty),
+    }));
     rows.push({ item: "Strømkabel", qty: "1" });
     rows.push({ item: "AUX-kabel", qty: "1" });
-    // Pad to at least 6 rows
-    while (rows.length < 6) {
+    // Plads til håndskrevne tilføjelser
+    while (rows.length < 8) {
       rows.push({ item: "", qty: "" });
     }
     return rows;
@@ -125,7 +149,7 @@ export default function LejeseddelPage() {
   if (!selected) {
     return (
       <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
-        <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
           <h1 style={{ margin: 0, fontSize: "20px" }}>Lejeseddel</h1>
           <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
             <a href="/admin" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
@@ -133,6 +157,9 @@ export default function LejeseddelPage() {
             </a>
             <a href="/admin/lager" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
               Lager
+            </a>
+            <a href="/admin/udlevering" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
+              Udlevering
             </a>
             <a href="/admin/nyhedsbrev" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
               Nyhedsbrev
@@ -184,11 +211,11 @@ export default function LejeseddelPage() {
       `}</style>
 
       {/* Controls bar (hidden on print) */}
-      <div className="no-print" style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "12px 24px", display: "flex", gap: "12px", alignItems: "center", fontFamily: "system-ui, sans-serif" }}>
+      <div className="no-print" style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "12px 16px", display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", fontFamily: "system-ui, sans-serif" }}>
         <button onClick={() => setSelected(null)} style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", cursor: "pointer", color: "#111" }}>
           &larr; Vælg anden booking
         </button>
-        <div style={{ flex: 1 }} />
+        <div style={{ flex: 1, minWidth: "8px" }} />
         <label style={{ fontSize: "13px", color: "#666" }}>
           Depositum:
           <input value={deposit} onChange={(e) => setDeposit(e.target.value)} style={{ marginLeft: "6px", width: "80px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "4px", fontSize: "13px", color: "#111" }} />
@@ -199,7 +226,7 @@ export default function LejeseddelPage() {
         </label>
         <label style={{ fontSize: "13px", color: "#666" }}>
           Afhentning:
-          <input value={pickupPlace} onChange={(e) => setPickupPlace(e.target.value)} style={{ marginLeft: "6px", width: "220px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "4px", fontSize: "13px", color: "#111" }} />
+          <input value={pickupPlace} onChange={(e) => setPickupPlace(e.target.value)} style={{ marginLeft: "6px", width: "100%", maxWidth: "220px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "4px", fontSize: "13px", color: "#111" }} />
         </label>
         <button onClick={() => window.print()} style={{ padding: "8px 20px", fontSize: "14px", fontWeight: 600, background: "#111", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer" }}>
           Print
@@ -253,6 +280,21 @@ export default function LejeseddelPage() {
           <tbody>
             <tr><td>Periode:</td><td>{selected.period} ({selected.days} {selected.days === 1 ? "dag" : "dage"})</td></tr>
             <tr><td>Afhentningssted:</td><td>{pickupPlace}</td></tr>
+            <tr>
+              <td>Kørsel:</td>
+              <td>
+                {(() => {
+                  const d = deliveryInfo(selected);
+                  if (!d) return "Lejer henter og afleverer selv";
+                  const dir = d.out && d.back
+                    ? "Udlejer leverer og henter igen"
+                    : d.out
+                      ? "Udlejer leverer — lejer afleverer selv"
+                      : "Lejer henter — udlejer henter igen";
+                  return d.address ? `${dir} — ${d.address}` : dir;
+                })()}
+              </td>
+            </tr>
           </tbody>
         </table>
 
@@ -283,6 +325,12 @@ export default function LejeseddelPage() {
         <p style={{ fontSize: "12px", color: "#666", marginTop: "-8px" }}>
           Lejer bekræfter ved underskrift at have modtaget ovenstående udstyr i den anførte stand på afhentningstidspunktet, samt at udstyret er funktionsdueligt og uden synlige skader, medmindre andet er noteret ovenfor.
         </p>
+        {selected.handover && (
+          <p style={{ fontSize: "12px", color: "#155724", marginTop: "4px" }}>
+            Kvitteret digitalt ved udlevering {new Date(selected.handover.signedAt).toLocaleString("da-DK")}
+            {selected.handover.note ? ` — bemærkning: ${selected.handover.note}` : ""}
+          </p>
+        )}
 
         {/* 4. Betaling og depositum */}
         <h3 className="section-title">4. Betaling og depositum</h3>
@@ -356,9 +404,18 @@ export default function LejeseddelPage() {
                 </div>
               </td>
               <td style={{ width: "50%", height: "100px", verticalAlign: "bottom", paddingBottom: "12px" }}>
+                {signatureImg && (
+                  <img
+                    src={signatureImg}
+                    alt="Lejers underskrift"
+                    style={{ display: "block", maxWidth: "100%", maxHeight: "70px", objectFit: "contain" }}
+                  />
+                )}
                 <div style={{ borderTop: "1px solid #111", paddingTop: "6px", fontSize: "12px" }}>
-                  Lejer: {selected.name}<br />
-                  Dato: ____________________
+                  Lejer: {selected.handover?.signerName || selected.name}<br />
+                  Dato: {selected.handover?.signedAt
+                    ? new Date(selected.handover.signedAt).toLocaleString("da-DK")
+                    : "____________________"}
                 </div>
               </td>
             </tr>

@@ -3,9 +3,9 @@
 import { useState, useMemo, useEffect, useCallback, useRef, FormEvent } from "react";
 import { type Locale, t } from "@/lib/i18n";
 
-import { dayMultiplier, isSummerSale, applyDiscount } from "@/lib/products";
+import { dayMultiplier, isSummerSale, applyDiscount, DELIVERY_ADDON_IDS } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
-import { trackPurchase } from "@/lib/analytics";
+import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
 import CapacityBadge, { capacityLevel } from "@/components/CapacityBadge";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -185,6 +185,102 @@ function PickupInfo({ locale = "da" }: { locale?: Locale }) {
   );
 }
 
+/* ───── Levering & afhentning ─────
+   To selvstændige ture: 495 kr. for én vej, 795 kr. for begge. Ligger som
+   sit eget felt (ikke bare endnu en tilvalgs-række), fordi det er ordrens
+   dyreste tilvalg og tidligere blev overset. */
+
+function DeliveryPicker({
+  options,
+  value,
+  onSelect,
+  address,
+  onAddressChange,
+  addressMissing,
+  locale = "da",
+}: {
+  options: Array<{ id: string; label: string; desc: string; price: number }>;
+  value: string | null;
+  onSelect: (id: string | null) => void;
+  address: string;
+  onAddressChange: (v: string) => void;
+  addressMissing: boolean;
+  locale?: Locale;
+}) {
+  const s = t[locale].booking;
+  if (options.length === 0) return null;
+
+  const selfLabel = locale === "en" ? "I pick up and return it myself" : "Jeg henter og afleverer selv";
+  const selfDesc =
+    locale === "en" ? "Halvtolv 9, Copenhagen K — free" : "Halvtolv 9, København K — gratis";
+
+  const rows: Array<{ id: string | null; label: string; desc: string; price: number }> = [
+    { id: null, label: selfLabel, desc: selfDesc, price: 0 },
+    ...options,
+  ];
+
+  return (
+    <div className="glass rounded-2xl p-4">
+      <div className="mb-1 flex items-center gap-2">
+        <svg className="h-5 w-5 text-brand-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-6" />
+        </svg>
+        <h3 className="text-base font-semibold">{s.deliveryTitle}</h3>
+      </div>
+      <p className="mb-3 text-xs text-white/40">{s.deliveryDesc}</p>
+
+      <div className="space-y-2">
+        {rows.map((o) => {
+          const selected = value === o.id;
+          return (
+            <button
+              key={o.id ?? "selv"}
+              type="button"
+              onClick={() => onSelect(o.id)}
+              className={`flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left transition active:scale-[0.99] ${
+                selected ? "border-brand-500 bg-brand-500/10" : "border-white/10 bg-white/[0.03] hover:border-white/25"
+              }`}
+            >
+              <div
+                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition ${
+                  selected ? "border-brand-500 bg-brand-500" : "border-white/20 bg-white/5"
+                }`}
+              >
+                {selected && <span className="h-2 w-2 rounded-full bg-black" />}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold">{o.label}</p>
+                <p className="text-xs text-white/40">{o.desc}</p>
+              </div>
+              <p className={`shrink-0 text-sm font-bold ${o.price ? "text-brand-400" : "text-white/40"}`}>
+                {o.price ? `+${o.price},-` : s.deliveryFree}
+              </p>
+            </button>
+          );
+        })}
+      </div>
+
+      {value && (
+        <div className="pt-3">
+          <label className="mb-1 block text-xs text-white/50">{s.deliveryAddressLabel}</label>
+          <input
+            type="text"
+            placeholder={s.deliveryPlaceholder}
+            value={address}
+            onChange={(e) => onAddressChange(e.target.value)}
+            className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-1 ${
+              addressMissing
+                ? "border-red-400/60 focus:border-red-400 focus:ring-red-400"
+                : "border-brand-500/30 focus:border-brand-500 focus:ring-brand-500"
+            }`}
+          />
+          {addressMissing && <p className="mt-1 text-xs text-red-400">{s.deliveryAddressRequired}</p>}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ───── Light Bar ───── */
 
 function LightBar() {
@@ -242,6 +338,8 @@ export default function BookingFlow({
   const [returnDate, setReturnDate] = useState<Date | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [deliveryAddress, setDeliveryAddress] = useState("");
+  /** Adresse-fejlen vises først når man forsøger at gå videre */
+  const [showDeliveryError, setShowDeliveryError] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", comment: "", company: "" });
   // GDPR: markedsføringssamtykke skal være aktivt tilvalg — må ikke være forudkrydset
   const [newsletter, setNewsletter] = useState(false);
@@ -423,8 +521,11 @@ export default function BookingFlow({
       : selectedRental.name_da
     : null;
   const hasLights = selectedAddons.includes("lys");
-  const DELIVERY_IDS = ["levering_opsaetning"];
+  const DELIVERY_IDS: readonly string[] = DELIVERY_ADDON_IDS;
   const hasDelivery = selectedAddons.some((id) => DELIVERY_IDS.includes(id));
+  const deliveryChoice = selectedAddons.find((id) => DELIVERY_IDS.includes(id)) ?? null;
+  // Kørsel uden adresse er ubrugelig — så ved vi ikke hvor vi skal hen
+  const deliveryAddressMissing = hasDelivery && deliveryAddress.trim().length < 5;
 
   // Bookes ét enkelt tilvalg uden højtaler (fx subwoofer eller røgmaskine),
   // vis produktets eget navn/billede i stedet for den generiske "Kun effekter"
@@ -463,6 +564,13 @@ export default function BookingFlow({
   useEffect(() => {
     onSummaryChange?.({ count: cartCount, total });
   }, [cartCount, total, onSummaryChange]);
+
+  // GA4 form_start — booking step 4 (kontaktoplysninger), ikke kontakt/nyhedsbrev
+  useEffect(() => {
+    if (step === 4 && !checkoutSecret && !done) {
+      trackBookingFormStart({ value: total, itemCount: cartCount });
+    }
+  }, [step, checkoutSecret, done, total, cartCount]);
 
   function formatDate(d: Date) {
     return `${s.dayNames[d.getDay()]} ${d.getDate()}. ${s.monthNames[d.getMonth()].toLowerCase().slice(0, 3)}`;
@@ -528,6 +636,13 @@ export default function BookingFlow({
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    // Har kunden valgt kørsel, skal vi vide hvorhen — ellers bliver leveringen
+    // aldrig sat på ordren
+    if (deliveryAddressMissing) {
+      setShowDeliveryError(true);
+      setStep(3);
+      return;
+    }
     setSubmitting(true);
     setError("");
 
@@ -554,7 +669,8 @@ export default function BookingFlow({
             .filter((a) => selectedAddons.includes(a.id))
             .map((a) => a.id),
           cartItems: cartItems.map((item) => ({ name: item.name, price: item.price, productId: item.productId })),
-          deliveryAddress: hasDelivery ? deliveryAddress : undefined,
+          deliveryAddress: hasDelivery ? deliveryAddress.trim() : undefined,
+          deliveryOptionId: deliveryChoice ?? undefined,
           total,
           discountCode: coupon?.code,
           locale,
@@ -1154,9 +1270,11 @@ export default function BookingFlow({
               />
             </div>
 
-            {/* Kompakte tilvalgs-rækker — passer på én skærm */}
+            {/* Kompakte tilvalgs-rækker — passer på én skærm.
+                Kørsel har sit eget felt nederst og er ikke med her. */}
             <div className="space-y-2">
               {visibleAddons
+                .filter((a) => !DELIVERY_IDS.includes(a.id))
                 .filter((a) => {
                   const q = addonSearch.trim().toLowerCase();
                   if (!q) return true;
@@ -1192,23 +1310,28 @@ export default function BookingFlow({
                         </div>
                         <p className="shrink-0 text-sm font-bold text-brand-400">+{a.price},-</p>
                       </button>
-
-                      {/* Delivery address field */}
-                      {DELIVERY_IDS.includes(a.id) && selected && (
-                        <div className="px-2 pt-2">
-                          <input
-                            type="text"
-                            placeholder={s.deliveryPlaceholder}
-                            value={deliveryAddress}
-                            onChange={(e) => setDeliveryAddress(e.target.value)}
-                            className="w-full rounded-xl border border-brand-500/30 bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
-                          />
-                        </div>
-                      )}
                     </div>
                   );
                 })}
             </div>
+
+            <DeliveryPicker
+              locale={locale}
+              options={addons
+                .filter((a) => DELIVERY_IDS.includes(a.id))
+                .map((a) => ({ id: a.id, label: a.label, desc: a.desc, price: a.price }))}
+              value={deliveryChoice}
+              onSelect={(id) => {
+                setSelectedAddons((prev) => {
+                  const rest = prev.filter((x) => !DELIVERY_IDS.includes(x));
+                  return id ? [...rest, id] : rest;
+                });
+                if (!id) setDeliveryAddress("");
+              }}
+              address={deliveryAddress}
+              onAddressChange={setDeliveryAddress}
+              addressMissing={deliveryAddressMissing && showDeliveryError}
+            />
 
             {/* Resten af sortimentet — vises ALTID, ikke kun når man søger.
                 Tidligere skulle man gætte sig til at skrive i søgefeltet for at
@@ -1303,12 +1426,19 @@ export default function BookingFlow({
               <button onClick={prevStep} className="flex-1 rounded-xl border border-white/10 py-3 font-medium transition hover:bg-white/5">
                 {s.back}
               </button>
-              <button onClick={nextStep} className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95">
+              <button
+                onClick={() => {
+                  if (deliveryAddressMissing) { setShowDeliveryError(true); return; }
+                  nextStep();
+                }}
+                className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95"
+              >
                 {s.next}
               </button>
             </div>
             <button
               onClick={() => {
+                if (deliveryAddressMissing) { setShowDeliveryError(true); return; }
                 setSelectedAddons((prev) => prev.filter((id) => DELIVERY_IDS.includes(id)));
                 setStep(4);
               }}
@@ -1338,7 +1468,7 @@ export default function BookingFlow({
 
         {/* Step 4: Contact + Submit */}
         {!checkoutSecret && step === 4 && (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form id="booking-form" name="booking" onSubmit={handleSubmit} className="space-y-4">
             <h2 className="text-center text-2xl font-bold">{s.step4Title}</h2>
             <p className="text-center text-sm text-white/50">
               {s.step4Desc}

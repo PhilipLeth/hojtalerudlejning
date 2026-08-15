@@ -103,6 +103,14 @@ export interface RentalProduct {
   contents?: string[];
   /** Sammensat produkt — vises i BundleGrid, ikke i almindeligt produktgrid */
   bundle?: ProductBundle;
+  /**
+   * Lader kortbilledet i BundleGrid fylde hele kortets bredde (object-cover)
+   * i stedet for at stå som en lille firkant midt i feltet (object-contain).
+   * Værdien er en CSS object-position — altså hvor beskæringens midte lander,
+   * fx "50% 46%" når motivet ligger lidt over billedets midte.
+   * Kun til billeder hvor motivet ligger i et vandret bånd med luft over/under.
+   */
+  cardImageCrop?: string;
 }
 
 export function isBundleProduct(p: RentalProduct): boolean {
@@ -317,20 +325,71 @@ export const addons: Addon[] = [
     da: { label: "Bæretaske", desc: "Polstret sportstaske til sikker transport på cykel eller i bil" },
     en: { label: "Carry bag", desc: "Padded sports bag for safe transport by bike or car" },
   },
+  // ── Kørsel: levering (ud) og afhentning (retur) er to selvstændige ture.
+  // Én vej koster 495, begge veje 795 — derfor er "begge veje" et selvstændigt
+  // id med sin egen pris i stedet for to linjer der lægges sammen til 990.
   {
-    id: "levering_opsaetning",
+    id: "levering_ud",
     price: 495,
     image: null,
     da: {
-      label: "Levering + opsætning i København",
-      desc: "Vi bringer, sætter alt op klar til brug og henter igen",
+      label: "Levering + opsætning",
+      desc: "Vi kører ud, sætter op klar til brug — du afleverer selv bagefter",
     },
     en: {
-      label: "Delivery + setup in Copenhagen",
-      desc: "We deliver, set everything up ready to use and collect again",
+      label: "Delivery + setup",
+      desc: "We drive out and set everything up — you return it yourself",
+    },
+  },
+  {
+    id: "afhentning_retur",
+    price: 495,
+    image: null,
+    da: {
+      label: "Afhentning efter festen",
+      desc: "Du henter selv — vi henter udstyret igen bagefter",
+    },
+    en: {
+      label: "Collection after the party",
+      desc: "You pick it up yourself — we collect the gear afterwards",
+    },
+  },
+  {
+    id: "levering_begge",
+    price: 795,
+    image: null,
+    da: {
+      label: "Levering + afhentning (begge veje)",
+      desc: "Vi kører ud, sætter op og henter igen — spar 195 kr.",
+    },
+    en: {
+      label: "Delivery + collection (both ways)",
+      desc: "We deliver, set up and collect again — save 195 DKK",
     },
   },
 ];
+
+/**
+ * Kørsels-tilvalgene. De udelukker hinanden: man kører enten ud, henter hjem,
+ * eller begge dele — aldrig to af dem på samme ordre.
+ */
+export const DELIVERY_ADDON_IDS = ["levering_ud", "afhentning_retur", "levering_begge"] as const;
+export type DeliveryAddonId = (typeof DELIVERY_ADDON_IDS)[number];
+
+/** Gamle ordrer/kataloger bruger disse ids — de tæller stadig som kørsel */
+export const LEGACY_DELIVERY_IDS = ["levering", "levering_opsaetning"];
+
+export function isDeliveryAddon(id: string): boolean {
+  return (DELIVERY_ADDON_IDS as readonly string[]).includes(id) || LEGACY_DELIVERY_IDS.includes(id);
+}
+
+/** Hvilke veje vi kører på en given ordre — bruges i admin og på lejesedlen */
+export function deliveryDirections(id: string): { out: boolean; back: boolean } {
+  if (id === "levering_ud") return { out: true, back: false };
+  if (id === "afhentning_retur") return { out: false, back: true };
+  if (id === "levering_begge" || LEGACY_DELIVERY_IDS.includes(id)) return { out: true, back: true };
+  return { out: false, back: false };
+}
 
 /** Standalone rental products (lys, av) — bookable via /?product=ID#book */
 export const rentalProducts: RentalProduct[] = [
@@ -343,12 +402,13 @@ export const rentalProducts: RentalProduct[] = [
     category: "lyd",
     price: 495,
     image: "/images/product-pakke-fest-lille.png",
+    cardImageCrop: "50% 46%",
     name_da: "Lille festpakke",
     name_en: "Small party package",
     desc_da: "Lille højtalerpakke + enkelt lyseffekt. Lyd og lys til op til 40 pers. — spar 95 kr.",
     desc_en: "Small speaker package + single light effect. Sound and lights for up to 40 people — save 90 DKK.",
     contents: ['2× Alto 10" højtalere', "1 LED-lyseffekt", "Bluetooth + alle kabler"],
-    allowedAddons: ["subwoofer", "rog", "stativer", "mikrofon", "levering_opsaetning"],
+    allowedAddons: ["subwoofer", "rog", "stativer", "mikrofon", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 95,
       usecase_da: "Lyd og lys til den lille fest — op til 40 pers. Kompakt sæt, klar på 10 minutter.",
@@ -366,12 +426,13 @@ export const rentalProducts: RentalProduct[] = [
     category: "lyd",
     price: 895,
     image: "/images/product-pakke-fest-stor.png",
+    cardImageCrop: "50% 47%",
     name_da: "Stor festpakke",
     name_en: "Large party package",
     desc_da: "Stor højtalerpakke + lys-pakke. Lyd og lys til op til 100 pers. — spar 95 kr.",
     desc_en: "Large speaker package + light package. Sound and lights for up to 100 people — save 190 DKK.",
     contents: ['2× EV 12" højtalere', "Lys-pakke (2 lamper + centereffekt)", "Bluetooth + alle kabler"],
-    allowedAddons: ["subwoofer", "rog", "mikrofon", "levering_opsaetning"],
+    allowedAddons: ["subwoofer", "rog", "mikrofon", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 95,
       usecase_da: "Lyd og lys til den store fest — op til 100 pers. med de store højtalere.",
@@ -414,7 +475,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Karaokemaskine + 32\" skærm + lille højtalerpakke. Alt til karaoke op til 40 pers. — spar 385 kr.",
     desc_en: "Karaoke machine + 32\" screen + small speaker package. Everything for karaoke up to 40 people — save 385 kr.",
     contents: ["Singing Machine + 2 trådløse mikrofoner", '32" LED-skærm på 3-fod stativ', '2× Alto 10" højtalere', "HDMI + alle kabler"],
-    allowedAddons: ["rog", "lyseffekt", "subwoofer", "stativer", "levering_opsaetning"],
+    allowedAddons: ["rog", "lyseffekt", "subwoofer", "stativer", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 385,
       usecase_da: "Karaoke til hjemmefesten — skærm til teksterne og rigtige højtalere til lyden.",
@@ -438,7 +499,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Karaokemaskine + 55\" storskærm + store højtalere — karaoke til op til 100 pers. Spar 285 kr.",
     desc_en: "Karaoke machine + 55\" screen + large speakers — karaoke for up to 100 people. Save 285 kr.",
     contents: ["Singing Machine + 2 trådløse mikrofoner", '55" LED-skærm på 3-fod stativ', '2× 12" højtalere', "Alle kabler"],
-    allowedAddons: ["rog", "lyseffekt", "lys", "subwoofer", "levering_opsaetning"],
+    allowedAddons: ["rog", "lyseffekt", "lys", "subwoofer", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 285,
       usecase_da: "Fuld karaoke-fest: storskærm til teksterne og store højtalere til lyden.",

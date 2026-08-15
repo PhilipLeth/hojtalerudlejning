@@ -16,6 +16,8 @@ interface BookingData {
   addonIds?: string[];
   cartItems?: Array<{ name: string; price: number; productId?: string }>;
   deliveryAddress?: string;
+  /** levering_ud | afhentning_retur | levering_begge — hvilken vej vi kører */
+  deliveryOptionId?: string;
   total: number;
   discountCode?: string;
   name: string;
@@ -57,7 +59,7 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
     ids.has("lyskaeder_farvet") ||
     ids.has("uplight") ||
     ids.has("uplight_4") ||
-    // Festpakkerne indeholder lys-pakken
+    // Lille festpakke = lyseffekt; stor festpakke = lys-pakke
     ids.has("pakke_fest_lille") ||
     ids.has("pakke_fest_stor") ||
     labels.some((l) => l.includes("lys") || l.includes("disco"));
@@ -65,10 +67,13 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
     ids.has("rog") ||
     ids.has("low_fog") ||
     labels.some((l) => l.includes("røg") || l.includes("rog") || l.includes("fog"));
-  const hasSetup =
+  const hasDelivery =
+    ids.has("levering_ud") ||
+    ids.has("afhentning_retur") ||
+    ids.has("levering_begge") ||
+    // Ældre bookinger
     ids.has("levering_opsaetning") ||
-    labels.some((l) => l.includes("opsætning") || l.includes("opsatning"));
-  const hasDelivery = hasSetup;
+    labels.some((l) => l.includes("levering") || l.includes("afhentning efter"));
 
   const speakerIds = new Set(["thumpgo", "party", "soundboks", "festival"]);
   const hasSpeaker =
@@ -104,12 +109,12 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
     };
   }
 
-  // 3) No delivery → levering + opsætning (495)
+  // 3) No delivery → levering + afhentning begge veje (795)
   if (!hasDelivery) {
-    const list = 495;
+    const list = 795;
     return {
-      id: "levering_opsaetning",
-      title: "Levering + opsætning",
+      id: "levering_begge",
+      title: "Levering + afhentning",
       blurb: "Vi kører ud, sætter alt op klar til brug og henter igen.",
       listPrice: list,
       offerPrice: offerPrice(list),
@@ -117,6 +122,23 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
   }
 
   return null;
+}
+
+/**
+ * Kørslen på ordren i klartekst. Levering (ud) og afhentning (retur) er to
+ * selvstændige ture — 495 kr. for én vej, 795 for begge — så både vi og kunden
+ * skal kunne se præcis hvilke(n) vej vi kører.
+ */
+function deliveryLine(data: BookingData): string | null {
+  const ids = new Set<string>([
+    ...(data.deliveryOptionId ? [data.deliveryOptionId] : []),
+    ...(data.addonIds || []),
+  ]);
+  if (ids.has("levering_ud")) return "Vi leverer og sætter op — kunden afleverer selv";
+  if (ids.has("afhentning_retur")) return "Kunden henter selv — vi henter udstyret igen";
+  if (ids.has("levering_begge") || ids.has("levering_opsaetning")) return "Vi leverer, sætter op og henter igen";
+  // Ældre bookinger uden id'er: en adresse betyder at der blev aftalt kørsel
+  return data.deliveryAddress ? "Levering aftalt" : null;
 }
 
 function upsellCustomerHtml(offer: UpsellOffer): string {
@@ -178,6 +200,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     : `<tr><td colspan="2" style="padding:3px 0;color:#888;">Ingen linjer registreret</td></tr>`;
   const orderTableHtml = `<table style="border-collapse:collapse;width:100%;max-width:420px;font-family:sans-serif;font-size:14px;">${orderRowsHtml}<tr><td style="padding-top:8px;border-top:1px solid #ddd;font-weight:bold;">I alt</td><td style="padding-top:8px;border-top:1px solid #ddd;text-align:right;font-weight:bold;">${data.total} kr</td></tr></table>`;
 
+  const delivery = deliveryLine(data);
   const upsell = pickUpsell(data);
   console.log("[book] upsell:", upsell?.id ?? "none", "addonIds:", data.addonIds);
 
@@ -187,7 +210,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;vertical-align:top;">Ordre:</td><td>${orderTableHtml}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Periode:</td><td>${data.period}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Dage:</td><td>${data.days}</td></tr>
-      ${data.deliveryAddress ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Leveringsadresse:</td><td>${data.deliveryAddress}</td></tr>` : ""}
+      ${delivery ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Kørsel:</td><td><strong>${delivery}</strong></td></tr>` : `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Kørsel:</td><td>Kunden henter og afleverer selv</td></tr>`}
+      ${data.deliveryAddress ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Adresse:</td><td>${data.deliveryAddress}</td></tr>` : ""}
       ${discountRow}
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Total:</td><td><strong>${data.total} kr</strong></td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Upsell tilbudt:</td><td>${upsell ? `${upsell.title} @ ${upsell.offerPrice} kr (norm. ${upsell.listPrice})` : "Ingen"}</td></tr>
@@ -209,7 +233,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         <p style="margin:4px 0 8px;"><strong>Din ordre:</strong></p>
         ${orderTableHtml}
         <p style="margin:12px 0 4px;"><strong>Periode:</strong> ${data.period}</p>
-        ${data.deliveryAddress ? `<p style="margin:4px 0;"><strong>Levering til:</strong> ${data.deliveryAddress}</p>` : `<p style="margin:4px 0;"><strong>Afhentning:</strong> Halvtolv 9, 1. th, København K</p>`}
+        ${delivery ? `<p style="margin:4px 0;"><strong>Kørsel:</strong> ${delivery}${data.deliveryAddress ? ` — ${data.deliveryAddress}` : ""}</p>` : `<p style="margin:4px 0;"><strong>Afhentning:</strong> Halvtolv 9, 1. th, København K</p>`}
         ${discount ? `<p style="margin:4px 0;color:#1e7e34;"><strong>Rabat:</strong> ${discount.code} (−${discount.pct}%)</p>` : ""}
         <p style="margin:8px 0 0;font-size:20px;"><strong>Total: ${data.total} kr</strong></p>
         <p style="margin:0;font-size:12px;color:#888;">Betales ved afhentning (MobilePay eller kontant)</p>

@@ -4,7 +4,7 @@
  * og der blev aldrig sendt et GA4-purchase-event.
  */
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { trackPurchase } from "@/lib/analytics";
+import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
 
 type Win = Window & { dataLayer?: unknown[]; gtag?: (...a: unknown[]) => void };
 
@@ -16,6 +16,39 @@ beforeEach(() => {
   delete (w() as Record<string, unknown>).dataLayer;
   delete (w() as Record<string, unknown>).gtag;
   sessionStorage.clear();
+});
+
+describe("trackBookingFormStart", () => {
+  it("sender form_start med form_id=booking selvom dataLayer mangler", () => {
+    trackBookingFormStart({ value: 495, itemCount: 1 });
+    const events = (w().dataLayer as Array<{ event?: string; form_id?: string }>);
+    expect(events.some((e) => e.event === "form_start" && e.form_id === "booking")).toBe(true);
+  });
+
+  it("sender GA4 form_start via gtag", () => {
+    const gtag = vi.fn();
+    w().gtag = gtag;
+    trackBookingFormStart({ value: 895, itemCount: 2 });
+    expect(gtag).toHaveBeenCalledWith(
+      "event",
+      "form_start",
+      expect.objectContaining({ form_id: "booking", value: 895, currency: "DKK" })
+    );
+  });
+
+  it("deduplikerer — kun én form_start pr. session", () => {
+    const gtag = vi.fn();
+    w().gtag = gtag;
+    trackBookingFormStart({ value: 495 });
+    trackBookingFormStart({ value: 495 });
+    expect(gtag).toHaveBeenCalledTimes(1);
+  });
+
+  it("sender booking_form_start til GTM-triggers", () => {
+    trackBookingFormStart({ value: 395, itemCount: 1 });
+    const events = (w().dataLayer as Array<{ event?: string }>).map((e) => e.event);
+    expect(events).toContain("booking_form_start");
+  });
 });
 
 describe("trackPurchase", () => {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import TopBar from "@/components/TopBar";
+import PhoneLink from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
   title: "Erhverv — Lyd, lys og AV til professionelle events | Lejhøjtaler.dk",
@@ -101,12 +102,10 @@ export default function ErhvervPage() {
             >
               Se pakker
             </a>
-            <a
-              href="tel:+4531132852"
+            <PhoneLink
               className="rounded-full border border-white/20 px-8 py-4 text-lg font-medium transition hover:bg-white/5"
-            >
-              Ring 31 13 28 52
-            </a>
+              prefix="Ring"
+            />
           </div>
         </div>
       </section>
@@ -174,7 +173,7 @@ export default function ErhvervPage() {
             Book erhvervspakke
           </a>
           <p className="mt-3 text-sm text-white/40">
-            Eller ring til os på <a href="tel:+4531132852" className="text-brand-400 hover:underline">31 13 28 52</a> for en skræddersyet løsning
+            Eller ring til os på <PhoneLink className="text-brand-400 hover:underline" /> for en skræddersyet løsning
           </p>
         </div>
       </section>

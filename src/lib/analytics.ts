@@ -27,10 +27,29 @@ export interface PurchaseEvent {
   paymentMethod?: string;
 }
 
+export interface BookingFormStartEvent {
+  /** Kurvens værdi ved formular-start (step 4) */
+  value?: number;
+  /** Antal produkter/linjer i kurven */
+  itemCount?: number;
+}
+
 type Win = Window & {
   dataLayer?: unknown[];
   gtag?: (...args: unknown[]) => void;
 };
+
+/** Én form_start pr. session — undgår dobbelttælling ved tilbage/ frem i flowet */
+function bookingFormStartAlreadyTracked(): boolean {
+  try {
+    const key = "booking_form_start_tracked";
+    if (sessionStorage.getItem(key)) return true;
+    sessionStorage.setItem(key, "1");
+    return false;
+  } catch {
+    return false;
+  }
+}
 
 /** Har vi allerede sporet denne booking? (sessionStorage overlever redirect til Stripe) */
 function alreadyTracked(transactionId: string): boolean {
@@ -41,6 +60,44 @@ function alreadyTracked(transactionId: string): boolean {
     return false;
   } catch {
     return false; // privat browsing e.l. — hellere spore end at miste eventet
+  }
+}
+
+/**
+ * Booking-formular start (step 4: navn/e-mail/telefon).
+ * Sender GA4's standard form_start med form_id=booking, så key event
+ * kan filtreres fra kontakt/nyhedsbrev (Enhanced Measurement).
+ */
+export function trackBookingFormStart(e: BookingFormStartEvent = {}): void {
+  if (typeof window === "undefined") return;
+  if (bookingFormStartAlreadyTracked()) return;
+
+  const w = window as Win;
+  const currency = "DKK";
+
+  w.dataLayer = w.dataLayer || [];
+  w.dataLayer.push({
+    event: "form_start",
+    form_id: "booking",
+    form_name: "Book udstyr",
+    form_destination: "https://lejhojtaler.dk/#book",
+    value: e.value,
+    currency,
+    item_count: e.itemCount,
+  });
+  w.dataLayer.push({
+    event: "booking_form_start",
+    booking_value: e.value,
+    item_count: e.itemCount,
+  });
+
+  if (typeof w.gtag === "function") {
+    w.gtag("event", "form_start", {
+      form_id: "booking",
+      form_name: "Book udstyr",
+      value: e.value,
+      currency,
+    });
   }
 }
 

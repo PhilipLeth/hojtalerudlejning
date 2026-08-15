@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { applyDiscount, isSummerSale } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
+import PhoneLink from "@/components/PhoneLink";
 
 export default function StickyBookBar() {
   const [visible, setVisible] = useState(false);
@@ -76,10 +77,7 @@ export default function StickyBookBar() {
 
       <span className="h-5 w-px bg-black/20" />
 
-      <a
-        href="tel:+4531132852"
-        className="flex items-center gap-1.5 font-semibold text-black text-sm"
-      >
+      <PhoneLink className="flex items-center gap-1.5 font-semibold text-black text-sm">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
@@ -92,8 +90,7 @@ export default function StickyBookBar() {
             clipRule="evenodd"
           />
         </svg>
-        31 13 28 52
-      </a>
+      </PhoneLink>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import ProductYouTube from "@/components/ProductYouTube";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
+import { PhoneText } from "@/components/PhoneLink";
 
 export interface ProductLandingProps {
   slug: string;
@@ -126,7 +127,7 @@ export default function ProductLanding({
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Betal ved afhentning · Ring 31 13 28 52
+            København · Betal ved afhentning · Ring <PhoneText />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             {headline}

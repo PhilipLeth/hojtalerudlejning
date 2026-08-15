@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import PhoneLink from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
   title: "Privatlivspolitik | Lejhøjtaler.dk",
@@ -44,9 +45,7 @@ export default function PrivatlivspolitikPage() {
                   info@lejhojtaler.dk
                 </a>{" "}
                 eller ringe på{" "}
-                <a href="tel:+4531132852" className="text-brand-400 hover:underline">
-                  31 13 28 52
-                </a>
+                <PhoneLink className="text-brand-400 hover:underline" />
                 .
               </p>
             </Section>

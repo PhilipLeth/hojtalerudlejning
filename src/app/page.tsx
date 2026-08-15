@@ -6,6 +6,7 @@ import HowItWorks from "@/components/HowItWorks";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import StickyBookBar from "@/components/StickyBookBar";
+import { PHONE_E164 } from "@/lib/phone";
 
 export default function Home() {
   return (
@@ -28,7 +29,7 @@ export default function Home() {
             name: "Scharling Studio / Lejhøjtaler.dk",
             legalName: "Scharling Studio",
             taxID: "DK40994904",
-            telephone: "+4531132852",
+            telephone: PHONE_E164,
             priceRange: "95-1195 kr",
             image: "https://lejhojtaler.dk/images/logo-lejhojtaler.png",
             description:

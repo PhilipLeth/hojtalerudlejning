@@ -1,10 +1,11 @@
 import { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
+import PhoneLink, { PhoneText } from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
   title: "Kontakt os | Lejhøjtaler.dk",
   description:
-    "Kontakt Lejhøjtaler.dk — skriv til info@lejhojtaler.dk, ring 31 13 28 52 eller brug formularen. Vi svarer som regel samme dag.",
+    "Kontakt Lejhøjtaler.dk — skriv til info@lejhojtaler.dk, ring eller brug formularen. Vi svarer som regel samme dag.",
   alternates: { canonical: "https://lejhojtaler.dk/kontakt" },
 };
 
@@ -27,16 +28,15 @@ export default function KontaktPage() {
             <span className="font-semibold text-brand-400">info@lejhojtaler.dk</span>
           </span>
         </a>
-        <a
-          href="tel:+4531132852"
-          className="glass flex items-center gap-3 rounded-2xl p-4 transition hover:bg-white/5"
-        >
+        <PhoneLink hideNumber className="glass flex items-center gap-3 rounded-2xl p-4 transition hover:bg-white/5">
           <span className="text-2xl">📞</span>
           <span>
             <span className="block text-sm text-white/50">Telefon</span>
-            <span className="font-semibold text-brand-400">31 13 28 52</span>
+            <span className="font-semibold text-brand-400">
+              <PhoneText />
+            </span>
           </span>
-        </a>
+        </PhoneLink>
       </div>
 
       <div className="mt-8">

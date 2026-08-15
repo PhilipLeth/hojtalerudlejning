@@ -178,7 +178,13 @@ describe("BookingFlow - Step 3: Addons", () => {
       expect(screen.getByText("Røgmaskine")).toBeInTheDocument();
       expect(screen.getByText("Højtalerstativer")).toBeInTheDocument();
       expect(screen.getByText("Bæretaske")).toBeInTheDocument();
-      expect(screen.getByText("Levering + opsætning i København")).toBeInTheDocument();
+      // Kørslen har sit eget felt med de tre valgmuligheder — ikke bare endnu
+      // en tilvalgs-række
+      expect(screen.getByText("Levering og afhentning")).toBeInTheDocument();
+      expect(screen.getByText("Levering + opsætning")).toBeInTheDocument();
+      expect(screen.getByText("Afhentning efter festen")).toBeInTheDocument();
+      expect(screen.getByText("Levering + afhentning (begge veje)")).toBeInTheDocument();
+      expect(screen.getByText("Jeg henter og afleverer selv")).toBeInTheDocument();
     }
   });
 });

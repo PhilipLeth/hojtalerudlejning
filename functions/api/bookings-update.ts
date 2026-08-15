@@ -63,16 +63,34 @@ export const onRequestOptions: PagesFunction<Env> = async () => {
 interface UpdateBody {
   id: string;
   status?: string;
-  action?: "delete" | "set_flag";
+  action?: "delete" | "set_flag" | "set_fields";
   /** set_flag: hvilket felt der slås til/fra */
   flag?: "paidManual" | "reviewDone";
   value?: boolean;
+  /** set_fields: flere felter i én skrivning (fx betaling + metode) */
+  fields?: Record<string, unknown>;
 }
 
 /** Felter admin kan slå til/fra direkte i ordreoverblikket */
 const VALID_FLAGS = ["paidManual", "reviewDone"] as const;
 
-const VALID_STATUSES = ["ny", "bekraeftet", "afhentet", "afleveret", "annulleret_kunde", "annulleret_admin"];
+/**
+ * Felter admin kan sætte fra de to spor i ordreoverblikket. Hver har en
+ * validator, så en tastefejl i frontend ikke kan skrive vrøvl i KV.
+ */
+const FIELD_VALIDATORS: Record<string, (v: unknown) => boolean> = {
+  // Betaling
+  paidManual: (v) => typeof v === "boolean",
+  paidMethod: (v) => v === null || ["mobilepay", "kontant", "bank"].includes(v as string),
+  // Depositum — beløb i kr, 0 betyder "intet depositum"
+  depositAmount: (v) => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= 100000,
+  depositState: (v) => v === null || ["afventer", "modtaget", "tilbagebetalt"].includes(v as string),
+  // Udstyr
+  inspected: (v) => typeof v === "boolean",
+  reviewDone: (v) => typeof v === "boolean",
+};
+
+const VALID_STATUSES = ["ny", "bekraeftet", "pakket", "afhentet", "afleveret", "annulleret_kunde", "annulleret_admin"];
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const url = new URL(context.request.url);
@@ -135,6 +153,40 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         status: 200,
         headers: corsHeaders,
       });
+    }
+
+    // Sæt flere felter på én gang (betalingsmetode, depositum, inspektion)
+    if (body.action === "set_fields") {
+      const fields = body.fields;
+      if (!fields || typeof fields !== "object" || Array.isArray(fields) || Object.keys(fields).length === 0) {
+        return new Response(JSON.stringify({ error: "Missing fields" }), { status: 400, headers: corsHeaders });
+      }
+      for (const [key, value] of Object.entries(fields)) {
+        const validator = FIELD_VALIDATORS[key];
+        if (!validator) {
+          return new Response(
+            JSON.stringify({ error: `Invalid field "${key}". Must be one of: ${Object.keys(FIELD_VALIDATORS).join(", ")}` }),
+            { status: 400, headers: corsHeaders },
+          );
+        }
+        if (!validator(value)) {
+          return new Response(JSON.stringify({ error: `Invalid value for "${key}"` }), { status: 400, headers: corsHeaders });
+        }
+      }
+      const existingFields = await context.env.BOOKINGS.get(body.id);
+      if (!existingFields) {
+        return new Response(JSON.stringify({ error: "Booking not found" }), { status: 404, headers: corsHeaders });
+      }
+      const bookingFields = JSON.parse(existingFields);
+      const now = new Date().toISOString();
+      for (const [key, value] of Object.entries(fields)) {
+        bookingFields[key] = value;
+        // Booleans får et tidsstempel, så vi kan se hvornår hakket blev sat
+        if (typeof value === "boolean") bookingFields[`${key}At`] = value ? now : null;
+      }
+      bookingFields.updatedAt = now;
+      await context.env.BOOKINGS.put(body.id, JSON.stringify(bookingFields));
+      return new Response(JSON.stringify({ ok: true, booking: bookingFields }), { status: 200, headers: corsHeaders });
     }
 
     if (!body.id || !body.status) {

@@ -3,6 +3,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { bookHref } from "@/lib/bookUrl";
+import { PhoneText, LivePhoneCopy } from "@/components/PhoneLink";
 
 export interface OccasionTip {
   title: string;
@@ -89,7 +90,7 @@ export default function OccasionLanding({
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Book online på 2 min · Ring 31 13 28 52
+            København · Book online på 2 min · Ring <PhoneText />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             {headline}
@@ -145,7 +146,7 @@ export default function OccasionLanding({
             {tips.map((t) => (
               <div key={t.title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
                 <h3 className="mb-2 font-semibold text-white">{t.title}</h3>
-                <p className="text-sm text-white/50">{t.text}</p>
+                <p className="text-sm text-white/50"><LivePhoneCopy text={t.text} /></p>
               </div>
             ))}
           </div>
@@ -163,7 +164,7 @@ export default function OccasionLanding({
                     <span className="mt-1 shrink-0 text-brand-400 transition group-open:rotate-45">+</span>
                   </span>
                 </summary>
-                <p className="mt-3 text-sm text-white/50">{f.a}</p>
+                <p className="mt-3 text-sm text-white/50"><LivePhoneCopy text={f.a} /></p>
               </details>
             ))}
           </div>
