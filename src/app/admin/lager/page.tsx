@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 import { useState, useEffect, useCallback } from "react";
 
 interface BlockedDate {
@@ -8,7 +10,7 @@ interface BlockedDate {
   products: string[];
 }
 
-const PRODUCT_IDS = ["thumpgo", "party", "soundboks", "festival", "lys", "rog", "stativer", "taske", "subwoofer"];
+const PRODUCT_IDS = ["thumpgo", "party", "soundboks", "festival", "lys", "rog", "stativer", "taske", "subwoofer", "lyskaeder"];
 const PRODUCT_LABELS: Record<string, string> = {
   thumpgo: "Thump GO",
   party: "Party",
@@ -19,6 +21,7 @@ const PRODUCT_LABELS: Record<string, string> = {
   stativer: "Stativer",
   taske: "Taske",
   subwoofer: "Subwoofer 12\"",
+  lyskaeder: "Lyskæde varm hvid",
 };
 
 export default function LagerPage() {
@@ -132,29 +135,7 @@ export default function LagerPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
-      <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h1 style={{ margin: 0, fontSize: "20px" }}>Lager &amp; blokering</h1>
-        <div style={{ display: "flex", gap: "12px" }}>
-          <a href="/admin" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Bookinger
-          </a>
-          <a href="/admin/udsolgt" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Udsolgt
-          </a>
-          <a href="/admin/produkter" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Produkter
-          </a>
-          <a href="/admin/kanaler" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Kanaler
-          </a>
-          <a href="/admin/nyhedsbrev" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Nyhedsbrev
-          </a>
-          <a href="/admin/lejeseddel" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Lejeseddel
-          </a>
-        </div>
-      </header>
+      <AdminNav title="Lager" />
 
       <main style={{ maxWidth: "900px", margin: "0 auto", padding: "24px" }}>
         {/* Inventory */}
