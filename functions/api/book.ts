@@ -1,9 +1,15 @@
 import { resolveDiscountFor } from "./_lib/discounts";
+import { sendPush } from "../../src/lib/webpush";
+import { KV_PUSH_SUBS, loadSubscriptions } from "./push";
 import type { SaleContext } from "./_lib/weekendSale";
 
 interface Env {
   RESEND_API_KEY: string;
   NOTIFY_EMAIL: string;
+  /** Push til hjemmeskærms-appen — se /admin/notifikationer */
+  VAPID_PUBLIC_KEY?: string;
+  VAPID_PRIVATE_KEY?: string;
+  VAPID_SUBJECT?: string;
   BOOKINGS: KVNamespace;
 }
 
@@ -24,6 +30,8 @@ interface BookingData {
   deliveryOptionId?: string;
   total: number;
   discountCode?: string;
+  /** "online" eller "pickup" — vises i push-beskeden */
+  paymentChoice?: string;
   name: string;
   company?: string;
   email: string;
@@ -44,6 +52,44 @@ const UPSELL_DISCOUNT = 0.3;
 
 function offerPrice(list: number): number {
   return Math.round(list * (1 - UPSELL_DISCOUNT));
+}
+
+/**
+ * Push til de tilmeldte telefoner. Beskeden skal kunne læses på en låseskærm
+ * uden at åbne noget: hvem, hvad, hvornår og hvor meget.
+ */
+async function notifyPhones(env: Env, data: BookingData, bookingId: string): Promise<void> {
+  const { VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT, BOOKINGS } = env;
+  if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) return;
+
+  const subs = await loadSubscriptions(BOOKINGS);
+  if (subs.length === 0) return;
+
+  const hvad = orderProductIds(data).length
+    ? [data.speaker, ...(data.cartItems || []).map((c) => c.name)].filter(Boolean).join(", ")
+    : data.speaker;
+  const betaling = data.paymentChoice === "online" ? "betalt online" : "betales v. afhentning";
+
+  const payload = JSON.stringify({
+    title: `Ny booking — ${data.total} kr`,
+    body: `${data.name} · ${hvad}\n${data.period} · ${betaling}`,
+    url: "/admin",
+    tag: bookingId,
+  });
+
+  const results = await Promise.all(
+    subs.map((s) =>
+      sendPush(s, payload, { publicKey: VAPID_PUBLIC_KEY, privateKey: VAPID_PRIVATE_KEY },
+        VAPID_SUBJECT || "mailto:info@lejhojtaler.dk"),
+    ),
+  );
+
+  // En telefon der har afmeldt sig svarer 404/410 — ryd op, så vi ikke bliver
+  // ved med at sende til den
+  const gone = new Set(results.filter((r) => r.gone).map((r) => r.endpoint));
+  if (gone.size) {
+    await BOOKINGS.put(KV_PUSH_SUBS, JSON.stringify(subs.filter((s) => !gone.has(s.endpoint))));
+  }
 }
 
 /** Produkt-ids i ordren — grundlaget for at afgøre om weekendudsalget gælder */
@@ -344,6 +390,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   } catch (e) {
     console.error("KV save error:", e);
     // Don't fail the booking if KV save fails — emails were already sent
+  }
+
+  // Push til telefonen. Efter KV-skrivningen, så beskeden aldrig kommer før
+  // ordren kan slås op — og i sit eget try/catch, fordi en telefon der ikke
+  // kan nås aldrig må vælte en booking.
+  try {
+    await notifyPhones(context.env, data, key);
+  } catch (e) {
+    console.error("[push] kunne ikke sende:", e);
   }
 
   return new Response(JSON.stringify({ ok: true, bookingId: key, upsell: upsell?.id ?? null }), {

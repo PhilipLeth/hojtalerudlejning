@@ -12,6 +12,14 @@ const GA_ID = "G-QDXW7S53GF";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lejhojtaler.dk"),
+  // Hjemmeskærms-appen — se /admin/notifikationer. iOS henter ikonet herfra,
+  // når siden lægges på hjemmeskærmen.
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: "Lejhøjtaler", statusBarStyle: "black-translucent" },
+  icons: {
+    icon: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   title: "Lej Højtaler København | Fra 345 kr/weekend | Lejhøjtaler.dk",
   description:
     "Lej højtaler i København fra 345 kr/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje — hent fredag, aflever mandag. Book online på 2 min.",

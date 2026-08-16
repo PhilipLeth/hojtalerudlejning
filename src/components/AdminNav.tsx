@@ -65,7 +65,10 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
   },
   {
     group: "System",
-    items: [{ href: "/admin/indstillinger", label: "Indstillinger", hint: "Åbningstider, kontakt m.m." }],
+    items: [
+      { href: "/admin/indstillinger", label: "Indstillinger", hint: "Åbningstider, kontakt m.m." },
+      { href: "/admin/notifikationer", label: "Notifikationer", hint: "Push på telefonen når en ordre lander" },
+    ],
   },
 ];
 
