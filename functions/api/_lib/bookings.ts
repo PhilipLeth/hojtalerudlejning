@@ -75,7 +75,12 @@ export function bookedProductIds(booking: Record<string, unknown>): string[] {
       : speakerNameToId(String(booking.speaker || ""));
 
   if (speakerId === "lys-only") ids.push("lys");
-  else if (speakerId && speakerId !== "effects-only" && SPEAKER_IDS.includes(speakerId)) ids.push(speakerId);
+  // Hovedproduktet tæller uanset type. Whitelisten på SPEAKER_IDS betød at en
+  // ordre på fx en lyskæde eller en projektor ikke optog noget som helst —
+  // produktet stod ledigt i kalender og udsolgt-oversigt, selvom det var ude.
+  // Produkter uden lagertal påvirker intet: både soldout og availability
+  // regner kun på id'er der findes i inventory.
+  else if (speakerId && speakerId !== "effects-only") ids.push(speakerId);
 
   if (Array.isArray(booking.addonIds) && booking.addonIds.length) {
     for (const pid of booking.addonIds) {

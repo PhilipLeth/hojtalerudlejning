@@ -82,6 +82,18 @@ describe("soldOutDaysByProduct", () => {
 });
 
 describe("bookedProductIds", () => {
+  it("tæller hovedproduktet selvom det ikke er en højtaler", () => {
+    // Whitelisten på SPEAKER_IDS betød at en ordre på en lyskæde eller en
+    // projektor ikke optog noget — produktet stod ledigt selvom det var ude
+    expect(bookedProductIds({ speakerId: "lyskaeder", speaker: "Lyskæde varm hvid" })).toContain("lyskaeder");
+    expect(bookedProductIds({ speakerId: "projektor", speaker: "Projektor" })).toContain("projektor");
+    expect(bookedProductIds({ speakerId: "pakke_fest_stor", speaker: "Stor festpakke" })).toContain("pakke_fest_stor");
+  });
+
+  it("tæller ikke 'kun effekter' som et produkt", () => {
+    expect(bookedProductIds({ speakerId: "effects-only", speaker: "Kun effekter" })).toEqual([]);
+  });
+
   it("finder højtaleren via navn når speakerId mangler", () => {
     expect(bookedProductIds({ speaker: "Soundboks 4" })).toContain("soundboks");
   });

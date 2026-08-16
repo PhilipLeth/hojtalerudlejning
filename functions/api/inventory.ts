@@ -55,8 +55,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           headers: corsHeaders,
         });
       }
-      await context.env.BOOKINGS.put("inventory", JSON.stringify(inv));
-      return new Response(JSON.stringify({ ok: true, inventory: inv }), {
+      // Merge: admin/lager sender kun redigerbare felter — behold øvrige nøgler
+      let existing: Record<string, number> = {};
+      try {
+        const raw = await context.env.BOOKINGS.get("inventory");
+        if (raw) existing = JSON.parse(raw);
+      } catch { /* ignore */ }
+      const merged = { ...existing, ...inv };
+      console.log("[inventory] gemmer", Object.keys(merged).length, "produkter");
+      await context.env.BOOKINGS.put("inventory", JSON.stringify(merged));
+      return new Response(JSON.stringify({ ok: true, inventory: merged }), {
         status: 200,
         headers: corsHeaders,
       });

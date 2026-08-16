@@ -1774,30 +1774,30 @@
     {
       "id": "admin-belægningskalender",
       "title": "Admin: belægningskalender for produkter",
-      "description": "Ny admin-side /admin/kalender (eller fanen under /admin/lager) der viser belægning visuelt. Layout: produkter vertikalt (rækker), dage horisontalt (kolonner) for de næste N dage (default 14–30, vælgbar). Hver booking tegnes som et bånd hen over dens afhentning→retur-datoer med kundenavn (evt. telefon/booking-id). Formål: se hvem der har hvad hvornår, og hvor fyldt lageret er. Link fra admin-nav. Kræver admin-secret. Se også belægning-api + belægning-lanes.",
+      "description": "Ny admin-side /admin/kalender der viser belægning visuelt. Layout: produkter vertikalt, dage horisontalt (7/14/30/60). Bookinger som bånd med kundenavn. Link fra admin-nav. Kræver admin-secret.",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "belægning-api",
       "title": "API: belægningsdata til kalender",
-      "description": "GET /api/occupancy?from=&to=&secret= (admin). Returnér for hvert produkt i inventory: { id, name, stock (fra KV inventory), bookings: [{ bookingId, customerName, pickup, returnDate, qty }] }. Kun aktive bookinger (ikke afleveret/annulleret). Inkludér både speakers, rentalProducts og addons der tæller i lager. Pakker (festpakke osv.) ekspanderes til deres dele (party+lyseffekt) så kalenderen matcher fysisk udlevering — samme logik som availability/soldout. Brug eksisterende booking-felter (speakerId, addonIds, cartItems, pickup, returnDate).",
+      "description": "GET /api/occupancy?from=&to=&secret=. Returnerer produkter med stock, peak og bookinger. Pakker ekspanderes til dele. Aktive bookinger only.",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "belægning-lanes",
       "title": "Kalender: lagerrækker pr. produkt (multi-enhed uden enheds-ID)",
-      "description": "Lager er i dag kun antal (inventory.soundboks=2) — ikke navngivne enheder. I kalenderen: for hvert produkt tegn stock 'baner' (lane 1..N). Bookinger pakkes greedily ind i baner (første ledige bane uden overlap) så man visuelt ser at 2 Soundbokse kan have fx 5 bookinger på forskellige datoer, og hvor der er overlap på samme dag (begge enheder ude). Farvekode: ledig / delvist / fuldt belagt. Klik på booking → åbn bookingdetalje i /admin. V1: ingen permanent enhedstildeling i KV. V2 (senere, separat task hvis behov): fysiske enheds-ID'er (Soundboks A/B) + manuel tildeling ved udlevering.",
+      "description": "Bookinger pakkes greedily i baner 0..stock-1. Overbookinger markeres rødt. V1 uden permanente enheds-ID'er.",
       "priority": "high",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "belægning-filtre-ux",
       "title": "Kalender: filtre, horisont og mobil",
-      "description": "Filtre: kategori (lyd/lys/røg/av), kun produkter med bookinger, søg produktnavn. Vælg horisont: 7 / 14 / 30 / 60 dage + hop til dato. Sticky produktkolonne ved horisontal scroll. Mobil: scrollbart grid eller kompakt liste pr. dag. Vis også blokerede dage fra /admin/lager (blocked_*) som skravering. Tom tilstand: 'Ingen bookinger i perioden'.",
+      "description": "Filtre: kategori, kun med bookinger, søg. Horisont 7/14/30/60 + hop til dato. Sticky produktkolonne. Blokerede dage som skravering.",
       "priority": "medium",
-      "status": "todo"
+      "status": "done"
     }
   ],
   "status": {
@@ -2012,6 +2012,11 @@
       "status": "done",
       "date": "2026-08-16",
       "description": "Én menu for hele admin: src/components/AdminNav.tsx med ADMIN_MENU grupperet i Drift (Bookinger, Kalender, Udlevering, Lejeseddel, Lager, Udsolgt), Katalog & priser (Produkter, Rabatkoder, Udsalg), Markedsføring (Ads, Regler, Kanaler, Nyhedsbrev) og System (Indstillinger). Før havde hver side sin egen håndplukkede stribe links — Rabatkoder pegede kun på Ads og Regler, Lejeseddel på Lager og Nyhedsbrev — så man skulle om forsiden for at komme videre. Menuen markerer den aktuelle side, henter sidens navn fra stien og folder til én dropdown med optgroups på telefon. En test låser at hver admin-side bruger AdminNav og ikke har sin egen linkstribe."
+    },
+    "lagerlogik_hovedprodukt": {
+      "status": "done",
+      "date": "2026-08-16",
+      "description": "Rettet ved gennemgangen af belægningskalenderen: bookedProductIds (og den tilsvarende kopi i availability.ts) talte kun hovedproduktet med, hvis det stod på whitelisten SPEAKER_IDS. En ordre på fx en lyskæde, en projektor eller en festpakke optog derfor ingenting — produktet stod ledigt i kalender, udsolgt-oversigt og for kunden, selvom det var ude. Nu tæller hovedproduktet uanset type; produkter uden lagertal påvirker intet, da både soldout og availability kun regner på id'er der findes i inventory."
     }
   },
   "booking_improvements": {

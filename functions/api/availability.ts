@@ -10,7 +10,7 @@ const corsHeaders = {
   "Content-Type": "application/json",
 };
 
-const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 2, soundboks: 2, festival: 2, festival_bas: 1, lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 1 };
+const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 2, soundboks: 2, festival: 2, festival_bas: 1, lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 4, lyskaeder: 6 };
 
 const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival", "festival_bas"];
 
@@ -100,7 +100,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
         if (speakerId === "lys-only") {
           booked.lys = (booked.lys || 0) + 1;
-        } else if (speakerId && speakerId !== "effects-only" && SPEAKER_IDS.includes(speakerId)) {
+        } else if (speakerId && speakerId !== "effects-only") {
+          // Samme rettelse som i _lib/bookings.ts: hovedproduktet tæller uanset
+          // type, ellers kunne den samme lyskæde bookes ubegrænset
           booked[speakerId] = (booked[speakerId] || 0) + 1;
         }
 
