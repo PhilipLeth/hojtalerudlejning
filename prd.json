@@ -2408,6 +2408,20 @@
         "status": "done"
       },
       {
+        "id": "regn-5",
+        "titel": "Annonceforbrug i regnskabet",
+        "story": "Som ejer vil jeg se hvad Google Ads har kostet i samme periode som omsætningen, så jeg kan se hvad der er tilbage efter annoncer.",
+        "accept": [
+          "Forbrug pr. kampagne for den valgte periode, hentet direkte fra Google Ads",
+          "Nøgletal: annonceudgift, andel af omsætningen og 'efter annoncer' med ROAS",
+          "Klik, visninger og pris pr. klik",
+          "Regnskabstallene falder ikke, hvis Google Ads er nede eller ikke konfigureret — forbruget hentes for sig (GET /api/ads-spend) og siden skriver hvorfor det mangler",
+          "Annoncetallene kommer med i CSV-eksporten"
+        ],
+        "status": "done",
+        "note": "ROAS er hele omsætningen mod hele forbruget — ikke attribueret pr. ordre. Konverteringssporingen på kontoen er først lige ryddet op (se google_ads), så attribuering pr. ordre venter."
+      },
+      {
         "id": "regn-3",
         "titel": "Rykker på forfaldne fakturaer",
         "story": "Som udlejer vil jeg automatisk kunne sende en venlig rykker, når en faktura er forfalden.",

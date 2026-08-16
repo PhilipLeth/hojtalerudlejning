@@ -20,6 +20,15 @@ interface UnpaidOrder {
   total: number; paid: number; outstanding: number; status: "delvis" | "ubetalt";
   invoiceNumber?: string; dueDate?: string; overdue: boolean; daysSincePickup: number;
 }
+interface CampaignSpend { id: string; name: string; status: string; cost: number; clicks: number; impressions: number; conversions: number }
+interface SpendReport {
+  from: string; to: string; currency: string;
+  cost: number; clicks: number; impressions: number; conversions: number;
+  campaigns: CampaignSpend[];
+  error?: string;
+  configured?: boolean;
+}
+
 interface Settings {
   monthlyTarget: number; bankReg: string; bankKonto: string;
   mobilePay: string; paymentTermsDays: number; invoiceFooter: string;
@@ -93,6 +102,8 @@ export default function AccountingPage() {
   const [data, setData] = useState<Summary | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [spend, setSpend] = useState<SpendReport | null>(null);
+  const [spendError, setSpendError] = useState("");
   const [showSettings, setShowSettings] = useState(false);
   const [draft, setDraft] = useState<Settings | null>(null);
   const [saving, setSaving] = useState(false);
@@ -125,7 +136,27 @@ export default function AccountingPage() {
     }
   }, [secret, from, to]);
 
+  /** Annonceforbruget kommer fra Google og hentes for sig, så regnskabstallene
+   *  ikke venter på — eller falder med — Google Ads. */
+  const loadSpend = useCallback(async () => {
+    if (!secret) return;
+    setSpendError("");
+    setSpend(null);
+    try {
+      const res = await fetch(`/api/ads-spend?from=${from}&to=${to}&secret=${encodeURIComponent(secret)}`);
+      const json: SpendReport = await res.json();
+      if (!res.ok) {
+        setSpendError(json.configured === false ? "Google Ads er ikke sat op på serveren" : json.error || "Kunne ikke hente annonceforbrug");
+        return;
+      }
+      setSpend(json);
+    } catch {
+      setSpendError("Netværksfejl mod Google Ads");
+    }
+  }, [secret, from, to]);
+
   useEffect(() => { load(); }, [load]);
+  useEffect(() => { loadSpend(); }, [loadSpend]);
 
   async function saveSettings() {
     if (!draft) return;
@@ -165,6 +196,12 @@ export default function AccountingPage() {
       ["Weekend (fredag)", "Ordrer", "Omsætning", "Betalt", "Udestående"],
       ...data.byWeekend.map((w) => [w.friday, w.orders, w.revenue, w.paid, w.outstanding]),
       [],
+      ["Annoncer", "Beløb"],
+      ["Annonceudgift", spend?.cost ?? ""],
+      ["Klik", spend?.clicks ?? ""],
+      ["Visninger", spend?.impressions ?? ""],
+      ...(spend?.campaigns ?? []).map((c) => [c.name, c.cost]),
+      [],
       ["Betalingsmetode", "Beløb"],
       ...data.byMethod.map((m) => [PAYMENT_METHOD_LABELS[m.method] ?? m.method, m.amount]),
       [],
@@ -199,7 +236,7 @@ export default function AccountingPage() {
             <button onClick={() => setShowSettings((v) => !v)} style={{ padding: "8px 14px", fontSize: "13px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", cursor: "pointer", color: "#111" }}>
               Indstillinger
             </button>
-            <button onClick={load} disabled={loading} style={{ padding: "8px 14px", fontSize: "13px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", cursor: "pointer", color: "#111" }}>
+            <button onClick={() => { load(); loadSpend(); }} disabled={loading} style={{ padding: "8px 14px", fontSize: "13px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", cursor: "pointer", color: "#111" }}>
               {loading ? "Henter…" : "↺ Opdater"}
             </button>
           </>
@@ -269,12 +306,30 @@ export default function AccountingPage() {
         )}
 
         {/* Nøgletal */}
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 12, marginBottom: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(3, 1fr)", gap: 12, marginBottom: 16 }}>
           {[
             { label: "Omsætning", value: data?.revenue ?? 0, hint: `${data?.orders ?? 0} ordrer` },
             { label: "Betalt", value: data?.paid ?? 0, hint: "modtaget", color: "#155724" },
             { label: "Udestående", value: data?.outstanding ?? 0, hint: `${data?.unpaid.length ?? 0} ordrer mangler`, color: (data?.outstanding ?? 0) > 0 ? "#c0392b" : "#155724" },
             { label: "Gns. ordre", value: data?.averageOrder ?? 0, hint: data?.cancelled ? `${data.cancelled} annulleret` : "pr. booking" },
+            {
+              label: "Annonceudgift",
+              value: spend?.cost ?? 0,
+              hint: spendError
+                ? spendError
+                : !spend
+                  ? "henter fra Google Ads…"
+                  : data && data.revenue > 0
+                    ? `${Math.round((spend.cost / data.revenue) * 100)}% af omsætningen`
+                    : `${spend.clicks} klik`,
+              color: "#c0392b",
+            },
+            {
+              label: "Efter annoncer",
+              value: (data?.revenue ?? 0) - (spend?.cost ?? 0),
+              hint: spend && spend.cost > 0 && data ? `ROAS ${(data.revenue / spend.cost).toFixed(1)}×` : "omsætning minus annoncer",
+              color: "#155724",
+            },
           ].map((k) => (
             <div key={k.label} style={{ ...card, marginBottom: 0, padding: "14px" }}>
               <div style={{ fontSize: 11, color: "#888", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.04em" }}>{k.label}</div>
@@ -400,6 +455,54 @@ export default function AccountingPage() {
               </table>
             )}
           </div>
+        </div>
+
+        {/* Annonceforbrug */}
+        <div style={card}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
+            <p style={{ margin: 0, fontWeight: 700, fontSize: 14 }}>Annonceforbrug (Google Ads)</p>
+            {spend && (
+              <span style={{ fontSize: 12, color: "#888" }}>
+                {spend.clicks} klik · {new Intl.NumberFormat("da-DK").format(spend.impressions)} visninger
+                {spend.clicks > 0 && ` · ${kr(spend.cost / spend.clicks)} pr. klik`}
+              </span>
+            )}
+          </div>
+
+          {spendError ? (
+            <p style={{ margin: 0, color: "#888", fontSize: 13 }}>{spendError}</p>
+          ) : !spend ? (
+            <p style={{ margin: 0, color: "#aaa", fontSize: 13 }}>Henter fra Google Ads…</p>
+          ) : spend.campaigns.length === 0 ? (
+            <p style={{ margin: 0, color: "#888", fontSize: 13 }}>Intet forbrug i perioden</p>
+          ) : (
+            <>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <tbody>
+                  {spend.campaigns.map((c) => (
+                    <tr key={c.id}>
+                      <td style={td}>
+                        {c.name}
+                        <div style={{ fontSize: 11, color: "#aaa" }}>
+                          {c.status === "ENABLED" ? "aktiv" : c.status.toLowerCase()} · {c.clicks} klik
+                        </div>
+                      </td>
+                      <td style={{ ...td, width: "30%" }}>
+                        <Bar value={c.cost} max={Math.max(1, ...spend.campaigns.map((x) => x.cost))} color="#c0392b" />
+                      </td>
+                      <td style={{ ...num, fontWeight: 700 }}>{kr(c.cost)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {data && data.revenue > 0 && spend.cost > 0 && (
+                <p style={{ margin: "10px 0 0", fontSize: 12, color: "#666" }}>
+                  Hver annoncekrone har hentet <strong>{(data.revenue / spend.cost).toFixed(1)} kr</strong> hjem i omsætning
+                  i perioden. Tallet er ikke attribueret pr. ordre — det er hele omsætningen mod hele forbruget.
+                </p>
+              )}
+            </>
+          )}
         </div>
 
         {/* Betalingsmetoder */}

@@ -22,6 +22,7 @@ import {
   type Payment,
 } from "@/lib/payments";
 import { buildAccounting, allocateRevenue, weekendFriday, revenueDate } from "../../functions/api/_lib/accounting";
+import { microsToMajor } from "../../functions/api/_lib/googleads";
 
 const pay = (amount: number, method: Payment["method"], paidAt = "2026-08-15T10:00:00Z"): Payment => ({
   id: `p${amount}${method}`, amount, method, paidAt, source: "manuel",
@@ -238,6 +239,14 @@ describe("Bogføringsdato", () => {
   });
 });
 
+describe("Annonceforbrug", () => {
+  it("regner mikroenheder om til kroner", () => {
+    expect(microsToMajor(1_000_000)).toBe(1);
+    expect(microsToMajor("12345678")).toBe(12.35);
+    expect(microsToMajor(undefined)).toBe(0);
+  });
+});
+
 describe("API'erne bag betaling og faktura", () => {
   const read = (p: string) => readFileSync(join(process.cwd(), p), "utf8");
 
@@ -273,6 +282,21 @@ describe("API'erne bag betaling og faktura", () => {
     const src = read("functions/api/accounting.ts");
     expect(src).toContain("Unauthorized");
     expect(src).toContain("buildAccounting");
+  });
+
+  it("henter annonceforbrug pr. kampagne for perioden", () => {
+    const lib = read("functions/api/_lib/googleads.ts");
+    expect(lib).toContain("campaignSpend");
+    expect(lib).toContain("metrics.cost_micros");
+    expect(lib).toContain("segments.date BETWEEN");
+    // Én række pr. dag pr. kampagne — de skal lægges sammen
+    expect(lib).toMatch(/row\.cost \+= microsToMajor/);
+
+    const api = read("functions/api/ads-spend.ts");
+    expect(api).toContain("Unauthorized");
+    expect(api).toContain("AdsNotConfigured");
+    // Regnskabstallene må ikke falde med Google Ads
+    expect(read("functions/api/accounting.ts")).not.toContain("campaignSpend");
   });
 
   it("lægger Stripe-betalinger på betalingslisten", () => {
