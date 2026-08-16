@@ -27,6 +27,18 @@ import {
 } from "@/lib/bookingStage";
 import { orderLines, deliveryInfo, type OrderBooking } from "@/lib/orderLines";
 import { useProducts } from "@/lib/useProducts";
+import PaymentPanel from "@/components/PaymentPanel";
+import {
+  paymentStatus,
+  paidAmount,
+  outstanding,
+  paymentsOf,
+  PAYMENT_METHOD_LABELS as PM_LABELS,
+  PAYMENT_STATUS_META,
+  type Payment,
+  type PaymentMethod,
+  type Invoice,
+} from "@/lib/payments";
 import AdminNav from "@/components/AdminNav";
 
 interface Booking extends OrderBooking {
@@ -67,6 +79,10 @@ interface Booking extends OrderBooking {
   inspected?: boolean;
   /** Admin har set anmeldelsen komme ind */
   reviewDone?: boolean;
+  /** Indbetalinger — en ordre kan betales ad flere gange og med flere metoder */
+  payments?: Payment[];
+  /** Faktureret men ikke betalt tæller stadig som udestående */
+  invoice?: Invoice | null;
   /** Rabatkode valideret server-side ved booking */
   discount?: { code: string; pct: number } | null;
   /** Kundens underskrift ved udlevering — se /admin/udlevering */
@@ -82,16 +98,6 @@ type EditableFields = {
   inspected?: boolean;
   reviewDone?: boolean;
 };
-
-/** Betalingssporets valg — Stripe-betalinger er låst, resten sætter admin selv */
-type PaymentChoice = "ikke_betalt" | PaidMethod;
-
-const PAYMENT_CHOICES: Array<{ id: PaymentChoice; label: string; icon: string }> = [
-  { id: "ikke_betalt", label: "Ikke betalt", icon: "⏳" },
-  { id: "mobilepay", label: PAID_METHOD_LABELS.mobilepay, icon: "📱" },
-  { id: "kontant", label: PAID_METHOD_LABELS.kontant, icon: "💵" },
-  { id: "bank", label: PAID_METHOD_LABELS.bank, icon: "🏦" },
-];
 
 const DEPOSIT_CHOICES: Array<{ id: DepositState; label: string; icon: string }> = [
   { id: "afventer", label: "Ikke modtaget", icon: "⏳" },
@@ -281,31 +287,38 @@ function OrderBreakdown({ b, priceOf }: { b: Booking; priceOf: (id?: string) => 
 
 /** Betalingsstatus i klartekst — skal kunne ses på en armslængde på mobilen */
 function PaymentBanner({ b }: { b: Booking }) {
-  const paid = isPaid(b);
-  const method = b.paid ? "Betalt online (Stripe)" : b.paidMethod ? PAID_METHOD_LABELS[b.paidMethod] : null;
+  const status = paymentStatus(b);
+  const meta = PAYMENT_STATUS_META[status];
+  const methods = [...new Set(paymentsOf(b).map((p) => PM_LABELS[p.method] ?? p.method))];
+  const rest = outstanding(b);
   const deposit = hasDeposit(b)
     ? `Depositum ${b.depositAmount} kr · ${DEPOSIT_CHOICES.find((d) => d.id === (b.depositState ?? "afventer"))!.label}`
     : "Intet depositum";
+
   return (
     <div
       style={{
         display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px",
-        background: paid ? "#d4edda" : "#fff3cd",
-        border: `1px solid ${paid ? "#28a745" : "#ffc107"}`,
-        borderRadius: "8px", padding: "10px 12px",
+        background: meta.bg, border: `1px solid ${meta.border}`, borderRadius: "8px", padding: "10px 12px",
       }}
     >
       <div>
-        <div style={{ fontSize: "14px", fontWeight: 800, color: paid ? "#155724" : "#856404" }}>
-          {paid ? `✓ BETALT${method ? ` · ${method}` : ""}` : "⏳ IKKE BETALT"}
+        <div style={{ fontSize: "14px", fontWeight: 800, color: meta.text }}>
+          {status === "betalt" ? "✓" : status === "delvis" ? "◑" : "⏳"} {meta.short}
+          {status === "betalt" && methods.length > 0 && ` · ${methods.join(" + ")}`}
+          {status === "delvis" && ` · mangler ${outstanding(b)} kr`}
         </div>
-        <div style={{ fontSize: "11px", color: paid ? "#2f6f45" : "#8a6d1f" }}>
+        <div style={{ fontSize: "11px", color: meta.text, opacity: 0.85 }}>
           {deposit}
-          {!paid && b.paymentChoice === "online" && " · kunden valgte online betaling"}
+          {status !== "betalt" && b.invoice && ` · faktura ${b.invoice.number} forfalder ${b.invoice.dueDate}`}
+          {status === "ubetalt" && !b.invoice && b.paymentChoice === "online" && " · kunden valgte online betaling"}
         </div>
       </div>
-      <div style={{ fontSize: "20px", fontWeight: 800, whiteSpace: "nowrap", color: paid ? "#155724" : "#856404" }}>
-        {b.total} kr
+      <div style={{ textAlign: "right", whiteSpace: "nowrap", color: meta.text }}>
+        <div style={{ fontSize: "20px", fontWeight: 800 }}>{b.total} kr</div>
+        {status === "delvis" && (
+          <div style={{ fontSize: "11px" }}>betalt {paidAmount(b)} kr</div>
+        )}
       </div>
     </div>
   );
@@ -425,6 +438,52 @@ export default function AdminPage() {
       alert("Netværksfejl");
     }
   };
+
+  /** Betalinger og faktura — samme kald bruges af tabel og mobilkort */
+  const paymentActions: PaymentActions = useMemo(() => {
+    const post = async (body: Record<string, unknown>, fejl: string) => {
+      setUpdating(String(body.id));
+      try {
+        const res = await fetch(`/api/bookings-update?secret=${encodeURIComponent(secret)}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (!res.ok) { alert(data.error || fejl); return; }
+        setBookings((prev) => prev.map((b) => (b.id === body.id ? { ...b, ...data.booking } : b)));
+      } catch {
+        alert("Netværksfejl");
+      } finally {
+        setUpdating(null);
+      }
+    };
+
+    return {
+      busy: updating,
+      add: (id, payment) => post({ id, action: "add_payment", payment }, "Kunne ikke registrere betalingen"),
+      remove: (id, paymentId) => post({ id, action: "delete_payment", paymentId }, "Kunne ikke fjerne betalingen"),
+      clearInvoice: (id) => post({ id, action: "set_invoice", invoice: null }, "Kunne ikke fjerne fakturaen"),
+      sendInvoice: async (id) => {
+        setUpdating(id);
+        try {
+          const res = await fetch(`/api/invoice?secret=${encodeURIComponent(secret)}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
+          });
+          const data = await res.json();
+          if (!res.ok) { alert(data.error || "Kunne ikke sende fakturaen"); return; }
+          setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, ...data.booking } : b)));
+          alert(`Faktura ${data.invoice.number} sendt — forfalder ${data.invoice.dueDate}`);
+        } catch {
+          alert("Netværksfejl");
+        } finally {
+          setUpdating(null);
+        }
+      },
+    };
+  }, [secret, updating]);
 
   const today = useMemo(() => startOfDay(new Date()), []);
 
@@ -626,11 +685,11 @@ export default function AdminPage() {
                 <span style={{ color: "#aaa", fontSize: "12px" }}>{group.length} booking{group.length !== 1 ? "er" : ""}</span>
                 {hint && <span style={{ color: "#bbb", fontSize: "12px" }}>· {hint}</span>}
               </div>
-              <BookingList mobile={isMobile} bookings={group} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
+              <BookingList mobile={isMobile} payments={paymentActions} bookings={group} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
             </div>
           ))
         ) : (
-          <BookingList mobile={isMobile} bookings={filtered} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
+          <BookingList mobile={isMobile} payments={paymentActions} bookings={filtered} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
         )}
       </main>
     </div>
@@ -749,42 +808,23 @@ function DepositAmount({ value, onCommit }: { value: number; onCommit: (v: numbe
 
 /**
  * Betalingssporet: lejen og et eventuelt depositum, adskilt fra udstyret.
- * Stripe-betalinger er låst — dem har webhooken bekræftet.
+ * Selve betalingen ligger i PaymentPanel — her hænger depositummet på.
  */
-function PaymentTrack({ b, issues, setFields }: {
+function PaymentTrack({ b, issues, setFields, payments }: {
   b: Booking;
   issues: OpenIssue[];
   setFields: (id: string, fields: EditableFields) => void;
+  payments: PaymentActions;
 }) {
-  const choice: PaymentChoice = b.paidManual ? (b.paidMethod ?? "kontant") : "ikke_betalt";
-  const paidTone = isPaid(b)
-    ? { bg: "#d4edda", text: "#155724", border: "#28a745" }
-    : { bg: "#fff3cd", text: "#856404", border: "#ffc107" };
-
-  const onSelect = (value: PaymentChoice) => {
-    if (value === "ikke_betalt") setFields(b.id, { paidManual: false, paidMethod: null });
-    else setFields(b.id, { paidManual: true, paidMethod: value });
-  };
-
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "4px", alignItems: "flex-start" }}>
-      {b.paid ? (
-        <span title={b.paidAt ? `Betalt ${new Date(b.paidAt).toLocaleString("da-DK")}` : "Bekræftet af Stripe"} style={{ padding: "3px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: 700, background: "#d1f7e3", color: "#0a7a43", border: "1px solid #28a745", whiteSpace: "nowrap" }}>
-          💳 Betalt online{b.paidAmount ? ` · ${Math.round(b.paidAmount / 100)} kr` : ""}
-        </span>
-      ) : (
-        <select
-          value={choice}
-          onChange={(e) => onSelect(e.target.value as PaymentChoice)}
-          title={b.paymentChoice === "online" ? "Kunden valgte online betaling — den er ikke gennemført endnu" : "Sådan er lejen betalt"}
-          style={{ ...trackSelect, background: paidTone.bg, color: paidTone.text, border: `1px solid ${paidTone.border}` }}
-        >
-          {PAYMENT_CHOICES.map((p) => (
-            <option key={p.id} value={p.id}>{p.icon} {p.label}</option>
-          ))}
-        </select>
-      )}
-
+    <PaymentPanel
+      booking={b}
+      busy={payments.busy === b.id}
+      onAddPayment={payments.add}
+      onDeletePayment={payments.remove}
+      onSendInvoice={payments.sendInvoice}
+      onClearInvoice={payments.clearInvoice}
+    >
       {hasDeposit(b) ? (
         <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "11px", color: "#666" }}>
           <span title="Depositum">🔒</span>
@@ -818,12 +858,22 @@ function PaymentTrack({ b, issues, setFields }: {
         </button>
       )}
       <IssueList issues={issues} />
-    </div>
+    </PaymentPanel>
   );
+}
+
+/** Handlingerne på betalingssporet, samlet ét sted og delt af tabel og kort */
+export interface PaymentActions {
+  busy: string | null;
+  add: (id: string, payment: { amount: number; method: PaymentMethod; note?: string }) => void;
+  remove: (id: string, paymentId: string) => void;
+  sendInvoice: (id: string) => void;
+  clearInvoice: (id: string) => void;
 }
 
 interface ListProps {
   bookings: Booking[];
+  payments: PaymentActions;
   expanded: string | null;
   setExpanded: (id: string | null) => void;
   updateStatus: (id: string, status: string) => void;
@@ -941,7 +991,7 @@ function BookingDetails({ b, today }: { b: Booking; today: Date }) {
  * Mobilvisning: ét kort pr. booking. Rækkefølgen er den man bruger i døren —
  * hvem, hvornår, hvad der skal med, hvad der skal betales, og så handlingerne.
  */
-function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today }: ListProps) {
+function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments }: ListProps) {
   if (bookings.length === 0) return null;
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
@@ -981,7 +1031,7 @@ function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBoo
               </div>
               <div>
                 <div style={{ fontSize: "10px", fontWeight: 700, color: "#888", textTransform: "uppercase", marginBottom: "4px" }}>Betaling</div>
-                <PaymentTrack b={b} issues={issues.filter((i) => i.track === "betaling")} setFields={setFields} />
+                <PaymentTrack b={b} issues={issues.filter((i) => i.track === "betaling")} setFields={setFields} payments={payments} />
               </div>
             </div>
 
@@ -1000,7 +1050,7 @@ function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBoo
   );
 }
 
-function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today }: ListProps) {
+function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments }: ListProps) {
   if (bookings.length === 0) return null;
 
   const thStyle: React.CSSProperties = { padding: "8px 12px", fontSize: "11px", fontWeight: 700, textAlign: "left", color: "#888", textTransform: "uppercase", letterSpacing: "0.05em", borderBottom: "1px solid #eee", whiteSpace: "nowrap" };
@@ -1051,7 +1101,7 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                   {/* Beløb, betalingsspor og handlinger i én kolonne */}
                   <td style={tdStyle} onClick={(e) => e.stopPropagation()}>
                     <div style={{ fontWeight: 800, fontSize: "15px", marginBottom: "4px" }}>{b.total} kr</div>
-                    <PaymentTrack b={b} issues={issues.filter((i) => i.track === "betaling")} setFields={setFields} />
+                    <PaymentTrack b={b} issues={issues.filter((i) => i.track === "betaling")} setFields={setFields} payments={payments} />
                     <div style={{ marginTop: "8px" }}>
                       <RowActions b={b} busy={busy} deleteBooking={deleteBooking} />
                     </div>

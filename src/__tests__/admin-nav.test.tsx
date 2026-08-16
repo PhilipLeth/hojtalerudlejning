@@ -30,6 +30,7 @@ describe("Menustrukturen", () => {
       "Drift",
       "Katalog & priser",
       "Markedsføring",
+      "Økonomi",
       "System",
     ]);
   });
@@ -45,6 +46,8 @@ describe("Menustrukturen", () => {
       expect(hrefs, `${page} mangler i menuen`).toContain(page);
     }
     expect(hrefs).toContain("/admin");
+    // Regnskabet ligger uden for /admin, men hører til i menuen
+    expect(hrefs).toContain("/accounting");
   });
 
   it("navngiver siden ud fra stien", () => {
@@ -109,7 +112,7 @@ describe("AdminNav", () => {
     const select = screen.getByLabelText("Gå til admin-side") as HTMLSelectElement;
     expect(select.value).toBe("/admin/rabatkoder");
     expect([...container.querySelectorAll("optgroup")].map((o) => o.label)).toEqual([
-      "Drift", "Katalog & priser", "Markedsføring", "System",
+      "Drift", "Katalog & priser", "Markedsføring", "Økonomi", "System",
     ]);
   });
 

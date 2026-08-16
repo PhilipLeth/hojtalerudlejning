@@ -10,6 +10,8 @@
  * Datoerne kommer fra lejeperioden (pickup/returnDate), ikke fra oprettelsen.
  */
 
+import { isFullyPaid, paymentStatus, outstanding, type PayableBooking } from "@/lib/payments";
+
 export type DepositState = "afventer" | "modtaget" | "tilbagebetalt";
 export type PaidMethod = "mobilepay" | "kontant" | "bank";
 
@@ -22,6 +24,12 @@ export interface StageBooking {
   /** Lejeperiodens start/slut som ISO — sat af kalenderen ved booking */
   pickup?: string;
   returnDate?: string;
+  /** Ordrens beløb — betalingsstatus regnes mod det */
+  total?: number;
+  /** Indbetalinger (kan være flere, med hver sin metode) */
+  payments?: PayableBooking["payments"];
+  /** Faktureret men ikke betalt tæller stadig som udestående */
+  invoice?: PayableBooking["invoice"];
   /** Betalt online via Stripe */
   paid?: boolean;
   /** Admin har kvitteret for MobilePay/kontant/bank */
@@ -91,8 +99,17 @@ export const PAID_METHOD_LABELS: Record<PaidMethod, string> = {
   bank: "Bankoverførsel",
 };
 
+/**
+ * Er lejen betalt fuldt ud. En ordre med kun en delbetaling tæller IKKE som
+ * betalt — den mangler stadig penge, og sagen kan ikke lukkes.
+ */
 export function isPaid(b: StageBooking): boolean {
-  return !!b.paid || !!b.paidManual;
+  return isFullyPaid(b as PayableBooking);
+}
+
+/** Hvad der mangler at komme ind på ordren */
+export function missingAmount(b: StageBooking): number {
+  return outstanding(b as PayableBooking);
 }
 
 export function hasDeposit(b: StageBooking): boolean {
@@ -194,7 +211,12 @@ export function openIssues(b: StageBooking, today: Date): OpenIssue[] {
     });
   }
   if (isHandedOut(b) && !isPaid(b)) {
-    issues.push({ track: "betaling", label: "Betaling mangler" });
+    const mangler = missingAmount(b);
+    const delvis = paymentStatus(b as PayableBooking) === "delvis";
+    issues.push({
+      track: "betaling",
+      label: delvis ? `Mangler ${mangler} kr` : b.invoice ? `Faktura ubetalt (${mangler} kr)` : "Betaling mangler",
+    });
   }
   // De to depositum-advarsler udelukker hinanden: enten mangler pengene at
   // komme ind, eller også sidder vi på dem og skal give dem tilbage

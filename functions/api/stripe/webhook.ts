@@ -50,6 +50,22 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           booking.stripePaymentIntent = typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id;
           booking.paidAmount = session.amount_total;
           booking.paidAt = new Date(event.created * 1000).toISOString();
+          // Betalingen skal også stå på ordrens betalingsliste, så en online
+          // betalt ordre der får tilkøb i døren viser "delvis betalt" og ikke
+          // fejlagtigt står som færdigbetalt
+          const kr = Math.round((session.amount_total || 0) / 100);
+          const payments = Array.isArray(booking.payments) ? booking.payments : [];
+          if (!payments.some((p: { note?: string }) => p?.note === session.id)) {
+            payments.push({
+              id: `pay_${event.created}_${session.id.slice(-6)}`,
+              amount: kr,
+              method: "kort",
+              paidAt: booking.paidAt,
+              source: "stripe",
+              note: session.id,
+            });
+          }
+          booking.payments = payments;
           await context.env.BOOKINGS.put(bookingId, JSON.stringify(booking));
           console.log("[stripe] booking marked paid:", bookingId, session.amount_total);
         } catch (e) {

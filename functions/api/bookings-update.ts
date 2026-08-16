@@ -63,7 +63,13 @@ export const onRequestOptions: PagesFunction<Env> = async () => {
 interface UpdateBody {
   id: string;
   status?: string;
-  action?: "delete" | "set_flag" | "set_fields";
+  action?: "delete" | "set_flag" | "set_fields" | "add_payment" | "delete_payment" | "set_invoice";
+  /** add_payment: en indbetaling på ordren */
+  payment?: { amount?: unknown; method?: unknown; paidAt?: unknown; note?: unknown };
+  /** delete_payment: hvilken indbetaling der skal væk */
+  paymentId?: string;
+  /** set_invoice: forfaldsdato, eller null for at fjerne fakturaen igen */
+  invoice?: { dueDate?: unknown } | null;
   /** set_flag: hvilket felt der slås til/fra */
   flag?: "paidManual" | "reviewDone";
   value?: boolean;
@@ -89,6 +95,21 @@ const FIELD_VALIDATORS: Record<string, (v: unknown) => boolean> = {
   inspected: (v) => typeof v === "boolean",
   reviewDone: (v) => typeof v === "boolean",
 };
+
+const PAYMENT_METHODS = ["mobilepay", "kontant", "bank", "kort", "andet"];
+
+/**
+ * Fakturanummer som løbenummer pr. år (2026-001). Tælleren ligger i KV, så vi
+ * slipper for at scanne alle bookinger for at finde det højeste nummer.
+ */
+async function nextInvoiceNumber(kv: KVNamespace): Promise<string> {
+  const year = new Date().getFullYear();
+  const key = `invoice_seq_${year}`;
+  const current = Number((await kv.get(key)) || 0);
+  const next = Number.isFinite(current) ? current + 1 : 1;
+  await kv.put(key, String(next));
+  return `${year}-${String(next).padStart(3, "0")}`;
+}
 
 const VALID_STATUSES = ["ny", "bekraeftet", "pakket", "afhentet", "afleveret", "annulleret_kunde", "annulleret_admin"];
 
@@ -153,6 +174,69 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         status: 200,
         headers: corsHeaders,
       });
+    }
+
+    // ── Betalinger: en ordre kan betales ad flere gange og med flere metoder
+    if (body.action === "add_payment" || body.action === "delete_payment" || body.action === "set_invoice") {
+      const existingRaw = await context.env.BOOKINGS.get(body.id);
+      if (!existingRaw) {
+        return new Response(JSON.stringify({ error: "Booking not found" }), { status: 404, headers: corsHeaders });
+      }
+      const booking = JSON.parse(existingRaw);
+      const now = new Date().toISOString();
+      booking.payments = Array.isArray(booking.payments) ? booking.payments : [];
+
+      if (body.action === "add_payment") {
+        const amount = Math.round(Number(body.payment?.amount));
+        const method = String(body.payment?.method || "");
+        if (!Number.isFinite(amount) || amount <= 0 || amount > 1000000) {
+          return new Response(JSON.stringify({ error: "Beløbet skal være mellem 1 og 1.000.000 kr" }), { status: 400, headers: corsHeaders });
+        }
+        if (!PAYMENT_METHODS.includes(method)) {
+          return new Response(JSON.stringify({ error: `Ukendt betalingsmetode. Vælg: ${PAYMENT_METHODS.join(", ")}` }), { status: 400, headers: corsHeaders });
+        }
+        const paidAt = typeof body.payment?.paidAt === "string" && /^\d{4}-\d{2}-\d{2}/.test(body.payment.paidAt)
+          ? new Date(body.payment.paidAt).toISOString()
+          : now;
+        booking.payments.push({
+          id: `pay_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+          amount,
+          method,
+          paidAt,
+          note: typeof body.payment?.note === "string" ? body.payment.note.slice(0, 200) : undefined,
+          source: "manuel",
+        });
+      }
+
+      if (body.action === "delete_payment") {
+        const before = booking.payments.length;
+        booking.payments = booking.payments.filter((p: { id?: string }) => p?.id !== body.paymentId);
+        if (booking.payments.length === before) {
+          return new Response(JSON.stringify({ error: "Indbetalingen findes ikke" }), { status: 404, headers: corsHeaders });
+        }
+      }
+
+      if (body.action === "set_invoice") {
+        if (body.invoice === null) {
+          booking.invoice = null;
+        } else {
+          const dueDate = String(body.invoice?.dueDate || "");
+          if (!/^\d{4}-\d{2}-\d{2}$/.test(dueDate)) {
+            return new Response(JSON.stringify({ error: "Forfaldsdato skal være YYYY-MM-DD" }), { status: 400, headers: corsHeaders });
+          }
+          const number = booking.invoice?.number || (await nextInvoiceNumber(context.env.BOOKINGS));
+          booking.invoice = { ...(booking.invoice || {}), number, dueDate, amount: Number(booking.total) || 0 };
+        }
+      }
+
+      // Den gamle model holdes i sync, så alt der endnu læser paidManual
+      // ser det samme som betalingslisten
+      const paidSum = booking.payments.reduce((s: number, p: { amount?: number }) => s + (Number(p?.amount) || 0), 0);
+      booking.paidManual = paidSum > 0 && paidSum >= (Number(booking.total) || 0) - 1;
+      booking.updatedAt = now;
+
+      await context.env.BOOKINGS.put(body.id, JSON.stringify(booking));
+      return new Response(JSON.stringify({ ok: true, booking }), { status: 200, headers: corsHeaders });
     }
 
     // Sæt flere felter på én gang (betalingsmetode, depositum, inspektion)

@@ -195,9 +195,10 @@ describe("Tabellen på desktop", () => {
     const orderCell = screen.getByText(/Lyskæde varm hvid/).closest("td")!;
     expect(orderCell.querySelector("select")).toBeTruthy();
 
-    // Beløb, betalingsvalg og handlingsknapper i én celle
+    // Beløb, betalingsstatus og handlingsknapper i én celle
     const payCell = screen.getByText("1480 kr").closest("td")!;
-    expect(payCell.querySelector("select")).toBeTruthy();
+    expect(payCell.textContent).toContain("IKKE BETALT");
+    expect(payCell.textContent).toContain("Registrér betaling");
     expect(payCell.textContent).toContain("Print");
     expect(payCell.textContent).toContain("Underskrift");
   });
@@ -242,5 +243,27 @@ describe("Udleveringssiden", () => {
     render(<UdleveringPage />);
     await waitFor(() => expect(screen.getByText("⏳ SKAL BETALES NU")).toBeInTheDocument());
     expect(screen.getByText("1480 kr")).toBeInTheDocument();
+  });
+
+  it("viser afhentningskø når der ikke er valgt en booking", async () => {
+    window.history.pushState({}, "", "/admin/udlevering");
+    const soon = new Date();
+    soon.setDate(soon.getDate() + 2);
+    (global.fetch as any).mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({
+        bookings: [{
+          ...booking,
+          status: "bekraeftet",
+          pickup: soon.toISOString().slice(0, 10),
+          handover: undefined,
+        }],
+      }),
+    });
+    render(<UdleveringPage />);
+    await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
+    expect(screen.getByText(/Vælg en afhentning/i)).toBeInTheDocument();
+    const link = screen.getByRole("link", { name: /Julie Blegvad/i });
+    expect(link.getAttribute("href")).toContain(`/admin/udlevering?id=${booking.id}`);
   });
 });

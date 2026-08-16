@@ -1724,7 +1724,7 @@
     {
       "id": "hojtaler-ny-struktur",
       "title": "Ny struktur for højtalere + nye produktbilleder",
-      "description": "Nye Gemini-billeder på Lille (2× Alto) og Stor (2× EV) højtalerpakke. NY toppakke 'Stor højtalerpakke + bas' 895 kr (/hojtalerpakke-bas) med bundkasse-billedet — spar 95 vs 695+295. Lager 1 (begrænset af subwoofer). Naming ensrettet: 'normal' hedder nu Stor overalt (URL /hojtalerpakke-normal beholdt).",
+      "description": "Nye Gemini-billeder på Lille (2× Alto) og Stor (2× EV) højtalerpakke. Naming ensrettet: 'normal' hedder nu Stor overalt (URL /hojtalerpakke-normal beholdt). OBS 2026-08-16: 'Stor højtalerpakke + bas' (festival_bas) er fjernet — det var en opfundet combo; bas = subwoofer-tilvalg.",
       "priority": "high",
       "status": "done"
     },
@@ -2066,6 +2066,11 @@
       "date": "2026-08-04",
       "description": "Bugfix: Valgte kunden produkt A og klikkede derefter Book på produkt B (?product=B), blev A overskrevet og forsvandt fra kurven. Nu lægges det igangværende valg (produkt + tilvalg) automatisk i kurven, før det nye produkt vælges. Samme produkt to gange stabler ikke dubletter. '+ Tilføj et produkt mere' bevarer nu også valgte tilvalg (lægges i kurven) og levering/adresse (gælder hele ordren)."
     },
+    "fjern_festival_bas_2026_08": {
+      "status": "done",
+      "date": "2026-08-16",
+      "description": "festival_bas ('Stor højtalerpakke + bas') fjernet som produkt/lagerlinje. Det er ikke et fysisk produkt — kun subwoofer (tilvalg) + stor højtalerpakke. /hojtalerpakke-bas → 301 /subwoofer. Gamle bookinger ekspanderes til festival+subwoofer."
+    },
     "subwoofer_2026_08": {
       "status": "done",
       "date": "2026-08-04",
@@ -2310,5 +2315,103 @@
       }
     ],
     "note": "'cancelled' betyder afvist/rullet tilbage — IKKE åbent arbejde. Booking er og forbliver en drawer-kurv, se booking_drawer-sektionen."
+  },
+  "betaling_og_regnskab": {
+    "opdateret": "2026-08-16",
+    "baggrund": "Betaling var ét flueben: enten betalt eller ikke betalt, med én metode. Virkeligheden er en anden — 500 kontant i døren og resten på MobilePay, erhverv der skal have en faktura og betaler 8 dage senere, eller en online betalt ordre der får tilkøb med ud ad døren. Og der fandtes intet sted at se hvad der faktisk kom ind.",
+    "model": {
+      "kilde": "src/lib/payments.ts — brugt af admin, udleveringssiden, sagsstatus og regnskab",
+      "betalinger": "booking.payments[]: { id, amount (kr), method, paidAt, note, source }. Metoder: mobilepay, kontant, bank, kort, andet.",
+      "status": "betalt / delvis / ubetalt regnes ud fra summen mod ordrens total, med 1 kr slør for Stripe-afrunding",
+      "faktura": "booking.invoice: { number, dueDate, amount, sentAt } — en tilstand, ikke en betaling. Ordren er ubetalt indtil pengene registreres.",
+      "bagudkompatibilitet": "Gamle ordrer med paid/paidManual oversættes til én syntetisk indbetaling, så intet skifter status ved opdateringen."
+    },
+    "stories": [
+      {
+        "id": "betal-1",
+        "titel": "Flere indbetalinger på samme ordre",
+        "story": "Som udlejer vil jeg kunne registrere flere indbetalinger med hver sin metode, så en ordre der betales delvist kontant og delvist på MobilePay viser den rigtige status.",
+        "accept": [
+          "Ordre på 1.480: 500 kontant giver 'Delvis betalt · mangler 980'",
+          "Yderligere 980 på MobilePay giver 'Betalt' og viser 'Kontant + MobilePay'",
+          "En indbetaling kan fjernes igen, og status ruller tilbage"
+        ],
+        "status": "done"
+      },
+      {
+        "id": "betal-2",
+        "titel": "Faktureres = ikke betalt endnu",
+        "story": "Som udlejer vil jeg kunne sætte en ordre til fakturering (bankoverførsel), så den tæller som udestående indtil pengene er der, og kan skiftes til betalt ved at registrere indbetalingen.",
+        "accept": [
+          "Fakturering giver ordren et løbenummer (2026-001) og en forfaldsdato",
+          "Ordren står som ubetalt/faktureret og indgår i udestående",
+          "Passeret forfaldsdato markeres rødt i regnskabet"
+        ],
+        "status": "done"
+      },
+      {
+        "id": "betal-3",
+        "titel": "Fakturamail til kunden",
+        "story": "Som udlejer vil jeg sende en faktura på mail med ordrelinjer, beløb, hvad der allerede er betalt og hvordan man betaler.",
+        "accept": [
+          "Mailen viser linjer, total, allerede betalt og 'At betale'",
+          "Bank og MobilePay hentes fra regnskabsindstillingerne",
+          "Fakturaen logges i bookingens kommunikationslog og kan sendes igen"
+        ],
+        "status": "done",
+        "hvor": "POST /api/invoice + functions/api/_lib/invoiceMail.ts"
+      },
+      {
+        "id": "betal-4",
+        "titel": "Online betalt ordre der vokser",
+        "story": "Som udlejer vil jeg have at en Stripe-betaling er én indbetaling blandt flere, så en ordre der får tilkøb i døren viser at der mangler penge.",
+        "accept": [
+          "Stripe-webhooken lægger betalingen på betalingslisten",
+          "Ordre betalt 895 online med tilkøb til 1.140 viser 'mangler 245'"
+        ],
+        "status": "done"
+      },
+      {
+        "id": "regn-1",
+        "titel": "Regnskab på /accounting",
+        "story": "Som ejer vil jeg have ét sted med omsætning, betalt, udestående, fordeling pr. produkt, pr. weekend og pr. betalingsmetode, samt en liste over ubetalte ordrer — for en valgt periode.",
+        "accept": [
+          "Perioder: denne måned, sidste måned, 90 dage, i år, eller frit valgte datoer",
+          "Nøgletal: omsætning, betalt, udestående, gennemsnitsordre",
+          "Omsætning pr. produkt fordeler ordrens total efter katalogpriserne, så summen aldrig overstiger det der blev solgt for",
+          "Weekender grupperes på fredagen",
+          "Ubetalte viser alder, faktura og forfald",
+          "CSV-eksport af det hele",
+          "Månedsmål med fremdrift"
+        ],
+        "status": "done"
+      },
+      {
+        "id": "regn-2",
+        "titel": "Én sandhed om penge",
+        "story": "Som udvikler vil jeg have at betalingsstatus regnes ét sted, så admin, udlevering, sagsstatus og regnskab aldrig kan være uenige.",
+        "accept": [
+          "src/lib/payments.ts er eneste kilde",
+          "bookingStage.isPaid kalder samme funktion",
+          "Regnskabet bruger de samme summer som admin viser"
+        ],
+        "status": "done"
+      },
+      {
+        "id": "regn-3",
+        "titel": "Rykker på forfaldne fakturaer",
+        "story": "Som udlejer vil jeg automatisk kunne sende en venlig rykker, når en faktura er forfalden.",
+        "status": "todo",
+        "note": "Bygger på faktura-mailen; mangler skabelon og en regel for hvornår der rykkes."
+      },
+      {
+        "id": "regn-4",
+        "titel": "Udgifter og dækningsbidrag",
+        "story": "Som ejer vil jeg kunne taste udgifter (indkøb, transport, reparation), så /accounting viser resultat og ikke kun omsætning.",
+        "status": "todo"
+      }
+    ],
+    "regnskabsindstillinger": "KV: accounting_settings — månedsmål, bank reg/konto, MobilePay, betalingsfrist og fodnote på fakturaen. Redigeres på /accounting.",
+    "noter": "Omsætning bogføres på lejeperiodens første dag, ikke oprettelsesdatoen. Annullerede ordrer indgår ikke. Beløb pr. produkt er ordrens total fordelt efter katalogpriser, så rabatter lander hvor de blev givet."
   }
 }

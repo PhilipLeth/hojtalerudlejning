@@ -33,7 +33,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
     items: [
       { href: "/admin", label: "Bookinger", hint: "Ordrer, status, betaling" },
       { href: "/admin/kalender", label: "Kalender", hint: "Hvad er ude hvornår" },
-      { href: "/admin/udlevering", label: "Udlevering", hint: "Gennemgang og kundens underskrift" },
+      { href: "/admin/udlevering", label: "Udlevering", hint: "Dagens afhentninger + underskrift" },
       { href: "/admin/lejeseddel", label: "Lejeseddel", hint: "Print lejekontrakt" },
       { href: "/admin/lager", label: "Lager", hint: "Antal af hvert produkt" },
       { href: "/admin/udsolgt", label: "Udsolgt", hint: "Udsolgte dage og blokeringer" },
@@ -54,6 +54,12 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
       { href: "/admin/regler", label: "Regler", hint: "Automatiske annonceregler" },
       { href: "/admin/kanaler", label: "Kanaler", hint: "DBA, Marketplace og øvrige feeds" },
       { href: "/admin/nyhedsbrev", label: "Nyhedsbrev", hint: "Tilmeldte modtagere" },
+    ],
+  },
+  {
+    group: "Økonomi",
+    items: [
+      { href: "/accounting", label: "Regnskab", hint: "Omsætning, udestående, betalingsmetoder" },
     ],
   },
   {

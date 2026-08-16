@@ -48,9 +48,10 @@ describe("Udleveringssiden", () => {
     expect(src).toContain('toDataURL("image/png")');
   });
 
-  it("viser betalingsstatus og beløb tydeligt", () => {
+  it("viser betalingsstatus og beløb tydeligt — også ved delbetaling", () => {
     expect(src).toContain("SKAL BETALES NU");
-    expect(src).toContain("isPaid(booking)");
+    expect(src).toContain("MANGLER");
+    expect(src).toContain("paymentStatus(booking)");
   });
 });
 
@@ -70,7 +71,9 @@ describe("Admin er brugbar på mobil", () => {
 
   it("har betalingsstatus som eget banner på kortet", () => {
     expect(src).toContain("PaymentBanner");
-    expect(src).toContain("IKKE BETALT");
+    // Teksterne kommer fra den fælles betalingsmodel
+    expect(src).toContain("PAYMENT_STATUS_META");
+    expect(src).toContain("paymentStatus(b)");
   });
 
   it("linker til udlevering med underskrift", () => {

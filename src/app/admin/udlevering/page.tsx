@@ -12,7 +12,15 @@ import AdminNav from "@/components/AdminNav";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { orderLines, deliveryInfo, type OrderBooking } from "@/lib/orderLines";
-import { isPaid, hasDeposit, PAID_METHOD_LABELS, type PaidMethod } from "@/lib/bookingStage";
+import { isPaid, hasDeposit, type PaidMethod } from "@/lib/bookingStage";
+import {
+  paymentStatus,
+  paidAmount,
+  outstanding,
+  paymentsOf,
+  PAYMENT_METHOD_LABELS,
+  PAYMENT_STATUS_META,
+} from "@/lib/payments";
 
 interface Booking extends OrderBooking {
   id: string;
@@ -21,11 +29,16 @@ interface Booking extends OrderBooking {
   email: string;
   period: string;
   days: number;
+  pickup?: string;
+  returnDate?: string;
   comment?: string;
   status: string;
   paid?: boolean;
+  paidAmount?: number;
   paidManual?: boolean;
   paidMethod?: PaidMethod;
+  payments?: import("@/lib/payments").Payment[];
+  invoice?: import("@/lib/payments").Invoice | null;
   paymentChoice?: string;
   depositAmount?: number;
   depositState?: string;
@@ -182,11 +195,54 @@ export default function UdleveringPage() {
   const [note, setNote] = useState("");
   const [signature, setSignature] = useState<string | null>(null);
 
+  /** Kø uden ?id= — dagens + kommende afhentninger der mangler underskrift */
+  const [queue, setQueue] = useState<Booking[]>([]);
+  const [queueLoading, setQueueLoading] = useState(false);
+
   useEffect(() => {
     const stored = localStorage.getItem("admin_secret");
     if (stored) setSecret(stored);
     setBookingId(new URLSearchParams(window.location.search).get("id"));
   }, []);
+
+  const loadQueue = useCallback(async () => {
+    if (!secret || bookingId) return;
+    setQueueLoading(true);
+    setError("");
+    try {
+      const res = await fetch(`/api/bookings?secret=${encodeURIComponent(secret)}`);
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Kunne ikke hente bookinger");
+        if (res.status === 401) {
+          localStorage.removeItem("admin_secret");
+          setSecret("");
+        }
+        return;
+      }
+      const today = new Date().toISOString().slice(0, 10);
+      const list = ((data.bookings || []) as Booking[])
+        .filter((b) => {
+          const st = String(b.status || "");
+          if (st.startsWith("annulleret") || st === "afhentet" || st === "afleveret") return false;
+          if (b.handover?.signedAt) return false;
+          const pickup = String(b.pickup || "").slice(0, 10);
+          // Vis i dag + næste 7 dage (og evt. forsinkede afhentninger)
+          if (!pickup) return true;
+          const week = new Date();
+          week.setDate(week.getDate() + 7);
+          const to = week.toISOString().slice(0, 10);
+          return pickup <= to;
+        })
+        .sort((a, b) => String(a.pickup || "").localeCompare(String(b.pickup || "")));
+      console.log("[udlevering] kø", list.length, "af", (data.bookings || []).length);
+      setQueue(list);
+    } catch {
+      setError("Netværksfejl");
+    } finally {
+      setQueueLoading(false);
+    }
+  }, [secret, bookingId]);
 
   const load = useCallback(async () => {
     if (!secret || !bookingId) return;
@@ -213,6 +269,7 @@ export default function UdleveringPage() {
   }, [secret, bookingId]);
 
   useEffect(() => { load(); }, [load]);
+  useEffect(() => { loadQueue(); }, [loadQueue]);
 
   const lines = booking ? orderLines(booking) : [];
   const delivery = booking ? deliveryInfo(booking) : null;
@@ -272,6 +329,8 @@ export default function UdleveringPage() {
     );
   }
 
+  const today = new Date().toISOString().slice(0, 10);
+
   return (
     <div style={page}>
       <AdminNav title="Udlevering" />
@@ -279,12 +338,54 @@ export default function UdleveringPage() {
       <main style={{ maxWidth: "620px", margin: "0 auto", padding: "14px 12px 60px" }}>
         {error && <div style={{ background: "#f8d7da", color: "#721c24", padding: "10px 14px", borderRadius: "8px", marginBottom: "12px" }}>{error}</div>}
         {loading && <p style={{ textAlign: "center", color: "#888" }}>Henter booking…</p>}
+
+        {/* Ingen booking valgt → kø over afhentninger */}
         {!bookingId && !loading && (
-          <div style={card}>
-            <p style={{ margin: 0, color: "#666" }}>
-              Åbn en booking fra <a href="/admin" style={{ color: "#0070f3" }}>ordreoverblikket</a> og tryk &quot;Udlever&quot;.
-            </p>
-          </div>
+          <>
+            <div style={card}>
+              <h1 style={{ margin: "0 0 6px", fontSize: "20px" }}>Udlevering</h1>
+              <p style={{ margin: 0, fontSize: "13px", color: "#666", lineHeight: 1.45 }}>
+                Vælg en afhentning, hak udstyret af sammen med kunden, og få underskrift.
+                Du kan også åbne direkte fra en booking på <a href="/admin" style={{ color: "#0070f3" }}>ordreoverblikket</a>.
+              </p>
+            </div>
+            {queueLoading && <p style={{ textAlign: "center", color: "#888" }}>Henter afhentninger…</p>}
+            {!queueLoading && queue.length === 0 && (
+              <div style={card}>
+                <p style={{ margin: 0, color: "#888" }}>Ingen åbne afhentninger de næste 7 dage.</p>
+              </div>
+            )}
+            {queue.map((b) => {
+              const pickup = String(b.pickup || "").slice(0, 10);
+              const isToday = pickup === today;
+              const overdue = pickup && pickup < today;
+              return (
+                <a
+                  key={b.id}
+                  href={`/admin/udlevering?id=${encodeURIComponent(b.id)}`}
+                  style={{
+                    ...card,
+                    display: "block",
+                    textDecoration: "none",
+                    color: "inherit",
+                    borderLeft: `4px solid ${overdue ? "#c0392b" : isToday ? "#111" : "#ddd"}`,
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "baseline" }}>
+                    <div style={{ fontSize: 17, fontWeight: 800 }}>{b.name}</div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: overdue ? "#c0392b" : isToday ? "#111" : "#666", whiteSpace: "nowrap" }}>
+                      {overdue ? "Forsinket" : isToday ? "I dag" : pickup || "—"}
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 13, color: "#555", marginTop: 4 }}>{b.period || pickup}</div>
+                  <div style={{ fontSize: 12, color: "#888", marginTop: 6 }}>
+                    {b.phone} · {b.total} kr
+                    {!isPaid(b) && <span style={{ color: "#856404", fontWeight: 700 }}> · mangler betaling</span>}
+                  </div>
+                </a>
+              );
+            })}
+          </>
         )}
 
         {booking && (
@@ -307,29 +408,36 @@ export default function UdleveringPage() {
             </div>
 
             {/* Betaling — skal være tydelig FØR udstyret ryger ud ad døren */}
-            <div
-              style={{
-                ...card,
-                background: isPaid(booking) ? "#d4edda" : "#fff3cd",
-                border: `1px solid ${isPaid(booking) ? "#28a745" : "#ffc107"}`,
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px" }}>
-                <div>
-                  <div style={{ fontSize: "16px", fontWeight: 800, color: isPaid(booking) ? "#155724" : "#856404" }}>
-                    {isPaid(booking)
-                      ? `✓ BETALT${booking.paid ? " · online" : booking.paidMethod ? ` · ${PAID_METHOD_LABELS[booking.paidMethod]}` : ""}`
-                      : "⏳ SKAL BETALES NU"}
-                  </div>
-                  <div style={{ fontSize: "12px", color: isPaid(booking) ? "#2f6f45" : "#8a6d1f" }}>
-                    {hasDeposit(booking) ? `Depositum ${booking.depositAmount} kr · ${booking.depositState ?? "afventer"}` : "Intet depositum"}
+            {(() => {
+              const status = paymentStatus(booking);
+              const meta = PAYMENT_STATUS_META[status];
+              const rest = outstanding(booking);
+              const methods = [...new Set(paymentsOf(booking).map((p) => PAYMENT_METHOD_LABELS[p.method] ?? p.method))];
+              return (
+                <div style={{ ...card, background: meta.bg, border: `1px solid ${meta.border}` }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px" }}>
+                    <div>
+                      <div style={{ fontSize: "16px", fontWeight: 800, color: meta.text }}>
+                        {status === "betalt"
+                          ? `✓ BETALT${methods.length ? ` · ${methods.join(" + ")}` : ""}`
+                          : status === "delvis"
+                            ? `◑ MANGLER ${rest} KR`
+                            : booking.invoice
+                              ? `🧾 FAKTURERET — forfalder ${booking.invoice.dueDate}`
+                              : "⏳ SKAL BETALES NU"}
+                      </div>
+                      <div style={{ fontSize: "12px", color: meta.text, opacity: 0.85 }}>
+                        {status === "delvis" && `Betalt ${paidAmount(booking)} kr af ${booking.total} kr · `}
+                        {hasDeposit(booking) ? `Depositum ${booking.depositAmount} kr · ${booking.depositState ?? "afventer"}` : "Intet depositum"}
+                      </div>
+                    </div>
+                    <div style={{ fontSize: "26px", fontWeight: 800, color: meta.text, whiteSpace: "nowrap" }}>
+                      {status === "betalt" ? booking.total : rest} kr
+                    </div>
                   </div>
                 </div>
-                <div style={{ fontSize: "26px", fontWeight: 800, color: isPaid(booking) ? "#155724" : "#856404", whiteSpace: "nowrap" }}>
-                  {booking.total} kr
-                </div>
-              </div>
-            </div>
+              );
+            })()}
 
             {/* Udstyrsgennemgang */}
             <div style={card}>
