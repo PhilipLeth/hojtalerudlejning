@@ -133,8 +133,8 @@ describe("Addons data", () => {
   it("lyskæder findes i to varianter med hver sit billede", () => {
     const hvid = rentalProducts.find((p) => p.id === "lyskaeder")!;
     const farvet = rentalProducts.find((p) => p.id === "lyskaeder_farvet")!;
-    expect(hvid.image).toBe("/images/product-lyskaeder.png");
-    expect(farvet.image).toBe("/images/product-lyskaeder-farvet.png");
+    expect(hvid.image).toBe("/images/product-lyskaeder.webp");
+    expect(farvet.image).toBe("/images/product-lyskaeder-farvet.webp");
     expect(hvid.price).toBe(195);
     expect(farvet.price).toBe(195);
   });
@@ -152,9 +152,9 @@ describe("Addons data", () => {
   it("PRO-mikrofoner findes med egne billeder (Shure)", () => {
     const traadloesPro = rentalProducts.find((p) => p.id === "traadloes_mikrofon_pro")!;
     const haandholdtPro = rentalProducts.find((p) => p.id === "haandholdt_mikrofon_pro")!;
-    expect(traadloesPro.image).toBe("/images/product-mikrofon-pro.png");
+    expect(traadloesPro.image).toBe("/images/product-mikrofon-pro.webp");
     expect(traadloesPro.price).toBe(495);
-    expect(haandholdtPro.image).toBe("/images/product-mikrofon-kabel-pro.png");
+    expect(haandholdtPro.image).toBe("/images/product-mikrofon-kabel-pro.webp");
     expect(haandholdtPro.price).toBe(195);
   });
 
@@ -163,7 +163,7 @@ describe("Addons data", () => {
     expect(sub).toBeDefined();
     expect(sub.price).toBe(295);
     expect(sub.page).toBe("/subwoofer");
-    expect(sub.image).toBe("/images/product-subwoofer-v2.png");
+    expect(sub.image).toBe("/images/product-subwoofer-v2.webp");
     expect(sub.da.label).toContain("Subwoofer");
     expect(sub.contents?.join(" ")).toContain("Behringer");
   });
@@ -185,7 +185,7 @@ describe("Addons data", () => {
     const s32 = rentalProducts.find((p) => p.id === "skaerm_32")!;
     const s55 = rentalProducts.find((p) => p.id === "skaerm_55")!;
     expect(s32.price).toBe(395);
-    expect(s32.image).toBe("/images/product-skaerm-32.png");
+    expect(s32.image).toBe("/images/product-skaerm-32.webp");
     expect(s32.contents).toContain("3-fod stativ");
     expect(s55.contents).toContain("3-fod stativ");
     expect(s55.contents).not.toContain("Gulvstativ");
