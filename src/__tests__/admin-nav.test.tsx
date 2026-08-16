@@ -4,7 +4,7 @@
  * Nyhedsbrev — så man ikke kunne komme fra A til B uden om forsiden.
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import AdminNav, { ADMIN_MENU, adminPageTitle } from "@/components/AdminNav";
@@ -54,18 +54,58 @@ describe("Menustrukturen", () => {
 });
 
 describe("AdminNav", () => {
-  it("viser alle sider som links på skærm og markerer den aktuelle", () => {
+  it("viser én knap pr. gruppe i stedet for fjorten links", () => {
     render(<AdminNav />);
-    const links = screen.getAllByRole("link");
-    expect(links.length).toBe(ADMIN_MENU.flatMap((g) => g.items).length);
-    expect(screen.getByRole("link", { name: "Rabatkoder" })).toHaveAttribute("aria-current", "page");
-    expect(screen.getByRole("link", { name: "Bookinger" })).not.toHaveAttribute("aria-current");
+    expect(screen.queryAllByRole("link")).toHaveLength(0);
+    for (const g of ADMIN_MENU) {
+      expect(screen.getByRole("button", { name: new RegExp(g.group) })).toBeInTheDocument();
+    }
+  });
+
+  it("markerer gruppen man står i, og skriver sidens navn på knappen", () => {
+    render(<AdminNav />);
+    const btn = screen.getByRole("button", { name: /Katalog & priser/ });
+    expect(btn).toHaveTextContent("Rabatkoder");
+  });
+
+  it("folder gruppens sider ud ved klik og markerer den aktuelle", () => {
+    render(<AdminNav />);
+    fireEvent.click(screen.getByRole("button", { name: /Katalog & priser/ }));
+
+    const menu = screen.getByRole("menu", { name: "Katalog & priser" });
+    expect(menu).toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: /Produkter/ })).toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: /Rabatkoder/ })).toHaveAttribute("aria-current", "page");
+    // Sider fra andre grupper er ikke fremme
+    expect(screen.queryByRole("menuitem", { name: /Nyhedsbrev/ })).not.toBeInTheDocument();
+  });
+
+  it("lukker igen på Escape og når man klikker udenfor", () => {
+    render(<AdminNav />);
+    const open = () => fireEvent.click(screen.getByRole("button", { name: /Drift/ }));
+
+    open();
+    expect(screen.getByRole("menu", { name: "Drift" })).toBeInTheDocument();
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+
+    open();
+    fireEvent.mouseDown(document.body);
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+  });
+
+  it("kun én gruppe er åben ad gangen", () => {
+    render(<AdminNav />);
+    fireEvent.click(screen.getByRole("button", { name: /Drift/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Markedsføring/ }));
+    expect(screen.getAllByRole("menu")).toHaveLength(1);
+    expect(screen.getByRole("menu", { name: "Markedsføring" })).toBeInTheDocument();
   });
 
   it("folder til én grupperet dropdown på telefon", () => {
     setViewport(true);
     const { container } = render(<AdminNav />);
-    expect(screen.queryAllByRole("link")).toHaveLength(0);
+    expect(screen.queryAllByRole("button")).toHaveLength(0);
     const select = screen.getByLabelText("Gå til admin-side") as HTMLSelectElement;
     expect(select.value).toBe("/admin/rabatkoder");
     expect([...container.querySelectorAll("optgroup")].map((o) => o.label)).toEqual([

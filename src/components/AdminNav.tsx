@@ -11,6 +11,7 @@
  * man er i gang med: dagens drift, katalog og priser, markedsføring, system.
  */
 
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useIsMobile } from "@/lib/useIsMobile";
 
@@ -76,31 +77,27 @@ export default function AdminNav({ title, actions }: { title?: string; actions?:
     ?? ALL_ITEMS.find((i) => i.href !== "/admin" && pathname.startsWith(i.href))?.href
     ?? "/admin";
 
-  const link = (item: AdminMenuItem) => {
-    const active = item.href === current;
-    return (
-      <a
-        key={item.href}
-        href={item.href}
-        title={item.hint}
-        aria-current={active ? "page" : undefined}
-        style={{
-          padding: "6px 12px",
-          fontSize: "13px",
-          fontWeight: active ? 700 : 400,
-          borderRadius: "6px",
-          textDecoration: "none",
-          whiteSpace: "nowrap",
-          background: active ? "#111" : "#f2f2f2",
-          color: active ? "#fff" : "#333",
-          border: "1px solid",
-          borderColor: active ? "#111" : "#e2e2e2",
-        }}
-      >
-        {item.label}
-      </a>
-    );
-  };
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const navRef = useRef<HTMLElement | null>(null);
+
+  // Luk når man klikker ved siden af eller trykker Escape — ellers står
+  // menuen åben oven på det man prøver at arbejde med
+  useEffect(() => {
+    if (!openGroup) return;
+    const onDown = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setOpenGroup(null);
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpenGroup(null); };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [openGroup]);
+
+  const currentItem = ALL_ITEMS.find((i) => i.href === current);
+  const currentGroup = ADMIN_MENU.find((g) => g.items.some((i) => i.href === current))?.group;
 
   return (
     <header
@@ -136,13 +133,74 @@ export default function AdminNav({ title, actions }: { title?: string; actions?:
           ))}
         </select>
       ) : (
-        <nav style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
-          {ADMIN_MENU.map((g, gi) => (
-            <span key={g.group} style={{ display: "flex", alignItems: "center", gap: "6px" }} title={g.group}>
-              {gi > 0 && <span style={{ width: "1px", height: "18px", background: "#e5e5e5", margin: "0 4px" }} />}
-              {g.items.map(link)}
-            </span>
-          ))}
+        // Én knap pr. gruppe der folder sine sider ud — fjorten links på
+        // række gjorde bjælken bredere end indholdet nedenunder
+        <nav ref={navRef} style={{ display: "flex", alignItems: "center", gap: "6px", position: "relative" }}>
+          {ADMIN_MENU.map((g) => {
+            const isCurrent = g.group === currentGroup;
+            const open = openGroup === g.group;
+            return (
+              <div key={g.group} style={{ position: "relative" }}>
+                <button
+                  type="button"
+                  onClick={() => setOpenGroup(open ? null : g.group)}
+                  aria-expanded={open}
+                  aria-haspopup="menu"
+                  style={{
+                    display: "flex", alignItems: "center", gap: "6px",
+                    padding: "7px 12px", fontSize: "13px", cursor: "pointer",
+                    fontWeight: isCurrent ? 700 : 500,
+                    background: open ? "#111" : isCurrent ? "#f2f2f2" : "#fff",
+                    color: open ? "#fff" : "#333",
+                    border: `1px solid ${open || isCurrent ? "#111" : "#e2e2e2"}`,
+                    borderRadius: "8px", whiteSpace: "nowrap",
+                  }}
+                >
+                  {g.group}
+                  {isCurrent && currentItem && (
+                    <span style={{ fontWeight: 400, opacity: open ? 0.8 : 0.55 }}>· {currentItem.label}</span>
+                  )}
+                  <span style={{ fontSize: "9px", opacity: 0.6 }}>{open ? "▲" : "▼"}</span>
+                </button>
+
+                {open && (
+                  <div
+                    role="menu"
+                    aria-label={g.group}
+                    style={{
+                      position: "absolute", top: "calc(100% + 6px)", left: 0, minWidth: "230px",
+                      background: "#fff", border: "1px solid #e2e2e2", borderRadius: "10px",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.12)", padding: "6px", zIndex: 20,
+                    }}
+                  >
+                    {g.items.map((item) => {
+                      const active = item.href === current;
+                      return (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          role="menuitem"
+                          aria-current={active ? "page" : undefined}
+                          style={{
+                            display: "block", padding: "8px 10px", borderRadius: "6px",
+                            textDecoration: "none", color: active ? "#fff" : "#222",
+                            background: active ? "#111" : "transparent",
+                          }}
+                        >
+                          <span style={{ fontSize: "13px", fontWeight: active ? 700 : 500 }}>{item.label}</span>
+                          {item.hint && (
+                            <span style={{ display: "block", fontSize: "11px", color: active ? "rgba(255,255,255,0.7)" : "#888" }}>
+                              {item.hint}
+                            </span>
+                          )}
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </nav>
       )}
 
