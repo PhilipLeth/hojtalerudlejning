@@ -54,6 +54,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
       { href: "/admin/regler", label: "Regler", hint: "Automatiske annonceregler" },
       { href: "/admin/kanaler", label: "Kanaler", hint: "DBA, Marketplace og øvrige feeds" },
       { href: "/admin/nyhedsbrev", label: "Nyhedsbrev", hint: "Tilmeldte modtagere" },
+      { href: "/admin/kommunikation", label: "Kommunikation", hint: "Opfølgning efter ordre og delekode" },
     ],
   },
   {

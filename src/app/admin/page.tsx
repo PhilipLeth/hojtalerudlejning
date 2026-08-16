@@ -87,6 +87,10 @@ interface Booking extends OrderBooking {
   discount?: { code: string; pct: number } | null;
   /** Kundens underskrift ved udlevering — se /admin/udlevering */
   handover?: { signedAt: string; signerName?: string; note?: string; items?: string[] };
+  /** Hvem stod for udlejningen — se /admin/kommunikation */
+  handledBy?: string;
+  /** Personlig besked til opfølgningsmailen */
+  personalNote?: string;
 }
 
 /** Felter de to spor kan skrive — skal matche FIELD_VALIDATORS i bookings-update.ts */
@@ -97,6 +101,10 @@ type EditableFields = {
   depositState?: DepositState | null;
   inspected?: boolean;
   reviewDone?: boolean;
+  /** Hvem stod for udlejningen — underskriver opfølgningsmailen */
+  handledBy?: string | null;
+  /** Personlig besked der sættes ind i opfølgningsmailen */
+  personalNote?: string | null;
 };
 
 const DEPOSIT_CHOICES: Array<{ id: DepositState; label: string; icon: string }> = [
@@ -932,7 +940,69 @@ function RowActions({ b, busy, deleteBooking, big }: {
 }
 
 /** Kontaktoplysninger, kommentar og mail-log — vist under kortet/rækken */
-function BookingDetails({ b, today }: { b: Booking; today: Date }) {
+/**
+ * Navnene fra /admin/kommunikation. Hentes én gang og deles mellem alle
+ * udfoldede ordrer — listen ændrer sig ikke, mens man kigger på bookinger.
+ */
+let staffCache: string[] | null = null;
+function useStaffNames(): string[] {
+  const [names, setNames] = useState<string[]>(staffCache ?? []);
+  useEffect(() => {
+    if (staffCache) return;
+    const secret = localStorage.getItem("admin_secret");
+    if (!secret) return;
+    fetch(`/api/kommunikation?secret=${encodeURIComponent(secret)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d: { settings?: { staff?: Array<{ name: string }> } } | null) => {
+        const list = (d?.settings?.staff ?? []).map((s) => s.name).filter(Boolean);
+        staffCache = list;
+        setNames(list);
+      })
+      .catch(() => {});
+  }, []);
+  return names;
+}
+
+/**
+ * Hvem stod for udlejningen, og hvad de vil skrive til kunden. Begge dele
+ * ender i opfølgningsmailen — ansvarlig som underskrift, beskeden som eget
+ * afsnit. Er beskeden tom, falder afsnittet væk.
+ */
+function FollowUpFields({ b, setFields }: { b: Booking; setFields: (id: string, f: EditableFields) => void }) {
+  const staff = useStaffNames();
+  const [note, setNote] = useState(b.personalNote ?? "");
+  useEffect(() => { setNote(b.personalNote ?? ""); }, [b.personalNote]);
+  const sent = !!b.reviewMailSentAt;
+
+  return (
+    <div style={{ gridColumn: "1 / -1", background: "#fafafa", border: "1px solid #eee", borderRadius: "8px", padding: "10px 12px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", marginBottom: "8px" }}>
+        <strong style={{ fontSize: "12px" }}>Ansvarlig for udlejningen</strong>
+        <select
+          value={b.handledBy ?? ""}
+          onChange={(e) => setFields(b.id, { handledBy: e.target.value || null })}
+          style={{ fontSize: "12px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "6px", background: "#fff", color: "#111", cursor: "pointer" }}
+        >
+          <option value="">— ikke sat —</option>
+          {staff.map((n) => <option key={n} value={n}>{n}</option>)}
+          {b.handledBy && !staff.includes(b.handledBy) && <option value={b.handledBy}>{b.handledBy}</option>}
+        </select>
+        {sent && <span style={{ fontSize: "11px", color: "#c0392b" }}>Mailen er allerede sendt — ændringer her ændrer den ikke</span>}
+      </div>
+      <textarea
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+        onBlur={() => { if (note !== (b.personalNote ?? "")) setFields(b.id, { personalNote: note || null }); }}
+        placeholder="Personlig besked i opfølgningsmailen — fx »Fedt I fik gang i dansegulvet!«"
+        rows={2}
+        maxLength={600}
+        style={{ width: "100%", boxSizing: "border-box", fontSize: "12px", padding: "6px 8px", border: "1px solid #ddd", borderRadius: "6px", color: "#111", fontFamily: "inherit", resize: "vertical" }}
+      />
+    </div>
+  );
+}
+
+function BookingDetails({ b, today, setFields }: { b: Booking; today: Date; setFields: (id: string, f: EditableFields) => void }) {
   const priceOf = usePriceLookup();
   return (
     <div style={{ paddingTop: "12px" }}>
@@ -957,6 +1027,7 @@ function BookingDetails({ b, today }: { b: Booking; today: Date }) {
           {b.handover.note ? ` · ${b.handover.note}` : ""}
         </div>
       )}
+      <FollowUpFields b={b} setFields={setFields} />
       {b.comment && <div style={{ gridColumn: "1 / -1" }}><strong>Kommentar:</strong> {b.comment}</div>}
       <div style={{ gridColumn: "1 / -1" }}>
         <strong>Sendte mails:</strong>
@@ -1042,7 +1113,7 @@ function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBoo
               </button>
             </div>
 
-            {isExpanded && <BookingDetails b={b} today={today} />}
+            {isExpanded && <BookingDetails b={b} today={today} setFields={setFields} />}
           </div>
         );
       })}
@@ -1122,7 +1193,7 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                 {isExpanded && (
                   <tr>
                     <td colSpan={5} style={{ padding: "0 12px 16px", background: "#fafffe", borderBottom: "1px solid #eee" }}>
-                      <BookingDetails b={b} today={today} />
+                      <BookingDetails b={b} today={today} setFields={setFields} />
                     </td>
                   </tr>
                 )}

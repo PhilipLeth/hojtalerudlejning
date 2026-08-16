@@ -1,3 +1,12 @@
+import {
+  DEFAULT_SETTINGS,
+  KV_COMM_SETTINGS,
+  buildFollowUpMail,
+  parseCommSettings,
+  signatureFor,
+} from "../../src/lib/commTemplates";
+import { KV_SALE_CAMPAIGN, parseCampaign } from "./_lib/weekendSale";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -49,6 +58,72 @@ function reviewMailHtml(name: string, reviewUrl: string, locale?: string): { sub
   };
 }
 
+/**
+ * Opfølgningsmailen bygges nu fra skabelonen i /admin/kommunikation, så
+ * teksten kan rettes uden deploy. Den engelske reviewMailHtml ovenfor er
+ * fallback: skabelonen er dansk, og en engelsk kunde skal ikke få den.
+ */
+async function followUpMail(
+  kv: KVNamespace,
+  booking: Record<string, unknown>,
+  reviewUrl: string,
+): Promise<{ subject: string; html: string }> {
+  if (booking.locale === "en") {
+    return reviewMailHtml(String(booking.name || ""), reviewUrl, "en");
+  }
+  try {
+    const raw = await kv.get(KV_COMM_SETTINGS);
+    const settings = raw ? parseCommSettings(JSON.parse(raw)) : DEFAULT_SETTINGS;
+
+    // Udsalgsafsnittet er kun med, når udsalget faktisk er tændt
+    let udsalg = "";
+    try {
+      const campaignRaw = await kv.get(KV_SALE_CAMPAIGN);
+      const campaign = campaignRaw ? parseCampaign(JSON.parse(campaignRaw)) : null;
+      if (campaign?.active) {
+        udsalg = `PS: Vi har weekendudsalg lige nu — ${campaign.pct}% på det udstyr der står ledigt til weekenden. Brug koden ${campaign.code.toUpperCase()}.`;
+      }
+    } catch {
+      // uden udsalg er afsnittet bare tomt
+    }
+
+    const navn = String(booking.name || "");
+    const ansvarlig = typeof booking.handledBy === "string" ? booking.handledBy : undefined;
+    const produkter = orderLineNames(booking);
+
+    return buildFollowUpMail(settings, {
+      fornavn: navn.split(" ")[0] || navn,
+      navn,
+      produkter,
+      periode: String(booking.period || ""),
+      ansvarlig,
+      hilsen: signatureFor(settings, ansvarlig),
+      besked: typeof booking.personalNote === "string" ? booking.personalNote : "",
+      rabatkode: settings.referralCode,
+      rabatpct: settings.referralPct,
+      udsalg,
+      reviewUrl,
+    });
+  } catch (e) {
+    // Skabelonen må ikke kunne forhindre mailen i at blive sendt
+    console.error("[kommunikation] faldt tilbage på standardmail:", e);
+    return reviewMailHtml(String(booking.name || ""), reviewUrl, undefined);
+  }
+}
+
+/** Hvad kunden lejede, som læsbar tekst til mailen */
+function orderLineNames(booking: Record<string, unknown>): string {
+  const names: string[] = [];
+  if (booking.speaker && booking.speakerId !== "effects-only") names.push(String(booking.speaker));
+  for (const item of (booking.cartItems as Array<{ name?: string }>) || []) {
+    if (item?.name) names.push(item.name);
+  }
+  for (const a of (booking.addons as string[]) || []) {
+    if (a) names.push(String(a));
+  }
+  return [...new Set(names)].join(", ");
+}
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -94,6 +169,9 @@ const FIELD_VALIDATORS: Record<string, (v: unknown) => boolean> = {
   // Udstyr
   inspected: (v) => typeof v === "boolean",
   reviewDone: (v) => typeof v === "boolean",
+  // Kommunikation: hvem stod for udlejningen, og hvad de vil skrive til kunden
+  handledBy: (v) => v === null || (typeof v === "string" && v.length <= 60),
+  personalNote: (v) => v === null || (typeof v === "string" && v.length <= 600),
 };
 
 const PAYMENT_METHODS = ["mobilepay", "kontant", "bank", "kort", "andet"];
@@ -310,7 +388,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     ) {
       try {
         const reviewUrl = context.env.GOOGLE_REVIEW_URL || GOOGLE_REVIEW_FALLBACK;
-        const mail = reviewMailHtml(booking.name || "", reviewUrl, booking.locale);
+        const mail = await followUpMail(context.env.BOOKINGS, booking, reviewUrl);
         const res = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {

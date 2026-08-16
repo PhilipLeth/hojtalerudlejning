@@ -919,6 +919,12 @@
       "method": "GET",
       "description": "OFFENTLIG (ingen secret). Svarer om der skal vises weekendudsalg lige nu. Aktiv kun når BEGGE holder: admin har tændt kontakten i /admin/udsalg, OG der faktisk står udstyr ledigt hele den kommende weekend (unitsOnSale > 0). Ellers {active:false} — popup'en må aldrig råbe udsalg på en weekend hvor alt er udlejet. Fejl (manglende katalog, KV) giver også {active:false}: en kampagne må ikke kunne vælte sitet. Cache 60s.",
       "status": "live"
+    },
+    "kommunikation": {
+      "path": "/api/kommunikation",
+      "method": "GET/POST",
+      "description": "Admin. Skabelon til opfølgningsmailen efter ordre, personaleliste (ansvarlig + underskrift) og delekoden. Gemmes i KV under comm_settings. POST skriver SAMTIDIG delekoden ind i discount_codes — ellers ville mailen love en rabat, der bliver afvist ved booking.",
+      "status": "live"
     }
   },
   "email_flow": {
@@ -2023,6 +2029,10 @@
       "status": "done",
       "date": "2026-08-16",
       "description": "Rettet ved gennemgangen af belægningskalenderen: bookedProductIds (og den tilsvarende kopi i availability.ts) talte kun hovedproduktet med, hvis det stod på whitelisten SPEAKER_IDS. En ordre på fx en lyskæde, en projektor eller en festpakke optog derfor ingenting — produktet stod ledigt i kalender, udsolgt-oversigt og for kunden, selvom det var ude. Nu tæller hovedproduktet uanset type; produkter uden lagertal påvirker intet, da både soldout og availability kun regner på id'er der findes i inventory."
+    },
+    "kommunikation": {
+      "status": "done",
+      "description": "/admin/kommunikation (2026-08-16): opfølgningsmailen efter en ordre er flyttet fra hardkodet HTML i bookings-update.ts til en skabelon i KV, så teksten kan rettes uden deploy. Shortcodes udfyldes server-side: {{fornavn}} {{navn}} {{produkter}} {{periode}} {{ansvarlig}} {{hilsen}} {{besked}} {{rabatkode}} {{rabatpct}} {{anmeldelseslink}} {{udsalg}}. VALG: skabelonen er ren tekst, ikke HTML — admin skal ikke kunne ødelægge en mail, og teksten escapes. Ukendte shortcodes fjernes helt, så en tastefejl aldrig ender i kundens indbakke som '{{fornvan}}'. Et afsnit hvor alle shortcodes blev tomme droppes, så en ordre uden personlig besked ikke får et hul midt i mailen. ANSVARLIG: bookingen har handledBy (hvem stod for udlejningen) og personalNote (personlig besked), begge sat i den udfoldede ordre i /admin. handledBy vælger underskriften fra personalelisten; tom underskrift falder tilbage på navnet. DELEKODE: default DEL10 = 10%, oprettes som rigtig rabatkode ved gem. FORBUNDET MED UDSALG: {{udsalg}} bliver til en PS-linje når weekendudsalget er tændt, og til ingenting når det er slukket — samme kontakt styrer begge dele. Engelske bookinger (locale=en) får stadig den hardkodede engelske mail; skabelonen er dansk. Fejler skabelonen, sendes standardmailen — en skabelonfejl må ikke koste en mail. Delt kode: src/lib/commTemplates.ts, så admin-siden laver live-forhåndsvisning med præcis samme funktion som serveren sender med."
     }
   },
   "booking_improvements": {
