@@ -9,7 +9,7 @@
  * weekender, før den får lov at røre priserne.
  */
 
-import { bookedCountsByDay, type LoadedBooking, type Weekend } from "./bookings";
+import { addDays, bookedCountsByDay, type LoadedBooking, type Weekend } from "./bookings";
 import type { CatalogProduct } from "./catalog";
 
 export const KV_SALE_CAMPAIGN = "weekend_sale";
@@ -22,10 +22,14 @@ export interface SaleCampaign {
    * fuld pris alligevel. Uden dem giver man rabat på den sidste Soundboks.
    */
   excluded: string[];
+  /** Koden kunden skriver i booking-flowet. */
+  code: string;
+  /** Slået fra betyder at koden afvises som enhver anden ukendt kode. */
+  active: boolean;
   note?: string;
 }
 
-export const DEFAULT_CAMPAIGN: SaleCampaign = { pct: 20, excluded: [] };
+export const DEFAULT_CAMPAIGN: SaleCampaign = { pct: 20, excluded: [], code: "weekend", active: false };
 
 export interface SaleOffer {
   productId: string;
@@ -75,8 +79,15 @@ export function weekendSale(
   catalog: CatalogProduct[],
   campaign: SaleCampaign,
   weekend: Weekend,
+  /**
+   * Ordre der ikke skal tælle med. Når kunden er nået til betaling, ligger
+   * bookingen allerede i KV — uden dette ville ordren gøre sit eget udstyr
+   * "udsolgt" og afvise den rabat, kunden lige fik godkendt.
+   */
+  excludeBookingId?: string,
 ): WeekendSale {
-  const perDay = bookedCountsByDay(bookings, weekend.days[0], weekend.days[weekend.days.length - 1]);
+  const counted = excludeBookingId ? bookings.filter((b) => b.id !== excludeBookingId) : bookings;
+  const perDay = bookedCountsByDay(counted, weekend.days[0], weekend.days[weekend.days.length - 1]);
   const byId = new Map(catalog.map((p) => [p.id, p]));
   const excluded = new Set(campaign.excluded);
 
@@ -136,9 +147,87 @@ export function weekendSale(
 export function parseCampaign(raw: unknown): SaleCampaign {
   const obj = (raw ?? {}) as Partial<SaleCampaign>;
   const pct = Number(obj.pct);
+  const code = normalizeSaleCode(obj.code);
   return {
     pct: Number.isFinite(pct) && pct >= 1 && pct <= 99 ? Math.round(pct) : DEFAULT_CAMPAIGN.pct,
     excluded: Array.isArray(obj.excluded) ? obj.excluded.filter((id): id is string => typeof id === "string") : [],
+    code: code || DEFAULT_CAMPAIGN.code,
+    // Uden kode kan udsalget ikke være tændt — så ville koden "" ramme alt
+    active: obj.active === true && !!code,
     ...(typeof obj.note === "string" && obj.note ? { note: obj.note } : {}),
   };
+}
+
+/** Samme normalisering som rabatkoder, så "Weekend" og "weekend" er samme kode. */
+export function normalizeSaleCode(raw: unknown): string {
+  return String(raw ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/æ/g, "ae")
+    .replace(/ø/g, "oe")
+    .replace(/å/g, "aa");
+}
+
+/**
+ * Weekenden en afhentningsdato hører til, eller null hvis datoen ikke er
+ * fre/lør/søn. Lejer man fra en onsdag, er det ikke en weekendleje.
+ */
+export function weekendForPickup(pickup: string): Weekend | null {
+  const dow = new Date(`${pickup}T00:00:00Z`).getUTCDay(); // 0=søn, 5=fre, 6=lør
+  const backToFriday = dow === 5 ? 0 : dow === 6 ? 1 : dow === 0 ? 2 : null;
+  if (backToFriday === null) return null;
+  const from = addDays(pickup, -backToFriday);
+  return { from, to: addDays(from, 3), days: [from, addDays(from, 1), addDays(from, 2)] };
+}
+
+/** Ordren som kampagnen skal vurderes imod */
+export interface SaleContext {
+  /** YYYY-MM-DD */
+  pickup: string;
+  returnDate: string;
+  /** Produkt-ids i ordren */
+  productIds: string[];
+}
+
+export type SaleVerdict = { ok: true; weekend: Weekend } | { ok: false; reason: string };
+
+/**
+ * Gælder kampagnen for denne konkrete ordre?
+ *
+ * Tre krav, og alle tre skal holde på serveren — klienten har ingen stemme:
+ *   1. Udsalget er tændt
+ *   2. Hele lejeperioden ligger inden for én weekend (fre→man)
+ *   3. Hvert produkt i ordren står på udsalg netop den weekend
+ *
+ * Krav 3 genberegnes mod lageret her og nu. Der kan gå timer fra en kunde ser
+ * tilbuddet til ordren lander, og i mellemtiden kan udstyret være væk.
+ */
+export function campaignApplies(
+  campaign: SaleCampaign,
+  ctx: SaleContext,
+  bookings: LoadedBooking[],
+  inventory: Record<string, number>,
+  catalog: CatalogProduct[],
+  excludeBookingId?: string,
+): SaleVerdict {
+  if (!campaign.active) return { ok: false, reason: "Udsalget er ikke aktivt" };
+
+  const weekend = weekendForPickup(ctx.pickup);
+  if (!weekend) return { ok: false, reason: "Afhentning er ikke fredag, lørdag eller søndag" };
+  if (ctx.returnDate > weekend.to) return { ok: false, reason: "Lejeperioden rækker ud over weekenden" };
+  if (ctx.returnDate <= ctx.pickup) return { ok: false, reason: "Ugyldig lejeperiode" };
+
+  const sale = weekendSale(bookings, inventory, catalog, campaign, weekend, excludeBookingId);
+  const onSale = new Set(sale.offers.filter((o) => o.onSale).map((o) => o.productId));
+
+  const ids = [...new Set(ctx.productIds)];
+  if (ids.length === 0) return { ok: false, reason: "Ingen produkter i ordren" };
+
+  const outside = ids.filter((id) => !onSale.has(id));
+  if (outside.length > 0) {
+    const names = outside.map((id) => sale.offers.find((o) => o.productId === id)?.name ?? id);
+    return { ok: false, reason: `Ikke på udsalg denne weekend: ${names.join(", ")}` };
+  }
+
+  return { ok: true, weekend };
 }

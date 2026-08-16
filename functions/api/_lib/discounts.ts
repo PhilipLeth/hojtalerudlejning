@@ -4,6 +4,10 @@
  * "discount_codes" ({ "kode": pct }), så nye koder ikke kræver deploy.
  */
 
+import { DEFAULT_INVENTORY, loadBookings } from "./bookings";
+import { productCatalog } from "./catalog";
+import { KV_SALE_CAMPAIGN, campaignApplies, parseCampaign, type SaleContext } from "./weekendSale";
+
 export const DEFAULT_CODES: Record<string, number> = {
   genkoeb: 10, // genkøbere
   venner: 20, // venner
@@ -25,6 +29,8 @@ export function normalizeCode(raw: unknown): string {
 export interface Discount {
   code: string;
   pct: number;
+  /** Sat når rabatten kom fra weekendkampagnen og ikke fra en fast kode */
+  campaign?: boolean;
 }
 
 /** Slå en kode op. null når koden er ukendt eller procenten er ugyldig. */
@@ -47,6 +53,60 @@ export async function resolveDiscount(
   // 0 i KV betyder "kode slået fra". Alt uden for 1-99 afvises.
   if (typeof pct !== "number" || !Number.isFinite(pct) || pct < 1 || pct > 99) return null;
   return { code, pct: Math.round(pct) };
+}
+
+/**
+ * Slå en kode op, hvor weekendkampagnen tæller med.
+ *
+ * Kampagnekoden kan ikke bare stå i kode-mappet: den gælder kun for bestemte
+ * datoer og kun for udstyr, der faktisk står tilbage. Derfor skal ordren med
+ * i opslaget, og derfor afvises koden, når ordren mangler — der er ikke noget
+ * at validere imod.
+ *
+ * Kampagnen har forrang: hedder en fast kode det samme, vinder udsalget.
+ */
+export async function resolveDiscountFor(
+  kv: KVNamespace,
+  rawCode: unknown,
+  ctx: SaleContext | null,
+  excludeBookingId?: string,
+): Promise<Discount | null> {
+  const code = normalizeCode(rawCode);
+  if (!code) return null;
+
+  const campaign = parseCampaign(await readJson(kv, KV_SALE_CAMPAIGN));
+  if (campaign.active && code === campaign.code) {
+    if (!ctx) return null;
+    try {
+      const [catalogRaw, inventoryRaw, bookings] = await Promise.all([
+        readJson(kv, "products_catalog"),
+        readJson(kv, "inventory"),
+        loadBookings(kv),
+      ]);
+      const inventory = { ...DEFAULT_INVENTORY, ...((inventoryRaw as Record<string, number>) ?? {}) };
+      const verdict = campaignApplies(
+        campaign, ctx, bookings, inventory, productCatalog(catalogRaw), excludeBookingId,
+      );
+      return verdict.ok ? { code: campaign.code, pct: campaign.pct, campaign: true } : null;
+    } catch (e) {
+      // Manglende katalog eller andet uheld må aldrig vælte en booking —
+      // kan rabatten ikke bekræftes, gives den ikke.
+      console.error("[udsalg] kunne ikke validere kampagnekode:", e);
+      return null;
+    }
+  }
+
+  return resolveDiscount(kv, code);
+}
+
+async function readJson(kv: KVNamespace, key: string): Promise<unknown> {
+  const raw = await kv.get(key);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
 }
 
 /** Rabat i øre af et beløb i øre. Afrundes — samme regel som frontend. */

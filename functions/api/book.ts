@@ -1,4 +1,5 @@
-import { resolveDiscount } from "./_lib/discounts";
+import { resolveDiscountFor } from "./_lib/discounts";
+import type { SaleContext } from "./_lib/weekendSale";
 
 interface Env {
   RESEND_API_KEY: string;
@@ -15,6 +16,9 @@ interface BookingData {
   addons: string[];
   addonIds?: string[];
   cartItems?: Array<{ name: string; price: number; productId?: string }>;
+  /** Lejeperioden som ISO — sendes af kalenderen, bruges til weekendudsalget */
+  pickup?: string;
+  returnDate?: string;
   deliveryAddress?: string;
   /** levering_ud | afhentning_retur | levering_begge — hvilken vej vi kører */
   deliveryOptionId?: string;
@@ -40,6 +44,26 @@ const UPSELL_DISCOUNT = 0.3;
 
 function offerPrice(list: number): number {
   return Math.round(list * (1 - UPSELL_DISCOUNT));
+}
+
+/** Produkt-ids i ordren — grundlaget for at afgøre om weekendudsalget gælder */
+function orderProductIds(data: BookingData): string[] {
+  const ids = new Set<string>(data.addonIds || []);
+  for (const item of data.cartItems || []) {
+    if (item.productId) ids.add(item.productId);
+  }
+  if (data.speakerId && data.speakerId !== "effects-only") ids.add(data.speakerId);
+  return [...ids];
+}
+
+/** Ordren som weekendudsalget skal vurderes imod. null når datoerne mangler. */
+function saleContext(data: BookingData): SaleContext | null {
+  const pickup = String(data.pickup ?? "").slice(0, 10);
+  const returnDate = String(data.returnDate ?? "").slice(0, 10);
+  const isDate = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s);
+  if (!isDate(pickup) || !isDate(returnDate)) return null;
+  const productIds = orderProductIds(data);
+  return productIds.length ? { pickup, returnDate, productIds } : null;
 }
 
 function pickUpsell(data: BookingData): UpsellOffer | null {
@@ -164,8 +188,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const data: BookingData = await context.request.json();
 
   // Rabatkode valideres mod serverens liste — klientens ord alene tæller ikke.
+  // Weekendudsalgets kode tjekkes desuden mod lageret: den gælder kun udstyr,
+  // der stadig står tilbage netop den weekend.
   const discount = data.discountCode
-    ? await resolveDiscount(context.env.BOOKINGS, data.discountCode)
+    ? await resolveDiscountFor(context.env.BOOKINGS, data.discountCode, saleContext(data))
     : null;
   const discountRow = discount
     ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Rabatkode:</td><td>${discount.code} (−${discount.pct}%)</td></tr>`

@@ -10,8 +10,8 @@
  */
 
 import { DEFAULT_INVENTORY, loadBookings, nextWeekends } from "./_lib/bookings";
-import { productCatalog } from "./_lib/catalog";
-import { DEFAULT_CAMPAIGN, KV_SALE_CAMPAIGN, parseCampaign, weekendSale } from "./_lib/weekendSale";
+import { CatalogMissingError, productCatalog } from "./_lib/catalog";
+import { DEFAULT_CAMPAIGN, KV_SALE_CAMPAIGN, normalizeSaleCode, parseCampaign, weekendSale } from "./_lib/weekendSale";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -71,7 +71,17 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
     const campaign = campaignRaw ? parseCampaign(campaignRaw) : DEFAULT_CAMPAIGN;
     const inventory = { ...DEFAULT_INVENTORY, ...inventoryRaw };
-    const catalog = productCatalog(catalogRaw);
+
+    let catalog;
+    try {
+      catalog = productCatalog(catalogRaw);
+    } catch (e) {
+      if (e instanceof CatalogMissingError) {
+        console.error("[udsalg]", e.message);
+        return json({ error: e.message }, 503);
+      }
+      throw e;
+    }
 
     const weekends = nextWeekends(today, count).map((w) =>
       weekendSale(bookings, inventory, catalog, campaign, w),
@@ -82,8 +92,10 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       campaign,
       weekends,
       /** Ingen kunde ser kampagnen endnu. Ændres først når rabatten gives automatisk. */
-      live: false,
-      note: "Udkast. Rabatten gives ikke automatisk — hverken rabatkoder, booking eller Stripe kender kampagnen.",
+      live: campaign.active,
+      note: campaign.active
+        ? `Udsalget er aktivt. Koden "${campaign.code}" giver ${campaign.pct}% på udstyr der står ledigt hele weekenden.`
+        : "Slået fra. Koden afvises som enhver anden ukendt kode.",
     });
   } catch (e) {
     return json({ error: e instanceof Error ? e.message : "Ukendt fejl" }, 500);
@@ -94,7 +106,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const denied = unauthorized(context);
   if (denied) return denied;
 
-  let body: { pct?: unknown; excluded?: unknown; note?: unknown };
+  let body: { pct?: unknown; excluded?: unknown; note?: unknown; code?: unknown; active?: unknown };
   try {
     body = await context.request.json();
   } catch {
@@ -113,7 +125,18 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return json({ error: "note skal være tekst" }, 400);
   }
 
-  const campaign = parseCampaign({ pct, excluded, note: body.note as string | undefined });
+  const code = normalizeSaleCode(body.code);
+  if (!code || !/^[a-z0-9-]{2,30}$/.test(code)) {
+    return json({ error: `Ugyldig kode: "${body.code}" — brug 2-30 tegn, bogstaver/tal/bindestreg` }, 400);
+  }
+
+  const campaign = parseCampaign({
+    pct,
+    excluded,
+    code,
+    active: body.active === true,
+    note: body.note as string | undefined,
+  });
   await context.env.BOOKINGS.put(KV_SALE_CAMPAIGN, JSON.stringify(campaign));
   return json({ ok: true, campaign });
 };

@@ -17,7 +17,7 @@ import {
   type LoadedBooking,
 } from "./_lib/bookings";
 
-import { productCatalog } from "./_lib/catalog";
+import { productCatalog, CatalogMissingError } from "./_lib/catalog";
 import {
   AdsNotConfigured,
   listAdGroups,
@@ -115,7 +115,16 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     ]);
 
     const inventory = { ...DEFAULT_INVENTORY, ...inventoryRaw };
-    const catalog = productCatalog(catalogRaw);
+    let catalog;
+    try {
+      catalog = productCatalog(catalogRaw);
+    } catch (e) {
+      if (e instanceof CatalogMissingError) {
+        console.error("[ads]", e.message);
+        return json({ error: e.message }, 503);
+      }
+      throw e;
+    }
     const soldOut = soldOutDaysByProduct(bookings, inventory, today, horizonEnd);
     const stats = statsByProduct(bookings);
     const weekend = upcomingWeekend(today);

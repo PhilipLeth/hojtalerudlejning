@@ -5,7 +5,13 @@
  */
 import { describe, it, expect } from "vitest";
 import { nextWeekends, upcomingWeekend, type LoadedBooking } from "../../functions/api/_lib/bookings";
-import { DEFAULT_CAMPAIGN, parseCampaign, weekendSale } from "../../functions/api/_lib/weekendSale";
+import {
+  DEFAULT_CAMPAIGN,
+  campaignApplies,
+  parseCampaign,
+  weekendForPickup,
+  weekendSale,
+} from "../../functions/api/_lib/weekendSale";
 import type { CatalogProduct } from "../../functions/api/_lib/catalog";
 
 // Weekenden 21.-23. august 2026 (fredag, lørdag, søndag)
@@ -19,8 +25,9 @@ const CATALOG: CatalogProduct[] = [
 
 const INVENTORY = { festival: 2, party: 2, lys: 2 };
 
+let seq = 0;
 function booking(pickup: string, returnDate: string, productIds: string[]): LoadedBooking {
-  return { pickup, returnDate, productIds, total: 0, cartItems: [] };
+  return { id: `booking_${++seq}`, pickup, returnDate, productIds, total: 0, cartItems: [] };
 }
 
 function offerFor(sale: ReturnType<typeof weekendSale>, id: string) {
@@ -91,7 +98,7 @@ describe("weekendSale", () => {
   });
 
   it("holder undtagne produkter ude, uanset hvor meget der står tilbage", () => {
-    const sale = run([], { pct: 20, excluded: ["festival"] });
+    const sale = run([], { ...DEFAULT_CAMPAIGN, excluded: ["festival"] });
     const festival = offerFor(sale, "festival");
     expect(festival.onSale).toBe(false);
     expect(festival.because).toBe("Undtaget fra udsalg");
@@ -101,7 +108,7 @@ describe("weekendSale", () => {
   });
 
   it("regner rabatprisen ud pr. produkt", () => {
-    const sale = run([], { pct: 20, excluded: [] });
+    const sale = run([], { ...DEFAULT_CAMPAIGN, excluded: [] });
     expect(offerFor(sale, "festival").salePrice).toBe(556);
     expect(offerFor(sale, "party").salePrice).toBe(316);
   });
@@ -122,17 +129,89 @@ describe("weekendSale", () => {
 
 describe("parseCampaign", () => {
   it("falder tilbage på standarden ved vrøvl", () => {
-    expect(parseCampaign(null)).toEqual({ pct: 20, excluded: [] });
+    expect(parseCampaign(null)).toEqual({ pct: 20, excluded: [], code: "weekend", active: false });
     expect(parseCampaign({ pct: 500 }).pct).toBe(20);
     expect(parseCampaign({ pct: 0 }).pct).toBe(20);
     expect(parseCampaign({ excluded: "festival" }).excluded).toEqual([]);
   });
 
   it("beholder gyldige værdier", () => {
-    expect(parseCampaign({ pct: 15, excluded: ["soundboks"], note: "kun august" })).toEqual({
+    expect(parseCampaign({ pct: 15, excluded: ["soundboks"], code: "Weekend", active: true, note: "kun august" })).toEqual({
       pct: 15,
       excluded: ["soundboks"],
+      code: "weekend",
+      active: true,
       note: "kun august",
     });
+  });
+
+  it("kan ikke være tændt uden en kode — ellers ville tom kode ramme alt", () => {
+    expect(parseCampaign({ pct: 20, code: "", active: true }).active).toBe(false);
+  });
+});
+
+/** Kampagne der er tændt — DEFAULT_CAMPAIGN er slået fra med vilje */
+const AKTIV = { ...DEFAULT_CAMPAIGN, active: true };
+
+describe("weekendForPickup", () => {
+  it("finder fredagen for fre, lør og søn", () => {
+    expect(weekendForPickup("2026-08-21")?.from).toBe("2026-08-21"); // fredag
+    expect(weekendForPickup("2026-08-22")?.from).toBe("2026-08-21"); // lørdag
+    expect(weekendForPickup("2026-08-23")?.from).toBe("2026-08-21"); // søndag
+  });
+
+  it("giver null for hverdage — det er ikke en weekendleje", () => {
+    expect(weekendForPickup("2026-08-19")).toBeNull(); // onsdag
+    expect(weekendForPickup("2026-08-20")).toBeNull(); // torsdag
+  });
+});
+
+describe("campaignApplies", () => {
+  const ctx = { pickup: "2026-08-21", returnDate: "2026-08-24", productIds: ["festival"] };
+  const apply = (c = AKTIV, over = {}, bookings: LoadedBooking[] = [], exclude?: string) =>
+    campaignApplies(c, { ...ctx, ...over }, bookings, INVENTORY, CATALOG, exclude);
+
+  it("godkender en weekendleje på ledigt udstyr", () => {
+    const verdict = apply();
+    expect(verdict.ok).toBe(true);
+  });
+
+  it("afviser når udsalget er slået fra", () => {
+    const verdict = apply(DEFAULT_CAMPAIGN);
+    expect(verdict).toEqual({ ok: false, reason: "Udsalget er ikke aktivt" });
+  });
+
+  it("afviser afhentning på en hverdag", () => {
+    const verdict = apply(AKTIV, { pickup: "2026-08-19", returnDate: "2026-08-21" });
+    expect(verdict.ok).toBe(false);
+  });
+
+  it("afviser en leje der rækker ud over weekenden", () => {
+    const verdict = apply(AKTIV, { returnDate: "2026-08-26" });
+    expect(verdict).toEqual({ ok: false, reason: "Lejeperioden rækker ud over weekenden" });
+  });
+
+  it("afviser udstyr der ikke er ledigt hele weekenden", () => {
+    const optaget = [
+      booking("2026-08-22", "2026-08-23", ["festival"]),
+      booking("2026-08-22", "2026-08-23", ["festival"]),
+    ];
+    const verdict = apply(AKTIV, {}, optaget);
+    expect(verdict.ok).toBe(false);
+    if (!verdict.ok) expect(verdict.reason).toContain("Stor højtalerpakke");
+  });
+
+  it("afviser hele ordren hvis bare én vare ikke er på udsalg", () => {
+    const verdict = apply({ ...AKTIV, excluded: ["lys"] }, { productIds: ["festival", "lys"] });
+    expect(verdict.ok).toBe(false);
+  });
+
+  it("lader ikke ordren gøre sit eget udstyr udsolgt", () => {
+    // Begge enheder er booket — men den ene ER ordren selv, som allerede
+    // ligger i KV når Stripe-sessionen oprettes
+    const egen = booking("2026-08-21", "2026-08-24", ["festival"]);
+    const anden = booking("2026-08-21", "2026-08-24", ["festival"]);
+    expect(apply(AKTIV, {}, [egen, anden]).ok).toBe(false);
+    expect(apply(AKTIV, {}, [egen, anden], egen.id).ok).toBe(true);
   });
 });

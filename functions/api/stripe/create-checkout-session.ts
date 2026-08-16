@@ -4,7 +4,7 @@
  */
 import Stripe from "stripe";
 import { loadPriceTable, buildLineItems, type LineItemInput } from "../_lib/pricing";
-import { resolveDiscount, discountOre } from "../_lib/discounts";
+import { resolveDiscountFor, discountOre } from "../_lib/discounts";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -22,6 +22,9 @@ interface Body {
   bookingId?: string;
   locale?: string;
   discountCode?: string;
+  /** Lejeperioden — weekendudsalgets kode gælder kun bestemte datoer */
+  pickup?: string;
+  returnDate?: string;
 }
 
 /**
@@ -72,9 +75,20 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   // Rabatkode valideres server-side — en ukendt kode ignoreres frem for at
   // fejle, så en tastefejl aldrig blokerer en betaling.
+  //
+  // Bookingen er allerede gemt på dette tidspunkt, så den holdes ude af sin
+  // egen ledighedsberegning: ellers ville ordren gøre sit eget udstyr udsolgt
+  // og afvise den rabat, kunden lige fik godkendt.
   let discount: { code: string; pct: number } | null = null;
   if (body.discountCode) {
-    discount = await resolveDiscount(context.env.BOOKINGS, body.discountCode);
+    const pickup = String(body.pickup ?? "").slice(0, 10);
+    const returnDate = String(body.returnDate ?? "").slice(0, 10);
+    const isDate = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s);
+    const ctx =
+      isDate(pickup) && isDate(returnDate)
+        ? { pickup, returnDate, productIds: body.items.map((i) => String(i?.id ?? "")).filter(Boolean) }
+        : null;
+    discount = await resolveDiscountFor(context.env.BOOKINGS, body.discountCode, ctx, body.bookingId);
   }
 
   const origin = new URL(context.request.url).origin;

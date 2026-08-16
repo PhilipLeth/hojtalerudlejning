@@ -355,8 +355,20 @@ export default function BookingFlow({
     if (!code) return;
     setCouponChecking(true);
     setCouponError(false);
+    // Ordren sendes med: weekendudsalgets kode gælder kun bestemte datoer og
+    // kun det udstyr, der stadig står tilbage. Almindelige koder ignorerer det.
+    const productIds = [
+      ...(speaker && speaker !== "effects-only" ? [speaker] : []),
+      ...selectedAddons,
+      ...cartItems.map((c) => c.productId),
+    ].filter(Boolean);
+    const params = new URLSearchParams({ code });
+    if (pickupDate) params.set("pickup", pickupDate.toISOString().slice(0, 10));
+    if (returnDate) params.set("returnDate", returnDate.toISOString().slice(0, 10));
+    if (productIds.length) params.set("products", productIds.join(","));
+
     try {
-      const res = await fetch(`/api/discount?code=${encodeURIComponent(code)}`);
+      const res = await fetch(`/api/discount?${params.toString()}`);
       const json: { valid: boolean; code?: string; pct?: number } = await res.json();
       if (json.valid && json.code && json.pct) {
         setCoupon({ code: json.code, pct: json.pct });
@@ -722,6 +734,9 @@ export default function BookingFlow({
             bookingId: bookResult.bookingId,
             locale,
             discountCode: coupon?.code,
+            // Weekendudsalgets kode gælder kun bestemte datoer og produkter
+            pickup: pickupDate?.toISOString(),
+            returnDate: returnDate?.toISOString(),
           }),
         });
         if (!payRes.ok) throw new Error("payment");

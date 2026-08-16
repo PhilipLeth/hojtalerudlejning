@@ -8,7 +8,7 @@
 /** Skal matche DEFAULT_INVENTORY i availability.ts */
 export const DEFAULT_INVENTORY: Record<string, number> = {
   thumpgo: 1, party: 2, soundboks: 2, festival: 2, festival_bas: 1,
-  lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 1,
+  lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 4, lyskaeder: 6,
 };
 
 export const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival", "festival_bas"];
@@ -97,6 +97,9 @@ export function bookedProductIds(booking: Record<string, unknown>): string[] {
 }
 
 export interface LoadedBooking {
+  /** KV-nøglen ("booking_…"). Bruges til at holde en ordre ude af sin egen
+   *  ledighedsberegning, når den allerede er gemt. */
+  id: string;
   pickup: string;
   returnDate: string;
   productIds: string[];
@@ -126,6 +129,7 @@ export async function loadBookings(kv: KVNamespace): Promise<LoadedBooking[]> {
     // eller rabatkode-forbrug — de blev aldrig til noget
     if (String(booking.status || "").startsWith("annulleret")) continue;
     out.push({
+      id: key.name,
       pickup,
       returnDate: ret,
       productIds: bookedProductIds(booking),
