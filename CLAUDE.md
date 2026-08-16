@@ -15,6 +15,11 @@ npx wrangler pages deploy out --project-name=speaker-rental --branch=main
 git push                 # hold GitHub i sync med det der er live
 ```
 
+**Deploy kun et rent træ.** `wrangler pages deploy out` uploader det du lige
+har bygget — inklusive uncommittede filer fra en anden session, der arbejder i
+samme mappe. Ligger der fremmed arbejde i `git status`, så commit dit eget,
+push, og lad Cloudflares Git-build tage commit'en i produktion i stedet.
+
 Sig altid eksplicit i svaret om der er deployet eller ej, og link til
 deployment-URL'en. Er der en grund til ikke at deploye (fx halvfærdigt arbejde
 eller noget der kræver en beslutning), så sig det tydeligt frem for at lade

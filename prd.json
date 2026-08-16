@@ -1987,6 +1987,16 @@
       "status": "done",
       "date": "2026-08-15",
       "description": "orderLines slår ens varer sammen til én linje med antal ('2× Lyskæde varm hvid'). To identiske linjer under hinanden kunne ikke skelnes fra en dublet — nu er det entydigt hvor mange stk. der skal med. I udfoldningen vises linjens beløb som antal × stykpris."
+    },
+    "admin_shell_2026_08_16": {
+      "status": "done",
+      "date": "2026-08-16",
+      "description": "src/app/admin/layout.tsx pakker alle admin-sider i .admin-shell (globals.css): lys baggrund, mørk tekst og læsbare formularfelter, plus 16px felter under 900 px så iOS ikke zoomer. Sitet kører mørkt tema på body, så sider der ikke selv satte farver fik lys tekst på hvide kort — /admin/rabatkoder var reelt usynlig, og /admin/ads, /admin/regler, /admin/indstillinger og /admin/udsalg havde samme fejl. Skallen dækker også fremtidige admin-sider."
+    },
+    "rabatkoder_overblik": {
+      "status": "done",
+      "date": "2026-08-16",
+      "description": "/admin/rabatkoder har fået samme hoved som de øvrige admin-sider, tællere (antal koder, aktive, bookinger med rabat), AKTIV/SLÅET FRA som farvede pills, en forklaring på standard- vs. egne koder, og kortvisning på telefon i stedet for en tabel med seks kolonner."
     }
   },
   "booking_improvements": {

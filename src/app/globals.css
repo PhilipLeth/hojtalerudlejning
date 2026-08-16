@@ -11,6 +11,40 @@ body {
   color: #f0eef5;
 }
 
+/* Admin er et lyst værktøj oven på et mørkt site. Uden denne skal arver
+   admin-siderne body's lyse tekst, og så står teksten hvid på hvide kort —
+   det ramte /admin/rabatkoder, /admin/ads, /admin/regler og /admin/udsalg,
+   som ikke selv satte en baggrund. Skallen ligger i src/app/admin/layout.tsx
+   og gælder alle nuværende og fremtidige admin-sider. */
+.admin-shell {
+  min-height: 100vh;
+  background: #f5f5f5;
+  color: #111;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.admin-shell input,
+.admin-shell select,
+.admin-shell textarea {
+  color: #111;
+  background: #fff;
+}
+
+.admin-shell input::placeholder,
+.admin-shell textarea::placeholder {
+  color: #999;
+}
+
+/* Felter må ikke være mindre end 16px på iOS — ellers zoomer Safari ind
+   hver gang man trykker i dem */
+@media (max-width: 900px) {
+  .admin-shell input,
+  .admin-shell select,
+  .admin-shell textarea {
+    font-size: 16px;
+  }
+}
+
 @layer utilities {
   .glass {
     background: rgba(255, 255, 255, 0.04);
