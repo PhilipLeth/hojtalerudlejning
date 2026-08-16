@@ -13,8 +13,11 @@ import {
   addDays,
   loadBookings,
   soldOutDaysByProduct,
+  upcomingWeekend,
   type LoadedBooking,
 } from "./_lib/bookings";
+
+import { productCatalog } from "./_lib/catalog";
 import {
   AdsNotConfigured,
   listAdGroups,
@@ -23,6 +26,10 @@ import {
   type AdGroupRow,
   type GoogleAdsEnv,
 } from "./_lib/googleads";
+
+// upcomingWeekend lå her tidligere. Flyttet til _lib så udsalget kan bruge den
+// uden at trække hele ads-modulet med; re-eksporteres så gamle kald virker.
+export { upcomingWeekend };
 
 interface Env extends GoogleAdsEnv {
   BOOKINGS: KVNamespace;
@@ -41,19 +48,6 @@ const corsHeaders = {
 
 export const onRequestOptions: PagesFunction<Env> = async () =>
   new Response(null, { status: 204, headers: corsHeaders });
-
-/** Fallback når intet katalog er gemt i admin. Matcher src/lib/products.ts. */
-const FALLBACK_PRODUCTS: Array<{ id: string; name: string; price: number }> = [
-  { id: "thumpgo", name: "Mackie Thump GO", price: 345 },
-  { id: "party", name: "Lille højtalerpakke", price: 395 },
-  { id: "soundboks", name: "Soundboks 4", price: 595 },
-  { id: "festival", name: "Stor højtalerpakke", price: 695 },
-  { id: "lys", name: "Lys-pakke", price: 495 },
-  { id: "rog", name: "Røgmaskine", price: 245 },
-  { id: "subwoofer", name: 'Subwoofer 12"', price: 295 },
-  { id: "stativer", name: "Stativer", price: 95 },
-  { id: "taske", name: "Bæretaske", price: 95 },
-];
 
 interface Economics {
   /** Indkøbspris / hvad udstyret kostede. Bruges kun til afskrivningsoverblik. */
@@ -83,30 +77,6 @@ async function readJson<T>(kv: KVNamespace, key: string, fallback: T): Promise<T
   } catch {
     return fallback;
   }
-}
-
-/** Fredag→mandag i den førstkommende weekend. Fredag selv tæller som "kommende". */
-export function upcomingWeekend(today: string): { from: string; to: string; days: string[] } {
-  const dow = new Date(`${today}T00:00:00Z`).getUTCDay(); // 0=søn
-  const daysUntilFriday = (5 - dow + 7) % 7;
-  const from = addDays(today, daysUntilFriday);
-  const days = [from, addDays(from, 1), addDays(from, 2)]; // fre, lør, søn
-  return { from, to: addDays(from, 3), days };
-}
-
-function productCatalog(saved: unknown): Array<{ id: string; name: string; price: number }> {
-  const groups = saved as Record<string, Array<{ id?: string; name?: string; price?: number }> | null> | null;
-  if (!groups) return FALLBACK_PRODUCTS;
-  const out: Array<{ id: string; name: string; price: number }> = [];
-  const seen = new Set<string>();
-  for (const list of Object.values(groups)) {
-    for (const p of list ?? []) {
-      if (!p?.id || seen.has(p.id)) continue;
-      seen.add(p.id);
-      out.push({ id: p.id, name: p.name || p.id, price: Number(p.price) || 0 });
-    }
-  }
-  return out.length ? out : FALLBACK_PRODUCTS;
 }
 
 /** Bookinger og omsætning pr. produkt, målt på kurv-varer med kendt productId. */

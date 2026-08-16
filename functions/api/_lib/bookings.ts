@@ -38,6 +38,33 @@ export function addDays(iso: string, days: number): string {
   return d.toISOString().slice(0, 10);
 }
 
+export interface Weekend {
+  /** Fredag */
+  from: string;
+  /** Mandag — udstyret er tilbage, så dagen er ikke en del af weekenden */
+  to: string;
+  /** Fre, lør, søn */
+  days: string[];
+}
+
+/** Fredag→mandag i den førstkommende weekend. Fredag selv tæller som "kommende". */
+export function upcomingWeekend(today: string): Weekend {
+  const dow = new Date(`${today}T00:00:00Z`).getUTCDay(); // 0=søn
+  const daysUntilFriday = (5 - dow + 7) % 7;
+  const from = addDays(today, daysUntilFriday);
+  const days = [from, addDays(from, 1), addDays(from, 2)]; // fre, lør, søn
+  return { from, to: addDays(from, 3), days };
+}
+
+/** De næste `count` weekender, den førstkommende først. */
+export function nextWeekends(today: string, count: number): Weekend[] {
+  const first = upcomingWeekend(today);
+  return Array.from({ length: Math.max(1, count) }, (_, i) => {
+    const from = addDays(first.from, i * 7);
+    return { from, to: addDays(from, 3), days: [from, addDays(from, 1), addDays(from, 2)] };
+  });
+}
+
 /** Produkt-ids en booking optager (speaker + tilvalg + kurv-varer) */
 export function bookedProductIds(booking: Record<string, unknown>): string[] {
   const ids: string[] = [];
@@ -111,16 +138,19 @@ export async function loadBookings(kv: KVNamespace): Promise<LoadedBooking[]> {
 }
 
 /**
- * Hvilke dage er hvert produkt udsolgt i vinduet?
+ * Hvor mange enheder af hvert produkt er optaget pr. dag i vinduet?
  * Dag D er optaget når pickup <= D < returnDate — afleveringsdagen tæller ikke,
  * fordi udstyret er tilbage samme dag.
+ *
+ * Grundlaget for både udsolgt-beregningen og udsalget: begge skal svare på
+ * det samme spørgsmål fra samme tal, ellers kan et produkt være "udsolgt" ét
+ * sted og "ledigt" et andet.
  */
-export function soldOutDaysByProduct(
+export function bookedCountsByDay(
   bookings: LoadedBooking[],
-  inventory: Record<string, number>,
   from: string,
   to: string,
-): Record<string, string[]> {
+): Record<string, Record<string, number>> {
   const perDay: Record<string, Record<string, number>> = {};
   for (const b of bookings) {
     for (let day = b.pickup; day < b.returnDate; day = addDays(day, 1)) {
@@ -129,6 +159,17 @@ export function soldOutDaysByProduct(
       for (const id of b.productIds) dayMap[id] = (dayMap[id] ?? 0) + 1;
     }
   }
+  return perDay;
+}
+
+/** Hvilke dage er hvert produkt udsolgt i vinduet? */
+export function soldOutDaysByProduct(
+  bookings: LoadedBooking[],
+  inventory: Record<string, number>,
+  from: string,
+  to: string,
+): Record<string, string[]> {
+  const perDay = bookedCountsByDay(bookings, from, to);
 
   const result: Record<string, string[]> = {};
   for (const [day, counts] of Object.entries(perDay)) {

@@ -118,6 +118,7 @@ const mobileSelect: React.CSSProperties = {
 const ADMIN_PAGES = [
   { href: "/admin/lager", label: "Lager" },
   { href: "/admin/udsolgt", label: "Udsolgt" },
+  { href: "/admin/udsalg", label: "Udsalg" },
   { href: "/admin/ads", label: "Ads" },
   { href: "/admin/regler", label: "Regler" },
   { href: "/admin/rabatkoder", label: "Rabatkoder" },

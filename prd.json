@@ -907,6 +907,12 @@
       "method": "GET",
       "description": "Public. Serverer produktvideoer fra R2 med Range-support (206) så <video> kan spole/streame.",
       "status": "live"
+    },
+    "udsalg": {
+      "path": "/api/udsalg",
+      "method": "GET/POST",
+      "description": "Admin. GET: hvilke produkter er ledige HELE den kommende weekend (fre+lør+søn), de næste 4 weekender, med listeværdi og hvad en rabat ville koste. POST: gemmer kampagne-udkast (pct, excluded, note) i KV-nøglen weekend_sale. UDKAST — rabatten gives ikke til nogen kunde: /api/discount, booking-flowet og Stripe kender ikke kampagnen. Svaret har live:false.",
+      "status": "live"
     }
   },
   "email_flow": {
@@ -1997,6 +2003,10 @@
       "status": "done",
       "date": "2026-08-16",
       "description": "/admin/rabatkoder har fået samme hoved som de øvrige admin-sider, tællere (antal koder, aktive, bookinger med rabat), AKTIV/SLÅET FRA som farvede pills, en forklaring på standard- vs. egne koder, og kortvisning på telefon i stedet for en tabel med seks kolonner."
+    },
+    "fredagsudsalg": {
+      "status": "done",
+      "description": "/admin/udsalg (2026-08-16): fredagsudsalg til weekenden i evaluér-og-vis-form, samme fremgangsmåde som ads-reglerne. Viser pr. weekend hvert produkts lager, ledige enheder fre/lør/søn hver for sig, og 'ledig hele weekenden' — det er minimum over de tre dage der afgør om noget kan sættes på udsalg, for er noget ledigt fredag men booket lørdag, kan kunden ikke leje det til weekenden. Afleveringsdagen tæller ikke som optaget. Undtagelses-chips slår produkter fra, der bliver udlejet til fuld pris alligevel (fx den sidste Soundboks). BESLUTNING: intet er kundevendt endnu — kampagnen er et udkast i KV (weekend_sale), så tallene kan ses et par weekender før priserne røres. Når det skal live mangler tre ting: resolveDiscount skal kende datoer+produkter (i dag er en rabatkode en flad pct på hele ordren uden dato- eller produktbinding), book.ts må ikke stole på klientens total, og nyhedsbrevet mangler et send-endpoint. Fælder noteret: kannibalisering hvis udsalget bliver en fast ugentlig ting, og førpris-reglerne (laveste pris i 30 dage) gør overstreget 'før'-pris uholdbart — formuler som '-20% på det vi har tilbage til weekenden'. Delt logik: bookedCountsByDay, upcomingWeekend/nextWeekends og productCatalog ligger i functions/api/_lib/ og bruges af både ads-oversigten og udsalget, så et produkt ikke kan være ledigt ét sted og udsolgt et andet."
     }
   },
   "booking_improvements": {
