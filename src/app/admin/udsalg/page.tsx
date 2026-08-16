@@ -186,15 +186,17 @@ export default function UdsalgPage() {
 
       {data?.live ? (
         <div style={{ background: "#d4edda", color: "#155724", padding: "12px 14px", borderRadius: "8px", margin: "0 0 18px", fontSize: "13px", border: "1px solid #28a745" }}>
-          <strong>Udsalget er aktivt.</strong> Kunder kan skrive koden <code style={{ background: "#fff", padding: "1px 6px", borderRadius: "4px", fontWeight: 700 }}>{data.campaign.code}</code> i
-          booking-flowet og få {data.campaign.pct}% — men kun når hele lejeperioden ligger i én weekend, og kun
-          på udstyr der står ledigt alle tre dage. Alt andet afvises. Kontrollen sker på serveren ved både
-          kodetjek, booking og betaling.
+          <strong>Udsalget er aktivt — og kunderne kan se det.</strong> Der vises en popup på sitet med
+          weekendens ledige udstyr og koden <code style={{ background: "#fff", padding: "1px 6px", borderRadius: "4px", fontWeight: 700 }}>{data.campaign.code}</code>.
+          Rabatten på {data.campaign.pct}% gives kun når hele lejeperioden ligger i én weekend, og kun på udstyr
+          der står ledigt alle tre dage. Alt andet afvises — kontrollen sker på serveren ved kodetjek, booking
+          og betaling. Bliver det sidste udstyr udlejet, forsvinder popup&apos;en af sig selv.
         </div>
       ) : (
         <div style={{ background: "#e8f0fe", color: "#174ea6", padding: "12px 14px", borderRadius: "8px", margin: "0 0 18px", fontSize: "13px" }}>
-          <strong>Udsalget er slået fra.</strong> Koden afvises som enhver anden ukendt kode. Tallene herunder
-          viser, hvad du <em>ville</em> give rabat på, og hvad det ville koste. Tænd det med kontakten nedenfor.
+          <strong>Udsalget er slået fra.</strong> Ingen popup på sitet, og koden afvises som enhver anden ukendt
+          kode. Tallene herunder viser, hvad du <em>ville</em> give rabat på, og hvad det ville koste. Tænd det
+          med kontakten nedenfor.
         </div>
       )}
 

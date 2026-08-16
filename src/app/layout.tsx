@@ -4,6 +4,7 @@ import BurgerMenu from "@/components/BurgerMenu";
 import TopBar from "@/components/TopBar";
 import SiteHeader from "@/components/SiteHeader";
 import BookingDrawer from "@/components/BookingDrawer";
+import WeekendSalePopup from "@/components/WeekendSalePopup";
 import "./globals.css";
 
 const GTM_ID = "GTM-M52R25VF";
@@ -85,6 +86,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <BookingDrawer />
+        <WeekendSalePopup />
       </body>
     </html>
   );

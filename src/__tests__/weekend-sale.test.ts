@@ -215,3 +215,32 @@ describe("campaignApplies", () => {
     expect(apply(AKTIV, {}, [egen, anden], egen.id).ok).toBe(true);
   });
 });
+
+/**
+ * Popup'en på sitet må kun vises når der faktisk er noget at sælge.
+ * /api/udsalg-aktiv bygger sit svar på unitsOnSale — er den 0, siger den nej,
+ * uanset at kontakten er tændt. Ellers råber sitet "udsalg" på en weekend
+ * hvor alt er udlejet, og kunden klikker ind og finder ingenting.
+ */
+describe("offentlig udsalgsstatus", () => {
+  const optagetHeleWeekenden = (id: string, antal: number) =>
+    Array.from({ length: antal }, () => booking("2026-08-21", "2026-08-24", [id]));
+
+  it("har noget at vise når der står udstyr tilbage", () => {
+    expect(weekendSale([], INVENTORY, CATALOG, AKTIV, WEEKEND).unitsOnSale).toBeGreaterThan(0);
+  });
+
+  it("har intet at vise når alt er udlejet", () => {
+    const alt = [
+      ...optagetHeleWeekenden("festival", 2),
+      ...optagetHeleWeekenden("party", 2),
+      ...optagetHeleWeekenden("lys", 2),
+    ];
+    expect(weekendSale(alt, INVENTORY, CATALOG, AKTIV, WEEKEND).unitsOnSale).toBe(0);
+  });
+
+  it("har intet at vise når alt er undtaget", () => {
+    const intet = { ...AKTIV, excluded: ["festival", "party", "lys"] };
+    expect(weekendSale([], INVENTORY, CATALOG, intet, WEEKEND).unitsOnSale).toBe(0);
+  });
+});
