@@ -24,7 +24,7 @@ export default function Page() {
       price={1195}
       headline="Konferencepakken — klar til mødet"
       sub={'55" storskærm + trådløst headset + lille højtalerpakke. Spar 140 kr.'}
-      image="/images/product-skaerm.png"
+      image="/images/product-skaerm.webp"
       imageAlt="Konferencepakke med storskærm, headset og højtalere"
       productId="pakke_konference"
       bullets={["55\" LED-skærm på 3-fod stativ", "Trådløst headset", "2× 10\" højtalere med Bluetooth", "Alle kabler og adaptere", "Spar 140 kr ift. enkeltpriser"]}

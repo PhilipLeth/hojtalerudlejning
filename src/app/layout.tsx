@@ -62,6 +62,19 @@ export default function RootLayout({
   return (
     <html lang="da">
       <head>
+        {/* The hero is the LCP element on the front page, every product page
+            and every occasion page, but it is applied as a CSS background — so
+            the browser only discovers it after the stylesheet has parsed and
+            laid out. Preloading moves that discovery to the first bytes of the
+            document. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero.webp"
+          type="image/webp"
+          fetchPriority="high"
+        />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"

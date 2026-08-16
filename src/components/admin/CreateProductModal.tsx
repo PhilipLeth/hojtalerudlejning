@@ -39,7 +39,7 @@ export default function CreateProductModal({ open, existingIds, onClose, onCreat
   const [id, setId] = useState("");
   const [idTouched, setIdTouched] = useState(false);
   const [price, setPrice] = useState("399");
-  const [image, setImage] = useState("/images/product-party.png");
+  const [image, setImage] = useState("/images/product-party.webp");
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState<ProductCategory>("lys");
   const [power, setPower] = useState<Speaker["power"]>("kabel");
@@ -52,7 +52,7 @@ export default function CreateProductModal({ open, existingIds, onClose, onCreat
     setId("");
     setIdTouched(false);
     setPrice("399");
-    setImage("/images/product-party.png");
+    setImage("/images/product-party.webp");
     setDesc("");
     setCategory("lys");
     setPower("kabel");
@@ -91,8 +91,8 @@ export default function CreateProductModal({ open, existingIds, onClose, onCreat
       const speaker: Speaker = {
         id: productId,
         price: priceNum,
-        product: image || "/images/product-party.png",
-        mood: "/images/mood-party.png",
+        product: image || "/images/product-party.webp",
+        mood: "/images/mood-party.webp",
         power,
         sizeClass: "lille",
         weight: "",
@@ -118,7 +118,7 @@ export default function CreateProductModal({ open, existingIds, onClose, onCreat
         id: productId,
         category,
         price: priceNum,
-        image: image || "/images/product-discokugle.png",
+        image: image || "/images/product-discokugle.webp",
         name_da: name.trim(),
         name_en: name.trim(),
         desc_da: desc.trim(),

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { bookHref } from "@/lib/bookUrl";
 import { isBundleProduct } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
+import { thumbSrcSet, GRID_IMAGE_SIZES } from "@/lib/imageSrcSet";
 
 /** Forside produktgrid. Book → kurv-drawer. Info → produktside. */
 const GRID: Array<{
@@ -14,16 +15,16 @@ const GRID: Array<{
   image: string;
   tag?: string;
 }> = [
-  { id: "soundboks", page: "/soundboks-4", name: "Soundboks 4", price: 600, image: "/images/product-soundboks.png", tag: "Populær" },
-  { id: "thumpgo", page: "/mackie-thump-go", name: "Mackie Thump GO", price: 350, image: "/images/product-thumpgo.png", tag: "Batteri" },
-  { id: "party", page: "/hojtalerpakke-lille", name: "Højtalerpakke lille", price: 399, image: "/images/product-party.png" },
-  { id: "festival", page: "/hojtalerpakke-normal", name: "Højtalerpakke normal", price: 700, image: "/images/product-festival.png" },
-  { id: "subwoofer", page: "/subwoofer", name: "Subwoofer 12\"", price: 295, image: "/images/product-subwoofer-v2.png", tag: "Ny" },
-  { id: "lys", page: "/lys-pakke", name: "Lys-pakke", price: 495, image: "/images/product-lys.png" },
-  { id: "rog", page: "/roegmaskine", name: "Røgmaskine", price: 250, image: "/images/product-rog.png" },
-  { id: "discokugle", page: "/discokugle", name: "Discokugle", price: 250, image: "/images/product-discokugle.png" },
-  { id: "lyskaeder", page: "/lyskaeder", name: "Lyskæder", price: 200, image: "/images/product-lyskaeder.png" },
-  { id: "projektor", page: "/projektor", name: "Projektor", price: 500, image: "/images/product-projektor.png" },
+  { id: "soundboks", page: "/soundboks-4", name: "Soundboks 4", price: 600, image: "/images/product-soundboks.webp", tag: "Populær" },
+  { id: "thumpgo", page: "/mackie-thump-go", name: "Mackie Thump GO", price: 350, image: "/images/product-thumpgo.webp", tag: "Batteri" },
+  { id: "party", page: "/hojtalerpakke-lille", name: "Højtalerpakke lille", price: 399, image: "/images/product-party.webp" },
+  { id: "festival", page: "/hojtalerpakke-normal", name: "Højtalerpakke normal", price: 700, image: "/images/product-festival.webp" },
+  { id: "subwoofer", page: "/subwoofer", name: "Subwoofer 12\"", price: 295, image: "/images/product-subwoofer-v2.webp", tag: "Ny" },
+  { id: "lys", page: "/lys-pakke", name: "Lys-pakke", price: 495, image: "/images/product-lys.webp" },
+  { id: "rog", page: "/roegmaskine", name: "Røgmaskine", price: 250, image: "/images/product-rog.webp" },
+  { id: "discokugle", page: "/discokugle", name: "Discokugle", price: 250, image: "/images/product-discokugle.webp" },
+  { id: "lyskaeder", page: "/lyskaeder", name: "Lyskæder", price: 200, image: "/images/product-lyskaeder.webp" },
+  { id: "projektor", page: "/projektor", name: "Projektor", price: 500, image: "/images/product-projektor.webp" },
 ];
 
 export default function ProductGrid() {
@@ -126,8 +127,10 @@ export default function ProductGrid() {
                     {p.tag}
                   </span>
                 )}
-                <img
+                <img loading="lazy" decoding="async"
                   src={image}
+                  srcSet={thumbSrcSet(image)}
+                  sizes={GRID_IMAGE_SIZES}
                   alt={name}
                   className="mx-auto h-40 w-full object-contain transition duration-300 group-hover:scale-105 group-hover:opacity-20"
                 />

@@ -12,7 +12,7 @@ const CATALOG = {
       id: "projektor",
       category: "av",
       price: 495,
-      image: "/images/product-projektor.png",
+      image: "/images/product-projektor.webp",
       name_da: "Projektor",
       name_en: "Projector",
       video: "/api/video/vid_test123",

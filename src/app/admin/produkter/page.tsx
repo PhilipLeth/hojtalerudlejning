@@ -352,7 +352,7 @@ export default function AdminProdukterPage() {
         {loading && <p style={{ textAlign: "center", color: "#888" }}>Henter produkter...</p>}
 
         <p style={{ fontSize: "14px", color: "#666", marginBottom: "24px" }}>
-          Rediger pris, billeder og tekst pr. produkt. Billedstier er relative til sitet, fx <code>/images/product-party.png</code>.
+          Rediger pris, billeder og tekst pr. produkt. Billedstier er relative til sitet, fx <code>/images/product-party.webp</code>.
         </p>
 
         <h2 style={{ fontSize: "17px", margin: "8px 0 12px" }}>Højtalere ({speakers.length})</h2>

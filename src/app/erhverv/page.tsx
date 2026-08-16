@@ -78,7 +78,7 @@ export default function ErhvervPage() {
       <section className="relative flex min-h-[60vh] flex-col items-center justify-center px-4 pt-14 text-center">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-30"
-          style={{ backgroundImage: "url(/images/hero.png)" }}
+          style={{ backgroundImage: "url(/images/hero.webp)" }}
         />
         <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/60 via-transparent to-[#07060b]/90" />
         <div className="relative z-10 max-w-3xl">

@@ -24,7 +24,7 @@ export default function Page() {
       price={195}
       headline="Lej Shure Beta 58A"
       sub={'Shure Beta 58A med kabel — klassikeren til sang og taler.'}
-      image="/images/product-mikrofon-kabel-pro.png"
+      image="/images/product-mikrofon-kabel-pro.webp"
       imageAlt="Shure Beta 58A mikrofon til leje"
       productId="haandholdt_mikrofon_pro"
       bullets={["Shure Beta 58A — industristandarden", "XLR-kabel inkluderet", "Perfekt til sang og taler", "Tilslut direkte til vores højtalere", "195 kr/weekend"]}

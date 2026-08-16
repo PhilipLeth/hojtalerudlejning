@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { applyDiscount, isSummerSale } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
+import { thumbSrcSet, THUMB_IMAGE_SIZES } from "@/lib/imageSrcSet";
 
 interface EventType {
   id: string;
@@ -63,7 +64,7 @@ function ProductCard({ id, badge }: { id: string; badge?: string }) {
         </span>
       )}
       <a href={info.page ?? info.href} className="block">
-        <img src={info.image} alt="" className="mx-auto h-24 w-24 object-contain transition-transform duration-300 group-hover:scale-110" />
+        <img loading="lazy" decoding="async" src={info.image} srcSet={thumbSrcSet(info.image)} sizes={THUMB_IMAGE_SIZES} alt="" className="mx-auto h-24 w-24 object-contain transition-transform duration-300 group-hover:scale-110" />
         <p className="mt-3 font-semibold text-white">{info.name}</p>
         <p className={`text-sm font-bold ${summer ? "text-amber-400" : "text-brand-400"}`}>
           {summer && <span className="mr-1 font-normal text-white/30 line-through">{info.price},-</span>}

@@ -101,7 +101,7 @@ export default function KobenhavnPage() {
       <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-55"
-          style={{ backgroundImage: "url(/images/hero.png)" }}
+          style={{ backgroundImage: "url(/images/hero.webp)" }}
         />
         <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
 
@@ -145,7 +145,7 @@ export default function KobenhavnPage() {
             <div className="glass rounded-2xl p-8">
               <div className="mb-4 overflow-hidden rounded-xl">
                 <Image
-                  src="/images/product-party.png"
+                  src="/images/product-party.webp"
                   alt="Lille højtalerpakke til fest i København"
                   width={600}
                   height={400}
@@ -172,7 +172,7 @@ export default function KobenhavnPage() {
             <div className="glass rounded-2xl p-8">
               <div className="mb-4 overflow-hidden rounded-xl">
                 <Image
-                  src="/images/product-festival.png"
+                  src="/images/product-festival.webp"
                   alt="Stor højtalerpakke til fest i København"
                   width={600}
                   height={400}

@@ -24,7 +24,7 @@ export default function Page() {
       price={195}
       headline="Lej lærred 160 cm"
       sub={'160 cm lærred på stativ — perfekt makker til projektoren.'}
-      image="/images/product-laerred.png"
+      image="/images/product-laerred.webp"
       imageAlt="Projektorlærred 160 cm på stativ til leje"
       productId="laerred_160"
       bullets={["160 cm bredt lærred", "Stabilt trefods-stativ", "Sat op på 2 minutter", "Kombinér med projektor fra 495 kr", "Hent fredag, aflever mandag"]}

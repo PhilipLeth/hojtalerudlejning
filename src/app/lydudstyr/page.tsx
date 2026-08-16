@@ -61,7 +61,7 @@ export default function LydudstyrPage() {
       <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-55"
-          style={{ backgroundImage: "url(/images/hero.png)" }}
+          style={{ backgroundImage: "url(/images/hero.webp)" }}
         />
         <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
 
@@ -101,7 +101,7 @@ export default function LydudstyrPage() {
           <div className="grid gap-8 sm:grid-cols-2 items-center">
             <div className="overflow-hidden rounded-2xl">
               <Image
-                src="/images/product-festival.png"
+                src="/images/product-festival.webp"
                 alt="Festival PA-anlæg med højtalere, mixer og mikrofon"
                 width={600}
                 height={400}
@@ -160,7 +160,7 @@ export default function LydudstyrPage() {
               </div>
               <div className="overflow-hidden rounded-xl">
                 <Image
-                  src="/images/product-party.png"
+                  src="/images/product-party.webp"
                   alt="Party-højtalerpakke – budget-alternativ"
                   width={600}
                   height={400}

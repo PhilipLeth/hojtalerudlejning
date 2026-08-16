@@ -29,7 +29,7 @@ export default function Soundboks4Page() {
         price={595}
         headline="Lej Soundboks 4 i København"
         sub="Batteridrevet højtaler med kraftig bas - ingen strøm nødvendig."
-        image="/images/product-soundboks.png"
+        image="/images/product-soundboks.webp"
         imageAlt="Soundboks 4 til leje i København"
         productId="soundboks"
         bullets={[

@@ -24,7 +24,7 @@ export default function Page() {
       price={495}
       headline="Lej trådløst headset PRO"
       sub={'Professionelt headset i broadcast-kvalitet — til konferencer og scener.'}
-      image="/images/product-headset-pro.png"
+      image="/images/product-headset-pro.webp"
       imageAlt="Professionelt trådløst headset til leje"
       productId="headset_pro"
       bullets={["PRO headset-mikrofon i broadcast-kvalitet", "Bodypack-sender + modtager", "Kabelforbindelse til højtaler/mixer", "Perfekt til konference og scene", "Hent fredag, aflever mandag"]}

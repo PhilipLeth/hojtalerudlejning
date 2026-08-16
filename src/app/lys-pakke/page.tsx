@@ -60,7 +60,7 @@ export default function LysPakkePage() {
       <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-55"
-          style={{ backgroundImage: "url(/images/hero.png)" }}
+          style={{ backgroundImage: "url(/images/hero.webp)" }}
         />
         <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
 
@@ -93,7 +93,7 @@ export default function LysPakkePage() {
           <div className="grid gap-8 sm:grid-cols-2 items-center">
             <div className="overflow-hidden rounded-2xl">
               <Image
-                src="/images/product-lys.png"
+                src="/images/product-lys.webp"
                 alt="Lys-pakke til leje i København"
                 width={600}
                 height={400}

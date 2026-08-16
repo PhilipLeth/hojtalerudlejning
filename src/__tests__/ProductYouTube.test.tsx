@@ -7,8 +7,8 @@ const CATALOG = {
     {
       id: "thumpgo",
       price: 345,
-      product: "/images/product-thumpgo.png",
-      mood: "/images/mood-party.png",
+      product: "/images/product-thumpgo.webp",
+      mood: "/images/mood-party.webp",
       power: "batteri",
       sizeClass: "lille",
       weight: "10 kg",

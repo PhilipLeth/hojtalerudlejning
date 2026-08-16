@@ -24,7 +24,7 @@ export default function Page() {
       price={95}
       headline="Lej håndholdt mikrofon"
       sub={'Almindelig håndholdt mikrofon med kabel — til taler og sang.'}
-      image="/images/product-mikrofon-kabel.png"
+      image="/images/product-mikrofon-kabel.webp"
       imageAlt="Håndholdt mikrofon med kabel til leje"
       productId="haandholdt_mikrofon"
       bullets={["Klassisk håndholdt dynamisk mikrofon", "XLR-kabel inkluderet", "Tilslut direkte til vores højtalere", "Perfekt til taler og fest", "Kun 95 kr/weekend"]}

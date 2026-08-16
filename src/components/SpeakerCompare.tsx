@@ -4,6 +4,7 @@ import { Fragment, useMemo } from "react";
 import { type Locale, t } from "@/lib/i18n";
 import { applyDiscount, isSummerSale, type Speaker, type PowerType } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
+import { thumbSrcSet, GRID_IMAGE_SIZES } from "@/lib/imageSrcSet";
 
 function PowerIcon({ power }: { power: PowerType }) {
   if (power === "batteri") {
@@ -76,7 +77,7 @@ export default function SpeakerCompare({
                     <tr key={sp.id} className="border-b border-white/5 last:border-0 transition hover:bg-white/[0.02]">
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-3">
-                          <img src={sp.product} alt={text.name} className="h-16 w-16 shrink-0 rounded-lg bg-[#0d0c12] object-contain p-1" />
+                          <img loading="lazy" decoding="async" src={sp.product} srcSet={thumbSrcSet(sp.product)} sizes={GRID_IMAGE_SIZES} alt={text.name} className="h-16 w-16 shrink-0 rounded-lg bg-[#0d0c12] object-contain p-1" />
                           <div>
                             <p className="font-semibold text-white">{text.name}</p>
                             <p className="text-xs text-white/40">{text.size}</p>
@@ -132,8 +133,10 @@ export default function SpeakerCompare({
                     🔋 {c.noPower}
                   </span>
                 )}
-                <img
+                <img loading="lazy" decoding="async"
                   src={sp.product}
+                  srcSet={thumbSrcSet(sp.product)}
+                  sizes={GRID_IMAGE_SIZES}
                   alt={text.name}
                   className="mx-auto h-44 w-full object-contain transition-transform duration-300 group-hover:scale-105"
                 />

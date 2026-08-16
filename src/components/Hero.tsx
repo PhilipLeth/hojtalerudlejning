@@ -20,7 +20,7 @@ export default function Hero({ locale = "da" }: { locale?: Locale }) {
         role="img"
         aria-label="Festscenemning med lyd og lys i København"
         className="fixed inset-0 bg-cover bg-center opacity-55"
-        style={{ backgroundImage: "url(/images/hero.png)" }}
+        style={{ backgroundImage: "url(/images/hero.webp)" }}
       />
       {/* Gradient overlays */}
       <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />

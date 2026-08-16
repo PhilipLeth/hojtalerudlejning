@@ -8,6 +8,7 @@ import { useProducts } from "@/lib/useProducts";
 import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
 import CapacityBadge, { capacityLevel } from "@/components/CapacityBadge";
 import { loadStripe } from "@stripe/stripe-js";
+import { thumbSrcSet, THUMB_IMAGE_SIZES } from "@/lib/imageSrcSet";
 
 /* ───── Helpers ───── */
 
@@ -547,8 +548,8 @@ export default function BookingFlow({
     soloAddons.length === 1 && soloAddons[0].image
       ? soloAddons[0].image
       : hasLights
-        ? "/images/product-lys.png"
-        : "/images/product-rog.png";
+        ? "/images/product-lys.webp"
+        : "/images/product-rog.webp";
 
   const summer = isSummerSale();
   const summerLabel = t[locale].summer;
@@ -889,7 +890,7 @@ export default function BookingFlow({
           <div className="glass rounded-2xl overflow-hidden mb-4">
             {/* Product preview */}
             <div className="flex items-center gap-4 bg-white/[0.02] p-4">
-              <img src={isEffectsOnly ? effectsImage : selectedRental?.image ?? selectedSpeaker?.product} alt={isEffectsOnly ? effectsLabel : rentalName ?? `${selectedSpeaker?.name ?? "Højtalerpakke"}`} className="h-16 w-16 object-contain rounded-lg" />
+              <img loading="lazy" decoding="async" src={isEffectsOnly ? effectsImage : selectedRental?.image ?? selectedSpeaker?.product} srcSet={thumbSrcSet(isEffectsOnly ? effectsImage : selectedRental?.image ?? selectedSpeaker?.product)} sizes={THUMB_IMAGE_SIZES} alt={isEffectsOnly ? effectsLabel : rentalName ?? `${selectedSpeaker?.name ?? "Højtalerpakke"}`} className="h-16 w-16 object-contain rounded-lg" />
               <div>
                 <p className="font-semibold">{isEffectsOnly ? effectsLabel : isRentalOnly ? rentalName : `${selectedSpeaker?.name}${s.speakerSuffix}`}</p>
                 <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id)).map((a) => a.label).join(" + ") : isRentalOnly ? "" : `${selectedSpeaker?.size} — ${selectedSpeaker?.capacity}`}</p>
@@ -966,7 +967,7 @@ export default function BookingFlow({
           {/* ── Fixed mood background ── */}
           <div
             className="fixed inset-0 bg-cover bg-center transition-opacity duration-700"
-            style={{ backgroundImage: "url(/images/hero.png)", opacity: speaker === null ? 0.5 : 0 }}
+            style={{ backgroundImage: "url(/images/hero.webp)", opacity: speaker === null ? 0.5 : 0 }}
           />
           {speakers.map((sd) => (
             <div
@@ -1017,8 +1018,10 @@ export default function BookingFlow({
                     }`}
                   >
                     <div className="relative h-48 overflow-hidden bg-[#0d0c12]">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src={sp.product}
+                        srcSet={thumbSrcSet(sp.product)}
+                        sizes={THUMB_IMAGE_SIZES}
                         alt={sp.name}
                         className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-110"
                       />
@@ -1070,7 +1073,7 @@ export default function BookingFlow({
                   }}
                   className="rounded-xl border border-dashed border-white/15 p-3 text-center transition active:scale-[0.98] hover:border-brand-500/40 hover:bg-white/[0.02]"
                 >
-                  <img src="/images/product-lys.png" alt="Lys-pakke med LED-lamper og centereffekt" className="mx-auto h-12 w-12 object-contain rounded-lg" />
+                  <img loading="lazy" decoding="async" src="/images/product-lys.webp" srcSet={thumbSrcSet("/images/product-lys.webp")} sizes={THUMB_IMAGE_SIZES} alt="Lys-pakke med LED-lamper og centereffekt" className="mx-auto h-12 w-12 object-contain rounded-lg" />
                   <p className="mt-2 text-sm font-medium text-white/70">
                     {lysAddon?.label}
                   </p>
@@ -1088,7 +1091,7 @@ export default function BookingFlow({
                   }}
                   className="rounded-xl border border-dashed border-white/15 p-3 text-center transition active:scale-[0.98] hover:border-brand-500/40 hover:bg-white/[0.02]"
                 >
-                  <img src="/images/product-rog.png" alt="Røgmaskine til fest" className="mx-auto h-12 w-12 object-contain rounded-lg" />
+                  <img loading="lazy" decoding="async" src="/images/product-rog.webp" srcSet={thumbSrcSet("/images/product-rog.webp")} sizes={THUMB_IMAGE_SIZES} alt="Røgmaskine til fest" className="mx-auto h-12 w-12 object-contain rounded-lg" />
                   <p className="mt-2 text-sm font-medium text-white/70">
                     {rogAddon?.label}
                   </p>
@@ -1118,7 +1121,7 @@ export default function BookingFlow({
                           : "border-white/15 border-dashed hover:border-brand-500/40 hover:bg-white/[0.02]"
                       }`}
                     >
-                      <img src={rp.image} alt={locale === "en" ? rp.name_en : rp.name_da} className="mx-auto h-16 w-16 object-contain rounded-lg" />
+                      <img loading="lazy" decoding="async" src={rp.image} srcSet={thumbSrcSet(rp.image)} sizes={THUMB_IMAGE_SIZES} alt={locale === "en" ? rp.name_en : rp.name_da} className="mx-auto h-16 w-16 object-contain rounded-lg" />
                       <p className="mt-2 text-sm font-medium text-white/70">
                         {locale === "en" ? rp.name_en : rp.name_da}
                       </p>
@@ -1147,7 +1150,7 @@ export default function BookingFlow({
                   className="flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-4 py-1.5 text-sm font-semibold text-brand-400 transition hover:bg-brand-500/20"
                 >
                   {(selectedSpeaker?.product || selectedRental?.image || isEffectsOnly) && (
-                    <img src={isEffectsOnly ? effectsImage : (selectedSpeaker?.product ?? selectedRental?.image)} alt="" className="h-6 w-6 rounded object-contain" />
+                    <img loading="lazy" decoding="async" src={isEffectsOnly ? effectsImage : (selectedSpeaker?.product ?? selectedRental?.image)} srcSet={thumbSrcSet(isEffectsOnly ? effectsImage : (selectedSpeaker?.product ?? selectedRental?.image))} sizes={THUMB_IMAGE_SIZES} alt="" className="h-6 w-6 rounded object-contain" />
                   )}
                   {isEffectsOnly
                     ? effectsLabel
@@ -1161,8 +1164,10 @@ export default function BookingFlow({
             {(selectedRental || selectedSpeaker) && (
               <div className="glass rounded-2xl p-4">
                 <div className="flex items-start gap-4">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={selectedSpeaker?.product ?? selectedRental?.image}
+                    srcSet={thumbSrcSet(selectedSpeaker?.product ?? selectedRental?.image)}
+                    sizes={THUMB_IMAGE_SIZES}
                     alt=""
                     className="h-20 w-20 shrink-0 rounded-xl bg-[#0d0c12] object-contain p-1"
                   />
@@ -1317,7 +1322,7 @@ export default function BookingFlow({
                           )}
                         </div>
                         {a.image && (
-                          <img src={a.image} alt="" className="h-10 w-10 shrink-0 rounded-lg bg-[#0d0c12] object-contain p-0.5" />
+                          <img loading="lazy" decoding="async" src={a.image} srcSet={thumbSrcSet(a.image)} sizes={THUMB_IMAGE_SIZES} alt="" className="h-10 w-10 shrink-0 rounded-lg bg-[#0d0c12] object-contain p-0.5" />
                         )}
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-sm font-semibold">{a.label}</p>
@@ -1396,7 +1401,7 @@ export default function BookingFlow({
                       }}
                       className="flex w-full items-center gap-3 rounded-xl border border-dashed border-white/15 px-3 py-2.5 text-left transition hover:border-brand-500/40"
                     >
-                      <img src={prod.image} alt="" className="h-10 w-10 shrink-0 rounded-lg bg-[#0d0c12] object-contain p-0.5" />
+                      <img loading="lazy" decoding="async" src={prod.image} srcSet={thumbSrcSet(prod.image)} sizes={THUMB_IMAGE_SIZES} alt="" className="h-10 w-10 shrink-0 rounded-lg bg-[#0d0c12] object-contain p-0.5" />
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-semibold">{prod.name}</p>
                         <p className="text-xs text-white/40">{s.addToCartHint}</p>

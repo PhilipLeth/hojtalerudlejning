@@ -51,7 +51,7 @@ export default function RoegPage() {
       <section className="relative flex min-h-[55vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-55"
-          style={{ backgroundImage: "url(/images/hero.png)" }}
+          style={{ backgroundImage: "url(/images/hero.webp)" }}
         />
         <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
 

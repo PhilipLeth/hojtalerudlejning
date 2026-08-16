@@ -13,7 +13,7 @@ export default function HomeHero() {
     <section className="relative overflow-hidden px-4 pb-8 pt-6 sm:pt-8">
       <div
         className="fixed inset-0 bg-cover bg-center opacity-40"
-        style={{ backgroundImage: "url(/images/hero.png)" }}
+        style={{ backgroundImage: "url(/images/hero.webp)" }}
       />
       <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/70 via-[#07060b]/50 to-[#07060b]" />
       <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-brand-500/10 blur-[120px]" />

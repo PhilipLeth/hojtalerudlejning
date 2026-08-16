@@ -1,3 +1,24 @@
 /*
   Cache-Control: public, max-age=0, must-revalidate
   Alt-Svc: clear
+
+# HTML must stay uncached — prices and availability come from the KV-backed
+# catalog and a stale page shows the wrong price. Static assets are a different
+# story: the rule above applied to them too, so every image was revalidated on
+# every page view, including a 2.6 MB hero.
+
+# Filenames here carry a content hash, so a changed file is a changed URL.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Image filenames are NOT hashed, so this is deliberately not immutable. The
+# established way to force a refresh is to rename the file — see
+# product-subwoofer-v2.webp, renamed for exactly that reason.
+/images/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/*.svg
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/*.ico
+  Cache-Control: public, max-age=2592000

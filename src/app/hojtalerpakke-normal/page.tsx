@@ -25,7 +25,7 @@ export default function HojtalerpakkeNormalPage() {
       price={495}
       headline="Lej stor højtalerpakke i København"
       sub={'To kraftige 12" EV aktive højtalere - klar lyd til større rum og udendørs.'}
-      image="/images/product-festival.png"
+      image="/images/product-festival.webp"
       imageAlt="Stor højtalerpakke til leje i København"
       productId="festival"
       reviewed={{ ratingValue: "5.0", reviewCount: "1" }}

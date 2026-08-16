@@ -7,6 +7,7 @@ import {
   type RentalProduct,
 } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
+import { thumbSrcSet, GRID_IMAGE_SIZES } from "@/lib/imageSrcSet";
 
 /**
  * Sammensatte pakker vist som tilbudskort — samme kort som på forsiden.
@@ -72,8 +73,10 @@ function BundleCard({ product: p }: { product: RentalProduct }) {
         aria-label={`Se ${p.name_da}`}
         className="relative block h-48 overflow-hidden bg-[#0d0c12] sm:h-56"
       >
-        <img
+        <img loading="lazy" decoding="async"
           src={p.image}
+          srcSet={thumbSrcSet(p.image)}
+          sizes={GRID_IMAGE_SIZES}
           alt={p.name_da}
           style={p.cardImageCrop ? { objectPosition: p.cardImageCrop } : undefined}
           className={`h-full w-full transition duration-500 group-hover:scale-105 ${p.cardImageCrop ? "object-cover" : "object-contain"}`}

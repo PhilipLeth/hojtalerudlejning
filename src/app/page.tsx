@@ -31,7 +31,7 @@ export default function Home() {
             taxID: "DK40994904",
             telephone: PHONE_E164,
             priceRange: "95-1195 kr",
-            image: "https://lejhojtaler.dk/images/logo-lejhojtaler.png",
+            image: "https://lejhojtaler.dk/images/logo-lejhojtaler.webp",
             description:
               "Højtalerudlejning i København. Lej højtaler, PA-anlæg, batterihøjtaler og lydudstyr til fest, event og party. Billig levering i hele København. Festudstyr til leje fra 345 kr/weekend.",
             url: "https://lejhojtaler.dk",

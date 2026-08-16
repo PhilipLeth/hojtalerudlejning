@@ -24,7 +24,7 @@ export default function Page() {
       price={695}
       headline="Lej karaokemaskine i København"
       sub={'Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys — tilslut TV via HDMI.'}
-      image="/images/product-karaoke.png"
+      image="/images/product-karaoke.webp"
       imageAlt="Singing Machine karaokemaskine med to trådløse mikrofoner til leje"
       productId="karaoke"
       bullets={["Singing Machine med indbygget skærm", "2 trådløse mikrofoner medfølger", "Festlys i højtaleren", "HDMI til TV/projektor + Bluetooth", "Klar på 5 minutter", "Billigst i Karaokepakken — spar 385 kr"]}

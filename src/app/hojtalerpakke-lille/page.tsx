@@ -25,7 +25,7 @@ export default function HojtalerpakkeLillePage() {
       price={395}
       headline="Lej højtalerpakke lille i København"
       sub={'To kompakte 10" Alto højtalere med Bluetooth - klar til cyklen.'}
-      image="/images/product-party.png"
+      image="/images/product-party.webp"
       imageAlt="Lille højtalerpakke til leje i København"
       productId="party"
       reviewed={{ ratingValue: "5.0", reviewCount: "2" }}

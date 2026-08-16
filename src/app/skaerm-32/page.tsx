@@ -33,7 +33,7 @@ export default function Page() {
       price={395}
       headline={'Lej 32" skærm på stativ'}
       sub={'32" LED-skærm på 3-fod stativ — kompakt, nem at flytte og klar på 5 minutter.'}
-      image="/images/product-skaerm-32.png"
+      image="/images/product-skaerm-32.webp"
       imageAlt={'32" LED-skærm på 3-fod stativ til leje i København'}
       productId="skaerm_32"
       bullets={[

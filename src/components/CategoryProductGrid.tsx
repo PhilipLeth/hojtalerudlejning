@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useProducts } from "@/lib/useProducts";
+import { thumbSrcSet, GRID_IMAGE_SIZES } from "@/lib/imageSrcSet";
 
 export interface CategoryItem {
   /** Produkt-id i kataloget (speaker, addon eller rentalProduct) */
@@ -48,7 +49,7 @@ export default function CategoryProductGrid({
         name: ad.da.label,
         desc: ad.da.desc,
         price: ad.price,
-        image: ad.image ?? "/images/product-lys.png",
+        image: ad.image ?? "/images/product-lys.webp",
         contents: ad.contents ?? [],
         href: `/?product=${ad.id}#book`,
         page: ad.page ?? (item.href && !item.href.includes("#book") && !item.href.startsWith("/book") ? item.href : undefined),
@@ -84,8 +85,10 @@ export default function CategoryProductGrid({
                   {p.tag}
                 </span>
               )}
-              <img
+              <img loading="lazy" decoding="async"
                 src={p.image}
+                srcSet={thumbSrcSet(p.image)}
+                sizes={GRID_IMAGE_SIZES}
                 alt={p.name}
                 className="mx-auto h-40 w-full object-contain transition duration-300 group-hover:scale-105 group-hover:opacity-20"
               />

@@ -32,7 +32,7 @@ export default function Page() {
       price={195}
       headline="Lej enkelt lyseffekt i København"
       sub="1 LED-par-lys (uden stativ) — plug and play farveeffekt der sætter stemning på få minutter."
-      image="/images/product-lyseffekt.png"
+      image="/images/product-lyseffekt.webp"
       imageAlt="Enkelt LED-festlys til leje i København"
       productId="lyseffekt"
       bullets={[
