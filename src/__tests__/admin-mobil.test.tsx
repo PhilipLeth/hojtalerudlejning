@@ -98,6 +98,24 @@ describe("Ordreoverblikket på mobil", () => {
     expect(screen.getByText("1480 kr")).toBeInTheDocument();
   });
 
+  it("samler filtrene i tre dropdowns i stedet for elleve chips", async () => {
+    const { container } = render(<AdminPage />);
+    await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
+
+    // Periode, status og sortering — tre selects i toppen
+    const selects = [...container.querySelectorAll("select")];
+    const values = selects.map((s) => s.value);
+    expect(values).toContain("aktive");
+    expect(values).toContain("alle");
+    expect(values).toContain("status");
+    // Statusserne ligger i dropdownen, ikke som knapper man skal scrolle forbi
+    expect(screen.queryByRole("button", { name: /Bekræftet/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "7 dage" })).not.toBeInTheDocument();
+    // Menuen til de andre admin-sider er også foldet sammen
+    expect(screen.getByRole("option", { name: "Menu…" })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Rabatkoder" })).not.toBeInTheDocument();
+  });
+
   it("har en knap til udlevering med underskrift", async () => {
     render(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());

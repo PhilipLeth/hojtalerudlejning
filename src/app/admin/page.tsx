@@ -109,6 +109,25 @@ const navLink: React.CSSProperties = {
   whiteSpace: "nowrap",
 };
 
+/** Dropdown der kan rammes med en tommelfinger — 16px undgår zoom på iOS */
+const mobileSelect: React.CSSProperties = {
+  flex: 1, minWidth: 0, padding: "10px 8px", fontSize: "16px",
+  border: "1px solid #ddd", borderRadius: "8px", background: "#fff", color: "#111",
+};
+
+const ADMIN_PAGES = [
+  { href: "/admin/lager", label: "Lager" },
+  { href: "/admin/udsolgt", label: "Udsolgt" },
+  { href: "/admin/ads", label: "Ads" },
+  { href: "/admin/regler", label: "Regler" },
+  { href: "/admin/rabatkoder", label: "Rabatkoder" },
+  { href: "/admin/produkter", label: "Produkter" },
+  { href: "/admin/kanaler", label: "Kanaler" },
+  { href: "/admin/nyhedsbrev", label: "Nyhedsbrev" },
+  { href: "/admin/lejeseddel", label: "Lejeseddel" },
+  { href: "/admin/indstillinger", label: "Indstillinger" },
+];
+
 /**
  * Telefon eller ej. Admin bruges i praksis stående i døren ved udlevering,
  * så under 900 px skifter listen fra tabel til kort — en tabel med 8 kolonner
@@ -484,17 +503,24 @@ export default function AdminPage() {
     <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
       <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: isMobile ? "10px 12px" : "12px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px", position: "sticky", top: 0, zIndex: 5 }}>
         <h1 style={{ margin: 0, fontSize: "18px", fontWeight: 700 }}>Bookinger</h1>
-        <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: isMobile ? "nowrap" : "wrap", overflowX: isMobile ? "auto" : "visible", maxWidth: "100%", paddingBottom: isMobile ? "2px" : 0, WebkitOverflowScrolling: "touch" }}>
-          <a href="/admin/lager" style={navLink}>Lager</a>
-          <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
-          <a href="/admin/ads" style={navLink}>Ads</a>
-          <a href="/admin/regler" style={navLink}>Regler</a>
-          <a href="/admin/rabatkoder" style={navLink}>Rabatkoder</a>
-          <a href="/admin/produkter" style={navLink}>Produkter</a>
-          <a href="/admin/kanaler" style={navLink}>Kanaler</a>
-          <a href="/admin/nyhedsbrev" style={navLink}>Nyhedsbrev</a>
-          <a href="/admin/lejeseddel" style={navLink}>Lejeseddel</a>
-          <a href="/admin/indstillinger" style={navLink}>Indstillinger</a>
+        <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap", maxWidth: "100%" }}>
+          {isMobile ? (
+            // Ti links i en scrollende stribe er ubrugelige med tommelfingeren
+            <select
+              value=""
+              onChange={(e) => { if (e.target.value) window.location.href = e.target.value; }}
+              style={{ ...navLink, appearance: "auto", padding: "9px 10px", fontSize: "14px" }}
+            >
+              <option value="">Menu…</option>
+              {ADMIN_PAGES.map((p) => (
+                <option key={p.href} value={p.href}>{p.label}</option>
+              ))}
+            </select>
+          ) : (
+            ADMIN_PAGES.map((p) => (
+              <a key={p.href} href={p.href} style={navLink}>{p.label}</a>
+            ))
+          )}
           <button onClick={fetchBookings} disabled={loading} style={{ ...navLink, cursor: "pointer", border: "none" as React.CSSProperties["border"] }}>
             {loading ? "Henter..." : "↺ Opdater"}
           </button>
@@ -505,44 +531,95 @@ export default function AdminPage() {
       <main style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "12px 10px 40px" : "20px 16px" }}>
         {error && <div style={{ background: "#f8d7da", color: "#721c24", padding: "10px 14px", borderRadius: "8px", marginBottom: "12px" }}>{error}</div>}
 
-        {/* Filters */}
-        <div style={{ background: "#fff", borderRadius: "10px", padding: isMobile ? "10px" : "12px 16px", marginBottom: "16px", display: "flex", gap: isMobile ? "8px" : "12px", flexWrap: "wrap", alignItems: "center", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
-          <div style={{ display: "flex", gap: "4px", overflowX: "auto", maxWidth: "100%" }}>
-            {(["aktive", "7dage", "maaned", "alle"] as FilterPeriod[]).map((p) => (
-              <button key={p} onClick={() => setFilterPeriod(p)} title={p === "aktive" ? "Kommende, igangværende og sager der mangler retur eller betaling" : undefined} style={{ padding: isMobile ? "8px 14px" : "5px 12px", fontSize: "12px", fontWeight: filterPeriod === p ? 700 : 400, background: filterPeriod === p ? "#111" : "#f0f0f0", color: filterPeriod === p ? "#fff" : "#555", border: "none", borderRadius: "20px", cursor: "pointer", whiteSpace: "nowrap" }}>
-                {{ aktive: "Aktive", "7dage": "7 dage", maaned: "30 dage", alle: "Alle" }[p]}
-              </button>
-            ))}
-          </div>
-          {!isMobile && <div style={{ width: "1px", height: "20px", background: "#eee" }} />}
-          <div style={{ display: "flex", gap: "4px", overflowX: "auto", maxWidth: "100%", paddingBottom: isMobile ? "2px" : 0 }}>
-            {["alle", ...EQUIPMENT_STEPS.map((s) => s.id), ...CANCEL_STEPS.map((s) => s.id)].map((s) => {
-              const meta = stepMeta(s);
-              const active = filterStatus === s;
-              return (
-                <button key={s} onClick={() => setFilterStatus(s)} style={{ whiteSpace: "nowrap", padding: isMobile ? "8px 14px" : "5px 12px", fontSize: "12px", fontWeight: active ? 700 : 400, background: active ? (s === "alle" ? "#111" : meta.bg) : "#f0f0f0", color: active ? (s === "alle" ? "#fff" : meta.text) : "#555", border: active && s !== "alle" ? `1px solid ${meta.border}` : "1px solid transparent", borderRadius: "20px", cursor: "pointer" }}>
-                  {s === "alle" ? "Alle statusser" : `${meta.icon} ${meta.label}`}
+        {/* Filtre — chips på skærm, tre dropdowns på telefon.
+            Elleve chips fyldte den halve mobilskærm før man nåede en booking. */}
+        {isMobile ? (
+          <div style={{ background: "#fff", borderRadius: "10px", padding: "10px", marginBottom: "12px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+            <div style={{ display: "flex", gap: "6px" }}>
+              <select
+                value={filterPeriod}
+                onChange={(e) => setFilterPeriod(e.target.value as FilterPeriod)}
+                style={mobileSelect}
+              >
+                <option value="aktive">Aktive</option>
+                <option value="7dage">7 dage</option>
+                <option value="maaned">30 dage</option>
+                <option value="alle">Alle</option>
+              </select>
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                style={mobileSelect}
+              >
+                <option value="alle">Alle statusser</option>
+                {[...EQUIPMENT_STEPS, ...CANCEL_STEPS].map((st) => (
+                  <option key={st.id} value={st.id}>{st.icon} {st.label}</option>
+                ))}
+              </select>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as SortField)}
+                title="Sortering"
+                style={mobileSelect}
+              >
+                <option value="status">↕ Status</option>
+                <option value="weekend">↕ Weekend</option>
+                <option value="dato">↕ Oprettet</option>
+                <option value="total">↕ Beløb</option>
+                <option value="navn">↕ Navn</option>
+              </select>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "8px", fontSize: "12px", color: "#888" }}>
+              <span>{filtered.length} booking{filtered.length !== 1 ? "er" : ""}</span>
+              {openCount > 0 && (
+                <button
+                  onClick={() => { setFilterPeriod("aktive"); setSortBy("status"); }}
+                  style={{ background: STAGE_META.afslut.bg, color: STAGE_META.afslut.text, border: `1px solid ${STAGE_META.afslut.border}`, borderRadius: "20px", padding: "4px 12px", fontWeight: 700, fontSize: "12px", cursor: "pointer" }}
+                >
+                  {openCount} skal afsluttes
                 </button>
-              );
-            })}
+              )}
+            </div>
           </div>
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", color: "#888" }}>
-            Sortér:
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortField)} style={{ fontSize: "12px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "6px", background: "#fff" }}>
-              <option value="status">Status</option>
-              <option value="weekend">Weekend</option>
-              <option value="dato">Oprettelsesdato</option>
-              <option value="total">Beløb</option>
-              <option value="navn">Navn</option>
-            </select>
-            <span style={{ color: "#bbb" }}>{filtered.length} booking{filtered.length !== 1 ? "er" : ""}</span>
-            {openCount > 0 && (
-              <span title="Bookinger der mangler registrering af retur og/eller betaling" style={{ background: STAGE_META.afslut.bg, color: STAGE_META.afslut.text, border: `1px solid ${STAGE_META.afslut.border}`, borderRadius: "20px", padding: "2px 10px", fontWeight: 700 }}>
-                {openCount} skal afsluttes
-              </span>
-            )}
+        ) : (
+          <div style={{ background: "#fff", borderRadius: "10px", padding: "12px 16px", marginBottom: "16px", display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+            <div style={{ display: "flex", gap: "4px" }}>
+              {(["aktive", "7dage", "maaned", "alle"] as FilterPeriod[]).map((p) => (
+                <button key={p} onClick={() => setFilterPeriod(p)} title={p === "aktive" ? "Kommende, igangværende og sager der mangler retur eller betaling" : undefined} style={{ padding: "5px 12px", fontSize: "12px", fontWeight: filterPeriod === p ? 700 : 400, background: filterPeriod === p ? "#111" : "#f0f0f0", color: filterPeriod === p ? "#fff" : "#555", border: "none", borderRadius: "20px", cursor: "pointer", whiteSpace: "nowrap" }}>
+                  {{ aktive: "Aktive", "7dage": "7 dage", maaned: "30 dage", alle: "Alle" }[p]}
+                </button>
+              ))}
+            </div>
+            <div style={{ width: "1px", height: "20px", background: "#eee" }} />
+            <div style={{ display: "flex", gap: "4px", overflowX: "auto", maxWidth: "100%" }}>
+              {["alle", ...EQUIPMENT_STEPS.map((s) => s.id), ...CANCEL_STEPS.map((s) => s.id)].map((s) => {
+                const meta = stepMeta(s);
+                const active = filterStatus === s;
+                return (
+                  <button key={s} onClick={() => setFilterStatus(s)} style={{ whiteSpace: "nowrap", padding: "5px 12px", fontSize: "12px", fontWeight: active ? 700 : 400, background: active ? (s === "alle" ? "#111" : meta.bg) : "#f0f0f0", color: active ? (s === "alle" ? "#fff" : meta.text) : "#555", border: active && s !== "alle" ? `1px solid ${meta.border}` : "1px solid transparent", borderRadius: "20px", cursor: "pointer" }}>
+                    {s === "alle" ? "Alle statusser" : `${meta.icon} ${meta.label}`}
+                  </button>
+                );
+              })}
+            </div>
+            <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", color: "#888" }}>
+              Sortér:
+              <select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortField)} style={{ fontSize: "12px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "6px", background: "#fff" }}>
+                <option value="status">Status</option>
+                <option value="weekend">Weekend</option>
+                <option value="dato">Oprettelsesdato</option>
+                <option value="total">Beløb</option>
+                <option value="navn">Navn</option>
+              </select>
+              <span style={{ color: "#bbb" }}>{filtered.length} booking{filtered.length !== 1 ? "er" : ""}</span>
+              {openCount > 0 && (
+                <span title="Bookinger der mangler registrering af retur og/eller betaling" style={{ background: STAGE_META.afslut.bg, color: STAGE_META.afslut.text, border: `1px solid ${STAGE_META.afslut.border}`, borderRadius: "20px", padding: "2px 10px", fontWeight: 700 }}>
+                  {openCount} skal afsluttes
+                </span>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Table or weekend groups */}
         {filtered.length === 0 && !loading && (
@@ -638,6 +715,11 @@ function EquipmentTrack({ b, issues, updateStatus, setFields, busy }: {
           </button>
         )}
       </div>
+      {/* Returneret er det eneste statusskift der sender mail — sig det, så det
+          ikke kommer bag på nogen at kunden får en anmeldelsesmail */}
+      {next?.id === "afleveret" && !b.reviewMailSentAt && (
+        <span style={{ fontSize: "10px", color: "#888" }}>↳ sender anmeldelsesmail til kunden</span>
+      )}
       {canInspect && (
         <label
           title="Udstyret er testet/inspiceret og fundet i orden"

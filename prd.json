@@ -961,6 +961,18 @@
       "description": "Follow-up mail (Frederiks tekst, 2026-08-03) der beder om Google-anmeldelse — IKKE Trustpilot. Dansk/engelsk efter booking.locale. Sendes via Resend fra booking@lejhojtaler.dk. Sendes kun én gang (reviewMailSentAt på bookingen). Admin viser '⭐ Review-mail sendt'.",
       "todo": "Ingen — linket er sat både som default i koden (bookings-update.ts) og som GOOGLE_REVIEW_URL i Cloudflare Pages production (5. aug 2026).",
       "review_url": "https://g.page/r/CbIkmN4b8vjGEBM/review → search.google.com/local/writereview?placeid=ChIJ9UxZq-xTUkYRsiSY3hvy-MY"
+    },
+    "status_mails": {
+      "regel": "Kun ét statusskift sender mail: 'Returneret' (afleveret) udløser anmeldelsesmailen til kunden — én gang pr. booking, styret af reviewMailSentAt.",
+      "ingen_mail_ved": [
+        "Bekræftet",
+        "Pakket",
+        "Udleveret",
+        "Annulleret (kunde eller admin)",
+        "Underskrift ved udlevering"
+      ],
+      "ui": "Udstyrs-dropdownen i admin skriver '↳ sender anmeldelsesmail til kunden' når næste trin er Returneret og mailen ikke er sendt endnu.",
+      "logges_i": "booking.communications — admin viser 'Sendte mails' i detaljevisningen."
     }
   },
   "fulfillment_and_upsell": {
@@ -1752,6 +1764,34 @@
       "description": "Kontakt som menupunkt, og en fremhævet erhvervs-/event-forespørgsel øverst i menuen der lander mærket i indbakken.",
       "priority": "high",
       "status": "done"
+    },
+    {
+      "id": "admin-belægningskalender",
+      "title": "Admin: belægningskalender for produkter",
+      "description": "Ny admin-side /admin/kalender (eller fanen under /admin/lager) der viser belægning visuelt. Layout: produkter vertikalt (rækker), dage horisontalt (kolonner) for de næste N dage (default 14–30, vælgbar). Hver booking tegnes som et bånd hen over dens afhentning→retur-datoer med kundenavn (evt. telefon/booking-id). Formål: se hvem der har hvad hvornår, og hvor fyldt lageret er. Link fra admin-nav. Kræver admin-secret. Se også belægning-api + belægning-lanes.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "belægning-api",
+      "title": "API: belægningsdata til kalender",
+      "description": "GET /api/occupancy?from=&to=&secret= (admin). Returnér for hvert produkt i inventory: { id, name, stock (fra KV inventory), bookings: [{ bookingId, customerName, pickup, returnDate, qty }] }. Kun aktive bookinger (ikke afleveret/annulleret). Inkludér både speakers, rentalProducts og addons der tæller i lager. Pakker (festpakke osv.) ekspanderes til deres dele (party+lyseffekt) så kalenderen matcher fysisk udlevering — samme logik som availability/soldout. Brug eksisterende booking-felter (speakerId, addonIds, cartItems, pickup, returnDate).",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "belægning-lanes",
+      "title": "Kalender: lagerrækker pr. produkt (multi-enhed uden enheds-ID)",
+      "description": "Lager er i dag kun antal (inventory.soundboks=2) — ikke navngivne enheder. I kalenderen: for hvert produkt tegn stock 'baner' (lane 1..N). Bookinger pakkes greedily ind i baner (første ledige bane uden overlap) så man visuelt ser at 2 Soundbokse kan have fx 5 bookinger på forskellige datoer, og hvor der er overlap på samme dag (begge enheder ude). Farvekode: ledig / delvist / fuldt belagt. Klik på booking → åbn bookingdetalje i /admin. V1: ingen permanent enhedstildeling i KV. V2 (senere, separat task hvis behov): fysiske enheds-ID'er (Soundboks A/B) + manuel tildeling ved udlevering.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "belægning-filtre-ux",
+      "title": "Kalender: filtre, horisont og mobil",
+      "description": "Filtre: kategori (lyd/lys/røg/av), kun produkter med bookinger, søg produktnavn. Vælg horisont: 7 / 14 / 30 / 60 dage + hop til dato. Sticky produktkolonne ved horisontal scroll. Mobil: scrollbart grid eller kompakt liste pr. dag. Vis også blokerede dage fra /admin/lager (blocked_*) som skravering. Tom tilstand: 'Ingen bookinger i perioden'.",
+      "priority": "medium",
+      "status": "todo"
     }
   ],
   "status": {
@@ -1922,7 +1962,7 @@
     "mobil_admin_2026_08_15": {
       "status": "done",
       "date": "2026-08-15",
-      "description": "/admin skifter til kortvisning under 900 px (useIsMobile → matchMedia). Hvert kort viser: navn + sagsstatus, periode, klikbart telefonnummer, hele ordren, kørsel, et betalingsbanner (BETALT/IKKE BETALT + metode + depositum + beløb i stor skrift), udstyrs- og betalingsspor, og handlingsknapper. Nav og filter-chips scroller vandret i stedet for at brække layoutet; header er sticky. Desktop-tabellen er uændret bortset fra at Produkt-kolonnen nu viser ordrelinjerne."
+      "description": "/admin skifter til kortvisning under 900 px (useIsMobile → matchMedia). Hvert kort viser: navn + sagsstatus, periode, klikbart telefonnummer, hele ordren, kørsel, et betalingsbanner (BETALT/IKKE BETALT + metode + depositum + beløb i stor skrift), udstyrs- og betalingsspor, og handlingsknapper. Nav og filter-chips scroller vandret i stedet for at brække layoutet; header er sticky. Desktop-tabellen er uændret bortset fra at Produkt-kolonnen nu viser ordrelinjerne. OPDATERET 16. aug: toppen er foldet sammen på mobil — de ti nav-links blev til én 'Menu…'-dropdown, og de elleve filter-chips til tre dropdowns (periode, status, sortering) med antal og 'skal afsluttes' som en klikbar genvej under. Dropdowns har 16px tekst, så iOS ikke zoomer ved tryk."
     },
     "ordrelinjer_2026_08_15": {
       "status": "done",
