@@ -1,0 +1,774 @@
+{
+  "_readme": [
+    "Performance Max for lejhojtaler.dk. Deploy with:",
+    "  python3 ads-export/deploy_pmax.py --customer-id 4410207627 --paused",
+    "",
+    "READ THIS BEFORE ENABLING THE CAMPAIGN.",
+    "PMax always runs smart bidding, so it optimises toward whatever is marked",
+    "primary in Tools > Conversions. As of 2026-08-16 that includes six GA4",
+    "events with category PURCHASE: page_view, session_start, user_engagement,",
+    "first_visit, scroll and form_start. Over the last 30 days they produced 180",
+    "of the account's 181 'conversions'; the real purchase action produced 1.",
+    "Enable this campaign against that goal set and Google will spend 1000 kr/day",
+    "buying pageviews. Set those six to Secondary first, leave only 'purchase'",
+    "primary, then enable.",
+    "",
+    "Final-URL expansion cannot be switched off any more. Google removed",
+    "campaign.url_expansion_opt_out from the API, so PMax will always send some",
+    "traffic to pages it picks itself. The upside is that the occasion pages not",
+    "listed below (/havefest, /nytaar, /polterabend, /studenterkoersel,",
+    "/julefrokost, /konfirmation) can earn traffic on their own. The downside is",
+    "that /lejevilkaar and /privatlivspolitik are equally eligible — hence the",
+    "url_exclusions list, which is the only remaining control."
+  ],
+  "campaign": {
+    "name": "Lejhøjtaler — Performance Max",
+    "daily_budget_dkk": 1000,
+    "bidding_strategy": "MAXIMIZE_CONVERSIONS",
+    "_bidding_note": "No target_cpa on launch — a tCPA before the campaign has conversion history just throttles delivery. Add one after ~30 real bookings.",
+    "url_exclusions": [
+      "/lejevilkaar",
+      "/privatlivspolitik",
+      "/admin",
+      "/en/"
+    ],
+    "_url_exclusions_note": "Negative webpage criteria, matched as 'URL contains'. Keeps expansion off the legal pages, the admin app and the English tree — the campaign only carries Danish assets, so an English landing page would read as a mismatch. /book is deliberately NOT excluded: the 'Priser og booking' sitelink points there on purpose.",
+    "business_name": "LejHøjtaler.dk",
+    "final_url_suffix": "utm_source=google&utm_medium=cpc&utm_campaign=pmax",
+    "targeting": {
+      "language": "languageConstants/1009",
+      "geo": {
+        "proximity": {
+          "lat": 55.6761,
+          "lon": 12.5683,
+          "radius_km": 40
+        }
+      },
+      "positive_geo_target_type": "PRESENCE",
+      "_geo_note": "The search campaign targets the city constant 'Copenhagen' (1005010), which is Københavns Kommune only — one reason it can only spend 40 kr/day. 40 km from København K reaches Roskilde, Køge, Hillerød and Helsingørs opland, all within reach of the 495 kr delivery. PRESENCE keeps out the 'soundboks leje odense' clicks visible in the search-term report."
+    }
+  },
+  "campaign_assets": {
+    "sitelinks": [
+      {
+        "text": "Lej højtalere",
+        "final_url": "https://lejhojtaler.dk/lej-hojtaler",
+        "description_line_1": "Fra 345 kr for weekenden",
+        "description_line_2": "Bluetooth og alle kabler med"
+      },
+      {
+        "text": "Festlys og røgmaskine",
+        "final_url": "https://lejhojtaler.dk/festlys",
+        "description_line_1": "Diskokugle, uplights, lyskæder",
+        "description_line_2": "Plug and play fra 125 kr"
+      },
+      {
+        "text": "Festpakker",
+        "final_url": "https://lejhojtaler.dk/festlyd",
+        "description_line_1": "Lyd og lys samlet i én pakke",
+        "description_line_2": "Billigere end hver for sig"
+      },
+      {
+        "text": "Karaoke",
+        "final_url": "https://lejhojtaler.dk/karaoke",
+        "description_line_1": "Maskine, skærm og mikrofoner",
+        "description_line_2": "Klar til brug på ti minutter"
+      },
+      {
+        "text": "Priser og booking",
+        "final_url": "https://lejhojtaler.dk/book",
+        "description_line_1": "Book online på to minutter",
+        "description_line_2": "Betaling online eller ved hent"
+      },
+      {
+        "text": "Erhverv og events",
+        "final_url": "https://lejhojtaler.dk/erhverv",
+        "description_line_1": "Faktura til firmaet",
+        "description_line_2": "Levering og opsætning"
+      }
+    ],
+    "callouts": [
+      "Weekendleje fredag-mandag",
+      "Levering i København",
+      "Book online på 2 min.",
+      "Alle kabler følger med",
+      "Bluetooth i højtalerne",
+      "Opsætning kan tilvælges"
+    ]
+  },
+  "asset_groups": [
+    {
+      "name": "01 — Højtalere & PA",
+      "final_url": "https://lejhojtaler.dk/lej-hojtaler",
+      "_products": [
+        "Mackie Thump GO 345",
+        "Lille højtalerpakke 395",
+        "Stor højtalerpakke 495",
+        "Stor højtalerpakke + bas 695",
+        "Subwoofer 295",
+        "Højtalerstativer 100",
+        "Bæretaske 95",
+        "Ekstra batteri 145"
+      ],
+      "headlines": [
+        "Lej Højtaler I København",
+        "Højtalere Fra 345 Kr",
+        "Lyd Til Fest — Book Online",
+        "Hent Fredag, Aflever Mandag",
+        "Op Til 100 Personer",
+        "Bluetooth Og Alle Kabler",
+        "PA-Anlæg Til Leje",
+        "Subwoofer Kan Tilvælges",
+        "Levering I Hele København",
+        "Batterihøjtaler Til Fest",
+        "Lej Anlæg Til 100 Pers.",
+        "Alto, EV Og Mackie",
+        "Weekendleje Fra 345 Kr"
+      ],
+      "long_headlines": [
+        "Lej højtalere i København fra 345 kr for hele weekenden — book online på to minutter",
+        "Fra batterihøjtaler til fuldt PA-anlæg med subwoofer — lyd til alle størrelser fester",
+        "Højtalere, subwoofer og stativer til leje i København — hent fredag, aflever mandag",
+        "Batterihøjtaler til parken eller fuldt PA til festsalen — samme nemme booking"
+      ],
+      "descriptions": [
+        "Lej højtalere fra 345 kr/weekend.",
+        "Batterihøjtaler, festanlæg eller PA med sub. Bluetooth og alle kabler følger med.",
+        "Hent fredag og aflever mandag. Levering og opsætning i København for 495 kr.",
+        "Book online på to minutter. Betaling online eller ved afhentning."
+      ],
+      "search_themes": [
+        "lej højtaler",
+        "højtaler leje",
+        "højtalerudlejning københavn",
+        "leje af højtalere",
+        "lej pa anlæg",
+        "pa anlæg leje",
+        "lej festanlæg",
+        "lej musikanlæg",
+        "lej lydanlæg",
+        "lej subwoofer",
+        "højtaler til fest leje",
+        "lej højtalere til fest"
+      ],
+      "images": {
+        "landscape": [
+          "ads/assets/product-festival--landscape.jpg",
+          "ads/assets/product-party--landscape.jpg",
+          "ads/assets/mood-party--landscape.jpg"
+        ],
+        "square": [
+          "ads/assets/product-festival--square.jpg",
+          "ads/assets/product-thumpgo--square.jpg",
+          "ads/assets/product-festival-bas--square.jpg"
+        ],
+        "portrait": [
+          "ads/assets/product-festival--portrait.jpg",
+          "ads/assets/product-party--portrait.jpg"
+        ]
+      },
+      "videos": [
+        "0M7xZoiqn9U",
+        "0VN2Q2bMufA",
+        "h1nMZO7giU0",
+        "C9J1G7KQIHA"
+      ]
+    },
+    {
+      "name": "02 — Soundboks",
+      "final_url": "https://lejhojtaler.dk/soundboks-4",
+      "_products": [
+        "Soundboks 4 595"
+      ],
+      "_note": "Own asset group because the search-term report shows 'lej soundboks', 'leje af soundboks' and 'soundboks leje' as the account's highest-volume real searches.",
+      "headlines": [
+        "Lej Soundboks 4",
+        "Soundboks Fra 595 Kr",
+        "Soundboks Udlejning KBH",
+        "Batteridrevet — Ingen Strøm",
+        "Op Til 50 Personer",
+        "Hent Fredag, Aflever Mandag",
+        "Book Soundboks Online",
+        "Soundboks Til Din Fest",
+        "Lej Soundboks Til Weekend",
+        "Kraftig Bas, Trådløst",
+        "Soundboks 4 På Lager"
+      ],
+      "long_headlines": [
+        "Lej en Soundboks 4 i København fra 595 kr for hele weekenden — batteridrevet",
+        "Soundboks 4 med kraftig bas og Bluetooth — perfekt til udendørs fest uden strøm",
+        "Soundboks 4 til leje i København — hent fredag og aflever mandag, oplader med",
+        "Den populære Soundboks 4 klar til afhentning — book online på to minutter"
+      ],
+      "descriptions": [
+        "Lej Soundboks 4 fra 595 kr/weekend.",
+        "Batteridrevet med Bluetooth og kraftig bas. Ingen strøm nødvendig — perfekt udendørs.",
+        "Hent fredag, aflever mandag. Inkl. oplader og AUX-kabel.",
+        "Levering og opsætning i København fra 495 kr. Book online på to minutter."
+      ],
+      "search_themes": [
+        "lej soundboks",
+        "soundboks leje",
+        "leje af soundboks",
+        "soundboks udlejning",
+        "soundboks til leje",
+        "lej soundboks københavn",
+        "soundboks leje pris"
+      ],
+      "images": {
+        "landscape": [
+          "ads/assets/product-soundboks--landscape.jpg",
+          "ads/assets/mood-party--landscape.jpg"
+        ],
+        "square": [
+          "ads/assets/product-soundboks--square.jpg",
+          "ads/assets/mood-party--square.jpg"
+        ],
+        "portrait": [
+          "ads/assets/product-soundboks--portrait.jpg"
+        ]
+      },
+      "videos": [
+        "k7nG3O4I6JI"
+      ]
+    },
+    {
+      "name": "03 — Festpakker",
+      "final_url": "https://lejhojtaler.dk/festlyd",
+      "_products": [
+        "Lille festpakke 495",
+        "Stor festpakke 895"
+      ],
+      "headlines": [
+        "Lej Festpakke Fra 495 Kr",
+        "Lyd Og Lys I Én Pakke",
+        "Komplet Fest — Book Online",
+        "Spar På Den Samlede Pakke",
+        "Op Til 100 Personer",
+        "Hent Fredag, Aflever Mandag",
+        "Festpakke Til Leje I KBH",
+        "Alt Til Festen I Én Leje",
+        "Lyd Og Lys Fra 495 Kr",
+        "Klar På Ti Minutter",
+        "Stor Festpakke 895 Kr"
+      ],
+      "long_headlines": [
+        "Lyd og lys i én pakke fra 495 kr — alt til festen, klar til brug i København",
+        "Lille festpakke til 40 personer eller stor pakke til 100 — book hele sættet online",
+        "Festpakke med højtalere og lyseffekter — billigere end at leje delene hver for sig",
+        "Vælg den lille pakke til 40 gæster eller den store til 100 gæster"
+      ],
+      "descriptions": [
+        "Lyd og lys i én festpakke fra 495 kr.",
+        "Højtalere og lyseffekter samlet i én pakke — billigere end at leje delene hver for sig.",
+        "Klar på ti minutter. Bluetooth, alle kabler og lyseffekter følger med.",
+        "Levering og opsætning i København 495 kr. Hent fredag, aflever mandag."
+      ],
+      "search_themes": [
+        "lej festpakke",
+        "festpakke leje",
+        "lej festudstyr",
+        "festudstyr udlejning",
+        "leje af festudstyr",
+        "lej lyd og lys",
+        "lej lyd til fest",
+        "udlejning af festudstyr københavn"
+      ],
+      "images": {
+        "landscape": [
+          "ads/assets/product-pakke-fest-stor--landscape.jpg",
+          "ads/assets/product-pakke-fest-lille--landscape.jpg",
+          "ads/assets/mood-festival--landscape.jpg"
+        ],
+        "square": [
+          "ads/assets/product-pakke-fest-stor--square.jpg",
+          "ads/assets/product-pakke-fest-lille--square.jpg",
+          "ads/assets/mood-festival--square.jpg"
+        ],
+        "portrait": [
+          "ads/assets/product-pakke-fest-stor--portrait.jpg",
+          "ads/assets/product-pakke-fest-lille--portrait.jpg"
+        ]
+      },
+      "videos": [
+        "0VN2Q2bMufA",
+        "h1nMZO7giU0",
+        "FcOqGlPsyYY"
+      ]
+    },
+    {
+      "name": "04 — Festlys",
+      "final_url": "https://lejhojtaler.dk/festlys",
+      "_products": [
+        "Lys-pakke 495",
+        "Enkelt lyseffekt 195",
+        "Discokugle 245",
+        "Lyskæde varm hvid 195",
+        "Lyskæde farvet 195",
+        "Uplight 125",
+        "Uplight 4-pak 395",
+        "Røgmaskine 245"
+      ],
+      "headlines": [
+        "Lej Festlys I København",
+        "Festlys Fra 125 Kr",
+        "Diskokugle Til Leje",
+        "Lej Røgmaskine 245 Kr",
+        "Lyskæder Og Uplights",
+        "Lys-Pakke Fra 495 Kr",
+        "Hent Fredag, Aflever Mandag",
+        "Plug And Play Festbelysning",
+        "Uplights Fra 125 Kr",
+        "Lyskæde På 10 Meter",
+        "Farvet Lys Til Festen",
+        "Lej Lyseffekt 195 Kr"
+      ],
+      "long_headlines": [
+        "Lej festlys i København fra 125 kr — diskokugle, uplights, lyskæder og røgmaskine",
+        "Lyspakke med farvede lamper og centereffekt på stativ — plug and play fra 495 kr",
+        "Diskokugle, uplights og røgmaskine til leje i København — alt sammen plug and play",
+        "Sæt stemning på festen med farvet lys og lyskæder fra 125 kr for weekenden"
+      ],
+      "descriptions": [
+        "Lej festlys i København fra 125 kr.",
+        "Diskokugle, uplights, lyskæder, lyseffekter og røgmaskine. Alt er plug and play.",
+        "Røgmaskine inkl. væske gør lyset ti gange federe. Fra 245 kr for weekenden.",
+        "Hent fredag, aflever mandag. Levering og opsætning i København for 495 kr."
+      ],
+      "search_themes": [
+        "lej festlys",
+        "festlys leje",
+        "lej diskokugle",
+        "diskokugle leje",
+        "lej røgmaskine",
+        "røgmaskine leje",
+        "lej lyskæder",
+        "lej uplights",
+        "lej lyseffekter",
+        "lys til fest leje",
+        "leje af festbelysning"
+      ],
+      "images": {
+        "landscape": [
+          "ads/assets/product-lys--landscape.jpg",
+          "ads/assets/product-discokugle--landscape.jpg",
+          "ads/assets/product-lysshow--landscape.jpg"
+        ],
+        "square": [
+          "ads/assets/product-lys--square.jpg",
+          "ads/assets/product-discokugle--square.jpg",
+          "ads/assets/product-uplight-4--square.jpg",
+          "ads/assets/product-rog--square.jpg"
+        ],
+        "portrait": [
+          "ads/assets/product-lys--portrait.jpg",
+          "ads/assets/product-lysshow--portrait.jpg"
+        ]
+      },
+      "videos": [
+        "FcOqGlPsyYY",
+        "XhecuXfY0vo",
+        "okV56ZfjetM",
+        "DLi7MQbRH8c",
+        "hQXFyo28Ndc"
+      ]
+    },
+    {
+      "name": "05 — Karaoke",
+      "final_url": "https://lejhojtaler.dk/karaoke",
+      "_products": [
+        "Karaokemaskine",
+        "Karaokepakke",
+        "Karaoke + festpakke",
+        "32\" skærm 395"
+      ],
+      "headlines": [
+        "Lej Karaoke I København",
+        "Karaokeanlæg Til Leje",
+        "Karaoke Med Storskærm",
+        "Mikrofoner Følger Med",
+        "Book Karaoke Online",
+        "Hent Fredag, Aflever Mandag",
+        "Karaokemaskine Til Fest",
+        "Karaoke Til Festen",
+        "Skærm, Mic Og Højtaler",
+        "Lej Karaokepakke",
+        "Syng Med Trådløs Mic"
+      ],
+      "long_headlines": [
+        "Lej karaokeanlæg i København — maskine, storskærm, mikrofoner og lyd i én pakke",
+        "Karaoke til festen: alt udstyret samlet og klar til brug på ti minutter",
+        "Karaokepakke med maskine, skærm og mikrofoner — eller hele festen med højtalere",
+        "Lej karaoke i København og hent om fredagen — aflever igen mandag"
+      ],
+      "descriptions": [
+        "Lej karaokeanlæg med skærm og mikrofoner.",
+        "Karaokemaskine, 32\" skærm på stativ og trådløse mikrofoner — samlet i én pakke.",
+        "Vælg karaoke alene eller sammen med højtalere til hele festen.",
+        "Hent fredag, aflever mandag. Levering og opsætning i København 495 kr."
+      ],
+      "search_themes": [
+        "lej karaoke",
+        "karaoke leje",
+        "lej karaokeanlæg",
+        "karaokemaskine leje",
+        "leje af karaoke",
+        "karaoke udlejning københavn",
+        "lej karaoke maskine"
+      ],
+      "images": {
+        "landscape": [
+          "ads/assets/product-pakke-karaoke-fest--landscape.jpg",
+          "ads/assets/product-pakke-karaoke--landscape.jpg",
+          "ads/assets/product-karaoke--landscape.jpg"
+        ],
+        "square": [
+          "ads/assets/product-pakke-karaoke-fest--square.jpg",
+          "ads/assets/product-pakke-karaoke--square.jpg",
+          "ads/assets/product-karaoke--square.jpg"
+        ],
+        "portrait": [
+          "ads/assets/product-pakke-karaoke-fest--portrait.jpg",
+          "ads/assets/product-pakke-karaoke--portrait.jpg"
+        ]
+      },
+      "videos": [
+        "_UaBe_xR3JY",
+        "wIsu3Lo5kK4",
+        "ED_w3MHXjxk"
+      ]
+    },
+    {
+      "name": "06 — Mikrofoner",
+      "final_url": "https://lejhojtaler.dk/lydudstyr",
+      "_products": [
+        "Trådløs mikrofon 295",
+        "Trådløs mikrofon PRO 495",
+        "Trådløst headset 345",
+        "Trådløst headset PRO 495",
+        "Håndholdt mikrofon 95",
+        "Håndholdt mikrofon PRO 195"
+      ],
+      "headlines": [
+        "Lej Mikrofon Fra 95 Kr",
+        "Trådløs Mikrofon 295 Kr",
+        "Shure Mikrofon Til Leje",
+        "Headset Til Præsentation",
+        "Mikrofon Til Tale Og Sang",
+        "Book Mikrofon Online",
+        "Hent Fredag, Aflever Mandag",
+        "Shure Beta 58A Til Leje",
+        "Kabelmikrofon 95 Kr",
+        "Mikrofon Til Konference",
+        "Trådløst Headset 345 Kr"
+      ],
+      "long_headlines": [
+        "Lej mikrofon i København fra 95 kr — håndholdt, trådløs eller headset til taler",
+        "Shure BLX trådløs og Shure Beta 58A på kabel — scenekvalitet til event og konference",
+        "Trådløs mikrofon, headset eller kabelmikrofon til leje i København fra 95 kr",
+        "Shure BLX og Beta 58A — mikrofoner i scenekvalitet til taler, sang og konference"
+      ],
+      "descriptions": [
+        "Lej mikrofon i København fra 95 kr.",
+        "Trådløs håndholdt, headset eller kabelmikrofon. Shure-modeller i scenekvalitet.",
+        "Til taler, konferencer, karaoke og sang. Modtager og kabler følger med.",
+        "Hent fredag, aflever mandag. Book online på to minutter."
+      ],
+      "search_themes": [
+        "lej mikrofon",
+        "mikrofon leje",
+        "lej trådløs mikrofon",
+        "trådløs mikrofon leje",
+        "lej headset mikrofon",
+        "leje af mikrofon",
+        "mikrofon udlejning københavn",
+        "lej shure mikrofon"
+      ],
+      "images": {
+        "landscape": [
+          "ads/assets/product-mikrofon-pro--landscape.jpg",
+          "ads/assets/product-mikrofon--landscape.jpg",
+          "ads/assets/product-headset-pro--landscape.jpg"
+        ],
+        "square": [
+          "ads/assets/product-mikrofon-pro--square.jpg",
+          "ads/assets/product-mikrofon--square.jpg",
+          "ads/assets/product-headset--square.jpg",
+          "ads/assets/product-mikrofon-kabel-pro--square.jpg"
+        ],
+        "portrait": [
+          "ads/assets/product-mikrofon-pro--portrait.jpg",
+          "ads/assets/product-headset-pro--portrait.jpg"
+        ]
+      },
+      "videos": [
+        "ED_w3MHXjxk",
+        "mnNM1npG_EM",
+        "4gssAwctUFQ",
+        "Y8CBYnicB5g"
+      ]
+    },
+    {
+      "name": "07 — Projektor & skærm",
+      "final_url": "https://lejhojtaler.dk/av-udstyr",
+      "_products": [
+        "Projektor 495",
+        "Projektor PRO",
+        "55\" storskærm 595",
+        "32\" skærm 395",
+        "Lærred 160 cm 195"
+      ],
+      "headlines": [
+        "Lej Projektor Fra 495 Kr",
+        "Storskærm Til Leje",
+        "Lej Lærred 195 Kr",
+        "Full HD Projektor",
+        "55\" Skærm På Stativ",
+        "AV-Udstyr I København",
+        "Hent Fredag, Aflever Mandag",
+        "Lej 32\" Skærm 395 Kr",
+        "Projektor Til Filmaften",
+        "HDMI Og Kabler Med",
+        "Skærm På Stativ"
+      ],
+      "long_headlines": [
+        "Lej projektor, lærred eller storskærm i København — Full HD og klar til brug",
+        "55\" og 32\" skærme på stativ med HDMI — til præsentation, film og event",
+        "Projektor, lærred og storskærm til leje i København — HDMI og kabler følger med",
+        "Full HD projektor fra 495 kr eller storskærm på stativ — klar til brug straks"
+      ],
+      "descriptions": [
+        "Lej projektor og skærm fra 195 kr.",
+        "Full HD projektor, 160 cm lærred og 55\" eller 32\" skærm på stativ. HDMI følger med.",
+        "Til præsentation, konference, filmaften og event. Klar til brug med det samme.",
+        "Hent fredag, aflever mandag. Levering og opsætning i København 495 kr."
+      ],
+      "search_themes": [
+        "lej projektor",
+        "projektor leje",
+        "lej storskærm",
+        "lej lærred",
+        "leje af projektor",
+        "lej skærm til event",
+        "projektor udlejning københavn",
+        "lej tv skærm"
+      ],
+      "images": {
+        "landscape": [
+          "ads/assets/product-projektor--landscape.jpg",
+          "ads/assets/product-skaerm--landscape.jpg",
+          "ads/assets/product-laerred--landscape.jpg"
+        ],
+        "square": [
+          "ads/assets/product-projektor--square.jpg",
+          "ads/assets/product-skaerm--square.jpg",
+          "ads/assets/product-skaerm-32--square.jpg",
+          "ads/assets/product-projektor-pro--square.jpg"
+        ],
+        "portrait": [
+          "ads/assets/product-projektor--portrait.jpg",
+          "ads/assets/product-skaerm--portrait.jpg"
+        ]
+      },
+      "videos": [
+        "PfUdmfpiV6k",
+        "7FhRTCCKCm0",
+        "wIsu3Lo5kK4",
+        "PLqEcB93Sac"
+      ]
+    },
+    {
+      "name": "08 — Erhverv & konference",
+      "final_url": "https://lejhojtaler.dk/erhverv",
+      "_products": [
+        "Konferencepakke",
+        "Præsentationspakke",
+        "Tale + musik-pakke"
+      ],
+      "headlines": [
+        "AV-Udstyr Til Erhverv",
+        "Lyd Og Lys Til Events",
+        "Konferenceudstyr Til Leje",
+        "Faktura Til Firmaet",
+        "Levering Og Opsætning",
+        "Professionelt Udstyr",
+        "Book Til Dit Firmaevent",
+        "Udstyr Til Julefrokost",
+        "Lyd Til Konferencen",
+        "Event-Udstyr I KBH",
+        "Vi Sætter Op For Jer",
+        "Højtalere Til Firmafest"
+      ],
+      "long_headlines": [
+        "Lyd, lys og AV til firmaevents i København — leveret og sat op klar til brug",
+        "Konference, reception og julefrokost: professionelt udstyr med faktura til firmaet",
+        "Professionelt lyd- og lysudstyr til firmaevents — leveret, sat op og hentet igen",
+        "Konferencepakke med højtaler, mikrofon og projektor — faktura til firmaet"
+      ],
+      "descriptions": [
+        "Lyd, lys og AV til firmaevents i København.",
+        "Højtalere, mikrofoner, projektor og scenelys. Leveret og sat op klar til brug.",
+        "Faktura til firmaet. Fast pris på levering, opsætning og afhentning.",
+        "Til konference, reception, julefrokost og kick-off. Book online eller ring."
+      ],
+      "search_themes": [
+        "lej av udstyr",
+        "av udstyr udlejning",
+        "lej konferenceudstyr",
+        "lyd til event leje",
+        "lej lydudstyr erhverv",
+        "udstyr til firmafest leje",
+        "lej højtaler til konference",
+        "lej udstyr til julefrokost"
+      ],
+      "images": {
+        "landscape": [
+          "ads/assets/hero--landscape.jpg",
+          "ads/assets/product-projektor-pro--landscape.jpg",
+          "ads/assets/product-headset-pro--landscape.jpg"
+        ],
+        "square": [
+          "ads/assets/product-projektor-pro--square.jpg",
+          "ads/assets/product-headset-pro--square.jpg",
+          "ads/assets/product-festival--square.jpg"
+        ],
+        "portrait": [
+          "ads/assets/hero--portrait.jpg",
+          "ads/assets/product-projektor-pro--portrait.jpg"
+        ]
+      },
+      "videos": [
+        "wIsu3Lo5kK4",
+        "PfUdmfpiV6k",
+        "h1nMZO7giU0",
+        "mnNM1npG_EM"
+      ]
+    },
+    {
+      "name": "09 — Anledninger: privatfest",
+      "final_url": "https://lejhojtaler.dk/foedselsdag",
+      "_note": "Covers fødselsdag, havefest, polterabend, studenterkørsel and nytår. Those pages get their own traffic once url_expansion_opt_out is turned off.",
+      "headlines": [
+        "Lyd Til Fødselsdagen",
+        "Højtalere Til Havefest",
+        "Lej Musikanlæg Til Fest",
+        "Fra 345 Kr For Weekenden",
+        "Hent Fredag, Aflever Mandag",
+        "Op Til 100 Personer",
+        "Book Festudstyr Online",
+        "Lyd Og Lys Til Nytår",
+        "Lej Anlæg Til Haven",
+        "Musik Til Polterabend",
+        "Højtaler Til Studentervogn",
+        "Fest Med Lyd Og Lys"
+      ],
+      "long_headlines": [
+        "Lej lyd og lys til fødselsdagen, havefesten eller polterabend — fra 345 kr",
+        "Alt til festen samlet ét sted i København — book online og hent om fredagen",
+        "Højtalere og festlys til fødselsdagen, havefesten eller polterabend fra 345 kr",
+        "Batterihøjtaler til haven eller festanlæg til salen — book online og hent fredag"
+      ],
+      "descriptions": [
+        "Lej lyd og lys til festen fra 345 kr.",
+        "Fødselsdag, havefest, polterabend eller nytår — vi har anlægget og lyset til det.",
+        "Bluetooth i alle højtalere. Alle kabler og lyseffekter følger med i prisen.",
+        "Hent fredag, aflever mandag. Levering og opsætning i København 495 kr."
+      ],
+      "search_themes": [
+        "lej højtaler til fødselsdag",
+        "musikanlæg til fest leje",
+        "lej anlæg til havefest",
+        "lyd til havefest leje",
+        "lej højtaler til polterabend",
+        "lej anlæg til studenterkørsel",
+        "lej lyd til nytårsfest",
+        "lej festudstyr til fødselsdag"
+      ],
+      "images": {
+        "landscape": [
+          "ads/assets/mood-party--landscape.jpg",
+          "ads/assets/product-pakke-fest-lille--landscape.jpg",
+          "ads/assets/product-lyskaeder--landscape.jpg"
+        ],
+        "square": [
+          "ads/assets/mood-party--square.jpg",
+          "ads/assets/product-pakke-fest-lille--square.jpg",
+          "ads/assets/product-lyskaeder-farvet--square.jpg"
+        ],
+        "portrait": [
+          "ads/assets/mood-party--portrait.jpg",
+          "ads/assets/product-pakke-fest-lille--portrait.jpg"
+        ]
+      },
+      "videos": [
+        "0VN2Q2bMufA",
+        "FcOqGlPsyYY",
+        "okV56ZfjetM"
+      ]
+    },
+    {
+      "name": "10 — Anledninger: bryllup & konfirmation",
+      "final_url": "https://lejhojtaler.dk/bryllup",
+      "headlines": [
+        "Lyd Til Brylluppet",
+        "Lej Anlæg Til Bryllup",
+        "Mikrofon Til Talerne",
+        "Udstyr Til Konfirmation",
+        "Fra 345 Kr For Weekenden",
+        "Hent Fredag, Aflever Mandag",
+        "Levering Og Opsætning",
+        "Book Bryllupslyd Online",
+        "Højtaler Til Festsalen",
+        "Trådløs Mic Til Taler",
+        "Lyd Til Konfirmationen",
+        "Vi Leverer Og Henter"
+      ],
+      "long_headlines": [
+        "Lyd til brylluppet: højtalere til festen og trådløs mikrofon til talerne",
+        "Lej lyd og lys til bryllup eller konfirmation i København — vi sætter op for jer",
+        "Højtalere til dansegulvet og trådløs mikrofon til talerne — samlet i én leje",
+        "Lyd og lys til bryllup og konfirmation i København — vi leverer og sætter op"
+      ],
+      "descriptions": [
+        "Lej lyd til bryllup og konfirmation.",
+        "Højtalere til dansegulvet og trådløs mikrofon til talerne — samlet i én leje.",
+        "Vi kan levere, sætte op og hente igen, så I kan koncentrere jer om festen.",
+        "Hent fredag, aflever mandag. Book online eller ring for rådgivning."
+      ],
+      "search_themes": [
+        "lej højtaler til bryllup",
+        "lyd til bryllup leje",
+        "lej anlæg til bryllup",
+        "lej mikrofon til bryllup",
+        "lej højtaler til konfirmation",
+        "lyd til konfirmation leje",
+        "musikanlæg til bryllup leje"
+      ],
+      "images": {
+        "landscape": [
+          "ads/assets/mood-festival--landscape.jpg",
+          "ads/assets/product-festival--landscape.jpg",
+          "ads/assets/product-mikrofon-pro--landscape.jpg"
+        ],
+        "square": [
+          "ads/assets/mood-festival--square.jpg",
+          "ads/assets/product-festival--square.jpg",
+          "ads/assets/product-mikrofon-pro--square.jpg"
+        ],
+        "portrait": [
+          "ads/assets/mood-festival--portrait.jpg",
+          "ads/assets/product-festival--portrait.jpg"
+        ]
+      },
+      "videos": [
+        "h1nMZO7giU0",
+        "mnNM1npG_EM",
+        "FcOqGlPsyYY"
+      ]
+    }
+  ],
+  "logos": {
+    "square": "ads/assets/logo.jpg",
+    "landscape": "ads/assets/logo-wide.jpg"
+  }
+}

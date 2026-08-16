@@ -14,3 +14,6 @@ publish-gtm.py
 setup-ga4.py
 setup-gtm-ga4.py
 .dev.vars
+
+# Genererede PMax-billedassets — bygges af ads-export/build_pmax_assets.py
+ads/assets/
