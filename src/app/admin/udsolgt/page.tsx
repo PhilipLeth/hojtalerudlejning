@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 import { useState, useEffect, useCallback } from "react";
 
 interface SoldOutEntry {
@@ -178,20 +180,7 @@ export default function UdsolgtPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
-      <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
-        <h1 style={{ margin: 0, fontSize: "20px" }}>Udsolgt-oversigt</h1>
-        <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-          <a href="/admin" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Bookinger
-          </a>
-          <a href="/admin/lager" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Lager
-          </a>
-          <a href="/admin/produkter" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-            Produkter
-          </a>
-        </div>
-      </header>
+      <AdminNav title="Udsolgt" />
 
       <main style={{ maxWidth: "900px", margin: "0 auto", padding: "24px" }}>
         {/* Periode */}

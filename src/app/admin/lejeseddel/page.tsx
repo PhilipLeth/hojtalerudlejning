@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 import { useState, useEffect, useCallback } from "react";
 import { orderLines, deliveryInfo, type OrderBooking } from "@/lib/orderLines";
 
@@ -149,23 +151,7 @@ export default function LejeseddelPage() {
   if (!selected) {
     return (
       <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
-        <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
-          <h1 style={{ margin: 0, fontSize: "20px" }}>Lejeseddel</h1>
-          <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-            <a href="/admin" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-              Bookinger
-            </a>
-            <a href="/admin/lager" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-              Lager
-            </a>
-            <a href="/admin/udlevering" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-              Udlevering
-            </a>
-            <a href="/admin/nyhedsbrev" style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", textDecoration: "none", color: "#111" }}>
-              Nyhedsbrev
-            </a>
-          </div>
-        </header>
+        <AdminNav title="Lejeseddel" />
         <main style={{ maxWidth: "700px", margin: "0 auto", padding: "24px" }}>
           {error && <div style={{ background: "#f8d7da", color: "#721c24", padding: "12px 16px", borderRadius: "8px", marginBottom: "16px" }}>{error}</div>}
           {loading && <p style={{ textAlign: "center", color: "#888" }}>Henter bookinger...</p>}

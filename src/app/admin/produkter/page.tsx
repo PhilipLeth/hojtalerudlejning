@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 import { useState, useEffect, useCallback } from "react";
 import {
   speakers as defaultSpeakers,
@@ -317,30 +319,25 @@ export default function AdminProdukterPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
-      <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
-        <div>
-          <h1 style={{ margin: 0, fontSize: "20px" }}>Produkter</h1>
-          <p style={{ margin: "2px 0 0", fontSize: "13px", color: "#888" }}>
-            {isCustom ? "Live-katalog: redigeret i admin (gemt i KV)" : "Live-katalog: standard fra koden"}
-          </p>
-        </div>
-        <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
-          <a href="/admin" style={navLink}>Bookinger</a>
-          <a href="/admin/lager" style={navLink}>Lager</a>
-          <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
-          <a href="/admin/kanaler" style={navLink}>Kanaler</a>
-          <button
-            type="button"
-            onClick={() => setShowCreate(true)}
-            style={{ padding: "8px 16px", fontSize: "14px", fontWeight: 600, background: "#0070f3", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer" }}
-          >
-            + Opret produkt
-          </button>
-          <button onClick={save} disabled={saving || loading} style={{ padding: "8px 20px", fontSize: "14px", fontWeight: 600, background: "#28a745", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer" }}>
-            {saving ? "Gemmer..." : "Gem ændringer"}
-          </button>
-        </div>
-      </header>
+      <AdminNav
+        actions={
+          <>
+            <span style={{ fontSize: "12px", color: "#888" }}>
+              {isCustom ? "Redigeret katalog (KV)" : "Standardkatalog"}
+            </span>
+            <button
+              type="button"
+              onClick={() => setShowCreate(true)}
+              style={{ padding: "8px 16px", fontSize: "14px", fontWeight: 600, background: "#0070f3", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer" }}
+            >
+              + Opret produkt
+            </button>
+            <button onClick={save} disabled={saving || loading} style={{ padding: "8px 20px", fontSize: "14px", fontWeight: 600, background: "#28a745", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer" }}>
+              {saving ? "Gemmer..." : "Gem ændringer"}
+            </button>
+          </>
+        }
+      />
 
       <CreateProductModal
         open={showCreate}

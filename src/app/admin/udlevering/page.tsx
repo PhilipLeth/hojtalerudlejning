@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 /**
  * Udlevering på mobilen: gennemgå udstyret med kunden, og lad kunden skrive
  * under med fingeren på at have modtaget det. Underskriften gemmes på
@@ -272,11 +274,7 @@ export default function UdleveringPage() {
 
   return (
     <div style={page}>
-      <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "12px 14px", display: "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: 0, zIndex: 5 }}>
-        <a href="/admin" style={{ color: "#0070f3", textDecoration: "none", fontSize: "14px" }}>&larr; Bookinger</a>
-        <strong style={{ fontSize: "15px" }}>Udlevering</strong>
-        <span style={{ width: "70px" }} />
-      </header>
+      <AdminNav title="Udlevering" />
 
       <main style={{ maxWidth: "620px", margin: "0 auto", padding: "14px 12px 60px" }}>
         {error && <div style={{ background: "#f8d7da", color: "#721c24", padding: "10px 14px", borderRadius: "8px", marginBottom: "12px" }}>{error}</div>}

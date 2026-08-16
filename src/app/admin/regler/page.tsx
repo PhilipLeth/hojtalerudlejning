@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 import { useState, useEffect, useCallback } from "react";
 
 type Trigger = "udsolgt_weekend" | "udsolgt_naeste_dage" | "lager_nul";
@@ -187,16 +189,15 @@ export default function ReglerPage() {
   const productName = (id: string) => products.find((p) => p.id === id)?.name ?? id;
 
   return (
-    <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "20px", fontFamily: "system-ui, sans-serif" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap", marginBottom: "6px" }}>
-        <h1 style={{ margin: 0, fontSize: "18px", fontWeight: 700 }}>Regler</h1>
-        <a href="/admin" style={navLink}>Bookinger</a>
-        <a href="/admin/ads" style={navLink}>Ads</a>
-        <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
-        <button onClick={load} disabled={loading} style={{ ...navLink, cursor: "pointer" }}>
-          {loading ? "Henter…" : "Opdater"}
-        </button>
-      </div>
+    <>
+      <AdminNav
+        actions={
+          <button onClick={load} disabled={loading} style={{ ...navLink, cursor: "pointer" }}>
+            {loading ? "Henter…" : "↺ Opdater"}
+          </button>
+        }
+      />
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "20px" }}>
 
       <div style={{ background: "#e8f0fe", color: "#174ea6", padding: "12px 14px", borderRadius: "8px", margin: "0 0 18px", fontSize: "13px" }}>
         <strong>Reglerne kører ikke.</strong> De gemmes og evalueres, så du kan se hvad de <em>ville</em> gøre.
@@ -352,6 +353,7 @@ export default function ReglerPage() {
           Evalueret mod {dk(data.today)}. Kommende weekend: {data.weekend.days.map(dk).join(" · ")}.
         </p>
       )}
-    </div>
+      </div>
+    </>
   );
 }

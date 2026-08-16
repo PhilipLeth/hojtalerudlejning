@@ -2007,6 +2007,11 @@
     "fredagsudsalg": {
       "status": "done",
       "description": "/admin/udsalg (2026-08-16): fredagsudsalg til weekenden i evaluér-og-vis-form, samme fremgangsmåde som ads-reglerne. Viser pr. weekend hvert produkts lager, ledige enheder fre/lør/søn hver for sig, og 'ledig hele weekenden' — det er minimum over de tre dage der afgør om noget kan sættes på udsalg, for er noget ledigt fredag men booket lørdag, kan kunden ikke leje det til weekenden. Afleveringsdagen tæller ikke som optaget. Undtagelses-chips slår produkter fra, der bliver udlejet til fuld pris alligevel (fx den sidste Soundboks). BESLUTNING: intet er kundevendt endnu — kampagnen er et udkast i KV (weekend_sale), så tallene kan ses et par weekender før priserne røres. Når det skal live mangler tre ting: resolveDiscount skal kende datoer+produkter (i dag er en rabatkode en flad pct på hele ordren uden dato- eller produktbinding), book.ts må ikke stole på klientens total, og nyhedsbrevet mangler et send-endpoint. Fælder noteret: kannibalisering hvis udsalget bliver en fast ugentlig ting, og førpris-reglerne (laveste pris i 30 dage) gør overstreget 'før'-pris uholdbart — formuler som '-20% på det vi har tilbage til weekenden'. Delt logik: bookedCountsByDay, upcomingWeekend/nextWeekends og productCatalog ligger i functions/api/_lib/ og bruges af både ads-oversigten og udsalget, så et produkt ikke kan være ledigt ét sted og udsolgt et andet."
+    },
+    "navigation_2026_08_16": {
+      "status": "done",
+      "date": "2026-08-16",
+      "description": "Én menu for hele admin: src/components/AdminNav.tsx med ADMIN_MENU grupperet i Drift (Bookinger, Kalender, Udlevering, Lejeseddel, Lager, Udsolgt), Katalog & priser (Produkter, Rabatkoder, Udsalg), Markedsføring (Ads, Regler, Kanaler, Nyhedsbrev) og System (Indstillinger). Før havde hver side sin egen håndplukkede stribe links — Rabatkoder pegede kun på Ads og Regler, Lejeseddel på Lager og Nyhedsbrev — så man skulle om forsiden for at komme videre. Menuen markerer den aktuelle side, henter sidens navn fra stien og folder til én dropdown med optgroups på telefon. En test låser at hver admin-side bruger AdminNav og ikke har sin egen linkstribe."
     }
   },
   "booking_improvements": {

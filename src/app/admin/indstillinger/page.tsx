@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 import { useState, useEffect, useCallback } from "react";
 import { phoneFromInput } from "@/lib/phone";
 import { clearSiteSettingsCache } from "@/lib/useSiteSettings";
@@ -93,14 +95,16 @@ export default function IndstillingerPage() {
   const preview = phoneFromInput(phone);
 
   return (
-    <div style={{ maxWidth: "640px", margin: "0 auto", padding: "20px", fontFamily: "system-ui, sans-serif" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap", marginBottom: "6px" }}>
-        <h1 style={{ margin: 0, fontSize: "18px", fontWeight: 700 }}>Web-indstillinger</h1>
-        <a href="/admin" style={navLink}>Bookinger</a>
-        <button onClick={load} disabled={loading} style={{ ...navLink, cursor: "pointer" }}>
-          {loading ? "Henter…" : "Opdater"}
-        </button>
-      </div>
+    <>
+      <AdminNav
+        title="Indstillinger"
+        actions={
+          <button onClick={load} disabled={loading} style={{ ...navLink, cursor: "pointer" }}>
+            {loading ? "Henter…" : "↺ Opdater"}
+          </button>
+        }
+      />
+      <div style={{ maxWidth: "640px", margin: "0 auto", padding: "20px" }}>
       <p style={{ color: "#888", fontSize: "12px", margin: "0 0 20px" }}>
         Ændringer slår igennem med det samme på hjemmesiden (header, footer, book-knap).
       </p>
@@ -144,6 +148,7 @@ export default function IndstillingerPage() {
           {saving ? "Gemmer…" : "Gem"}
         </button>
       </form>
-    </div>
+      </div>
+    </>
   );
 }

@@ -111,8 +111,8 @@ describe("Ordreoverblikket på mobil", () => {
     // Statusserne ligger i dropdownen, ikke som knapper man skal scrolle forbi
     expect(screen.queryByRole("button", { name: /Bekræftet/ })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "7 dage" })).not.toBeInTheDocument();
-    // Menuen til de andre admin-sider er også foldet sammen
-    expect(screen.getByRole("option", { name: "Menu…" })).toBeInTheDocument();
+    // Admin-menuen er én grupperet dropdown, ikke elleve links
+    expect(screen.getByLabelText("Gå til admin-side")).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Rabatkoder" })).not.toBeInTheDocument();
   });
 

@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 import { useState, useEffect, useCallback } from "react";
 
 interface SaleOffer {
@@ -25,6 +27,8 @@ interface WeekendSale {
 interface Campaign {
   pct: number;
   excluded: string[];
+  code: string;
+  active: boolean;
   note?: string;
 }
 
@@ -90,6 +94,8 @@ export default function UdsalgPage() {
   const [pct, setPct] = useState("20");
   const [excluded, setExcluded] = useState<string[]>([]);
   const [note, setNote] = useState("");
+  const [code, setCode] = useState("weekend");
+  const [active, setActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -121,6 +127,8 @@ export default function UdsalgPage() {
       setPct(String(json.campaign.pct));
       setExcluded(json.campaign.excluded);
       setNote(json.campaign.note ?? "");
+      setCode(json.campaign.code);
+      setActive(json.campaign.active);
       setDirty(false);
     } catch {
       setError("Netværksfejl");
@@ -143,7 +151,7 @@ export default function UdsalgPage() {
       const res = await fetch(`/api/udsalg?secret=${encodeURIComponent(secret)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pct: Number(pct), excluded, note: note || undefined }),
+        body: JSON.stringify({ pct: Number(pct), excluded, code, active, note: note || undefined }),
       });
       const json = (await res.json()) as { error?: string };
       if (!res.ok) {
@@ -165,22 +173,30 @@ export default function UdsalgPage() {
   const first = data?.weekends[0];
 
   return (
-    <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "20px", fontFamily: "system-ui, sans-serif", color: "#111" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap", marginBottom: "6px" }}>
-        <h1 style={{ margin: 0, fontSize: "18px", fontWeight: 700 }}>Fredagsudsalg</h1>
-        <a href="/admin" style={navLink}>Bookinger</a>
-        <a href="/admin/lager" style={navLink}>Lager</a>
-        <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
-        <a href="/admin/rabatkoder" style={navLink}>Rabatkoder</a>
-        <button onClick={load} disabled={loading} style={{ ...navLink, cursor: "pointer" }}>
-          {loading ? "Henter…" : "Opdater"}
-        </button>
-      </div>
+    <>
+      <AdminNav
+        title="Fredagsudsalg"
+        actions={
+          <button onClick={load} disabled={loading} style={{ ...navLink, cursor: "pointer" }}>
+            {loading ? "Henter…" : "↺ Opdater"}
+          </button>
+        }
+      />
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "20px", color: "#111" }}>
 
-      <div style={{ background: "#e8f0fe", color: "#174ea6", padding: "12px 14px", borderRadius: "8px", margin: "0 0 18px", fontSize: "13px" }}>
-        <strong>Udsalget kører ikke.</strong> Ingen kunde kan bruge rabatten — hverken rabatkoder, booking-flowet
-        eller Stripe kender kampagnen. Tallene viser, hvad du <em>ville</em> give rabat på, og hvad det ville koste.
-      </div>
+      {data?.live ? (
+        <div style={{ background: "#d4edda", color: "#155724", padding: "12px 14px", borderRadius: "8px", margin: "0 0 18px", fontSize: "13px", border: "1px solid #28a745" }}>
+          <strong>Udsalget er aktivt.</strong> Kunder kan skrive koden <code style={{ background: "#fff", padding: "1px 6px", borderRadius: "4px", fontWeight: 700 }}>{data.campaign.code}</code> i
+          booking-flowet og få {data.campaign.pct}% — men kun når hele lejeperioden ligger i én weekend, og kun
+          på udstyr der står ledigt alle tre dage. Alt andet afvises. Kontrollen sker på serveren ved både
+          kodetjek, booking og betaling.
+        </div>
+      ) : (
+        <div style={{ background: "#e8f0fe", color: "#174ea6", padding: "12px 14px", borderRadius: "8px", margin: "0 0 18px", fontSize: "13px" }}>
+          <strong>Udsalget er slået fra.</strong> Koden afvises som enhver anden ukendt kode. Tallene herunder
+          viser, hvad du <em>ville</em> give rabat på, og hvad det ville koste. Tænd det med kontakten nedenfor.
+        </div>
+      )}
 
       {error && (
         <div style={{ background: "#fdecea", color: "#c0392b", padding: "10px 14px", borderRadius: "8px", marginBottom: "14px", fontSize: "13px" }}>
@@ -202,6 +218,31 @@ export default function UdsalgPage() {
               style={{ width: "62px", padding: "5px 7px", fontSize: "13px", border: "1px solid #ddd", borderRadius: "6px", color: "#111" }}
             />
             %
+          </label>
+          <label style={{ fontSize: "13px", display: "flex", alignItems: "center", gap: "6px" }}>
+            Kode
+            <input
+              value={code}
+              onChange={(e) => { setCode(e.target.value); setDirty(true); }}
+              placeholder="weekend"
+              style={{ width: "120px", padding: "5px 7px", fontSize: "13px", border: "1px solid #ddd", borderRadius: "6px", color: "#111" }}
+            />
+          </label>
+          <label
+            title="Tændt betyder at kunder kan bruge koden med det samme"
+            style={{ fontSize: "13px", display: "flex", alignItems: "center", gap: "6px", fontWeight: active ? 700 : 400, color: active ? "#155724" : "#555", cursor: "pointer" }}
+          >
+            <input
+              type="checkbox"
+              checked={active}
+              onChange={(e) => {
+                if (e.target.checked && !confirm(`Tænd udsalget?\n\nKunder kan derefter bruge koden "${code}" og få ${pct}% på udstyr, der står ledigt hele weekenden.`)) return;
+                setActive(e.target.checked);
+                setDirty(true);
+              }}
+              style={{ width: "16px", height: "16px", cursor: "pointer" }}
+            />
+            {active ? "Tændt for kunder" : "Slået fra"}
           </label>
           <label style={{ fontSize: "13px", display: "flex", alignItems: "center", gap: "6px", flex: "1 1 220px" }}>
             Note
@@ -317,6 +358,7 @@ export default function UdsalgPage() {
           lagerberegning som udsolgt-siden, så et produkt ikke kan være ledigt her og udsolgt der.
         </p>
       )}
-    </div>
+      </div>
+    </>
   );
 }

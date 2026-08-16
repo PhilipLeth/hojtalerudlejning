@@ -27,6 +27,7 @@ import {
 } from "@/lib/bookingStage";
 import { orderLines, deliveryInfo, type OrderBooking } from "@/lib/orderLines";
 import { useProducts } from "@/lib/useProducts";
+import AdminNav from "@/components/AdminNav";
 
 interface Booking extends OrderBooking {
   id: string;
@@ -115,19 +116,6 @@ const mobileSelect: React.CSSProperties = {
   border: "1px solid #ddd", borderRadius: "8px", background: "#fff", color: "#111",
 };
 
-const ADMIN_PAGES = [
-  { href: "/admin/lager", label: "Lager" },
-  { href: "/admin/udsolgt", label: "Udsolgt" },
-  { href: "/admin/udsalg", label: "Udsalg" },
-  { href: "/admin/ads", label: "Ads" },
-  { href: "/admin/regler", label: "Regler" },
-  { href: "/admin/rabatkoder", label: "Rabatkoder" },
-  { href: "/admin/produkter", label: "Produkter" },
-  { href: "/admin/kanaler", label: "Kanaler" },
-  { href: "/admin/nyhedsbrev", label: "Nyhedsbrev" },
-  { href: "/admin/lejeseddel", label: "Lejeseddel" },
-  { href: "/admin/indstillinger", label: "Indstillinger" },
-];
 
 /**
  * Telefon eller ej. Admin bruges i praksis stående i døren ved udlevering,
@@ -366,6 +354,21 @@ export default function AdminPage() {
     }
   }, [secret, fetchBookings]);
 
+  // Fra /admin/kalender: åbn den valgte booking når listen er hentet
+  useEffect(() => {
+    if (!bookings.length) return;
+    let focusId: string | null = null;
+    try {
+      focusId = sessionStorage.getItem("admin_focus_booking");
+      if (focusId) sessionStorage.removeItem("admin_focus_booking");
+    } catch { /* ignore */ }
+    if (!focusId) return;
+    if (!bookings.some((b) => b.id === focusId)) return;
+    setExpanded(focusId);
+    setFilterPeriod("alle");
+    setFilterStatus("alle");
+  }, [bookings]);
+
   const updateStatus = async (id: string, newStatus: string) => {
     setUpdating(id);
     try {
@@ -502,32 +505,19 @@ export default function AdminPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
-      <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: isMobile ? "10px 12px" : "12px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px", position: "sticky", top: 0, zIndex: 5 }}>
-        <h1 style={{ margin: 0, fontSize: "18px", fontWeight: 700 }}>Bookinger</h1>
-        <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap", maxWidth: "100%" }}>
-          {isMobile ? (
-            // Ti links i en scrollende stribe er ubrugelige med tommelfingeren
-            <select
-              value=""
-              onChange={(e) => { if (e.target.value) window.location.href = e.target.value; }}
-              style={{ ...navLink, appearance: "auto", padding: "9px 10px", fontSize: "14px" }}
-            >
-              <option value="">Menu…</option>
-              {ADMIN_PAGES.map((p) => (
-                <option key={p.href} value={p.href}>{p.label}</option>
-              ))}
-            </select>
-          ) : (
-            ADMIN_PAGES.map((p) => (
-              <a key={p.href} href={p.href} style={navLink}>{p.label}</a>
-            ))
-          )}
-          <button onClick={fetchBookings} disabled={loading} style={{ ...navLink, cursor: "pointer", border: "none" as React.CSSProperties["border"] }}>
-            {loading ? "Henter..." : "↺ Opdater"}
-          </button>
-          <button onClick={() => { localStorage.removeItem("admin_secret"); setSecret(""); setBookings([]); }} style={{ fontSize: "13px", background: "none", border: "none", color: "#aaa", cursor: "pointer" }}>Log ud</button>
-        </div>
-      </header>
+      <AdminNav
+        title="Bookinger"
+        actions={
+          <>
+            <button onClick={fetchBookings} disabled={loading} style={{ ...navLink, cursor: "pointer", border: "none" as React.CSSProperties["border"] }}>
+              {loading ? "Henter..." : "↺ Opdater"}
+            </button>
+            <button onClick={() => { localStorage.removeItem("admin_secret"); setSecret(""); setBookings([]); }} style={{ fontSize: "13px", background: "none", border: "none", color: "#aaa", cursor: "pointer" }}>
+              Log ud
+            </button>
+          </>
+        }
+      />
 
       <main style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "12px 10px 40px" : "20px 16px" }}>
         {error && <div style={{ background: "#f8d7da", color: "#721c24", padding: "10px 14px", borderRadius: "8px", marginBottom: "12px" }}>{error}</div>}

@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 import { useState, useEffect, useCallback } from "react";
 
 interface LinkedAdGroup {
@@ -192,17 +194,15 @@ export default function AdsPage() {
   const weekend = data?.weekend;
 
   return (
-    <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "20px", fontFamily: "system-ui, sans-serif" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap", marginBottom: "6px" }}>
-        <h1 style={{ margin: 0, fontSize: "18px", fontWeight: 700 }}>Ads</h1>
-        <a href="/admin" style={navLink}>Bookinger</a>
-        <a href="/admin/lager" style={navLink}>Lager</a>
-        <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
-        <a href="/admin/regler" style={navLink}>Regler</a>
-        <button onClick={load} disabled={loading} style={{ ...navLink, cursor: "pointer", border: "1px solid #ddd" }}>
-          {loading ? "Henter…" : "Opdater"}
-        </button>
-      </div>
+    <>
+      <AdminNav
+        actions={
+          <button onClick={load} disabled={loading} style={{ ...navLink, cursor: "pointer", border: "1px solid #ddd" }}>
+            {loading ? "Henter…" : "↺ Opdater"}
+          </button>
+        }
+      />
+      <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "20px" }}>
 
       <p style={{ color: "#888", fontSize: "12px", margin: "0 0 16px" }}>
         Intet slukkes automatisk. Knapperne herunder ændrer status i Google Ads med det samme, når du trykker.
@@ -372,6 +372,7 @@ export default function AdsPage() {
           {data.adGroups.length} annoncegrupper hentet fra Google Ads.
         </p>
       )}
-    </div>
+      </div>
+    </>
   );
 }

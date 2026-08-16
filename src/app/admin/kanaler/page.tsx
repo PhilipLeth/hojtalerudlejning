@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 import { useCallback, useEffect, useState } from "react";
 
 type ChannelStatus = "not_started" | "ready" | "connected" | "live" | "paused" | "skipped";
@@ -207,32 +209,26 @@ export default function AdminKanalerPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
-      <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "12px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
-        <div>
-          <h1 style={{ margin: 0, fontSize: "18px", fontWeight: 700 }}>Marketing-kanaler</h1>
-          <p style={{ margin: "2px 0 0", fontSize: "13px", color: "#888" }}>
-            Alle konti: info@lejhojtaler.dk
-            {data ? ` · ${data.productCount} produkter i feed` : ""}
-            {data?.lastSetupRunAt ? ` · Sidste run: ${new Date(data.lastSetupRunAt).toLocaleString("da-DK")}` : ""}
-          </p>
-        </div>
-        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}>
-          <a href="/admin" style={navLink}>Bookinger</a>
-          <a href="/admin/produkter" style={navLink}>Produkter</a>
-          <a href="/admin/lager" style={navLink}>Lager</a>
-          <a href="/admin/udsolgt" style={navLink}>Udsolgt</a>
-          <button onClick={load} disabled={loading} style={{ ...navLink, border: "none", cursor: "pointer" }}>
-            {loading ? "Henter..." : "Opdater"}
-          </button>
-          <button
-            onClick={runSetup}
-            disabled={running}
-            style={{ padding: "8px 18px", fontSize: "14px", fontWeight: 700, background: "#111", color: "#fff", border: "none", borderRadius: "6px", cursor: running ? "wait" : "pointer" }}
-          >
-            {running ? "Kører setup..." : "▶ Run setup"}
-          </button>
-        </div>
-      </header>
+      <AdminNav
+        actions={
+          <>
+            <span style={{ fontSize: "12px", color: "#888" }}>
+              {data ? `${data.productCount} produkter i feed` : "Alle konti: info@lejhojtaler.dk"}
+              {data?.lastSetupRunAt ? ` · sidste run ${new Date(data.lastSetupRunAt).toLocaleDateString("da-DK")}` : ""}
+            </span>
+            <button onClick={load} disabled={loading} style={{ ...navLink, border: "none", cursor: "pointer" }}>
+              {loading ? "Henter..." : "↺ Opdater"}
+            </button>
+            <button
+              onClick={runSetup}
+              disabled={running}
+              style={{ padding: "8px 18px", fontSize: "14px", fontWeight: 700, background: "#111", color: "#fff", border: "none", borderRadius: "6px", cursor: running ? "wait" : "pointer" }}
+            >
+              {running ? "Kører setup..." : "▶ Run setup"}
+            </button>
+          </>
+        }
+      />
 
       <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px 16px" }}>
         {error && <div style={{ background: "#f8d7da", color: "#721c24", padding: "12px 16px", borderRadius: "8px", marginBottom: "12px" }}>{error}</div>}

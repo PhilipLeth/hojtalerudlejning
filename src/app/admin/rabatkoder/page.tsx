@@ -1,5 +1,7 @@
 "use client";
 
+import AdminNav from "@/components/AdminNav";
+
 import { useState, useEffect, useCallback } from "react";
 import { useIsMobile } from "@/lib/useIsMobile";
 
@@ -219,15 +221,13 @@ export default function RabatkoderPage() {
 
   return (
     <div>
-      <header style={{ background: "#fff", borderBottom: "1px solid #eee", padding: isMobile ? "10px 12px" : "12px 20px", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", position: "sticky", top: 0, zIndex: 5 }}>
-        <h1 style={{ margin: 0, fontSize: "18px", fontWeight: 700 }}>Rabatkoder</h1>
-        <a href="/admin" style={navLink}>&larr; Bookinger</a>
-        <a href="/admin/ads" style={navLink}>Ads</a>
-        <a href="/admin/regler" style={navLink}>Regler</a>
-        <button onClick={load} disabled={loading} style={{ ...navLink, cursor: "pointer" }}>
-          {loading ? "Henter…" : "↺ Opdater"}
-        </button>
-      </header>
+      <AdminNav
+        actions={
+          <button onClick={load} disabled={loading} style={{ ...navLink, cursor: "pointer" }}>
+            {loading ? "Henter…" : "↺ Opdater"}
+          </button>
+        }
+      />
 
       <main style={{ maxWidth: "860px", margin: "0 auto", padding: isMobile ? "14px 12px 40px" : "20px" }}>
         <p style={{ color: "#666", fontSize: "13px", margin: "0 0 12px", lineHeight: 1.5 }}>
