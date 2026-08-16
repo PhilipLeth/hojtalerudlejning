@@ -239,6 +239,74 @@ def summarize(cfg: dict[str, Any]) -> None:
 # ── deployment ───────────────────────────────────────────────────────────────
 
 
+def set_state(client, customer_id: str, name: str, enabled: bool) -> int:
+    """Flip an existing campaign and every asset group under it.
+
+    Both levels have their own status and both must be ENABLED for anything to
+    serve — an enabled campaign full of paused asset groups spends nothing and
+    looks fine in the campaign list.
+    """
+    from google.protobuf.field_mask_pb2 import FieldMask
+
+    campaign_rn = campaign_exists(client, customer_id, name)
+    if not campaign_rn:
+        logger.error("No campaign named %r", name)
+        return 1
+
+    target = "ENABLED" if enabled else "PAUSED"
+
+    ga = client.get_service("GoogleAdsService")
+    q = (
+        "SELECT asset_group.resource_name, asset_group.name, asset_group.status, "
+        "asset_group.ad_strength FROM asset_group "
+        f"WHERE campaign.resource_name = '{campaign_rn}'"
+    )
+    groups = []
+    for batch in ga.search_stream(customer_id=customer_id, query=q):
+        for row in batch.results:
+            groups.append({
+                "resource_name": row.asset_group.resource_name,
+                "name": row.asset_group.name,
+                "status": row.asset_group.status.name,
+                "strength": row.asset_group.ad_strength.name,
+            })
+
+    camp_op = client.get_type("CampaignOperation")
+    camp_op.update.resource_name = campaign_rn
+    camp_op.update.status = getattr(client.enums.CampaignStatusEnum, target)
+    client.copy_from(camp_op.update_mask, FieldMask(paths=["status"]))
+    client.get_service("CampaignService").mutate_campaigns(
+        customer_id=customer_id, operations=[camp_op]
+    )
+
+    ag_ops = []
+    for g in sorted(groups, key=lambda x: x["name"]):
+        op = client.get_type("AssetGroupOperation")
+        op.update.resource_name = g["resource_name"]
+        op.update.status = getattr(client.enums.AssetGroupStatusEnum, target)
+        client.copy_from(op.update_mask, FieldMask(paths=["status"]))
+        ag_ops.append(op)
+    if ag_ops:
+        client.get_service("AssetGroupService").mutate_asset_groups(
+            customer_id=customer_id, operations=ag_ops
+        )
+
+    # Read back — a mutate that changed nothing still returns success.
+    stale = []
+    for batch in ga.search_stream(customer_id=customer_id, query=q):
+        for row in batch.results:
+            if row.asset_group.status.name != target:
+                stale.append(row.asset_group.name)
+    if stale:
+        logger.error("Asset groups still not %s: %s", target, ", ".join(stale))
+        return 1
+
+    logger.info("Campaign %r → %s, with %d asset groups.", name, target, len(ag_ops))
+    for g in sorted(groups, key=lambda x: x["name"]):
+        logger.info("  %-44s ad strength %s", g["name"], g["strength"])
+    return 0
+
+
 def find_budget(client, customer_id: str, name: str) -> str | None:
     ga = client.get_service("GoogleAdsService")
     q = (
@@ -657,12 +725,33 @@ def main() -> int:
         help="Required for --apply. Lejhøjtaler is 4410207627 — the yaml default is OpenOcean.",
     )
     ap.add_argument("--apply", action="store_true", help="Actually create the campaign.")
+    ap.add_argument(
+        "--set-state",
+        choices=("enabled", "paused"),
+        help="Flip the existing campaign and its asset groups. Creates nothing.",
+    )
     ap.add_argument("--paused", action="store_true", help="Create everything PAUSED.")
     ap.add_argument("--force", action="store_true", help="Replace an existing campaign of the same name.")
     args = ap.parse_args()
 
     with open(args.pmax_json, "r", encoding="utf-8") as f:
         cfg = json.load(f)
+
+    if args.set_state:
+        if not args.customer_id:
+            logger.error("--customer-id is required with --set-state.")
+            return 1
+        if not os.path.isfile(args.config):
+            logger.error("Missing credentials file: %s", args.config)
+            return 1
+        from google.ads.googleads.client import GoogleAdsClient
+
+        return set_state(
+            GoogleAdsClient.load_from_storage(args.config),
+            normalize_customer_id(args.customer_id),
+            cfg["campaign"]["name"],
+            enabled=args.set_state == "enabled",
+        )
 
     errors = validate(cfg)
     if errors:
