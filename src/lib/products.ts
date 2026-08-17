@@ -227,32 +227,6 @@ export const speakers: Speaker[] = [
       extra: "Incl. all cables. Stands available as add-on for 100 kr.",
     },
   },
-  {
-    id: "festival_bas",
-    page: "/hojtalerpakke-bas",
-    youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0",
-    price: 695,
-    product: "/images/product-festival-bas.png",
-    mood: "/images/mood-festival.png",
-    power: "kabel",
-    sizeClass: "stor",
-    weight: "2× 16 kg + 18 kg",
-    contents: ['2× EV 12" højtalere', '12" aktiv subwoofer', "Stativ + topstang", "Bluetooth", "AUX + strømkabler", "USB-C / iPhone-adapter"],
-    da: {
-      name: "Stor højtalerpakke + bas",
-      size: '2× 12" EV + sub',
-      capacity: "50-100 pers.",
-      desc: 'Det store sæt med subwoofer: to 12" EV-højtalere plus aktiv bas. Tryk på dansegulvet — spar 95 kr. mod at leje delene hver for sig.',
-      extra: "Inkl. subwoofer, stativer og alle kabler.",
-    },
-    en: {
-      name: "Large Speaker Package + Bass",
-      size: '2× 12" EV + sub',
-      capacity: "50-100 people",
-      desc: 'The big rig with a subwoofer: two 12" EV speakers plus active bass. Punch on the dance floor — save 95 kr vs renting separately.',
-      extra: "Incl. subwoofer, stands and all cables.",
-    },
-  },
 ];
 
 export const addons: Addon[] = [

@@ -1,6 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { getAdminToken } from "@/lib/useAdminAuth";
+import { compressImage, formatBytes, MAX_UPLOAD_BYTES } from "@/lib/compressImage";
 
 const labelStyle: React.CSSProperties = {
   display: "block",
@@ -22,12 +24,30 @@ export default function ImageField({
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
+  const [note, setNote] = useState("");
 
-  const handleFile = async (file: File) => {
+  const handleFile = async (original: File) => {
     setUploadError("");
+    setNote("");
     setUploading(true);
     try {
-      const secret = localStorage.getItem("admin_secret") ?? "";
+      // Skalér og konvertér til WebP før upload. R2-billeder serveres rå, så
+      // det brugeren sender er præcis det besøgende henter.
+      const { file, originalBytes, bytes, compressed } = await compressImage(original);
+
+      if (bytes > MAX_UPLOAD_BYTES) {
+        setUploadError(
+          compressed
+            ? `Billedet fylder stadig ${formatBytes(bytes)} efter komprimering — max ${formatBytes(MAX_UPLOAD_BYTES)}. Beskær det og prøv igen.`
+            : `Filen fylder ${formatBytes(bytes)} og kunne ikke komprimeres — max ${formatBytes(MAX_UPLOAD_BYTES)}. Gem den som JPG eller WebP først.`,
+        );
+        return;
+      }
+      if (compressed && originalBytes > bytes) {
+        setNote(`Komprimeret ${formatBytes(originalBytes)} → ${formatBytes(bytes)}`);
+      }
+
+      const secret = getAdminToken();
       // Rå body (ikke multipart) — produktionens formData-parsing har historisk
       // konverteret filer til strings ("No file"-fejlen)
       const res = await fetch(`/api/upload?secret=${encodeURIComponent(secret)}`, {
@@ -52,10 +72,6 @@ export default function ImageField({
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (!file) return;
-    if (file.size > 10_000_000) {
-      setUploadError("Filen er for stor — max 10 MB");
-      return;
-    }
     handleFile(file);
   };
 
@@ -97,7 +113,7 @@ export default function ImageField({
             <span>
               Klik eller træk billede hertil
               <span style={{ display: "block", fontSize: "11px", color: "#aaa", marginTop: "4px" }}>
-                Max 10 MB · JPG, PNG, WebP
+                Skaleres automatisk · JPG, PNG, WebP
               </span>
             </span>
           </>
@@ -112,10 +128,6 @@ export default function ImageField({
         onChange={(e) => {
           const file = e.target.files?.[0];
           if (!file) return;
-          if (file.size > 10_000_000) {
-            setUploadError("Filen er for stor — max 10 MB");
-            return;
-          }
           handleFile(file);
           e.target.value = "";
         }}
@@ -123,6 +135,9 @@ export default function ImageField({
 
       {uploadError && (
         <p style={{ color: "#dc3545", fontSize: "12px", margin: "4px 0 0" }}>{uploadError}</p>
+      )}
+      {note && !uploadError && (
+        <p style={{ color: "#28a745", fontSize: "12px", margin: "4px 0 0" }}>{note}</p>
       )}
 
       {/* Preview */}

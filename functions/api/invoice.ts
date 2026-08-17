@@ -7,6 +7,8 @@
  */
 import { invoiceHtml, invoiceSubject, type InvoiceLine } from "./_lib/invoiceMail";
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -51,10 +53,8 @@ async function nextInvoiceNumber(kv: KVNamespace): Promise<string> {
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const secret = new URL(context.request.url).searchParams.get("secret");
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return json({ error: "Unauthorized" }, 401);
-  }
+  const auth = await requireAdmin(context, cors);
+  if (auth instanceof Response) return auth;
   if (!context.env.RESEND_API_KEY) return json({ error: "Mail er ikke konfigureret" }, 503);
 
   let body: Body;

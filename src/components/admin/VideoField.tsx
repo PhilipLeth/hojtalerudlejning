@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { getAdminToken } from "@/lib/useAdminAuth";
 
 const MAX_BYTES = 100_000_000; // 100 MB
 const ALLOWED = ["video/mp4", "video/webm", "video/quicktime"];
@@ -39,7 +40,7 @@ export default function VideoField({
     }
     setUploading(true);
     try {
-      const secret = localStorage.getItem("admin_secret") ?? "";
+      const secret = getAdminToken();
       // Rå body (ikke multipart) så filen streames direkte til R2
       const res = await fetch(`/api/upload-video?secret=${encodeURIComponent(secret)}`, {
         method: "POST",

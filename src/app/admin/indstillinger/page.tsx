@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 
 import { useState, useEffect, useCallback } from "react";
 import { phoneFromInput } from "@/lib/phone";
@@ -17,7 +19,7 @@ const navLink: React.CSSProperties = {
 };
 
 export default function IndstillingerPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [phone, setPhone] = useState("");
   const [savedDisplay, setSavedDisplay] = useState("");
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
@@ -26,11 +28,6 @@ export default function IndstillingerPage() {
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
-  }, []);
 
   const load = useCallback(async () => {
     if (!secret) return;
@@ -70,11 +67,7 @@ export default function IndstillingerPage() {
       });
       const json = (await res.json()) as { error?: string; display?: string; updatedAt?: string };
       if (!res.ok) {
-        if (res.status === 401) {
-          localStorage.removeItem("admin_secret");
-          window.location.href = "/admin";
-          return;
-        }
+        if (res.status === 401) { unauthorized(); return; }
         setError(json.error || "Kunne ikke gemme");
         return;
       }
@@ -90,7 +83,8 @@ export default function IndstillingerPage() {
     }
   }
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Indstillinger" />;
 
   const preview = phoneFromInput(phone);
 

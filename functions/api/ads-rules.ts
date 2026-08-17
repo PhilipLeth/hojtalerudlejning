@@ -12,6 +12,8 @@
 import { DEFAULT_INVENTORY, addDays, loadBookings, soldOutDaysByProduct } from "./_lib/bookings";
 import { upcomingWeekend } from "./ads";
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -47,14 +49,6 @@ function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), { status, headers: corsHeaders });
 }
 
-function unauthorized(context: { request: Request; env: Env }): Response | null {
-  const secret = new URL(context.request.url).searchParams.get("secret");
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return json({ error: "Unauthorized" }, 401);
-  }
-  return null;
-}
-
 /** Første dag fra og med `from` hvor produktet ikke er udsolgt. */
 function firstFreeDay(soldOutDays: string[], from: string, horizon: string): string | null {
   const set = new Set(soldOutDays);
@@ -65,8 +59,8 @@ function firstFreeDay(soldOutDays: string[], from: string, horizon: string): str
 }
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const denied = unauthorized(context);
-  if (denied) return denied;
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   const kv = context.env.BOOKINGS;
   const today = new Date().toISOString().slice(0, 10);
@@ -141,8 +135,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const denied = unauthorized(context);
-  if (denied) return denied;
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   try {
     const body = (await context.request.json()) as { rules?: Rule[] };

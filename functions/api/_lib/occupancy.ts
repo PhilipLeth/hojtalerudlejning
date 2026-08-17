@@ -9,6 +9,8 @@ import { addDays, bookedProductIds } from "./bookings";
 
 /** Pakker → fysiske dele (matcher src/lib/products.ts bundles). */
 export const BUNDLE_PARTS: Record<string, string[]> = {
+  /** Legacy — ikke et fysisk produkt; kun gamle bookinger */
+  festival_bas: ["festival", "subwoofer"],
   pakke_fest_lille: ["party", "lyseffekt"],
   pakke_fest_stor: ["festival", "lys"],
   pakke_karaoke: ["karaoke", "skaerm_32", "party"],
@@ -23,7 +25,6 @@ export const PRODUCT_LABELS: Record<string, string> = {
   party: "Lille højtalerpakke",
   soundboks: "Soundboks 4",
   festival: "Stor højtalerpakke",
-  festival_bas: "Stor højtalerpakke + bas",
   lys: "Lys-pakke",
   lyseffekt: "Enkelt lyseffekt",
   rog: "Røgmaskine",
@@ -57,7 +58,6 @@ export const PRODUCT_CATEGORY: Record<string, string> = {
   party: "lyd",
   soundboks: "lyd",
   festival: "lyd",
-  festival_bas: "lyd",
   subwoofer: "lyd",
   stativer: "lyd",
   taske: "lyd",

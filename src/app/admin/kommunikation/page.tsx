@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 import {
   DEFAULT_SETTINGS,
   SHORTCODES,
@@ -52,7 +54,7 @@ const PREVIEW = {
 };
 
 export default function KommunikationPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [settings, setSettings] = useState<CommSettings>(DEFAULT_SETTINGS);
   const [saleActive, setSaleActive] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -61,11 +63,6 @@ export default function KommunikationPage() {
   const [dirty, setDirty] = useState(false);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
-  }, []);
 
   const load = useCallback(async () => {
     if (!secret) return;
@@ -75,11 +72,7 @@ export default function KommunikationPage() {
       const res = await fetch(`/api/kommunikation?secret=${encodeURIComponent(secret)}`);
       const json: CommResponse = await res.json();
       if (!res.ok) {
-        if (res.status === 401) {
-          localStorage.removeItem("admin_secret");
-          window.location.href = "/admin";
-          return;
-        }
+        if (res.status === 401) { unauthorized(); return; }
         setError(json.error || "Kunne ikke hente indstillingerne");
         return;
       }
@@ -154,7 +147,8 @@ export default function KommunikationPage() {
     });
   }, [settings, saleActive]);
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Kommunikation" />;
 
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "20px", fontFamily: "system-ui, sans-serif", color: "#111" }}>

@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 
 import { useCallback, useEffect, useState } from "react";
 
@@ -64,8 +66,7 @@ const navLink: React.CSSProperties = {
 };
 
 export default function AdminKanalerPage() {
-  const [secret, setSecret] = useState("");
-  const [inputSecret, setInputSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [data, setData] = useState<ChannelsPayload | null>(null);
   const [loading, setLoading] = useState(false);
   const [running, setRunning] = useState(false);
@@ -79,10 +80,6 @@ export default function AdminKanalerPage() {
   >([]);
   const [expandedPaste, setExpandedPaste] = useState<string | null>(null);
 
-  useEffect(() => {
-    const s = localStorage.getItem("admin_secret");
-    if (s) setSecret(s);
-  }, []);
 
   const load = useCallback(async () => {
     if (!secret) return;
@@ -94,8 +91,7 @@ export default function AdminKanalerPage() {
       if (!res.ok) {
         setError(json.error || "Kunne ikke hente kanaler");
         if (res.status === 401) {
-          localStorage.removeItem("admin_secret");
-          setSecret("");
+          logout();
         }
         return;
       }
@@ -181,29 +177,8 @@ export default function AdminKanalerPage() {
     }
   };
 
-  if (!secret) {
-    return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (inputSecret.trim()) {
-              localStorage.setItem("admin_secret", inputSecret.trim());
-              setSecret(inputSecret.trim());
-            }
-          }}
-          style={{ background: "#fff", padding: "40px", borderRadius: "12px", boxShadow: "0 2px 12px rgba(0,0,0,0.1)", maxWidth: "400px", width: "100%" }}
-        >
-          <h1 style={{ margin: "0 0 8px", fontSize: "24px" }}>Kanaler</h1>
-          <p style={{ margin: "0 0 24px", color: "#666" }}>Indtast adgangskode</p>
-          <input type="password" value={inputSecret} onChange={(e) => setInputSecret(e.target.value)} placeholder="Adgangskode" style={{ width: "100%", padding: "12px", fontSize: "16px", border: "1px solid #ddd", borderRadius: "8px", marginBottom: "16px", boxSizing: "border-box", color: "#111" }} />
-          <button type="submit" style={{ width: "100%", padding: "12px", fontSize: "16px", background: "#000", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer" }}>
-            Log ind
-          </button>
-        </form>
-      </div>
-    );
-  }
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Kanaler" />;
 
   const stateById = new Map(data?.channels.map((c) => [c.id, c]) || []);
 

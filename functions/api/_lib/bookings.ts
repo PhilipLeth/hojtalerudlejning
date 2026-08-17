@@ -7,15 +7,21 @@
 
 /** Skal matche DEFAULT_INVENTORY i availability.ts */
 export const DEFAULT_INVENTORY: Record<string, number> = {
-  thumpgo: 1, party: 2, soundboks: 2, festival: 2, festival_bas: 1,
+  thumpgo: 1, party: 2, soundboks: 2, festival: 2,
   lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 4, lyskaeder: 6,
 };
 
-export const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival", "festival_bas"];
+export const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival"];
+
+/** Legacy combo-SKU — ikke et fysisk produkt; ekspanderes til festival + subwoofer. */
+const LEGACY_COMBO: Record<string, string[]> = {
+  festival_bas: ["festival", "subwoofer"],
+};
 
 export function speakerNameToId(name: string): string | null {
   const lower = name.toLowerCase();
   if (lower === "party" || lower.includes("lille højtalerpakke") || lower.includes("small speaker")) return "party";
+  // Gammel "Stor højtalerpakke + bas"-booking: map til legacy-id, ekspanderes nedenfor
   if (lower.includes("+ bas") || lower.includes("+ bass") || lower.includes("med bas")) return "festival_bas";
   if (lower === "festival" || lower.includes("stor højtalerpakke") || lower.includes("large speaker")) return "festival";
   if (lower.includes("thump")) return "thumpgo";
@@ -75,6 +81,7 @@ export function bookedProductIds(booking: Record<string, unknown>): string[] {
       : speakerNameToId(String(booking.speaker || ""));
 
   if (speakerId === "lys-only") ids.push("lys");
+  else if (speakerId && LEGACY_COMBO[speakerId]) ids.push(...LEGACY_COMBO[speakerId]);
   // Hovedproduktet tæller uanset type. Whitelisten på SPEAKER_IDS betød at en
   // ordre på fx en lyskæde eller en projektor ikke optog noget som helst —
   // produktet stod ledigt i kalender og udsolgt-oversigt, selvom det var ude.

@@ -2,9 +2,9 @@ import { describe, it, expect } from "vitest";
 import { speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice } from "@/lib/products";
 
 describe("Products data", () => {
-  it("has five speaker packages (incl. + bas fra 12. aug 2026)", () => {
-    expect(speakers).toHaveLength(5);
-    expect(speakers.map((s) => s.id)).toEqual(["thumpgo", "party", "soundboks", "festival", "festival_bas"]);
+  it("has four speaker packages", () => {
+    expect(speakers).toHaveLength(4);
+    expect(speakers.map((s) => s.id)).toEqual(["thumpgo", "party", "soundboks", "festival"]);
   });
 
   it("thump go is 345 kr", () => {
@@ -36,8 +36,8 @@ describe("Products data", () => {
 
   it("all speakers have product and mood images", () => {
     for (const s of speakers) {
-      expect(s.product).toMatch(/^\/images\/product-.+\.(png|svg)$/);
-      expect(s.mood).toMatch(/^\/images\/mood-.+\.png$/);
+      expect(s.product).toMatch(/^\/images\/product-.+\.(webp|svg)$/);
+      expect(s.mood).toMatch(/^\/images\/mood-.+\.webp$/);
     }
   });
 
@@ -242,7 +242,7 @@ describe("Addons data", () => {
       if (["levering_ud", "afhentning_retur", "levering_begge"].includes(a.id)) {
         expect(a.image).toBeNull();
       } else {
-        expect(a.image).toMatch(/^\/images\/product-.+\.(png|svg)$/);
+        expect(a.image).toMatch(/^\/images\/product-.+\.(webp|svg)$/);
       }
     }
   });

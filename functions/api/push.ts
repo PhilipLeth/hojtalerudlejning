@@ -12,6 +12,8 @@ import { sendPush, type StoredSubscription } from "../../src/lib/webpush";
 
 export const KV_PUSH_SUBS = "push_subs";
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -36,14 +38,6 @@ const json = (body: unknown, status = 200) =>
 export const onRequestOptions: PagesFunction<Env> = async () =>
   new Response(null, { status: 204, headers: corsHeaders });
 
-function unauthorized(context: { request: Request; env: Env }): Response | null {
-  const secret = new URL(context.request.url).searchParams.get("secret");
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return json({ error: "Unauthorized" }, 401);
-  }
-  return null;
-}
-
 export async function loadSubscriptions(kv: KVNamespace): Promise<StoredSubscription[]> {
   try {
     const raw = await kv.get(KV_PUSH_SUBS);
@@ -55,8 +49,8 @@ export async function loadSubscriptions(kv: KVNamespace): Promise<StoredSubscrip
 }
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const denied = unauthorized(context);
-  if (denied) return denied;
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   const subs = await loadSubscriptions(context.env.BOOKINGS);
   const configured = !!(context.env.VAPID_PUBLIC_KEY && context.env.VAPID_PRIVATE_KEY);
@@ -73,8 +67,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const denied = unauthorized(context);
-  if (denied) return denied;
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   let body: { action?: string; subscription?: StoredSubscription; endpoint?: string };
   try {

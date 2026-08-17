@@ -1,3 +1,5 @@
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -34,15 +36,9 @@ interface UnblockDateBody {
 type RequestBody = SetInventoryBody | BlockDateBody | UnblockDateBody;
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const url = new URL(context.request.url);
-  const secret = url.searchParams.get("secret");
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: corsHeaders,
-    });
-  }
 
   try {
     const body: RequestBody = await context.request.json();

@@ -40,6 +40,8 @@ import {
   type Invoice,
 } from "@/lib/payments";
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth, getAdminToken } from "@/lib/useAdminAuth";
 
 interface Booking extends OrderBooking {
   id: string;
@@ -333,8 +335,7 @@ function PaymentBanner({ b }: { b: Booking }) {
 }
 
 export default function AdminPage() {
-  const [secret, setSecret] = useState("");
-  const [inputSecret, setInputSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -345,11 +346,6 @@ export default function AdminPage() {
   const [expanded, setExpanded] = useState<string | null>(null);
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-  }, []);
-
   const fetchBookings = useCallback(async () => {
     if (!secret) return;
     setLoading(true);
@@ -359,7 +355,7 @@ export default function AdminPage() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || "Kunne ikke hente bookinger");
-        if (res.status === 401) { localStorage.removeItem("admin_secret"); setSecret(""); }
+        if (res.status === 401) unauthorized();
         return;
       }
       setBookings(data.bookings || []);
@@ -557,18 +553,8 @@ export default function AdminPage() {
     [bookings, today],
   );
 
-  if (!secret) {
-    return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
-        <form onSubmit={(e) => { e.preventDefault(); if (inputSecret.trim()) { localStorage.setItem("admin_secret", inputSecret.trim()); setSecret(inputSecret.trim()); setInputSecret(""); } }} style={{ background: "#fff", padding: "40px", borderRadius: "12px", boxShadow: "0 2px 12px rgba(0,0,0,0.1)", maxWidth: "400px", width: "100%" }}>
-          <h1 style={{ margin: "0 0 8px", fontSize: "24px" }}>Admin</h1>
-          <p style={{ margin: "0 0 24px", color: "#666" }}>Indtast adgangskode</p>
-          <input type="password" value={inputSecret} onChange={(e) => setInputSecret(e.target.value)} placeholder="Adgangskode" style={{ width: "100%", padding: "12px", fontSize: "16px", border: "1px solid #ddd", borderRadius: "8px", marginBottom: "16px", boxSizing: "border-box", color: "#111" }} />
-          <button type="submit" style={{ width: "100%", padding: "12px", fontSize: "16px", background: "#000", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer" }}>Log ind</button>
-        </form>
-      </div>
-    );
-  }
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Bookinger" />;
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
@@ -579,8 +565,8 @@ export default function AdminPage() {
             <button onClick={fetchBookings} disabled={loading} style={{ ...navLink, cursor: "pointer", border: "none" as React.CSSProperties["border"] }}>
               {loading ? "Henter..." : "↺ Opdater"}
             </button>
-            <button onClick={() => { localStorage.removeItem("admin_secret"); setSecret(""); setBookings([]); }} style={{ fontSize: "13px", background: "none", border: "none", color: "#aaa", cursor: "pointer" }}>
-              Log ud
+            <button onClick={() => { logout(); setBookings([]); }} style={{ fontSize: "13px", background: "none", border: "none", color: "#aaa", cursor: "pointer" }}>
+              Log ud{user ? ` (${user.name})` : ""}
             </button>
           </>
         }
@@ -949,7 +935,7 @@ function useStaffNames(): string[] {
   const [names, setNames] = useState<string[]>(staffCache ?? []);
   useEffect(() => {
     if (staffCache) return;
-    const secret = localStorage.getItem("admin_secret");
+    const secret = getAdminToken();
     if (!secret) return;
     fetch(`/api/kommunikation?secret=${encodeURIComponent(secret)}`)
       .then((r) => (r.ok ? r.json() : null))

@@ -16,6 +16,10 @@ describe("expandProductIds", () => {
     expect(expandProductIds(["pakke_fest_stor"])).toEqual(["festival", "lys"]);
   });
 
+  it("ekspanderer legacy festival_bas til festival + subwoofer", () => {
+    expect(expandProductIds(["festival_bas"])).toEqual(["festival", "subwoofer"]);
+  });
+
   it("beholder almindelige produkter", () => {
     expect(expandProductIds(["soundboks", "rog"])).toEqual(["soundboks", "rog"]);
   });

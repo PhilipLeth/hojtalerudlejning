@@ -10,6 +10,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { PAYMENT_METHOD_LABELS, PAYMENT_METHOD_ICONS, type PaymentMethod } from "@/lib/payments";
 
@@ -96,7 +98,7 @@ function Bar({ value, max, color = "#111" }: { value: number; max: number; color
 }
 
 export default function AccountingPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const today = useMemo(() => iso(new Date()), []);
   const presets = useMemo(() => periodPresets(today), [today]);
   const [from, setFrom] = useState(presets[0].from);
@@ -112,11 +114,6 @@ export default function AccountingPage() {
   const [saving, setSaving] = useState(false);
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
-  }, []);
 
   const load = useCallback(async () => {
     if (!secret) return;
@@ -126,7 +123,7 @@ export default function AccountingPage() {
       const res = await fetch(`/api/accounting?from=${from}&to=${to}&basis=${basis}&secret=${encodeURIComponent(secret)}`);
       const json: Summary = await res.json();
       if (!res.ok) {
-        if (res.status === 401) { localStorage.removeItem("admin_secret"); window.location.href = "/admin"; return; }
+        if (res.status === 401) { unauthorized(); return; }
         setError(json.error || "Kunne ikke hente regnskabstal");
         return;
       }
@@ -220,7 +217,8 @@ export default function AccountingPage() {
     URL.revokeObjectURL(url);
   }
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Regnskab" />;
 
   const target = data?.settings.monthlyTarget ?? 0;
   const maxProduct = Math.max(1, ...(data?.byProduct.map((p) => p.revenue) ?? [1]));

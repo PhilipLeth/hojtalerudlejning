@@ -11,7 +11,7 @@ const LEVELS: Record<string, CapacityLevel> = {
   party: 1,
   soundboks: 2,
   festival: 2,
-  festival_bas: 3,
+  subwoofer: 2,
 };
 
 export function capacityLevel(productId: string): CapacityLevel {

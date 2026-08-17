@@ -13,13 +13,13 @@ describe("productCatalog", () => {
 
   it("læser navn fra da.name / name_da", () => {
     const cat = productCatalog({
-      speakers: [{ id: "festival_bas", price: 695, da: { name: "Stor højtalerpakke + bas" } }],
+      speakers: [{ id: "festival", price: 495, da: { name: "Stor højtalerpakke" } }],
       rentalProducts: [{ id: "lyskaeder", price: 195, name_da: "Lyskæde varm hvid" }],
     });
-    expect(cat.find((p) => p.id === "festival_bas")).toEqual({
-      id: "festival_bas",
-      name: "Stor højtalerpakke + bas",
-      price: 695,
+    expect(cat.find((p) => p.id === "festival")).toEqual({
+      id: "festival",
+      name: "Stor højtalerpakke",
+      price: 495,
     });
     expect(cat.find((p) => p.id === "lyskaeder")?.price).toBe(195);
   });

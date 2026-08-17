@@ -1,3 +1,4 @@
+import { requireAdmin } from "./_lib/adminAuth";
 import {
   CHANNEL_DEFS,
   CHANNELS_KEY,
@@ -35,9 +36,8 @@ function auth(context: EventContext<Env, string, unknown>): boolean {
 
 /** GET: channel overview + feed URLs + product count (admin) */
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  if (!auth(context)) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: cors });
-  }
+  const auth = await requireAdmin(context, cors);
+  if (auth instanceof Response) return auth;
 
   const origin = SITE;
   const doc = await loadChannels(context.env.BOOKINGS, origin);
@@ -75,9 +75,8 @@ interface PostBody {
  * - reset: clear channel state
  */
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  if (!auth(context)) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: cors });
-  }
+  const auth = await requireAdmin(context, cors);
+  if (auth instanceof Response) return auth;
 
   const origin = SITE;
   let body: PostBody;

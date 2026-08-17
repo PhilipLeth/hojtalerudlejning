@@ -13,6 +13,8 @@ import { DEFAULT_INVENTORY, loadBookings, nextWeekends } from "./_lib/bookings";
 import { CatalogMissingError, productCatalog } from "./_lib/catalog";
 import { DEFAULT_CAMPAIGN, KV_SALE_CAMPAIGN, normalizeSaleCode, parseCampaign, weekendSale } from "./_lib/weekendSale";
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -33,14 +35,6 @@ const json = (body: unknown, status = 200) =>
 export const onRequestOptions: PagesFunction<Env> = async () =>
   new Response(null, { status: 204, headers: corsHeaders });
 
-function unauthorized(context: { request: Request; env: Env }): Response | null {
-  const secret = new URL(context.request.url).searchParams.get("secret");
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return json({ error: "Unauthorized" }, 401);
-  }
-  return null;
-}
-
 async function readJson<T>(kv: KVNamespace, key: string, fallback: T): Promise<T> {
   const raw = await kv.get(key);
   if (!raw) return fallback;
@@ -52,8 +46,8 @@ async function readJson<T>(kv: KVNamespace, key: string, fallback: T): Promise<T
 }
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const denied = unauthorized(context);
-  if (denied) return denied;
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   const url = new URL(context.request.url);
   const requested = Number(url.searchParams.get("weekends"));
@@ -71,6 +65,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
     const campaign = campaignRaw ? parseCampaign(campaignRaw) : DEFAULT_CAMPAIGN;
     const inventory = { ...DEFAULT_INVENTORY, ...inventoryRaw };
+    delete inventory.festival_bas; // opfundet combo-SKU — ikke fysisk lager
 
     let catalog;
     try {
@@ -103,8 +98,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const denied = unauthorized(context);
-  if (denied) return denied;
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   let body: { pct?: unknown; excluded?: unknown; note?: unknown; code?: unknown; active?: unknown };
   try {

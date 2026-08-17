@@ -297,7 +297,7 @@ describe("API'erne bag betaling og faktura", () => {
 
   it("kræver adminnøgle på regnskabstallene", () => {
     const src = read("functions/api/accounting.ts");
-    expect(src).toContain("Unauthorized");
+    expect(src).toContain("requireAdmin");
     expect(src).toContain("buildAccounting");
   });
 

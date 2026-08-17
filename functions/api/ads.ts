@@ -8,6 +8,7 @@
  * Regler defineres i /api/ads-rules og eksekveres ikke endnu — med vilje.
  */
 
+import { requireAdmin } from "./_lib/adminAuth";
 import {
   DEFAULT_INVENTORY,
   addDays,
@@ -61,14 +62,6 @@ function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), { status, headers: corsHeaders });
 }
 
-function unauthorized(context: { request: Request; env: Env }): Response | null {
-  const secret = new URL(context.request.url).searchParams.get("secret");
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return json({ error: "Unauthorized" }, 401);
-  }
-  return null;
-}
-
 async function readJson<T>(kv: KVNamespace, key: string, fallback: T): Promise<T> {
   const raw = await kv.get(key);
   if (!raw) return fallback;
@@ -98,8 +91,8 @@ function statsByProduct(bookings: LoadedBooking[]): Record<string, { bookings: n
 }
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const denied = unauthorized(context);
-  if (denied) return denied;
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   const kv = context.env.BOOKINGS;
   const today = new Date().toISOString().slice(0, 10);
@@ -115,6 +108,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     ]);
 
     const inventory = { ...DEFAULT_INVENTORY, ...inventoryRaw };
+    delete inventory.festival_bas; // opfundet combo-SKU — ikke fysisk lager
     let catalog;
     try {
       catalog = productCatalog(catalogRaw);
@@ -202,8 +196,8 @@ type PostBody =
   | { action: "save_economics"; economics: Record<string, Economics> };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const denied = unauthorized(context);
-  if (denied) return denied;
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   let body: PostBody;
   try {

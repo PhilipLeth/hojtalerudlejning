@@ -3,6 +3,8 @@
  * GET  /api/site-settings — public
  * POST /api/site-settings?secret= — admin
  */
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -66,10 +68,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const secret = new URL(context.request.url).searchParams.get("secret");
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return json({ error: "Unauthorized" }, 401);
-  }
+  const auth = await requireAdmin(context, cors);
+  if (auth instanceof Response) return auth;
 
   let body: { phone?: unknown };
   try {

@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 
 import { useState, useEffect, useCallback } from "react";
 
@@ -89,7 +91,7 @@ function kr(n: number): string {
 }
 
 export default function UdsalgPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [data, setData] = useState<SaleResponse | null>(null);
   const [pct, setPct] = useState("20");
   const [excluded, setExcluded] = useState<string[]>([]);
@@ -101,11 +103,6 @@ export default function UdsalgPage() {
   const [error, setError] = useState("");
   const [dirty, setDirty] = useState(false);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
-  }, []);
 
   const load = useCallback(async () => {
     if (!secret) return;
@@ -115,11 +112,7 @@ export default function UdsalgPage() {
       const res = await fetch(`/api/udsalg?secret=${encodeURIComponent(secret)}&weekends=4`);
       const json: SaleResponse = await res.json();
       if (!res.ok) {
-        if (res.status === 401) {
-          localStorage.removeItem("admin_secret");
-          window.location.href = "/admin";
-          return;
-        }
+        if (res.status === 401) { unauthorized(); return; }
         setError(json.error || "Kunne ikke hente udsalget");
         return;
       }
@@ -166,7 +159,8 @@ export default function UdsalgPage() {
     }
   }
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Udsalg" />;
 
   // Produkterne til undtagelseslisten kommer fra lageret via første weekend
   const allProducts = (data?.weekends[0]?.offers ?? []).map((o) => ({ id: o.productId, name: o.name }));

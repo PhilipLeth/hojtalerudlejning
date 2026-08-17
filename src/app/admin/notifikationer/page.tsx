@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 import { b64urlToBytes } from "@/lib/webpush";
 
 interface PushStatus {
@@ -41,7 +43,7 @@ function useStandalone(): boolean {
 }
 
 export default function NotifikationerPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [status, setStatus] = useState<PushStatus | null>(null);
   const [permission, setPermission] = useState<NotificationPermission | "unsupported">("default");
   const [thisDevice, setThisDevice] = useState<string | null>(null);
@@ -51,9 +53,6 @@ export default function NotifikationerPage() {
   const standalone = useStandalone();
 
   useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
     setPermission(
       typeof Notification === "undefined" || !("serviceWorker" in navigator)
         ? "unsupported"
@@ -68,7 +67,7 @@ export default function NotifikationerPage() {
       const res = await fetch(`/api/push?secret=${encodeURIComponent(secret)}`);
       const json: PushStatus = await res.json();
       if (!res.ok) {
-        if (res.status === 401) { localStorage.removeItem("admin_secret"); window.location.href = "/admin"; return; }
+        if (res.status === 401) { unauthorized(); return; }
         setError(json.error || "Kunne ikke hente status");
         return;
       }
@@ -168,7 +167,8 @@ export default function NotifikationerPage() {
     }
   }
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Notifikationer" />;
 
   const subscribed = !!thisDevice && !!status?.devices.some((d) => d.endpoint === thisDevice);
 

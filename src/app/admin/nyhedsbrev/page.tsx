@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 
 import { useState, useEffect, useCallback } from "react";
 
@@ -10,16 +12,11 @@ interface Subscriber {
 }
 
 export default function NyhedsbrevPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
-  }, []);
 
   const fetchSubscribers = useCallback(async () => {
     if (!secret) return;
@@ -57,7 +54,8 @@ export default function NyhedsbrevPage() {
     URL.revokeObjectURL(url);
   };
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Nyhedsbrev" />;
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>

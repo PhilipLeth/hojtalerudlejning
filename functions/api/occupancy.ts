@@ -10,6 +10,8 @@ import {
   type BlockedDay,
 } from "./_lib/occupancy";
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -36,12 +38,10 @@ function isIsoDate(s: string): boolean {
 }
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const url = new URL(context.request.url);
-  const secret = url.searchParams.get("secret");
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return json({ error: "Unauthorized" }, 401);
-  }
+  const auth = await requireAdmin(context, cors);
+  if (auth instanceof Response) return auth;
 
+  const url = new URL(context.request.url);
   const today = new Date().toISOString().slice(0, 10);
   let from = url.searchParams.get("from") || today;
   let to = url.searchParams.get("to") || addDays(today, 29);
@@ -66,6 +66,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
         /* defaults */
       }
     }
+    delete inventory.festival_bas; // opfundet combo-SKU
 
     // Labels: defaults + evt. katalog-navne
     const labels = { ...PRODUCT_LABELS };

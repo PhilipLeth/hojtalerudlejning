@@ -1827,21 +1827,21 @@
       "title": "Admin: flere brugere (Frederik / Philip)",
       "description": "Erstat én fælles ADMIN_SECRET med navngivne brugere i KV (admin_users). Login: vælg bruger + adgangskode → session-token. Vis 'Logget ind som …' i AdminNav. Legacy ADMIN_SECRET virker stadig som nødadgang indtil brugere er sat op.",
       "priority": "high",
-      "status": "in_progress"
+      "status": "done"
     },
     {
       "id": "admin-brugere-api",
       "title": "API: admin-login + admin-users",
       "description": "POST /api/admin-login (userId+password → token). GET /api/admin-login (brugerliste til dropdown). GET/POST /api/admin-users (administration af brugere). Sessions i KV admin_session_<token> med udløb. Passwords hashes med PBKDF2. requireAdmin() i _lib/adminAuth.ts bruges af alle admin-endpoints.",
       "priority": "high",
-      "status": "in_progress"
+      "status": "done"
     },
     {
       "id": "admin-brugere-ui",
       "title": "Admin: /admin/brugere + fælles useAdminAuth",
       "description": "Fælles login-komponent og useAdminAuth-hook erstatter duplikeret localStorage admin_secret på alle admin-sider. /admin/brugere: tilføj bruger, skift adgangskode, deaktivér. Bootstrap: tom KV → Frederik+Philip oprettes med ADMIN_SECRET som startkode (skiftes i bruger-admin).",
       "priority": "high",
-      "status": "in_progress"
+      "status": "done"
     },
     {
       "id": "ads-geo-presence",
@@ -2153,7 +2153,7 @@
       "description": "festival_bas ('Stor højtalerpakke + bas') fjernet som produkt/lagerlinje. Det er ikke et fysisk produkt — kun subwoofer (tilvalg) + stor højtalerpakke. /hojtalerpakke-bas → 301 /subwoofer. Gamle bookinger ekspanderes til festival+subwoofer."
     },
     "admin_brugere_2026_08": {
-      "status": "in_progress",
+      "status": "done",
       "date": "2026-08-17",
       "description": "Admin-login med navngivne brugere (Frederik, Philip) i stedet for én fælles adgangskode. KV admin_users + session-tokens. /admin/brugere til at tilføje og skifte adgangskoder. ADMIN_SECRET beholdes som legacy/nødadgang. requireAdmin() centraliserer auth på ~22 endpoints. useAdminAuth + AdminLogin erstatter duplikeret login på admin-sider."
     },

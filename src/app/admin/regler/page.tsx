@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 
 import { useState, useEffect, useCallback } from "react";
 
@@ -84,7 +86,7 @@ function dk(iso: string): string {
 }
 
 export default function ReglerPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [data, setData] = useState<RulesResponse | null>(null);
   const [products, setProducts] = useState<AdsResponse["products"]>([]);
   const [rules, setRules] = useState<Rule[]>([]);
@@ -93,11 +95,6 @@ export default function ReglerPage() {
   const [error, setError] = useState("");
   const [dirty, setDirty] = useState(false);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
-  }, []);
 
   const load = useCallback(async () => {
     if (!secret) return;
@@ -111,9 +108,7 @@ export default function ReglerPage() {
       const rulesJson: RulesResponse = await rulesRes.json();
       if (!rulesRes.ok) {
         if (rulesRes.status === 401) {
-          localStorage.removeItem("admin_secret");
-          window.location.href = "/admin";
-          return;
+          unauthorized(); return;
         }
         setError(rulesJson.error || "Kunne ikke hente regler");
         return;
@@ -183,7 +178,8 @@ export default function ReglerPage() {
     }
   }
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Regler" />;
 
   const evalById = new Map((data?.evaluations ?? []).map((e) => [e.ruleId, e]));
   const productName = (id: string) => products.find((p) => p.id === id)?.name ?? id;

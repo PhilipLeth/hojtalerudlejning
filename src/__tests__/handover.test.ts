@@ -12,9 +12,9 @@ const read = (p: string) => readFileSync(join(process.cwd(), p), "utf8");
 describe("Udleveringskvittering (/api/handover)", () => {
   const src = read("functions/api/handover.ts");
 
-  it("kræver admin-hemmeligheden", () => {
-    expect(src).toContain("ADMIN_SECRET");
-    expect(src).toContain("Unauthorized");
+  it("kræver admin-auth via requireAdmin", () => {
+    expect(src).toContain("requireAdmin");
+    expect(src).toContain("adminAuth");
   });
 
   it("gemmer underskriften for sig, ikke inde i bookingen", () => {

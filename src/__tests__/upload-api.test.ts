@@ -9,7 +9,9 @@
  * 1. `instanceof File`-tjek der fejlede i Workers-runtime ("No file")
  * 2. Fil-endelse i nøglen (.png) — stier med endelse behandles som statiske
  *    assets af Cloudflare Pages-routeren, så billedet kunne aldrig hentes.
- * 3. KV's 500 kB-grænse afviste almindelige fotos — nu R2 med 10 MB (billeder) / 100 MB (video).
+ * 3. KV's 500 kB-grænse afviste almindelige fotos — nu R2 med 1 MB (billeder) / 100 MB (video).
+ *    Grænsen er 1 MB fordi billederne serveres RÅ gennem /api/image/[key]; admin
+ *    skalerer og konverterer til WebP i browseren først (src/lib/compressImage.ts).
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { onRequestPost as uploadPost } from "../../functions/api/upload";
@@ -146,12 +148,12 @@ describe("Admin billede-upload (/api/upload → R2)", () => {
   });
 
   it("accepterer almindelige fotos over 500 kB (gammel KV-grænse)", async () => {
-    const res = await uploadPost(uploadContext(kv, r2, { file: pngFile(3_000_000) }));
+    const res = await uploadPost(uploadContext(kv, r2, { file: pngFile(800_000) }));
     expect(res.status).toBe(200);
   });
 
-  it("afviser filer over 10 MB (413)", async () => {
-    const res = await uploadPost(uploadContext(kv, r2, { file: pngFile(11_000_000) }));
+  it("afviser filer over 1 MB (413)", async () => {
+    const res = await uploadPost(uploadContext(kv, r2, { file: pngFile(1_200_000) }));
     expect(res.status).toBe(413);
   });
 
@@ -195,11 +197,11 @@ describe("Admin billede-upload (/api/upload → R2)", () => {
     expect([...back.slice(0, 10)]).toEqual([...bytes.slice(0, 10)]);
   });
 
-  it("rå body-upload afviser over 10 MB (413)", async () => {
+  it("rå body-upload afviser over 1 MB (413)", async () => {
     const request = new Request(`https://lejhojtaler.dk/api/upload?secret=${SECRET}`, {
       method: "POST",
       headers: { "Content-Type": "image/jpeg" },
-      body: new Uint8Array(11_000_000),
+      body: new Uint8Array(1_200_000),
     });
     const res = await uploadPost({ request, env: { BOOKINGS: kv, MEDIA: r2, ADMIN_SECRET: SECRET } } as any);
     expect(res.status).toBe(413);
@@ -210,6 +212,7 @@ function videoContext(
   r2: ReturnType<typeof fakeR2>,
   opts: { secret?: string; bytes?: Uint8Array; contentType?: string } = {}
 ) {
+  const kv = fakeKv();
   const bytes = opts.bytes ?? new Uint8Array(5000).map((_, i) => i % 251);
   const secret = opts.secret ?? SECRET;
   const request = new Request(`https://lejhojtaler.dk/api/upload-video?secret=${encodeURIComponent(secret)}`, {
@@ -220,7 +223,7 @@ function videoContext(
     },
     body: bytes,
   });
-  return { request, env: { MEDIA: r2, ADMIN_SECRET: SECRET } } as any;
+  return { request, env: { BOOKINGS: kv, MEDIA: r2, ADMIN_SECRET: SECRET } } as any;
 }
 
 describe("Admin video-upload (/api/upload-video → R2) + serving med Range", () => {

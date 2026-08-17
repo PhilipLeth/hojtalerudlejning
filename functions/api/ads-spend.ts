@@ -7,6 +7,8 @@
  */
 import { campaignSpend, AdsNotConfigured, AdsApiError, type GoogleAdsEnv } from "./_lib/googleads";
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env extends GoogleAdsEnv {
   ADMIN_SECRET: string;
 }

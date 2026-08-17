@@ -12,6 +12,8 @@ import {
   bookedProductIds,
 } from "./_lib/bookings";
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -29,15 +31,9 @@ export const onRequestOptions: PagesFunction<Env> = async () => {
 };
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const url = new URL(context.request.url);
-  const secret = url.searchParams.get("secret");
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: corsHeaders,
-    });
-  }
 
   const today = new Date().toISOString().slice(0, 10);
   const from = url.searchParams.get("from") || addDays(today, -60);

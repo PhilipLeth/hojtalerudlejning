@@ -37,7 +37,10 @@ export async function loadPriceTable(kv: KVNamespace): Promise<Map<string, Price
     const raw = await kv.get(CATALOG_KEY);
     if (raw) {
       const cat = JSON.parse(raw) as CatalogShape;
-      for (const s of cat.speakers ?? []) add(s.id, s.da?.name ?? s.id, s.price, s.hidden);
+      for (const s of cat.speakers ?? []) {
+        if (s.id === "festival_bas") continue; // opfundet combo-SKU
+        add(s.id, s.da?.name ?? s.id, s.price, s.hidden);
+      }
       for (const a of cat.addons ?? []) add(a.id, a.da?.label ?? a.id, a.price, a.hidden);
       for (const r of cat.rentalProducts ?? []) add(r.id, r.name_da ?? r.id, r.price, r.hidden);
     }

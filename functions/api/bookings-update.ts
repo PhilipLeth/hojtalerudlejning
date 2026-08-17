@@ -7,6 +7,8 @@ import {
 } from "../../src/lib/commTemplates";
 import { KV_SALE_CAMPAIGN, parseCampaign } from "./_lib/weekendSale";
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -192,15 +194,10 @@ async function nextInvoiceNumber(kv: KVNamespace): Promise<string> {
 const VALID_STATUSES = ["ny", "bekraeftet", "pakket", "afhentet", "afleveret", "annulleret_kunde", "annulleret_admin"];
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const url = new URL(context.request.url);
-  const secret = url.searchParams.get("secret");
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
+  const updatedBy = auth.name;
 
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: corsHeaders,
-    });
-  }
 
   try {
     const body: UpdateBody = await context.request.json();
@@ -247,6 +244,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       bookingFlag[body.flag] = on;
       bookingFlag[`${body.flag}At`] = on ? new Date().toISOString() : null;
       bookingFlag.updatedAt = new Date().toISOString();
+      bookingFlag.updatedBy = updatedBy;
       await context.env.BOOKINGS.put(body.id, JSON.stringify(bookingFlag));
       return new Response(JSON.stringify({ ok: true, booking: bookingFlag }), {
         status: 200,
@@ -312,6 +310,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       const paidSum = booking.payments.reduce((s: number, p: { amount?: number }) => s + (Number(p?.amount) || 0), 0);
       booking.paidManual = paidSum > 0 && paidSum >= (Number(booking.total) || 0) - 1;
       booking.updatedAt = now;
+      booking.updatedBy = updatedBy;
 
       await context.env.BOOKINGS.put(body.id, JSON.stringify(booking));
       return new Response(JSON.stringify({ ok: true, booking }), { status: 200, headers: corsHeaders });
@@ -347,6 +346,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         if (typeof value === "boolean") bookingFields[`${key}At`] = value ? now : null;
       }
       bookingFields.updatedAt = now;
+      bookingFields.updatedBy = updatedBy;
       await context.env.BOOKINGS.put(body.id, JSON.stringify(bookingFields));
       return new Response(JSON.stringify({ ok: true, booking: bookingFields }), { status: 200, headers: corsHeaders });
     }
@@ -377,6 +377,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const previousStatus = booking.status;
     booking.status = body.status;
     booking.updatedAt = new Date().toISOString();
+    booking.updatedBy = updatedBy;
 
     // Follow-up anmeldelsesmail (Google) når udstyret er afleveret — kun én gang
     if (

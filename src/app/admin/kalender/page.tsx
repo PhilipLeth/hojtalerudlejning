@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
 
@@ -86,7 +88,7 @@ function colIndex(days: string[], iso: string): number {
 const LANE_COLORS = ["#3b82f6", "#8b5cf6", "#059669", "#d97706", "#db2777", "#0891b2"];
 
 export default function KalenderPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [horizon, setHorizon] = useState(30);
   const [from, setFrom] = useState(todayIso);
   const [data, setData] = useState<OccupancyResponse | null>(null);
@@ -97,11 +99,6 @@ export default function KalenderPage() {
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<OccBooking | null>(null);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
-  }, []);
 
   const to = useMemo(() => addDaysIso(from, horizon - 1), [from, horizon]);
 
@@ -115,11 +112,7 @@ export default function KalenderPage() {
       );
       const json: OccupancyResponse = await res.json();
       if (!res.ok) {
-        if (res.status === 401) {
-          localStorage.removeItem("admin_secret");
-          window.location.href = "/admin";
-          return;
-        }
+        if (res.status === 401) { unauthorized(); return; }
         setError(json.error || "Kunne ikke hente belægning");
         return;
       }
@@ -157,12 +150,13 @@ export default function KalenderPage() {
     return list;
   }, [data, category, onlyBooked, search]);
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Kalender" />;
 
   const days = data?.days || [];
   const colW = 36;
   const labelW = 160;
-  const laneH = 22;
+  const laneH = 18;
   const laneGap = 2;
 
   return (
@@ -314,7 +308,10 @@ export default function KalenderPage() {
 
               {/* Rows */}
               {products.map((p) => {
-                const lanes = Math.max(p.stock, 1, ...p.bookings.map((b) => b.lane + 1));
+                // Kun så mange baner som bookingerne kræver — ikke hele lageret
+                const lanes = p.bookings.length
+                  ? Math.max(1, ...p.bookings.map((b) => b.lane + 1))
+                  : 1;
                 const rowH = lanes * (laneH + laneGap) + 8;
                 const full = p.peak >= p.stock && p.stock > 0;
                 const partial = p.peak > 0 && !full;
@@ -329,7 +326,7 @@ export default function KalenderPage() {
                         background: "#fff",
                         borderBottom: "1px solid #f0f0f0",
                         borderRight: "1px solid #eee",
-                        padding: "8px 10px",
+                        padding: "4px 10px",
                         minHeight: rowH,
                         display: "flex",
                         flexDirection: "column",

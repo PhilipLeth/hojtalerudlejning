@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth, getAdminToken } from "@/lib/useAdminAuth";
 
 import { useState, useEffect, useCallback } from "react";
 import {
@@ -120,8 +122,7 @@ const navLink: React.CSSProperties = {
 };
 
 export default function AdminProdukterPage() {
-  const [secret, setSecret] = useState("");
-  const [inputSecret, setInputSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [speakers, setSpeakers] = useState<Speaker[]>(defaultSpeakers);
   const [addons, setAddons] = useState<Addon[]>(defaultAddons);
   const [rentals, setRentals] = useState<RentalProduct[]>(defaultRentals);
@@ -132,11 +133,6 @@ export default function AdminProdukterPage() {
   const [error, setError] = useState("");
   const [showCreate, setShowCreate] = useState(false);
   const [highlightId, setHighlightId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-  }, []);
 
   const loadCatalog = useCallback(async () => {
     setLoading(true);
@@ -168,15 +164,6 @@ export default function AdminProdukterPage() {
   useEffect(() => {
     loadCatalog();
   }, [loadCatalog]);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (inputSecret.trim()) {
-      localStorage.setItem("admin_secret", inputSecret.trim());
-      setSecret(inputSecret.trim());
-      setInputSecret("");
-    }
-  };
 
   const updateSpeaker = (i: number, patch: Partial<Speaker>) => {
     setSpeakers((prev) => prev.map((sp, idx) => (idx === i ? { ...sp, ...patch } : sp)));
@@ -253,10 +240,7 @@ export default function AdminProdukterPage() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || "Kunne ikke gemme");
-        if (res.status === 401) {
-          localStorage.removeItem("admin_secret");
-          setSecret("");
-        }
+        if (res.status === 401) unauthorized();
         return;
       }
       setIsCustom(true);
@@ -296,26 +280,8 @@ export default function AdminProdukterPage() {
     }
   };
 
-  if (!secret) {
-    return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>
-        <form onSubmit={handleLogin} style={{ background: "#fff", padding: "40px", borderRadius: "12px", boxShadow: "0 2px 12px rgba(0,0,0,0.1)", maxWidth: "400px", width: "100%" }}>
-          <h1 style={{ margin: "0 0 8px", fontSize: "24px", color: "#111" }}>Produkter</h1>
-          <p style={{ margin: "0 0 24px", color: "#666" }}>Indtast adgangskode</p>
-          <input
-            type="password"
-            value={inputSecret}
-            onChange={(e) => setInputSecret(e.target.value)}
-            placeholder="Adgangskode"
-            style={{ width: "100%", padding: "12px", fontSize: "16px", border: "1px solid #ddd", borderRadius: "8px", marginBottom: "16px", boxSizing: "border-box", color: "#111" }}
-          />
-          <button type="submit" style={{ width: "100%", padding: "12px", fontSize: "16px", background: "#000", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer" }}>
-            Log ind
-          </button>
-        </form>
-      </div>
-    );
-  }
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Produkter" />;
 
   return (
     <div style={{ minHeight: "100vh", background: "#f5f5f5", color: "#111", fontFamily: "system-ui, sans-serif" }}>

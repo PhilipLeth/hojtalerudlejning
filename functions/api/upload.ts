@@ -1,13 +1,28 @@
 /** Image upload → R2 (tidligere KV/base64). Returnerer /api/image/<key> URL.
  *  KV bruges stadig som læse-fallback for gamle billeder i /api/image/[key]. */
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   MEDIA: R2Bucket;
   ADMIN_SECRET: string;
 }
 
-const MAX_BYTES = 10_000_000; // 10 MB — R2 har ingen 500 kB-begrænsning som KV
+/**
+ * 1 MB. Skal spejle MAX_UPLOAD_BYTES i src/lib/compressImage.ts.
+ *
+ * R2 kan sagtens rumme mere, men billederne herfra serveres RÅ gennem
+ * /api/image/[key] — der er intet skalerings- eller konverteringstrin på vejen
+ * ud. Det brugeren uploader er præcis det en besøgende henter, og et 4 MB
+ * telefonfoto på en produktside ødelægger landingssideoplevelsen på samme måde
+ * som de 2,65 MB PNG'er gjorde (se scripts/optimize-images.py).
+ *
+ * Admin komprimerer og skalerer i browseren før upload, så grænsen her er et
+ * sikkerhedsnet — mod ældre klienter, mod direkte kald og mod at
+ * komprimeringen fejler stille.
+ */
+const MAX_BYTES = 1_000_000;
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -19,13 +34,8 @@ export const onRequestOptions: PagesFunction<Env> = async () =>
   new Response(null, { status: 204, headers: cors });
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const secret = new URL(context.request.url).searchParams.get("secret") ?? "";
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: { ...cors, "Content-Type": "application/json" },
-    });
-  }
+  const auth = await requireAdmin(context, cors);
+  if (auth instanceof Response) return auth;
 
   const reqType = (context.request.headers.get("Content-Type") || "").split(";")[0].trim();
 
@@ -61,7 +71,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   if (blob.size > MAX_BYTES) {
-    return new Response(JSON.stringify({ error: "Filen er for stor (maks 10 MB)" }), {
+    return new Response(JSON.stringify({ error: "Filen er for stor (maks 1 MB)" }), {
       status: 413,
       headers: { ...cors, "Content-Type": "application/json" },
     });

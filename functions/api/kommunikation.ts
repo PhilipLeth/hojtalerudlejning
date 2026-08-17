@@ -21,6 +21,8 @@ import {
 import { DISCOUNT_CODES_KEY, loadCustomCodes } from "./_lib/discounts";
 import { KV_SALE_CAMPAIGN, parseCampaign } from "./_lib/weekendSale";
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -41,14 +43,6 @@ const json = (body: unknown, status = 200) =>
 
 export const onRequestOptions: PagesFunction<Env> = async () =>
   new Response(null, { status: 204, headers: corsHeaders });
-
-function unauthorized(context: { request: Request; env: Env }): Response | null {
-  const secret = new URL(context.request.url).searchParams.get("secret");
-  if (!context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET) {
-    return json({ error: "Unauthorized" }, 401);
-  }
-  return null;
-}
 
 async function readJson(kv: KVNamespace, key: string): Promise<unknown> {
   const raw = await kv.get(key);
@@ -77,8 +71,8 @@ async function previewContext(kv: KVNamespace) {
 }
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  const denied = unauthorized(context);
-  if (denied) return denied;
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   try {
     const kv = context.env.BOOKINGS;
@@ -123,8 +117,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const denied = unauthorized(context);
-  if (denied) return denied;
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   let body: unknown;
   try {

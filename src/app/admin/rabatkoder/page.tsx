@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 
 import { useState, useEffect, useCallback } from "react";
 import { useIsMobile } from "@/lib/useIsMobile";
@@ -47,7 +49,7 @@ const td: React.CSSProperties = {
 };
 
 export default function RabatkoderPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [data, setData] = useState<CodesResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -57,11 +59,6 @@ export default function RabatkoderPage() {
   const [editPct, setEditPct] = useState<Record<string, string>>({});
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
-  }, []);
 
   const load = useCallback(async () => {
     if (!secret) return;
@@ -71,11 +68,7 @@ export default function RabatkoderPage() {
       const res = await fetch(`/api/discount-codes?secret=${encodeURIComponent(secret)}`);
       const json: CodesResponse = await res.json();
       if (!res.ok) {
-        if (res.status === 401) {
-          localStorage.removeItem("admin_secret");
-          window.location.href = "/admin";
-          return;
-        }
+        if (res.status === 401) { unauthorized(); return; }
         setError(json.error || "Kunne ikke hente rabatkoder");
         return;
       }
@@ -139,7 +132,8 @@ export default function RabatkoderPage() {
     }
   }
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Rabatkoder" />;
 
   const codes = data?.codes ?? [];
   const aktive = codes.filter((c) => c.active).length;

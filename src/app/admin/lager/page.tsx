@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 
 import { useState, useEffect, useCallback } from "react";
 
@@ -25,7 +27,7 @@ const PRODUCT_LABELS: Record<string, string> = {
 };
 
 export default function LagerPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
 
   const [inventory, setInventory] = useState<Record<string, number>>({ thumpgo: 1, party: 1, soundboks: 1, festival: 1, lys: 2, rog: 1, stativer: 2, taske: 2 });
   const [inventoryDraft, setInventoryDraft] = useState<Record<string, number>>({ thumpgo: 1, party: 1, soundboks: 1, festival: 1, lys: 2, rog: 1, stativer: 2, taske: 2 });
@@ -37,11 +39,6 @@ export default function LagerPage() {
   const [blockProducts, setBlockProducts] = useState<string[]>([]);
   const [blockingSaving, setBlockingSaving] = useState(false);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
-  }, []);
 
   const fetchInventory = useCallback(async () => {
     try {
@@ -129,7 +126,8 @@ export default function LagerPage() {
     }
   };
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Lager" />;
 
   const inventoryChanged = JSON.stringify(inventory) !== JSON.stringify(inventoryDraft);
 

@@ -80,11 +80,14 @@ function mergeAddons(fromKv: Addon[]): Addon[] {
 }
 
 function mergeSpeakers(fromKv: Speaker[]): Speaker[] {
-  return fromKv.map((s) => {
-    if (s.contents?.length) return s;
-    const d = defaultSpeakers.find((x) => x.id === s.id);
-    return d?.contents?.length ? { ...s, contents: d.contents } : s;
-  });
+  // festival_bas var en opfundet combo-SKU — kun subwoofer + festival findes fysisk
+  return fromKv
+    .filter((s) => s.id !== "festival_bas")
+    .map((s) => {
+      if (s.contents?.length) return s;
+      const d = defaultSpeakers.find((x) => x.id === s.id);
+      return d?.contents?.length ? { ...s, contents: d.contents } : s;
+    });
 }
 
 let cached: CatalogResponse | null = null;

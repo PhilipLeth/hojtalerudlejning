@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 
 /**
  * Udlevering på mobilen: gennemgå udstyret med kunden, og lad kunden skrive
@@ -180,8 +182,7 @@ function SignaturePad({ onChange }: { onChange: (dataUrl: string | null) => void
 /* ───── Side ───── */
 
 export default function UdleveringPage() {
-  const [secret, setSecret] = useState("");
-  const [inputSecret, setInputSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [bookingId, setBookingId] = useState<string | null>(null);
   const [booking, setBooking] = useState<Booking | null>(null);
   const [signatureImg, setSignatureImg] = useState<string | null>(null);
@@ -200,8 +201,6 @@ export default function UdleveringPage() {
   const [queueLoading, setQueueLoading] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
     setBookingId(new URLSearchParams(window.location.search).get("id"));
   }, []);
 
@@ -215,8 +214,7 @@ export default function UdleveringPage() {
       if (!res.ok) {
         setError(data.error || "Kunne ikke hente bookinger");
         if (res.status === 401) {
-          localStorage.removeItem("admin_secret");
-          setSecret("");
+          logout();
         }
         return;
       }
@@ -253,7 +251,7 @@ export default function UdleveringPage() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || "Kunne ikke hente bookingen");
-        if (res.status === 401) { localStorage.removeItem("admin_secret"); setSecret(""); }
+        if (res.status === 401) unauthorized();
         return;
       }
       setBooking(data.booking);
@@ -305,29 +303,8 @@ export default function UdleveringPage() {
     }
   }
 
-  if (!secret) {
-    return (
-      <div style={{ ...page, display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (inputSecret.trim()) {
-              localStorage.setItem("admin_secret", inputSecret.trim());
-              setSecret(inputSecret.trim());
-              setInputSecret("");
-            }
-          }}
-          style={{ ...card, maxWidth: "400px", width: "100%" }}
-        >
-          <h1 style={{ margin: "0 0 8px", fontSize: "22px" }}>Udlevering</h1>
-          <p style={{ margin: "0 0 20px", color: "#666" }}>Indtast adgangskode</p>
-          <input type="password" value={inputSecret} onChange={(e) => setInputSecret(e.target.value)} placeholder="Adgangskode"
-            style={{ width: "100%", padding: "14px", fontSize: "16px", border: "1px solid #ddd", borderRadius: "8px", marginBottom: "12px", boxSizing: "border-box", color: "#111" }} />
-          <button type="submit" style={{ width: "100%", padding: "14px", fontSize: "16px", background: "#000", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer" }}>Log ind</button>
-        </form>
-      </div>
-    );
-  }
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Udlevering" />;
 
   const today = new Date().toISOString().slice(0, 10);
 

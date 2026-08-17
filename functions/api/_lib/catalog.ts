@@ -45,6 +45,8 @@ export function productCatalog(saved: unknown): CatalogProduct[] {
   for (const list of Object.values(groups)) {
     for (const p of list ?? []) {
       if (!p?.id || seen.has(p.id)) continue;
+      // Opfundet combo-SKU — ikke et fysisk produkt
+      if (p.id === "festival_bas") continue;
       const price = Number(p.price);
       if (!Number.isFinite(price) || price < 0) continue;
       seen.add(p.id);

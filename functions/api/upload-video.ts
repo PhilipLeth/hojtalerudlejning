@@ -2,8 +2,11 @@
  *  så store filer streames direkte til R2 uden at fylde workerens hukommelse.
  *  Returnerer /api/video/<key> URL som gemmes på produktet i kataloget. */
 
+import { requireAdmin } from "./_lib/adminAuth";
+
 interface Env {
   MEDIA: R2Bucket;
+  BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
 }
 
@@ -29,10 +32,8 @@ export const onRequestOptions: PagesFunction<Env> = async () =>
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { request, env } = context;
-  const secret = new URL(request.url).searchParams.get("secret") ?? "";
-  if (!env.ADMIN_SECRET || secret !== env.ADMIN_SECRET) {
-    return json({ error: "Unauthorized" }, 401);
-  }
+  const auth = await requireAdmin(context, cors);
+  if (auth instanceof Response) return auth;
 
   const contentType = (request.headers.get("Content-Type") || "").split(";")[0].trim();
   if (!ALLOWED_TYPES.includes(contentType)) {

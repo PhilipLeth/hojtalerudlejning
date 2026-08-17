@@ -1,6 +1,8 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import AdminLogin from "@/components/AdminLogin";
+import { useAdminAuth } from "@/lib/useAdminAuth";
 
 import { useState, useEffect, useCallback } from "react";
 
@@ -99,7 +101,7 @@ function StatusPill({ status }: { status: string | null }) {
 }
 
 export default function AdsPage() {
-  const [secret, setSecret] = useState("");
+  const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [data, setData] = useState<AdsResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -108,11 +110,6 @@ export default function AdsPage() {
   const [draftCost, setDraftCost] = useState<string>("");
   const [draftLinks, setDraftLinks] = useState<string[]>([]);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("admin_secret");
-    if (stored) setSecret(stored);
-    else window.location.href = "/admin";
-  }, []);
 
   const load = useCallback(async () => {
     if (!secret) return;
@@ -122,11 +119,7 @@ export default function AdsPage() {
       const res = await fetch(`/api/ads?secret=${encodeURIComponent(secret)}`);
       const json: AdsResponse = await res.json();
       if (!res.ok) {
-        if (res.status === 401) {
-          localStorage.removeItem("admin_secret");
-          window.location.href = "/admin";
-          return;
-        }
+        if (res.status === 401) { unauthorized(); return; }
         setError(json.error || "Kunne ikke hente oversigt");
         return;
       }
@@ -188,7 +181,8 @@ export default function AdsPage() {
     setEditing(null);
   }
 
-  if (!secret) return null;
+  if (!ready) return null;
+  if (!isLoggedIn) return <AdminLogin title="Ads" />;
 
   const products = data?.products ?? [];
   const weekend = data?.weekend;

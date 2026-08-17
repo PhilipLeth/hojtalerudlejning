@@ -1,3 +1,5 @@
+import { requireAdmin } from "./_lib/adminAuth";
+
 /**
  * GET  /api/accounting?from=&to=&secret=  — regnskabstal for en periode
  * POST /api/accounting?secret=            — gem regnskabsindstillinger
@@ -29,11 +31,6 @@ export const onRequestOptions: PagesFunction<Env> = async () =>
   new Response(null, { status: 204, headers: cors });
 
 const isIsoDate = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s);
-
-function unauthorized(context: { request: Request; env: Env }): boolean {
-  const secret = new URL(context.request.url).searchParams.get("secret");
-  return !context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET;
-}
 
 export interface AccountingSettings {
   /** Månedsmål i kr — 0 betyder intet mål */
@@ -67,7 +64,8 @@ async function readSettings(kv: KVNamespace): Promise<AccountingSettings> {
 }
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  if (unauthorized(context)) return json({ error: "Unauthorized" }, 401);
+  const auth = await requireAdmin(context, cors);
+  if (auth instanceof Response) return auth;
 
   const url = new URL(context.request.url);
   const today = new Date().toISOString().slice(0, 10);
@@ -115,7 +113,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  if (unauthorized(context)) return json({ error: "Unauthorized" }, 401);
+  const auth = await requireAdmin(context, cors);
+  if (auth instanceof Response) return auth;
 
   let body: Partial<AccountingSettings>;
   try {

@@ -1,3 +1,5 @@
+import { requireAdmin } from "./_lib/adminAuth";
+
 /**
  * Udleveringskvittering: kunden skriver under på telefonen ved udlevering.
  *
@@ -30,14 +32,10 @@ const MAX_SIGNATURE_CHARS = 400_000;
 export const onRequestOptions: PagesFunction<Env> = async () =>
   new Response(null, { status: 204, headers: corsHeaders });
 
-function unauthorized(context: { request: Request; env: Env }): boolean {
-  const secret = new URL(context.request.url).searchParams.get("secret");
-  return !context.env.ADMIN_SECRET || secret !== context.env.ADMIN_SECRET;
-}
-
 /** Hent en gemt underskrift (billedet) til visning på lejeseddel/udleveringsside */
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  if (unauthorized(context)) return json({ error: "Unauthorized" }, 401);
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   const id = new URL(context.request.url).searchParams.get("id");
   if (!id || !id.startsWith("booking_")) return json({ error: "Invalid booking id" }, 400);
@@ -69,7 +67,8 @@ interface HandoverBody {
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  if (unauthorized(context)) return json({ error: "Unauthorized" }, 401);
+  const auth = await requireAdmin(context, corsHeaders);
+  if (auth instanceof Response) return auth;
 
   let body: HandoverBody;
   try {
