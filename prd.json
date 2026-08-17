@@ -860,6 +860,18 @@
       "description": "Opdater booking-status eller slet (action=delete). Ved status=afleveret sendes automatisk follow-up anmeldelsesmail (Google review, Resend) — kun én gang pr. booking (reviewMailSentAt). Review-link: env GOOGLE_REVIEW_URL, fallback Google Maps-søgning.",
       "status": "live"
     },
+    "sms": {
+      "path": "/api/sms",
+      "method": "GET/POST",
+      "description": "Admin. GET: er GatewayAPI sat op, saldo og SMS-skabeloner. POST: save (gem skabeloner), test (besked til et nummer man selv skriver), send (besked til kunden på en ordre — skrives i ordrens kommunikationslog).",
+      "status": "live"
+    },
+    "sms_paamindelser": {
+      "path": "/api/sms-paamindelser",
+      "method": "POST",
+      "description": "Admin. Dagens påmindelser: afhentning i dag og aflevering i dag, én gang pr. ordre (smsSent). ?dryRun=1 viser hvad der ville blive sendt. Kaldes af .github/workflows/sms-paamindelser.yml kl. 07:00 UTC.",
+      "status": "live"
+    },
     "availability": {
       "path": "/api/availability",
       "method": "GET",
@@ -998,6 +1010,42 @@
       "ui": "Udstyrs-dropdownen i admin skriver '↳ sender anmeldelsesmail til kunden' når næste trin er Returneret og mailen ikke er sendt endnu.",
       "logges_i": "booking.communications — admin viser 'Sendte mails' i detaljevisningen."
     }
+  },
+  "sms_flow": {
+    "provider": "GatewayAPI (gatewayapi.com) — dansk udbyder, afregning pr. besked. Samme gateway som Symposio bruger, så der er ét sted at holde styr på afsendernavn og saldo.",
+    "secrets": [
+      "SMS_API_TOKEN — GatewayAPI-token, secret på Cloudflare Pages-projektet speaker-rental. Mangler den, sendes INTET, og /admin/kommunikation siger det tydeligt (UnconfiguredSmsGateway fejler højlydt frem for at lade som om beskeden gik afsted).",
+      "SMS_DEV_MODE — sættes kun i .dev.vars lokalt: beskeder logges i stedet for at blive sendt.",
+      "ADMIN_SECRET som GitHub-secret — bruges af .github/workflows/sms-paamindelser.yml til at kalde påmindelses-endepunktet."
+    ],
+    "sender": "Lejhojtaler — max 11 tegn, kun bogstaver og tal (GatewayAPI's regel). Kan ændres i /admin/kommunikation. En besked fra et navn kan ikke besvares, så alle tekster beder om et opkald i stedet.",
+    "code": {
+      "src/lib/sms.ts": "Gateway bag et interface (GatewayApiSms / LogSmsGateway / UnconfiguredSmsGateway + smsFromEnv), E.164-normalisering af kundens frit skrevne nummer, GSM-7-oprensning af typografiske tegn og tegn/beskedtælling (160 vs. 70). Ingen imports, så den kan bruges både i browseren og i Pages Functions.",
+      "src/lib/smsTemplates.ts": "Skabeloner, shortcodes og indstillinger (KV: sms_settings). Samme motor som mailskabelonerne (renderWithKeys i commTemplates.ts).",
+      "src/lib/smsReminders.ts": "remindersDue() — hvilke ordrer skal have en påmindelse i dag. Ren logik, testet uden KV.",
+      "functions/api/_lib/sms.ts": "Serverens ene indgang: sendBookingSms() + recordSms(), som skriver beskeden i ordrens communications-log og mærker smsSent[type].",
+      "functions/api/sms.ts": "Admin: GET status/saldo/skabeloner, POST save | test | send.",
+      "functions/api/sms-paamindelser.ts": "Dagens påmindelser. POST med admin-token, ?dryRun=1 viser hvad der ville blive sendt.",
+      "src/components/admin/SmsSettings.tsx": "SMS-sektionen i /admin/kommunikation: til/fra pr. type, tekst, forhåndsvisning med tegn- og beskedtæller, testbesked, saldo og manuel kørsel af påmindelserne.",
+      "src/components/admin/SendSmsBox.tsx": "Send SMS på den enkelte ordre i /admin — skabelonen er udgangspunktet, teksten kan rettes før afsendelse."
+    },
+    "types": {
+      "booking_modtaget": "Straks ved bestilling. SLUKKET som standard — bekræftelsesmailen siger det samme.",
+      "bekraeftet": "Tændt. Sendes når ordren sættes til »bekræftet« i /admin.",
+      "afhentning_i_morgen": "Tændt. Kl. 9 på afhentningsdagen (id'et er historisk; påmindelsen gælder dagen selv).",
+      "retur_i_morgen": "Tændt. Kl. 9 på afleveringsdagen — færre for sene afleveringer.",
+      "tak": "Slukket som standard. Anmeldelsesmailen sendes allerede ved retur; SMS oveni er et tilvalg."
+    },
+    "cron": "Pages Functions har ingen cron. .github/workflows/sms-paamindelser.yml kører 07:00 UTC (09:00 dansk sommertid) og POST'er til /api/sms-paamindelser. Mangler ADMIN_SECRET som GitHub-secret, springer jobbet over uden at fejle. Kan også trykkes manuelt i /admin/kommunikation.",
+    "decisions": [
+      "Beskederne bygges ALDRIG af det klienten sender: teksten kommer fra skabelonen i KV, og datoer/adresser fyldes ud server-side fra ordren.",
+      "Ingen tavs fejl: uden SMS_API_TOKEN returneres sms_ikke_konfigureret, og admin får fejlteksten oversat (token, saldo, afsendernavn).",
+      "Hver sendt besked mærkes på ordren (smsSent[type]) — en dobbeltkørsel af påmindelserne rammer ikke kunden to gange, og et statusskift tilbage og frem sender ikke igen.",
+      "En SMS må aldrig kunne vælte en booking eller en statusopdatering: alle kald ligger i try/catch og fejler blødt.",
+      "Standardteksterne holdes under 160 tegn på en typisk ordre og uden emoji — et enkelt emoji tvinger beskeden over i UCS-2 og halverer grænsen til 70 tegn. Pilen i periodeteksten (»→«) oversættes til bindestreg af samme grund. Admin ser tegn- og beskedtælleren live.",
+      "Hele korrespondancen står på ordren: SMS'er lægges i samme communications-log som mails, med den fulde tekst — en SMS kan ikke slås op andre steder bagefter."
+    ],
+    "status": "Kode klar 2026-08-17. Venter kun på at SMS_API_TOKEN lægges på Cloudflare + saldo hos GatewayAPI; indtil da gemmes teksterne, men intet sendes."
   },
   "fulfillment_and_upsell": {
     "goal": "Frederik kører ud + opsætter billigt. Luk flere komplette aftaler uden forhandling eller hustle-følelse.",
