@@ -181,6 +181,11 @@ describe("GatewayAPI-kaldet", () => {
       credit: 412.5,
       currency: "DKK",
     });
+    // GatewayAPI svarer i praksis med saldoen som streng — set på den rigtige konto
+    expect(await smsBalance(env, fakeFetch(200, { credit: "2.00000", currency: "EUR" }))).toEqual({
+      credit: 2,
+      currency: "EUR",
+    });
     expect(await smsBalance(env, fakeFetch(500, {}))).toBeNull();
     // Twilio svarer med balance som streng
     expect(

@@ -438,9 +438,11 @@ export async function smsBalance(
       headers: { Authorization: `Token ${token}` },
     });
     if (!res.ok) return null;
-    const body = (await res.json()) as { credit?: number; currency?: string };
-    if (typeof body.credit !== "number") return null;
-    return { credit: body.credit, currency: String(body.currency || "DKK") };
+    // GatewayAPI svarer med saldoen som streng ("2.00000") — ikke som tal
+    const body = (await res.json()) as { credit?: string | number; currency?: string };
+    const credit = Number(body.credit);
+    if (!Number.isFinite(credit)) return null;
+    return { credit, currency: String(body.currency || "DKK") };
   } catch {
     return null;
   }
