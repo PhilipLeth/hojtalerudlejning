@@ -21,14 +21,27 @@ import {
   type SmsTypeId,
 } from "@/lib/smsTemplates";
 
-/** Indstillingerne er de samme for alle ordrer — hent dem én gang pr. sidevisning */
-let cached: Promise<SmsSettings | null> | null = null;
+/**
+ * Skabeloner, vores telefonnummer og anmeldelseslinket kommer fra serveren —
+ * samme værdier som de automatiske beskeder fyldes med, så en besked skrevet i
+ * hånden ikke sender et forældet nummer eller et tomt link. Ens for alle
+ * ordrer, så det hentes én gang pr. sidevisning.
+ */
+interface SmsConfig {
+  settings: SmsSettings;
+  telefon?: string;
+  link?: string;
+}
 
-function loadSettings(secret: string): Promise<SmsSettings | null> {
+let cached: Promise<SmsConfig | null> | null = null;
+
+function loadConfig(secret: string): Promise<SmsConfig | null> {
   if (!cached) {
     cached = adminFetch("/api/sms", secret).then((r) => {
       if ("error" in r || !r.res.ok) return null;
-      return (r.data as { settings?: SmsSettings }).settings ?? null;
+      const data = r.data as { settings?: SmsSettings; telefon?: string; link?: string };
+      if (!data.settings) return null;
+      return { settings: data.settings, telefon: data.telefon, link: data.link };
     });
   }
   return cached;
@@ -43,7 +56,7 @@ interface Props {
 
 export default function SendSmsBox({ booking, secret, onUpdated }: Props) {
   const [open, setOpen] = useState(false);
-  const [settings, setSettings] = useState<SmsSettings>(DEFAULT_SMS_SETTINGS);
+  const [config, setConfig] = useState<SmsConfig>({ settings: DEFAULT_SMS_SETTINGS });
   const [type, setType] = useState<SmsTypeId>("bekraeftet");
   const [text, setText] = useState("");
   const [touched, setTouched] = useState(false);
@@ -55,13 +68,16 @@ export default function SendSmsBox({ booking, secret, onUpdated }: Props) {
 
   useEffect(() => {
     if (!open) return;
-    loadSettings(secret).then((s) => {
-      if (s) setSettings(s);
+    loadConfig(secret).then((c) => {
+      if (c) setConfig(c);
     });
   }, [open, secret]);
 
-  const vars = useMemo(() => smsVarsFor(booking), [booking]);
-  const suggestion = useMemo(() => buildSms(settings, type, vars).text, [settings, type, vars]);
+  const vars = useMemo(
+    () => smsVarsFor(booking, { telefon: config.telefon, link: config.link }),
+    [booking, config.telefon, config.link],
+  );
+  const suggestion = useMemo(() => buildSms(config.settings, type, vars).text, [config.settings, type, vars]);
 
   // Skabelonen fylder feltet, indtil man selv har rettet i teksten
   useEffect(() => {

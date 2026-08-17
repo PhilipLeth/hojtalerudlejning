@@ -10,7 +10,6 @@
 
 import { requireAdmin } from "./_lib/adminAuth";
 import {
-  loadSmsSettings,
   recordSms,
   saveSmsSettings,
   sendBookingSms,
@@ -46,14 +45,18 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const auth = await requireAdmin(context, corsHeaders);
   if (auth instanceof Response) return auth;
 
-  const settings = await loadSmsSettings(context.env.BOOKINGS);
+  const ctx = await smsContext(context.env);
   const token = context.env.SMS_API_TOKEN;
 
   return json({
     configured: smsConfigured(context.env),
     devMode: !!context.env.SMS_DEV_MODE,
-    settings,
+    settings: ctx.settings,
     types: SMS_TYPES,
+    // Samme værdier serveren fylder i beskederne, så admins forhåndsvisning og
+    // manuelle beskeder viser det rigtige nummer og det rigtige anmeldelseslink
+    telefon: ctx.telefon,
+    link: ctx.link,
     // Saldoen må ikke kunne blokere siden — null betyder "kunne ikke hentes"
     balance: token ? await smsBalance(token) : null,
   });

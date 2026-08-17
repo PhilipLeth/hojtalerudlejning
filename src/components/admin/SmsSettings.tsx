@@ -32,10 +32,11 @@ const PREVIEW_BOOKING = {
   total: 1995,
 };
 
-const PREVIEW_VARS = smsVarsFor(PREVIEW_BOOKING, {
-  telefon: "31 13 28 52",
-  link: "https://g.page/r/CbIkmN4b8vjGEBM/review",
-});
+/** Fyldes med serverens egne værdier, så forhåndsvisningen viser det rigtige
+ *  telefonnummer og anmeldelseslink — ikke et gæt fra klienten. */
+function previewVars(telefon?: string, link?: string) {
+  return smsVarsFor(PREVIEW_BOOKING, { telefon, link });
+}
 
 const card: React.CSSProperties = {
   background: "#fff",
@@ -67,6 +68,9 @@ interface SmsGetResponse {
   devMode: boolean;
   settings: Settings;
   balance: SmsBalance | null;
+  /** Vores nummer og anmeldelseslinket, som serveren fylder dem i */
+  telefon?: string;
+  link?: string;
   error?: string;
 }
 
@@ -84,6 +88,7 @@ export default function SmsSettings({ secret }: { secret: string }) {
   const [configured, setConfigured] = useState(true);
   const [devMode, setDevMode] = useState(false);
   const [balance, setBalance] = useState<SmsBalance | null>(null);
+  const [vars, setVars] = useState(() => previewVars());
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -111,6 +116,7 @@ export default function SmsSettings({ secret }: { secret: string }) {
     setConfigured(data.configured);
     setDevMode(data.devMode);
     setBalance(data.balance ?? null);
+    setVars(previewVars(data.telefon, data.link));
     setDirty(false);
     setError("");
   }, [secret]);
@@ -248,7 +254,7 @@ export default function SmsSettings({ secret }: { secret: string }) {
 
       {SMS_TYPES.map((def) => {
         const tpl = settings.templates[def.id];
-        const built = buildSms(settings, def.id, PREVIEW_VARS);
+        const built = buildSms(settings, def.id, vars);
         const len = built.length;
         const over = len.segments > 1;
         const typing = smsLength(tpl.text);
