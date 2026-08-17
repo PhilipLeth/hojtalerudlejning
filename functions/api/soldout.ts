@@ -7,7 +7,8 @@
  */
 
 import { addDays, bookedProductIds } from "./_lib/bookings";
-import { INVENTORY_KEY, effectiveInventory } from "./_lib/inventory";
+import { bundlePartsFromCatalog, loadInventoryPair } from "./_lib/inventory";
+import { expandProductIds } from "./_lib/occupancy";
 
 import { requireAdmin } from "./_lib/adminAuth";
 
@@ -44,7 +45,14 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   }
 
   try {
-    const inventory = effectiveInventory(await context.env.BOOKINGS.get(INVENTORY_KEY));
+    // "Udsolgt" betyder at der ikke er mere at tage imod — også ikke JIT. Det er
+    // grundlaget for at slukke annoncer, og vi slukker ikke for noget vi kan skaffe.
+    const [pair, catalogRaw] = await Promise.all([
+      loadInventoryPair(context.env.BOOKINGS),
+      context.env.BOOKINGS.get("products_catalog"),
+    ]);
+    const inventory = pair.bookable;
+    const bundleParts = bundlePartsFromCatalog(catalogRaw);
 
     // Optaget pr. dag pr. produkt: dag D er optaget når pickup <= D < return
     const perDay: Record<string, Record<string, number>> = {};
@@ -71,7 +79,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       // Annullerede bookinger optog aldrig noget — de skal heller ikke i historikken
       if (String(booking.status || "").startsWith("annulleret")) continue;
 
-      const ids = bookedProductIds(booking);
+      // Pakker optager deres dele, ikke sig selv
+      const ids = expandProductIds(bookedProductIds(booking), bundleParts);
       if (!ids.length) continue;
 
       for (let day = pickup < from ? from : pickup; day < ret && day <= to; day = addDays(day, 1)) {

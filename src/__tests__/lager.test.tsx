@@ -198,11 +198,22 @@ function mockStorage() {
 }
 
 /** Kataloget som gemt i KV + lagertallene, som siderne henter dem */
-function mockApi(stock: Record<string, number>) {
+function mockApi(
+  stock: Record<string, number>,
+  extra: { overbook?: Record<string, number>; overbooked?: unknown[] } = {},
+) {
   (global.fetch as any).mockImplementation((url: string) => {
     const u = String(url);
     if (u.startsWith("/api/inventory")) {
-      return Promise.resolve({ ok: true, json: () => Promise.resolve({ inventory: stock, blocked: [] }) });
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({
+          inventory: stock,
+          overbook: extra.overbook ?? {},
+          overbooked: extra.overbooked ?? [],
+          blocked: [],
+        }),
+      });
     }
     if (u.startsWith("/api/products")) {
       return Promise.resolve({ ok: true, json: () => Promise.resolve({ speakers: null, addons: null, rentalProducts: null }) });
@@ -274,6 +285,50 @@ describe("/admin/lager", () => {
     });
   });
 
+  it("har et overbooking-felt pr. produkt ved siden af lageret", async () => {
+    mockApi({ rog: 2 }, { overbook: { rog: 2 } });
+    renderAdmin(<LagerPage />);
+    await waitFor(() => expect(screen.getByLabelText("Lagerliste")).toBeInTheDocument());
+
+    const række = rækkeFor("Røgmaskine");
+    const felter = række.querySelectorAll('input[type="number"]');
+    expect(felter).toHaveLength(2);
+    expect((felter[0] as HTMLInputElement).value).toBe("2");
+    expect((felter[1] as HTMLInputElement).value).toBe("2");
+    // 2 på lager + 2 der kan skaffes
+    expect(række.textContent).toMatch(/tager imod 4/);
+  });
+
+  it("gemmer overbooking for sig, så lagertallet ikke røres", async () => {
+    mockApi({ rog: 2 });
+    renderAdmin(<LagerPage />);
+    await waitFor(() => expect(screen.getByLabelText("Lagerliste")).toBeInTheDocument());
+
+    const overbookFelt = rækkeFor("Røgmaskine").querySelectorAll('input[type="number"]')[1];
+    fireEvent.change(overbookFelt, { target: { value: "3" } });
+    fireEvent.blur(overbookFelt);
+
+    await waitFor(() => {
+      const body = sidsteLagerkald();
+      expect(body.overbook).toEqual({ rog: 3 });
+      expect(body.inventory).toBeUndefined();
+    });
+  });
+
+  it("viser hvad der skal skaffes, så beskeden ikke kun lever i en push", async () => {
+    mockApi({ karaoke: 1 }, {
+      overbook: { karaoke: 1 },
+      overbooked: [{ id: "karaoke", name: "Karaokemaskine", day: "2026-08-21", booked: 2, owned: 1, missing: 1 }],
+    });
+    renderAdmin(<LagerPage />);
+    await waitFor(() => expect(screen.getByText(/Skal skaffes \(1\)/)).toBeInTheDocument());
+
+    const boks = screen.getByText(/Skal skaffes \(1\)/).closest("div")!;
+    expect(boks.textContent).toMatch(/Karaokemaskine/);
+    expect(boks.textContent).toMatch(/skaf 1/);
+    expect(boks.textContent).toMatch(/2 booket, vi har 1/);
+  });
+
   it("rydder tallet når feltet tømmes — produktet er ubegrænset igen", async () => {
     mockApi({ party: 2 });
     renderAdmin(<LagerPage />);
@@ -307,6 +362,14 @@ describe("/admin/produkter", () => {
     await waitFor(() => expect(screen.getAllByText("Lager (antal)").length).toBeGreaterThan(0));
     expect(screen.getAllByText(/lager ikke sat/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/2 stk\./).length).toBeGreaterThan(0);
+  });
+
+  it("har overbooking ved siden af lageret", async () => {
+    mockApi({ party: 2 }, { overbook: { party: 1 } });
+    renderAdmin(<ProdukterPage />);
+    await waitFor(() => expect(screen.getAllByText("Overbooking (kan skaffes)").length).toBeGreaterThan(0));
+    expect(screen.getAllByText(/tager imod 3/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/\+1 JIT/).length).toBeGreaterThan(0);
   });
 
   it("gemmer lagertallet med det samme, uden at publicere hele kataloget", async () => {
@@ -346,14 +409,15 @@ describe("Ingen anden produktliste tilbage", () => {
     const src = read("functions/api/availability.ts");
     expect(src).toContain("bookedProductIds");
     expect(src).toContain("expandProductIds");
-    expect(src).toContain("effectiveInventory");
+    // Lagertal hentes gennem den delte lib, ikke læst direkte fra KV
+    expect(src).toContain("loadInventoryPair");
     // Ingen egen kopi af lager, produktnavne eller tilvalgs-mapning
     expect(src).not.toMatch(/const DEFAULT_INVENTORY/);
     expect(src).not.toMatch(/addonNameToId/);
     expect(src).not.toMatch(/speakerNameToId/);
   });
 
-  it("alle endpoints læser lager gennem effectiveInventory", () => {
+  it("alle endpoints læser lager gennem den delte lib", () => {
     for (const f of [
       "functions/api/soldout.ts",
       "functions/api/occupancy.ts",
@@ -365,7 +429,7 @@ describe("Ingen anden produktliste tilbage", () => {
       "functions/api/_lib/channels.ts",
     ]) {
       const src = read(f);
-      expect(src, f).toContain("effectiveInventory");
+      expect(src, f).toMatch(/effectiveInventory|loadInventoryPair/);
       expect(src, f).not.toMatch(/\{ \.\.\.DEFAULT_INVENTORY/);
     }
   });

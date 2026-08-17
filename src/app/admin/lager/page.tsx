@@ -36,11 +36,16 @@ const card: React.CSSProperties = {
   marginBottom: "24px",
 };
 
-function StockRow({ item, stock, onSet }: {
+function StockRow({ item, stock, overbook, onSetStock, onSetOverbook }: {
   item: StockItem;
   stock: Record<string, number>;
-  onSet: (id: string, v: number | null) => void;
+  overbook: Record<string, number>;
+  onSetStock: (id: string, v: number | null) => void;
+  onSetOverbook: (id: string, v: number | null) => void;
 }) {
+  const owned = stock[item.id];
+  const extra = overbook[item.id] ?? 0;
+
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "12px", padding: "8px 0", borderBottom: "1px solid #f5f5f5" }}>
       <div style={{ flex: 1, minWidth: 0 }}>
@@ -52,19 +57,35 @@ function StockRow({ item, stock, onSet }: {
       </div>
       {item.parts ? (
         // Pakken har ikke eget lager — den låner delenes
-        <div style={{ textAlign: "right", maxWidth: "300px" }}>
-          <DerivedStock parts={item.parts} stock={stock} />
+        <div style={{ textAlign: "right", maxWidth: "320px" }}>
+          <DerivedStock parts={item.parts} stock={stock} overbook={overbook} />
         </div>
       ) : (
         <>
-          <StockNumberInput value={stock[item.id] ?? null} onCommit={(v) => onSet(item.id, v)} />
-          <div style={{ width: "92px", fontSize: "11px", color: stock[item.id] === undefined ? "#b8860b" : "#bbb" }}>
-            {stock[item.id] === undefined ? "ubegrænset" : "stk. på lager"}
+          <StockNumberInput value={owned ?? null} onCommit={(v) => onSetStock(item.id, v)} />
+          <StockNumberInput
+            value={overbook[item.id] ?? null}
+            tone="overbook"
+            onCommit={(v) => onSetOverbook(item.id, v)}
+          />
+          <div style={{ width: "120px", fontSize: "11px", color: owned === undefined ? "#b8860b" : "#bbb" }}>
+            {owned === undefined
+              ? "ubegrænset"
+              : extra > 0
+                ? `tager imod ${owned + extra}`
+                : `${owned} stk. på lager`}
           </div>
         </>
       )}
     </div>
   );
+}
+
+/** "fre 21. aug 2026" */
+function langDag(iso: string): string {
+  const d = new Date(`${iso}T12:00:00`);
+  if (isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("da-DK", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
 }
 
 export default function LagerPage() {
@@ -90,6 +111,7 @@ export default function LagerPage() {
     : items;
 
   const setOne = (id: string, v: number | null) => lager.saveStock({ [id]: v });
+  const setOverbookOne = (id: string, v: number | null) => lager.saveOverbook({ [id]: v });
 
   /** Sæt alle produkter uden tal til 1 — det almindelige tilfælde: vi har én */
   const fillMissing = () => {
@@ -128,6 +150,34 @@ export default function LagerPage() {
           </div>
         )}
 
+        {/* Det vi allerede har taget imod ud over det vi ejer. En push er sendt da
+            det skete, men en push kan swipes væk — den her liste bliver stående
+            indtil udstyret er skaffet eller bookingen er væk. */}
+        {lager.overbooked.length > 0 && (
+          <div style={{ ...card, border: "2px solid #dc3545", background: "#fff8f7" }}>
+            <h2 style={{ margin: "0 0 4px", fontSize: "18px", color: "#c0392b" }}>
+              Skal skaffes ({lager.overbooked.length})
+            </h2>
+            <p style={{ fontSize: "13px", color: "#666", margin: "0 0 12px" }}>
+              Overbooking vi har sagt ja til. Udstyret skal købes eller lejes ind inden dagen.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              {lager.overbooked.map((h) => (
+                <div key={`${h.id}_${h.day}`} style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", padding: "8px 12px", background: "#fff", border: "1px solid #f3d0cd", borderRadius: "8px", fontSize: "14px" }}>
+                  <strong>{h.name}</strong>
+                  <span style={{ color: "#c0392b", fontWeight: 700 }}>
+                    skaf {h.missing}
+                  </span>
+                  <span style={{ color: "#666" }}>
+                    {h.booked} booket, vi har {h.owned}
+                  </span>
+                  <span style={{ marginLeft: "auto", color: "#888", fontSize: "13px" }}>{langDag(h.day)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div style={card}>
           <div style={{ display: "flex", alignItems: "baseline", gap: "12px", flexWrap: "wrap", marginBottom: "4px" }}>
             <h2 style={{ margin: 0, fontSize: "18px" }}>Lagerbeholdning</h2>
@@ -136,7 +186,12 @@ export default function LagerPage() {
           <p style={{ fontSize: "13px", color: "#666", margin: "0 0 16px" }}>
             Antallet her er det, både booking-flowet, udsolgt-oversigten, kalenderen og
             annoncereglerne regner med. Navne og priser rettes under{" "}
-            <a href="/admin/produkter" style={{ color: "#0070f3" }}>Produkter</a>, hvor lagertallet også står.
+            <a href="/admin/produkter" style={{ color: "#0070f3" }}>Produkter</a>, hvor de samme to tal står.
+          </p>
+          <p style={{ fontSize: "13px", color: "#666", margin: "0 0 16px" }}>
+            <strong style={{ color: "#7c5cd6" }}>Overbooking</strong> er hvor mange vi tager imod ud over
+            lageret, fordi de kan købes eller lejes ind til dagen. Sker det, kommer der en push —
+            og produktet står i "Skal skaffes" til det er hjemme.
           </p>
 
           {missing.length > 0 && (
@@ -166,6 +221,13 @@ export default function LagerPage() {
 
           {(catalog.loading || lager.loading) && <p style={{ color: "#888", fontSize: "13px" }}>Henter…</p>}
 
+          {/* Hvad de to talfelter betyder — ellers er de bare to bokse */}
+          <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end", fontSize: "10px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", color: "#aaa", marginTop: "8px" }}>
+            <span style={{ width: "72px", textAlign: "center" }}>Lager</span>
+            <span style={{ width: "72px", textAlign: "center", color: "#7c5cd6" }}>Overbooking</span>
+            <span style={{ width: "120px" }} />
+          </div>
+
           <div aria-label="Lagerliste">
           {(["speakers", "rentals", "addons"] as StockSection[]).map((section) => {
             const rows = shown.filter((i) => i.section === section);
@@ -176,7 +238,14 @@ export default function LagerPage() {
                   {SECTION_LABELS[section]} ({rows.length})
                 </h3>
                 {rows.map((item) => (
-                  <StockRow key={item.id} item={item} stock={stock} onSet={setOne} />
+                  <StockRow
+                    key={item.id}
+                    item={item}
+                    stock={stock}
+                    overbook={lager.overbook}
+                    onSetStock={setOne}
+                    onSetOverbook={setOverbookOne}
+                  />
                 ))}
               </div>
             );

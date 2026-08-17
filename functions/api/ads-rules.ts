@@ -10,7 +10,7 @@
  */
 
 import { addDays, loadBookings, soldOutDaysByProduct } from "./_lib/bookings";
-import { effectiveInventory } from "./_lib/inventory";
+import { bundlePartsFromCatalog, expandBookings, loadInventoryPair } from "./_lib/inventory";
 import { upcomingWeekend } from "./ads";
 
 import { requireAdmin } from "./_lib/adminAuth";
@@ -68,17 +68,21 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const horizon = addDays(today, 60);
 
   try {
-    const [rulesRaw, mappingRaw, inventoryRaw, bookings] = await Promise.all([
+    const [rulesRaw, mappingRaw, pair, catalogRaw, bookings] = await Promise.all([
       kv.get(KV_RULES),
       kv.get(KV_MAPPING),
-      kv.get("inventory"),
+      loadInventoryPair(kv),
+      kv.get("products_catalog"),
       loadBookings(kv),
     ]);
 
     const rules: Rule[] = rulesRaw ? JSON.parse(rulesRaw) : [];
     const mapping: Record<string, string[]> = mappingRaw ? JSON.parse(mappingRaw) : {};
-    const inventory = effectiveInventory(inventoryRaw);
-    const soldOut = soldOutDaysByProduct(bookings, inventory, today, horizon);
+    // Vi slukker ikke annoncer for noget vi stadig kan skaffe til dagen, og en
+    // pakke-booking optager sine dele — ikke sig selv
+    const inventory = pair.bookable;
+    const counted = expandBookings(bookings, bundlePartsFromCatalog(catalogRaw));
+    const soldOut = soldOutDaysByProduct(counted, inventory, today, horizon);
     const weekend = upcomingWeekend(today);
 
     const evaluations = rules.map((rule) => {

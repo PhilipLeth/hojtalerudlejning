@@ -9,7 +9,7 @@
  */
 
 import { requireAdmin } from "./_lib/adminAuth";
-import { INVENTORY_KEY, effectiveInventory } from "./_lib/inventory";
+import { bundlePartsFromCatalog, expandBookings, loadInventoryPair } from "./_lib/inventory";
 import {
   addDays,
   loadBookings,
@@ -99,15 +99,16 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const horizonEnd = addDays(today, 60);
 
   try {
-    const [catalogRaw, inventoryRaw, mapping, economics, bookings] = await Promise.all([
+    const [catalogRaw, pair, mapping, economics, bookings] = await Promise.all([
       readJson<unknown>(kv, "products_catalog", null),
-      readJson<Record<string, number>>(kv, INVENTORY_KEY, {}),
+      loadInventoryPair(kv),
       readJson<Record<string, string[]>>(kv, KV_MAPPING, {}),
       readJson<Record<string, Economics>>(kv, KV_ECONOMICS, {}),
       loadBookings(kv),
     ]);
 
-    const inventory = effectiveInventory(inventoryRaw);
+    // Udsolgt = intet tilbage at tage imod, heller ikke JIT
+    const inventory = pair.bookable;
     let catalog;
     try {
       catalog = productCatalog(catalogRaw);
@@ -118,7 +119,11 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       }
       throw e;
     }
-    const soldOut = soldOutDaysByProduct(bookings, inventory, today, horizonEnd);
+    // Kapacitet regnes på pakkers dele; statistikken beholder de rå id'er, så
+    // en annonce for karaokepakken tælles som karaokepakken
+    const soldOut = soldOutDaysByProduct(
+      expandBookings(bookings, bundlePartsFromCatalog(catalogRaw)), inventory, today, horizonEnd,
+    );
     const stats = statsByProduct(bookings);
     const weekend = upcomingWeekend(today);
 

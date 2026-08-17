@@ -112,3 +112,38 @@ export function effectiveStock(item: StockItem, stock: Record<string, number>): 
   const n = stock[item.id];
   return typeof n === "number" ? n : null;
 }
+
+/**
+ * Hvad vi tager imod i alt: det ejede plus den overbooking vi har sagt ja til,
+ * fordi resten kan købes eller lejes ind til dagen (JIT).
+ *
+ * Skal svare til bookableInventory() i functions/api/_lib/inventory.ts — det er
+ * serveren der bestemmer, det her er kun for at vise admin det samme tal.
+ * Overbooking uden lagertal betyder intet: uden et loft er der ikke noget at
+ * overskride.
+ */
+export function bookableMap(
+  stock: Record<string, number>,
+  overbook: Record<string, number>,
+): Record<string, number> {
+  const out = { ...stock };
+  for (const [id, extra] of Object.entries(overbook)) {
+    if (typeof out[id] === "number") out[id] += extra;
+  }
+  return out;
+}
+
+/** Overbooking på et produkt — for en pakke: hvad delene tilsammen tillader */
+export function effectiveOverbook(
+  item: StockItem,
+  stock: Record<string, number>,
+  overbook: Record<string, number>,
+): number {
+  if (item.parts) {
+    const owned = derivedStock(item.parts, stock);
+    const bookable = derivedStock(item.parts, bookableMap(stock, overbook));
+    if (owned === null || bookable === null) return 0;
+    return Math.max(0, bookable - owned);
+  }
+  return typeof stock[item.id] === "number" ? overbook[item.id] ?? 0 : 0;
+}

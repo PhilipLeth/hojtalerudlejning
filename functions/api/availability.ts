@@ -12,10 +12,9 @@
  */
 import { bookedProductIds } from "./_lib/bookings";
 import {
-  INVENTORY_KEY,
   bundlePartsFromCatalog,
   bundleSlots,
-  effectiveInventory,
+  loadInventoryPair,
 } from "./_lib/inventory";
 import { expandProductIds } from "./_lib/occupancy";
 
@@ -48,11 +47,13 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   }
 
   try {
-    const [inventoryRaw, catalogRaw] = await Promise.all([
-      context.env.BOOKINGS.get(INVENTORY_KEY),
+    const [pair, catalogRaw] = await Promise.all([
+      loadInventoryPair(context.env.BOOKINGS),
       context.env.BOOKINGS.get("products_catalog"),
     ]);
-    const inventory = effectiveInventory(inventoryRaw);
+    // Kunden må booke op til det vi tager imod: det ejede plus den overbooking
+    // vi selv har sat, fordi resten kan skaffes til dagen (JIT).
+    const inventory = pair.bookable;
     const bundleParts = bundlePartsFromCatalog(catalogRaw);
 
     // Optaget pr. fysisk produkt. Pakker tælles på deres dele, så en booking af

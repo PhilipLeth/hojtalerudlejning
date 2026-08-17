@@ -19,15 +19,31 @@ export interface BlockedDate {
   products: string[];
 }
 
+/** Et produkt vi har taget imod flere bookinger på, end vi ejer enheder af */
+export interface OverbookHit {
+  id: string;
+  name: string;
+  day: string;
+  booked: number;
+  owned: number;
+  missing: number;
+}
+
 export interface LagerState {
-  /** productId → antal. Mangler et id, har produktet intet lagertal */
+  /** productId → antal vi ejer. Mangler et id, har produktet intet lagertal */
   stock: Record<string, number>;
+  /** productId → hvor mange vi derudover tager imod, fordi de kan skaffes JIT */
+  overbook: Record<string, number>;
+  /** Hvad vi allerede har taget imod ud over det ejede — skal skaffes */
+  overbooked: OverbookHit[];
   blocked: BlockedDate[];
   loading: boolean;
   saving: boolean;
   error: string;
   /** Sæt (eller ryd med null) et eller flere antal. Optimistisk med rullback. */
   saveStock: (patch: Record<string, number | null>) => Promise<void>;
+  /** Samme, for overbooking. 0 og null betyder "ingen overbooking". */
+  saveOverbook: (patch: Record<string, number | null>) => Promise<void>;
   blockDate: (date: string, reason: string, products: string[]) => Promise<boolean>;
   unblockDate: (date: string) => Promise<void>;
   reload: () => void;
@@ -35,6 +51,8 @@ export interface LagerState {
 
 export function useLager(secret: string): LagerState {
   const [stock, setStock] = useState<Record<string, number>>({});
+  const [overbook, setOverbook] = useState<Record<string, number>>({});
+  const [overbooked, setOverbooked] = useState<OverbookHit[]>([]);
   const [blocked, setBlocked] = useState<BlockedDate[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -45,9 +63,17 @@ export function useLager(secret: string): LagerState {
     setLoading(true);
     fetch(`/api/inventory?secret=${encodeURIComponent(secret)}`)
       .then((r) => r.json())
-      .then((d: { inventory?: Record<string, number>; blocked?: BlockedDate[]; error?: string }) => {
+      .then((d: {
+        inventory?: Record<string, number>;
+        overbook?: Record<string, number>;
+        overbooked?: OverbookHit[];
+        blocked?: BlockedDate[];
+        error?: string;
+      }) => {
         if (d.inventory) {
           setStock(d.inventory);
+          setOverbook(d.overbook ?? {});
+          setOverbooked(Array.isArray(d.overbooked) ? d.overbooked : []);
           setBlocked(Array.isArray(d.blocked) ? d.blocked : []);
           setError("");
         } else {
@@ -84,20 +110,39 @@ export function useLager(secret: string): LagerState {
     [secret],
   );
 
+  /** Optimistisk opdatering af et af de to tal-kort, med rullback hvis kaldet fejler */
+  const patchMap = (
+    setter: React.Dispatch<React.SetStateAction<Record<string, number>>>,
+    patch: Record<string, number | null>,
+    zeroClears: boolean,
+  ) => {
+    let before: Record<string, number> = {};
+    setter((prev) => {
+      before = prev;
+      const next = { ...prev };
+      for (const [id, value] of Object.entries(patch)) {
+        if (value === null || (zeroClears && value === 0)) delete next[id];
+        else next[id] = value;
+      }
+      return next;
+    });
+    return () => setter(before);
+  };
+
   const saveStock = useCallback(
     async (patch: Record<string, number | null>) => {
-      let before: Record<string, number> = {};
-      setStock((prev) => {
-        before = prev;
-        const next = { ...prev };
-        for (const [id, value] of Object.entries(patch)) {
-          if (value === null) delete next[id];
-          else next[id] = value;
-        }
-        return next;
-      });
+      const rollback = patchMap(setStock, patch, false);
       const ok = await post({ action: "set_inventory", inventory: patch }, "Kunne ikke gemme lagertallet");
-      if (!ok) setStock(before);
+      if (!ok) rollback();
+    },
+    [post],
+  );
+
+  const saveOverbook = useCallback(
+    async (patch: Record<string, number | null>) => {
+      const rollback = patchMap(setOverbook, patch, true);
+      const ok = await post({ action: "set_inventory", overbook: patch }, "Kunne ikke gemme overbookingen");
+      if (!ok) rollback();
     },
     [post],
   );
@@ -125,5 +170,8 @@ export function useLager(secret: string): LagerState {
     [post],
   );
 
-  return { stock, blocked, loading, saving, error, saveStock, blockDate, unblockDate, reload };
+  return {
+    stock, overbook, overbooked, blocked, loading, saving, error,
+    saveStock, saveOverbook, blockDate, unblockDate, reload,
+  };
 }

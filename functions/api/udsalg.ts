@@ -10,7 +10,7 @@
  */
 
 import { loadBookings, nextWeekends } from "./_lib/bookings";
-import { effectiveInventory } from "./_lib/inventory";
+import { bundlePartsFromCatalog, effectiveInventory, expandBookings } from "./_lib/inventory";
 import { CatalogMissingError, productCatalog } from "./_lib/catalog";
 import { DEFAULT_CAMPAIGN, KV_SALE_CAMPAIGN, normalizeSaleCode, parseCampaign, weekendSale } from "./_lib/weekendSale";
 
@@ -65,7 +65,10 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     ]);
 
     const campaign = campaignRaw ? parseCampaign(campaignRaw) : DEFAULT_CAMPAIGN;
+    // Udsalget er til udstyr der står stille — altså det vi EJER. Vi giver ikke
+    // rabat på enheder vi mangler at købe ind. Pakker tælles på deres dele.
     const inventory = effectiveInventory(inventoryRaw);
+    const counted = expandBookings(bookings, bundlePartsFromCatalog(catalogRaw));
 
     let catalog;
     try {
@@ -79,7 +82,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     }
 
     const weekends = nextWeekends(today, count).map((w) =>
-      weekendSale(bookings, inventory, catalog, campaign, w),
+      weekendSale(counted, inventory, catalog, campaign, w),
     );
 
     return json({

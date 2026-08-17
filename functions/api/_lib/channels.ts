@@ -1,6 +1,6 @@
 /** Shared feed + channel helpers for Pages Functions */
 
-import { INVENTORY_KEY, effectiveInventory } from "./inventory";
+import { INVENTORY_KEY, loadInventoryPair } from "./inventory";
 
 export const SITE = "https://lejhojtaler.dk";
 export const CATALOG_KEY = "products_catalog";
@@ -388,9 +388,12 @@ export async function loadCatalogFromKvOnly(kv: KVNamespace): Promise<CatalogRaw
   }
 }
 
-/** Lagertal som resten af systemet ser dem — gemte tal over defaults fra koden */
+/**
+ * Lagertal til feeds: "in stock" hvis vi kan tage imod én mere, altså det ejede
+ * plus den overbooking vi kan skaffe til dagen.
+ */
 export async function loadInventory(kv: KVNamespace): Promise<Record<string, number>> {
-  return effectiveInventory(await kv.get(INVENTORY_KEY));
+  return (await loadInventoryPair(kv)).bookable;
 }
 
 export async function loadChannels(kv: KVNamespace, origin: string): Promise<ChannelsDoc> {

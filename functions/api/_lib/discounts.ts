@@ -5,7 +5,7 @@
  */
 
 import { loadBookings } from "./bookings";
-import { effectiveInventory } from "./inventory";
+import { bundlePartsFromCatalog, effectiveInventory, expandBookings } from "./inventory";
 import { productCatalog } from "./catalog";
 import { KV_SALE_CAMPAIGN, campaignApplies, parseCampaign, type SaleContext } from "./weekendSale";
 
@@ -84,9 +84,11 @@ export async function resolveDiscountFor(
         readJson(kv, "inventory"),
         loadBookings(kv),
       ]);
+      // Samme grundlag som /api/udsalg: det vi ejer, og pakker talt på deres dele
       const inventory = effectiveInventory(inventoryRaw);
+      const counted = expandBookings(bookings, bundlePartsFromCatalog(catalogRaw));
       const verdict = campaignApplies(
-        campaign, ctx, bookings, inventory, productCatalog(catalogRaw), excludeBookingId,
+        campaign, ctx, counted, inventory, productCatalog(catalogRaw), excludeBookingId,
       );
       return verdict.ok ? { code: campaign.code, pct: campaign.pct, campaign: true } : null;
     } catch (e) {

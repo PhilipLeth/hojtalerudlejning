@@ -117,7 +117,7 @@ function Field({
 }
 
 /** Lagertallet i produktets sammenfoldede linje — tomt lager er værd at se */
-function StockBadge({ value }: { value: number | undefined }) {
+function StockBadge({ value, overbook }: { value: number | undefined; overbook?: number }) {
   if (value === undefined) {
     return (
       <span title="Intet lagertal — produktet kan bookes ubegrænset" style={{ fontSize: "11px", fontWeight: 700, color: "#b8860b", background: "#fffbf0", border: "1px solid #f0c36d", borderRadius: "20px", padding: "1px 8px" }}>
@@ -126,8 +126,15 @@ function StockBadge({ value }: { value: number | undefined }) {
     );
   }
   return (
-    <span title="Antal på lager" style={{ fontSize: "11px", fontWeight: 700, color: value === 0 ? "#c0392b" : "#555", background: "#f5f5f5", borderRadius: "20px", padding: "1px 8px" }}>
-      {value} stk.
+    <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+      <span title="Antal på lager" style={{ fontSize: "11px", fontWeight: 700, color: value === 0 ? "#c0392b" : "#555", background: "#f5f5f5", borderRadius: "20px", padding: "1px 8px" }}>
+        {value} stk.
+      </span>
+      {!!overbook && (
+        <span title={`Vi tager imod ${value + overbook} — ${overbook} skaffes til dagen`} style={{ fontSize: "11px", fontWeight: 700, color: "#4b2ea3", background: "#f6f2ff", border: "1px solid #d9ccf7", borderRadius: "20px", padding: "1px 8px" }}>
+          +{overbook} JIT
+        </span>
+      )}
     </span>
   );
 }
@@ -158,6 +165,7 @@ export default function AdminProdukterPage() {
   // uden at publicere hele kataloget, og to faner må ikke overskrive hinanden
   const lager = useLager(secret);
   const setStock = (id: string, v: number | null) => lager.saveStock({ [id]: v });
+  const setOverbook = (id: string, v: number | null) => lager.saveOverbook({ [id]: v });
 
   const loadCatalog = useCallback(async () => {
     setLoading(true);
@@ -335,7 +343,7 @@ export default function AdminProdukterPage() {
         {loading && <p style={{ textAlign: "center", color: "#888" }}>Henter produkter...</p>}
 
         <p style={{ fontSize: "14px", color: "#666", marginBottom: "24px" }}>
-          Rediger pris, lager, billeder og tekst pr. produkt. Billedstier er relative til sitet, fx{" "}
+          Rediger pris, lager, overbooking, billeder og tekst pr. produkt. Billedstier er relative til sitet, fx{" "}
           <code>/images/product-party.webp</code>. Bemærk at <strong>lagertallet gemmes med det samme</strong> —
           resten venter på "Gem ændringer". Hele lageret på én side: <a href="/admin/lager" style={{ color: "#0070f3" }}>Lager</a>.
         </p>
@@ -350,14 +358,21 @@ export default function AdminProdukterPage() {
                   {sp.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
                 </span>
                 <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <StockBadge value={lager.stock[sp.id]} />
+                  <StockBadge value={lager.stock[sp.id]} overbook={lager.overbook[sp.id]} />
                   <span style={{ color: "#0070f3" }}>{sp.price} kr</span>
                   <button type="button" onClick={(e) => { e.preventDefault(); removeSpeaker(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
                 </span>
               </summary>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", marginTop: "16px" }}>
                 <Field label="Pris (kr)" type="number" value={sp.price} onChange={(v) => updateSpeaker(i, { price: Number(v) || 0 })} />
-                <StockField id={sp.id} stock={lager.stock} onSet={setStock} labelStyle={labelStyle} />
+                <StockField
+                  id={sp.id}
+                  stock={lager.stock}
+                  overbook={lager.overbook}
+                  onSetStock={setStock}
+                  onSetOverbook={setOverbook}
+                  labelStyle={labelStyle}
+                />
                 <Field label="Vægt" value={sp.weight} onChange={(v) => updateSpeaker(i, { weight: v })} />
                 <div>
                   <label style={labelStyle}>Strøm</label>
@@ -432,7 +447,7 @@ export default function AdminProdukterPage() {
                   {isBundleProduct(r) ? (
                     <span style={{ fontSize: "11px", color: "#aaa" }}>lager: fra delene</span>
                   ) : (
-                    <StockBadge value={lager.stock[r.id]} />
+                    <StockBadge value={lager.stock[r.id]} overbook={lager.overbook[r.id]} />
                   )}
                   <span style={{ color: "#0070f3" }}>{r.price} kr</span>
                   <button type="button" onClick={(e) => { e.preventDefault(); removeRental(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
@@ -444,7 +459,9 @@ export default function AdminProdukterPage() {
                   id={r.id}
                   parts={isBundleProduct(r) ? r.bundle!.parts.map((p) => p.productId) : undefined}
                   stock={lager.stock}
-                  onSet={setStock}
+                  overbook={lager.overbook}
+                  onSetStock={setStock}
+                  onSetOverbook={setOverbook}
                   labelStyle={labelStyle}
                 />
                 <div>
@@ -504,7 +521,7 @@ export default function AdminProdukterPage() {
                   {a.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
                 </span>
                 <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  {!isDeliveryAddon(a.id) && <StockBadge value={lager.stock[a.id]} />}
+                  {!isDeliveryAddon(a.id) && <StockBadge value={lager.stock[a.id]} overbook={lager.overbook[a.id]} />}
                   <span style={{ color: "#0070f3" }}>{a.price} kr</span>
                   <button type="button" onClick={(e) => { e.preventDefault(); removeAddon(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
                 </span>
@@ -513,7 +530,14 @@ export default function AdminProdukterPage() {
                 <Field label="Pris (kr)" type="number" value={a.price} onChange={(v) => updateAddon(i, { price: Number(v) || 0 })} />
                 {/* Kørsel står ikke på en hylde og har derfor intet lager */}
                 {!isDeliveryAddon(a.id) && (
-                  <StockField id={a.id} stock={lager.stock} onSet={setStock} labelStyle={labelStyle} />
+                  <StockField
+                    id={a.id}
+                    stock={lager.stock}
+                    overbook={lager.overbook}
+                    onSetStock={setStock}
+                    onSetOverbook={setOverbook}
+                    labelStyle={labelStyle}
+                  />
                 )}
                 <ImageField label="Billede (tom = intet)" value={a.image ?? ""} onChange={(v) => updateAddon(i, { image: v || null })} />
                 <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", alignSelf: "end", paddingBottom: "8px" }}>

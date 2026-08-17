@@ -12,7 +12,7 @@
  */
 
 import { loadBookings, upcomingWeekend } from "./_lib/bookings";
-import { effectiveInventory } from "./_lib/inventory";
+import { bundlePartsFromCatalog, effectiveInventory, expandBookings } from "./_lib/inventory";
 import { productCatalog } from "./_lib/catalog";
 import { KV_SALE_CAMPAIGN, parseCampaign, weekendSale } from "./_lib/weekendSale";
 
@@ -61,10 +61,13 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       loadBookings(kv),
     ]);
 
+    // Udsalget gælder udstyr vi ejer og som står stille — ikke JIT-enheder.
+    // Pakker optager deres dele, så en booket festpakke ikke sætter delene til salg.
     const inventory = effectiveInventory(inventoryRaw);
+    const counted = expandBookings(bookings, bundlePartsFromCatalog(catalogRaw));
     const today = new Date().toISOString().slice(0, 10);
     const weekend = upcomingWeekend(today);
-    const sale = weekendSale(bookings, inventory, productCatalog(catalogRaw), campaign, weekend);
+    const sale = weekendSale(counted, inventory, productCatalog(catalogRaw), campaign, weekend);
 
     if (sale.unitsOnSale === 0) return inactive();
 

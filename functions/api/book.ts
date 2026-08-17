@@ -1,6 +1,7 @@
 import { resolveDiscountFor } from "./_lib/discounts";
 import { sendPush } from "../../src/lib/webpush";
 import { KV_PUSH_SUBS, loadSubscriptions } from "./push";
+import { notifyOverbooking } from "./_lib/overbooking";
 import { recordSms, sendBookingSms, type SendSmsOutcome } from "./_lib/sms";
 import type { SaleContext } from "./_lib/weekendSale";
 
@@ -415,6 +416,18 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     await notifyPhones(context.env, data, key);
   } catch (e) {
     console.error("[push] kunne ikke sende:", e);
+  }
+
+  // Landede bookingen ud over det vi ejer? Vi tillader overbooking med vilje,
+  // produkt for produkt (se /admin/lager), men så skal nogen vide det med det
+  // samme — udstyret skal købes eller lejes ind inden udlevering.
+  try {
+    const hits = await notifyOverbooking(context.env, data as unknown as Record<string, unknown>, key);
+    if (hits.length) {
+      console.log("[overbooking]", key, hits.map((h) => `${h.id} ${h.booked}/${h.owned} ${h.day}`).join(", "));
+    }
+  } catch (e) {
+    console.error("[overbooking] kunne ikke tjekke:", e);
   }
 
   return new Response(JSON.stringify({ ok: true, bookingId: key, upsell: upsell?.id ?? null }), {

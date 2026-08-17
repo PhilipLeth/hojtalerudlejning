@@ -1,5 +1,11 @@
 import { requireAdmin } from "./_lib/adminAuth";
-import { INVENTORY_KEY, effectiveInventory, validateStockPatch } from "./_lib/inventory";
+import {
+  INVENTORY_KEY,
+  OVERBOOK_KEY,
+  loadInventoryPair,
+  validateStockPatch,
+} from "./_lib/inventory";
+import { overbookingAhead } from "./_lib/overbooking";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -21,13 +27,20 @@ export const onRequestOptions: PagesFunction<Env> = async () => {
  * Lagertallene som resten af systemet regner med — det gemte lagt over
  * defaults fra koden. Admin redigerer præcis de tal, ledighed beregnes ud fra,
  * så der ikke kan stå ét antal i admin og gælde et andet i booking-flowet.
+ *
+ * Svaret bærer også overbooking pr. produkt og "skal skaffes"-listen: de
+ * bookinger vi allerede har taget imod ud over det vi ejer.
  */
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const auth = await requireAdmin(context, corsHeaders);
   if (auth instanceof Response) return auth;
 
   try {
-    const raw = await context.env.BOOKINGS.get(INVENTORY_KEY);
+    const today = new Date().toISOString().slice(0, 10);
+    const [{ owned, overbook }, overbooked] = await Promise.all([
+      loadInventoryPair(context.env.BOOKINGS),
+      overbookingAhead(context.env.BOOKINGS, today),
+    ]);
 
     // Spærrede datoer hører til samme side — de er også "hvad kan lejes hvornår"
     const blocked: Array<{ date: string; reason: string; products: string[] }> = [];
@@ -47,7 +60,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     }
     blocked.sort((a, b) => a.date.localeCompare(b.date));
 
-    return new Response(JSON.stringify({ inventory: effectiveInventory(raw), blocked }), {
+    return new Response(JSON.stringify({ inventory: owned, overbook, blocked, overbooked }), {
       status: 200,
       headers: corsHeaders,
     });
@@ -63,7 +76,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 interface SetInventoryBody {
   action: "set_inventory";
   /** productId → antal, eller null for at rydde tallet igen */
-  inventory: Record<string, number | null>;
+  inventory?: Record<string, number | null>;
+  /** productId → hvor mange vi derudover tager imod (JIT), null rydder */
+  overbook?: Record<string, number | null>;
 }
 
 interface BlockDateBody {
@@ -89,29 +104,46 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const body: RequestBody = await context.request.json();
 
     if (body.action === "set_inventory") {
-      const valid = validateStockPatch(body.inventory);
-      if (!valid.ok) {
-        return new Response(JSON.stringify({ error: valid.error }), {
-          status: 400,
-          headers: corsHeaders,
-        });
+      if (!body.inventory && !body.overbook) {
+        return new Response(JSON.stringify({ error: "Ingen lagertal at gemme" }), { status: 400, headers: corsHeaders });
       }
+
       // Flet felt for felt: admin sender kun de produkter der blev rettet, så to
       // faner (eller produktsiden og lagersiden) ikke overskriver hinanden.
-      let existing: Record<string, number> = {};
-      try {
-        const raw = await context.env.BOOKINGS.get(INVENTORY_KEY);
-        if (raw) existing = JSON.parse(raw);
-      } catch { /* ignore */ }
-      const merged: Record<string, number> = { ...existing };
-      for (const [id, value] of Object.entries(valid.patch)) {
-        // null rydder tallet — produktet er dermed uden lagerstyring igen
-        if (value === null) delete merged[id];
-        else merged[id] = value;
+      const gem = async (key: string, patch: Record<string, number | null>) => {
+        let existing: Record<string, number> = {};
+        try {
+          const raw = await context.env.BOOKINGS.get(key);
+          if (raw) existing = JSON.parse(raw);
+        } catch { /* ignore */ }
+        const merged: Record<string, number> = { ...existing };
+        for (const [id, value] of Object.entries(patch)) {
+          // null (og 0 overbooking) rydder tallet — produktet er tilbage til udgangspunktet
+          if (value === null) delete merged[id];
+          else merged[id] = value;
+        }
+        console.log("[inventory]", key, Object.keys(patch).length, "rettelser →", Object.keys(merged).length, "produkter");
+        await context.env.BOOKINGS.put(key, JSON.stringify(merged));
+      };
+
+      for (const [key, patch] of [
+        [INVENTORY_KEY, body.inventory],
+        [OVERBOOK_KEY, body.overbook],
+      ] as const) {
+        if (!patch) continue;
+        const valid = validateStockPatch(patch);
+        if (!valid.ok) {
+          return new Response(JSON.stringify({ error: valid.error }), { status: 400, headers: corsHeaders });
+        }
+        // Overbooking 0 er det samme som ingen overbooking
+        const cleaned = Object.fromEntries(
+          Object.entries(valid.patch).map(([id, v]) => [id, key === OVERBOOK_KEY && v === 0 ? null : v]),
+        );
+        await gem(key, cleaned);
       }
-      console.log("[inventory] gemmer", Object.keys(valid.patch).length, "rettelser →", Object.keys(merged).length, "produkter");
-      await context.env.BOOKINGS.put(INVENTORY_KEY, JSON.stringify(merged));
-      return new Response(JSON.stringify({ ok: true, inventory: effectiveInventory(JSON.stringify(merged)) }), {
+
+      const pair = await loadInventoryPair(context.env.BOOKINGS);
+      return new Response(JSON.stringify({ ok: true, inventory: pair.owned, overbook: pair.overbook }), {
         status: 200,
         headers: corsHeaders,
       });
