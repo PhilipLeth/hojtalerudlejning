@@ -9,7 +9,8 @@
  * beslutning om hvem der kalder det (cron).
  */
 
-import { DEFAULT_INVENTORY, addDays, loadBookings, soldOutDaysByProduct } from "./_lib/bookings";
+import { addDays, loadBookings, soldOutDaysByProduct } from "./_lib/bookings";
+import { effectiveInventory } from "./_lib/inventory";
 import { upcomingWeekend } from "./ads";
 
 import { requireAdmin } from "./_lib/adminAuth";
@@ -76,7 +77,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
     const rules: Rule[] = rulesRaw ? JSON.parse(rulesRaw) : [];
     const mapping: Record<string, string[]> = mappingRaw ? JSON.parse(mappingRaw) : {};
-    const inventory = { ...DEFAULT_INVENTORY, ...(inventoryRaw ? JSON.parse(inventoryRaw) : {}) };
+    const inventory = effectiveInventory(inventoryRaw);
     const soldOut = soldOutDaysByProduct(bookings, inventory, today, horizon);
     const weekend = upcomingWeekend(today);
 

@@ -1,3 +1,24 @@
+/** Ledighed til booking-flowet: hvad er optaget i en periode.
+ *
+ * Regner nu på præcis samme logik som udsolgt-oversigten, kalenderen,
+ * weekendudsalget og annoncereglerne: bookedProductIds() for hvad en ordre
+ * optager, kataloget for hvad en pakke består af, og "inventory" i KV for hvor
+ * mange vi har.
+ *
+ * Før havde denne fil sin egen kopi: en liste på ni produkter, hvor tilvalg kun
+ * blev talt hvis de stod i listen, og hvor en pakke blev talt under sit eget
+ * pakke-id. Konsekvensen var at kunden kunne booke den samme karaokemaskine to
+ * gange, mens admin så den som udsolgt.
+ */
+import { bookedProductIds } from "./_lib/bookings";
+import {
+  INVENTORY_KEY,
+  bundlePartsFromCatalog,
+  bundleSlots,
+  effectiveInventory,
+} from "./_lib/inventory";
+import { expandProductIds } from "./_lib/occupancy";
+
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
@@ -9,23 +30,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type",
   "Content-Type": "application/json",
 };
-
-const DEFAULT_INVENTORY: Record<string, number> = { thumpgo: 1, party: 2, soundboks: 2, festival: 2, lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 4, lyskaeder: 6 };
-
-const SPEAKER_IDS = ["thumpgo", "party", "soundboks", "festival"];
-
-// Map booking speaker names back to product IDs (fallback for old bookings without speakerId)
-function speakerNameToId(name: string): string | null {
-  const lower = name.toLowerCase();
-  if (lower === "party" || lower.includes("lille højtalerpakke") || lower.includes("small speaker")) return "party";
-  // Legacy combo — tælles som festival + subwoofer nedenfor
-  if (lower.includes("+ bas") || lower.includes("+ bass") || lower.includes("med bas")) return "festival_bas";
-  if (lower === "festival" || lower.includes("stor højtalerpakke") || lower.includes("large speaker")) return "festival";
-  if (lower.includes("thump")) return "thumpgo";
-  if (lower.includes("soundboks")) return "soundboks";
-  if (lower === "kun lys") return "lys-only";
-  return null;
-}
 
 export const onRequestOptions: PagesFunction<Env> = async () => {
   return new Response(null, { status: 204, headers: corsHeaders });
@@ -44,111 +48,71 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   }
 
   try {
-    // Read inventory — merge stored counts over defaults so newly added
-    // products (not yet saved from /admin/lager) get their default count
-    // instead of appearing sold out
-    let inventory: Record<string, number> = { ...DEFAULT_INVENTORY };
-    const inventoryRaw = await context.env.BOOKINGS.get("inventory");
-    if (inventoryRaw) {
-      try {
-        inventory = { ...DEFAULT_INVENTORY, ...JSON.parse(inventoryRaw) };
-      } catch {
-        // use defaults
-      }
-    }
+    const [inventoryRaw, catalogRaw] = await Promise.all([
+      context.env.BOOKINGS.get(INVENTORY_KEY),
+      context.env.BOOKINGS.get("products_catalog"),
+    ]);
+    const inventory = effectiveInventory(inventoryRaw);
+    const bundleParts = bundlePartsFromCatalog(catalogRaw);
 
-    // Count overlapping bookings per product
-    const booked: Record<string, number> = { thumpgo: 0, party: 0, soundboks: 0, festival: 0, lys: 0, rog: 0, stativer: 0, taske: 0, subwoofer: 0 };
+    // Optaget pr. fysisk produkt. Pakker tælles på deres dele, så en booking af
+    // karaokepakken optager maskinen, skærmen og højtalerne hver for sig.
+    const booked: Record<string, number> = {};
 
-    // Map addon display names to product IDs
-    const addonNameToId: Record<string, string> = {
-      lys: "lys", lysshow: "lys", "lys show": "lys",
-      rog: "rog", "røg": "rog", roegmaskine: "rog", "røgmaskine": "rog", "smoke": "rog",
-      stativer: "stativer", stativ: "stativer",
-      taske: "taske", baeretaske: "taske", "bæretaske": "taske",
-      subwoofer: "subwoofer", sub: "subwoofer",
-    };
+    const qFrom = from.slice(0, 10);
+    const qTo = to.slice(0, 10);
 
     const list = await context.env.BOOKINGS.list({ prefix: "booking_" });
     for (const key of list.keys) {
       const value = await context.env.BOOKINGS.get(key.name);
       if (!value) continue;
 
-      const booking = JSON.parse(value);
+      let booking: Record<string, unknown>;
+      try {
+        booking = JSON.parse(value);
+      } catch {
+        continue;
+      }
 
-      // Only count active bookings — returned equipment is back, and a
-      // cancelled booking must release its dates immediately
-      if (booking.status === "afleveret" || String(booking.status || "").startsWith("annulleret")) continue;
+      // Kun aktive bookinger — afleveret udstyr er tilbage på hylden, og en
+      // annulleret booking skal frigive sine datoer med det samme
+      const status = String(booking.status || "");
+      if (status === "afleveret" || status.startsWith("annulleret")) continue;
 
-      // Check date overlap: booking.pickup < query.to AND booking.returnDate > query.from
-      const bookingPickup = booking.pickup;
-      const bookingReturn = booking.returnDate;
-      if (!bookingPickup || !bookingReturn) continue;
+      const bPickup = String(booking.pickup || "").slice(0, 10);
+      const bReturn = String(booking.returnDate || "").slice(0, 10);
+      if (!bPickup || !bReturn) continue;
+      if (!(bPickup < qTo && bReturn > qFrom)) continue;
 
-      const bPickup = bookingPickup.slice(0, 10);
-      const bReturn = bookingReturn.slice(0, 10);
-      const qFrom = from.slice(0, 10);
-      const qTo = to.slice(0, 10);
-
-      if (bPickup < qTo && bReturn > qFrom) {
-        // Overlaps — figure out which products are booked.
-        // New bookings carry speakerId/addonIds directly; old ones need name matching.
-        const speakerId: string | null =
-          typeof booking.speakerId === "string" && booking.speakerId
-            ? booking.speakerId
-            : speakerNameToId(booking.speaker || "");
-
-        if (speakerId === "lys-only") {
-          booked.lys = (booked.lys || 0) + 1;
-        } else if (speakerId === "festival_bas") {
-          // Legacy combo-SKU → fysisk festival + subwoofer
-          booked.festival = (booked.festival || 0) + 1;
-          booked.subwoofer = (booked.subwoofer || 0) + 1;
-        } else if (speakerId && speakerId !== "effects-only") {
-          // Samme rettelse som i _lib/bookings.ts: hovedproduktet tæller uanset
-          // type, ellers kunne den samme lyskæde bookes ubegrænset
-          booked[speakerId] = (booked[speakerId] || 0) + 1;
-        }
-
-        // Count all addons (lys, rog, stativer, taske)
-        if (Array.isArray(booking.addonIds) && booking.addonIds.length) {
-          for (const pid of booking.addonIds) {
-            if (typeof pid === "string" && pid in booked) {
-              booked[pid] = (booked[pid] || 0) + 1;
-            }
-          }
-        } else {
-          const addonLabels: string[] = booking.addons || [];
-          for (const label of addonLabels) {
-            const lower = label.toLowerCase().replace(/[^a-zæøå]/g, "");
-            const pid = addonNameToId[lower];
-            if (pid && pid in booked) {
-              booked[pid] = (booked[pid] || 0) + 1;
-            }
-          }
-        }
+      // Ikke unique: to af samme produkt på én ordre optager to enheder
+      for (const id of expandProductIds(bookedProductIds(booking), bundleParts)) {
+        booked[id] = (booked[id] ?? 0) + 1;
       }
     }
 
-    // Read blocked dates within range
+    // Pakkerne har ikke eget lager — deres ledighed er den snævreste dels.
+    // Udtrykt som total/optaget, så klienten kan regne "rest" på samme måde
+    // for en pakke som for et enkelt produkt.
+    for (const [bundleId, parts] of Object.entries(bundleParts)) {
+      const slots = bundleSlots(parts, inventory, booked);
+      if (!slots) continue;
+      inventory[bundleId] = slots.total;
+      booked[bundleId] = slots.used;
+    }
+
+    // Blokerede datoer i perioden
     const blockedDates: Array<{ date: string; reason: string; products: string[] }> = [];
     const blockedList = await context.env.BOOKINGS.list({ prefix: "blocked_" });
     for (const key of blockedList.keys) {
-      // key.name = "blocked_YYYY-MM-DD"
       const date = key.name.replace("blocked_", "");
-      const qFrom = from.slice(0, 10);
-      const qTo = to.slice(0, 10);
-
-      if (date >= qFrom && date <= qTo) {
-        const val = await context.env.BOOKINGS.get(key.name);
-        if (val) {
-          try {
-            const parsed = JSON.parse(val);
-            blockedDates.push({ date, reason: parsed.reason || "", products: parsed.products || [] });
-          } catch {
-            blockedDates.push({ date, reason: "", products: [] });
-          }
-        }
+      if (date < qFrom || date > qTo) continue;
+      const val = await context.env.BOOKINGS.get(key.name);
+      if (!val) continue;
+      try {
+        const parsed = JSON.parse(val);
+        blockedDates.push({ date, reason: parsed.reason || "", products: parsed.products || [] });
+      } catch {
+        blockedDates.push({ date, reason: "", products: [] });
       }
     }
 

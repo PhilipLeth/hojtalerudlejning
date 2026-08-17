@@ -9,7 +9,8 @@
  * ads-reglerne i /api/ads-rules.
  */
 
-import { DEFAULT_INVENTORY, loadBookings, nextWeekends } from "./_lib/bookings";
+import { loadBookings, nextWeekends } from "./_lib/bookings";
+import { effectiveInventory } from "./_lib/inventory";
 import { CatalogMissingError, productCatalog } from "./_lib/catalog";
 import { DEFAULT_CAMPAIGN, KV_SALE_CAMPAIGN, normalizeSaleCode, parseCampaign, weekendSale } from "./_lib/weekendSale";
 
@@ -64,8 +65,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     ]);
 
     const campaign = campaignRaw ? parseCampaign(campaignRaw) : DEFAULT_CAMPAIGN;
-    const inventory = { ...DEFAULT_INVENTORY, ...inventoryRaw };
-    delete inventory.festival_bas; // opfundet combo-SKU — ikke fysisk lager
+    const inventory = effectiveInventory(inventoryRaw);
 
     let catalog;
     try {

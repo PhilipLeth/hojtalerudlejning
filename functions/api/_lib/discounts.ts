@@ -4,7 +4,8 @@
  * "discount_codes" ({ "kode": pct }), så nye koder ikke kræver deploy.
  */
 
-import { DEFAULT_INVENTORY, loadBookings } from "./bookings";
+import { loadBookings } from "./bookings";
+import { effectiveInventory } from "./inventory";
 import { productCatalog } from "./catalog";
 import { KV_SALE_CAMPAIGN, campaignApplies, parseCampaign, type SaleContext } from "./weekendSale";
 
@@ -83,7 +84,7 @@ export async function resolveDiscountFor(
         readJson(kv, "inventory"),
         loadBookings(kv),
       ]);
-      const inventory = { ...DEFAULT_INVENTORY, ...((inventoryRaw as Record<string, number>) ?? {}) };
+      const inventory = effectiveInventory(inventoryRaw);
       const verdict = campaignApplies(
         campaign, ctx, bookings, inventory, productCatalog(catalogRaw), excludeBookingId,
       );

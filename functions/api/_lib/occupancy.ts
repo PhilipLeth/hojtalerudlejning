@@ -5,19 +5,24 @@
  * belægning. Overbookinger får ekstra baner (markeret).
  */
 
+import { isBundleProduct, rentalProducts as defaultRentals } from "../../../src/lib/products";
 import { addDays, bookedProductIds } from "./bookings";
 
-/** Pakker → fysiske dele (matcher src/lib/products.ts bundles). */
+/**
+ * Pakker → fysiske dele, udledt af produktkataloget.
+ *
+ * Stod før som en håndholdt tabel her. Den var nødt til at være en tro kopi af
+ * bundle.parts i src/lib/products.ts, og en pakke hvis dele blev rettet ét sted
+ * ville optage noget andet på lageret end den lover kunden. Nu er der én kilde.
+ */
 export const BUNDLE_PARTS: Record<string, string[]> = {
-  /** Legacy — ikke et fysisk produkt; kun gamle bookinger */
+  /** Legacy — ikke et fysisk produkt, findes ikke i kataloget; kun gamle bookinger */
   festival_bas: ["festival", "subwoofer"],
-  pakke_fest_lille: ["party", "lyseffekt"],
-  pakke_fest_stor: ["festival", "lys"],
-  pakke_karaoke: ["karaoke", "skaerm_32", "party"],
-  pakke_karaoke_fest: ["karaoke", "skaerm_55", "festival"],
-  pakke_praesentation: ["projektor", "laerred_160", "haandholdt_mikrofon"],
-  pakke_konference: ["skaerm_55", "headset", "party"],
-  pakke_tale_musik: ["festival", "traadloes_mikrofon"],
+  ...Object.fromEntries(
+    defaultRentals
+      .filter(isBundleProduct)
+      .map((p) => [p.id, p.bundle!.parts.map((part) => part.productId)]),
+  ),
 };
 
 export const PRODUCT_LABELS: Record<string, string> = {
@@ -96,12 +101,15 @@ const SKIP_IDS = new Set([
   "effects-only",
 ]);
 
-/** Erstat pakke-id'er med deres dele. Ukendte id'er beholdes. */
-export function expandProductIds(ids: string[]): string[] {
+/**
+ * Erstat pakke-id'er med deres dele. Ukendte id'er beholdes.
+ * `parts` kan gives med, når kataloget i KV har andre pakker end koden.
+ */
+export function expandProductIds(ids: string[], parts_ = BUNDLE_PARTS): string[] {
   const out: string[] = [];
   for (const id of ids) {
     if (SKIP_IDS.has(id)) continue;
-    const parts = BUNDLE_PARTS[id];
+    const parts = parts_[id];
     if (parts) out.push(...parts);
     else out.push(id);
   }
@@ -236,6 +244,7 @@ export function buildOccupancy(
   from: string,
   to: string,
   labels: Record<string, string> = PRODUCT_LABELS,
+  bundleParts: Record<string, string[]> = BUNDLE_PARTS,
 ): OccupancyProduct[] {
   // productId → bookings that use it
   const byProduct = new Map<string, RawOccupancyBooking[]>();
@@ -246,7 +255,10 @@ export function buildOccupancy(
     if (!b.pickup || !b.returnDate) continue;
     if (b.returnDate <= from || b.pickup > to) continue;
 
-    const ids = expandProductIds(b.productIds.length ? b.productIds : bookedProductIds(b as unknown as Record<string, unknown>));
+    const ids = expandProductIds(
+      b.productIds.length ? b.productIds : bookedProductIds(b as unknown as Record<string, unknown>),
+      bundleParts,
+    );
     const unique = [...new Set(ids)];
     for (const id of unique) {
       if (SKIP_IDS.has(id)) continue;

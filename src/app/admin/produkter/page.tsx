@@ -9,11 +9,16 @@ import {
   speakers as defaultSpeakers,
   addons as defaultAddons,
   rentalProducts as defaultRentals,
+  isBundleProduct,
+  isDeliveryAddon,
   type Speaker,
   type Addon,
   type RentalProduct,
   type ProductCategory,
 } from "@/lib/products";
+import { DEFAULT_ADMIN_CATALOG, loadAdminCatalog } from "@/lib/useAdminCatalog";
+import { useLager } from "@/lib/useLager";
+import { StockField } from "@/components/admin/StockField";
 import ImageField from "@/components/admin/ImageField";
 import VideoField from "@/components/admin/VideoField";
 import CreateProductModal, { type ProductType } from "@/components/admin/CreateProductModal";
@@ -111,6 +116,22 @@ function Field({
   );
 }
 
+/** Lagertallet i produktets sammenfoldede linje — tomt lager er værd at se */
+function StockBadge({ value }: { value: number | undefined }) {
+  if (value === undefined) {
+    return (
+      <span title="Intet lagertal — produktet kan bookes ubegrænset" style={{ fontSize: "11px", fontWeight: 700, color: "#b8860b", background: "#fffbf0", border: "1px solid #f0c36d", borderRadius: "20px", padding: "1px 8px" }}>
+        lager ikke sat
+      </span>
+    );
+  }
+  return (
+    <span title="Antal på lager" style={{ fontSize: "11px", fontWeight: 700, color: value === 0 ? "#c0392b" : "#555", background: "#f5f5f5", borderRadius: "20px", padding: "1px 8px" }}>
+      {value} stk.
+    </span>
+  );
+}
+
 const navLink: React.CSSProperties = {
   padding: "8px 16px",
   fontSize: "14px",
@@ -133,29 +154,25 @@ export default function AdminProdukterPage() {
   const [error, setError] = useState("");
   const [showCreate, setShowCreate] = useState(false);
   const [highlightId, setHighlightId] = useState<string | null>(null);
+  // Lageret hører til produktet, men gemmes for sig: ét tal skal kunne rettes
+  // uden at publicere hele kataloget, og to faner må ikke overskrive hinanden
+  const lager = useLager(secret);
+  const setStock = (id: string, v: number | null) => lager.saveStock({ [id]: v });
 
   const loadCatalog = useCallback(async () => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/products");
-      const data = await res.json();
-      if (Array.isArray(data.speakers) && data.speakers.length) {
-        setSpeakers(data.speakers);
-        setAddons(Array.isArray(data.addons) && data.addons.length ? data.addons : defaultAddons);
-        setRentals(Array.isArray(data.rentalProducts) && data.rentalProducts.length ? data.rentalProducts : defaultRentals);
-        setIsCustom(true);
-      } else {
-        setSpeakers(defaultSpeakers);
-        setAddons(defaultAddons);
-        setRentals(defaultRentals);
-        setIsCustom(false);
-      }
+      const c = await loadAdminCatalog();
+      setSpeakers(c.speakers);
+      setAddons(c.addons);
+      setRentals(c.rentalProducts);
+      setIsCustom(c.isCustom);
     } catch {
       setError("Kunne ikke hente produkter — viser standard-kataloget");
-      setSpeakers(defaultSpeakers);
-      setAddons(defaultAddons);
-      setRentals(defaultRentals);
+      setSpeakers(DEFAULT_ADMIN_CATALOG.speakers);
+      setAddons(DEFAULT_ADMIN_CATALOG.addons);
+      setRentals(DEFAULT_ADMIN_CATALOG.rentalProducts);
     } finally {
       setLoading(false);
     }
@@ -318,7 +335,9 @@ export default function AdminProdukterPage() {
         {loading && <p style={{ textAlign: "center", color: "#888" }}>Henter produkter...</p>}
 
         <p style={{ fontSize: "14px", color: "#666", marginBottom: "24px" }}>
-          Rediger pris, billeder og tekst pr. produkt. Billedstier er relative til sitet, fx <code>/images/product-party.webp</code>.
+          Rediger pris, lager, billeder og tekst pr. produkt. Billedstier er relative til sitet, fx{" "}
+          <code>/images/product-party.webp</code>. Bemærk at <strong>lagertallet gemmes med det samme</strong> —
+          resten venter på "Gem ændringer". Hele lageret på én side: <a href="/admin/lager" style={{ color: "#0070f3" }}>Lager</a>.
         </p>
 
         <h2 style={{ fontSize: "17px", margin: "8px 0 12px" }}>Højtalere ({speakers.length})</h2>
@@ -331,12 +350,14 @@ export default function AdminProdukterPage() {
                   {sp.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
                 </span>
                 <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <StockBadge value={lager.stock[sp.id]} />
                   <span style={{ color: "#0070f3" }}>{sp.price} kr</span>
                   <button type="button" onClick={(e) => { e.preventDefault(); removeSpeaker(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
                 </span>
               </summary>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", marginTop: "16px" }}>
                 <Field label="Pris (kr)" type="number" value={sp.price} onChange={(v) => updateSpeaker(i, { price: Number(v) || 0 })} />
+                <StockField id={sp.id} stock={lager.stock} onSet={setStock} labelStyle={labelStyle} />
                 <Field label="Vægt" value={sp.weight} onChange={(v) => updateSpeaker(i, { weight: v })} />
                 <div>
                   <label style={labelStyle}>Strøm</label>
@@ -408,12 +429,24 @@ export default function AdminProdukterPage() {
                   {r.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
                 </span>
                 <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  {isBundleProduct(r) ? (
+                    <span style={{ fontSize: "11px", color: "#aaa" }}>lager: fra delene</span>
+                  ) : (
+                    <StockBadge value={lager.stock[r.id]} />
+                  )}
                   <span style={{ color: "#0070f3" }}>{r.price} kr</span>
                   <button type="button" onClick={(e) => { e.preventDefault(); removeRental(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
                 </span>
               </summary>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", marginTop: "16px" }}>
                 <Field label="Pris (kr)" type="number" value={r.price} onChange={(v) => updateRental(i, { price: Number(v) || 0 })} />
+                <StockField
+                  id={r.id}
+                  parts={isBundleProduct(r) ? r.bundle!.parts.map((p) => p.productId) : undefined}
+                  stock={lager.stock}
+                  onSet={setStock}
+                  labelStyle={labelStyle}
+                />
                 <div>
                   <label style={labelStyle}>Kategori</label>
                   <select value={r.category} onChange={(e) => updateRental(i, { category: e.target.value as ProductCategory })} style={inputStyle}>
@@ -471,12 +504,17 @@ export default function AdminProdukterPage() {
                   {a.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
                 </span>
                 <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  {!isDeliveryAddon(a.id) && <StockBadge value={lager.stock[a.id]} />}
                   <span style={{ color: "#0070f3" }}>{a.price} kr</span>
                   <button type="button" onClick={(e) => { e.preventDefault(); removeAddon(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
                 </span>
               </summary>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", marginTop: "16px" }}>
                 <Field label="Pris (kr)" type="number" value={a.price} onChange={(v) => updateAddon(i, { price: Number(v) || 0 })} />
+                {/* Kørsel står ikke på en hylde og har derfor intet lager */}
+                {!isDeliveryAddon(a.id) && (
+                  <StockField id={a.id} stock={lager.stock} onSet={setStock} labelStyle={labelStyle} />
+                )}
                 <ImageField label="Billede (tom = intet)" value={a.image ?? ""} onChange={(v) => updateAddon(i, { image: v || null })} />
                 <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", alignSelf: "end", paddingBottom: "8px" }}>
                   <input type="checkbox" checked={!!a.hidden} onChange={(e) => updateAddon(i, { hidden: e.target.checked })} />

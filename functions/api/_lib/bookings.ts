@@ -5,7 +5,13 @@
  * annoncer blive slukket på et andet grundlag end udsolgt-siden viser.
  */
 
-/** Skal matche DEFAULT_INVENTORY i availability.ts */
+/**
+ * Udgangspunktet for lagerbeholdningen: hvad vi har af de produkter der fandtes
+ * da lagerstyringen blev bygget. Læs den ALDRIG direkte — brug
+ * effectiveInventory() i _lib/inventory.ts, som lægger admins tal fra KV
+ * ovenpå. Produkter der ikke står her, har intet lagertal før admin sætter et,
+ * og kan derfor ikke blive udsolgt; /admin/lager viser hvilke.
+ */
 export const DEFAULT_INVENTORY: Record<string, number> = {
   thumpgo: 1, party: 2, soundboks: 2, festival: 2,
   lys: 2, rog: 2, stativer: 2, taske: 1, subwoofer: 4, lyskaeder: 6,

@@ -1,8 +1,10 @@
 /** Shared feed + channel helpers for Pages Functions */
 
+import { INVENTORY_KEY, effectiveInventory } from "./inventory";
+
 export const SITE = "https://lejhojtaler.dk";
 export const CATALOG_KEY = "products_catalog";
-export const INVENTORY_KEY = "inventory";
+export { INVENTORY_KEY };
 export const CHANNELS_KEY = "marketing_channels";
 
 export type ChannelStatus = "not_started" | "ready" | "connected" | "live" | "paused" | "skipped";
@@ -386,14 +388,9 @@ export async function loadCatalogFromKvOnly(kv: KVNamespace): Promise<CatalogRaw
   }
 }
 
-export async function loadInventory(kv: KVNamespace): Promise<Record<string, number> | null> {
-  const raw = await kv.get(INVENTORY_KEY);
-  if (!raw) return null;
-  try {
-    return JSON.parse(raw) as Record<string, number>;
-  } catch {
-    return null;
-  }
+/** Lagertal som resten af systemet ser dem — gemte tal over defaults fra koden */
+export async function loadInventory(kv: KVNamespace): Promise<Record<string, number>> {
+  return effectiveInventory(await kv.get(INVENTORY_KEY));
 }
 
 export async function loadChannels(kv: KVNamespace, origin: string): Promise<ChannelsDoc> {

@@ -4,7 +4,9 @@ import AdminNav from "@/components/AdminNav";
 import AdminLogin from "@/components/AdminLogin";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { useAdminCatalog } from "@/lib/useAdminCatalog";
+import { stockItems } from "@/lib/stock";
 
 interface SoldOutEntry {
   id: string;
@@ -27,20 +29,23 @@ interface SoldOutResponse {
   error?: string;
 }
 
-const PRODUCT_LABELS: Record<string, string> = {
-  thumpgo: "Mackie Thump GO",
-  party: "Lille højtalerpakke",
-  soundboks: "Soundboks 4",
-  festival: "Stor højtalerpakke",
-  lys: "Lys-pakke",
-  rog: "Røgmaskine",
-  stativer: "Stativer",
-  taske: "Bæretaske",
-  subwoofer: "Subwoofer 12\"",
-};
-
-function label(id: string): string {
-  return PRODUCT_LABELS[id] || id;
+/**
+ * Produktnavne kommer fra kataloget — samme kilde som /admin/produkter og
+ * /admin/lager. Her stod før en kopi på ni navne, så alt andet (fx karaoke)
+ * blev vist som sit rå id.
+ */
+function useLabels(): (id: string) => string {
+  const catalog = useAdminCatalog();
+  return useMemo(() => {
+    const byId = new Map(
+      stockItems({
+        speakers: catalog.speakers,
+        addons: catalog.addons,
+        rentalProducts: catalog.rentalProducts,
+      }).map((i) => [i.id, i.name]),
+    );
+    return (id: string) => byId.get(id) || id;
+  }, [catalog.speakers, catalog.addons, catalog.rentalProducts]);
 }
 
 function isoDaysFromToday(days: number): string {
@@ -60,6 +65,7 @@ function formatDate(iso: string): string {
 
 export default function UdsolgtPage() {
   const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
+  const label = useLabels();
   const [from, setFrom] = useState(() => isoDaysFromToday(-60));
   const [to, setTo] = useState(() => isoDaysFromToday(90));
   const [data, setData] = useState<SoldOutResponse | null>(null);

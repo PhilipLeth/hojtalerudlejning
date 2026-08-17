@@ -11,7 +11,8 @@
  * hvor alt er udlejet — kunden klikker ind og finder ingenting.
  */
 
-import { DEFAULT_INVENTORY, loadBookings, upcomingWeekend } from "./_lib/bookings";
+import { loadBookings, upcomingWeekend } from "./_lib/bookings";
+import { effectiveInventory } from "./_lib/inventory";
 import { productCatalog } from "./_lib/catalog";
 import { KV_SALE_CAMPAIGN, parseCampaign, weekendSale } from "./_lib/weekendSale";
 
@@ -60,7 +61,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       loadBookings(kv),
     ]);
 
-    const inventory = { ...DEFAULT_INVENTORY, ...((inventoryRaw as Record<string, number>) ?? {}) };
+    const inventory = effectiveInventory(inventoryRaw);
     const today = new Date().toISOString().slice(0, 10);
     const weekend = upcomingWeekend(today);
     const sale = weekendSale(bookings, inventory, productCatalog(catalogRaw), campaign, weekend);

@@ -9,8 +9,8 @@
  */
 
 import { requireAdmin } from "./_lib/adminAuth";
+import { INVENTORY_KEY, effectiveInventory } from "./_lib/inventory";
 import {
-  DEFAULT_INVENTORY,
   addDays,
   loadBookings,
   soldOutDaysByProduct,
@@ -101,14 +101,13 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
     const [catalogRaw, inventoryRaw, mapping, economics, bookings] = await Promise.all([
       readJson<unknown>(kv, "products_catalog", null),
-      readJson<Record<string, number>>(kv, "inventory", DEFAULT_INVENTORY),
+      readJson<Record<string, number>>(kv, INVENTORY_KEY, {}),
       readJson<Record<string, string[]>>(kv, KV_MAPPING, {}),
       readJson<Record<string, Economics>>(kv, KV_ECONOMICS, {}),
       loadBookings(kv),
     ]);
 
-    const inventory = { ...DEFAULT_INVENTORY, ...inventoryRaw };
-    delete inventory.festival_bas; // opfundet combo-SKU — ikke fysisk lager
+    const inventory = effectiveInventory(inventoryRaw);
     let catalog;
     try {
       catalog = productCatalog(catalogRaw);

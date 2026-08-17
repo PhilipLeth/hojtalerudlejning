@@ -2,7 +2,8 @@
  * GET /api/occupancy?from=YYYY-MM-DD&to=YYYY-MM-DD&secret=
  * Admin-belægningsdata til /admin/kalender.
  */
-import { DEFAULT_INVENTORY, addDays, bookedProductIds } from "./_lib/bookings";
+import { addDays, bookedProductIds } from "./_lib/bookings";
+import { INVENTORY_KEY, bundlePartsFromCatalog, effectiveInventory } from "./_lib/inventory";
 import {
   buildOccupancy,
   PRODUCT_LABELS,
@@ -57,16 +58,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   if (to > maxTo) to = maxTo;
 
   try {
-    let inventory: Record<string, number> = { ...DEFAULT_INVENTORY };
-    const invRaw = await context.env.BOOKINGS.get("inventory");
-    if (invRaw) {
-      try {
-        inventory = { ...DEFAULT_INVENTORY, ...JSON.parse(invRaw) };
-      } catch {
-        /* defaults */
-      }
-    }
-    delete inventory.festival_bas; // opfundet combo-SKU
+    const inventory = effectiveInventory(await context.env.BOOKINGS.get(INVENTORY_KEY));
 
     // Labels: defaults + evt. katalog-navne
     const labels = { ...PRODUCT_LABELS };
@@ -129,7 +121,11 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       Object.keys(inventory).length,
     );
 
-    const products = buildOccupancy(rawBookings, inventory, from, to, labels);
+    // Pakkernes dele kommer fra kataloget, så kalenderen fordeler en pakke på
+    // præcis de produkter kunden faktisk får med
+    const products = buildOccupancy(
+      rawBookings, inventory, from, to, labels, bundlePartsFromCatalog(catalogRaw),
+    );
 
     const blocked: BlockedDay[] = [];
     const blockedList = await context.env.BOOKINGS.list({ prefix: "blocked_" });

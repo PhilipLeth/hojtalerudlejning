@@ -6,11 +6,8 @@
  * "afleveret"), så historikken viser hvad der reelt var udsolgt.
  */
 
-import {
-  DEFAULT_INVENTORY,
-  addDays,
-  bookedProductIds,
-} from "./_lib/bookings";
+import { addDays, bookedProductIds } from "./_lib/bookings";
+import { INVENTORY_KEY, effectiveInventory } from "./_lib/inventory";
 
 import { requireAdmin } from "./_lib/adminAuth";
 
@@ -47,15 +44,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   }
 
   try {
-    let inventory: Record<string, number> = { ...DEFAULT_INVENTORY };
-    const inventoryRaw = await context.env.BOOKINGS.get("inventory");
-    if (inventoryRaw) {
-      try {
-        inventory = { ...DEFAULT_INVENTORY, ...JSON.parse(inventoryRaw) };
-      } catch {
-        // use defaults
-      }
-    }
+    const inventory = effectiveInventory(await context.env.BOOKINGS.get(INVENTORY_KEY));
 
     // Optaget pr. dag pr. produkt: dag D er optaget når pickup <= D < return
     const perDay: Record<string, Record<string, number>> = {};
