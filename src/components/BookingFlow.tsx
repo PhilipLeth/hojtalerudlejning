@@ -9,6 +9,14 @@ import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
 import CapacityBadge, { capacityLevel } from "@/components/CapacityBadge";
 import { loadStripe } from "@stripe/stripe-js";
 import { thumbSrcSet, THUMB_IMAGE_SIZES } from "@/lib/imageSrcSet";
+import { useSiteSettings } from "@/lib/useSiteSettings";
+import {
+  formatDateLine,
+  formatOneLine,
+  hoursForDate,
+  upcomingExceptions,
+  type OpeningHours,
+} from "@/lib/openingHours";
 
 /* ───── Helpers ───── */
 
@@ -65,11 +73,14 @@ function MiniCalendar({
   returnDate,
   onSelectDate,
   locale = "da",
+  hours,
 }: {
   pickupDate: Date | null;
   returnDate: Date | null;
   onSelectDate: (d: Date) => void;
   locale?: Locale;
+  /** Åbningstider fra /admin/indstillinger — styrer hvad man kan vælge */
+  hours: OpeningHours;
 }) {
   const s = t[locale].booking;
   const [viewMonth, setViewMonth] = useState(() => {
@@ -97,13 +108,13 @@ function MiniCalendar({
   return (
     <div className="glass rounded-2xl p-4">
       <div className="flex items-center justify-between mb-3">
-        <button type="button" onClick={() => setViewMonth((m) => new Date(m.getFullYear(), m.getMonth() - 1, 1))} className="rounded-lg p-2 hover:bg-white/10 transition">
+        <button type="button" aria-label={locale === "en" ? "Previous month" : "Forrige måned"} onClick={() => setViewMonth((m) => new Date(m.getFullYear(), m.getMonth() - 1, 1))} className="rounded-lg p-2 hover:bg-white/10 transition">
           <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg>
         </button>
         <span className="font-semibold">
           {s.monthNames[viewMonth.getMonth()]} {viewMonth.getFullYear()}
         </span>
-        <button type="button" onClick={() => setViewMonth((m) => new Date(m.getFullYear(), m.getMonth() + 1, 1))} className="rounded-lg p-2 hover:bg-white/10 transition">
+        <button type="button" aria-label={locale === "en" ? "Next month" : "Næste måned"} onClick={() => setViewMonth((m) => new Date(m.getFullYear(), m.getMonth() + 1, 1))} className="rounded-lg p-2 hover:bg-white/10 transition">
           <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
         </button>
       </div>
@@ -117,29 +128,43 @@ function MiniCalendar({
       <div className="grid grid-cols-7 gap-0.5">
         {cells.map((date, i) => {
           if (!date) return <div key={`e${i}`} />;
+          const iso = dateKey(date);
           const isPast = date < today;
           const isPickup = pickupDate && isSameDay(date, pickupDate);
           const isReturn = returnDate && isSameDay(date, returnDate);
           const isInRange = pickupDate && returnDate && date > pickupDate && date < returnDate;
           const isTooFar = pickupDate && !returnDate && diffDays(pickupDate, date) > 5;
-          const isHotFriday = hotFridays.has(dateKey(date));
+          const isHotFriday = hotFridays.has(iso);
+          // Åbningstiderne for netop denne dato — en særlig dato slår ugedagen ud
+          const resolved = hoursForDate(hours, iso);
+          const isSpecial = !!resolved.exception && !resolved.closed;
+          // Kun når admin har slået "kun åbne dage" til, spærrer en lukket dag
+          const isClosed = hours.onlyOpenDays && resolved.closed;
+          const label = formatDateLine(hours, iso, locale);
+          const title = resolved.exception?.note ? `${label} — ${resolved.exception.note}` : label;
 
           return (
             <button
               type="button"
-              key={dateKey(date)}
-              disabled={isPast || !!isTooFar}
+              key={iso}
+              disabled={isPast || !!isTooFar || isClosed}
               onClick={() => onSelectDate(date)}
+              title={title}
+              aria-label={`${date.getDate()}. ${s.monthNames[date.getMonth()]} — ${title}`}
               className={`
                 relative h-10 rounded-lg text-sm font-medium transition
-                ${isPast || isTooFar ? "text-white/15 cursor-not-allowed" : "hover:bg-white/10 cursor-pointer"}
+                ${isPast || isTooFar || isClosed ? "text-white/15 cursor-not-allowed" : "hover:bg-white/10 cursor-pointer"}
                 ${isPickup ? "bg-brand-500 text-black font-bold" : ""}
                 ${isReturn ? "bg-brand-600 text-black font-bold" : ""}
                 ${isInRange ? "bg-brand-500/20 text-brand-300" : ""}
                 ${isHotFriday && !isPast && !isPickup ? "ring-1 ring-orange-400/50" : ""}
+                ${isSpecial && !isPast && !isPickup && !isReturn ? "ring-1 ring-brand-400 text-brand-300" : ""}
               `}
             >
               {date.getDate()}
+              {isSpecial && !isPast && (
+                <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-brand-400" />
+              )}
               {isHotFriday && !isPast && (
                 <span className="absolute -top-1 -right-1 flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 animate-ping" />
@@ -151,6 +176,9 @@ function MiniCalendar({
         })}
       </div>
 
+      {/* Hvad gælder på de valgte datoer — inkl. særlige åbninger som 30. dec */}
+      <SelectedDayHours hours={hours} pickupDate={pickupDate} returnDate={returnDate} locale={locale} />
+
       {/* Nudge */}
       <div className="mt-3 flex items-center gap-2 rounded-lg bg-orange-400/10 px-3 py-2 text-xs text-orange-300">
         <span className="flex h-2 w-2 shrink-0 rounded-full bg-orange-400" />
@@ -160,10 +188,56 @@ function MiniCalendar({
   );
 }
 
+/**
+ * Åbningstiderne for de datoer kunden har valgt.
+ *
+ * Uden dette er kalenderen tavs om hvornår man egentlig kan hente. Er datoen en
+ * særlig åbning (fx 30. december), står noten med, så det er tydeligt hvorfor
+ * en tirsdag pludselig er mulig.
+ */
+function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da" }: {
+  hours: OpeningHours;
+  pickupDate: Date | null;
+  returnDate: Date | null;
+  locale?: Locale;
+}) {
+  const rows: Array<{ key: string; label: string; iso: string }> = [];
+  if (pickupDate) rows.push({ key: "pickup", label: locale === "en" ? "Pickup" : "Afhentning", iso: dateKey(pickupDate) });
+  if (returnDate) rows.push({ key: "return", label: locale === "en" ? "Return" : "Aflevering", iso: dateKey(returnDate) });
+  if (rows.length === 0) return null;
+
+  return (
+    <div className="mt-3 space-y-1 rounded-lg bg-white/5 px-3 py-2 text-xs">
+      {rows.map((row) => {
+        const resolved = hoursForDate(hours, row.iso);
+        const note = resolved.exception?.note;
+        return (
+          <div key={row.key} className="flex flex-wrap items-baseline gap-x-2">
+            <span className="text-white/40">{row.label}:</span>
+            <span className={resolved.closed ? "text-white/50" : "text-brand-300"}>
+              {formatDateLine(hours, row.iso, locale)}
+            </span>
+            {resolved.closed && (
+              <span className="text-white/40">
+                {locale === "en" ? "— by appointment, write it in the comment field" : "— efter aftale, skriv det i kommentarfeltet"}
+              </span>
+            )}
+            {note && <span className="text-brand-400">· {note}</span>}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 /* ───── Pickup Info ───── */
 
 function PickupInfo({ locale = "da" }: { locale?: Locale }) {
   const s = t[locale].booking;
+  const { hours } = useSiteSettings();
+  const today = dateKey(new Date());
+  const særlige = upcomingExceptions(hours, today, 120).filter((e) => !e.closed);
+  const linje = formatOneLine(hours, locale);
   return (
     <div className="glass rounded-2xl p-5 text-sm">
       <div className="flex items-start gap-3">
@@ -180,6 +254,22 @@ function PickupInfo({ locale = "da" }: { locale?: Locale }) {
             <br />
             {s.pickupDesc2}
           </p>
+          {linje && (
+            <p className="mt-2 text-white/60">
+              <span className="text-white/40">{locale === "en" ? "Opening hours" : "Åbningstider"}:</span> {linje}
+            </p>
+          )}
+          {/* Ekstra åbninger — fx 30. december op til nytår */}
+          {særlige.length > 0 && (
+            <ul className="mt-1 space-y-0.5 text-brand-300">
+              {særlige.map((e) => (
+                <li key={e.date}>
+                  {formatDateLine(hours, e.date, locale)}
+                  {e.note ? ` · ${e.note}` : ""}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>
@@ -309,6 +399,10 @@ export default function BookingFlow({
 }) {
   const inDrawer = variant === "drawer";
   const s = t[locale].booking;
+
+  // Åbningstider fra /admin/indstillinger: hvad kalenderen viser, og — hvis
+  // admin har slået det til — hvilke datoer der kan vælges
+  const { hours } = useSiteSettings();
 
   // Live catalog (admin-editable) localized for the current locale
   const catalog = useProducts();
@@ -1226,6 +1320,7 @@ export default function BookingFlow({
               returnDate={returnDate}
               onSelectDate={handleDateSelect}
               locale={locale}
+              hours={hours}
             />
 
             <div className="glass rounded-xl p-4 text-sm">

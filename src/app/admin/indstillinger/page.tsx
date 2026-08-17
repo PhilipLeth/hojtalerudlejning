@@ -12,12 +12,16 @@ import {
   DEFAULT_OPENING_HOURS,
   WEEKDAYS,
   dayName,
+  formatDateLine,
   formatOneLine,
+  formatShortDate,
+  isIsoDate,
   normalizeOpeningHours,
   openDays,
   purposeName,
   type DayHours,
   type DayPurpose,
+  type HoursException,
   type OpeningHours,
   type Weekday,
 } from "@/lib/openingHours";
@@ -118,6 +122,93 @@ function DayRow({ day, value, onChange }: {
   );
 }
 
+/**
+ * En særlig dato: 30. december åben, eller en helligdag lukket. Datoen slår
+ * ugedagen ud — både i footeren og i kalenderen i checkout.
+ */
+function ExceptionRow({ value, onChange, onRemove }: {
+  value: HoursException;
+  onChange: (next: HoursException) => void;
+  onRemove: () => void;
+}) {
+  const iDag = new Date().toISOString().slice(0, 10);
+  const overstået = value.date < iDag;
+
+  return (
+    <div style={{ padding: "10px 0", borderBottom: "1px solid #f5f5f5", opacity: overstået ? 0.5 : 1 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+        <input
+          type="date"
+          value={value.date}
+          onChange={(e) => onChange({ ...value, date: e.target.value })}
+          aria-label="Dato"
+          style={timeInput}
+        />
+        <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", cursor: "pointer" }}>
+          <input
+            type="checkbox"
+            checked={!value.closed}
+            onChange={(e) => onChange({ ...value, closed: !e.target.checked })}
+            aria-label={`Åben ${value.date}`}
+          />
+          {value.closed ? "Lukket" : "Åben"}
+        </label>
+
+        {!value.closed && (
+          <>
+            <input
+              type="time"
+              value={value.open}
+              onChange={(e) => onChange({ ...value, open: e.target.value })}
+              aria-label={`${value.date} åbner`}
+              style={timeInput}
+            />
+            <span style={{ color: "#aaa" }}>–</span>
+            <input
+              type="time"
+              value={value.close}
+              onChange={(e) => onChange({ ...value, close: e.target.value })}
+              aria-label={`${value.date} lukker`}
+              style={timeInput}
+            />
+            <select
+              value={value.purpose}
+              onChange={(e) => onChange({ ...value, purpose: e.target.value as DayPurpose })}
+              aria-label={`${value.date} formål`}
+              style={{ ...timeInput, cursor: "pointer" }}
+            >
+              {DAY_PURPOSES.map((pp) => (
+                <option key={pp || "ingen"} value={pp}>{pp ? purposeName(pp) : "— intet formål —"}</option>
+              ))}
+            </select>
+          </>
+        )}
+
+        <button
+          type="button"
+          onClick={onRemove}
+          title="Fjern datoen"
+          style={{ marginLeft: "auto", background: "none", border: "none", color: "#c0392b", cursor: "pointer", fontSize: "13px" }}
+        >
+          Fjern
+        </button>
+      </div>
+      <input
+        type="text"
+        value={value.note}
+        maxLength={120}
+        onChange={(e) => onChange({ ...value, note: e.target.value })}
+        placeholder="Info til kunden — fx »Nytår: hent 30. dec, aflever 2. jan«"
+        aria-label={`Note ${value.date}`}
+        style={{ width: "100%", marginTop: "6px", padding: "8px 10px", fontSize: "13px", border: "1px solid #ddd", borderRadius: "6px", boxSizing: "border-box", color: "#111" }}
+      />
+      {overstået && (
+        <p style={{ margin: "4px 0 0", fontSize: "11px", color: "#aaa" }}>Datoen er passeret — kan fjernes</p>
+      )}
+    </div>
+  );
+}
+
 export default function IndstillingerPage() {
   const { secret, ready, isLoggedIn, unauthorized } = useAdminAuth();
   const [phone, setPhone] = useState("");
@@ -197,6 +288,23 @@ export default function IndstillingerPage() {
   const setDay = (day: Weekday, next: DayHours) =>
     setHours((prev) => ({ ...prev, days: { ...prev.days, [day]: next } }));
 
+  const setException = (i: number, next: HoursException) =>
+    setHours((prev) => ({ ...prev, exceptions: prev.exceptions.map((e, idx) => (idx === i ? next : e)) }));
+  const removeException = (i: number) =>
+    setHours((prev) => ({ ...prev, exceptions: prev.exceptions.filter((_, idx) => idx !== i) }));
+  const addException = () =>
+    setHours((prev) => ({
+      ...prev,
+      exceptions: [
+        ...prev.exceptions,
+        // Tom dato: admin vælger den. Tiderne er fredagens, som er de mest brugte.
+        { date: "", closed: false, open: prev.days.fri.open, close: prev.days.fri.close, purpose: "afhentning", note: "" },
+      ],
+    }));
+
+  // Datoer uden dato er ikke gemt endnu — de må ikke sendes til serveren
+  const ufuldstændigeDatoer = hours.exceptions.some((e) => !isIsoDate(e.date));
+
   return (
     <>
       <AdminNav
@@ -267,6 +375,59 @@ export default function IndstillingerPage() {
             style={{ width: "100%", padding: "10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
           />
 
+          {/* Særlige datoer — det tekniske OG teksten, samme sted */}
+          <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #eee" }}>
+            <h3 style={{ margin: "0 0 4px", fontSize: "14px" }}>Særlige datoer</h3>
+            <p style={{ margin: "0 0 10px", fontSize: "12px", color: "#888", lineHeight: 1.5 }}>
+              En dato her slår ugedagen ud. Åbn fx <strong>30. december</strong> til afhentning,
+              så nytårsgæsterne kan vælge den i kalenderen — eller luk en helligdag. Noten står
+              hos kunden ved datoen i checkout.
+            </p>
+
+            {hours.exceptions.length === 0 && (
+              <p style={{ fontSize: "13px", color: "#aaa", margin: "0 0 10px" }}>Ingen særlige datoer</p>
+            )}
+            {hours.exceptions.map((e, i) => (
+              <ExceptionRow
+                key={`${e.date}_${i}`}
+                value={e}
+                onChange={(next) => setException(i, next)}
+                onRemove={() => removeException(i)}
+              />
+            ))}
+
+            <button
+              type="button"
+              onClick={addException}
+              style={{ marginTop: "10px", padding: "6px 12px", fontSize: "13px", background: "#fff", color: "#111", border: "1px solid #ddd", borderRadius: "6px", cursor: "pointer" }}
+            >
+              + Tilføj særlig dato
+            </button>
+          </div>
+
+          {/* Den tekniske del: må kunden kun vælge de dage vi har åbent? */}
+          <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #eee" }}>
+            <h3 style={{ margin: "0 0 8px", fontSize: "14px" }}>Booking-kalenderen</h3>
+            <label style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "13px", cursor: "pointer" }}>
+              <input
+                type="checkbox"
+                checked={hours.onlyOpenDays}
+                onChange={(e) => setHours((prev) => ({ ...prev, onlyOpenDays: e.target.checked }))}
+                style={{ marginTop: "2px" }}
+              />
+              <span>
+                <strong>Kun åbne dage kan vælges</strong>
+                <br />
+                <span style={{ color: "#888" }}>
+                  Slået fra: kunden kan vælge enhver dato og aftale tidspunktet i kommentarfeltet
+                  (som hidtil) — åbningstiderne står som information ved datoen. Slået til:
+                  kalenderen spærrer de dage vi har lukket, og kun åbne dage og særlige datoer
+                  kan vælges.
+                </span>
+              </span>
+            </label>
+          </div>
+
           <div style={{ marginTop: "14px", padding: "10px 12px", background: "#fafafa", border: "1px solid #eee", borderRadius: "8px" }}>
             <div style={{ fontSize: "11px", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em" }}>
               Sådan står det i footeren
@@ -275,11 +436,22 @@ export default function IndstillingerPage() {
               {openDays(hours).length ? formatOneLine(hours) : <span style={{ color: "#c0392b" }}>Ingen åbne dage — footeren viser ingen åbningstider</span>}
             </div>
             {hours.other && <div style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}>{hours.other}</div>}
+            {hours.exceptions.filter((e) => isIsoDate(e.date)).map((e) => (
+              <div key={e.date} style={{ fontSize: "12px", color: "#4b2ea3", marginTop: "2px" }}>
+                {formatShortDate(e.date)}: {e.closed ? "lukket" : formatDateLine(hours, e.date)}
+                {e.note ? ` · ${e.note}` : ""}
+              </div>
+            ))}
           </div>
 
-          <button type="submit" disabled={saving !== null} style={knap}>
+          <button type="submit" disabled={saving !== null || ufuldstændigeDatoer} style={knap}>
             {saving === "hours" ? "Gemmer…" : "Gem åbningstider"}
           </button>
+          {ufuldstændigeDatoer && (
+            <p style={{ margin: "8px 0 0", fontSize: "12px", color: "#c0392b" }}>
+              Vælg en dato på den særlige åbning — eller fjern linjen.
+            </p>
+          )}
 
           {/* Ærligt forbehold: to steder følger IKKE med automatisk */}
           <p style={{ margin: "14px 0 0", fontSize: "12px", color: "#888", lineHeight: 1.5 }}>

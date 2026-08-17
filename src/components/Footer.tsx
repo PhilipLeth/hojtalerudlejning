@@ -5,7 +5,7 @@ import Link from "next/link";
 import { type Locale, t } from "@/lib/i18n";
 import PhoneLink from "@/components/PhoneLink";
 import { useSiteSettings } from "@/lib/useSiteSettings";
-import { formatOneLine, openDays } from "@/lib/openingHours";
+import { formatDateLine, formatOneLine, openDays, upcomingExceptions } from "@/lib/openingHours";
 
 /**
  * Åbningstiderne i footeren. Tiderne kommer fra /admin/indstillinger, så de kan
@@ -13,15 +13,27 @@ import { formatOneLine, openDays } from "@/lib/openingHours";
  */
 function OpeningHoursLine({ locale }: { locale: Locale }) {
   const { hours } = useSiteSettings();
-  if (openDays(hours).length === 0) return null;
+  const iDag = new Date().toISOString().slice(0, 10);
+  // Kun de kommende — en særlig åbning i marts hjælper ingen i august
+  const særlige = upcomingExceptions(hours, iDag, 60);
+  if (openDays(hours).length === 0 && særlige.length === 0) return null;
+
   return (
     <>
-      <p className="mt-3 text-white/50">
-        <span className="font-medium text-white/70">
-          {locale === "da" ? "Åbningstider" : "Opening hours"}:
-        </span>{" "}
-        {formatOneLine(hours, locale)}
-      </p>
+      {openDays(hours).length > 0 && (
+        <p className="mt-3 text-white/50">
+          <span className="font-medium text-white/70">
+            {locale === "da" ? "Åbningstider" : "Opening hours"}:
+          </span>{" "}
+          {formatOneLine(hours, locale)}
+        </p>
+      )}
+      {særlige.map((e) => (
+        <p key={e.date} className="mt-1 text-brand-400">
+          {formatDateLine(hours, e.date, locale)}
+          {e.note ? ` · ${e.note}` : ""}
+        </p>
+      ))}
       {hours.other && <p className="mt-1 text-xs text-white/30">{hours.other}</p>}
     </>
   );

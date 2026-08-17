@@ -15,17 +15,23 @@ import Footer from "@/components/Footer";
 import IndstillingerPage from "@/app/admin/indstillinger/page";
 import {
   DEFAULT_OPENING_HOURS,
+  formatDateLine,
   formatDayLine,
   formatOneLine,
   formatRange,
   formatSentence,
   formatTime,
+  hoursForDate,
+  isOpenOn,
   normalizeOpeningHours,
   openDays,
   openingHoursSpecification,
+  upcomingExceptions,
   validateOpeningHours,
+  weekdayOf,
   type OpeningHours,
 } from "@/lib/openingHours";
+import BookingFlow from "@/components/BookingFlow";
 import { clearSiteSettingsCache } from "@/lib/useSiteSettings";
 
 /** Åbningstider med kun de dage man nævner — resten lukket */
@@ -168,6 +174,126 @@ describe("Strukturerede data til Google", () => {
   });
 });
 
+describe("Særlige datoer", () => {
+  /** 30. december 2026 er en onsdag — normalt lukket */
+  const nytår: OpeningHours = normalizeOpeningHours({
+    ...DEFAULT_OPENING_HOURS,
+    exceptions: [
+      { date: "2026-12-30", closed: false, open: "14:00", close: "18:00", purpose: "afhentning", note: "Nytår — hent 30. dec" },
+      { date: "2026-12-25", closed: true, open: "14:00", close: "18:00", purpose: "", note: "Juledag" },
+    ],
+  });
+
+  it("kender ugedagen for en dato uanset tidszone", () => {
+    expect(weekdayOf("2026-12-30")).toBe("wed");
+    expect(weekdayOf("2026-08-21")).toBe("fri");
+    expect(weekdayOf("2026-08-23")).toBe("sun");
+  });
+
+  it("åbner en dag der ellers var lukket", () => {
+    // Onsdag er lukket i ugeplanen — undtagelsen vinder
+    expect(isOpenOn(DEFAULT_OPENING_HOURS, "2026-12-30")).toBe(false);
+    expect(isOpenOn(nytår, "2026-12-30")).toBe(true);
+    expect(hoursForDate(nytår, "2026-12-30")).toMatchObject({
+      open: "14:00", close: "18:00", purpose: "afhentning", closed: false,
+    });
+  });
+
+  it("kan også lukke en dag der ellers var åben", () => {
+    // 25. december 2026 er en fredag — normalt afhentningsdag
+    expect(weekdayOf("2026-12-25")).toBe("fri");
+    expect(isOpenOn(DEFAULT_OPENING_HOURS, "2026-12-25")).toBe(true);
+    expect(isOpenOn(nytår, "2026-12-25")).toBe(false);
+  });
+
+  it("nævnes ved dato, ikke ved ugedag", () => {
+    expect(formatDateLine(nytår, "2026-12-30")).toBe("30. dec 14–18 (afhentning)");
+    expect(formatDateLine(nytår, "2026-12-25")).toBe("25. dec: lukket");
+    // En almindelig dag nævnes stadig ved sin ugedag
+    expect(formatDateLine(nytår, "2026-08-21")).toBe("Fredag 14–18 (afhentning)");
+  });
+
+  it("bærer en note til kunden", () => {
+    expect(hoursForDate(nytår, "2026-12-30").exception?.note).toBe("Nytår — hent 30. dec");
+  });
+
+  it("viser kun de kommende", () => {
+    expect(upcomingExceptions(nytår, "2026-12-01").map((e) => e.date)).toEqual(["2026-12-25", "2026-12-30"]);
+    expect(upcomingExceptions(nytår, "2026-12-26").map((e) => e.date)).toEqual(["2026-12-30"]);
+    expect(upcomingExceptions(nytår, "2027-01-05")).toEqual([]);
+    // Uden for vinduet
+    expect(upcomingExceptions(nytår, "2026-08-01", 30)).toEqual([]);
+  });
+
+  it("sorteres og kan ikke stå to gange for samme dato", () => {
+    const h = normalizeOpeningHours({
+      ...DEFAULT_OPENING_HOURS,
+      exceptions: [
+        { date: "2026-12-30", closed: false, open: "10:00", close: "12:00", purpose: "", note: "først" },
+        { date: "2026-12-30", closed: true, open: "14:00", close: "18:00", purpose: "", note: "dublet" },
+        { date: "2026-12-01", closed: false, open: "14:00", close: "18:00", purpose: "", note: "" },
+      ],
+    });
+    expect(h.exceptions.map((e) => e.date)).toEqual(["2026-12-01", "2026-12-30"]);
+    expect(h.exceptions.find((e) => e.date === "2026-12-30")?.note).toBe("først");
+  });
+
+  it("kasseres hvis datoen ikke er en dato", () => {
+    const h = normalizeOpeningHours({ ...DEFAULT_OPENING_HOURS, exceptions: [{ date: "30. december" }] });
+    expect(h.exceptions).toEqual([]);
+  });
+
+  it("afvises ved gemning med en tydelig fejl", () => {
+    const base = { days: DEFAULT_OPENING_HOURS.days, other: "" };
+    const dato = (e: unknown) => validateOpeningHours({ ...base, exceptions: [e] });
+
+    expect(dato({ date: "i morgen", closed: false, open: "14:00", close: "18:00", purpose: "" }).ok).toBe(false);
+    const forkertTid = dato({ date: "2026-12-30", closed: false, open: "14:00", close: "13:00", purpose: "" });
+    expect(forkertTid.ok).toBe(false);
+    if (!forkertTid.ok) expect(forkertTid.error).toContain("30. dec");
+
+    const dublet = validateOpeningHours({
+      ...base,
+      exceptions: [
+        { date: "2026-12-30", closed: false, open: "14:00", close: "18:00", purpose: "" },
+        { date: "2026-12-30", closed: false, open: "14:00", close: "18:00", purpose: "" },
+      ],
+    });
+    expect(dublet.ok).toBe(false);
+  });
+
+  it("gemmes med note og formål", () => {
+    const res = validateOpeningHours({
+      days: DEFAULT_OPENING_HOURS.days,
+      other: "",
+      exceptions: [{ date: "2026-12-30", closed: false, open: "14:00", close: "18:00", purpose: "afhentning", note: "Nytår" }],
+      onlyOpenDays: true,
+    });
+    expect(res.ok).toBe(true);
+    if (res.ok) {
+      expect(res.hours.exceptions[0]).toEqual({
+        date: "2026-12-30", closed: false, open: "14:00", close: "18:00", purpose: "afhentning", note: "Nytår",
+      });
+      expect(res.hours.onlyOpenDays).toBe(true);
+    }
+  });
+
+  it("holder JSON-LD fri af enkeltdatoer — de er undtagelser, ikke åbningstider", () => {
+    expect(openingHoursSpecification(nytår)).toHaveLength(2);
+  });
+});
+
+describe("Den tekniske indstilling", () => {
+  it("er slået fra som standard, så alle datoer stadig kan vælges", () => {
+    expect(DEFAULT_OPENING_HOURS.onlyOpenDays).toBe(false);
+  });
+
+  it("gemmes som den blev sat", () => {
+    expect(normalizeOpeningHours({ ...DEFAULT_OPENING_HOURS, onlyOpenDays: true }).onlyOpenDays).toBe(true);
+    expect(normalizeOpeningHours({ ...DEFAULT_OPENING_HOURS, onlyOpenDays: "ja" }).onlyOpenDays).toBe(false);
+  });
+});
+
 /* ───── sitet og admin ───── */
 
 function mockSettings(hours?: unknown) {
@@ -246,6 +372,89 @@ describe("Footeren", () => {
   });
 });
 
+describe("Checkout", () => {
+  /** En særlig åbning på en onsdag, langt nok ude at kalenderen kan nå den */
+  function medSærligDato(onlyOpenDays = false) {
+    const d = new Date();
+    d.setUTCDate(d.getUTCDate() + 14);
+    // Ryk til næste onsdag, som ellers er lukket
+    while (d.getUTCDay() !== 3) d.setUTCDate(d.getUTCDate() + 1);
+    const dato = d.toISOString().slice(0, 10);
+    return {
+      dato,
+      hours: normalizeOpeningHours({
+        ...DEFAULT_OPENING_HOURS,
+        onlyOpenDays,
+        exceptions: [
+          { date: dato, closed: false, open: "14:00", close: "18:00", purpose: "afhentning", note: "Nytår — hent her" },
+        ],
+      }),
+    };
+  }
+
+  it("viser åbningstider og særlige datoer ved afhentningsinfoen", async () => {
+    const { dato, hours } = medSærligDato();
+    mockSettings(hours);
+    render(<BookingFlow />);
+
+    await waitFor(() => expect(screen.getByText(/Åbningstider:/)).toBeInTheDocument());
+    expect(screen.getByText(/Fredag 14–18 \(afhentning\)/)).toBeInTheDocument();
+    // Den særlige dato står med sin note, så kunden ved at datoen kan vælges
+    const kort = new Date(`${dato}T12:00:00Z`).toLocaleDateString("da-DK", { day: "numeric", month: "short", timeZone: "UTC" }).replace(/\.$/, "");
+    expect(screen.getByText(new RegExp(`${kort} 14–18 \\(afhentning\\) · Nytår`))).toBeInTheDocument();
+  });
+
+  it("markerer den særlige dato i kalenderen, så den kan vælges", async () => {
+    const { dato, hours } = medSærligDato();
+    mockSettings(hours);
+    render(<BookingFlow />);
+
+    fireEvent.click(screen.getByText("Lille højtalerpakke").closest("button")!);
+    await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
+
+    // Datoen kan ligge i næste måned — bladr frem indtil den er synlig
+    const find = () =>
+      screen.getAllByRole("button").find((b) => b.getAttribute("title")?.includes("Nytår"));
+    for (let i = 0; i < 3 && !find(); i++) {
+      fireEvent.click(screen.getByLabelText("Næste måned"));
+    }
+    const knap = find()!;
+    expect(knap).toBeTruthy();
+    expect(knap.textContent?.trim()).toBe(String(Number(dato.slice(8, 10))));
+    expect(knap).not.toBeDisabled();
+    expect(knap.getAttribute("title")).toMatch(/14–18 \(afhentning\) — Nytår/);
+  });
+
+  it("spærrer lukkede dage når admin har slået 'kun åbne dage' til", async () => {
+    const { hours } = medSærligDato(true);
+    mockSettings(hours);
+    render(<BookingFlow />);
+
+    fireEvent.click(screen.getByText("Lille højtalerpakke").closest("button")!);
+    await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
+
+    // En tirsdag i næste måned er lukket → spærret
+    const lukkede = screen.getAllByRole("button").filter((b) => b.getAttribute("title")?.includes("lukket"));
+    expect(lukkede.length).toBeGreaterThan(0);
+    for (const b of lukkede) expect(b).toBeDisabled();
+  });
+
+  it("lader alle datoer vælge når indstillingen er slået fra", async () => {
+    const { hours } = medSærligDato(false);
+    mockSettings(hours);
+    render(<BookingFlow />);
+
+    fireEvent.click(screen.getByText("Lille højtalerpakke").closest("button")!);
+    await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
+
+    const lukkede = screen.getAllByRole("button").filter((b) => b.getAttribute("title")?.includes("lukket"));
+    expect(lukkede.length).toBeGreaterThan(0);
+    // Som hidtil: man kan vælge dagen og aftale tidspunktet i kommentarfeltet
+    const fremtidige = lukkede.filter((b) => !b.className.includes("cursor-not-allowed"));
+    expect(fremtidige.length).toBeGreaterThan(0);
+  });
+});
+
 describe("/admin/indstillinger", () => {
   it("har en linje pr. ugedag med tider og formål", async () => {
     mockSettings();
@@ -300,6 +509,49 @@ describe("/admin/indstillinger", () => {
         (c: unknown[]) => (c[1] as { method?: string })?.method === "POST",
       );
       expect(JSON.parse((post[1] as { body: string }).body).hours.days.fri.closed).toBe(true);
+    });
+  });
+
+  it("kan tilføje en særlig dato med tider, formål og note", async () => {
+    mockSettings();
+    renderAdmin(<IndstillingerPage />);
+    await waitFor(() => expect(screen.getByText("Særlige datoer")).toBeInTheDocument());
+    expect(screen.getByText("Ingen særlige datoer")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText("+ Tilføj særlig dato"));
+    // Uden en dato kan der ikke gemmes
+    expect(screen.getByText("Gem åbningstider")).toBeDisabled();
+    expect(screen.getByText(/Vælg en dato på den særlige åbning/)).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText("Dato"), { target: { value: "2026-12-30" } });
+    fireEvent.change(screen.getByLabelText("Note 2026-12-30"), { target: { value: "Nytår" } });
+    fireEvent.click(screen.getByText("Gem åbningstider"));
+
+    await waitFor(() => {
+      const post = (global.fetch as any).mock.calls.find(
+        (c: unknown[]) => (c[1] as { method?: string })?.method === "POST",
+      );
+      const body = JSON.parse((post[1] as { body: string }).body);
+      expect(body.hours.exceptions).toHaveLength(1);
+      expect(body.hours.exceptions[0]).toMatchObject({ date: "2026-12-30", note: "Nytår", purpose: "afhentning", closed: false });
+    });
+  });
+
+  it("har den tekniske indstilling for kalenderen, slået fra som standard", async () => {
+    mockSettings();
+    renderAdmin(<IndstillingerPage />);
+    await waitFor(() => expect(screen.getByText("Kun åbne dage kan vælges")).toBeInTheDocument());
+
+    const hak = screen.getByText("Kun åbne dage kan vælges").closest("label")!.querySelector("input")!;
+    expect(hak.checked).toBe(false);
+    fireEvent.click(hak);
+    fireEvent.click(screen.getByText("Gem åbningstider"));
+
+    await waitFor(() => {
+      const post = (global.fetch as any).mock.calls.find(
+        (c: unknown[]) => (c[1] as { method?: string })?.method === "POST",
+      );
+      expect(JSON.parse((post[1] as { body: string }).body).hours.onlyOpenDays).toBe(true);
     });
   });
 

@@ -29,10 +29,39 @@ export interface DayHours {
   purpose: DayPurpose;
 }
 
+/**
+ * En enkelt dato der opfører sig anderledes end sin ugedag.
+ *
+ * Begge veje: en ekstra åbningsdag (30. december, så nytårsgæsterne kan hente)
+ * eller en lukket dag (helligdag, ferie). Noten er til kunden og står i
+ * checkout ved siden af datoen.
+ */
+export interface HoursException {
+  /** "YYYY-MM-DD" */
+  date: string;
+  closed: boolean;
+  open: string;
+  close: string;
+  purpose: DayPurpose;
+  /** Fx "Nytår — hent 30. dec". Tom er fint. */
+  note: string;
+}
+
 export interface OpeningHours {
   days: Record<Weekday, DayHours>;
   /** Linjen under tiderne — fx "Andre tidspunkter efter aftale" */
   other: string;
+  /** Datoer der slår ugedagen ud, sorteret efter dato */
+  exceptions: HoursException[];
+  /**
+   * Teknisk indstilling: må kunden kun vælge datoer vi har åbent?
+   *
+   * Slået fra som standard, fordi det altid har været muligt at vælge en
+   * hvilken som helst dato og aftale tidspunktet i kommentarfeltet. Slår man
+   * den til, kan kalenderen i checkout kun vælge åbne dage og de særlige
+   * datoer — så er åbningstiderne ikke længere kun information.
+   */
+  onlyOpenDays: boolean;
 }
 
 const LUKKET: DayHours = { closed: true, open: "10:00", close: "16:00", purpose: "" };
@@ -52,6 +81,8 @@ export const DEFAULT_OPENING_HOURS: OpeningHours = {
     sun: { ...LUKKET },
   },
   other: "Andre tidspunkter efter aftale — skriv i kommentarfeltet ved booking.",
+  exceptions: [],
+  onlyOpenDays: false,
 };
 
 const DAY_NAMES: Record<Weekday, { da: string; en: string }> = {
@@ -157,6 +188,87 @@ export function formatSentence(hours: OpeningHours, locale: "da" | "en" = "da"):
   return sentence.charAt(0).toUpperCase() + sentence.slice(1) + ".";
 }
 
+/* ─────────────────────────── datoer ─────────────────────────── */
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+export function isIsoDate(value: string): boolean {
+  return ISO_DATE.test(value) && !isNaN(new Date(`${value}T12:00:00Z`).getTime());
+}
+
+/** Ugedagen for en ISO-dato. Læses i UTC, så en tidszone ikke flytter dagen. */
+export function weekdayOf(isoDate: string): Weekday {
+  const d = new Date(`${isoDate.slice(0, 10)}T12:00:00Z`);
+  // getUTCDay: 0 = søndag
+  return WEEKDAYS[(d.getUTCDay() + 6) % 7];
+}
+
+export interface ResolvedDay extends DayHours {
+  date: string;
+  day: Weekday;
+  /** Sat når en særlig dato bestemmer tiderne i stedet for ugedagen */
+  exception: HoursException | null;
+}
+
+/**
+ * Hvad gælder på en bestemt dato: ugedagens tider, medmindre der er en
+ * undtagelse — den vinder altid, både når den åbner og når den lukker.
+ */
+export function hoursForDate(hours: OpeningHours, isoDate: string): ResolvedDay {
+  const date = isoDate.slice(0, 10);
+  const day = weekdayOf(date);
+  const exception = hours.exceptions.find((e) => e.date === date) ?? null;
+  const base = exception
+    ? { closed: exception.closed, open: exception.open, close: exception.close, purpose: exception.purpose }
+    : hours.days[day];
+  return { date, day, exception, ...base };
+}
+
+export function isOpenOn(hours: OpeningHours, isoDate: string): boolean {
+  return !hoursForDate(hours, isoDate).closed;
+}
+
+/** "Fredag 14–18 (afhentning)" — eller "30. dec 14–18 (afhentning)" for en særlig dato */
+export function formatDateLine(hours: OpeningHours, isoDate: string, locale: "da" | "en" = "da"): string {
+  const r = hoursForDate(hours, isoDate);
+  // En særlig dato nævnes ved sin dato ("30. dec"), en almindelig ved sin ugedag
+  const hvornår = r.exception ? formatShortDate(r.date, locale) : dayName(r.day, locale);
+  if (r.closed) {
+    return locale === "en" ? `${hvornår}: closed` : `${hvornår}: lukket`;
+  }
+  const p = purposeName(r.purpose, locale);
+  return `${hvornår} ${formatRange(r, locale)}${p ? ` (${p})` : ""}`;
+}
+
+/** "30. dec" / "Dec 30" */
+export function formatShortDate(isoDate: string, locale: "da" | "en" = "da"): string {
+  const d = new Date(`${isoDate.slice(0, 10)}T12:00:00Z`);
+  if (isNaN(d.getTime())) return isoDate;
+  return d
+    .toLocaleDateString(locale === "en" ? "en-GB" : "da-DK", {
+      day: "numeric",
+      month: "short",
+      timeZone: "UTC",
+    })
+    // Dansk skriver "30. dec." — punktummet klodser når datoen efterfølges af
+    // tider eller kolon ("30. dec.: lukket")
+    .replace(/\.$/, "");
+}
+
+/** Særlige datoer fra i dag og frem — det er dem kunden skal kende */
+export function upcomingExceptions(
+  hours: OpeningHours,
+  todayIso: string,
+  days = 120,
+): HoursException[] {
+  const until = new Date(`${todayIso}T12:00:00Z`);
+  until.setUTCDate(until.getUTCDate() + days);
+  const max = until.toISOString().slice(0, 10);
+  return hours.exceptions
+    .filter((e) => e.date >= todayIso && e.date <= max)
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
 /* ─────────────────────────── validering ─────────────────────────── */
 
 function normalizeDay(input: unknown, fallback: DayHours): DayHours {
@@ -188,7 +300,47 @@ export function normalizeOpeningHours(input: unknown): OpeningHours {
     out[day] = normalizeDay(days[day], DEFAULT_OPENING_HOURS.days[day]);
   }
   const other = typeof raw.other === "string" ? raw.other.trim().slice(0, 200) : DEFAULT_OPENING_HOURS.other;
-  return { days: out, other };
+
+  const rawEx = (raw as { exceptions?: unknown }).exceptions;
+  const exceptions: HoursException[] = [];
+  const seen = new Set<string>();
+  if (Array.isArray(rawEx)) {
+    for (const item of rawEx) {
+      const e = normalizeException(item);
+      // Én undtagelse pr. dato — den første vinder, så et dubleret felt i KV
+      // ikke gør det uforudsigeligt hvilke tider der gælder
+      if (e && !seen.has(e.date)) {
+        seen.add(e.date);
+        exceptions.push(e);
+      }
+    }
+  }
+  exceptions.sort((a, b) => a.date.localeCompare(b.date));
+
+  return {
+    days: out,
+    other,
+    exceptions,
+    onlyOpenDays: (raw as { onlyOpenDays?: unknown }).onlyOpenDays === true,
+  };
+}
+
+function normalizeException(input: unknown): HoursException | null {
+  if (!input || typeof input !== "object") return null;
+  const raw = input as Partial<HoursException>;
+  const date = String(raw.date ?? "").slice(0, 10);
+  if (!isIsoDate(date)) return null;
+  const open = typeof raw.open === "string" && isTime(raw.open) ? raw.open : "14:00";
+  const closeRaw = typeof raw.close === "string" && isTime(raw.close) ? raw.close : "18:00";
+  const close = minutesOf(closeRaw) > minutesOf(open) ? closeRaw : "18:00";
+  return {
+    date,
+    closed: raw.closed === true,
+    open,
+    close: minutesOf(close) > minutesOf(open) ? close : "23:00",
+    purpose: DAY_PURPOSES.includes(raw.purpose as DayPurpose) ? (raw.purpose as DayPurpose) : "",
+    note: typeof raw.note === "string" ? raw.note.trim().slice(0, 120) : "",
+  };
 }
 
 /**
@@ -223,7 +375,52 @@ export function validateOpeningHours(
   }
 
   const other = typeof raw.other === "string" ? raw.other.trim().slice(0, 200) : "";
-  return { ok: true, hours: { days: out, other } };
+
+  // Særlige datoer: fx 30. december åben, eller en helligdag lukket
+  const rawEx = (raw as { exceptions?: unknown }).exceptions;
+  const exceptions: HoursException[] = [];
+  if (rawEx !== undefined) {
+    if (!Array.isArray(rawEx)) return { ok: false, error: "Særlige datoer skal være en liste" };
+    if (rawEx.length > 60) return { ok: false, error: "Højst 60 særlige datoer" };
+    const seen = new Set<string>();
+    for (const item of rawEx as Array<Partial<HoursException>>) {
+      const date = String(item?.date ?? "").slice(0, 10);
+      if (!isIsoDate(date)) return { ok: false, error: `Ugyldig dato: "${item?.date ?? ""}"` };
+      if (seen.has(date)) return { ok: false, error: `${formatShortDate(date)} står to gange` };
+      seen.add(date);
+      const closed = item?.closed === true;
+      const open = String(item?.open ?? "");
+      const close = String(item?.close ?? "");
+      if (!isTime(open) || !isTime(close)) {
+        return { ok: false, error: `${formatShortDate(date)}: tiderne skal være HH:MM (fx 14:00)` };
+      }
+      if (!closed && minutesOf(close) <= minutesOf(open)) {
+        return { ok: false, error: `${formatShortDate(date)}: lukketid skal være efter åbningstid` };
+      }
+      if (!DAY_PURPOSES.includes((item?.purpose ?? "") as DayPurpose)) {
+        return { ok: false, error: `${formatShortDate(date)}: ukendt formål` };
+      }
+      exceptions.push({
+        date,
+        closed,
+        open,
+        close,
+        purpose: (item?.purpose ?? "") as DayPurpose,
+        note: typeof item?.note === "string" ? item.note.trim().slice(0, 120) : "",
+      });
+    }
+    exceptions.sort((a, b) => a.date.localeCompare(b.date));
+  }
+
+  return {
+    ok: true,
+    hours: {
+      days: out,
+      other,
+      exceptions,
+      onlyOpenDays: (raw as { onlyOpenDays?: unknown }).onlyOpenDays === true,
+    },
+  };
 }
 
 /* ─────────────────────────── structured data ─────────────────────────── */
