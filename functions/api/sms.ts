@@ -18,7 +18,7 @@ import {
   smsErrorText,
   type SmsEnv,
 } from "./_lib/sms";
-import { smsBalance, smsLength, toE164Dk } from "../../src/lib/sms";
+import { SMS_PROVIDERS, resolveProvider, smsBalance, smsLength, toE164Dk } from "../../src/lib/sms";
 import { isSmsType, parseSmsSettings, SMS_TYPES } from "../../src/lib/smsTemplates";
 
 interface Env extends SmsEnv {
@@ -46,11 +46,13 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   if (auth instanceof Response) return auth;
 
   const ctx = await smsContext(context.env);
-  const token = context.env.SMS_API_TOKEN;
 
   return json({
     configured: smsConfigured(context.env),
     devMode: !!context.env.SMS_DEV_MODE,
+    /** Hvilken udbyder nøglerne peger på — null når der ingen er */
+    provider: resolveProvider(context.env),
+    providers: SMS_PROVIDERS,
     settings: ctx.settings,
     types: SMS_TYPES,
     // Samme værdier serveren fylder i beskederne, så admins forhåndsvisning og
@@ -58,7 +60,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     telefon: ctx.telefon,
     link: ctx.link,
     // Saldoen må ikke kunne blokere siden — null betyder "kunne ikke hentes"
-    balance: token ? await smsBalance(token) : null,
+    balance: await smsBalance(context.env),
   });
 };
 
@@ -97,7 +99,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   // ── Testbesked til et nummer man selv skriver
   if (body.action === "test") {
     if (!smsConfigured(context.env)) {
-      return json({ error: "SMS_API_TOKEN mangler i Cloudflare — der kan ikke sendes endnu" }, 503);
+      return json({ error: "Ingen SMS-udbyder er sat op i Cloudflare — der kan ikke sendes endnu" }, 503);
     }
     const to = toE164Dk(body.phone);
     if (!to) {
@@ -135,7 +137,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (!text && type === "manuel") return json({ error: "Beskeden er tom" }, 400);
 
     if (!smsConfigured(context.env)) {
-      return json({ error: "SMS_API_TOKEN mangler i Cloudflare — der kan ikke sendes endnu" }, 503);
+      return json({ error: "Ingen SMS-udbyder er sat op i Cloudflare — der kan ikke sendes endnu" }, 503);
     }
 
     // force: admin har trykket på knappen, så typens automatik er irrelevant

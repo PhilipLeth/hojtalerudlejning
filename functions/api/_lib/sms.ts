@@ -1,7 +1,7 @@
 /* ───── SMS server-side ─────
  *
  * Ét sted at sende en SMS på en booking: henter indstillingerne fra KV, bygger
- * teksten af skabelonen, sender via GatewayAPI og giver linjen til
+ * teksten af skabelonen, sender via den valgte udbyder og giver linjen til
  * kommunikationsloggen tilbage. Kaldere bestemmer selv, hvornår ordren skrives
  * — så en besked og dens log lander i samme KV-skrivning.
  */
@@ -22,8 +22,16 @@ import {
 
 export interface SmsEnv {
   BOOKINGS: KVNamespace;
-  /** GatewayAPI-token. Mangler den, sendes intet — og det siges tydeligt. */
+  /** gatewayapi | cpsms | twilio. Tom: afgøres af hvilke nøgler der findes. */
+  SMS_PROVIDER?: string;
+  /** Token/API-nøgle. Mangler den, sendes intet — og det siges tydeligt. */
   SMS_API_TOKEN?: string;
+  /** CPSMS: brugernavnet der hører til nøglen */
+  SMS_USERNAME?: string;
+  /** Twilio: Account SID (AC…) */
+  SMS_ACCOUNT_SID?: string;
+  /** Twilio: afsender — købt nummer (+45…) eller Messaging Service (MG…) */
+  SMS_FROM?: string;
   /** Sat i .dev.vars lokalt: log i stedet for at sende */
   SMS_DEV_MODE?: string;
   GOOGLE_REVIEW_URL?: string;
@@ -152,16 +160,27 @@ export function recordSms(booking: Record<string, unknown>, outcome: SendSmsOutc
 export function smsErrorText(code?: string): string {
   switch (code) {
     case "sms_ikke_konfigureret":
-      return "SMS_API_TOKEN mangler i Cloudflare — der kan ikke sendes endnu";
+      return "Ingen SMS-udbyder er sat op i Cloudflare — der kan ikke sendes endnu";
     case "gatewayapi_401":
     case "gatewayapi_403":
-      return "GatewayAPI afviste tokenet — tjek SMS_API_TOKEN";
+    case "cpsms_401":
+    case "cpsms_403":
+    case "twilio_20003":
+      return "Udbyderen afviste dine nøgler — tjek SMS_API_TOKEN (og brugernavn/Account SID)";
     case "gatewayapi_402":
-      return "Ingen saldo hos GatewayAPI — læg penge på kontoen";
+    case "cpsms_402":
+    case "twilio_20429":
+      return "Ingen saldo hos udbyderen — læg penge på kontoen";
     case "gatewayapi_422":
-      return "GatewayAPI afviste beskeden — tjek afsendernavn (max 11 tegn) og nummeret";
+    case "cpsms_400":
+      return "Udbyderen afviste beskeden — tjek afsendernavn (max 11 tegn) og nummeret";
+    case "twilio_21606":
+    case "twilio_21212":
+      return "Twilio afviste afsenderen — sæt SMS_FROM til et nummer du har købt hos dem";
+    case "twilio_21608":
+      return "Twilio-prøvekonti kan kun sende til bekræftede numre — opgradér kontoen";
     case "netvaerksfejl":
-      return "Kunne ikke nå GatewayAPI — prøv igen";
+      return "Kunne ikke nå SMS-udbyderen — prøv igen";
     case "ugyldigt_nummer":
       return "Kundens telefonnummer kan ikke bruges til SMS";
     case "tom_tekst":

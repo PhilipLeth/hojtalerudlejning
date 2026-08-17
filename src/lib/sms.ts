@@ -1,7 +1,10 @@
 /* ───── SMS-gateway ─────
  *
- * GatewayAPI (gatewayapi.com) i produktion — dansk udbyder, betalt pr. besked.
- * Dev og tests logger i stedet for at sende, og en produktion uden token skal
+ * Udbyderen er et valg, ikke en beslutning støbt ind i koden: GatewayAPI,
+ * CPSMS eller Twilio, afgjort af hvilke nøgler der ligger i Cloudflare. Alle
+ * tre taler REST over fetch, så ingen af dem kræver en SDK i en Worker.
+ *
+ * Dev og tests logger i stedet for at sende, og en produktion uden nøgler skal
  * fejle højlydt frem for at lade som om beskeden gik afsted: en SMS der aldrig
  * blev sendt må ikke stå som "sendt" i kommunikationsloggen.
  *
@@ -201,28 +204,198 @@ export class GatewayApiSms implements SmsGateway {
   }
 }
 
-/** Produktion uden token: sig det tydeligt frem for at love en levering */
+/**
+ * CPSMS (cpsms.dk) — dansk udbyder, Basic auth med brugernavn og API-nøgle.
+ * Svarer 200 med et error-objekt i kroppen ved afviste beskeder, så status
+ * alene er ikke nok til at afgøre om beskeden gik igennem.
+ */
+export class CpsmsGateway implements SmsGateway {
+  constructor(
+    private username: string,
+    private apiKey: string,
+    private sender: string = DEFAULT_SMS_SENDER,
+    private fetchImpl: typeof fetch = (...a: Parameters<typeof fetch>) => fetch(...a),
+  ) {}
+
+  async send(to: string, message: string): Promise<SmsResult> {
+    const number = String(to).replace(/\D/g, "");
+    if (!number) return { ok: false, error: "ugyldigt_nummer" };
+
+    let res: Response;
+    try {
+      res = await this.fetchImpl("https://api.cpsms.dk/v2/send", {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${btoa(`${this.username}:${this.apiKey}`)}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          to: number,
+          from: cleanSender(this.sender),
+          message,
+          // Dansk tekst er GSM-7; teksten er allerede renset for pile og
+          // typografiske anførselstegn i renderSms
+          encoding: "UTF-8",
+        }),
+      });
+    } catch (e) {
+      console.error("[sms] cpsms uden svar:", e);
+      return { ok: false, error: "netvaerksfejl" };
+    }
+
+    let body: { success?: Array<{ to?: string }>; error?: { code?: number; message?: string } } = {};
+    try {
+      body = (await res.json()) as typeof body;
+    } catch {
+      /* tom krop — status afgør */
+    }
+
+    if (!res.ok || body.error) {
+      const code = body.error?.code ?? res.status;
+      console.error(`[sms] cpsms ${code}: ${String(body.error?.message ?? "").slice(0, 200)}`);
+      return { ok: false, error: `cpsms_${code}` };
+    }
+    return { ok: true, id: body.success?.[0]?.to };
+  }
+}
+
+/**
+ * Twilio — global, hurtigst at komme i gang med, men afsender er et købt
+ * nummer eller et navn der skal godkendes til dansk trafik. SMS_FROM afgør
+ * hvad der sendes fra; et "MG…"-id er en Messaging Service.
+ */
+export class TwilioSms implements SmsGateway {
+  constructor(
+    private accountSid: string,
+    private authToken: string,
+    private from: string,
+    private fetchImpl: typeof fetch = (...a: Parameters<typeof fetch>) => fetch(...a),
+  ) {}
+
+  async send(to: string, message: string): Promise<SmsResult> {
+    const form = new URLSearchParams({ To: to, Body: message });
+    if (this.from.startsWith("MG")) form.set("MessagingServiceSid", this.from);
+    else form.set("From", this.from);
+
+    let res: Response;
+    try {
+      res = await this.fetchImpl(
+        `https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(this.accountSid)}/Messages.json`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Basic ${btoa(`${this.accountSid}:${this.authToken}`)}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: form.toString(),
+        },
+      );
+    } catch (e) {
+      console.error("[sms] twilio uden svar:", e);
+      return { ok: false, error: "netvaerksfejl" };
+    }
+
+    let body: { sid?: string; code?: number; message?: string } = {};
+    try {
+      body = (await res.json()) as typeof body;
+    } catch {
+      /* tom krop — status afgør */
+    }
+
+    if (!res.ok) {
+      console.error(`[sms] twilio ${res.status}/${body.code}: ${String(body.message ?? "").slice(0, 200)}`);
+      // Twilios egen fejlkode siger mere end HTTP-status (fx 21606: forkert afsender)
+      return { ok: false, error: `twilio_${body.code ?? res.status}` };
+    }
+    return { ok: true, id: body.sid };
+  }
+}
+
+/** Produktion uden nøgler: sig det tydeligt frem for at love en levering */
 export class UnconfiguredSmsGateway implements SmsGateway {
   async send(): Promise<SmsResult> {
-    console.error("[sms] SMS_API_TOKEN mangler — beskeden blev ikke sendt");
+    console.error("[sms] ingen udbyder er konfigureret — beskeden blev ikke sendt");
     return { ok: false, error: "sms_ikke_konfigureret" };
   }
 }
 
+export type SmsProvider = "gatewayapi" | "cpsms" | "twilio";
+
+export const SMS_PROVIDERS: Array<{ id: SmsProvider; label: string; note: string }> = [
+  {
+    id: "gatewayapi",
+    label: "GatewayAPI",
+    note: "Dansk (Onlinecity). Kræver SMS_API_TOKEN.",
+  },
+  {
+    id: "cpsms",
+    label: "CPSMS",
+    note: "Dansk (Compaya). Kræver SMS_USERNAME + SMS_API_TOKEN.",
+  },
+  {
+    id: "twilio",
+    label: "Twilio",
+    note: "Global. Kræver SMS_ACCOUNT_SID + SMS_API_TOKEN, og SMS_FROM som afsender.",
+  },
+];
+
 export interface SmsEnvVars {
+  /** Tving en bestemt udbyder. Tom: afgøres af hvilke nøgler der findes. */
+  SMS_PROVIDER?: string;
+  /** Token/API-nøgle/auth token — samme navn hos alle tre */
   SMS_API_TOKEN?: string;
+  /** CPSMS: brugernavnet der hører til nøglen */
+  SMS_USERNAME?: string;
+  /** Twilio: Account SID (AC…) */
+  SMS_ACCOUNT_SID?: string;
+  /** Twilio: afsender — købt nummer (+45…) eller Messaging Service (MG…) */
+  SMS_FROM?: string;
   /** Sat lokalt i .dev.vars — logger i stedet for at sende rigtige beskeder */
   SMS_DEV_MODE?: string;
 }
 
+/**
+ * Hvilken udbyder er sat op? SMS_PROVIDER vinder, ellers afgør nøglerne det —
+ * så et skifte kun kræver, at man lægger de nye nøgler ind og fjerner de gamle.
+ */
+export function resolveProvider(env: SmsEnvVars): SmsProvider | null {
+  const forced = String(env.SMS_PROVIDER ?? "").trim().toLowerCase();
+  if (forced === "gatewayapi" || forced === "cpsms" || forced === "twilio") return forced;
+  if (!env.SMS_API_TOKEN) return null;
+  if (env.SMS_ACCOUNT_SID) return "twilio";
+  if (env.SMS_USERNAME) return "cpsms";
+  return "gatewayapi";
+}
+
+/** Har udbyderen det, den skal bruge for at kunne sende? */
+export function providerReady(env: SmsEnvVars): boolean {
+  const provider = resolveProvider(env);
+  if (!provider) return false;
+  if (!env.SMS_API_TOKEN) return false;
+  if (provider === "cpsms") return !!env.SMS_USERNAME;
+  if (provider === "twilio") return !!env.SMS_ACCOUNT_SID;
+  return true;
+}
+
 export function smsConfigured(env: SmsEnvVars): boolean {
-  return !!(env.SMS_API_TOKEN || env.SMS_DEV_MODE);
+  return !!env.SMS_DEV_MODE || providerReady(env);
 }
 
 export function smsFromEnv(env: SmsEnvVars, sender?: string): SmsGateway {
   if (env.SMS_DEV_MODE) return new LogSmsGateway();
-  if (env.SMS_API_TOKEN) return new GatewayApiSms(env.SMS_API_TOKEN, cleanSender(sender));
-  return new UnconfiguredSmsGateway();
+  if (!providerReady(env)) return new UnconfiguredSmsGateway();
+
+  const token = env.SMS_API_TOKEN!;
+  switch (resolveProvider(env)) {
+    case "cpsms":
+      return new CpsmsGateway(env.SMS_USERNAME!, token, cleanSender(sender));
+    case "twilio":
+      // Uden SMS_FROM prøver vi afsendernavnet; i Danmark kræver et navn
+      // godkendelse hos Twilio, så et købt nummer er den sikre vej
+      return new TwilioSms(env.SMS_ACCOUNT_SID!, token, env.SMS_FROM || cleanSender(sender));
+    default:
+      return new GatewayApiSms(token, cleanSender(sender));
+  }
 }
 
 // ------------------------------------------------------------------- saldo
@@ -233,15 +406,34 @@ export interface SmsBalance {
 }
 
 /**
- * Saldoen hos GatewayAPI. Vises i admin, så beskeder ikke stopper med at gå
+ * Saldoen hos udbyderen. Vises i admin, så beskeder ikke stopper med at gå
  * igennem uden at nogen kan se hvorfor. Fejler blødt — en manglende saldo må
- * ikke gøre indstillingssiden utilgængelig.
+ * ikke gøre indstillingssiden utilgængelig, og CPSMS har ingen saldo-endpoint
+ * vi kalder, så der vises ingenting frem for et gæt.
  */
 export async function smsBalance(
-  token: string,
+  env: SmsEnvVars,
   fetchImpl: typeof fetch = (...a: Parameters<typeof fetch>) => fetch(...a),
 ): Promise<SmsBalance | null> {
+  const token = env.SMS_API_TOKEN;
+  if (!token) return null;
+
   try {
+    if (resolveProvider(env) === "twilio") {
+      if (!env.SMS_ACCOUNT_SID) return null;
+      const res = await fetchImpl(
+        `https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(env.SMS_ACCOUNT_SID)}/Balance.json`,
+        { headers: { Authorization: `Basic ${btoa(`${env.SMS_ACCOUNT_SID}:${token}`)}` } },
+      );
+      if (!res.ok) return null;
+      const body = (await res.json()) as { balance?: string | number; currency?: string };
+      const credit = Number(body.balance);
+      if (!Number.isFinite(credit)) return null;
+      return { credit, currency: String(body.currency || "USD") };
+    }
+
+    if (resolveProvider(env) !== "gatewayapi") return null;
+
     const res = await fetchImpl("https://gatewayapi.com/rest/me", {
       headers: { Authorization: `Token ${token}` },
     });

@@ -1,10 +1,13 @@
 import { describe, it, expect, vi } from "vitest";
 import {
+  CpsmsGateway,
   GatewayApiSms,
   LogSmsGateway,
+  TwilioSms,
   UnconfiguredSmsGateway,
   cleanSender,
   displayPhone,
+  resolveProvider,
   smsBalance,
   smsConfigured,
   smsFromEnv,
@@ -94,11 +97,29 @@ describe("gateway-valg", () => {
     expect(smsFromEnv({ SMS_DEV_MODE: "1", SMS_API_TOKEN: "hemmelig" })).toBeInstanceOf(LogSmsGateway);
   });
 
-  it("token giver GatewayAPI", () => {
-    expect(smsFromEnv({ SMS_API_TOKEN: "tok" })).toBeInstanceOf(GatewayApiSms);
+  it("nøglerne afgør udbyderen, så et skifte kun kræver nye secrets", () => {
+    expect(resolveProvider({ SMS_API_TOKEN: "tok" })).toBe("gatewayapi");
+    expect(resolveProvider({ SMS_API_TOKEN: "tok", SMS_USERNAME: "frederik" })).toBe("cpsms");
+    expect(resolveProvider({ SMS_API_TOKEN: "tok", SMS_ACCOUNT_SID: "AC123" })).toBe("twilio");
+    expect(resolveProvider({})).toBeNull();
+    // SMS_PROVIDER vinder, når flere sæt nøgler ligger side om side
+    expect(resolveProvider({ SMS_PROVIDER: "gatewayapi", SMS_API_TOKEN: "tok", SMS_ACCOUNT_SID: "AC1" })).toBe("gatewayapi");
   });
 
-  it("produktion uden token fejler højlydt i stedet for at love levering", async () => {
+  it("bygger den gateway udbyderen kræver", () => {
+    expect(smsFromEnv({ SMS_API_TOKEN: "tok" })).toBeInstanceOf(GatewayApiSms);
+    expect(smsFromEnv({ SMS_API_TOKEN: "tok", SMS_USERNAME: "frederik" })).toBeInstanceOf(CpsmsGateway);
+    expect(smsFromEnv({ SMS_API_TOKEN: "tok", SMS_ACCOUNT_SID: "AC123" })).toBeInstanceOf(TwilioSms);
+  });
+
+  it("halve nøglesæt tæller ikke som opsat", () => {
+    // CPSMS uden brugernavn og Twilio uden Account SID kan ikke sende
+    expect(smsConfigured({ SMS_PROVIDER: "cpsms", SMS_API_TOKEN: "tok" })).toBe(false);
+    expect(smsConfigured({ SMS_PROVIDER: "twilio", SMS_API_TOKEN: "tok" })).toBe(false);
+    expect(smsFromEnv({ SMS_PROVIDER: "twilio", SMS_API_TOKEN: "tok" })).toBeInstanceOf(UnconfiguredSmsGateway);
+  });
+
+  it("produktion uden nøgler fejler højlydt i stedet for at love levering", async () => {
     const gw = smsFromEnv({});
     expect(gw).toBeInstanceOf(UnconfiguredSmsGateway);
     expect(await gw.send("+4531132852", "hej")).toEqual({ ok: false, error: "sms_ikke_konfigureret" });
@@ -155,11 +176,89 @@ describe("GatewayAPI-kaldet", () => {
   });
 
   it("saldoen hentes, og en fejl giver null i stedet for at vælte siden", async () => {
-    expect(await smsBalance("tok", fakeFetch(200, { credit: 412.5, currency: "DKK" }))).toEqual({
+    const env = { SMS_API_TOKEN: "tok" };
+    expect(await smsBalance(env, fakeFetch(200, { credit: 412.5, currency: "DKK" }))).toEqual({
       credit: 412.5,
       currency: "DKK",
     });
-    expect(await smsBalance("tok", fakeFetch(500, {}))).toBeNull();
+    expect(await smsBalance(env, fakeFetch(500, {}))).toBeNull();
+    // Twilio svarer med balance som streng
+    expect(
+      await smsBalance({ SMS_API_TOKEN: "tok", SMS_ACCOUNT_SID: "AC1" }, fakeFetch(200, { balance: "12.29", currency: "USD" })),
+    ).toEqual({ credit: 12.29, currency: "USD" });
+    // CPSMS har ingen saldo vi kalder — hellere ingenting end et gæt
+    expect(await smsBalance({ SMS_API_TOKEN: "tok", SMS_USERNAME: "frederik" }, fakeFetch(200, { credit: 5 }))).toBeNull();
+  });
+});
+
+describe("CPSMS-kaldet", () => {
+  function fakeFetch(status: number, body: unknown) {
+    return vi.fn(async () =>
+      new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } }),
+    ) as unknown as typeof fetch;
+  }
+
+  it("sender Basic auth og nummer uden plus, som CPSMS vil have det", async () => {
+    const f = fakeFetch(200, { success: [{ to: "4531132852", cost: 1, smsAmount: 1 }] });
+    const res = await new CpsmsGateway("frederik", "noegle", "Lejhojtaler", f).send("+4531132852", "Hej Agnes");
+
+    expect(res.ok).toBe(true);
+    const [url, init] = (f as unknown as ReturnType<typeof vi.fn>).mock.calls[0];
+    expect(url).toBe("https://api.cpsms.dk/v2/send");
+    expect((init as RequestInit).headers).toMatchObject({
+      Authorization: `Basic ${btoa("frederik:noegle")}`,
+    });
+    expect(JSON.parse(String((init as RequestInit).body))).toMatchObject({
+      to: "4531132852",
+      from: "Lejhojtaler",
+      message: "Hej Agnes",
+    });
+  });
+
+  it("fanger fejl i kroppen, selv når status er 200", async () => {
+    const f = fakeFetch(200, { error: { code: 400, message: "Phone number should be specified as a number" } });
+    expect(await new CpsmsGateway("u", "k", "L", f).send("+4531132852", "x")).toEqual({
+      ok: false,
+      error: "cpsms_400",
+    });
+  });
+});
+
+describe("Twilio-kaldet", () => {
+  function fakeFetch(status: number, body: unknown) {
+    return vi.fn(async () =>
+      new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } }),
+    ) as unknown as typeof fetch;
+  }
+
+  it("sender form-encoded To/From/Body med Basic auth", async () => {
+    const f = fakeFetch(201, { sid: "SM123", status: "queued" });
+    const res = await new TwilioSms("AC1", "tok", "+4571234567", f).send("+4531132852", "Hej Agnes");
+
+    expect(res).toEqual({ ok: true, id: "SM123" });
+    const [url, init] = (f as unknown as ReturnType<typeof vi.fn>).mock.calls[0];
+    expect(url).toBe("https://api.twilio.com/2010-04-01/Accounts/AC1/Messages.json");
+    expect((init as RequestInit).headers).toMatchObject({
+      Authorization: `Basic ${btoa("AC1:tok")}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    });
+    const form = new URLSearchParams(String((init as RequestInit).body));
+    expect(form.get("To")).toBe("+4531132852");
+    expect(form.get("From")).toBe("+4571234567");
+    expect(form.get("Body")).toBe("Hej Agnes");
+  });
+
+  it("et MG-id sendes som Messaging Service, ikke som afsendernummer", async () => {
+    const f = fakeFetch(201, { sid: "SM1" });
+    await new TwilioSms("AC1", "tok", "MG9", f).send("+4531132852", "x");
+    const form = new URLSearchParams(String(((f as unknown as ReturnType<typeof vi.fn>).mock.calls[0][1] as RequestInit).body));
+    expect(form.get("MessagingServiceSid")).toBe("MG9");
+    expect(form.get("From")).toBeNull();
+  });
+
+  it("bruger Twilios egen fejlkode, så beskeden til admin kan være præcis", async () => {
+    const f = fakeFetch(400, { code: 21606, message: "The From phone number is not a valid, SMS-capable Twilio number" });
+    expect((await new TwilioSms("AC1", "tok", "Lejhojtaler", f).send("+4531132852", "x")).error).toBe("twilio_21606");
   });
 });
 

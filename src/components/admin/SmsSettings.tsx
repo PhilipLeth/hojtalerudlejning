@@ -10,7 +10,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { adminFetch } from "@/lib/useAdminAuth";
-import { smsLength, type SmsBalance } from "@/lib/sms";
+import { SMS_PROVIDERS, smsLength, type SmsBalance, type SmsProvider } from "@/lib/sms";
 import {
   DEFAULT_SMS_SETTINGS,
   SMS_SHORTCODES,
@@ -66,6 +66,8 @@ const label: React.CSSProperties = {
 interface SmsGetResponse {
   configured: boolean;
   devMode: boolean;
+  /** Hvilken udbyder nøglerne i Cloudflare peger på */
+  provider: SmsProvider | null;
   settings: Settings;
   balance: SmsBalance | null;
   /** Vores nummer og anmeldelseslinket, som serveren fylder dem i */
@@ -88,6 +90,7 @@ export default function SmsSettings({ secret }: { secret: string }) {
   const [configured, setConfigured] = useState(true);
   const [devMode, setDevMode] = useState(false);
   const [balance, setBalance] = useState<SmsBalance | null>(null);
+  const [provider, setProvider] = useState<SmsProvider | null>(null);
   const [vars, setVars] = useState(() => previewVars());
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -116,6 +119,7 @@ export default function SmsSettings({ secret }: { secret: string }) {
     setConfigured(data.configured);
     setDevMode(data.devMode);
     setBalance(data.balance ?? null);
+    setProvider(data.provider ?? null);
     setVars(previewVars(data.telefon, data.link));
     setDirty(false);
     setError("");
@@ -230,14 +234,28 @@ export default function SmsSettings({ secret }: { secret: string }) {
             Saldo: {balance.credit.toLocaleString("da-DK", { maximumFractionDigits: 2 })} {balance.currency}
           </span>
         )}
+        {provider && (
+          <span style={{ fontSize: "12px", color: "#666" }}>
+            Udbyder: {SMS_PROVIDERS.find((p) => p.id === provider)?.label ?? provider}
+          </span>
+        )}
         {devMode && <span style={{ fontSize: "12px", color: "#8a6d3b" }}>Dev-tilstand: beskeder logges, sendes ikke</span>}
       </div>
 
       {!configured && (
         <div style={{ background: "#fdecea", color: "#c0392b", padding: "10px 12px", borderRadius: "8px", fontSize: "12px", marginBottom: "12px" }}>
-          <strong>SMS er ikke sat op endnu.</strong> Læg <code>SMS_API_TOKEN</code> fra gatewayapi.com ind som
-          secret på Cloudflare Pages-projektet <code>speaker-rental</code>. Indtil da gemmes teksterne, men
-          intet sendes.
+          <strong>SMS er ikke sat op endnu.</strong> Vælg en udbyder og læg nøglerne ind som secrets på
+          Cloudflare Pages-projektet <code>speaker-rental</code>. Indtil da gemmes teksterne, men intet sendes.
+          <ul style={{ margin: "8px 0 0", paddingLeft: "18px" }}>
+            {SMS_PROVIDERS.map((p) => (
+              <li key={p.id} style={{ marginBottom: "2px" }}>
+                <strong>{p.label}</strong> — {p.note}
+              </li>
+            ))}
+          </ul>
+          <div style={{ marginTop: "6px" }}>
+            Har du flere sæt nøgler liggende, afgør <code>SMS_PROVIDER</code> hvem der bruges.
+          </div>
         </div>
       )}
 

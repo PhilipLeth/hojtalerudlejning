@@ -1015,15 +1015,24 @@
     }
   },
   "sms_flow": {
-    "provider": "GatewayAPI (gatewayapi.com) — dansk udbyder, afregning pr. besked. Samme gateway som Symposio bruger, så der er ét sted at holde styr på afsendernavn og saldo.",
+    "provider": "Valgfri — GatewayAPI, CPSMS eller Twilio. Alle tre taler REST over fetch, så ingen kræver en SDK i en Worker. BESLUTNING 2026-08-17: udbyderen er ikke støbt ind i koden, fordi Frederik ikke kunne oprette sig hos GatewayAPI. resolveProvider() i src/lib/sms.ts vælger ud fra hvilke nøgler der ligger i Cloudflare; SMS_PROVIDER kan tvinge valget. Et skifte kræver kun nye secrets — hverken skabeloner, kommunikationslog eller påmindelser ved hvem der sender.",
+    "providers": {
+      "gatewayapi": "Dansk (Onlinecity, Aarhus). POST https://gatewayapi.com/rest/mtsms, Authorization: Token <SMS_API_TOKEN>. Saldo via /rest/me. Afsendernavn direkte i kaldet.",
+      "cpsms": "Dansk (Compaya). POST https://api.cpsms.dk/v2/send, Basic auth med SMS_USERNAME:SMS_API_TOKEN, JSON {to, from, message}. Svarer 200 med et error-objekt i kroppen ved afviste beskeder, så status alene er ikke nok. Ingen saldo-endpoint vi kalder.",
+      "twilio": "Global, hurtigst signup. POST https://api.twilio.com/2010-04-01/Accounts/<SMS_ACCOUNT_SID>/Messages.json, Basic auth SID:token, form-encoded To/From/Body. SMS_FROM afgør afsender: et købt nummer, eller et MG-id som Messaging Service. Et alfanumerisk afsendernavn kræver godkendelse til dansk trafik, så et købt nummer er den sikre vej. Saldo via Balance.json."
+    },
     "secrets": [
-      "SMS_API_TOKEN — GatewayAPI-token, secret på Cloudflare Pages-projektet speaker-rental. Mangler den, sendes INTET, og /admin/kommunikation siger det tydeligt (UnconfiguredSmsGateway fejler højlydt frem for at lade som om beskeden gik afsted).",
+      "SMS_API_TOKEN — token/API-nøgle/auth token, samme navn hos alle tre udbydere. Mangler den, sendes INTET, og /admin/kommunikation siger det tydeligt (UnconfiguredSmsGateway fejler højlydt frem for at lade som om beskeden gik afsted).",
+      "SMS_USERNAME — kun CPSMS: brugernavnet der hører til nøglen.",
+      "SMS_ACCOUNT_SID — kun Twilio: Account SID (AC…).",
+      "SMS_FROM — kun Twilio: afsender, enten et købt nummer (+45…) eller en Messaging Service (MG…).",
+      "SMS_PROVIDER — valgfri: gatewayapi | cpsms | twilio. Tom betyder at nøglerne afgør det.",
       "SMS_DEV_MODE — sættes kun i .dev.vars lokalt: beskeder logges i stedet for at blive sendt.",
       "ADMIN_SECRET som GitHub-secret — bruges af .github/workflows/sms-paamindelser.yml til at kalde påmindelses-endepunktet."
     ],
     "sender": "Lejhojtaler — max 11 tegn, kun bogstaver og tal (GatewayAPI's regel). Kan ændres i /admin/kommunikation. En besked fra et navn kan ikke besvares, så alle tekster beder om et opkald i stedet.",
     "code": {
-      "src/lib/sms.ts": "Gateway bag et interface (GatewayApiSms / LogSmsGateway / UnconfiguredSmsGateway + smsFromEnv), E.164-normalisering af kundens frit skrevne nummer, GSM-7-oprensning af typografiske tegn og tegn/beskedtælling (160 vs. 70). Ingen imports, så den kan bruges både i browseren og i Pages Functions.",
+      "src/lib/sms.ts": "Gateways bag ét interface (GatewayApiSms / CpsmsGateway / TwilioSms / LogSmsGateway / UnconfiguredSmsGateway + smsFromEnv + resolveProvider), E.164-normalisering af kundens frit skrevne nummer, GSM-7-oprensning af typografiske tegn og tegn/beskedtælling (160 vs. 70). Ingen imports, så den kan bruges både i browseren og i Pages Functions.",
       "src/lib/smsTemplates.ts": "Skabeloner, shortcodes og indstillinger (KV: sms_settings). Samme motor som mailskabelonerne (renderWithKeys i commTemplates.ts).",
       "src/lib/smsReminders.ts": "remindersDue() — hvilke ordrer skal have en påmindelse i dag. Ren logik, testet uden KV.",
       "functions/api/_lib/sms.ts": "Serverens ene indgang: sendBookingSms() + recordSms(), som skriver beskeden i ordrens communications-log og mærker smsSent[type].",
@@ -1048,7 +1057,7 @@
       "Standardteksterne holdes under 160 tegn på en typisk ordre og uden emoji — et enkelt emoji tvinger beskeden over i UCS-2 og halverer grænsen til 70 tegn. Pilen i periodeteksten (»→«) oversættes til bindestreg af samme grund. Admin ser tegn- og beskedtælleren live.",
       "Hele korrespondancen står på ordren: SMS'er lægges i samme communications-log som mails, med den fulde tekst — en SMS kan ikke slås op andre steder bagefter."
     ],
-    "status": "Kode klar 2026-08-17. Venter kun på at SMS_API_TOKEN lægges på Cloudflare + saldo hos GatewayAPI; indtil da gemmes teksterne, men intet sendes."
+    "status": "Kode live 2026-08-17. Venter kun på at nøglerne til den valgte udbyder lægges på Cloudflare + saldo på kontoen; indtil da gemmes teksterne, men intet sendes. /admin/kommunikation viser hvilken udbyder nøglerne peger på."
   },
   "fulfillment_and_upsell": {
     "goal": "Frederik kører ud + opsætter billigt. Luk flere komplette aftaler uden forhandling eller hustle-følelse.",

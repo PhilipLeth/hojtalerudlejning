@@ -80,7 +80,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const skipped: Array<{ id: string; type: string; reason: string }> = [];
 
   if (!dryRun && relevant.length > 0 && !smsConfigured(context.env)) {
-    return json({ error: "SMS_API_TOKEN mangler i Cloudflare — der blev ikke sendt noget" }, 503);
+    return json({ error: "Ingen SMS-udbyder er sat op i Cloudflare — der blev ikke sendt noget" }, 503);
   }
 
   for (const item of relevant) {
