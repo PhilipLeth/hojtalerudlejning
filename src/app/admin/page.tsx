@@ -81,6 +81,12 @@ interface Booking extends OrderBooking {
   inspected?: boolean;
   /** Admin har set anmeldelsen komme ind */
   reviewDone?: boolean;
+  /** Vi har ringet kunden op efter bookingen — mærke, ikke et trin i forløbet */
+  called?: boolean;
+  calledAt?: string;
+  calledBy?: string | null;
+  /** Hvad der blev aftalt i telefonen */
+  callNote?: string;
   /** Indbetalinger — en ordre kan betales ad flere gange og med flere metoder */
   payments?: Payment[];
   /** Faktureret men ikke betalt tæller stadig som udestående */
@@ -103,6 +109,9 @@ type EditableFields = {
   depositState?: DepositState | null;
   inspected?: boolean;
   reviewDone?: boolean;
+  /** Ringet til kunden efter bookingen, og hvad I aftalte */
+  called?: boolean;
+  callNote?: string | null;
   /** Hvem stod for udlejningen — underskriver opfølgningsmailen */
   handledBy?: string | null;
   /** Personlig besked der sættes ind i opfølgningsmailen */
@@ -988,6 +997,62 @@ function FollowUpFields({ b, setFields }: { b: Booking; setFields: (id: string, 
   );
 }
 
+/**
+ * "📞 ringet 18. aug" til den sammenklappede linje — eller null.
+ *
+ * Mærket vises kun når der ER ringet. Vi ringer ofte, men ikke altid, så en
+ * advarsel på alt der ikke er ringet til ville brumme på de bookinger man
+ * bevidst lader ligge. Fraværet af ikonet er signalet.
+ */
+function callBadge(b: Booking): string | null {
+  if (!b.called) return null;
+  const at = b.calledAt ? new Date(b.calledAt) : null;
+  if (!at || isNaN(at.getTime())) return "📞 ringet";
+  return `📞 ringet ${at.toLocaleDateString("da-DK", { day: "numeric", month: "short" })}`;
+}
+
+/**
+ * Det opfølgende opkald: hak, tidsstempel, hvem der ringede, og hvad I aftalte.
+ * Noten er det egentlige indhold — ændrede tider og løse aftaler skal ikke kun
+ * findes i hovedet på den der havde røret. Fjernes hakket, ryddes noten med,
+ * så der ikke står en aftale fra et opkald vi har trukket tilbage.
+ */
+function CallField({ b, setFields }: { b: Booking; setFields: (id: string, f: EditableFields) => void }) {
+  const [note, setNote] = useState(b.callNote ?? "");
+  useEffect(() => { setNote(b.callNote ?? ""); }, [b.callNote]);
+  const at = b.calledAt ? new Date(b.calledAt) : null;
+
+  return (
+    <div style={{ gridColumn: "1 / -1", background: b.called ? "#f3f9f5" : "#fafafa", border: `1px solid ${b.called ? "#cde9d5" : "#eee"}`, borderRadius: "8px", padding: "10px 12px" }}>
+      <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", cursor: "pointer", flexWrap: "wrap" }}>
+        <input
+          type="checkbox"
+          checked={!!b.called}
+          onChange={(e) => setFields(b.id, e.target.checked ? { called: true } : { called: false, callNote: null })}
+          style={{ width: "16px", height: "16px", cursor: "pointer" }}
+        />
+        <strong>📞 Ringet til kunden</strong>
+        {b.called && at && !isNaN(at.getTime()) && (
+          <span style={{ color: "#666" }}>
+            {at.toLocaleString("da-DK", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
+            {b.calledBy ? ` · ${b.calledBy}` : ""}
+          </span>
+        )}
+      </label>
+      {b.called && (
+        <input
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          onBlur={() => { if (note !== (b.callNote ?? "")) setFields(b.id, { callNote: note || null }); }}
+          placeholder="Hvad aftalte I? Fx »henter kl. 16 i stedet, tager kun én højtaler«"
+          maxLength={300}
+          style={{ width: "100%", boxSizing: "border-box", marginTop: "8px", fontSize: "12px", padding: "6px 8px", border: "1px solid #ddd", borderRadius: "6px", color: "#111", fontFamily: "inherit" }}
+        />
+      )}
+    </div>
+  );
+}
+
 function BookingDetails({ b, today, setFields }: { b: Booking; today: Date; setFields: (id: string, f: EditableFields) => void }) {
   const priceOf = usePriceLookup();
   return (
@@ -1013,6 +1078,7 @@ function BookingDetails({ b, today, setFields }: { b: Booking; today: Date; setF
           {b.handover.note ? ` · ${b.handover.note}` : ""}
         </div>
       )}
+      <CallField b={b} setFields={setFields} />
       <FollowUpFields b={b} setFields={setFields} />
       {b.comment && <div style={{ gridColumn: "1 / -1" }}><strong>Kommentar:</strong> {b.comment}</div>}
       <div style={{ gridColumn: "1 / -1" }}>
@@ -1100,6 +1166,11 @@ function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                 >
                   {b.phone}
                 </a>
+                {callBadge(b) && (
+                  <span title={b.callNote || "Vi har ringet kunden op"} style={{ color: "#2f7a4d", fontSize: "12px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {callBadge(b)}
+                  </span>
+                )}
                 {issues.length > 0 && (
                   <span title={issues.map((i) => i.label).join(" · ")} style={{ marginLeft: "auto", color: "#c0392b", fontSize: "12px", fontWeight: 700, flexShrink: 0 }}>
                     ⚠ {issues.length}
@@ -1180,6 +1251,11 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                       {" · "}
                       <span style={{ color: "#0070f3" }}>{isExpanded ? "skjul ordre" : "vis ordre"}</span>
                     </div>
+                    {callBadge(b) && (
+                      <div title={b.callNote || "Vi har ringet kunden op"} style={{ fontSize: "11px", color: "#2f7a4d", paddingLeft: "16px" }}>
+                        {callBadge(b)}
+                      </div>
+                    )}
                   </td>
                   {/* Ordren og udstyrssporet hører sammen: statussen er
                       kvitteringen for præcis de varer der står lige over */}

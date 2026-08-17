@@ -171,6 +171,11 @@ const FIELD_VALIDATORS: Record<string, (v: unknown) => boolean> = {
   // Udstyr
   inspected: (v) => typeof v === "boolean",
   reviewDone: (v) => typeof v === "boolean",
+  // Opfølgende opkald: vi ringer ofte kunden op efter en booking. Det er et
+  // mærke på sagen, ikke et trin i udstyrssporet — opkaldet kan ligge før
+  // eller efter bekræftelsen, og sker ikke på hver booking.
+  called: (v) => typeof v === "boolean",
+  callNote: (v) => v === null || (typeof v === "string" && v.length <= 300),
   // Kommunikation: hvem stod for udlejningen, og hvad de vil skrive til kunden
   handledBy: (v) => v === null || (typeof v === "string" && v.length <= 60),
   personalNote: (v) => v === null || (typeof v === "string" && v.length <= 600),
@@ -344,6 +349,11 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         bookingFields[key] = value;
         // Booleans får et tidsstempel, så vi kan se hvornår hakket blev sat
         if (typeof value === "boolean") bookingFields[`${key}At`] = value ? now : null;
+      }
+      // Opkaldet bærer hvem der ringede, så en aftale i telefonen kan spores
+      // til en person. updatedBy overskrives af næste ændring på ordren.
+      if (Object.prototype.hasOwnProperty.call(fields, "called")) {
+        bookingFields.calledBy = fields.called ? updatedBy : null;
       }
       bookingFields.updatedAt = now;
       bookingFields.updatedBy = updatedBy;
