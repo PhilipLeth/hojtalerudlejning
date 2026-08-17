@@ -6,6 +6,7 @@ import SiteHeader from "@/components/SiteHeader";
 import BookingDrawer from "@/components/BookingDrawer";
 import WeekendSalePopup from "@/components/WeekendSalePopup";
 import { localeAlternates } from "@/lib/hreflang";
+import { ADS_CONVERSION_ID } from "@/lib/analytics";
 import "./globals.css";
 
 const GTM_ID = "GTM-M52R25VF";
@@ -80,11 +81,15 @@ export default function RootLayout({
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
         />
+        {/* Samme gtag.js betjener flere destinationer — script-URL'en skal blot
+            bære ét af id'erne. Uden config-linjen for AW-id'et bliver
+            conversion-eventet i trackPurchase tavst kasseret. */}
         <Script id="gtag-init" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${GA_ID}');
+          gtag('config', '${ADS_CONVERSION_ID}');
         `}</Script>
       </head>
       <body className="antialiased">

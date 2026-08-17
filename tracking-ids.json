@@ -1,5 +1,9 @@
 {
+  "_note": "Ren dokumentation — ingen kode læser denne fil. Sandheden står i src/app/layout.tsx (GTM + GA4) og src/lib/analytics.ts (Ads-konvertering).",
   "gtm_id": "GTM-M52R25VF",
-  "ga4_measurement_id": "G-XCZ89XE6QT",
-  "google_ads_customer_id": "393-636-3454"
+  "ga4_measurement_id": "G-QDXW7S53GF",
+  "google_ads_customer_id": "441-020-7627",
+  "google_ads_conversion_id": "AW-18265431278",
+  "google_ads_purchase_label": "BHAoCI7sl8QcEO650YVE",
+  "_rettet_2026_08_17": "Filen pegede på GA4-id G-XCZ89XE6QT (sitet bruger G-QDXW7S53GF) og på den gamle Ads-konto 393-636-3454 (den aktive er 441-020-7627). Ingen kode læste den, så fejlen var harmløs — men den ville sende den næste, der slog et id op her, det forkerte sted hen."
 }

@@ -10,6 +10,20 @@
  *     Stripe. Purchase sendes nu fra kvitteringssiden når betalingen er bekræftet.
  */
 
+/**
+ * Google Ads-konverteringen "Køb" (handling 7659189774 på konto 441-020-7627).
+ *
+ * Indtil 17. august 2026 nåede bookinger kun frem til Ads via GA4-importen, som
+ * er langsom og taber attribution undervejs. Kontoen registrerede ét køb på 30
+ * dage, mens Performance Max brugte 1000 kr/dag uden noget at optimere mod.
+ * Dette event rapporterer direkte.
+ *
+ * Etiketten kommer fra konverteringshandlingens eget tag-snippet og hører
+ * sammen med konverterings-id'et — skift ikke det ene uden det andet.
+ */
+export const ADS_CONVERSION_ID = "AW-18265431278";
+export const ADS_PURCHASE_SEND_TO = `${ADS_CONVERSION_ID}/BHAoCI7sl8QcEO650YVE`;
+
 export interface PurchaseItem {
   id: string;
   name: string;
@@ -152,6 +166,17 @@ export function trackPurchase(e: PurchaseEvent): void {
         price: i.price,
         quantity: i.quantity ?? 1,
       })),
+    });
+
+    // 3) Google Ads direkte. Samme gtag.js betjener flere destinationer, så
+    //    dette kræver kun at layoutet også har kaldt config for AW-id'et.
+    //    transaction_id er det samme som til GA4, så Ads kan deduplikere hvis
+    //    GA4-importen stadig er slået til imens.
+    w.gtag("event", "conversion", {
+      send_to: ADS_PURCHASE_SEND_TO,
+      transaction_id: e.transactionId,
+      value: e.value,
+      currency,
     });
   }
 }

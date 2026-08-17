@@ -4,7 +4,12 @@
  * og der blev aldrig sendt et GA4-purchase-event.
  */
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
+import {
+  trackBookingFormStart,
+  trackPurchase,
+  ADS_CONVERSION_ID,
+  ADS_PURCHASE_SEND_TO,
+} from "@/lib/analytics";
 
 type Win = Window & { dataLayer?: unknown[]; gtag?: (...a: unknown[]) => void };
 
@@ -84,12 +89,18 @@ describe("trackPurchase", () => {
     expect(events).toContain("booking_complete");
   });
 
+  // Tælles på purchase-eventet, ikke på antallet af gtag-kald: ét køb sender
+  // nu til både GA4 og Google Ads, og testen skal måle deduplikering — ikke
+  // hvor mange destinationer der er tilføjet siden.
+  const purchaseCalls = (gtag: ReturnType<typeof vi.fn>) =>
+    gtag.mock.calls.filter((c) => c[0] === "event" && c[1] === "purchase");
+
   it("deduplikerer, så genindlæsning af kvitteringssiden ikke tæller dobbelt", () => {
     const gtag = vi.fn();
     w().gtag = gtag;
     trackPurchase({ transactionId: "booking_4", value: 500 });
     trackPurchase({ transactionId: "booking_4", value: 500 });
-    expect(gtag).toHaveBeenCalledTimes(1);
+    expect(purchaseCalls(gtag)).toHaveLength(1);
   });
 
   it("tæller forskellige bookinger hver for sig", () => {
@@ -97,6 +108,49 @@ describe("trackPurchase", () => {
     w().gtag = gtag;
     trackPurchase({ transactionId: "booking_5", value: 500 });
     trackPurchase({ transactionId: "booking_6", value: 900 });
-    expect(gtag).toHaveBeenCalledTimes(2);
+    expect(purchaseCalls(gtag)).toHaveLength(2);
+  });
+});
+
+describe("Google Ads-konvertering", () => {
+  it("sender conversion med den rigtige send_to, så Ads måler direkte", () => {
+    const gtag = vi.fn();
+    w().gtag = gtag;
+    trackPurchase({ transactionId: "booking_3", value: 895, paymentMethod: "pickup" });
+
+    const conversion = gtag.mock.calls.find(
+      (c) => c[0] === "event" && c[1] === "conversion"
+    );
+    expect(conversion).toBeDefined();
+    expect(conversion![2]).toMatchObject({
+      send_to: ADS_PURCHASE_SEND_TO,
+      transaction_id: "booking_3",
+      value: 895,
+      currency: "DKK",
+    });
+  });
+
+  it("bruger samme transaction_id som GA4-purchase, så Ads kan deduplikere", () => {
+    const gtag = vi.fn();
+    w().gtag = gtag;
+    trackPurchase({ transactionId: "booking_4", value: 495 });
+
+    const purchase = gtag.mock.calls.find((c) => c[1] === "purchase")![2] as { transaction_id: string };
+    const conversion = gtag.mock.calls.find((c) => c[1] === "conversion")![2] as { transaction_id: string };
+    expect(conversion.transaction_id).toBe(purchase.transaction_id);
+  });
+
+  it("send_to hænger sammen med konverterings-id'et", () => {
+    // Etiketten hører til id'et; skifter det ene uden det andet, forsvinder
+    // konverteringerne tavst.
+    expect(ADS_PURCHASE_SEND_TO.startsWith(ADS_CONVERSION_ID + "/")).toBe(true);
+  });
+
+  it("sender ikke konvertering to gange for samme booking", () => {
+    const gtag = vi.fn();
+    w().gtag = gtag;
+    trackPurchase({ transactionId: "booking_5", value: 300 });
+    trackPurchase({ transactionId: "booking_5", value: 300 });
+    expect(gtag.mock.calls.filter((c) => c[1] === "conversion")).toHaveLength(1);
   });
 });
