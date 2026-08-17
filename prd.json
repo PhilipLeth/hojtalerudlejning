@@ -1226,6 +1226,11 @@
       "klar_til_at_taende": "AG 16-23 (bryllup, fødselsdag, havefest, julefrokost, konfirmation, nytår, polterabend, studenterkørsel) peger allerede på de nye landingssider. AG 24-26 karaoke ligeledes.",
       "spild": "Søgetermer fra Fyn, Odense og Smukfest — ~15 kr af 170 kr på klik uden for leveringsområdet. Mangler negative keywords eller strammere geo-targeting.",
       "reelle_bookinger": "14 i KV i alt, 7 i august — men størstedelen af augustbookingerne er testbookinger. Reelle: 31. juli (395 kr) og 10. august (515 kr)."
+    },
+    "server_credentials": {
+      "status": "done",
+      "date": "2026-08-17",
+      "description": "De seks GOOGLE_ADS_*-secrets ligger nu i Cloudflare Pages-projektet speaker-rental (developer token, client id/secret, refresh token, LOGIN_CUSTOMER_ID=6231006021, CUSTOMER_ID=4410207627 — Lejhøjtaler, ikke OpenOceans 3104575490 fra google-ads.yaml). Uden dem svarede /api/ads-spend 503 'ikke konfigureret', og /admin/ads havde aldrig virket i produktion. Kildeværdierne ligger lokalt i ~/gitprojects/openocean-promo/google-ads.yaml. Bemærk at refresh-tokenet giver adgang til hele MCC'en, og at /admin/ads kan sætte annoncegrupper på pause for enhver med adminkoden."
     }
   },
   "tasks": [
