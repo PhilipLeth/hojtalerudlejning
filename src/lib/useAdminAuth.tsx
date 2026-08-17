@@ -29,6 +29,18 @@ export interface AdminAuthState {
   unauthorized: () => void;
 }
 
+function readStoredToken(): string {
+  const t = localStorage.getItem(TOKEN_KEY) || localStorage.getItem(LEGACY_KEY) || "";
+  // Ryd fejlagtigt indhold (fx terminal-advarsel indsat som adgangskode)
+  if (t && (t.length > 256 || /[\r\n]/.test(t))) {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(LEGACY_KEY);
+    localStorage.removeItem(USER_KEY);
+    return "";
+  }
+  return t;
+}
+
 function readStoredUser(): AdminUser | null {
   try {
     const raw = localStorage.getItem(USER_KEY);
@@ -48,7 +60,7 @@ function useProvideAdminAuth(): AdminAuthState {
   const [loginUsers, setLoginUsers] = useState<LoginUserOption[]>([]);
 
   useEffect(() => {
-    const t = localStorage.getItem(TOKEN_KEY) || localStorage.getItem(LEGACY_KEY) || "";
+    const t = readStoredToken();
     setToken(t);
     setUser(readStoredUser());
     setReady(true);
@@ -141,7 +153,7 @@ export function useAdminAuth(): AdminAuthState {
 
 export function getAdminToken(): string {
   if (typeof window === "undefined") return "";
-  return localStorage.getItem(TOKEN_KEY) || localStorage.getItem(LEGACY_KEY) || "";
+  return readStoredToken();
 }
 
 export async function adminFetch(

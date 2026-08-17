@@ -4,6 +4,7 @@ import {
   randomSalt,
   verifyPassword,
   publicUserList,
+  isPlausibleAdminToken,
   type AdminUserRecord,
 } from "../../functions/api/_lib/adminAuth";
 
@@ -29,6 +30,12 @@ describe("adminAuth", () => {
     };
     expect(await verifyPassword(user, "frederik123")).toBe(true);
     expect(await verifyPassword(user, "forkert")).toBe(false);
+  });
+
+  it("afviser for lange eller flerlinjede tokens", () => {
+    expect(isPlausibleAdminToken("abc123")).toBe(true);
+    expect(isPlausibleAdminToken("a".repeat(257))).toBe(false);
+    expect(isPlausibleAdminToken("En advarsel\nom noget")).toBe(false);
   });
 
   it("publicUserList viser kun aktive", () => {

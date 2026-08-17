@@ -8,6 +8,16 @@
 export const KV_ADMIN_USERS = "admin_users";
 const SESSION_PREFIX = "admin_session_";
 const SESSION_TTL_SEC = 60 * 60 * 24 * 30; // 30 dage
+/** KV-nøgle max 512 tegn — afvis absurd lange ?secret= (fx ved et fejlklist) */
+export const MAX_ADMIN_TOKEN_LEN = 256;
+
+/** Session-tokens er base64url ~43 tegn; legacy secret er kortere end 256 */
+export function isPlausibleAdminToken(token: string): boolean {
+  if (!token || token.length > MAX_ADMIN_TOKEN_LEN) return false;
+  // Gyldige tokens har ikke linjeskift — advarselstekst fra terminal fejler her
+  if (/[\r\n]/.test(token)) return false;
+  return true;
+}
 
 export interface AdminUserRecord {
   id: string;
@@ -111,6 +121,7 @@ export async function createSession(kv: KVNamespace, user: AdminUserRecord): Pro
 }
 
 export async function loadSession(kv: KVNamespace, token: string): Promise<AdminSession | null> {
+  if (!isPlausibleAdminToken(token)) return null;
   const raw = await kv.get(`${SESSION_PREFIX}${token}`);
   if (!raw) return null;
   try {
@@ -121,6 +132,7 @@ export async function loadSession(kv: KVNamespace, token: string): Promise<Admin
 }
 
 export async function deleteSession(kv: KVNamespace, token: string): Promise<void> {
+  if (!isPlausibleAdminToken(token)) return;
   await kv.delete(`${SESSION_PREFIX}${token}`);
 }
 
@@ -142,7 +154,7 @@ export function extractAdminToken(request: Request): string | null {
  */
 export async function resolveAdmin(env: AdminEnv, request: Request): Promise<AdminIdentity | null> {
   const token = extractAdminToken(request);
-  if (!token) return null;
+  if (!token || !isPlausibleAdminToken(token)) return null;
 
   if (env.ADMIN_SECRET && token === env.ADMIN_SECRET) {
     return { id: "legacy", name: "Legacy", legacy: true };
