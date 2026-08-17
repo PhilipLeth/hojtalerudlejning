@@ -382,11 +382,17 @@ def create_image_asset(client, customer_id: str, path: str, cache: dict[str, str
 
 
 def create_video_asset(client, customer_id: str, video_id: str, cache: dict[str, str]) -> str:
-    """Link a YouTube video the site already hosts on its product pages.
+    """Link a YouTube video from our egen kanal som video-asset.
 
-    Without a video asset Google auto-generates one from the images, which both
-    scores lower on ad strength and looks like a slideshow. These are real
-    product clips.
+    Uden en video genererer Google selv en ud fra billederne, hvilket scorer
+    lavere på annoncestyrke og ser ud som et lysbilledshow.
+
+    Kun videoer vi selv har lavet og uploadet. Den første udgave af denne fil
+    linkede 19 videoer fundet på YouTube — producenternes egne produktvideoer og
+    tilfældige anmelderes unboxings — i den tro at det var "rigtige produktklip".
+    De kørte som Lejhøjtalers annoncer med fremmed ophavsret og sendte kunder mod
+    amerikanske butikker, indtil strip_borrowed_videos.py fjernede dem. Videoerne
+    bygges nu med scripts/video-ads/ og skal uploades til vores egen kanal først.
     """
     if video_id in cache:
         return cache[video_id]

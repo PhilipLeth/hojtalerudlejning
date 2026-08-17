@@ -1,0 +1,112 @@
+{
+  "_readme": [
+    "Videoannoncer til Google Ads, én per anledning.",
+    "",
+    "Hver video er 10 sekunder og bygget i to dele:",
+    "  0,0–6,0 s  scene: anledningen, animeret fra et still (Runway gen4_turbo)",
+    "  6,0–10,0 s afslutning: det faktiske produkt vi udlejer, pris og lejhojtaler.dk",
+    "",
+    "Scenen laves med gen4_image, som får produktfotoet med som reference, så det er",
+    "vores eget udstyr der står i billedet og ikke en opdigtet højtaler med",
+    "volapyk-logo. Det er hele grunden til at vi ikke bruger text-to-video: en",
+    "udlejningsforretning kan ikke reklamere med udstyr den ikke har.",
+    "",
+    "Priserne skal matche lejhojtaler.dk. De er hentet fra /api/products 17-08-2026;",
+    "ændrer admin en pris i KV, skal videoen rendres og uploades igen. Derfor står",
+    "prisen kun i afslutningen — ét sted at rette.",
+    "",
+    "PMax kræver mindst 10 sekunders video. Google accepterer 16:9, 1:1 og 9:16;",
+    "build_videos.py laver alle tre fra samme master."
+  ],
+
+  "brand": {
+    "accent": "#ffd600",
+    "ink": "#0a0a0a",
+    "paper": "#ffffff",
+    "logo": "public/images/logo-lejhojtaler.webp",
+    "domain": "lejhojtaler.dk",
+    "cta": "Book på lejhojtaler.dk"
+  },
+
+  "spec": {
+    "scene_seconds": 6.0,
+    "endcard_seconds": 4.0,
+    "model_image": "gen4_image",
+    "model_video": "gen4_turbo",
+    "scene_ratio": "1280:720",
+    "renders": [
+      { "name": "16x9", "width": 1920, "height": 1080 },
+      { "name": "1x1", "width": 1080, "height": 1080 },
+      { "name": "9x16", "width": 1080, "height": 1920 }
+    ]
+  },
+
+  "occasions": [
+    {
+      "id": "bryllup",
+      "asset_group": "10 — Anledninger: bryllup & konfirmation",
+      "headline": "Lyd til brylluppet",
+      "sub": "Talerne bliver hørt. Dansen holder til sent.",
+      "product": "Stor højtalerpakke",
+      "price_dkk": 495,
+      "product_image": "public/images/product-festival.webp",
+      "scene_prompt": "Danish wedding reception in a bright rustic barn venue at dusk, long tables with white linen and candles, guests seated listening to a speech, the referenced PA speaker on a stand at the edge of the dance floor, warm string lights overhead, soft natural window light, photographic, shallow depth of field, no text",
+      "motion_prompt": "Slow steady push in toward the dance floor. Candle flames flicker, guests turn their heads and applaud gently, string lights sway. Static camera height, no zoom snap, cinematic and calm."
+    },
+    {
+      "id": "konfirmation",
+      "asset_group": "10 — Anledninger: bryllup & konfirmation",
+      "headline": "Konfirmation i haven",
+      "sub": "Musik og lys, klar på en halv time.",
+      "product": "Lille festpakke",
+      "price_dkk": 495,
+      "product_image": "public/images/product-pakke-fest-lille.webp",
+      "scene_prompt": "Danish garden party on a summer afternoon, family and teenagers around tables under a white pavilion, the referenced speaker on a stand beside the terrace, string lights strung between trees, hedge and brick house in the background, soft late-day sun, photographic, no text",
+      "motion_prompt": "Gentle drift to the right across the garden. Leaves and string lights move in a light breeze, people talk and laugh, a teenager walks past the speaker. Handheld feel, subtle, no fast motion."
+    },
+    {
+      "id": "havefest",
+      "asset_group": "09 — Anledninger: privatfest",
+      "headline": "Fest i baghaven",
+      "sub": "Batteridrevet. Ingen ledninger over græsset.",
+      "product": "Soundboks 4",
+      "price_dkk": 595,
+      "product_image": "public/images/product-soundboks.webp",
+      "scene_prompt": "Danish backyard party after dark, twenty friends dancing on a lawn between old apartment buildings, the referenced battery-powered speaker standing on the grass, string lights and a few colored lights, purple dusk sky, photographic, warm and lively, no text",
+      "motion_prompt": "Slow arc around the dancing crowd. People move to the beat, string lights twinkle, colored light spills across the grass. Night-time energy, smooth camera, no strobe."
+    },
+    {
+      "id": "firmafest",
+      "asset_group": "08 — Erhverv & konference",
+      "headline": "Møde, konference, firmafest",
+      "sub": "Projektor og mikrofon der virker første gang.",
+      "product": "Projektor",
+      "price_dkk": 495,
+      "product_image": "public/images/product-projektor.webp",
+      "scene_prompt": "Danish company presentation in a bright modern meeting room, twenty colleagues seated facing a large projected slide, the referenced projector on a table in the foreground, daylight through tall windows, clean Scandinavian interior, photographic, no readable text on the screen",
+      "motion_prompt": "Slow push in past the projector toward the audience. A presenter gestures, colleagues shift and take notes, dust drifts through the projector beam. Calm, professional, steady."
+    },
+    {
+      "id": "karaoke",
+      "asset_group": "05 — Karaoke",
+      "headline": "Karaokeaften derhjemme",
+      "sub": "To mikrofoner, skærm og tusindvis af sange.",
+      "product": "Karaokeanlæg",
+      "price_dkk": 695,
+      "product_image": "public/images/product-karaoke.webp",
+      "scene_prompt": "Danish living room karaoke night, two friends singing into microphones and laughing, the referenced karaoke system set up beside a TV, others on the sofa cheering, warm lamp light and a few colored party lights, photographic, cosy, no readable text on the screen",
+      "motion_prompt": "Slight handheld drift toward the singers. They laugh mid-song, the crowd on the sofa cheers and claps, colored lights sweep the wall. Warm, informal, alive."
+    },
+    {
+      "id": "studenterfest",
+      "asset_group": "01 — Højtalere & PA",
+      "headline": "Fest hvor der ingen strøm er",
+      "sub": "Batteri til hele aftenen. Vejer 8 kilo.",
+      "product": "Mackie Thump GO",
+      "price_dkk": 345,
+      "product_image": "public/images/product-thumpgo.webp",
+      "scene_prompt": "Danish students celebrating in a city park at golden hour, a group dancing on the grass around the referenced portable battery speaker, bicycles and picnic blankets, trees and Copenhagen rooftops behind, warm low sun flare, photographic, no text",
+      "motion_prompt": "Slow drift in toward the speaker on the grass. Students dance and jump, a bicycle rolls past in the background, sun flare shifts across the lens. Loose, summery, real."
+    }
+  ]
+}

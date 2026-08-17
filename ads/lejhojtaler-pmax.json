@@ -171,13 +171,7 @@
           "ads/assets/product-festival--portrait.jpg",
           "ads/assets/product-party--portrait.jpg"
         ]
-      },
-      "videos": [
-        "0M7xZoiqn9U",
-        "0VN2Q2bMufA",
-        "h1nMZO7giU0",
-        "C9J1G7KQIHA"
-      ]
+      }
     },
     {
       "name": "02 — Soundboks",
@@ -232,10 +226,7 @@
         "portrait": [
           "ads/assets/product-soundboks--portrait.jpg"
         ]
-      },
-      "videos": [
-        "k7nG3O4I6JI"
-      ]
+      }
     },
     {
       "name": "03 — Festpakker",
@@ -294,12 +285,7 @@
           "ads/assets/product-pakke-fest-stor--portrait.jpg",
           "ads/assets/product-pakke-fest-lille--portrait.jpg"
         ]
-      },
-      "videos": [
-        "0VN2Q2bMufA",
-        "h1nMZO7giU0",
-        "FcOqGlPsyYY"
-      ]
+      }
     },
     {
       "name": "04 — Festlys",
@@ -369,14 +355,7 @@
           "ads/assets/product-lys--portrait.jpg",
           "ads/assets/product-lysshow--portrait.jpg"
         ]
-      },
-      "videos": [
-        "FcOqGlPsyYY",
-        "XhecuXfY0vo",
-        "okV56ZfjetM",
-        "DLi7MQbRH8c",
-        "hQXFyo28Ndc"
-      ]
+      }
     },
     {
       "name": "05 — Karaoke",
@@ -436,12 +415,7 @@
           "ads/assets/product-pakke-karaoke-fest--portrait.jpg",
           "ads/assets/product-pakke-karaoke--portrait.jpg"
         ]
-      },
-      "videos": [
-        "_UaBe_xR3JY",
-        "wIsu3Lo5kK4",
-        "ED_w3MHXjxk"
-      ]
+      }
     },
     {
       "name": "06 — Mikrofoner",
@@ -505,13 +479,7 @@
           "ads/assets/product-mikrofon-pro--portrait.jpg",
           "ads/assets/product-headset-pro--portrait.jpg"
         ]
-      },
-      "videos": [
-        "ED_w3MHXjxk",
-        "mnNM1npG_EM",
-        "4gssAwctUFQ",
-        "Y8CBYnicB5g"
-      ]
+      }
     },
     {
       "name": "07 — Projektor & skærm",
@@ -574,13 +542,7 @@
           "ads/assets/product-projektor--portrait.jpg",
           "ads/assets/product-skaerm--portrait.jpg"
         ]
-      },
-      "videos": [
-        "PfUdmfpiV6k",
-        "7FhRTCCKCm0",
-        "wIsu3Lo5kK4",
-        "PLqEcB93Sac"
-      ]
+      }
     },
     {
       "name": "08 — Erhverv & konference",
@@ -641,13 +603,7 @@
           "ads/assets/hero--portrait.jpg",
           "ads/assets/product-projektor-pro--portrait.jpg"
         ]
-      },
-      "videos": [
-        "wIsu3Lo5kK4",
-        "PfUdmfpiV6k",
-        "h1nMZO7giU0",
-        "mnNM1npG_EM"
-      ]
+      }
     },
     {
       "name": "09 — Anledninger: privatfest",
@@ -704,12 +660,7 @@
           "ads/assets/mood-party--portrait.jpg",
           "ads/assets/product-pakke-fest-lille--portrait.jpg"
         ]
-      },
-      "videos": [
-        "0VN2Q2bMufA",
-        "FcOqGlPsyYY",
-        "okV56ZfjetM"
-      ]
+      }
     },
     {
       "name": "10 — Anledninger: bryllup & konfirmation",
@@ -764,12 +715,7 @@
           "ads/assets/mood-festival--portrait.jpg",
           "ads/assets/product-festival--portrait.jpg"
         ]
-      },
-      "videos": [
-        "h1nMZO7giU0",
-        "mnNM1npG_EM",
-        "FcOqGlPsyYY"
-      ]
+      }
     }
   ],
   "logos": {
