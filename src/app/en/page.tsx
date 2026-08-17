@@ -5,6 +5,7 @@ import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
 import { localeAlternates } from "@/lib/hreflang";
+import { openingHoursSpecification } from "@/lib/openingHours";
 
 export const metadata: Metadata = {
   title: "Rent Speaker Copenhagen | From 345 DKK/weekend | Lejhøjtaler.dk",
@@ -70,20 +71,7 @@ export default function EnHome() {
               "@type": "City",
               name: "Copenhagen",
             },
-            openingHoursSpecification: [
-              {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: "Friday",
-                opens: "14:00",
-                closes: "18:00",
-              },
-              {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: "Monday",
-                opens: "15:00",
-                closes: "17:00",
-              },
-            ],
+            openingHoursSpecification: openingHoursSpecification(),
           }),
         }}
       />

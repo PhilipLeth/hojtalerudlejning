@@ -1,4 +1,8 @@
+"use client";
+
 import { type Locale, t } from "@/lib/i18n";
+import { useSiteSettings } from "@/lib/useSiteSettings";
+import { formatDayLine, openDays } from "@/lib/openingHours";
 
 const stepIcons = [
   <svg key="1" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -14,6 +18,24 @@ const stepIcons = [
     <path strokeLinecap="round" strokeLinejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
   </svg>,
 ];
+
+function OpeningHours({ locale, title }: { locale: Locale; title: string }) {
+  const { hours } = useSiteSettings();
+  const days = openDays(hours);
+  if (days.length === 0) return null;
+
+  return (
+    <div className="mt-16 glass rounded-2xl p-8 text-center">
+      <h3 className="mb-4 text-xl font-semibold">{title}</h3>
+      <div className="flex flex-col gap-2 text-white/70">
+        {days.map((d) => (
+          <p key={d.day}>{formatDayLine(d, locale)}</p>
+        ))}
+        {hours.other && <p className="mt-2 text-sm text-white/40">{hours.other}</p>}
+      </div>
+    </div>
+  );
+}
 
 export default function HowItWorks({ locale = "da" }: { locale?: Locale }) {
   const s = t[locale].howItWorks;
@@ -41,21 +63,8 @@ export default function HowItWorks({ locale = "da" }: { locale?: Locale }) {
         ))}
       </div>
 
-      {/* Opening hours */}
-      <div className="mt-16 glass rounded-2xl p-8 text-center">
-        <h3 className="mb-4 text-xl font-semibold">{s.openingHoursTitle}</h3>
-        <div className="flex flex-col gap-2 text-white/70">
-          <p>
-            <span className="font-medium text-white">{s.friday}</span> {s.fridayHours}
-          </p>
-          <p>
-            <span className="font-medium text-white">{s.monday}</span> {s.mondayHours}
-          </p>
-          <p className="mt-2 text-sm text-white/40">
-            {s.otherTimes}
-          </p>
-        </div>
-      </div>
+      {/* Åbningstider — tiderne kommer fra /admin/indstillinger, ikke fra koden */}
+      <OpeningHours locale={locale} title={s.openingHoursTitle} />
     </section>
   );
 }

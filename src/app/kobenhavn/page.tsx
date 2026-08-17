@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import { openingHoursSpecification } from "@/lib/openingHours";
 
 export const metadata: Metadata = {
   title:
@@ -78,12 +79,7 @@ export default function KobenhavnPage() {
       name: "København",
     },
     priceRange: "345-695 DKK",
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Friday"],
-      opens: "15:00",
-      closes: "18:00",
-    },
+    openingHoursSpecification: openingHoursSpecification(),
   };
 
   return (

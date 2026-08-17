@@ -2,26 +2,41 @@
 
 import { useEffect, useState } from "react";
 import { DEFAULT_PHONE, type SitePhone } from "@/lib/phone";
+import {
+  DEFAULT_OPENING_HOURS,
+  normalizeOpeningHours,
+  type OpeningHours,
+} from "@/lib/openingHours";
 
-let cached: SitePhone | null = null;
-let inflight: Promise<SitePhone> | null = null;
+/** Det offentlige sitet henter i én omgang: nummer og åbningstider */
+export interface SiteSettings extends SitePhone {
+  hours: OpeningHours;
+}
 
-async function loadSitePhone(): Promise<SitePhone> {
+const DEFAULTS: SiteSettings = { ...DEFAULT_PHONE, hours: DEFAULT_OPENING_HOURS };
+
+let cached: SiteSettings | null = null;
+let inflight: Promise<SiteSettings> | null = null;
+
+async function loadSiteSettings(): Promise<SiteSettings> {
   if (cached) return cached;
   if (!inflight) {
     inflight = fetch("/api/site-settings")
       .then(async (res) => {
-        const json = (await res.json()) as Partial<SitePhone> & { phone?: string };
-        const next: SitePhone = {
+        const json = (await res.json()) as Partial<SitePhone> & { phone?: string; hours?: unknown };
+        const next: SiteSettings = {
           digits: json.digits || DEFAULT_PHONE.digits,
           display: json.display || DEFAULT_PHONE.display,
           e164: json.e164 || DEFAULT_PHONE.e164,
           href: json.href || DEFAULT_PHONE.href,
+          // Serveren normaliserer også, men klienten skal kunne stå alene med
+          // et gammelt eller halvt svar uden at vise tomme åbningstider
+          hours: normalizeOpeningHours(json.hours),
         };
         cached = next;
         return next;
       })
-      .catch(() => DEFAULT_PHONE)
+      .catch(() => DEFAULTS)
       .finally(() => {
         inflight = null;
       });
@@ -29,21 +44,24 @@ async function loadSitePhone(): Promise<SitePhone> {
   return inflight;
 }
 
-/** Public site settings (telefon). Én fetch deles af header/footer/menu. */
-export function useSiteSettings(): SitePhone {
-  const [phone, setPhone] = useState<SitePhone>(cached ?? DEFAULT_PHONE);
+/**
+ * Offentlige indstillinger (telefon + åbningstider). Én fetch deles af header,
+ * footer, menu, forsidens åbningstider og FAQ.
+ */
+export function useSiteSettings(): SiteSettings {
+  const [settings, setSettings] = useState<SiteSettings>(cached ?? DEFAULTS);
 
   useEffect(() => {
     let cancelled = false;
-    loadSitePhone().then((next) => {
-      if (!cancelled) setPhone(next);
+    loadSiteSettings().then((next) => {
+      if (!cancelled) setSettings(next);
     });
     return () => {
       cancelled = true;
     };
   }, []);
 
-  return phone;
+  return settings;
 }
 
 /** Efter admin gemmer — næste page-load henter friskt. */

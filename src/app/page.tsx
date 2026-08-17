@@ -7,6 +7,7 @@ import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import StickyBookBar from "@/components/StickyBookBar";
 import { PHONE_E164 } from "@/lib/phone";
+import { openingHoursSpecification } from "@/lib/openingHours";
 
 export default function Home() {
   return (
@@ -43,20 +44,7 @@ export default function Home() {
               addressCountry: "DK",
             },
             areaServed: { "@type": "City", name: "København" },
-            openingHoursSpecification: [
-              {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: "Friday",
-                opens: "14:00",
-                closes: "18:00",
-              },
-              {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: "Monday",
-                opens: "15:00",
-                closes: "17:00",
-              },
-            ],
+            openingHoursSpecification: openingHoursSpecification(),
           }),
         }}
       />

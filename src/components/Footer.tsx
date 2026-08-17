@@ -4,6 +4,28 @@ import { useState } from "react";
 import Link from "next/link";
 import { type Locale, t } from "@/lib/i18n";
 import PhoneLink from "@/components/PhoneLink";
+import { useSiteSettings } from "@/lib/useSiteSettings";
+import { formatOneLine, openDays } from "@/lib/openingHours";
+
+/**
+ * Åbningstiderne i footeren. Tiderne kommer fra /admin/indstillinger, så de kan
+ * rettes uden deploy — fx når julen ligger skævt.
+ */
+function OpeningHoursLine({ locale }: { locale: Locale }) {
+  const { hours } = useSiteSettings();
+  if (openDays(hours).length === 0) return null;
+  return (
+    <>
+      <p className="mt-3 text-white/50">
+        <span className="font-medium text-white/70">
+          {locale === "da" ? "Åbningstider" : "Opening hours"}:
+        </span>{" "}
+        {formatOneLine(hours, locale)}
+      </p>
+      {hours.other && <p className="mt-1 text-xs text-white/30">{hours.other}</p>}
+    </>
+  );
+}
 
 function NewsletterForm({ locale }: { locale: Locale }) {
   const [email, setEmail] = useState("");
@@ -69,6 +91,7 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
       <p className="font-medium text-white/50">Scharling Studio</p>
       <p className="mt-1">Halvtolv 9, 1. th &middot; 1436 København K</p>
       <p className="mt-1">CVR 40994904</p>
+      <OpeningHoursLine locale={locale} />
       <p className="mt-3">
         <PhoneLink
           className="inline-flex items-center gap-1.5 font-semibold text-brand-400 hover:text-brand-300 transition"

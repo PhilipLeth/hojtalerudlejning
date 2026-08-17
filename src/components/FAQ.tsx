@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSiteSettings } from "@/lib/useSiteSettings";
+import { formatSentence } from "@/lib/openingHours";
 
 const faqs = [
   {
@@ -12,7 +13,7 @@ const faqs = [
   {
     question: "Hvordan fungerer afhentning?",
     answer:
-      "Du henter udstyret på vores adresse i København K (Halvtolv 9, 1. th). Alle kabler følger med, og en bæretaske kan tilkøbes. Afhentning fredag kl. 14-18, aflevering mandag kl. 15-17.",
+      "Du henter udstyret på vores adresse i København K (Halvtolv 9, 1. th). Alle kabler følger med, og en bæretaske kan tilkøbes. AABNINGSTIDER",
   },
   {
     question: "Hvad er inkluderet i prisen?",
@@ -43,7 +44,11 @@ const faqs = [
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const { display } = useSiteSettings();
+  const { display, hours } = useSiteSettings();
+  // Tiderne må ikke stå som tekst her — så ville de modsige footeren dagen efter
+  // Frederik retter dem i /admin/indstillinger
+  const fill = (answer: string) =>
+    answer.replaceAll("PHONE", display).replaceAll("AABNINGSTIDER", formatSentence(hours));
 
   const toggle = (i: number) => {
     setOpenIndex(openIndex === i ? null : i);
@@ -89,7 +94,7 @@ export default function FAQ() {
                 }`}
               >
                 <p className="px-6 text-sm leading-relaxed text-white/70">
-                  {faq.answer.replaceAll("PHONE", display)}
+                  {fill(faq.answer)}
                 </p>
               </div>
             </div>
@@ -109,7 +114,7 @@ export default function FAQ() {
               name: faq.question,
               acceptedAnswer: {
                 "@type": "Answer",
-                text: faq.answer.replaceAll("PHONE", display),
+                text: fill(faq.answer),
               },
             })),
           }),

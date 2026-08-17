@@ -479,9 +479,12 @@
     }
   },
   "opening_hours": {
-    "friday": "14:00-18:00 (afhentning)",
+    "source": "src/lib/openingHours.ts (standard) + KV site_settings.hours (admins rettelser)",
+    "editable_at": "/admin/indstillinger",
     "monday": "15:00-17:00 (aflevering)",
-    "other": "Efter aftale (angiv i kommentarfelt)"
+    "friday": "14:00-18:00 (afhentning)",
+    "other": "Efter aftale (angiv i kommentarfelt)",
+    "note": "Åbningstiderne er strukturerede (dag → åben/lukket, HH:MM, formål: afhentning/aflevering/begge) og kan rettes uden deploy fra /admin/indstillinger; de gemmes i KV under site_settings.hours ved siden af telefonnummeret, og POST tager imod telefon og tider hver for sig. Sitet læser dem gennem useSiteSettings() — ÉN fetch deles af footer, forsidens Åbningstider-blok og FAQ'en (pladsholderen AABNINGSTIDER, samme trick som PHONE). Standardtiderne i koden bruges som fallback og til JSON-LD via openingHoursSpecification(). FØR: tiderne stod som tekst i i18n (howItWorks.fridayHours m.fl.), i tre JSON-LD-blokke og i brødtekst i FAQ, /kontakt, /lejevilkaar og PaymentResult — og de var uenige: forsiden sagde fredag 14-18, /kobenhavn sagde 15-18. De døde i18n-nøgler er fjernet, og de tre JSON-LD-blokke bygges nu af samme kilde. TILBAGE (bevidst): brødteksten på /kontakt, /lejevilkaar og i PaymentResult nævner stadig 14-18/15-17 som tekst. Ændrer Frederik tiderne permanent, skal de rettes i koden — det står som en note i /admin/indstillinger sammen med at Googles strukturerede data først følger med ved næste deploy, og at Google Business Profile skal rettes i hånden."
   },
   "pickup": {
     "method": "Lejer henter i padded sportstaske",

@@ -163,12 +163,8 @@ export const t = {
           text: "Aflever udstyret mandag kl. 15-17. Betal online ved booking — eller ved afhentning.",
         },
       ],
+      // Tiderne selv kommer fra /admin/indstillinger — se src/lib/openingHours.ts
       openingHoursTitle: "Åbningstider",
-      friday: "Fredag:",
-      fridayHours: "14:00 – 18:00 (afhentning)",
-      monday: "Mandag:",
-      mondayHours: "15:00 – 17:00 (aflevering)",
-      otherTimes: "Andre tidspunkter efter aftale — skriv i kommentarfeltet ved booking.",
     },
     footer: {
       about: "Om os",
@@ -343,12 +339,8 @@ export const t = {
           text: "Return the equipment Monday 3–5 PM. Pay online at booking — or at pickup.",
         },
       ],
+      // Hours themselves come from admin settings — see src/lib/openingHours.ts
       openingHoursTitle: "Opening hours",
-      friday: "Friday:",
-      fridayHours: "2:00 – 6:00 PM (pickup)",
-      monday: "Monday:",
-      mondayHours: "3:00 – 5:00 PM (return)",
-      otherTimes: "Other times by appointment — write in the comment field when booking.",
     },
     footer: {
       about: "About us",
