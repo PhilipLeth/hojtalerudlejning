@@ -41,6 +41,7 @@ import {
 } from "@/lib/payments";
 import AdminNav from "@/components/AdminNav";
 import AdminLogin from "@/components/AdminLogin";
+import SendSmsBox from "@/components/admin/SendSmsBox";
 import { useAdminAuth, getAdminToken, adminFetch } from "@/lib/useAdminAuth";
 
 interface Booking extends OrderBooking {
@@ -65,6 +66,8 @@ interface Booking extends OrderBooking {
   updatedAt?: string;
   reviewMailSentAt?: string;
   communications?: Array<{ type: string; label: string; to?: string; sentAt: string; note?: string }>;
+  /** Hvilke SMS-typer der er sendt, og hvornår — holder påmindelser fra at gentage sig */
+  smsSent?: Record<string, string>;
   /** Sat af Stripe-webhook ved gennemført online betaling */
   paid?: boolean;
   paidAmount?: number;
@@ -1082,9 +1085,12 @@ function BookingDetails({ b, today, setFields }: { b: Booking; today: Date; setF
       )}
       <CallField b={b} setFields={setFields} />
       <FollowUpFields b={b} setFields={setFields} />
+      {/* SMS til kunden. Sendte beskeder står i kommunikationsloggen nedenfor
+          med deres fulde tekst — en SMS kan ikke slås op andre steder. */}
+      <SendSmsBox booking={b} secret={getAdminToken()} />
       {b.comment && <div style={{ gridColumn: "1 / -1" }}><strong>Kommentar:</strong> {b.comment}</div>}
       <div style={{ gridColumn: "1 / -1" }}>
-        <strong>Sendte mails:</strong>
+        <strong>Sendt til kunden:</strong>
         {(b.communications?.length ?? 0) === 0 ? (
           <span style={{ color: "#aaa" }}>
             {" "}

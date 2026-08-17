@@ -6,6 +6,7 @@ import {
   signatureFor,
 } from "../../src/lib/commTemplates";
 import { KV_SALE_CAMPAIGN, parseCampaign } from "./_lib/weekendSale";
+import { recordSms, sendBookingSms } from "./_lib/sms";
 
 import { requireAdmin } from "./_lib/adminAuth";
 
@@ -15,6 +16,9 @@ interface Env {
   RESEND_API_KEY: string;
   /** Direkte "skriv en anmeldelse"-link fra Google Business Profile (g.page/r/…/review) */
   GOOGLE_REVIEW_URL?: string;
+  /** SMS via GatewayAPI — se /admin/kommunikation */
+  SMS_API_TOKEN?: string;
+  SMS_DEV_MODE?: string;
 }
 
 // Direkte "skriv en anmeldelse"-link fra Google Business Profile. Ligger som
@@ -434,6 +438,27 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       } catch (e) {
         // Statusopdateringen må ikke fejle pga. mailen
         console.error("Review mail error:", e);
+      }
+    }
+
+    // SMS ved statusskift. Hver type kan slås til og fra i /admin/kommunikation,
+    // og hver sendt besked mærkes på ordren, så et skift tilbage og frem ikke
+    // sender den igen. Må ikke kunne vælte statusopdateringen.
+    const smsType =
+      body.status === "bekraeftet" && previousStatus !== "bekraeftet"
+        ? "bekraeftet"
+        : body.status === "afleveret" && previousStatus !== "afleveret"
+          ? "tak"
+          : null;
+    if (smsType && !(booking.smsSent && booking.smsSent[smsType])) {
+      try {
+        const outcome = await sendBookingSms(context.env, booking, smsType);
+        recordSms(booking, outcome);
+        if (!outcome.ok && !outcome.skipped) {
+          console.error(`[sms] ${smsType} fejlede på ${body.id}:`, outcome.error);
+        }
+      } catch (e) {
+        console.error("[sms] uventet fejl ved statusskift:", e);
       }
     }
 

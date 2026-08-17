@@ -96,15 +96,22 @@ Bedste hilsner,
 export type TemplateVars = Partial<Record<string, string>>;
 
 /**
- * Erstat {{shortcode}} med værdier. Ukendte shortcodes fjernes helt — en
- * tastefejl i admin skal ikke ende som "{{fornvan}}" i kundens indbakke.
+ * Erstat {{shortcode}} med værdier for et givet sæt tilladte nøgler. Ukendte
+ * shortcodes fjernes helt — en tastefejl i admin skal ikke ende som
+ * "{{fornvan}}" hos kunden. SMS-skabelonerne har deres eget sæt nøgler og
+ * bruger samme motor (se smsTemplates.ts).
  */
-export function renderTemplate(text: string, vars: TemplateVars): string {
+export function renderWithKeys(text: string, allowed: Set<string>, vars: TemplateVars): string {
   return String(text ?? "").replace(/\{\{\s*([a-zA-ZæøåÆØÅ_]+)\s*\}\}/g, (_, raw: string) => {
     const key = raw.toLowerCase();
-    if (!SHORTCODE_KEYS.has(key)) return "";
+    if (!allowed.has(key)) return "";
     return vars[key] ?? "";
   });
+}
+
+/** Mail-skabelonernes shortcodes */
+export function renderTemplate(text: string, vars: TemplateVars): string {
+  return renderWithKeys(text, SHORTCODE_KEYS, vars);
 }
 
 function escapeHtml(s: string): string {

@@ -1,6 +1,7 @@
 import { resolveDiscountFor } from "./_lib/discounts";
 import { sendPush } from "../../src/lib/webpush";
 import { KV_PUSH_SUBS, loadSubscriptions } from "./push";
+import { recordSms, sendBookingSms, type SendSmsOutcome } from "./_lib/sms";
 import type { SaleContext } from "./_lib/weekendSale";
 
 interface Env {
@@ -10,6 +11,10 @@ interface Env {
   VAPID_PUBLIC_KEY?: string;
   VAPID_PRIVATE_KEY?: string;
   VAPID_SUBJECT?: string;
+  /** SMS via GatewayAPI — se /admin/kommunikation */
+  SMS_API_TOKEN?: string;
+  SMS_DEV_MODE?: string;
+  GOOGLE_REVIEW_URL?: string;
   BOOKINGS: KVNamespace;
 }
 
@@ -358,6 +363,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
   }
 
+  // SMS-kvittering til kunden. Slået fra som standard (bekræftelsesmailen siger
+  // det samme), men kan tændes i /admin/kommunikation. Sendes før KV-skrivningen,
+  // så beskeden og dens linje i kommunikationsloggen lander i samme skrivning.
+  let smsOutcome: SendSmsOutcome | null = null;
+  try {
+    smsOutcome = await sendBookingSms(context.env, data as unknown as Record<string, unknown>, "booking_modtaget");
+  } catch (e) {
+    console.error("[sms] kunne ikke sende kvittering:", e);
+  }
+
   // Save booking to KV
   const timestamp = Date.now();
   const random = Math.random().toString(36).substring(2, 8);
@@ -386,6 +401,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         },
       ],
     };
+    if (smsOutcome) recordSms(booking, smsOutcome);
     await context.env.BOOKINGS.put(key, JSON.stringify(booking));
   } catch (e) {
     console.error("KV save error:", e);
