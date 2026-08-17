@@ -5,8 +5,13 @@
  * en periode — ud kommer omsætning, betalt, udestående, fordeling pr. produkt,
  * pr. weekend og pr. betalingsmetode.
  *
- * Omsætning tælles på lejeperiodens start (afhentningsdagen), ikke på hvornår
- * ordren blev oprettet — det er dér udstyret rent faktisk tjener penge.
+ * Omsætningen kan tælles på to måder, og forskellen er ikke akademisk:
+ *
+ *   booket — datoen ordren kom ind. Det er den man skal holde op mod
+ *            annonceudgiften: en annoncekrone brugt i august giver bookinger i
+ *            august, også selvom festen først er i september.
+ *   leje   — lejeperiodens første dag. Det er den man skal bruge til at se
+ *            hvornår udstyret var i arbejde.
  */
 import {
   paidAmount,
@@ -69,6 +74,7 @@ export interface UnpaidOrder {
 export interface AccountingSummary {
   from: string;
   to: string;
+  basis: RevenueBasis;
   orders: number;
   /** Fakturerbar omsætning i perioden (ordrernes totaler) */
   revenue: number;
@@ -103,12 +109,22 @@ export function weekendFriday(iso: string): string {
   return d.toISOString().slice(0, 10);
 }
 
-/** Datoen omsætningen bogføres på: lejeperiodens start, ellers oprettelsen */
-export function revenueDate(b: AccountingBooking): string {
-  const pickup = String(b.pickup || "").slice(0, 10);
-  if (/^\d{4}-\d{2}-\d{2}$/.test(pickup)) return pickup;
-  const created = String(b.createdAt || "").slice(0, 10);
-  return /^\d{4}-\d{2}-\d{2}$/.test(created) ? created : "";
+export type RevenueBasis = "booket" | "leje";
+
+const isoDay = (v: unknown): string => {
+  const d = String(v || "").slice(0, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : "";
+};
+
+/** Datoen udstyret er ude — bruges til weekendgrupperingen uanset opgørelse */
+export function rentalDate(b: AccountingBooking): string {
+  return isoDay(b.pickup) || isoDay(b.createdAt);
+}
+
+/** Datoen omsætningen bogføres på for den valgte opgørelse */
+export function revenueDate(b: AccountingBooking, basis: RevenueBasis = "booket"): string {
+  if (basis === "leje") return isoDay(b.pickup) || isoDay(b.createdAt);
+  return isoDay(b.createdAt) || isoDay(b.pickup);
 }
 
 export interface PriceLookup {
@@ -164,9 +180,10 @@ export function buildAccounting(
   from: string,
   to: string,
   today: string,
+  basis: RevenueBasis = "booket",
 ): AccountingSummary {
   const inPeriod = bookings.filter((b) => {
-    const d = revenueDate(b);
+    const d = revenueDate(b, basis);
     return d && d >= from && d <= to;
   });
 
@@ -197,7 +214,7 @@ export function buildAccounting(
       products.set(line.id, row);
     }
 
-    const friday = weekendFriday(revenueDate(b));
+    const friday = weekendFriday(rentalDate(b));
     const w = weekends.get(friday) ?? { friday, orders: 0, revenue: 0, paid: 0, outstanding: 0 };
     w.orders += 1;
     w.revenue += total;
@@ -207,7 +224,7 @@ export function buildAccounting(
 
     const status = paymentStatus(b);
     if (status !== "betalt") {
-      const pickup = revenueDate(b);
+      const pickup = rentalDate(b);
       unpaid.push({
         id: b.id,
         name: b.name || "",
@@ -236,6 +253,7 @@ export function buildAccounting(
   return {
     from,
     to,
+    basis,
     orders: live.length,
     revenue,
     paid,

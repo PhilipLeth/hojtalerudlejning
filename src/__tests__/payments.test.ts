@@ -162,7 +162,8 @@ describe("Regnskab", () => {
     },
   ];
 
-  const sum = buildAccounting(bookings, priceOf, "2026-08-01", "2026-08-31", "2026-08-25");
+  // Testdata har kun pickup-datoer, så opgørelsen køres på lejeperioden
+  const sum = buildAccounting(bookings, priceOf, "2026-08-01", "2026-08-31", "2026-08-25", "leje");
 
   it("tæller kun ordrer i perioden og springer annullerede over", () => {
     expect(sum.orders).toBe(2);
@@ -224,12 +225,28 @@ describe("Fordeling af rabat", () => {
 });
 
 describe("Bogføringsdato", () => {
-  it("bruger lejeperiodens start, ikke oprettelsen", () => {
-    expect(revenueDate({ id: "z", total: 0, pickup: "2026-08-21T00:00:00Z", createdAt: "2026-07-01T10:00:00Z" })).toBe("2026-08-21");
+  const ordre = { id: "z", total: 0, pickup: "2026-08-21T00:00:00Z", createdAt: "2026-07-01T10:00:00Z" };
+
+  it("bogfører på bestillingsdatoen som standard — det er den annoncerne skal måles mod", () => {
+    expect(revenueDate(ordre)).toBe("2026-07-01");
+    expect(revenueDate(ordre, "booket")).toBe("2026-07-01");
   });
 
-  it("falder tilbage på oprettelsen for gamle ordrer uden datoer", () => {
-    expect(revenueDate({ id: "z", total: 0, createdAt: "2026-07-01T10:00:00Z" })).toBe("2026-07-01");
+  it("kan i stedet bogføre på lejeperiodens start", () => {
+    expect(revenueDate(ordre, "leje")).toBe("2026-08-21");
+  });
+
+  it("falder tilbage på den anden dato når én mangler", () => {
+    expect(revenueDate({ id: "z", total: 0, createdAt: "2026-07-01T10:00:00Z" }, "leje")).toBe("2026-07-01");
+    expect(revenueDate({ id: "z", total: 0, pickup: "2026-08-21T00:00:00Z" })).toBe("2026-08-21");
+  });
+
+  it("holder en juli-booking til en august-fest ude af august, når man måler på booket", () => {
+    const juliOrdre = { id: "j", total: 2000, createdAt: "2026-07-28T09:00:00Z", pickup: "2026-08-21" };
+    const august = buildAccounting([juliOrdre], priceOf, "2026-08-01", "2026-08-31", "2026-08-17", "booket");
+    const augustLeje = buildAccounting([juliOrdre], priceOf, "2026-08-01", "2026-08-31", "2026-08-17", "leje");
+    expect(august.orders).toBe(0);
+    expect(augustLeje.orders).toBe(1);
   });
 
   it("lægger lørdag og søndag på fredagen", () => {

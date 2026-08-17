@@ -6,7 +6,7 @@
  * ikke skal hente og gennemgå alle ordrer i browseren.
  */
 import { loadPriceTable } from "./_lib/pricing";
-import { buildAccounting, type AccountingBooking } from "./_lib/accounting";
+import { buildAccounting, type AccountingBooking, type RevenueBasis } from "./_lib/accounting";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -76,6 +76,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const to = url.searchParams.get("to") || today;
 
   if (!isIsoDate(from) || !isIsoDate(to)) return json({ error: "from/to skal være YYYY-MM-DD" }, 400);
+  // booket = datoen ordren kom ind (den man holder op mod annonceudgiften),
+  // leje = lejeperiodens start (den man bruger til at se hvornår udstyret var ude)
+  const basis: RevenueBasis = url.searchParams.get("basis") === "leje" ? "leje" : "booket";
   if (to < from) return json({ error: "to skal være >= from" }, 400);
 
   try {
@@ -101,8 +104,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       }
     }
 
-    const summary = buildAccounting(bookings, priceOf, from, to, today);
-    console.log("[accounting]", from, "→", to, "ordrer=", summary.orders, "omsætning=", summary.revenue);
+    const summary = buildAccounting(bookings, priceOf, from, to, today, basis);
+    console.log("[accounting]", basis, from, "→", to, "ordrer=", summary.orders, "omsætning=", summary.revenue);
 
     return json({ ...summary, today, settings });
   } catch (e) {

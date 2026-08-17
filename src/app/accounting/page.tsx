@@ -71,13 +71,15 @@ function periodPresets(today: string) {
   const y = t.getUTCFullYear();
   const m = t.getUTCMonth();
   const monthStart = new Date(Date.UTC(y, m, 1));
+  const monthEnd = new Date(Date.UTC(y, m + 1, 0));
   const lastMonthStart = new Date(Date.UTC(y, m - 1, 1));
   const lastMonthEnd = new Date(Date.UTC(y, m, 0));
   const yearStart = new Date(Date.UTC(y, 0, 1));
   const ago90 = new Date(t);
   ago90.setUTCDate(t.getUTCDate() - 89);
   return [
-    { id: "maaned", label: "Denne måned", from: iso(monthStart), to: today },
+    // Hele måneden, ikke kun til i dag: ellers falder kommende afhentninger ud
+    { id: "maaned", label: "Denne måned", from: iso(monthStart), to: iso(monthEnd) },
     { id: "sidste", label: "Sidste måned", from: iso(lastMonthStart), to: iso(lastMonthEnd) },
     { id: "90", label: "90 dage", from: iso(ago90), to: today },
     { id: "aar", label: "I år", from: iso(yearStart), to: today },
@@ -102,6 +104,7 @@ export default function AccountingPage() {
   const [data, setData] = useState<Summary | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [basis, setBasis] = useState<"booket" | "leje">("booket");
   const [spend, setSpend] = useState<SpendReport | null>(null);
   const [spendError, setSpendError] = useState("");
   const [showSettings, setShowSettings] = useState(false);
@@ -120,7 +123,7 @@ export default function AccountingPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`/api/accounting?from=${from}&to=${to}&secret=${encodeURIComponent(secret)}`);
+      const res = await fetch(`/api/accounting?from=${from}&to=${to}&basis=${basis}&secret=${encodeURIComponent(secret)}`);
       const json: Summary = await res.json();
       if (!res.ok) {
         if (res.status === 401) { localStorage.removeItem("admin_secret"); window.location.href = "/admin"; return; }
@@ -134,7 +137,7 @@ export default function AccountingPage() {
     } finally {
       setLoading(false);
     }
-  }, [secret, from, to]);
+  }, [secret, from, to, basis]);
 
   /** Annonceforbruget kommer fra Google og hentes for sig, så regnskabstallene
    *  ikke venter på — eller falder med — Google Ads. */
@@ -266,6 +269,26 @@ export default function AccountingPage() {
               </button>
             );
           })}
+          <span style={{ display: "flex", gap: 4, alignItems: "center", marginLeft: "auto" }}>
+            {([
+              { id: "booket" as const, label: "Booket", hint: "Datoen ordren kom ind — den annoncerne skal måles mod" },
+              { id: "leje" as const, label: "Leje", hint: "Lejeperiodens start — hvornår udstyret var ude" },
+            ]).map((o) => (
+              <button
+                key={o.id}
+                onClick={() => setBasis(o.id)}
+                title={o.hint}
+                style={{
+                  padding: isMobile ? "8px 12px" : "6px 12px", fontSize: 12, borderRadius: 20, cursor: "pointer",
+                  fontWeight: basis === o.id ? 700 : 400,
+                  background: basis === o.id ? "#0070f3" : "#f0f0f0",
+                  color: basis === o.id ? "#fff" : "#555", border: "none", whiteSpace: "nowrap",
+                }}
+              >
+                {o.label}
+              </button>
+            ))}
+          </span>
           <span style={{ display: "flex", gap: 6, alignItems: "center", fontSize: 12, color: "#888" }}>
             <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} style={{ padding: "5px 6px", border: "1px solid #ddd", borderRadius: 6 }} />
             →
@@ -305,6 +328,36 @@ export default function AccountingPage() {
           </div>
         )}
 
+        {/* ROAS — det tal der afgør om annoncerne løber rundt */}
+        <div
+          style={{
+            ...card,
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            gap: 16, flexWrap: "wrap",
+            background: !spend || !data ? "#fff" : spend.cost === 0 ? "#fff" : data.revenue / spend.cost >= 3 ? "#eaf7ed" : data.revenue / spend.cost >= 1 ? "#fff8e6" : "#fdecea",
+            border: `1px solid ${!spend || !data || spend.cost === 0 ? "#eee" : data.revenue / spend.cost >= 3 ? "#28a745" : data.revenue / spend.cost >= 1 ? "#f0ad4e" : "#e74c3c"}`,
+          }}
+        >
+          <div>
+            <div style={{ fontSize: 11, color: "#888", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.04em" }}>
+              ROAS — omsætning pr. annoncekrone
+            </div>
+            <div style={{ fontSize: isMobile ? 30 : 38, fontWeight: 800, lineHeight: 1.1, marginTop: 2 }}>
+              {!data || !spend ? "—" : spend.cost === 0 ? "ingen annonceudgift" : `${(data.revenue / spend.cost).toFixed(1)}×`}
+            </div>
+            <div style={{ fontSize: 12, color: "#666", marginTop: 2 }}>
+              {data && spend && spend.cost > 0
+                ? `${kr(data.revenue)} booket for ${kr(spend.cost)} i annoncer`
+                : spendError || "henter annonceforbrug…"}
+            </div>
+          </div>
+          <div style={{ fontSize: 12, color: "#777", maxWidth: 320, lineHeight: 1.5 }}>
+            {basis === "booket"
+              ? "Ordrer bogført på den dag de kom ind — samme periode som annoncekronerne blev brugt."
+              : "Ordrer bogført på lejeperiodens start. Til ROAS bør du bruge Booket, ellers sammenlignes august-annoncer med september-fester."}
+          </div>
+        </div>
+
         {/* Nøgletal */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(3, 1fr)", gap: 12, marginBottom: 16 }}>
           {[
@@ -327,7 +380,7 @@ export default function AccountingPage() {
             {
               label: "Efter annoncer",
               value: (data?.revenue ?? 0) - (spend?.cost ?? 0),
-              hint: spend && spend.cost > 0 && data ? `ROAS ${(data.revenue / spend.cost).toFixed(1)}×` : "omsætning minus annoncer",
+              hint: spend && data && data.orders > 0 ? `${kr(spend.cost / data.orders)} i annoncer pr. ordre` : "omsætning minus annoncer",
               color: "#155724",
             },
           ].map((k) => (
@@ -528,8 +581,11 @@ export default function AccountingPage() {
         </div>
 
         <p style={{ fontSize: 11, color: "#aaa", lineHeight: 1.6 }}>
-          Omsætning bogføres på lejeperiodens første dag. Beløb pr. produkt er ordrens total fordelt efter
-          katalogpriserne, så rabatter tælles med der hvor de blev givet. Annullerede ordrer indgår ikke.
+          {basis === "booket"
+            ? "Omsætning bogføres på den dag ordren kom ind."
+            : "Omsætning bogføres på lejeperiodens første dag."}{" "}Beløb pr. produkt er ordrens total fordelt efter katalogpriserne, så rabatter
+          tælles med der hvor de blev givet. Weekender grupperes altid på lejeperioden, uanset opgørelse.
+          Annullerede ordrer indgår ikke. ROAS er hele omsætningen mod hele forbruget — ikke attribueret pr. ordre.
         </p>
       </main>
     </div>

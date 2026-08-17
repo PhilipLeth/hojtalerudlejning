@@ -1821,6 +1821,62 @@
       "description": "Filtre: kategori, kun med bookinger, søg. Horisont 7/14/30/60 + hop til dato. Sticky produktkolonne. Blokerede dage som skravering.",
       "priority": "medium",
       "status": "done"
+    },
+    {
+      "id": "admin-brugere",
+      "title": "Admin: flere brugere (Frederik / Philip)",
+      "description": "Erstat én fælles ADMIN_SECRET med navngivne brugere i KV (admin_users). Login: vælg bruger + adgangskode → session-token. Vis 'Logget ind som …' i AdminNav. Legacy ADMIN_SECRET virker stadig som nødadgang indtil brugere er sat op.",
+      "priority": "high",
+      "status": "in_progress"
+    },
+    {
+      "id": "admin-brugere-api",
+      "title": "API: admin-login + admin-users",
+      "description": "POST /api/admin-login (userId+password → token). GET /api/admin-login (brugerliste til dropdown). GET/POST /api/admin-users (administration af brugere). Sessions i KV admin_session_<token> med udløb. Passwords hashes med PBKDF2. requireAdmin() i _lib/adminAuth.ts bruges af alle admin-endpoints.",
+      "priority": "high",
+      "status": "in_progress"
+    },
+    {
+      "id": "admin-brugere-ui",
+      "title": "Admin: /admin/brugere + fælles useAdminAuth",
+      "description": "Fælles login-komponent og useAdminAuth-hook erstatter duplikeret localStorage admin_secret på alle admin-sider. /admin/brugere: tilføj bruger, skift adgangskode, deaktivér. Bootstrap: tom KV → Frederik+Philip oprettes med ADMIN_SECRET som startkode (skiftes i bruger-admin).",
+      "priority": "high",
+      "status": "in_progress"
+    },
+    {
+      "id": "ads-geo-presence",
+      "title": "Ads: geo-målretning til PRESENCE, ikke PRESENCE_OR_INTEREST",
+      "description": "Søgekampagnen 'Højtaler Udlejning - Search' står på PRESENCE_OR_INTEREST og viser derfor annoncer til folk der blot er interesserede i København. Kilde til søgetermer som 'leje af lyskæder fyn', 'soundboks leje odense', 'leje soundboks smukfest'. PMax-kampagnen kører allerede PRESENCE. Ét felt: campaign.geo_target_type_setting.positive_geo_target_type.",
+      "priority": "high",
+      "status": "pending"
+    },
+    {
+      "id": "ads-soundboks-kannibalisering",
+      "title": "Ads: AG 1 stjæler Soundboks-søgninger til 2-3x prisen",
+      "description": "Samme søgninger fanges i både AG 1 (Højtalere & Lyd) og AG 4 (Soundboks): 'lej soundboks' 6,58 kr/klik i AG 4 mod 15,91 kr i AG 1; 'lej en soundboks' 6,98 mod 20,42. Ca. 178 kr af 1.200 kr på 30 dage. Forværret af budløftet 16. aug hvor AG 1 gik til 25 kr mod AG 4's 14. Fix: 'soundboks' og 'soundbox' som negative keywords i AG 1, og stavefejlen 'soundbox' som rigtige keywords i AG 4 (den mangler helt og har kostet ~103 kr fanget tilfældigt).",
+      "priority": "high",
+      "status": "pending"
+    },
+    {
+      "id": "sitemap-genereres-fra-build",
+      "title": "SEO: sitemap genereres fra build + admin ud af indeks",
+      "description": "public/sitemap.xml er håndskrevet og har 55 URL'er mod 89 byggede sider. 17 rigtige sider mangler — heriblandt annoncelandingssiderne /lej-hojtaler, /festlys, /festlyd, /av-udstyr, /lydudstyr, /erhverv, som prd.seo.sitemap_paths allerede foreskriver. Sitemap skal genereres fra out/ ved build. Samtidig: 16 admin-sider og /accounting er crawlbare (robots.txt er 'Allow: /', ingen noindex) — de skal ud af sitemap, have Disallow i robots.txt og noindex-meta.",
+      "priority": "high",
+      "status": "pending"
+    },
+    {
+      "id": "hreflang-da-en",
+      "title": "SEO: hreflang mellem danske og engelske sider",
+      "description": "Seks sider findes under /en (forside, book, om, lejevilkaar, blog) uden rel=alternate hreflang i nogen retning. Google ser to sæt uden at vide de hører sammen. Bemærk: prd.domains.en peger på lejhojtaler.com, men det domæne har dødt DNS — hreflang skal pege på /en-stier på lejhojtaler.dk.",
+      "priority": "medium",
+      "status": "pending"
+    },
+    {
+      "id": "core-web-vitals-maaling",
+      "title": "Mål rigtige Core Web Vitals (blokeret: mangler MCP)",
+      "description": "Billedarbejdet 16. aug er målt på payload i build-output (12,0 MB → 370 KB pr. landingsside), ikke på faktiske LCP/CLS/INP. Kræver Chrome DevTools MCP: npx -y chrome-devtools-mcp@latest. Philip skal tilføje den i MCP-konfigurationen; kan ikke gøres fra en session.",
+      "priority": "medium",
+      "status": "blocked"
     }
   ],
   "status": {
@@ -2096,6 +2152,11 @@
       "date": "2026-08-16",
       "description": "festival_bas ('Stor højtalerpakke + bas') fjernet som produkt/lagerlinje. Det er ikke et fysisk produkt — kun subwoofer (tilvalg) + stor højtalerpakke. /hojtalerpakke-bas → 301 /subwoofer. Gamle bookinger ekspanderes til festival+subwoofer."
     },
+    "admin_brugere_2026_08": {
+      "status": "in_progress",
+      "date": "2026-08-17",
+      "description": "Admin-login med navngivne brugere (Frederik, Philip) i stedet for én fælles adgangskode. KV admin_users + session-tokens. /admin/brugere til at tilføje og skifte adgangskoder. ADMIN_SECRET beholdes som legacy/nødadgang. requireAdmin() centraliserer auth på ~22 endpoints. useAdminAuth + AdminLogin erstatter duplikeret login på admin-sider."
+    },
     "subwoofer_2026_08": {
       "status": "done",
       "date": "2026-08-04",
@@ -2287,8 +2348,8 @@
     }
   },
   "task_overblik": {
-    "opdateret": "2026-08-15",
-    "antal_opgaver_i_alt": 79,
+    "opdateret": "2026-08-17",
+    "antal_opgaver_i_alt": 84,
     "bygget_og_deployet": 58,
     "afvist": [
       {
@@ -2337,6 +2398,31 @@
         "id": "stripe-7-tax",
         "title": "Stripe Tax: 25% dansk moms",
         "status": "todo"
+      },
+      {
+        "id": "ads-geo-presence",
+        "title": "Ads: geo-målretning til PRESENCE, ikke PRESENCE_OR_INTEREST",
+        "status": "pending"
+      },
+      {
+        "id": "ads-soundboks-kannibalisering",
+        "title": "Ads: AG 1 stjæler Soundboks-søgninger til 2-3x prisen",
+        "status": "pending"
+      },
+      {
+        "id": "sitemap-genereres-fra-build",
+        "title": "SEO: sitemap genereres fra build + admin ud af indeks",
+        "status": "pending"
+      },
+      {
+        "id": "hreflang-da-en",
+        "title": "SEO: hreflang mellem danske og engelske sider",
+        "status": "pending"
+      },
+      {
+        "id": "core-web-vitals-maaling",
+        "title": "Mål rigtige Core Web Vitals (blokeret: mangler MCP)",
+        "status": "blocked"
       }
     ],
     "note": "'cancelled' betyder afvist/rullet tilbage — IKKE åbent arbejde. Booking er og forbliver en drawer-kurv, se booking_drawer-sektionen."
@@ -2434,7 +2520,7 @@
           "Annoncetallene kommer med i CSV-eksporten"
         ],
         "status": "done",
-        "note": "ROAS er hele omsætningen mod hele forbruget — ikke attribueret pr. ordre. Konverteringssporingen på kontoen er først lige ryddet op (se google_ads), så attribuering pr. ordre venter."
+        "note": "ROAS måles på ordrer BOOKET i perioden, ikke på lejeperioden — annoncekroner brugt i august giver bookinger i august, også når festen er i september. /accounting har et skifte mellem de to opgørelser (Booket/Leje); Booket er standard. ROAS er stadig hele omsætningen mod hele forbruget, ikke attribueret pr. ordre."
       },
       {
         "id": "regn-3",
@@ -2451,6 +2537,6 @@
       }
     ],
     "regnskabsindstillinger": "KV: accounting_settings — månedsmål, bank reg/konto, MobilePay, betalingsfrist og fodnote på fakturaen. Redigeres på /accounting.",
-    "noter": "Omsætning bogføres på lejeperiodens første dag, ikke oprettelsesdatoen. Annullerede ordrer indgår ikke. Beløb pr. produkt er ordrens total fordelt efter katalogpriser, så rabatter lander hvor de blev givet."
+    "noter": "Omsætning bogføres som standard på bestillingsdatoen (booket), så den kan holdes op mod annonceudgiften i samme periode. Skift til 'Leje' for at se hvornår udstyret var i arbejde. Weekendgrupperingen bruger altid lejeperioden. 'Denne måned' dækker hele måneden, ikke kun til i dag — ellers falder kommende afhentninger ud af tallet. Annullerede ordrer indgår ikke. Beløb pr. produkt er ordrens total fordelt efter katalogpriser."
   }
 }
