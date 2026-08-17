@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 
+import { localeAlternates } from "@/lib/hreflang";
+
 export const metadata: Metadata = {
   alternates: {
     canonical: "https://lejhojtaler.dk/en",
-    languages: {
-      da: "https://lejhojtaler.dk",
-      en: "https://lejhojtaler.dk/en",
-    },
+    languages: localeAlternates("/"),
   },
 };
 

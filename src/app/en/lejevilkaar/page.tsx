@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Rental Terms | Lejhøjtaler.dk",
@@ -7,6 +8,7 @@ export const metadata: Metadata = {
     "Rental terms for speaker, lighting and PA system hire at Lejhøjtaler.dk. Read about prices, rental periods, pickup, return and liability.",
   alternates: {
     canonical: "https://lejhojtaler.dk/en/lejevilkaar",
+    languages: localeAlternates("/lejevilkaar"),
   },
 };
 

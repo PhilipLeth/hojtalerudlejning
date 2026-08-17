@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "postbuild": "python3 scripts/generate-sitemap.py --write"
   },
   "dependencies": {
     "@stripe/stripe-js": "^9.12.1",

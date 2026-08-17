@@ -5,6 +5,7 @@ import TopBar from "@/components/TopBar";
 import SiteHeader from "@/components/SiteHeader";
 import BookingDrawer from "@/components/BookingDrawer";
 import WeekendSalePopup from "@/components/WeekendSalePopup";
+import { localeAlternates } from "@/lib/hreflang";
 import "./globals.css";
 
 const GTM_ID = "GTM-M52R25VF";
@@ -45,12 +46,12 @@ export const metadata: Metadata = {
     locale: "da_DK",
     type: "website",
   },
+  // Bemærk: en side der sætter sin egen alternates.canonical erstatter HELE
+  // dette objekt og taber languages. Sider med en engelsk tvilling skal derfor
+  // sætte begge — se localeAlternates i src/lib/hreflang.ts.
   alternates: {
     canonical: "https://lejhojtaler.dk",
-    languages: {
-      da: "https://lejhojtaler.dk",
-      en: "https://lejhojtaler.dk/en",
-    },
+    languages: localeAlternates("/"),
   },
 };
 

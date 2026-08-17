@@ -6,54 +6,239 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/soundboks-4</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/festpakke-lille</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/festpakke-stor</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/mackie-thump-go</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/hojtalerpakke-lille</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/hojtalerpakke-normal</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/kontakt</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/hojtalerpakke-bas</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/en</loc>
+    <loc>https://lejhojtaler.dk/av-udstyr</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/kobenhavn</loc>
+    <loc>https://lejhojtaler.dk/blog</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/billig-hojtaler-leje</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/festlys-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/foedselsdagsfest-lyd</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/hojtaler-paa-cykel-kobenhavn</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/hojtaler-til-fest</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/lyd-til-havefest</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/musikanlaeg-til-fest</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/om-lejhojtaler</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/pa-anlaeg-udlejning-kobenhavn</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/soundboks-alternativ-kobenhavn</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/blog/speaker-rental-copenhagen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/bryllup</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/discokugle</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/blog</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/lejevilkaar</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/om</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/enkelt-lyseffekt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/erhverv</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/festlyd</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/festlys</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/festpakke-lille</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/festpakke-stor</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/foedselsdag</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/haandholdt-mikrofon</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/haandholdt-mikrofon-pro</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/havefest</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/headset-mikrofon</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/headset-pro</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/hojtalerpakke-lille</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/hojtalerpakke-normal</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/julefrokost</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/karaoke</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/karaoke-maskine</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/kobenhavn</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/konfirmation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/kontakt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/laerred-160</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/lej-hojtaler</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/lejevilkaar</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/lydudstyr</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/lys-pakke</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/lyskaeder</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/mackie-thump-go</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/nytaar</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lejhojtaler.dk/om</loc>
@@ -61,111 +246,98 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/en/om</loc>
+    <loc>https://lejhojtaler.dk/pakke-karaoke</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/lejevilkaar</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/en/lejevilkaar</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/en/blog</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://lejhojtaler.dk/blog</loc>
-    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/hojtaler-til-fest</loc>
+    <loc>https://lejhojtaler.dk/pakke-karaoke-fest</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/pa-anlaeg-udlejning-kobenhavn</loc>
+    <loc>https://lejhojtaler.dk/pakke-konference</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/lyd-til-havefest</loc>
+    <loc>https://lejhojtaler.dk/pakke-praesentation</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/festlys-guide</loc>
+    <loc>https://lejhojtaler.dk/pakke-tale-musik</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/foedselsdagsfest-lyd</loc>
+    <loc>https://lejhojtaler.dk/polterabend</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/billig-hojtaler-leje</loc>
+    <loc>https://lejhojtaler.dk/privatlivspolitik</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/musikanlaeg-til-fest</loc>
+    <loc>https://lejhojtaler.dk/projektor</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/speaker-rental-copenhagen</loc>
+    <loc>https://lejhojtaler.dk/projektor-pro</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/soundboks-alternativ-kobenhavn</loc>
+    <loc>https://lejhojtaler.dk/roeg</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/hojtaler-paa-cykel-kobenhavn</loc>
+    <loc>https://lejhojtaler.dk/roegmaskine</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lejhojtaler.dk/blog/om-lejhojtaler</loc>
+    <loc>https://lejhojtaler.dk/skaerm</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
-  <url><loc>https://lejhojtaler.dk/roeg</loc></url>
-  <url><loc>https://lejhojtaler.dk/headset-pro</loc></url>
-  <url><loc>https://lejhojtaler.dk/haandholdt-mikrofon</loc></url>
-  <url><loc>https://lejhojtaler.dk/laerred-160</loc></url>
-  <url><loc>https://lejhojtaler.dk/projektor-pro</loc></url>
-  <url><loc>https://lejhojtaler.dk/pakke-praesentation</loc></url>
-  <url><loc>https://lejhojtaler.dk/pakke-konference</loc></url>
-  <url><loc>https://lejhojtaler.dk/pakke-tale-musik</loc></url>
-  <url><loc>https://lejhojtaler.dk/traadloes-mikrofon-pro</loc></url>
-  <url><loc>https://lejhojtaler.dk/haandholdt-mikrofon-pro</loc></url>
-  <url><loc>https://lejhojtaler.dk/uplights</loc></url>
-  <url><loc>https://lejhojtaler.dk/enkelt-lyseffekt</loc></url>
-  <url><loc>https://lejhojtaler.dk/lys-pakke</loc></url>
-  <url><loc>https://lejhojtaler.dk/karaoke</loc></url>
-  <url><loc>https://lejhojtaler.dk/karaoke-maskine</loc></url>
-  <url><loc>https://lejhojtaler.dk/pakke-karaoke</loc></url>
-  <url><loc>https://lejhojtaler.dk/pakke-karaoke-fest</loc></url>
-  <url><loc>https://lejhojtaler.dk/subwoofer</loc></url>
-  <url><loc>https://lejhojtaler.dk/skaerm-32</loc></url>
-  <url><loc>https://lejhojtaler.dk/konfirmation</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lejhojtaler.dk/polterabend</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lejhojtaler.dk/studenterkoersel</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lejhojtaler.dk/bryllup</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lejhojtaler.dk/julefrokost</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lejhojtaler.dk/nytaar</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lejhojtaler.dk/havefest</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lejhojtaler.dk/foedselsdag</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://lejhojtaler.dk/privatlivspolitik</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url>
+    <loc>https://lejhojtaler.dk/skaerm-32</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/soundboks-4</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/studenterkoersel</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/subwoofer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/traadloes-mikrofon</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/traadloes-mikrofon-pro</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/uplights</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

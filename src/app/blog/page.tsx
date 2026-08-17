@@ -1,12 +1,13 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Blog | Lejhøjtaler.dk",
   description:
     "Guides og tips til højtalerudlejning, PA-anlæg, festlyd og festlys i København. Læs vores blog og bliv klogere på lyd til din næste fest.",
-  alternates: { canonical: "https://lejhojtaler.dk/blog" },
+  alternates: { canonical: "https://lejhojtaler.dk/blog", languages: localeAlternates("/blog") },
   openGraph: {
     title: "Blog | Lejhøjtaler.dk",
     description:

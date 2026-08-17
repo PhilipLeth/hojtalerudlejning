@@ -1,11 +1,12 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Om os | Lejhøjtaler.dk",
   description:
     "Mød Frederik Scharling, stifter af lejhøjtaler.dk. Københavns mest tilgængelige udlejningsservice for lyd og lys til private fester, firmaevents og alt derimellem.",
-  alternates: { canonical: "https://lejhojtaler.dk/om" },
+  alternates: { canonical: "https://lejhojtaler.dk/om", languages: localeAlternates("/om") },
   openGraph: {
     title: "Om os | Lejhøjtaler.dk",
     description:

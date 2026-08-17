@@ -1,4 +1,14 @@
 User-agent: *
 Allow: /
 
+# Bagkontor. Siderne bygges statisk og ligger derfor på samme domæne som
+# resten af sitet, men de har intet at gøre i et søgeindeks. De bærer også
+# noindex — robots.txt alene forhindrer ikke indeksering af en URL nogen
+# har linket til.
+Disallow: /admin
+Disallow: /accounting
+
+# Kvitteringssiden har ingen selvstændig værdi og optræder kun efter en booking.
+Disallow: /book/tak
+
 Sitemap: https://lejhojtaler.dk/sitemap.xml

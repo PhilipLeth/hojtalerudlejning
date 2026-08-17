@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   title: "Erhverv — Lyd, lys og AV til professionelle events | Lejhøjtaler.dk",
   description:
     "Professionelt udstyr til firmafester, konferencer, præsentationer og events i København. Højtalere, skærme, projektorer og mikrofoner til leje.",
+  // Uden denne arvede siden root-layoutets canonical og pegede dermed på
+  // forsiden — altså bad den Google om ikke at indeksere /erhverv. Det er
+  // landingssiden for PMax-asset group 08 og AG 32 i søgekampagnen.
+  alternates: { canonical: "https://lejhojtaler.dk/erhverv" },
 };
 
 const useCases = [

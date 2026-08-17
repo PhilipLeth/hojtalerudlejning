@@ -4,6 +4,7 @@ import SpeakerCompare from "@/components/SpeakerCompare";
 import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Rent Speaker Copenhagen | From 345 DKK/weekend | Lejhøjtaler.dk",
@@ -32,10 +33,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://lejhojtaler.dk/en",
-    languages: {
-      da: "https://lejhojtaler.dk",
-      en: "https://lejhojtaler.dk/en",
-    },
+    languages: localeAlternates("/"),
   },
 };
 
