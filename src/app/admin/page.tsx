@@ -41,7 +41,7 @@ import {
 } from "@/lib/payments";
 import AdminNav from "@/components/AdminNav";
 import AdminLogin from "@/components/AdminLogin";
-import { useAdminAuth, getAdminToken } from "@/lib/useAdminAuth";
+import { useAdminAuth, getAdminToken, adminFetch } from "@/lib/useAdminAuth";
 
 interface Booking extends OrderBooking {
   id: string;
@@ -359,18 +359,20 @@ export default function AdminPage() {
     if (!secret) return;
     setLoading(true);
     setError("");
-    try {
-      const res = await fetch(`/api/bookings?secret=${encodeURIComponent(secret)}`);
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "Kunne ikke hente bookinger");
-        if (res.status === 401) unauthorized();
-        return;
-      }
-      setBookings(data.bookings || []);
-    } catch { setError("Netværksfejl"); }
-    finally { setLoading(false); }
-  }, [secret]);
+    const result = await adminFetch("/api/bookings", secret);
+    setLoading(false);
+    if ("error" in result) {
+      setError(result.error);
+      return;
+    }
+    const { res, data } = result;
+    if (!res.ok) {
+      setError(String(data.error || "Kunne ikke hente bookinger"));
+      if (res.status === 401) unauthorized();
+      return;
+    }
+    setBookings((data.bookings as Booking[]) || []);
+  }, [secret, unauthorized]);
 
   useEffect(() => {
     if (secret) {

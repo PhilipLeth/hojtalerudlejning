@@ -23,12 +23,16 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
   try {
     const list = await context.env.BOOKINGS.list({ prefix: "booking_" });
+    const values = await Promise.all(list.keys.map((key) => context.env.BOOKINGS.get(key.name)));
     const bookings = [];
 
-    for (const key of list.keys) {
-      const value = await context.env.BOOKINGS.get(key.name);
-      if (value) {
+    for (let i = 0; i < list.keys.length; i++) {
+      const value = values[i];
+      if (!value) continue;
+      try {
         bookings.push(JSON.parse(value));
+      } catch (e) {
+        console.error("[bookings] skip korrupt:", list.keys[i].name, e);
       }
     }
 

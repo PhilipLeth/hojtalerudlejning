@@ -6,6 +6,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor, fireEvent, within } from "@testing-library/react";
 import AdminPage from "@/app/admin/page";
 import UdleveringPage from "@/app/admin/udlevering/page";
+import { renderAdmin } from "./adminTestUtils";
 
 const booking = {
   id: "booking_1755000000000_abc123",
@@ -78,7 +79,7 @@ describe("Ordreoverblikket på mobil", () => {
   });
 
   it("viser kun navn, dato, telefon og status når den er klappet sammen", async () => {
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
     // Overblikket skal kunne rumme en hel weekend på én skærm. Selve ordren
@@ -92,7 +93,7 @@ describe("Ordreoverblikket på mobil", () => {
   });
 
   it("viser hele ordren når den foldes ud", async () => {
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
     foldUd();
 
@@ -105,7 +106,7 @@ describe("Ordreoverblikket på mobil", () => {
   });
 
   it("viser kørslen med adresse", async () => {
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
     foldUd();
     expect(screen.getByText(/Vi leverer OG henter/)).toBeInTheDocument();
@@ -113,7 +114,7 @@ describe("Ordreoverblikket på mobil", () => {
   });
 
   it("gør betalingsstatus og beløb tydeligt", async () => {
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
     foldUd();
     expect(screen.getByText("⏳ IKKE BETALT")).toBeInTheDocument();
@@ -121,7 +122,7 @@ describe("Ordreoverblikket på mobil", () => {
   });
 
   it("samler filtrene i tre dropdowns i stedet for elleve chips", async () => {
-    const { container } = render(<AdminPage />);
+    const { container } = renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
     // Periode, status og sortering — tre selects i toppen
@@ -139,7 +140,7 @@ describe("Ordreoverblikket på mobil", () => {
   });
 
   it("har en knap til udlevering med underskrift", async () => {
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
     foldUd();
     const link = screen.getByText("✍️ Udlever + underskrift").closest("a")!;
@@ -163,7 +164,7 @@ describe("Ordren foldes ud når man klikker på den", () => {
   });
 
   it("viser ordrelinjer med pris, kørsel og total på mobilkortet", async () => {
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
     expect(screen.queryByText("Ordrelinjer")).not.toBeInTheDocument();
@@ -185,7 +186,7 @@ describe("Ordren foldes ud når man klikker på den", () => {
       addListener: () => {}, removeListener: () => {}, onchange: null, dispatchEvent: () => false,
     })) as any;
 
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
     expect(screen.getByText("vis ordre")).toBeInTheDocument();
@@ -208,7 +209,7 @@ describe("Tabellen på desktop", () => {
   });
 
   it("har fem kolonner — udstyr hører under ordren, handlinger under betaling", async () => {
-    const { container } = render(<AdminPage />);
+    const { container } = renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
     const headers = [...container.querySelectorAll("th")].map((th) => th.textContent);
@@ -227,7 +228,7 @@ describe("Tabellen på desktop", () => {
   });
 
   it("skriver perioden kompakt over tre linjer", async () => {
-    const { container } = render(<AdminPage />);
+    const { container } = renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
     // Ikke længere den brede "Fre 21. aug → Man 24. aug (3 dage)" på én linje
     expect(screen.queryByText(booking.period)).not.toBeInTheDocument();
@@ -246,7 +247,7 @@ describe("Udleveringssiden", () => {
   });
 
   it("lister udstyret til afkrydsning og har et underskriftsfelt", async () => {
-    const { container } = render(<UdleveringPage />);
+    const { container } = renderAdmin(<UdleveringPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
     expect(screen.getByText("Lyskæde varm hvid")).toBeInTheDocument();
@@ -256,14 +257,14 @@ describe("Udleveringssiden", () => {
   });
 
   it("kan ikke gemme før der er skrevet under", async () => {
-    render(<UdleveringPage />);
+    renderAdmin(<UdleveringPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
     const save = screen.getByText("Gem kvittering og marker som udleveret") as HTMLButtonElement;
     expect(save.disabled).toBe(true);
   });
 
   it("advarer om at der mangler betaling inden udstyret går ud ad døren", async () => {
-    render(<UdleveringPage />);
+    renderAdmin(<UdleveringPage />);
     await waitFor(() => expect(screen.getByText("⏳ SKAL BETALES NU")).toBeInTheDocument());
     expect(screen.getAllByText("1480 kr").length).toBeGreaterThan(0);
   });
@@ -283,7 +284,7 @@ describe("Udleveringssiden", () => {
         }],
       }),
     });
-    render(<UdleveringPage />);
+    renderAdmin(<UdleveringPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
     expect(screen.getByText(/Vælg en afhentning/i)).toBeInTheDocument();
     const link = screen.getByRole("link", { name: /Julie Blegvad/i });

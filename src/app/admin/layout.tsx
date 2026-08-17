@@ -7,6 +7,7 @@
  * tekst og læsbare formularfelter ét sted for alle admin-sider.
  */
 import type { Metadata } from "next";
+import AdminShell from "@/components/AdminShell";
 
 /**
  * Admin er et bagkontor, men siderne bygges statisk og udstilles derfor på
@@ -19,5 +20,9 @@ export const metadata: Metadata = {
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return <div className="admin-shell">{children}</div>;
+  return (
+    <div className="admin-shell">
+      <AdminShell>{children}</AdminShell>
+    </div>
+  );
 }

@@ -10,6 +10,7 @@ import { render, screen, waitFor, fireEvent, within } from "@testing-library/rea
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import AdminPage from "@/app/admin/page";
+import { renderAdmin } from "./adminTestUtils";
 
 const booking = {
   id: "booking_1755000000000_abc123",
@@ -80,7 +81,7 @@ beforeEach(() => {
 describe("Opkaldsmærket i overblikket", () => {
   it("viser 📞 med dato på den sammenklappede linje når der er ringet", async () => {
     mockApi([{ ...booking, called: true, calledAt: "2026-08-18T14:32:00.000Z", callNote: "Henter kl. 16" }]);
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
     const linje = within(screen.getByText("Julie Blegvad").closest('[role="button"]')!);
@@ -89,7 +90,7 @@ describe("Opkaldsmærket i overblikket", () => {
 
   it("brummer ikke om manglende opkald — intet mærke, ingen advarsel", async () => {
     mockApi([booking]);
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
     expect(screen.queryByText(/📞/)).not.toBeInTheDocument();
@@ -101,7 +102,7 @@ describe("Opkaldsmærket i overblikket", () => {
   it("står i kundekolonnen i tabellen på desktop", async () => {
     mockMobile(false);
     mockApi([{ ...booking, called: true, calledAt: "2026-08-18T14:32:00.000Z" }]);
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
     const kundecelle = screen.getByText("Julie Blegvad").closest("td")!;
@@ -112,7 +113,7 @@ describe("Opkaldsmærket i overblikket", () => {
 describe("Sådan sættes opkaldet", () => {
   it("gemmer hakket som felt på bookingen — ikke som ny status", async () => {
     mockApi([booking]);
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
     fireEvent.click(screen.getByText("Julie Blegvad").closest('[role="button"]')!);
 
@@ -130,7 +131,7 @@ describe("Sådan sættes opkaldet", () => {
 
   it("gemmer aftalen fra telefonen når feltet forlades", async () => {
     mockApi([{ ...booking, called: true, calledAt: new Date().toISOString() }]);
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
     fireEvent.click(screen.getByText("Julie Blegvad").closest('[role="button"]')!);
 
@@ -145,7 +146,7 @@ describe("Sådan sættes opkaldet", () => {
 
   it("rydder aftalen med, hvis opkaldet trækkes tilbage", async () => {
     mockApi([{ ...booking, called: true, calledAt: new Date().toISOString(), callNote: "Henter kl. 16" }]);
-    render(<AdminPage />);
+    renderAdmin(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
     fireEvent.click(screen.getByText("Julie Blegvad").closest('[role="button"]')!);
 

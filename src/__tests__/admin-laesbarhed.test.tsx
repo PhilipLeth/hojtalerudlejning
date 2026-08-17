@@ -9,6 +9,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import AdminLayout from "@/app/admin/layout";
 import RabatkoderPage from "@/app/admin/rabatkoder/page";
+import { renderAdmin } from "./adminTestUtils";
 
 const codes = {
   codes: [
@@ -60,7 +61,7 @@ describe("Admin-skallen", () => {
 
 describe("Rabatkoder", () => {
   it("viser koder, procent, type, status og forbrug", async () => {
-    render(<RabatkoderPage />);
+    renderAdmin(<RabatkoderPage />);
     await waitFor(() => expect(screen.getByText("genkoeb")).toBeInTheDocument());
 
     expect(screen.getByText("10 %")).toBeInTheDocument();
@@ -71,7 +72,7 @@ describe("Rabatkoder", () => {
   });
 
   it("opsummerer hvor mange koder der er, og hvor mange der virker", async () => {
-    render(<RabatkoderPage />);
+    renderAdmin(<RabatkoderPage />);
     await waitFor(() => expect(screen.getByText("genkoeb")).toBeInTheDocument());
     // Tallene står i <strong> inde i teksten, så matcheren ser på hele pillen
     const pill = (text: string) =>
@@ -82,14 +83,14 @@ describe("Rabatkoder", () => {
   });
 
   it("forklarer forskellen på standard- og egne koder", async () => {
-    render(<RabatkoderPage />);
+    renderAdmin(<RabatkoderPage />);
     await waitFor(() => expect(screen.getByText("genkoeb")).toBeInTheDocument());
     expect(screen.getByText(/kun kan slås fra/)).toBeInTheDocument();
     expect(screen.getByText(/dem kan du slette/)).toBeInTheDocument();
   });
 
   it("tilbyder de rigtige handlinger pr. kode", async () => {
-    render(<RabatkoderPage />);
+    renderAdmin(<RabatkoderPage />);
     await waitFor(() => expect(screen.getByText("genkoeb")).toBeInTheDocument());
     // Aktiv standardkode: kan rettes og slås fra, men ikke slettes
     expect(screen.getByText("Slå fra")).toBeInTheDocument();

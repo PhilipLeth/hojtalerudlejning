@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AdminShell from "@/components/AdminShell";
 
 /**
  * /accounting er reelt en admin-side — den bruger AdminNav og viser omsætning,
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function AccountingLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return <AdminShell>{children}</AdminShell>;
 }
