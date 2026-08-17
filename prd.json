@@ -1848,28 +1848,28 @@
       "title": "Ads: geo-målretning til PRESENCE, ikke PRESENCE_OR_INTEREST",
       "description": "Søgekampagnen 'Højtaler Udlejning - Search' står på PRESENCE_OR_INTEREST og viser derfor annoncer til folk der blot er interesserede i København. Kilde til søgetermer som 'leje af lyskæder fyn', 'soundboks leje odense', 'leje soundboks smukfest'. PMax-kampagnen kører allerede PRESENCE. Ét felt: campaign.geo_target_type_setting.positive_geo_target_type.",
       "priority": "high",
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "ads-soundboks-kannibalisering",
       "title": "Ads: AG 1 stjæler Soundboks-søgninger til 2-3x prisen",
       "description": "Samme søgninger fanges i både AG 1 (Højtalere & Lyd) og AG 4 (Soundboks): 'lej soundboks' 6,58 kr/klik i AG 4 mod 15,91 kr i AG 1; 'lej en soundboks' 6,98 mod 20,42. Ca. 178 kr af 1.200 kr på 30 dage. Forværret af budløftet 16. aug hvor AG 1 gik til 25 kr mod AG 4's 14. Fix: 'soundboks' og 'soundbox' som negative keywords i AG 1, og stavefejlen 'soundbox' som rigtige keywords i AG 4 (den mangler helt og har kostet ~103 kr fanget tilfældigt).",
       "priority": "high",
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "sitemap-genereres-fra-build",
       "title": "SEO: sitemap genereres fra build + admin ud af indeks",
       "description": "public/sitemap.xml er håndskrevet og har 55 URL'er mod 89 byggede sider. 17 rigtige sider mangler — heriblandt annoncelandingssiderne /lej-hojtaler, /festlys, /festlyd, /av-udstyr, /lydudstyr, /erhverv, som prd.seo.sitemap_paths allerede foreskriver. Sitemap skal genereres fra out/ ved build. Samtidig: 16 admin-sider og /accounting er crawlbare (robots.txt er 'Allow: /', ingen noindex) — de skal ud af sitemap, have Disallow i robots.txt og noindex-meta.",
       "priority": "high",
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "hreflang-da-en",
       "title": "SEO: hreflang mellem danske og engelske sider",
       "description": "Seks sider findes under /en (forside, book, om, lejevilkaar, blog) uden rel=alternate hreflang i nogen retning. Google ser to sæt uden at vide de hører sammen. Bemærk: prd.domains.en peger på lejhojtaler.com, men det domæne har dødt DNS — hreflang skal pege på /en-stier på lejhojtaler.dk.",
       "priority": "medium",
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "core-web-vitals-maaling",
@@ -2350,7 +2350,7 @@
   "task_overblik": {
     "opdateret": "2026-08-17",
     "antal_opgaver_i_alt": 84,
-    "bygget_og_deployet": 58,
+    "bygget_og_deployet": 62,
     "afvist": [
       {
         "id": "booking-page-not-drawer",
@@ -2398,26 +2398,6 @@
         "id": "stripe-7-tax",
         "title": "Stripe Tax: 25% dansk moms",
         "status": "todo"
-      },
-      {
-        "id": "ads-geo-presence",
-        "title": "Ads: geo-målretning til PRESENCE, ikke PRESENCE_OR_INTEREST",
-        "status": "pending"
-      },
-      {
-        "id": "ads-soundboks-kannibalisering",
-        "title": "Ads: AG 1 stjæler Soundboks-søgninger til 2-3x prisen",
-        "status": "pending"
-      },
-      {
-        "id": "sitemap-genereres-fra-build",
-        "title": "SEO: sitemap genereres fra build + admin ud af indeks",
-        "status": "pending"
-      },
-      {
-        "id": "hreflang-da-en",
-        "title": "SEO: hreflang mellem danske og engelske sider",
-        "status": "pending"
       },
       {
         "id": "core-web-vitals-maaling",
