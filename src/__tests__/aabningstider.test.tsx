@@ -52,11 +52,19 @@ function hoursWith(days: Partial<Record<string, { open: string; close: string; p
 }
 
 describe("Standardtiderne", () => {
-  it("er fredag afhentning og mandag aflevering", () => {
+  it("er åbent mandag og fredag", () => {
     const dage = openDays(DEFAULT_OPENING_HOURS);
     expect(dage.map((d) => d.day)).toEqual(["mon", "fri"]);
-    expect(DEFAULT_OPENING_HOURS.days.fri).toMatchObject({ open: "14:00", close: "18:00", purpose: "afhentning" });
-    expect(DEFAULT_OPENING_HOURS.days.mon).toMatchObject({ open: "15:00", close: "17:00", purpose: "aflevering" });
+    expect(DEFAULT_OPENING_HOURS.days.fri).toMatchObject({ open: "14:00", close: "18:00" });
+    expect(DEFAULT_OPENING_HOURS.days.mon).toMatchObject({ open: "15:00", close: "17:00" });
+  });
+
+  it("skelner ikke mellem afhentning og aflevering", () => {
+    // Man kan både hente og aflevere begge dage — så skal der ikke stå noget
+    for (const d of openDays(DEFAULT_OPENING_HOURS)) {
+      expect(d.purpose).toBe("");
+    }
+    expect(formatOneLine(DEFAULT_OPENING_HOURS)).not.toMatch(/afhentning|aflevering/);
   });
 });
 
@@ -73,21 +81,27 @@ describe("Visning", () => {
     expect(formatRange({ closed: false, open: "14:00", close: "18:00", purpose: "" }, "en")).toBe("2–6 PM");
   });
 
-  it("sætter dag, tid og formål sammen", () => {
-    expect(formatDayLine({ day: "fri", closed: false, open: "14:00", close: "18:00", purpose: "afhentning" }))
-      .toBe("Fredag 14–18 (afhentning)");
-    expect(formatDayLine({ day: "fri", closed: false, open: "14:00", close: "18:00", purpose: "afhentning" }, "en"))
-      .toBe("Friday 2–6 PM (pickup)");
+  it("skriver dag og tid — uden formål når der ikke er sat et", () => {
+    expect(formatDayLine({ day: "fri", closed: false, open: "14:00", close: "18:00", purpose: "" }))
+      .toBe("Fredag 14–18");
+    expect(formatDayLine({ day: "fri", closed: false, open: "14:00", close: "18:00", purpose: "" }, "en"))
+      .toBe("Friday 2–6 PM");
+  });
+
+  it("tager formålet med, hvis en dag undtagelsesvis kun er til det ene", () => {
+    expect(formatDayLine({ day: "mon", closed: false, open: "15:00", close: "17:00", purpose: "aflevering" }))
+      .toBe("Mandag 15–17 (aflevering)");
+    expect(formatDayLine({ day: "mon", closed: false, open: "15:00", close: "17:00", purpose: "aflevering" }, "en"))
+      .toBe("Monday 3–5 PM (return)");
   });
 
   it("laver footerlinjen af alle åbne dage, mandag først", () => {
-    expect(formatOneLine(DEFAULT_OPENING_HOURS))
-      .toBe("Mandag 15–17 (aflevering) · Fredag 14–18 (afhentning)");
+    expect(formatOneLine(DEFAULT_OPENING_HOURS)).toBe("Mandag 15–17 · Fredag 14–18");
   });
 
   it("laver en sætning til brødtekst", () => {
-    expect(formatSentence(DEFAULT_OPENING_HOURS))
-      .toBe("Aflevering mandag 15–17, afhentning fredag 14–18.");
+    expect(formatSentence(DEFAULT_OPENING_HOURS)).toBe("Åbent mandag 15–17 og fredag 14–18.");
+    expect(formatSentence(DEFAULT_OPENING_HOURS, "en")).toBe("Open Monday 3–5 PM and Friday 2–6 PM.");
   });
 
   it("siger ingenting når alt er lukket", () => {
@@ -209,8 +223,8 @@ describe("Særlige datoer", () => {
   it("nævnes ved dato, ikke ved ugedag", () => {
     expect(formatDateLine(nytår, "2026-12-30")).toBe("30. dec 14–18 (afhentning)");
     expect(formatDateLine(nytår, "2026-12-25")).toBe("25. dec: lukket");
-    // En almindelig dag nævnes stadig ved sin ugedag
-    expect(formatDateLine(nytår, "2026-08-21")).toBe("Fredag 14–18 (afhentning)");
+    // En almindelig dag nævnes stadig ved sin ugedag — og uden formål
+    expect(formatDateLine(nytår, "2026-08-21")).toBe("Fredag 14–18");
   });
 
   it("bærer en note til kunden", () => {
@@ -343,11 +357,9 @@ beforeEach(() => {
 
 describe("Footeren", () => {
   it("viser åbningstiderne fra indstillingerne", async () => {
-    mockSettings(hoursWith({ fri: { open: "15:00", close: "19:00", purpose: "afhentning" } }));
+    mockSettings(hoursWith({ fri: { open: "15:00", close: "19:00" } }));
     render(<Footer />);
-    await waitFor(() =>
-      expect(screen.getByText(/Fredag 15–19 \(afhentning\)/)).toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.getByText(/Fredag 15–19/)).toBeInTheDocument());
     expect(screen.getByText("Åbningstider:")).toBeInTheDocument();
   });
 
@@ -360,7 +372,7 @@ describe("Footeren", () => {
   it("viser engelske dagnavne på den engelske side", async () => {
     mockSettings();
     render(<Footer locale="en" />);
-    await waitFor(() => expect(screen.getByText(/Friday 2–6 PM \(pickup\)/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/Friday 2–6 PM/)).toBeInTheDocument());
     expect(screen.getByText("Opening hours:")).toBeInTheDocument();
   });
 
@@ -398,7 +410,7 @@ describe("Checkout", () => {
     render(<BookingFlow />);
 
     await waitFor(() => expect(screen.getByText(/Åbningstider:/)).toBeInTheDocument());
-    expect(screen.getByText(/Fredag 14–18 \(afhentning\)/)).toBeInTheDocument();
+    expect(screen.getByText(/Fredag 14–18/)).toBeInTheDocument();
     // Den særlige dato står med sin note, så kunden ved at datoen kan vælges
     const kort = new Date(`${dato}T12:00:00Z`).toLocaleDateString("da-DK", { day: "numeric", month: "short", timeZone: "UTC" }).replace(/\.$/, "");
     expect(screen.getByText(new RegExp(`${kort} 14–18 \\(afhentning\\) · Nytår`))).toBeInTheDocument();
@@ -474,7 +486,7 @@ describe("/admin/indstillinger", () => {
     mockSettings();
     renderAdmin(<IndstillingerPage />);
     await waitFor(() => expect(screen.getByText("Sådan står det i footeren")).toBeInTheDocument());
-    expect(screen.getByText("Mandag 15–17 (aflevering) · Fredag 14–18 (afhentning)")).toBeInTheDocument();
+    expect(screen.getByText("Mandag 15–17 · Fredag 14–18")).toBeInTheDocument();
   });
 
   it("gemmer kun åbningstiderne, ikke telefonnummeret", async () => {
@@ -533,7 +545,7 @@ describe("/admin/indstillinger", () => {
       );
       const body = JSON.parse((post[1] as { body: string }).body);
       expect(body.hours.exceptions).toHaveLength(1);
-      expect(body.hours.exceptions[0]).toMatchObject({ date: "2026-12-30", note: "Nytår", purpose: "afhentning", closed: false });
+      expect(body.hours.exceptions[0]).toMatchObject({ date: "2026-12-30", note: "Nytår", purpose: "", closed: false });
     });
   });
 

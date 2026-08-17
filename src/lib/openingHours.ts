@@ -67,16 +67,17 @@ export interface OpeningHours {
 const LUKKET: DayHours = { closed: true, open: "10:00", close: "16:00", purpose: "" };
 
 /**
- * Sådan har det været siden starten: udstyret hentes fredag eftermiddag og
- * kommer tilbage mandag. Alt andet aftales i kommentarfeltet.
+ * Sådan har det været siden starten: åbent fredag eftermiddag og mandag.
+ * Begge dage kan bruges til både afhentning og aflevering — derfor står der
+ * ikke noget formål på dem. Alt andet aftales i kommentarfeltet.
  */
 export const DEFAULT_OPENING_HOURS: OpeningHours = {
   days: {
-    mon: { closed: false, open: "15:00", close: "17:00", purpose: "aflevering" },
+    mon: { closed: false, open: "15:00", close: "17:00", purpose: "" },
     tue: { ...LUKKET },
     wed: { ...LUKKET },
     thu: { ...LUKKET },
-    fri: { closed: false, open: "14:00", close: "18:00", purpose: "afhentning" },
+    fri: { closed: false, open: "14:00", close: "18:00", purpose: "" },
     sat: { ...LUKKET },
     sun: { ...LUKKET },
   },
@@ -172,18 +173,36 @@ export function formatOneLine(hours: OpeningHours, locale: "da" | "en" = "da"): 
 }
 
 /**
- * Sætning til brødtekst: "Afhentning fredag 14–18, aflevering mandag 15–17."
- * Bygges af dagenes formål, så den følger tiderne i stedet for at gentage dem.
+ * Sætning til brødtekst. Uden formål på dagene: "Åbent mandag 15–17 og fredag
+ * 14–18." Har en dag et formål, nævnes det: "Afhentning fredag 14–18."
  */
 export function formatSentence(hours: OpeningHours, locale: "da" | "en" = "da"): string {
-  const parts = openDays(hours).map((d) => {
+  const dage = openDays(hours);
+  if (dage.length === 0) return "";
+
+  const listeSammen = (dele: string[]) =>
+    dele.length > 1
+      ? `${dele.slice(0, -1).join(", ")} ${locale === "en" ? "and" : "og"} ${dele[dele.length - 1]}`
+      : dele[0];
+
+  // Det almindelige tilfælde: ingen af dagene har et formål, fordi man kan både
+  // hente og aflevere på dem alle
+  if (dage.every((d) => !d.purpose)) {
+    // Dansk skriver ugedage med lille, engelsk med stort
+    const dele = dage.map((d) => {
+      const navn = dayName(d.day, locale);
+      return `${locale === "en" ? navn : navn.toLowerCase()} ${formatRange(d, locale)}`;
+    });
+    return `${locale === "en" ? "Open" : "Åbent"} ${listeSammen(dele)}.`;
+  }
+
+  const parts = dage.map((d) => {
     const p = purposeName(d.purpose, locale);
     const dag = dayName(d.day, locale).toLowerCase();
     const tid = formatRange(d, locale);
     if (!p) return locale === "en" ? `open ${dag} ${tid}` : `åbent ${dag} ${tid}`;
     return `${p} ${dag} ${tid}`;
   });
-  if (parts.length === 0) return "";
   const sentence = parts.join(", ");
   return sentence.charAt(0).toUpperCase() + sentence.slice(1) + ".";
 }

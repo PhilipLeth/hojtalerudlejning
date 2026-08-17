@@ -298,7 +298,7 @@ export default function IndstillingerPage() {
       exceptions: [
         ...prev.exceptions,
         // Tom dato: admin vælger den. Tiderne er fredagens, som er de mest brugte.
-        { date: "", closed: false, open: prev.days.fri.open, close: prev.days.fri.close, purpose: "afhentning", note: "" },
+        { date: "", closed: false, open: prev.days.fri.open, close: prev.days.fri.close, purpose: "", note: "" },
       ],
     }));
 
@@ -355,8 +355,9 @@ export default function IndstillingerPage() {
         <form onSubmit={(e) => { e.preventDefault(); save("hours"); }} style={card}>
           <h2 style={{ margin: "0 0 4px", fontSize: "16px" }}>Åbningstider</h2>
           <p style={{ margin: "0 0 12px", fontSize: "12px", color: "#888" }}>
-            Slå en dag til for at åbne den. Formålet står i parentes på sitet, så kunden
-            kan se hvornår der hentes og hvornår der afleveres.
+            Slå en dag til for at åbne den. Man kan både hente og aflevere på alle åbne
+            dage — formålet er kun til de tilfælde, hvor en dag undtagelsesvis kun er til
+            det ene. Står det tomt, skriver sitet bare tiderne.
           </p>
 
           {WEEKDAYS.map((day) => (

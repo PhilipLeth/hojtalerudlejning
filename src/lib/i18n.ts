@@ -152,7 +152,7 @@ export const t = {
         },
         {
           title: "2. Hent din højtaler",
-          text: "Hent på Halvtolv 9, København K — alle kabler følger med (iPhone, USB-C, AUX). Fredag kl. 14-18 eller efter aftale.",
+          text: "Hent på Halvtolv 9, København K — alle kabler følger med (iPhone, USB-C, AUX). Fredag eller efter aftale.",
         },
         {
           title: "3. Fest!",
@@ -160,7 +160,7 @@ export const t = {
         },
         {
           title: "4. Aflever mandag",
-          text: "Aflever udstyret mandag kl. 15-17. Betal online ved booking — eller ved afhentning.",
+          text: "Aflever udstyret mandag. Betal online ved booking — eller ved afhentning.",
         },
       ],
       // Tiderne selv kommer fra /admin/indstillinger — se src/lib/openingHours.ts
@@ -328,7 +328,7 @@ export const t = {
         },
         {
           title: "2. Pick up your speaker",
-          text: "Pick up at Halvtolv 9, København K — all cables included (iPhone, USB-C, AUX). Friday 2–6 PM or by appointment.",
+          text: "Pick up at Halvtolv 9, København K — all cables included (iPhone, USB-C, AUX). Friday or by appointment.",
         },
         {
           title: "3. Party!",
@@ -336,7 +336,7 @@ export const t = {
         },
         {
           title: "4. Return on Monday",
-          text: "Return the equipment Monday 3–5 PM. Pay online at booking — or at pickup.",
+          text: "Return the equipment Monday. Pay online at booking — or at pickup.",
         },
       ],
       // Hours themselves come from admin settings — see src/lib/openingHours.ts
