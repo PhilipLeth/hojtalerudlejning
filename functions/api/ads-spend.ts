@@ -29,10 +29,15 @@ export const onRequestOptions: PagesFunction<Env> = async () =>
 const isIsoDate = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s);
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
+  // requireAdmin, ikke en sammenligning mod ADMIN_SECRET. Efter overgangen til
+  // navngivne brugere sender admin et session-token i stedet for den fælles
+  // hemmelighed, så den gamle sammenligning fejlede altid — regnskabstallene
+  // kom frem (de bruger requireAdmin), mens annonceforbruget tavst gav 401 og
+  // så ud som om tallet manglede på /accounting.
+  const auth = await requireAdmin(context, cors);
+  if (auth instanceof Response) return auth;
+
   const url = new URL(context.request.url);
-  if (!context.env.ADMIN_SECRET || url.searchParams.get("secret") !== context.env.ADMIN_SECRET) {
-    return json({ error: "Unauthorized" }, 401);
-  }
 
   const today = new Date().toISOString().slice(0, 10);
   const from = url.searchParams.get("from") || `${today.slice(0, 7)}-01`;

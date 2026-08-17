@@ -197,7 +197,7 @@ export default function AccountingPage() {
       ...data.byWeekend.map((w) => [w.friday, w.orders, w.revenue, w.paid, w.outstanding]),
       [],
       ["Annoncer", "Beløb"],
-      ["Annonceudgift", spend?.cost ?? ""],
+      ["Google Ads costs", spend?.cost ?? ""],
       ["Klik", spend?.clicks ?? ""],
       ["Visninger", spend?.impressions ?? ""],
       ...(spend?.campaigns ?? []).map((c) => [c.name, c.cost]),
@@ -364,7 +364,7 @@ export default function AccountingPage() {
             { label: "Udestående", value: data?.outstanding ?? 0, hint: `${data?.unpaid.length ?? 0} ordrer mangler`, color: (data?.outstanding ?? 0) > 0 ? "#c0392b" : "#155724" },
             { label: "Gns. ordre", value: data?.averageOrder ?? 0, hint: data?.cancelled ? `${data.cancelled} annulleret` : "pr. booking" },
             {
-              label: "Annonceudgift",
+              label: "Google Ads costs",
               value: spend?.cost ?? 0,
               hint: spendError
                 ? spendError

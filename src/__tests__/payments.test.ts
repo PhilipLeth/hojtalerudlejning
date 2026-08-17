@@ -310,7 +310,13 @@ describe("API'erne bag betaling og faktura", () => {
     expect(lib).toMatch(/row\.cost \+= microsToMajor/);
 
     const api = read("functions/api/ads-spend.ts");
-    expect(api).toContain("Unauthorized");
+    // requireAdmin, ikke en egen sammenligning mod ADMIN_SECRET. Endpointet
+    // importerede requireAdmin uden at kalde den og tjekkede stadig query-
+    // parameteren mod den fælles hemmelighed. Efter overgangen til navngivne
+    // brugere sender admin et session-token, så tjekket fejlede altid — og
+    // annonceforbruget så ud til at mangle på /accounting.
+    expect(api).toContain("requireAdmin(context, cors)");
+    expect(api).not.toMatch(/searchParams\.get\("secret"\) !== context\.env\.ADMIN_SECRET/);
     expect(api).toContain("AdsNotConfigured");
     // Regnskabstallene må ikke falde med Google Ads
     expect(read("functions/api/accounting.ts")).not.toContain("campaignSpend");
