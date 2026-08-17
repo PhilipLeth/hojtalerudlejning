@@ -1062,58 +1062,95 @@ function BookingDetails({ b, today, setFields }: { b: Booking; today: Date; setF
  * Mobilvisning: ét kort pr. booking. Rækkefølgen er den man bruger i døren —
  * hvem, hvornår, hvad der skal med, hvad der skal betales, og så handlingerne.
  */
+/** Kort dato til den sammenklappede linje: "fre 21. aug" */
+function shortDate(d: Date): string {
+  return d.toLocaleDateString("da-DK", { weekday: "short", day: "numeric", month: "short" });
+}
+
+/**
+ * Bookinger på telefonen.
+ *
+ * Sammenklappet fylder én booking to tekstlinjer — navn, status, afhentning og
+ * telefon. Hele ordren, begge spor og knapperne kommer først frem, når man
+ * folder den ud. Før fyldte ét kort en halv skærm, og man kunne se tre
+ * bookinger ved at scrolle længe; nu er hele weekenden synlig på én gang.
+ */
 function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments }: ListProps) {
   if (bookings.length === 0) return null;
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
       {bookings.map((b) => {
         const issues = openIssues(b, today);
         const busy = updating === b.id;
         const stage = STAGE_META[bookingStage(b, today)];
         const isExpanded = expanded === b.id;
         return (
-          <div key={b.id} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 3px rgba(0,0,0,0.08)", padding: "14px", borderLeft: `4px solid ${stage.border}` }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px" }}>
-              <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: "16px", fontWeight: 700 }}>{b.name}</div>
-                <div style={{ fontSize: "13px", color: "#555" }}>{b.period}</div>
-                <div style={{ fontSize: "12px", marginTop: "2px" }}>
-                  <a href={`tel:${b.phone}`} style={{ color: "#0070f3" }}>{b.phone}</a>
+          <div key={b.id} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 3px rgba(0,0,0,0.08)", borderLeft: `4px solid ${stage.border}`, overflow: "hidden" }}>
+            {/* Den sammenklappede linje. Hele feltet er trykfladen — undtagen
+                telefonnummeret, der ringer op. */}
+            <div
+              role="button"
+              tabIndex={0}
+              aria-expanded={isExpanded}
+              onClick={() => setExpanded(isExpanded ? null : b.id)}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpanded(isExpanded ? null : b.id); } }}
+              style={{ padding: "12px 14px", cursor: "pointer", WebkitTapHighlightColor: "transparent" }}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
+                <span style={{ fontSize: "15px", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {b.name}
+                </span>
+                <span style={{ background: stage.bg, color: stage.text, border: `1px solid ${stage.border}`, borderRadius: "20px", padding: "2px 9px", fontSize: "11px", fontWeight: 700, whiteSpace: "nowrap", flexShrink: 0 }}>
+                  {stage.label}
+                </span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "3px", fontSize: "13px", color: "#555" }}>
+                <span style={{ whiteSpace: "nowrap" }}>{shortDate(pickupDateFromBooking(b))}</span>
+                <span style={{ color: "#ddd" }}>·</span>
+                <a
+                  href={`tel:${b.phone}`}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ color: "#0070f3", textDecoration: "none", whiteSpace: "nowrap" }}
+                >
+                  {b.phone}
+                </a>
+                {issues.length > 0 && (
+                  <span title={issues.map((i) => i.label).join(" · ")} style={{ marginLeft: "auto", color: "#c0392b", fontSize: "12px", fontWeight: 700, flexShrink: 0 }}>
+                    ⚠ {issues.length}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {isExpanded && (
+              <div style={{ padding: "0 14px 14px", borderTop: "1px solid #f2f2f2" }}>
+                <div style={{ margin: "12px 0", padding: "10px 12px", background: "#fafafa", borderRadius: "8px" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>
+                    Det her skal med
+                  </div>
+                  <OrderSummary b={b} />
                 </div>
+
+                <PaymentBanner b={b} />
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "12px" }}>
+                  <div>
+                    <div style={{ fontSize: "10px", fontWeight: 700, color: "#888", textTransform: "uppercase", marginBottom: "4px" }}>Udstyr</div>
+                    <EquipmentTrack b={b} issues={issues.filter((i) => i.track === "udstyr")} updateStatus={updateStatus} setFields={setFields} busy={busy} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: "10px", fontWeight: 700, color: "#888", textTransform: "uppercase", marginBottom: "4px" }}>Betaling</div>
+                    <PaymentTrack b={b} issues={issues.filter((i) => i.track === "betaling")} setFields={setFields} payments={payments} />
+                  </div>
+                </div>
+
+                <div style={{ marginTop: "12px" }}>
+                  <RowActions b={b} busy={busy} deleteBooking={deleteBooking} big />
+                </div>
+
+                <BookingDetails b={b} today={today} setFields={setFields} />
               </div>
-              <span style={{ background: stage.bg, color: stage.text, border: `1px solid ${stage.border}`, borderRadius: "20px", padding: "3px 10px", fontSize: "11px", fontWeight: 700, whiteSpace: "nowrap" }}>
-                {stage.label}
-              </span>
-            </div>
-
-            <div style={{ margin: "12px 0", padding: "10px 12px", background: "#fafafa", borderRadius: "8px" }}>
-              <div style={{ fontSize: "10px", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>
-                Det her skal med
-              </div>
-              <OrderSummary b={b} />
-            </div>
-
-            <PaymentBanner b={b} />
-
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "12px" }}>
-              <div>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#888", textTransform: "uppercase", marginBottom: "4px" }}>Udstyr</div>
-                <EquipmentTrack b={b} issues={issues.filter((i) => i.track === "udstyr")} updateStatus={updateStatus} setFields={setFields} busy={busy} />
-              </div>
-              <div>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#888", textTransform: "uppercase", marginBottom: "4px" }}>Betaling</div>
-                <PaymentTrack b={b} issues={issues.filter((i) => i.track === "betaling")} setFields={setFields} payments={payments} />
-              </div>
-            </div>
-
-            <div style={{ marginTop: "12px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-              <RowActions b={b} busy={busy} deleteBooking={deleteBooking} big />
-              <button onClick={() => setExpanded(isExpanded ? null : b.id)} style={{ background: "none", border: "none", color: "#0070f3", fontSize: "13px", cursor: "pointer", padding: "8px 0" }}>
-                {isExpanded ? "Skjul ordre" : "Vis ordre & detaljer"}
-              </button>
-            </div>
-
-            {isExpanded && <BookingDetails b={b} today={today} setFields={setFields} />}
+            )}
           </div>
         );
       })}

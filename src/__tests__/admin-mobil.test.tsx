@@ -3,7 +3,7 @@
  * Renderer de rigtige sider mod et mocket API — ikke kun kildetekst.
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent, within } from "@testing-library/react";
 import AdminPage from "@/app/admin/page";
 import UdleveringPage from "@/app/admin/udlevering/page";
 
@@ -64,6 +64,11 @@ beforeEach(() => {
   mockMobile();
 });
 
+/** Folder bookingen ud — hele linjen er trykfladen på mobil */
+function foldUd() {
+  fireEvent.click(screen.getByText("Julie Blegvad").closest('[role="button"]')!);
+}
+
 describe("Ordreoverblikket på mobil", () => {
   beforeEach(() => {
     (global.fetch as any).mockResolvedValue({
@@ -72,14 +77,29 @@ describe("Ordreoverblikket på mobil", () => {
     });
   });
 
-  it("viser bookingen som kort med hele ordren", async () => {
+  it("viser kun navn, dato, telefon og status når den er klappet sammen", async () => {
     render(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
+    // Overblikket skal kunne rumme en hel weekend på én skærm. Selve ordren
+    // hører til, når man har valgt en booking — og i døren: /admin/udlevering.
+    const linje = within(screen.getByText("Julie Blegvad").closest('[role="button"]')!);
+    expect(linje.getByText("Kommende")).toBeInTheDocument();
+    expect(linje.getByText("22245880")).toBeInTheDocument();
+    expect(linje.getByText(/aug/)).toBeInTheDocument();
+    expect(screen.queryByText(/Uplight/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Det her skal med/)).not.toBeInTheDocument();
+  });
+
+  it("viser hele ordren når den foldes ud", async () => {
+    render(<AdminPage />);
+    await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
+    foldUd();
+
     // Alle tre varelinjer — kurv-varen manglede før
-    expect(screen.getByText(/Lyskæde varm hvid/)).toBeInTheDocument();
-    expect(screen.getByText(/Uplight/)).toBeInTheDocument();
-    expect(screen.getByText(/Røgmaskine/)).toBeInTheDocument();
+    expect(screen.getAllByText(/Lyskæde varm hvid/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Uplight/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Røgmaskine/).length).toBeGreaterThan(0);
     // …og ingen "Højttaler (...)" på et lys-produkt
     expect(screen.queryByText(/Højttaler/)).not.toBeInTheDocument();
   });
@@ -87,15 +107,17 @@ describe("Ordreoverblikket på mobil", () => {
   it("viser kørslen med adresse", async () => {
     render(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
+    foldUd();
     expect(screen.getByText(/Vi leverer OG henter/)).toBeInTheDocument();
-    expect(screen.getByText(/Vestergade 5/)).toBeInTheDocument();
+    expect(screen.getAllByText(/Vestergade 5/).length).toBeGreaterThan(0);
   });
 
   it("gør betalingsstatus og beløb tydeligt", async () => {
     render(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
+    foldUd();
     expect(screen.getByText("⏳ IKKE BETALT")).toBeInTheDocument();
-    expect(screen.getByText("1480 kr")).toBeInTheDocument();
+    expect(screen.getAllByText("1480 kr").length).toBeGreaterThan(0);
   });
 
   it("samler filtrene i tre dropdowns i stedet for elleve chips", async () => {
@@ -119,6 +141,7 @@ describe("Ordreoverblikket på mobil", () => {
   it("har en knap til udlevering med underskrift", async () => {
     render(<AdminPage />);
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
+    foldUd();
     const link = screen.getByText("✍️ Udlever + underskrift").closest("a")!;
     expect(link.getAttribute("href")).toContain(`/admin/udlevering?id=${booking.id}`);
   });
@@ -144,7 +167,7 @@ describe("Ordren foldes ud når man klikker på den", () => {
     await waitFor(() => expect(screen.getByText("Julie Blegvad")).toBeInTheDocument());
 
     expect(screen.queryByText("Ordrelinjer")).not.toBeInTheDocument();
-    fireEvent.click(screen.getByText("Vis ordre & detaljer"));
+    foldUd();
 
     await waitFor(() => expect(screen.getByText("Ordrelinjer")).toBeInTheDocument());
     // Katalogpriser slået op pr. linje: lyskæde 195, uplight 125, røg 245, kørsel 795
@@ -242,7 +265,7 @@ describe("Udleveringssiden", () => {
   it("advarer om at der mangler betaling inden udstyret går ud ad døren", async () => {
     render(<UdleveringPage />);
     await waitFor(() => expect(screen.getByText("⏳ SKAL BETALES NU")).toBeInTheDocument());
-    expect(screen.getByText("1480 kr")).toBeInTheDocument();
+    expect(screen.getAllByText("1480 kr").length).toBeGreaterThan(0);
   });
 
   it("viser afhentningskø når der ikke er valgt en booking", async () => {
