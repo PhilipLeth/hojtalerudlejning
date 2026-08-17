@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import PhoneLink, { PhoneText } from "@/components/PhoneLink";
+import PickupSummary from "@/components/PickupSummary";
 
 export const metadata: Metadata = {
   title: "Kontakt os | Lejhøjtaler.dk",
@@ -43,9 +44,7 @@ export default function KontaktPage() {
         <ContactForm />
       </div>
 
-      <p className="mt-8 text-sm text-white/40">
-        Afhentning: Halvtolv 9, 1. th, 1436 København K · Fredag 14–18, aflevering mandag 15–17 · CVR 40994904
-      </p>
+      <PickupSummary className="mt-8 text-sm text-white/40" suffix="CVR 40994904" />
     </section>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSiteSettings } from "@/lib/useSiteSettings";
-import { formatSentence } from "@/lib/openingHours";
+import { formatAfterHours, formatSentence } from "@/lib/openingHours";
 
 const faqs = [
   {
@@ -13,7 +13,7 @@ const faqs = [
   {
     question: "Hvordan fungerer afhentning?",
     answer:
-      "Du henter udstyret på vores adresse i København K (Halvtolv 9, 1. th). Alle kabler følger med, og en bæretaske kan tilkøbes. AABNINGSTIDER",
+      "Du henter udstyret hos os på ADRESSE. Alle kabler følger med, og en bæretaske kan tilkøbes. AABNINGSTIDER GEBYR",
   },
   {
     question: "Hvad er inkluderet i prisen?",
@@ -44,11 +44,17 @@ const faqs = [
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const { display, hours } = useSiteSettings();
+  const { display, hours, pickupAddress } = useSiteSettings();
   // Tiderne må ikke stå som tekst her — så ville de modsige footeren dagen efter
   // Frederik retter dem i /admin/indstillinger
   const fill = (answer: string) =>
-    answer.replaceAll("PHONE", display).replaceAll("AABNINGSTIDER", formatSentence(hours));
+    answer
+      .replaceAll("PHONE", display)
+      .replaceAll("ADRESSE", pickupAddress)
+      .replaceAll("AABNINGSTIDER", formatSentence(hours))
+      .replaceAll("GEBYR", formatAfterHours(hours))
+      .replace(/\s+/g, " ")
+      .trim();
 
   const toggle = (i: number) => {
     setOpenIndex(openIndex === i ? null : i);

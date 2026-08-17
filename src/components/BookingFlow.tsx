@@ -11,6 +11,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { thumbSrcSet, THUMB_IMAGE_SIZES } from "@/lib/imageSrcSet";
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import {
+  formatAfterHours,
   formatDateLine,
   formatOneLine,
   hoursForDate,
@@ -201,6 +202,7 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da" }: {
   returnDate: Date | null;
   locale?: Locale;
 }) {
+  const afterHours = formatAfterHours(hours, locale);
   const rows: Array<{ key: string; label: string; iso: string }> = [];
   if (pickupDate) rows.push({ key: "pickup", label: locale === "en" ? "Pickup" : "Afhentning", iso: dateKey(pickupDate) });
   if (returnDate) rows.push({ key: "return", label: locale === "en" ? "Return" : "Aflevering", iso: dateKey(returnDate) });
@@ -226,6 +228,9 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da" }: {
           </div>
         );
       })}
+      {/* Gebyret for at møde uden for åbningstid — her, hvor datoerne vælges,
+          så det ikke kommer bag på nogen ved afhentningen */}
+      {afterHours && <p className="pt-1 text-white/40">{afterHours}</p>}
     </div>
   );
 }
@@ -234,7 +239,7 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da" }: {
 
 function PickupInfo({ locale = "da" }: { locale?: Locale }) {
   const s = t[locale].booking;
-  const { hours } = useSiteSettings();
+  const { hours, pickupAddress } = useSiteSettings();
   const today = dateKey(new Date());
   const særlige = upcomingExceptions(hours, today, 120).filter((e) => !e.closed);
   const linje = formatOneLine(hours, locale);
@@ -248,7 +253,9 @@ function PickupInfo({ locale = "da" }: { locale?: Locale }) {
           </svg>
         </div>
         <div>
-          <p className="font-medium text-white">{s.pickupAddress}</p>
+          <p className="font-medium text-white">
+            {locale === "en" ? "Pickup at" : "Hent på"} {pickupAddress}
+          </p>
           <p className="mt-1 text-white/40">
             {s.pickupDesc}
             <br />
@@ -301,9 +308,9 @@ function DeliveryPicker({
   const s = t[locale].booking;
   if (options.length === 0) return null;
 
+  const { pickupAddress } = useSiteSettings();
   const selfLabel = locale === "en" ? "I pick up and return it myself" : "Jeg henter og afleverer selv";
-  const selfDesc =
-    locale === "en" ? "Halvtolv 9, Copenhagen K — free" : "Halvtolv 9, København K — gratis";
+  const selfDesc = `${pickupAddress} — ${locale === "en" ? "free" : "gratis"}`;
 
   const rows: Array<{ id: string | null; label: string; desc: string; price: number }> = [
     { id: null, label: selfLabel, desc: selfDesc, price: 0 },
@@ -1009,7 +1016,7 @@ export default function BookingFlow({
                 <span className="text-white/70">
                   {hasDelivery && deliveryAddress
                     ? `${s.successDelivery} ${deliveryAddress}`
-                    : s.successPickup}
+                    : `${s.successPickup} ${pickupAddress}`}
                 </span>
               </div>
 

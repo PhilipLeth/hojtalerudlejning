@@ -84,8 +84,9 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
   });
 
   it("shows pickup address", () => {
+    // Adressen kommer fra /admin/indstillinger — her standardadressen
     render(<BookingFlow />);
-    expect(screen.getByText("Hent på Halvtolv 9, København K")).toBeInTheDocument();
+    expect(screen.getByText(/Hent på Vermlandsgade 66, 2300 København/)).toBeInTheDocument();
   });
 });
 

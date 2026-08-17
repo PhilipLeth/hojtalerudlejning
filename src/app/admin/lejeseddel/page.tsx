@@ -6,6 +6,7 @@ import { useAdminAuth } from "@/lib/useAdminAuth";
 
 import { useState, useEffect, useCallback } from "react";
 import { orderLines, deliveryInfo, type OrderBooking } from "@/lib/orderLines";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 
 interface Booking extends OrderBooking {
   id: string;
@@ -38,7 +39,13 @@ export default function LejeseddelPage() {
   // Editable fields for the rental slip
   const [deposit, setDeposit] = useState("500");
   const [payMethod, setPayMethod] = useState("MobilePay");
-  const [pickupPlace, setPickupPlace] = useState("Halvtolv 9, 1057 København K");
+  // Afhentningsstedet kommer fra /admin/indstillinger, men kan rettes på den
+  // enkelte seddel (fx hvis udstyret afleveres et andet sted)
+  const { pickupAddress } = useSiteSettings();
+  const [pickupPlace, setPickupPlace] = useState("");
+  useEffect(() => {
+    setPickupPlace((prev) => prev || pickupAddress);
+  }, [pickupAddress]);
   const [notes, setNotes] = useState("");
   const [signatureImg, setSignatureImg] = useState<string | null>(null);
 

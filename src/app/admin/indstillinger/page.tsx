@@ -7,12 +7,14 @@ import { useAdminAuth } from "@/lib/useAdminAuth";
 import { useState, useEffect, useCallback } from "react";
 import { phoneFromInput } from "@/lib/phone";
 import { clearSiteSettingsCache } from "@/lib/useSiteSettings";
+import { DEFAULT_PICKUP_ADDRESS } from "@/lib/pickup";
 import {
   DAY_PURPOSES,
   DEFAULT_OPENING_HOURS,
   WEEKDAYS,
   dayName,
   formatDateLine,
+  formatAfterHours,
   formatOneLine,
   formatShortDate,
   isIsoDate,
@@ -212,11 +214,12 @@ function ExceptionRow({ value, onChange, onRemove }: {
 export default function IndstillingerPage() {
   const { secret, ready, isLoggedIn, unauthorized } = useAdminAuth();
   const [phone, setPhone] = useState("");
+  const [pickupAddress, setPickupAddress] = useState(DEFAULT_PICKUP_ADDRESS);
   const [savedDisplay, setSavedDisplay] = useState("");
   const [hours, setHours] = useState<OpeningHours>(DEFAULT_OPENING_HOURS);
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState<"phone" | "hours" | null>(null);
+  const [saving, setSaving] = useState<"kontakt" | "hours" | null>(null);
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
 
@@ -230,9 +233,11 @@ export default function IndstillingerPage() {
         display?: string;
         phone?: string;
         hours?: unknown;
+        pickupAddress?: string;
         updatedAt?: string | null;
       };
       setPhone(json.display || json.phone || "");
+      setPickupAddress(json.pickupAddress || DEFAULT_PICKUP_ADDRESS);
       setSavedDisplay(json.display || "");
       setHours(normalizeOpeningHours(json.hours));
       setUpdatedAt(json.updatedAt ?? null);
@@ -248,7 +253,7 @@ export default function IndstillingerPage() {
   }, [load]);
 
   /** Gem enten telefon eller åbningstider — serveren tager imod ét felt ad gangen */
-  async function save(what: "phone" | "hours") {
+  async function save(what: "kontakt" | "hours") {
     setSaving(what);
     setError("");
     setOk("");
@@ -256,7 +261,7 @@ export default function IndstillingerPage() {
       const res = await fetch(`/api/site-settings?secret=${encodeURIComponent(secret)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(what === "phone" ? { phone } : { hours }),
+        body: JSON.stringify(what === "kontakt" ? { phone, pickupAddress } : { hours }),
       });
       const json = (await res.json()) as { error?: string; display?: string; hours?: unknown; updatedAt?: string };
       if (!res.ok) {
@@ -264,10 +269,10 @@ export default function IndstillingerPage() {
         setError(json.error || "Kunne ikke gemme");
         return;
       }
-      if (what === "phone") {
+      if (what === "kontakt") {
         setSavedDisplay(json.display || phoneFromInput(phone).display);
         setPhone(json.display || phone);
-        setOk(`Gemt — sitet viser nu ${json.display}. Ingen deploy nødvendig.`);
+        setOk(`Gemt — sitet viser nu ${json.display} og ${pickupAddress}. Ingen deploy nødvendig.`);
       } else {
         setHours(normalizeOpeningHours(json.hours));
         setOk("Åbningstiderne er gemt — de står på sitet med det samme.");
@@ -332,7 +337,7 @@ export default function IndstillingerPage() {
           </div>
         )}
 
-        <form onSubmit={(e) => { e.preventDefault(); save("phone"); }} style={card}>
+        <form onSubmit={(e) => { e.preventDefault(); save("kontakt"); }} style={card}>
           <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px" }}>
             Telefonnummer
           </label>
@@ -347,8 +352,25 @@ export default function IndstillingerPage() {
             Visning: {preview.display} · klik: {preview.href}
             {savedDisplay ? ` · live nu: ${savedDisplay}` : ""}
           </p>
+          <label style={{ display: "block", fontSize: "13px", fontWeight: 600, margin: "18px 0 6px" }}>
+            Afhentningsadresse
+          </label>
+          <input
+            type="text"
+            value={pickupAddress}
+            maxLength={120}
+            onChange={(e) => setPickupAddress(e.target.value)}
+            placeholder={DEFAULT_PICKUP_ADDRESS}
+            style={{ width: "100%", padding: "12px", fontSize: "16px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
+          />
+          <p style={{ margin: "8px 0 0", fontSize: "12px", color: "#888", lineHeight: 1.5 }}>
+            Står hvor kunden skal bruge den: i booking-flowet, i FAQ, på kvitteringssiden og
+            ved "jeg henter selv". <strong>Firmaadressen</strong> i footeren, lejevilkårene og
+            på fakturaen er noget andet og følger ikke med her.
+          </p>
+
           <button type="submit" disabled={saving !== null} style={knap}>
-            {saving === "phone" ? "Gemmer…" : "Gem nummer"}
+            {saving === "kontakt" ? "Gemmer…" : "Gem nummer og adresse"}
           </button>
         </form>
 
@@ -406,6 +428,60 @@ export default function IndstillingerPage() {
             </button>
           </div>
 
+          {/* Uden for åbningstid: vi møder gerne op, det koster bare et gebyr */}
+          <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #eee" }}>
+            <h3 style={{ margin: "0 0 8px", fontSize: "14px" }}>Uden for åbningstid</h3>
+            <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", cursor: "pointer", marginBottom: "10px" }}>
+              <input
+                type="checkbox"
+                checked={hours.afterHours.enabled}
+                onChange={(e) =>
+                  setHours((prev) => ({ ...prev, afterHours: { ...prev.afterHours, enabled: e.target.checked } }))
+                }
+              />
+              <strong>Vi møder også uden for åbningstid mod gebyr</strong>
+            </label>
+
+            {hours.afterHours.enabled && (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                <span style={{ fontSize: "13px", color: "#666" }}>Fra</span>
+                <input
+                  type="time"
+                  value={hours.afterHours.from}
+                  onChange={(e) => setHours((prev) => ({ ...prev, afterHours: { ...prev.afterHours, from: e.target.value } }))}
+                  aria-label="Uden for åbningstid fra"
+                  style={timeInput}
+                />
+                <span style={{ fontSize: "13px", color: "#666" }}>til</span>
+                <input
+                  type="time"
+                  value={hours.afterHours.to}
+                  onChange={(e) => setHours((prev) => ({ ...prev, afterHours: { ...prev.afterHours, to: e.target.value } }))}
+                  aria-label="Uden for åbningstid til"
+                  style={timeInput}
+                />
+                <span style={{ fontSize: "13px", color: "#666", marginLeft: "8px" }}>Gebyr</span>
+                <input
+                  type="number"
+                  min={0}
+                  max={10000}
+                  value={hours.afterHours.fee}
+                  onChange={(e) =>
+                    setHours((prev) => ({ ...prev, afterHours: { ...prev.afterHours, fee: Math.max(0, Math.round(Number(e.target.value) || 0)) } }))
+                  }
+                  aria-label="Gebyr uden for åbningstid"
+                  style={{ ...timeInput, width: "80px", textAlign: "center" }}
+                />
+                <span style={{ fontSize: "13px", color: "#666" }}>kr</span>
+              </div>
+            )}
+            <p style={{ margin: "8px 0 0", fontSize: "12px", color: "#888", lineHeight: 1.5 }}>
+              Noten står i checkout, når kunden vælger datoer — og på kvitteringssiden.
+              Gebyret lægges <strong>ikke</strong> automatisk på ordren; det aftales og
+              tilføjes som en betaling, hvis kunden bruger det.
+            </p>
+          </div>
+
           {/* Den tekniske del: må kunden kun vælge de dage vi har åbent? */}
           <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #eee" }}>
             <h3 style={{ margin: "0 0 8px", fontSize: "14px" }}>Booking-kalenderen</h3>
@@ -437,6 +513,9 @@ export default function IndstillingerPage() {
               {openDays(hours).length ? formatOneLine(hours) : <span style={{ color: "#c0392b" }}>Ingen åbne dage — footeren viser ingen åbningstider</span>}
             </div>
             {hours.other && <div style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}>{hours.other}</div>}
+            {formatAfterHours(hours) && (
+              <div style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}>{formatAfterHours(hours)}</div>
+            )}
             {hours.exceptions.filter((e) => isIsoDate(e.date)).map((e) => (
               <div key={e.date} style={{ fontSize: "12px", color: "#4b2ea3", marginTop: "2px" }}>
                 {formatShortDate(e.date)}: {e.closed ? "lukket" : formatDateLine(hours, e.date)}

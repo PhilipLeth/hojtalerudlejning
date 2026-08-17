@@ -81,7 +81,8 @@ export const t = {
       formEmail: "Email",
       formPhone: "Telefon",
       formComment: "Kommentar (valgfrit — f.eks. ønsket tidspunkt, special-kabler)",
-      pickupAddress: "Hent på Halvtolv 9, København K",
+      // Adressen kommer fra /admin/indstillinger — se src/lib/pickup.ts
+      pickupAddress: "Hent på",
       pickupDesc: "Leveres med alle kabler (iPhone, USB-C, AUX). Bæretaske kan tilkøbes.",
       pickupDesc2: "Mixere og lignende kan forespørges ved booking.",
       // Success page
@@ -89,7 +90,7 @@ export const t = {
       successEmailSent: "Bekræftelse sendt til",
       successChecking: "Vi tjekker din booking nu",
       successCheckingDesc: "Du hører fra os inden for få minutter med bekræftelse og praktiske detaljer.",
-      successPickup: "Afhentning: Halvtolv 9, København K",
+      successPickup: "Afhentning:",
       successDelivery: "Levering til",
       successIncluded: "Inkluderet i din booking:",
       successCables: "Alle kabler (iPhone m/ USB-C adapter, AUX, strøm)",
@@ -152,7 +153,7 @@ export const t = {
         },
         {
           title: "2. Hent din højtaler",
-          text: "Hent på Halvtolv 9, København K — alle kabler følger med (iPhone, USB-C, AUX). Fredag eller efter aftale.",
+          text: "Hent hos os på ADRESSE — alle kabler følger med (iPhone, USB-C, AUX). Fredag eller efter aftale.",
         },
         {
           title: "3. Fest!",
@@ -257,7 +258,7 @@ export const t = {
       formEmail: "Email",
       formPhone: "Phone",
       formComment: "Comment (optional — e.g. preferred time, special cables)",
-      pickupAddress: "Pickup at Halvtolv 9, København K",
+      pickupAddress: "Pickup at",
       pickupDesc: "Delivered with all cables (iPhone, USB-C, AUX). Carry bag available as add-on.",
       pickupDesc2: "Mixers and similar can be requested when booking.",
       // Success page
@@ -265,7 +266,7 @@ export const t = {
       successEmailSent: "Confirmation sent to",
       successChecking: "We're reviewing your booking now",
       successCheckingDesc: "You'll hear from us within a few minutes with confirmation and practical details.",
-      successPickup: "Pickup: Halvtolv 9, København K",
+      successPickup: "Pickup:",
       successDelivery: "Delivery to",
       successIncluded: "Included in your booking:",
       successCables: "All cables (iPhone w/ USB-C adapter, AUX, power)",
@@ -328,7 +329,7 @@ export const t = {
         },
         {
           title: "2. Pick up your speaker",
-          text: "Pick up at Halvtolv 9, København K — all cables included (iPhone, USB-C, AUX). Friday or by appointment.",
+          text: "Pick up at ADRESSE — all cables included (iPhone, USB-C, AUX). Friday or by appointment.",
         },
         {
           title: "3. Party!",

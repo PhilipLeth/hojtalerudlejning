@@ -21,6 +21,7 @@ import {
   formatRange,
   formatSentence,
   formatTime,
+  formatAfterHours,
   hoursForDate,
   isOpenOn,
   normalizeOpeningHours,
@@ -32,6 +33,7 @@ import {
   type OpeningHours,
 } from "@/lib/openingHours";
 import BookingFlow from "@/components/BookingFlow";
+import { DEFAULT_PICKUP_ADDRESS, normalizePickupAddress } from "@/lib/pickup";
 import { clearSiteSettingsCache } from "@/lib/useSiteSettings";
 
 /** Åbningstider med kun de dage man nævner — resten lukket */
@@ -310,7 +312,7 @@ describe("Den tekniske indstilling", () => {
 
 /* ───── sitet og admin ───── */
 
-function mockSettings(hours?: unknown) {
+function mockSettings(hours?: unknown, pickupAddress = DEFAULT_PICKUP_ADDRESS) {
   (global.fetch as any).mockImplementation((url: string) => {
     if (String(url).startsWith("/api/site-settings")) {
       return Promise.resolve({
@@ -322,6 +324,7 @@ function mockSettings(hours?: unknown) {
           e164: "+4531132852",
           href: "tel:+4531132852",
           hours: hours ?? DEFAULT_OPENING_HOURS,
+          pickupAddress,
           updatedAt: "2026-08-17T10:00:00.000Z",
         }),
       });
@@ -384,6 +387,70 @@ describe("Footeren", () => {
   });
 });
 
+describe("Uden for åbningstid", () => {
+  it("er slået til med 6.30–21 og 50 kr som standard", () => {
+    expect(DEFAULT_OPENING_HOURS.afterHours).toEqual({ enabled: true, from: "06:30", to: "21:00", fee: 50 });
+  });
+
+  it("skriver noten som en mulighed, ikke som en advarsel", () => {
+    expect(formatAfterHours(DEFAULT_OPENING_HOURS))
+      .toBe("Uden for åbningstid kan du hente og aflevere mellem 6.30 og 21 for 50 kr ekstra — skriv tidspunktet i kommentarfeltet.");
+    expect(formatAfterHours(DEFAULT_OPENING_HOURS, "en"))
+      .toContain("between 6:30 AM and 9 PM for 50 kr extra");
+  });
+
+  it("siger ingenting når det er slået fra", () => {
+    const h = normalizeOpeningHours({ ...DEFAULT_OPENING_HOURS, afterHours: { ...DEFAULT_OPENING_HOURS.afterHours, enabled: false } });
+    expect(formatAfterHours(h)).toBe("");
+  });
+
+  it("kan sættes til andre tider og et andet gebyr", () => {
+    const h = normalizeOpeningHours({ ...DEFAULT_OPENING_HOURS, afterHours: { enabled: true, from: "07:00", to: "22:00", fee: 75 } });
+    expect(formatAfterHours(h)).toContain("mellem 7 og 22 for 75 kr");
+  });
+
+  it("afviser et vindue der slutter før det starter", () => {
+    const res = validateOpeningHours({
+      days: DEFAULT_OPENING_HOURS.days,
+      other: "",
+      afterHours: { enabled: true, from: "21:00", to: "06:30", fee: 50 },
+    });
+    expect(res.ok).toBe(false);
+    if (!res.ok) expect(res.error).toMatch(/efter starttidspunktet/);
+  });
+
+  it("afviser et gebyr der ikke er et helt beløb", () => {
+    const krop = (fee: unknown) => validateOpeningHours({
+      days: DEFAULT_OPENING_HOURS.days,
+      other: "",
+      afterHours: { enabled: true, from: "06:30", to: "21:00", fee },
+    });
+    expect(krop(49.5).ok).toBe(false);
+    expect(krop(-10).ok).toBe(false);
+    expect(krop(50).ok).toBe(true);
+  });
+
+  it("falder tilbage på standarden ved skrald i KV", () => {
+    expect(normalizeOpeningHours({ ...DEFAULT_OPENING_HOURS, afterHours: "ja" }).afterHours)
+      .toEqual(DEFAULT_OPENING_HOURS.afterHours);
+  });
+});
+
+describe("Afhentningsadressen", () => {
+  it("er Vermlandsgade 66 som standard", () => {
+    expect(DEFAULT_PICKUP_ADDRESS).toBe("Vermlandsgade 66, 2300 København");
+  });
+
+  it("renses for linjeskift og dobbelte mellemrum", () => {
+    expect(normalizePickupAddress("  Vermlandsgade 66,\n 2300  København ")).toBe("Vermlandsgade 66, 2300 København");
+  });
+
+  it("falder tilbage på standarden hvis den er tom", () => {
+    expect(normalizePickupAddress("")).toBe(DEFAULT_PICKUP_ADDRESS);
+    expect(normalizePickupAddress(null)).toBe(DEFAULT_PICKUP_ADDRESS);
+  });
+});
+
 describe("Checkout", () => {
   /** En særlig åbning på en onsdag, langt nok ude at kalenderen kan nå den */
   function medSærligDato(onlyOpenDays = false) {
@@ -414,6 +481,29 @@ describe("Checkout", () => {
     // Den særlige dato står med sin note, så kunden ved at datoen kan vælges
     const kort = new Date(`${dato}T12:00:00Z`).toLocaleDateString("da-DK", { day: "numeric", month: "short", timeZone: "UTC" }).replace(/\.$/, "");
     expect(screen.getByText(new RegExp(`${kort} 14–18 \\(afhentning\\) · Nytår`))).toBeInTheDocument();
+  });
+
+  it("viser gebyr-noten når datoerne er valgt", async () => {
+    mockSettings();
+    render(<BookingFlow />);
+
+    fireEvent.click(screen.getByText("Lille højtalerpakke").closest("button")!);
+    await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
+
+    // Ingen datoer valgt endnu — så ingen note
+    expect(screen.queryByText(/50 kr ekstra/)).not.toBeInTheDocument();
+
+    const dage = screen.getAllByRole("button").filter((b) => /^\d+$/.test(b.textContent?.trim() ?? "") && !b.hasAttribute("disabled"));
+    fireEvent.click(dage[0]);
+
+    await waitFor(() => expect(screen.getByText(/50 kr ekstra/)).toBeInTheDocument());
+    expect(screen.getByText(/mellem 6.30 og 21/)).toBeInTheDocument();
+  });
+
+  it("viser den adresse der står i indstillingerne", async () => {
+    mockSettings(undefined, "Testvej 1, 2100 København Ø");
+    render(<BookingFlow />);
+    await waitFor(() => expect(screen.getByText(/Hent på Testvej 1, 2100 København Ø/)).toBeInTheDocument());
   });
 
   it("markerer den særlige dato i kalenderen, så den kan vælges", async () => {
@@ -564,6 +654,45 @@ describe("/admin/indstillinger", () => {
         (c: unknown[]) => (c[1] as { method?: string })?.method === "POST",
       );
       expect(JSON.parse((post[1] as { body: string }).body).hours.onlyOpenDays).toBe(true);
+    });
+  });
+
+  it("kan rette afhentningsadressen", async () => {
+    mockSettings();
+    renderAdmin(<IndstillingerPage />);
+    await waitFor(() => expect(screen.getByText("Afhentningsadresse")).toBeInTheDocument());
+
+    const felt = screen.getByPlaceholderText(DEFAULT_PICKUP_ADDRESS);
+    expect(felt).toHaveValue(DEFAULT_PICKUP_ADDRESS);
+    fireEvent.change(felt, { target: { value: "Testvej 1, 2100 København Ø" } });
+    fireEvent.click(screen.getByText("Gem nummer og adresse"));
+
+    await waitFor(() => {
+      const post = (global.fetch as any).mock.calls.find(
+        (c: unknown[]) => (c[1] as { method?: string })?.method === "POST",
+      );
+      const body = JSON.parse((post[1] as { body: string }).body);
+      expect(body.pickupAddress).toBe("Testvej 1, 2100 København Ø");
+      expect(body.hours).toBeUndefined();
+    });
+  });
+
+  it("kan sætte gebyr og vindue for afhentning uden for åbningstid", async () => {
+    mockSettings();
+    renderAdmin(<IndstillingerPage />);
+    await waitFor(() => expect(screen.getByText("Uden for åbningstid")).toBeInTheDocument());
+
+    expect(screen.getByLabelText("Uden for åbningstid fra")).toHaveValue("06:30");
+    expect(screen.getByLabelText("Gebyr uden for åbningstid")).toHaveValue(50);
+
+    fireEvent.change(screen.getByLabelText("Gebyr uden for åbningstid"), { target: { value: "75" } });
+    fireEvent.click(screen.getByText("Gem åbningstider"));
+
+    await waitFor(() => {
+      const post = (global.fetch as any).mock.calls.find(
+        (c: unknown[]) => (c[1] as { method?: string })?.method === "POST",
+      );
+      expect(JSON.parse((post[1] as { body: string }).body).hours.afterHours.fee).toBe(75);
     });
   });
 

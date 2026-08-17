@@ -7,13 +7,20 @@ import {
   normalizeOpeningHours,
   type OpeningHours,
 } from "@/lib/openingHours";
+import { DEFAULT_PICKUP_ADDRESS, normalizePickupAddress } from "@/lib/pickup";
 
-/** Det offentlige sitet henter i én omgang: nummer og åbningstider */
+/** Det offentlige sitet henter i én omgang: nummer, åbningstider og adresse */
 export interface SiteSettings extends SitePhone {
   hours: OpeningHours;
+  /** Hvor kunden henter — ikke firmaadressen i footeren */
+  pickupAddress: string;
 }
 
-const DEFAULTS: SiteSettings = { ...DEFAULT_PHONE, hours: DEFAULT_OPENING_HOURS };
+const DEFAULTS: SiteSettings = {
+  ...DEFAULT_PHONE,
+  hours: DEFAULT_OPENING_HOURS,
+  pickupAddress: DEFAULT_PICKUP_ADDRESS,
+};
 
 let cached: SiteSettings | null = null;
 let inflight: Promise<SiteSettings> | null = null;
@@ -23,7 +30,11 @@ async function loadSiteSettings(): Promise<SiteSettings> {
   if (!inflight) {
     inflight = fetch("/api/site-settings")
       .then(async (res) => {
-        const json = (await res.json()) as Partial<SitePhone> & { phone?: string; hours?: unknown };
+        const json = (await res.json()) as Partial<SitePhone> & {
+          phone?: string;
+          hours?: unknown;
+          pickupAddress?: unknown;
+        };
         const next: SiteSettings = {
           digits: json.digits || DEFAULT_PHONE.digits,
           display: json.display || DEFAULT_PHONE.display,
@@ -32,6 +43,7 @@ async function loadSiteSettings(): Promise<SiteSettings> {
           // Serveren normaliserer også, men klienten skal kunne stå alene med
           // et gammelt eller halvt svar uden at vise tomme åbningstider
           hours: normalizeOpeningHours(json.hours),
+          pickupAddress: normalizePickupAddress(json.pickupAddress),
         };
         cached = next;
         return next;

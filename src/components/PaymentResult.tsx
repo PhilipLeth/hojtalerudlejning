@@ -4,6 +4,25 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { trackPurchase } from "@/lib/analytics";
 import PhoneLink from "@/components/PhoneLink";
+import { useSiteSettings } from "@/lib/useSiteSettings";
+import { formatAfterHours, formatSentence } from "@/lib/openingHours";
+
+/**
+ * Hvor og hvornår kunden henter. Adressen og tiderne kommer fra
+ * /admin/indstillinger — kvitteringssiden er det sidste kunden ser, så den må
+ * ikke stå med en gammel adresse.
+ */
+function PickupLine() {
+  const { hours, pickupAddress } = useSiteSettings();
+  const gebyr = formatAfterHours(hours);
+  return (
+    <>
+      <p className="mt-1">{pickupAddress}</p>
+      <p className="mt-1">{formatSentence(hours)}</p>
+      {gebyr && <p className="mt-1 text-white/40">{gebyr}</p>}
+    </>
+  );
+}
 
 type State =
   | { kind: "loading" }
@@ -61,7 +80,7 @@ export default function PaymentResult() {
         </p>
         <div className="glass mt-6 rounded-2xl p-5 text-left text-sm text-white/60">
           <p className="font-semibold text-white/80">Afhentning</p>
-          <p className="mt-1">Halvtolv 9, 1. th, 1436 København K — fredag kl. 14-18 (eller efter aftale).</p>
+          <PickupLine />
         </div>
         <Link
           href="/"

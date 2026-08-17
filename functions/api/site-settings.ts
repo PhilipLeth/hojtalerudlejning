@@ -14,6 +14,7 @@ import {
   validateOpeningHours,
   type OpeningHours,
 } from "../../src/lib/openingHours";
+import { DEFAULT_PICKUP_ADDRESS, normalizePickupAddress } from "../../src/lib/pickup";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -49,7 +50,7 @@ function formatDk(digits: string): string {
   return digits;
 }
 
-function toResponse(digits: string, hours: OpeningHours, updatedAt: string | null) {
+function toResponse(digits: string, hours: OpeningHours, pickupAddress: string, updatedAt: string | null) {
   const d = digits.length === 8 ? digits : DEFAULT_DIGITS;
   const e164 = `+45${d}`;
   return {
@@ -59,6 +60,7 @@ function toResponse(digits: string, hours: OpeningHours, updatedAt: string | nul
     e164,
     href: `tel:${e164}`,
     hours,
+    pickupAddress,
     updatedAt,
   };
 }
@@ -69,14 +71,19 @@ export const onRequestOptions: PagesFunction<Env> = async () =>
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
     const raw = await context.env.BOOKINGS.get(KV_KEY);
-    if (!raw) return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, null));
-    const doc = JSON.parse(raw) as { phone?: string; hours?: unknown; updatedAt?: string };
+    if (!raw) return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, null));
+    const doc = JSON.parse(raw) as { phone?: string; hours?: unknown; pickupAddress?: unknown; updatedAt?: string };
     return json(
-      toResponse(digitsOnly(doc.phone || ""), normalizeOpeningHours(doc.hours), doc.updatedAt ?? null),
+      toResponse(
+        digitsOnly(doc.phone || ""),
+        normalizeOpeningHours(doc.hours),
+        normalizePickupAddress(doc.pickupAddress),
+        doc.updatedAt ?? null,
+      ),
     );
   } catch (e) {
     console.error("[site-settings] GET failed:", e);
-    return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, null));
+    return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, null));
   }
 };
 
@@ -84,7 +91,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const auth = await requireAdmin(context, cors);
   if (auth instanceof Response) return auth;
 
-  let body: { phone?: unknown; hours?: unknown };
+  let body: { phone?: unknown; hours?: unknown; pickupAddress?: unknown };
   try {
     body = await context.request.json();
   } catch {
@@ -92,7 +99,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   // Det gemte er udgangspunktet: admin kan sende kun telefon eller kun tider
-  let stored: { phone?: string; hours?: unknown } = {};
+  let stored: { phone?: string; hours?: unknown; pickupAddress?: unknown } = {};
   try {
     const raw = await context.env.BOOKINGS.get(KV_KEY);
     if (raw) stored = JSON.parse(raw);
@@ -119,8 +126,17 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     hours = valid.hours;
   }
 
+  let pickupAddress = normalizePickupAddress(stored.pickupAddress);
+  if (body.pickupAddress !== undefined) {
+    const adresse = String(body.pickupAddress || "").trim();
+    if (adresse.length < 5) {
+      return json({ error: "Afhentningsadressen er for kort — skriv vej, nummer og by" }, 400);
+    }
+    pickupAddress = normalizePickupAddress(adresse);
+  }
+
   const updatedAt = new Date().toISOString();
-  await context.env.BOOKINGS.put(KV_KEY, JSON.stringify({ phone: digits, hours, updatedAt }));
+  await context.env.BOOKINGS.put(KV_KEY, JSON.stringify({ phone: digits, hours, pickupAddress, updatedAt }));
   console.log("[site-settings] gemt telefon", digits, "og", Object.values(hours.days).filter((d) => !d.closed).length, "åbne dage");
-  return json({ ok: true, ...toResponse(digits, hours, updatedAt) });
+  return json({ ok: true, ...toResponse(digits, hours, pickupAddress, updatedAt) });
 };

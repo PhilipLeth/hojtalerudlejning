@@ -2,7 +2,7 @@
 
 import { type Locale, t } from "@/lib/i18n";
 import { useSiteSettings } from "@/lib/useSiteSettings";
-import { formatDayLine, openDays } from "@/lib/openingHours";
+import { formatAfterHours, formatDayLine, openDays } from "@/lib/openingHours";
 
 const stepIcons = [
   <svg key="1" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -22,7 +22,8 @@ const stepIcons = [
 function OpeningHours({ locale, title }: { locale: Locale; title: string }) {
   const { hours } = useSiteSettings();
   const days = openDays(hours);
-  if (days.length === 0) return null;
+  const gebyr = formatAfterHours(hours, locale);
+  if (days.length === 0 && !gebyr) return null;
 
   return (
     <div className="mt-16 glass rounded-2xl p-8 text-center">
@@ -32,6 +33,8 @@ function OpeningHours({ locale, title }: { locale: Locale; title: string }) {
           <p key={d.day}>{formatDayLine(d, locale)}</p>
         ))}
         {hours.other && <p className="mt-2 text-sm text-white/40">{hours.other}</p>}
+        {/* Vi møder gerne uden for åbningstid — det koster bare et gebyr */}
+        {gebyr && <p className="mt-1 text-sm text-brand-300/80">{gebyr}</p>}
       </div>
     </div>
   );
@@ -39,6 +42,12 @@ function OpeningHours({ locale, title }: { locale: Locale; title: string }) {
 
 export default function HowItWorks({ locale = "da" }: { locale?: Locale }) {
   const s = t[locale].howItWorks;
+  // Adressen står ét sted (indstillingerne) og sættes ind i trin-teksten
+  const { pickupAddress } = useSiteSettings();
+  const steps = s.steps.map((step) => ({
+    ...step,
+    text: step.text.replaceAll("ADRESSE", pickupAddress),
+  }));
   return (
     <section id="about" className="relative z-20 mx-auto max-w-4xl px-4 py-24">
       <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
@@ -52,7 +61,7 @@ export default function HowItWorks({ locale = "da" }: { locale?: Locale }) {
       </p>
 
       <div className="grid gap-8 sm:grid-cols-2">
-        {s.steps.map((step, i) => (
+        {steps.map((step, i) => (
           <div key={i} className="glass rounded-2xl p-6">
             <div className="mb-4 inline-flex rounded-xl bg-brand-600/20 p-3 text-brand-400">
               {stepIcons[i]}

@@ -47,6 +47,23 @@ export interface HoursException {
   note: string;
 }
 
+/**
+ * Afhentning uden for åbningstid.
+ *
+ * Vi kan sagtens møde en kunde klokken 7 om morgenen — det koster bare et
+ * gebyr, fordi nogen skal køre derned. Noten står i checkout, når kunden vælger
+ * datoer, så det ikke kommer bag på nogen.
+ */
+export interface AfterHours {
+  enabled: boolean;
+  /** Tidligste tidspunkt vi overhovedet møder op, "HH:MM" */
+  from: string;
+  /** Seneste tidspunkt, "HH:MM" */
+  to: string;
+  /** Gebyr i kr */
+  fee: number;
+}
+
 export interface OpeningHours {
   days: Record<Weekday, DayHours>;
   /** Linjen under tiderne — fx "Andre tidspunkter efter aftale" */
@@ -62,6 +79,8 @@ export interface OpeningHours {
    * datoer — så er åbningstiderne ikke længere kun information.
    */
   onlyOpenDays: boolean;
+  /** Afhentning uden for åbningstid mod gebyr */
+  afterHours: AfterHours;
 }
 
 const LUKKET: DayHours = { closed: true, open: "10:00", close: "16:00", purpose: "" };
@@ -84,6 +103,7 @@ export const DEFAULT_OPENING_HOURS: OpeningHours = {
   other: "Andre tidspunkter efter aftale — skriv i kommentarfeltet ved booking.",
   exceptions: [],
   onlyOpenDays: false,
+  afterHours: { enabled: true, from: "06:30", to: "21:00", fee: 50 },
 };
 
 const DAY_NAMES: Record<Weekday, { da: string; en: string }> = {
@@ -205,6 +225,32 @@ export function formatSentence(hours: OpeningHours, locale: "da" | "en" = "da"):
   });
   const sentence = parts.join(", ");
   return sentence.charAt(0).toUpperCase() + sentence.slice(1) + ".";
+}
+
+/**
+ * Sætningen om afhentning uden for åbningstid. Tom når det er slået fra.
+ * Formuleret som en mulighed, ikke som en advarsel — det er en service.
+ */
+export function formatAfterHours(hours: OpeningHours, locale: "da" | "en" = "da"): string {
+  const a = hours.afterHours;
+  if (!a.enabled) return "";
+  const fra = formatTime(a.from, locale);
+  const til = formatTime(a.to, locale);
+  if (locale === "en") {
+    return `Outside opening hours you can pick up and return between ${fra} and ${til} for ${a.fee} kr extra — write the time in the comment field.`;
+  }
+  return `Uden for åbningstid kan du hente og aflevere mellem ${fra} og ${til} for ${a.fee} kr ekstra — skriv tidspunktet i kommentarfeltet.`;
+}
+
+/** Kort udgave til en linje i footeren eller under kalenderen */
+export function formatAfterHoursShort(hours: OpeningHours, locale: "da" | "en" = "da"): string {
+  const a = hours.afterHours;
+  if (!a.enabled) return "";
+  const fra = formatTime(a.from, locale);
+  const til = formatTime(a.to, locale);
+  return locale === "en"
+    ? `Other times ${fra}–${til}: ${a.fee} kr`
+    : `Andre tidspunkter ${fra}–${til}: ${a.fee} kr`;
 }
 
 /* ─────────────────────────── datoer ─────────────────────────── */
@@ -341,6 +387,23 @@ export function normalizeOpeningHours(input: unknown): OpeningHours {
     other,
     exceptions,
     onlyOpenDays: (raw as { onlyOpenDays?: unknown }).onlyOpenDays === true,
+    afterHours: normalizeAfterHours((raw as { afterHours?: unknown }).afterHours),
+  };
+}
+
+function normalizeAfterHours(input: unknown): AfterHours {
+  const d = DEFAULT_OPENING_HOURS.afterHours;
+  if (!input || typeof input !== "object") return { ...d };
+  const raw = input as Partial<AfterHours>;
+  const from = typeof raw.from === "string" && isTime(raw.from) ? raw.from : d.from;
+  const to = typeof raw.to === "string" && isTime(raw.to) ? raw.to : d.to;
+  const fee = Number(raw.fee);
+  return {
+    enabled: raw.enabled !== false,
+    from,
+    // Et vindue der slutter før det starter giver ingen mening
+    to: minutesOf(to) > minutesOf(from) ? to : d.to,
+    fee: Number.isFinite(fee) && fee >= 0 && fee <= 10000 ? Math.round(fee) : d.fee,
   };
 }
 
@@ -431,6 +494,29 @@ export function validateOpeningHours(
     exceptions.sort((a, b) => a.date.localeCompare(b.date));
   }
 
+  // Afhentning uden for åbningstid
+  const rawAfter = (raw as { afterHours?: unknown }).afterHours;
+  let afterHours = { ...DEFAULT_OPENING_HOURS.afterHours };
+  if (rawAfter !== undefined) {
+    if (!rawAfter || typeof rawAfter !== "object") {
+      return { ok: false, error: "Uden for åbningstid: ugyldige felter" };
+    }
+    const a = rawAfter as Partial<AfterHours>;
+    const from = String(a.from ?? "");
+    const to = String(a.to ?? "");
+    if (!isTime(from) || !isTime(to)) {
+      return { ok: false, error: "Uden for åbningstid: tiderne skal være HH:MM (fx 06:30)" };
+    }
+    if (minutesOf(to) <= minutesOf(from)) {
+      return { ok: false, error: "Uden for åbningstid: sluttidspunktet skal være efter starttidspunktet" };
+    }
+    const fee = Number(a.fee);
+    if (!Number.isFinite(fee) || fee < 0 || fee > 10000 || !Number.isInteger(fee)) {
+      return { ok: false, error: "Uden for åbningstid: gebyret skal være et helt tal mellem 0 og 10.000 kr" };
+    }
+    afterHours = { enabled: a.enabled !== false, from, to, fee };
+  }
+
   return {
     ok: true,
     hours: {
@@ -438,6 +524,7 @@ export function validateOpeningHours(
       other,
       exceptions,
       onlyOpenDays: (raw as { onlyOpenDays?: unknown }).onlyOpenDays === true,
+      afterHours,
     },
   };
 }
