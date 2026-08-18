@@ -102,6 +102,30 @@ export function gsmSafe(text: string): string {
   return out;
 }
 
+/**
+ * Webadresser i teksten. Operatørerne afviser links, der ikke står på
+ * udbyderens hvidliste for kontoen — og afvisningen kommer FØRST efter at
+ * gatewayen har kvitteret, så beskeden ser sendt ud uden at nå frem. Derfor
+ * skal admin advares, inden teksten gemmes.
+ *
+ * Fanger både "https://…" og bare domæner som "lejhojtaler.dk". En mailadresse
+ * er ikke et link i den forstand og tæller ikke med.
+ */
+export function findLinks(text: string): string[] {
+  const found = new Set<string>();
+  const s = String(text ?? "");
+  for (const m of s.matchAll(/https?:\/\/[^\s]+/gi)) found.add(m[0]);
+  // Bare domæner: ord.tld, men ikke midt i en mailadresse
+  for (const m of s.matchAll(/(^|[^\w@./-])((?:[a-z0-9æøå-]+\.)+(?:dk|com|net|org|io|eu|se|no|de|co|app|shop|link|page))\b/gi)) {
+    found.add(m[2]);
+  }
+  return [...found];
+}
+
+export function hasLinks(text: string): boolean {
+  return findLinks(text).length > 0;
+}
+
 export interface SmsLength {
   /** Tegn som gatewayen tæller dem */
   chars: number;
@@ -443,6 +467,44 @@ export async function smsBalance(
     const credit = Number(body.credit);
     if (!Number.isFinite(credit)) return null;
     return { credit, currency: String(body.currency || "DKK") };
+  } catch {
+    return null;
+  }
+}
+
+export interface DeliveryStatus {
+  /** GatewayAPI's egen status: DELIVERED, REJECTED, EXPIRED … */
+  status: string;
+  /** Fx "contained non-allowed-links: lejhojtaler.dk" */
+  error?: string;
+  /** Afsenderen som operatøren faktisk viste den */
+  sender?: string;
+}
+
+/**
+ * Hvad skete der egentlig med beskeden? Gatewayen kvitterer med det samme, men
+ * operatøren kan afvise bagefter — og gør det bl.a. ved links, der ikke er
+ * godkendt. Uden dette opslag ville en afvist besked stå som "sendt" i admin.
+ *
+ * Kun GatewayAPI: de andre udbydere leverer status via callback, ikke opslag.
+ */
+export async function messageStatus(
+  env: SmsEnvVars,
+  id: string,
+  fetchImpl: typeof fetch = (...a: Parameters<typeof fetch>) => fetch(...a),
+): Promise<DeliveryStatus | null> {
+  if (!id || !env.SMS_API_TOKEN || resolveProvider(env) !== "gatewayapi") return null;
+  try {
+    const res = await fetchImpl(`https://gatewayapi.com/rest/mtsms/${encodeURIComponent(id)}`, {
+      headers: { Authorization: `Token ${env.SMS_API_TOKEN}` },
+    });
+    if (!res.ok) return null;
+    const body = (await res.json()) as {
+      recipients?: Array<{ dsnstatus?: string; dsnerror?: string; actual_sender?: string }>;
+    };
+    const r = body.recipients?.[0];
+    if (!r?.dsnstatus) return null;
+    return { status: r.dsnstatus, error: r.dsnerror || undefined, sender: r.actual_sender || undefined };
   } catch {
     return null;
   }

@@ -18,7 +18,15 @@ import {
   smsErrorText,
   type SmsEnv,
 } from "./_lib/sms";
-import { SMS_PROVIDERS, resolveProvider, smsBalance, smsLength, toE164Dk } from "../../src/lib/sms";
+import {
+  SMS_PROVIDERS,
+  findLinks,
+  messageStatus,
+  resolveProvider,
+  smsBalance,
+  smsLength,
+  toE164Dk,
+} from "../../src/lib/sms";
 import { isSmsType, parseSmsSettings, SMS_TYPES } from "../../src/lib/smsTemplates";
 
 interface Env extends SmsEnv {
@@ -119,8 +127,25 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (!outcome.ok) {
       return json({ error: smsErrorText(outcome.error || outcome.skipped) }, 502);
     }
-    console.log("[sms] testbesked sendt til", to, "af", auth.name);
-    return json({ ok: true, to, text, length: smsLength(text) });
+    // Gatewayen kvitterer med det samme, men operatøren kan afvise bagefter —
+    // bl.a. ved links der ikke er godkendt. Uden dette opslag ville en afvist
+    // testbesked se ud som en succes, og fejlen først vise sig hos en kunde.
+    let delivery = outcome.id ? await messageStatus(context.env, outcome.id) : null;
+    if (delivery && delivery.status !== "DELIVERED" && delivery.status !== "REJECTED") {
+      await new Promise((r) => setTimeout(r, 2500));
+      delivery = await messageStatus(context.env, outcome.id!);
+    }
+
+    console.log("[sms] testbesked sendt til", to, "af", auth.name, "status:", delivery?.status ?? "ukendt");
+    return json({
+      ok: true,
+      to,
+      text,
+      length: smsLength(text),
+      /** Webadresser i teksten skal være godkendt hos udbyderen for at nå frem */
+      links: findLinks(text),
+      delivery,
+    });
   }
 
   // ── Send til kunden på en ordre

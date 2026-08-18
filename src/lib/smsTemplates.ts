@@ -117,6 +117,15 @@ export interface SmsSettings {
 /**
  * Standardtekster. Holdt inden for 160 tegn på en typisk ordre, så én besked
  * er én besked — og uden emoji, fordi et enkelt emoji halverer grænsen til 70.
+ *
+ * INGEN webadresser i teksten. Operatørerne afviser links, der ikke står på
+ * udbyderens hvidliste for kontoen, og afvisningen sker EFTER at gatewayen har
+ * kvitteret — beskeden ser sendt ud, men når aldrig frem. Set i praksis
+ * 17. august 2026: "contained non-allowed-links: Lejhojtaler.dk" på en tekst,
+ * hvor domænet kun stod som underskrift. Derfor "Mvh Lejhøjtaler" uden .dk.
+ *
+ * Skal {{link}} bruges (tak-beskeden), skal domænet først godkendes hos
+ * udbyderen — se hasLinks() nedenfor, som advarer i admin.
  */
 export const DEFAULT_SMS_SETTINGS: SmsSettings = {
   enabled: true,
@@ -129,7 +138,7 @@ export const DEFAULT_SMS_SETTINGS: SmsSettings = {
     },
     bekraeftet: {
       enabled: true,
-      text: "Hej {{fornavn}}! Din booking er bekræftet: {{produkter}}, {{periode}}. Ring {{telefon}} hvis noget ændrer sig. /Lejhøjtaler.dk",
+      text: "Hej {{fornavn}}! Din booking er bekræftet: {{produkter}}, {{periode}}. Ring {{telefon}} hvis noget ændrer sig. Mvh Lejhøjtaler",
     },
     afhentning_i_morgen: {
       enabled: true,
@@ -137,12 +146,12 @@ export const DEFAULT_SMS_SETTINGS: SmsSettings = {
     },
     retur_i_morgen: {
       enabled: true,
-      text: "Hej {{fornavn}}! Husk at {{produkter}} skal afleveres i dag ({{returdato}}). Mangler I mere tid, så ring {{telefon}}. /Lejhøjtaler.dk",
+      text: "Hej {{fornavn}}! Husk at {{produkter}} skal afleveres i dag ({{returdato}}). Mangler I mere tid, så ring {{telefon}}. Mvh Lejhøjtaler",
     },
     // Anmeldelsesmailen sendes allerede ved retur — SMS oveni er et tilvalg
     tak: {
       enabled: false,
-      text: "Tak for denne gang, {{fornavn}}! Vil du bruge 30 sekunder på en anmeldelse? {{link}} Det betyder meget for os. /Lejhøjtaler.dk",
+      text: "Tak for denne gang, {{fornavn}}! Vil du bruge 30 sekunder på en anmeldelse? {{link}} Det betyder meget for os. Mvh Lejhøjtaler",
     },
   },
 };

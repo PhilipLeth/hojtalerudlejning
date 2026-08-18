@@ -7,6 +7,7 @@ import {
   UnconfiguredSmsGateway,
   cleanSender,
   displayPhone,
+  findLinks,
   resolveProvider,
   smsBalance,
   smsConfigured,
@@ -267,6 +268,20 @@ describe("Twilio-kaldet", () => {
   });
 });
 
+describe("links i teksten", () => {
+  it("finder både fulde adresser og bare domæner", () => {
+    expect(findLinks("Se https://lejhojtaler.dk/book")).toEqual(["https://lejhojtaler.dk/book"]);
+    expect(findLinks("Mvh lejhojtaler.dk")).toEqual(["lejhojtaler.dk"]);
+    expect(findLinks("Anmeld os: g.page/r/xyz/review").length).toBeGreaterThan(0);
+  });
+
+  it("en mailadresse eller et almindeligt punktum er ikke et link", () => {
+    expect(findLinks("Skriv til info@lejhojtaler.dk")).toEqual([]);
+    expect(findLinks("Vi ses i morgen. Tak for denne gang.")).toEqual([]);
+    expect(findLinks("Ring 31 13 28 52 kl. 9.30")).toEqual([]);
+  });
+});
+
 describe("skabeloner", () => {
   const booking = {
     name: "Agnes Dahle Stæhr",
@@ -311,6 +326,15 @@ describe("skabeloner", () => {
     // Standardadressen; den levende kommer fra /admin/indstillinger
     expect(placeLine({})).toContain("Vermlandsgade 66");
     expect(placeLine({}, "Testvej 1, 2100 København Ø")).toContain("Testvej 1");
+  });
+
+  it("standardteksterne indeholder ingen webadresser — operatøren afviser dem", () => {
+    // "contained non-allowed-links: Lejhojtaler.dk" — set på en rigtig besked
+    // 17. august 2026. Kun tak-beskeden må have {{link}}, og den er slukket.
+    const vars = smsVarsFor(booking, { telefon: "31 13 28 52", link: "" });
+    for (const def of SMS_TYPES) {
+      expect(findLinks(buildSms(DEFAULT_SMS_SETTINGS, def.id, vars).text), def.id).toEqual([]);
+    }
   });
 
   it("standardteksterne bliver én besked på en almindelig ordre", () => {

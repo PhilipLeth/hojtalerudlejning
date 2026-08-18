@@ -10,7 +10,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { adminFetch } from "@/lib/useAdminAuth";
-import { displayPhone, smsLength, toE164Dk } from "@/lib/sms";
+import { displayPhone, findLinks, smsLength, toE164Dk } from "@/lib/sms";
 import {
   DEFAULT_SMS_SETTINGS,
   SMS_TYPES,
@@ -188,6 +188,12 @@ export default function SendSmsBox({ booking, secret, onUpdated }: Props) {
         </button>
       </div>
 
+      {findLinks(text).length > 0 && (
+        <div style={{ fontSize: "11px", color: "#c0392b", marginTop: "6px" }}>
+          {findLinks(text).join(", ")} er en webadresse — den bliver afvist, medmindre domænet er godkendt
+          hos din SMS-udbyder.
+        </div>
+      )}
       {error && <div style={{ fontSize: "11px", color: "#c0392b", marginTop: "6px" }}>{error}</div>}
       {sent && <div style={{ fontSize: "11px", color: "#2f7a4d", marginTop: "6px" }}>{sent}</div>}
     </div>

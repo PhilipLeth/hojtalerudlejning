@@ -10,7 +10,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { adminFetch } from "@/lib/useAdminAuth";
-import { SMS_PROVIDERS, smsLength, type SmsBalance, type SmsProvider } from "@/lib/sms";
+import { SMS_PROVIDERS, findLinks, smsLength, type SmsBalance, type SmsProvider } from "@/lib/sms";
 import {
   DEFAULT_SMS_SETTINGS,
   SMS_SHORTCODES,
@@ -178,7 +178,14 @@ export default function SmsSettings({ secret }: { secret: string }) {
       setError(String(r.data.error || "Testbeskeden blev ikke sendt"));
       return;
     }
-    setNotice(`Testbesked sendt til ${r.data.to}`);
+    const d = r.data.delivery as { status?: string; error?: string } | null;
+    if (d && d.status !== "DELIVERED") {
+      // Gatewayen tog imod beskeden, men operatøren afviste den — det er
+      // netop den fejl, der ellers først dukker op hos en kunde
+      setError(`Udbyderen tog imod beskeden, men den blev ${d.status}: ${d.error || "ingen begrundelse"}`);
+      return;
+    }
+    setNotice(`Testbesked ${d ? "leveret" : "sendt"} til ${r.data.to}`);
   }
 
   async function runReminders(dryRun: boolean) {
@@ -330,6 +337,13 @@ export default function SmsSettings({ secret }: { secret: string }) {
               <div style={{ fontSize: "13px", lineHeight: 1.45, whiteSpace: "pre-wrap" }}>{built.text}</div>
             </div>
 
+            {findLinks(built.text).length > 0 && (
+              <div style={{ marginTop: "5px", fontSize: "11px", color: "#c0392b" }}>
+                Teksten indeholder {findLinks(built.text).join(", ")} — webadresser bliver afvist af
+                operatørerne, medmindre domænet er godkendt hos din udbyder. Beskeden ser sendt ud, men når
+                aldrig frem.
+              </div>
+            )}
             <div style={{ marginTop: "5px", fontSize: "11px", color: over ? "#c0392b" : "#999" }}>
               {len.chars} tegn · {len.segments} besked{len.segments === 1 ? "" : "er"}
               {len.unicode ? " · specialtegn/emoji sætter grænsen til 70 tegn" : ""}

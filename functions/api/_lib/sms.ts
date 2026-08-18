@@ -97,6 +97,8 @@ export async function smsContext(env: SmsEnv): Promise<SmsContext> {
 
 export interface SendSmsOutcome {
   ok: boolean;
+  /** Udbyderens id på beskeden — nøglen til at slå leveringen op bagefter */
+  id?: string;
   /** Sat når vi bevidst ikke sendte: slået fra, intet nummer, tom tekst */
   skipped?: "slaaet_fra" | "ugyldigt_nummer" | "tom_tekst";
   error?: string;
@@ -148,7 +150,7 @@ export async function sendBookingSms(
 
   if (!result.ok) return { ok: false, error: result.error || "ukendt_fejl", type, to, text };
 
-  return { ok: true, type, to, text, entry: smsLogEntry(type, to, text) };
+  return { ok: true, id: result.id, type, to, text, entry: smsLogEntry(type, to, text) };
 }
 
 /**
