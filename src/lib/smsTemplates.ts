@@ -154,6 +154,12 @@ export interface SmsSettings {
 }
 
 /**
+ * BESLUTNING 18. august 2026: al automatik er slukket som udgangspunkt.
+ * SMS er ikke et flow som mailene — det er Frederik, der sender én besked til
+ * én kunde fra overblikket. Teksterne herunder er derfor primært noget man
+ * VÆLGER, ikke noget der udløses. Automatikken kan tændes type for type i
+ * /admin/kommunikation, hvis den en dag skal bruges.
+ *
  * Standardtekster. Holdt inden for 160 tegn på en typisk ordre, så én besked
  * er én besked — og uden emoji, fordi et enkelt emoji halverer grænsen til 70.
  *
@@ -167,7 +173,8 @@ export interface SmsSettings {
  * udbyderen — se hasLinks() nedenfor, som advarer i admin.
  */
 export const DEFAULT_SMS_SETTINGS: SmsSettings = {
-  enabled: true,
+  // Hovedafbryderen er slukket: ingen SMS går ud, uden at nogen har trykket
+  enabled: false,
   sender: "Lejhojtaler",
   snippets: DEFAULT_SNIPPETS,
   templates: {
@@ -177,15 +184,15 @@ export const DEFAULT_SMS_SETTINGS: SmsSettings = {
       text: "Hej {{fornavn}}! Tak for din booking: {{produkter}}, {{periode}}. Vi bekræfter hurtigst muligt. Ring {{telefon}} ved spørgsmål.",
     },
     bekraeftet: {
-      enabled: true,
+      enabled: false,
       text: "Hej {{fornavn}}! Din booking er bekræftet: {{produkter}}, {{periode}}. Ring {{telefon}} hvis noget ændrer sig. Mvh Lejhøjtaler",
     },
     afhentning_i_morgen: {
-      enabled: true,
+      enabled: false,
       text: "Hej {{fornavn}}! I dag ({{dato}}) står {{produkter}} klar. {{sted}}. Ring {{telefon}} ved ændringer.",
     },
     retur_i_morgen: {
-      enabled: true,
+      enabled: false,
       text: "Hej {{fornavn}}! Husk at {{produkter}} skal afleveres i dag ({{returdato}}). Mangler I mere tid, så ring {{telefon}}. Mvh Lejhøjtaler",
     },
     // Anmeldelsesmailen sendes allerede ved retur — SMS oveni er et tilvalg

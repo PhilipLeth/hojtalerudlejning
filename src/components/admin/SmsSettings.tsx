@@ -225,6 +225,13 @@ export default function SmsSettings({ secret }: { secret: string }) {
 
   return (
     <div style={{ ...card, borderColor: "#e2dcc8", background: "#fffdf6" }}>
+      <div style={{ fontSize: "12px", color: "#7a5c00", background: "#fdf6df", border: "1px solid #e8dca8", borderRadius: "8px", padding: "9px 11px", marginBottom: "12px" }}>
+        <strong>SMS sendes fra ordren.</strong> Åbn en booking i overblikket og tryk 💬 ved
+        telefonnummeret — hurtigbeskederne ligger klar. Teksterne herunder kan også vælges dér.
+        Automatikken er slukket: intet går ud, uden at nogen har trykket. Vil du have en type til at
+        sende af sig selv, så tænd den her.
+      </div>
+
       <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", marginBottom: "10px" }}>
         <strong style={{ fontSize: "14px" }}>SMS til kunden</strong>
         <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", cursor: "pointer" }}>
@@ -234,7 +241,7 @@ export default function SmsSettings({ secret }: { secret: string }) {
             onChange={(e) => patch({ enabled: e.target.checked })}
             style={{ width: "16px", height: "16px", cursor: "pointer" }}
           />
-          Automatiske beskeder slået til
+          Tillad automatiske beskeder
         </label>
         {balance && (
           <span style={{ fontSize: "12px", color: balance.credit < 50 ? "#c0392b" : "#2f7a4d" }}>

@@ -347,12 +347,23 @@ describe("skabeloner", () => {
     }
   });
 
-  it("hovedafbryderen slår alle typer fra på én gang", () => {
-    expect(smsAutoEnabled(DEFAULT_SMS_SETTINGS, "bekraeftet")).toBe(true);
-    expect(smsAutoEnabled({ ...DEFAULT_SMS_SETTINGS, enabled: false }, "bekraeftet")).toBe(false);
-    // Mail dækker de to, så de er slukket som udgangspunkt
-    expect(smsAutoEnabled(DEFAULT_SMS_SETTINGS, "booking_modtaget")).toBe(false);
-    expect(smsAutoEnabled(DEFAULT_SMS_SETTINGS, "tak")).toBe(false);
+  it("intet sendes automatisk som udgangspunkt — SMS er noget man selv sender", () => {
+    // Beslutning 18. august 2026: SMS er Frederiks besked til én kunde fra
+    // overblikket, ikke et flow. Automatikken tændes bevidst, type for type.
+    for (const def of SMS_TYPES) {
+      expect(smsAutoEnabled(DEFAULT_SMS_SETTINGS, def.id), def.id).toBe(false);
+    }
+    // Tændes en type, skal hovedafbryderen stadig kunne slå alt fra på én gang
+    const tændt = {
+      ...DEFAULT_SMS_SETTINGS,
+      enabled: true,
+      templates: {
+        ...DEFAULT_SMS_SETTINGS.templates,
+        bekraeftet: { ...DEFAULT_SMS_SETTINGS.templates.bekraeftet, enabled: true },
+      },
+    };
+    expect(smsAutoEnabled(tændt, "bekraeftet")).toBe(true);
+    expect(smsAutoEnabled({ ...tændt, enabled: false }, "bekraeftet")).toBe(false);
   });
 
   it("parser vrøvl fra KV til brugbare indstillinger", () => {

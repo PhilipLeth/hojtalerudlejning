@@ -1047,20 +1047,24 @@
       "src/components/admin/SmsSettings.tsx": "SMS-sektionen i /admin/kommunikation: til/fra pr. type, tekst, forhåndsvisning med tegn- og beskedtæller, testbesked, saldo og manuel kørsel af påmindelserne.",
       "src/components/admin/SendSmsBox.tsx": "Send SMS på den enkelte ordre i /admin — skabelonen er udgangspunktet, teksten kan rettes før afsendelse."
     },
+    "model": "BESLUTNING 2026-08-18 (Philip): SMS er IKKE et flow som mailene. Det er Frederik, der står med én ordre i overblikket og skal sige én ting til én kunde. Derfor er al automatik slukket som udgangspunkt, og tyngdepunktet er 💬-knappen ved telefonnummeret i tabel og mobilkort, som åbner beskedfeltet oven på listen. Mailene kører fortsat det automatiske flow.",
+    "hurtigbeskeder": "Fire færdigskrevne beskeder til den enkelte ordre (KV: sms_settings.snippets): »Vi er på vej«, »Udstyret er klar«, »Vi står udenfor«, »Vi henter i dag«. Ingen automatik, intet til/fra — de er skrevet på forhånd, så en besked er ét tryk. Skabelonteksterne fra automatikken kan også vælges i samme dropdown.",
     "types": {
-      "booking_modtaget": "Straks ved bestilling. SLUKKET som standard — bekræftelsesmailen siger det samme.",
-      "bekraeftet": "Tændt. Sendes når ordren sættes til »bekræftet« i /admin.",
-      "afhentning_i_morgen": "Tændt. Kl. 9 på afhentningsdagen (id'et er historisk; påmindelsen gælder dagen selv).",
-      "retur_i_morgen": "Tændt. Kl. 9 på afleveringsdagen — færre for sene afleveringer.",
-      "tak": "Slukket som standard. Anmeldelsesmailen sendes allerede ved retur; SMS oveni er et tilvalg."
+      "_status": "Alle fem er SLUKKET som standard efter beslutningen 2026-08-18. De findes stadig som skabeloner, man kan vælge manuelt, og kan tændes type for type i /admin/kommunikation.",
+      "booking_modtaget": "Straks ved bestilling. Bekræftelsesmailen siger det samme.",
+      "bekraeftet": "Når ordren sættes til »bekræftet« i /admin.",
+      "afhentning_i_morgen": "Kl. 9 på afhentningsdagen (id'et er historisk; påmindelsen gælder dagen selv).",
+      "retur_i_morgen": "Kl. 9 på afleveringsdagen — færre for sene afleveringer.",
+      "tak": "Anmeldelsesmailen sendes allerede ved retur; SMS oveni er et tilvalg. Indeholder {{link}}, som kræver godkendt domæne hos udbyderen."
     },
-    "cron": "Pages Functions har ingen cron. .github/workflows/sms-paamindelser.yml kører 07:00 UTC (09:00 dansk sommertid) og POST'er til /api/sms-paamindelser. Mangler ADMIN_SECRET som GitHub-secret, springer jobbet over uden at fejle. Kan også trykkes manuelt i /admin/kommunikation.",
+    "cron": "Pages Functions har ingen cron. .github/workflows/sms-paamindelser.yml kører 07:00 UTC (09:00 dansk sommertid) og POST'er til /api/sms-paamindelser. Jobbet har sin EGEN nøgle (SMS_CRON_SECRET, sat både på Cloudflare og som GitHub-secret) i stedet for ADMIN_SECRET: admin-adgangskoden ville give adgang til hele /admin fra en GitHub-log, og jobbet skal kun kunne sende dagens påmindelser. Kørslen sender kun for de påmindelsestyper der er tændt — med automatikken slukket gennemgår den ordrerne og sender ingenting. Kan også trykkes manuelt i /admin/kommunikation.",
     "decisions": [
       "Beskederne bygges ALDRIG af det klienten sender: teksten kommer fra skabelonen i KV, og datoer/adresser fyldes ud server-side fra ordren.",
       "Ingen tavs fejl: uden SMS_API_TOKEN returneres sms_ikke_konfigureret, og admin får fejlteksten oversat (token, saldo, afsendernavn).",
       "Hver sendt besked mærkes på ordren (smsSent[type]) — en dobbeltkørsel af påmindelserne rammer ikke kunden to gange, og et statusskift tilbage og frem sender ikke igen.",
       "En SMS må aldrig kunne vælte en booking eller en statusopdatering: alle kald ligger i try/catch og fejler blødt.",
       "Standardteksterne holdes under 160 tegn på en typisk ordre og uden emoji — et enkelt emoji tvinger beskeden over i UCS-2 og halverer grænsen til 70 tegn. Pilen i periodeteksten (»→«) oversættes til bindestreg af samme grund. Admin ser tegn- og beskedtælleren live.",
+      "Webadresser i teksten bliver afvist af operatørerne, hvis domænet ikke står på udbyderens hvidliste for kontoen — og afvisningen kommer EFTER at gatewayen har kvitteret og trukket pengene. Set 2026-08-17: \"contained non-allowed-links: Lejhojtaler.dk\" på en tekst hvor domænet kun stod som underskrift. Standardteksterne er derfor uden webadresser (»Mvh Lejhøjtaler«), admin advarer når en tekst indeholder et link, og testknappen slår leveringen op hos udbyderen bagefter i stedet for at melde succes på kvitteringen alene.",
       "Hele korrespondancen står på ordren: SMS'er lægges i samme communications-log som mails, med den fulde tekst — en SMS kan ikke slås op andre steder bagefter."
     ],
     "status": "Kode live 2026-08-17. Venter kun på at nøglerne til den valgte udbyder lægges på Cloudflare + saldo på kontoen; indtil da gemmes teksterne, men intet sendes. /admin/kommunikation viser hvilken udbyder nøglerne peger på."
