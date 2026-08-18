@@ -5,6 +5,7 @@ import { notifyOverbooking } from "./_lib/overbooking";
 import { loadSiteSettings, mailFooter } from "./_lib/siteSettings";
 import { recordSms, sendBookingSms, type SendSmsOutcome } from "./_lib/sms";
 import type { SaleContext } from "./_lib/weekendSale";
+import { notifyRecipients } from "./_lib/notify";
 
 interface Env {
   RESEND_API_KEY: string;
@@ -331,7 +332,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const emails = [
     {
       from: fromEmail,
-      to: [NOTIFY_EMAIL],
+      to: notifyRecipients(NOTIFY_EMAIL),
       reply_to: data.email,
       subject: `Ny booking: ${data.speaker}${(data.cartItems?.length ?? 0) > 0 ? ` + ${data.cartItems!.length} mere` : ""} — ${data.period} — ${data.name}`,
       html: ownerHtml,

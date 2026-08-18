@@ -7,6 +7,8 @@
  * Udfyldt honeypot giver et falsk OK, så botten ikke lærer noget.
  */
 
+import { notifyRecipients } from "./_lib/notify";
+
 interface Env {
   RESEND_API_KEY: string;
   NOTIFY_EMAIL: string;
@@ -101,7 +103,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     },
     body: JSON.stringify({
       from: "Lejhøjtaler.dk <info@lejhojtaler.dk>",
-      to: [NOTIFY_EMAIL],
+      to: notifyRecipients(NOTIFY_EMAIL),
       reply_to: v.email,
       subject: v.topic ? `${v.topic}: ${v.name}` : `Kontaktformular: ${v.name}`,
       html,
