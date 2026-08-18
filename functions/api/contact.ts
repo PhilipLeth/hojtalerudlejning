@@ -100,7 +100,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "Lejhøjtaler.dk <booking@lejhojtaler.dk>",
+      from: "Lejhøjtaler.dk <info@lejhojtaler.dk>",
       to: [NOTIFY_EMAIL],
       reply_to: v.email,
       subject: v.topic ? `${v.topic}: ${v.name}` : `Kontaktformular: ${v.name}`,

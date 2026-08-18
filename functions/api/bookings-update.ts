@@ -415,7 +415,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: "Lejhøjtaler.dk <booking@lejhojtaler.dk>",
+            from: "Lejhøjtaler.dk <info@lejhojtaler.dk>",
             to: [booking.email],
             // Svar på anmeldelsesmailen skal kunne modtages — booking@ har
             // ingen rute i Cloudflare

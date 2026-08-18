@@ -326,7 +326,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     </div>
   `;
 
-  const fromEmail = `Lejhøjtaler.dk <booking@lejhojtaler.dk>`;
+  const fromEmail = `Lejhøjtaler.dk <info@lejhojtaler.dk>`;
 
   const emails = [
     {
@@ -339,8 +339,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     {
       from: fromEmail,
       to: [data.email],
-      // Kundesvar skal til info@ — booking@ er kun afsenderidentitet og har
-      // ingen modtage-rute i Cloudflare (svar dertil bouncer)
+      // Afsender og svaradresse er begge info@. Vi sendte tidligere fra
+      // booking@, som ingen modtage-rute har i Cloudflare — svar dertil
+      // bouncede med 550, og reply_to var det eneste værn.
       reply_to: site.company.email,
       subject: "Booking bekræftelse — Lejhøjtaler.dk",
       html: customerHtml,
