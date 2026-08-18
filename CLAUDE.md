@@ -8,20 +8,24 @@ sektion (opgaveliste, beslutningslog, åbne spørgsmål). Læs den før større
 
 ## Deploy er en del af opgaven
 
-Arbejde er ikke færdigt før det kan ses live. Når Cloudflare Pages-projektet
-er koblet på repoet (Git-integration, se README), er flowet:
+Arbejde er ikke færdigt før det kan ses live. Flowet:
 
 ```bash
 npm test                 # skal være grøn
 npm run build            # statisk eksport til out/
 git add -A && git commit # beskrivende besked på dansk
-git push                 # Cloudflares Git-build deployer automatisk
+git push                 # GitHub Actions tester, bygger og deployer main
 ```
 
-Indtil Git-integrationen er sat op kan der deployes manuelt med
-`npx wrangler pages deploy out --project-name=furniture-viz --branch=main`
-— men kun fra et rent træ. Sig altid eksplicit i svaret om der er deployet
-eller ej, og link til deployment-URL'en.
+GitHub Actions (`.github/workflows/deploy.yml`) provisionerer selv
+Cloudflare (Pages-projekt, KV, R2, secrets) via
+`scripts/setup-cloudflare.sh` — det kræver kun at repo-secretten
+`CLOUDFLARE_API_TOKEN` er sat (se README). Scriptet kan også køres lokalt
+med tokenet i miljøet, hvis der skal deployes uden om CI. Produktion:
+https://furniture-viz.pages.dev
+
+Sig altid eksplicit i svaret om der er deployet eller ej, og link til
+deployment-URL'en.
 
 ## Om projektet
 

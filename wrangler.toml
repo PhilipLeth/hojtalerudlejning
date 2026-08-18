@@ -4,12 +4,12 @@ pages_build_output_dir = "out"
 # strings i produktion (kendt bug fra lejhojtaler-projektet).
 compatibility_date = "2026-08-01"
 
-# Udfyld id efter: npx wrangler kv namespace create furniture-viz-data
+# id'et udfyldes automatisk af scripts/setup-cloudflare.sh (køres af CI)
 [[kv_namespaces]]
 binding = "DATA"
 id = "INDSAET-KV-NAMESPACE-ID-HER"
 
-# Opret bucket med: npx wrangler r2 bucket create furniture-viz-media
+# Oprettes automatisk af scripts/setup-cloudflare.sh
 [[r2_buckets]]
 binding = "MEDIA"
 bucket_name = "furniture-viz-media"

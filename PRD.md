@@ -238,7 +238,7 @@ Status: `[x]` = leveret i første build, `[ ]` = udestår.
 - [x] 0.1 Repo, Next.js 15 static export + Tailwind + TypeScript + vitest (samme stack som lejhojtaler)
 - [x] 0.2 `wrangler.toml` med `DATA`- (KV) og `MEDIA`-bindings (R2)
 - [x] 0.3 PRD (dette dokument), CLAUDE.md-arbejdsregler, README med opsætningsguide
-- [ ] 0.4 Flyt koden til eget GitHub-repo `philipleth/furniture-viz` (denne sessions GitHub-adgang måtte ikke oprette repos — kommandoer står i README)
+- [x] 0.4 Flyt koden til eget GitHub-repo — bor nu i `philipleth/furniture` (Philip oprettede repoet; branchen i hojtalerudlejning er slettet)
 
 ### Fase 1 — Slutkunde-MVP
 - [x] 1.1 App-skal `/app` + pretty URL `/t/<slug>` med tenant-opløsning (sti → query → localStorage)
@@ -259,8 +259,9 @@ Status: `[x]` = leveret i første build, `[ ]` = udestår.
 - [x] 2.5 Platform-endpoint: opret/list tenants med engangs-adgangskode
 
 ### Fase 3 — Drift & go-live med Reg
-- [ ] 3.1 Cloudflare-opsætning: KV-namespace, R2-bucket, Pages-projekt m. Git-integration, secrets (README trin 1–4)
-- [ ] 3.2 `GEMINI_API_KEY` oprettes (Google AI Studio) og sættes som secret — sluk demo-mode
+- [x] 3.1 Cloudflare-integration bygget ind i repoet: GitHub Actions-workflow + idempotent `scripts/setup-cloudflare.sh`, der selv opretter Pages-projekt, KV, R2, synker secrets og deployer
+- [ ] 3.1b Aktivér den: opret Cloudflare API-token og læg `CLOUDFLARE_API_TOKEN` + `PLATFORM_SECRET` som GitHub-secrets, push (Philip, ~5 min — README-trin 1–3)
+- [ ] 3.2 `GEMINI_API_KEY` oprettes (Google AI Studio) og sættes som GitHub-secret — sluk demo-mode
 - [ ] 3.3 Resend: domæne verificeres, `RESEND_API_KEY` + `MAIL_FROM` sættes
 - [ ] 3.4 Produktnavn + domæne besluttes (fx `app.<navn>.dk`) og kobles på Pages-projektet
 - [ ] 3.5 Regs rigtige katalog: produktfotos (gerne fritlagte/ensartede), beskrivelser, mål, priser
@@ -297,10 +298,19 @@ Status: `[x]` = leveret i første build, `[ ]` = udestår.
   (1–3 pr. generering, konfigurerbar pr. tenant); „flere/færre møbler" som
   senere forbedring skal ske ved at ændre produktsættet, ikke ved at lade
   modellen digte.
-- **2026-08-18** — Koden ligger midlertidigt som orphan-branch
-  `claude/furniture-viz-saas-1q8jkz` i hojtalerudlejning-repoet, fordi
-  sessionens GitHub-adgang ikke må oprette nye repos. Flyttes til
-  `philipleth/furniture-viz` (opgave 0.4).
+- **2026-08-18** — Koden lå først som orphan-branch i
+  hojtalerudlejning-repoet (sessionens GitHub-adgang må ikke oprette repos).
+  Philip oprettede `philipleth/furniture`; koden bor nu dér, og branchen i
+  hojtalerudlejning er slettet.
+- **2026-08-18** — Cloudflare-integration som selv-provisionerende
+  deploy-pipeline: GitHub Actions kører `scripts/setup-cloudflare.sh`
+  (idempotent — opretter projekt/KV/R2, synker secrets, deployer). GitHubs
+  repo-secrets er dermed den ene sandhedskilde for konfiguration.
+  Account-id (ikke hemmeligt) er fast i scriptet.
+- **2026-08-18** — Pages-projektnavnet forbliver `furniture-viz` (giver
+  furniture-viz.pages.dev) selvom repoet hedder `furniture` — navnet på
+  *.pages.dev skal være globalt ledigt, og det skiftes alligevel ud med
+  eget domæne i opgave 3.4.
 
 ## 11. Åbne spørgsmål
 

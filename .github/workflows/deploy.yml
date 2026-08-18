@@ -1,0 +1,50 @@
+# Test + byg på hvert push; provisionér Cloudflare og deploy på main.
+# Kræver repo-secret CLOUDFLARE_API_TOKEN (se README) — uden den testes og
+# bygges der stadig, og der vises en venlig påmindelse i stedet for deploy.
+name: Test og deploy
+
+on:
+  push:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  test-byg-deploy:
+    runs-on: ubuntu-latest
+    env:
+      # secrets kan ikke bruges direkte i steps.if — map til env her
+      HAR_CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && 'ja' || 'nej' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installér afhængigheder
+        run: npm ci
+
+      - name: Kør tests
+        run: npm test
+
+      - name: Byg statisk eksport
+        run: npm run build
+
+      - name: Provisionér Cloudflare og deploy
+        if: env.HAR_CF_TOKEN == 'ja' && github.ref == 'refs/heads/main'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PLATFORM_SECRET: ${{ secrets.PLATFORM_SECRET }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM || vars.MAIL_FROM }}
+        run: bash scripts/setup-cloudflare.sh
+
+      - name: Påmindelse om manglende token
+        if: env.HAR_CF_TOKEN == 'nej'
+        run: echo "::notice::CLOUDFLARE_API_TOKEN er ikke sat som repo-secret — der er testet og bygget, men IKKE deployet. Se README'ens afsnit om Cloudflare-integrationen."
