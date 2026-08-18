@@ -417,6 +417,66 @@ export const rentalProducts: RentalProduct[] = [
       ],
     },
   },
+  // ── Pakkestigen 150 og 250: navngivet efter antal gæster, ikke efter grej.
+  // Kunden ved hvor mange der kommer; han ved ikke hvad 2× 12" EV betyder.
+  // Kørsel er stadig et tilvalg her — se epic_aov i prd.json for hvorfor den
+  // skal med i prisen på sigt, og hvad der mangler i flowet før det kan lade sig gøre.
+  {
+    id: "pakke_fest_150",
+    page: "/festpakke-150",
+    youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0",
+    category: "lyd",
+    price: 1495,
+    image: "/images/product-pakke-fest-stor.webp",
+    cardImageCrop: "50% 47%",
+    name_da: "Festpakke 150",
+    name_en: "Party package 150",
+    desc_da: 'Højtalere, sub, lys og røg til op til 150 gæster — spar 135 kr.',
+    desc_en: "Speakers, sub, lights and fog for up to 150 guests — save 135 DKK.",
+    contents: ['2× EV 12" højtalere', '12" subwoofer', "Stativer", "Lys-pakke (2 lamper + centereffekt)", "Røgmaskine + væske", "Alle kabler"],
+    allowedAddons: ["mikrofon", "subwoofer", ...DELIVERY_ADDON_IDS],
+    bundle: {
+      discount: 135,
+      usecase_da: "Festen hvor dansegulvet skal fungere: bassen giver tryk, lyset giver rum, røgen gør lyset synligt.",
+      usecase_en: "The party where the dancefloor has to work: sub for punch, lights for the room, fog to make the light visible.",
+      parts: [
+        { productId: "festival", label_da: 'Stor højtalerpakke (2× 12")', label_en: 'Large speakers (2× 12")', price: 495 },
+        { productId: "subwoofer", label_da: 'Subwoofer 12"', label_en: 'Subwoofer 12"', price: 295 },
+        { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 100 },
+        { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
+        { productId: "rog", label_da: "Røgmaskine", label_en: "Fog machine", price: 245 },
+      ],
+    },
+  },
+  {
+    id: "pakke_fest_250",
+    page: "/festpakke-250",
+    youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0",
+    category: "lyd",
+    price: 2295,
+    image: "/images/product-festival.webp",
+    name_da: "Festpakke 250",
+    name_en: "Party package 250",
+    desc_da: "Dobbelt anlæg med to subs, lys og røg til op til 250 gæster — spar 225 kr. Leveres og sættes op.",
+    desc_en: "Double system with two subs, lights and fog for up to 250 guests — save 225 DKK.",
+    contents: ['4× EV 12" højtalere', '2× 12" subwoofer', "2 sæt stativer", "Lys-pakke", "Røgmaskine + væske", "Alle kabler + strøm"],
+    allowedAddons: ["mikrofon", ...DELIVERY_ADDON_IDS],
+    bundle: {
+      discount: 225,
+      usecase_da: "Sal, gård eller hal med 150-250 gæster. Fire tops dækker bredden, to subs holder bunden.",
+      usecase_en: "Hall or courtyard with 150-250 guests. Four tops cover the width, two subs hold the bottom.",
+      parts: [
+        { productId: "festival", label_da: 'Stor højtalerpakke (2× 12")', label_en: 'Large speakers (2× 12")', price: 495 },
+        { productId: "festival", label_da: 'Stor højtalerpakke nr. 2', label_en: "Large speakers no. 2", price: 495 },
+        { productId: "subwoofer", label_da: 'Subwoofer 12"', label_en: 'Subwoofer 12"', price: 295 },
+        { productId: "subwoofer", label_da: 'Subwoofer 12" nr. 2', label_en: 'Subwoofer 12" no. 2', price: 295 },
+        { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 100 },
+        { productId: "stativer", label_da: "Højtalerstativer nr. 2", label_en: "Speaker stands no. 2", price: 100 },
+        { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
+        { productId: "rog", label_da: "Røgmaskine", label_en: "Fog machine", price: 245 },
+      ],
+    },
+  },
   { id: "discokugle", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 245, image: "/images/product-discokugle.webp", name_da: "Discokugle", name_en: "Disco ball", desc_da: "Roterende discokugle med LED-lys og farver.", desc_en: "Rotating disco ball with LED lights.", contents: ["Discokugle m. motor", "LED-lys", "Stativ/ophæng", "Strømkabel"] },
   { id: "lyskaeder", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder.webp", name_da: "Lyskæde varm hvid", name_en: "Fairy lights warm white", desc_da: "10m lyskæde med varmt hvidt lys — hyggelig festbelysning.", desc_en: "10m fairy lights with warm white light — cosy party lighting.", contents: ["10m lyskæde", "Varm hvide pærer", "Strømforsyning"] },
   { id: "lyskaeder_farvet", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-farvet.webp", name_da: "Lyskæde farvet", name_en: "Fairy lights coloured", desc_da: "10m lyskæde med farvede pærer — festlig stemning fra første sekund.", desc_en: "10m fairy lights with coloured bulbs — party mood instantly.", contents: ["10m lyskæde", "Farvede pærer", "Strømforsyning"] },
@@ -435,6 +495,7 @@ export const rentalProducts: RentalProduct[] = [
   { id: "projektor_pro", page: "/projektor-pro", youtubeUrl: "https://www.youtube.com/watch?v=7FhRTCCKCm0", category: "av", price: 795, image: "/images/product-projektor-pro.webp", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor — skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector — sharp even in daylight.", contents: ["5000 lumen projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
   { id: "pakke_praesentation", page: "/pakke-praesentation", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", price: 695, image: "/images/product-projektor.webp", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen — spar 90 kr.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation — save 90 kr.", contents: ["Full HD projektor", "Lærred 160 cm", "Håndholdt mic + kabel", "HDMI + strøm"], bundle: { discount: 90, usecase_da: "Alt til præsentationen — projektor, lærred og mikrofon.", usecase_en: "Everything for your presentation.", parts: [ { productId: "projektor", label_da: "Projektor", label_en: "Projector", price: 495 }, { productId: "laerred_160", label_da: "Lærred 160 cm", label_en: "Screen 160 cm", price: 195 }, { productId: "haandholdt_mikrofon", label_da: "Håndholdt mikrofon", label_en: "Wired mic", price: 95 } ] } },
   { id: "pakke_konference", page: "/pakke-konference", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 1195, image: "/images/product-skaerm.webp", name_da: "Konferencepakken", name_en: "Conference bundle", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke. Klar til konference — spar 140 kr.", desc_en: "55\" screen + wireless headset + small speaker package. Conference-ready — save 140 kr.", contents: ['55" skærm + stativ', "Trådløst headset", '2× 10" højtalere', "Kabler + adapter"], bundle: { discount: 140, usecase_da: "Klar til konference — skærm, headset og lyd.", usecase_en: "Conference-ready — screen, headset and sound.", parts: [ { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 345 }, { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speakers", price: 395 } ] } },
+  { id: "pakke_konference_150", page: "/konferencepakke-150", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 1795, image: "/images/product-skaerm.webp", name_da: "Konferencepakke 150", name_en: "Conference package 150", desc_da: '2× 12" højtalere på stativer + Shure trådløs mikrofon + headset + 55" skærm. Til sale med 100-150 deltagere — spar 235 kr.', desc_en: 'Two 12" speakers on stands + Shure wireless mic + headset + 55" screen. For rooms with 100-150 attendees — save 235 DKK.', contents: ['2× EV 12" højtalere + stativer', "Shure trådløs mikrofon PRO", "Trådløst headset", '55" skærm på stativ', "HDMI + alle kabler"], allowedAddons: ["mikrofon", ...DELIVERY_ADDON_IDS], bundle: { discount: 235, usecase_da: "Konference eller generalforsamling hvor både taleren og salen skal kunne høres og se med.", usecase_en: "Conference or general assembly where both the speaker and the room must be heard and seen.", parts: [ { productId: "festival", label_da: 'Stor højtalerpakke (2× 12")', label_en: 'Large speakers (2× 12")', price: 495 }, { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 100 }, { productId: "traadloes_mikrofon_pro", label_da: "Trådløs mikrofon PRO", label_en: "Wireless mic PRO", price: 495 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 345 }, { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 } ] } },
   { id: "pakke_tale_musik", page: "/pakke-tale-musik", youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0", category: "av", price: 695, image: "/images/product-festival.webp", name_da: "Tale & musik-pakken", name_en: "Speech & music bundle", desc_da: "Stor højtalerpakke + trådløs mikrofon. Taler og musik til events — spar 95 kr.", desc_en: "Large speaker package + wireless mic. Speeches and music for events — save 95 kr.", contents: ['2× 12" højtalere', "Trådløs mikrofon", "Alle kabler"], bundle: { discount: 95, usecase_da: "Taler og musik til events.", usecase_en: "Speeches and music for events.", parts: [ { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speakers", price: 495 }, { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 295 } ] } },
   { id: "karaoke", page: "/karaoke-maskine", youtubeUrl: "https://www.youtube.com/watch?v=_UaBe_xR3JY", category: "av", price: 695, image: "/images/product-karaoke.webp", name_da: "Karaokemaskine", name_en: "Karaoke machine", desc_da: "Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys — tilslut TV via HDMI.", desc_en: "Singing Machine with built-in screen, 2 wireless mics and party lights — HDMI for your TV.", contents: ["Singing Machine karaoke-maskine", "2 trådløse mikrofoner", "Indbygget skærm + festlys", "HDMI-kabel + Bluetooth"] },
   {
@@ -498,8 +559,11 @@ export const NAV_CATEGORIES: NavCategory[] = [
     title: "Lyd & Højtalere",
     href: "/lej-hojtaler",
     links: [
-      { href: "/festpakke-lille", label: "Lille festpakke" },
-      { href: "/festpakke-stor", label: "Stor festpakke" },
+      { href: "/lydanlaeg", label: "Anlæg efter antal gæster" },
+      { href: "/festpakke-lille", label: "Festpakke 50" },
+      { href: "/festpakke-stor", label: "Festpakke 100" },
+      { href: "/festpakke-150", label: "Festpakke 150" },
+      { href: "/festpakke-250", label: "Festpakke 250" },
       { href: "/soundboks-4", label: "Soundboks 4" },
       { href: "/mackie-thump-go", label: "Mackie Thump GO" },
       { href: "/hojtalerpakke-lille", label: "Højtalerpakke lille" },
@@ -557,6 +621,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
     title: "AV-udstyr",
     href: "/av-udstyr",
     links: [
+      { href: "/konferencepakke-150", label: "Konferencepakke 150" },
       { href: "/projektor", label: "Projektor" },
       { href: "/skaerm", label: 'Storskærm 55"' },
       { href: "/skaerm-32", label: 'Skærm 32"' },
@@ -564,6 +629,46 @@ export const NAV_CATEGORIES: NavCategory[] = [
       { href: "/headset-mikrofon", label: "Headset-mikrofon" },
     ],
   },
+];
+
+/* ───── Pakkestigen ─────
+ *
+ * Stigen er navngivet efter antal gæster, ikke efter grej: kunden ved hvor
+ * mange der kommer, men ikke hvad 2× 12" EV betyder. Den bruges af
+ * /lydanlaeg og er samtidig kontrakten mellem siden og kataloget — en test
+ * låser at hvert trin peger på et produkt der findes, og at pakkeprisen er
+ * lavere end delene hver for sig.
+ *
+ * Gæstetallene gælder INDENDØRS. Udendørs uden vægge halveres de, og det skal
+ * stå på siden — ellers lover vi mere end anlægget kan.
+ */
+export interface LadderStep {
+  /** Produkt-id i kataloget. null = for stor til hylden, kun tilbud. */
+  productId: string | null;
+  navn: string;
+  gaester: string;
+  /** Øvre grænse indendørs — bruges til at sortere og til at vælge trin */
+  maxGaester: number;
+  href: string;
+  /** null = pris efter tilbud */
+  pris: number | null;
+  hvad: string;
+  koersel: "tilvalg" | "anbefalet" | "tilbud";
+}
+
+export const LADDER_FEST: LadderStep[] = [
+  { productId: "pakke_fest_lille", navn: "Festpakke 50", gaester: "op til 50", maxGaester: 50, href: "/festpakke-lille", pris: 495, hvad: '2× 10" højtalere + lyseffekt', koersel: "tilvalg" },
+  { productId: "pakke_fest_stor", navn: "Festpakke 100", gaester: "50-100", maxGaester: 100, href: "/festpakke-stor", pris: 895, hvad: '2× 12" højtalere + lys-pakke', koersel: "tilvalg" },
+  { productId: "pakke_fest_150", navn: "Festpakke 150", gaester: "100-150", maxGaester: 150, href: "/festpakke-150", pris: 1495, hvad: '2× 12" + sub + stativer + lys + røg', koersel: "anbefalet" },
+  { productId: "pakke_fest_250", navn: "Festpakke 250", gaester: "150-250", maxGaester: 250, href: "/festpakke-250", pris: 2295, hvad: '4× 12" + 2 subs + stativer + lys + røg', koersel: "anbefalet" },
+  { productId: null, navn: "Over 250 gæster", gaester: "250+", maxGaester: 9999, href: "/erhverv", pris: null, hvad: "Større tops og subs skaffes — tekniker med på dagen", koersel: "tilbud" },
+];
+
+export const LADDER_TALE: LadderStep[] = [
+  { productId: "pakke_praesentation", navn: "Præsentation", gaester: "op til 50", maxGaester: 50, href: "/pakke-praesentation", pris: 695, hvad: "Projektor + lærred + mikrofon", koersel: "tilvalg" },
+  { productId: "pakke_konference", navn: "Møde 100", gaester: "50-100", maxGaester: 100, href: "/pakke-konference", pris: 1195, hvad: '55" skærm + headset + 2× 10" højtalere', koersel: "tilvalg" },
+  { productId: "pakke_konference_150", navn: "Konference 150", gaester: "100-150", maxGaester: 150, href: "/konferencepakke-150", pris: 1795, hvad: '2× 12" + stativer + Shure mic + headset + 55" skærm', koersel: "anbefalet" },
+  { productId: null, navn: "Flere end to mikrofoner", gaester: "panel / hybrid", maxGaester: 9999, href: "/erhverv", pris: null, hvad: "Mixer, panelmikrofoner og lyd til Teams/Zoom", koersel: "tilbud" },
 ];
 
 /** Price multiplier by number of rental days — flat price regardless of duration */

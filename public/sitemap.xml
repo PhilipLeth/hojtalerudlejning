@@ -121,6 +121,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/festpakke-150</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/festpakke-250</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/festpakke-lille</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -191,6 +201,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/konferencepakke-150</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/konfirmation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -214,6 +229,11 @@
     <loc>https://lejhojtaler.dk/lejevilkaar</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/lydanlaeg</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lejhojtaler.dk/lydudstyr</loc>
