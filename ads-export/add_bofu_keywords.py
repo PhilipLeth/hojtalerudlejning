@@ -36,64 +36,90 @@ import os
 import sys
 
 DEFAULT_CONFIG = os.path.expanduser("~/gitprojects/openocean-promo/google-ads.yaml")
-CAMPAIGN_ID = 23973439325
+CAMPAIGNS = {
+    23973439325: "Højtaler Udlejning - Search",
+    24108797469: "Lejhøjtaler — Yderområder",
+}
 LABEL_NAME = "BOFU — købsintention"
 
+# Nøglet på (kampagne-id, annoncegruppe). De to kampagner rammer forskellig
+# geografi — hovedkampagnen Københavns Kommune, Yderområder forstæderne — så
+# den SAMME frase i begge er tilsigtet og konkurrerer ikke: en bruger er i det
+# ene område eller det andet. Dubletter inden for samme kampagne er derimod
+# skadelige, og det er dem værnet fanger.
 ADDITIONS = {
-    "AG 1 - Højtalere & Lyd": [
+    # ── Yderområder: havde 0 af 29 keywords BOFU-mærket ──────────────────
+    (24108797469, "YDER - Stor højtalerpakke"): [
         "leje af højtaler",
         "leje af højtalere",
+        "højtaler udlejning",
         "udlejning af højtalere",
     ],
-    "AG 9 - PA-anlæg og lydudstyr": [
-        "lej pa anlæg",
-        "leje af pa anlæg",
-        "lej lydudstyr",
+    (24108797469, "YDER - Lille højtalerpakke"): [
+        "lej højtalerpakke",
+        "højtalerpakke leje",
+        "leje af højtalerpakke",
+    ],
+    (24108797469, "YDER - PA-anlæg"): [
+        "pa anlæg leje",
+        "lydudstyr leje",
         "leje af lydudstyr",
-        "lej lydanlæg",
-        "leje af lydanlæg",
-        "lej musikanlæg",
-        "leje af musikanlæg",
+        "lydanlæg udlejning",
     ],
-    "AG 4 - Soundboks": [
-        "udlejning af soundboks",
+    (24108797469, "YDER - Stor festpakke"): [
+        "festanlæg leje",
+        "leje af festanlæg",
+        "udlejning af festanlæg",
     ],
-    "AG 13 - Trådløs mikrofon": [
-        "leje af mikrofon",
-        "leje af trådløs mikrofon",
-        "udlejning af mikrofon",
+    (24108797469, "YDER - Lille festpakke"): [
+        "leje af festudstyr",
+        "leje af festpakke",
+        "udlejning af festudstyr",
     ],
-    "AG 46 - Håndholdt mikrofon": [
-        "leje af håndholdt mikrofon",
+    (24108797469, "YDER - Karaoke"): [
+        "udlejning af karaoke",
+        "lej karaokeanlæg",
+        "karaokeanlæg leje",
     ],
-    "AG 42 - Skærm 32\"": [
-        "leje af skærm",
-        "skærm udlejning",
+    (24108797469, "YDER - Mackie Thump GO"): [
+        "leje af batterihøjtaler",
+        "batterihøjtaler leje",
     ],
-    "AG 10 - AV-udstyr": [
-        "leje af av udstyr",
-        "udlejning af av udstyr",
+    (24108797469, "YDER - Bryllup"): [
+        "lyd til bryllup leje",
+        "leje af lyd til bryllup",
+        "leje af højtaler til bryllup",
     ],
-    "AG 5 - Lyskæder": [
-        "leje af lyskæder",
-        "lyskæder leje",
-        "lyskæder udlejning",
+
+    # ── Hovedkampagnen: de tyndeste grupper der stod tilbage ─────────────
+    (23973439325, "AG 31 - Præsentationspakke"): [
+        "lej præsentationsudstyr",
+        "præsentationsudstyr leje",
+        "leje af præsentationsudstyr",
     ],
-    "AG 38 - Uplights": [
-        "leje af uplights",
+    (23973439325, "AG 40 - Low fog maskine"): [
+        "leje af low fog maskine",
     ],
-    "AG 2 — Festlys & diskokugle": [
-        "leje af diskokugle",
-        "udlejning af diskokugle",
+    (23973439325, "AG 46 - Håndholdt mikrofon"): [
+        "håndholdt mikrofon udlejning",
     ],
-    "AG 3 - Røgmaskine": [
-        "udlejning af røgmaskine",
+    (23973439325, "AG 42 - Skærm 32\""): [
+        "udlejning af skærm",
     ],
-    "AG 6 - Lysshow": [
-        "leje af lysshow",
+    (23973439325, "AG 5 - Lyskæder"): [
+        "udlejning af lyskæder",
     ],
-    "AG 36 - Subwoofer": [
-        "udlejning af subwoofer",
+    (23973439325, "AG 38 - Uplights"): [
+        "udlejning af uplights",
+    ],
+    (23973439325, "AG 6 - Lysshow"): [
+        "udlejning af lysshow",
+    ],
+    (23973439325, "AG 9 - PA-anlæg og lydudstyr"): [
+        "udlejning af lydudstyr",
+    ],
+    (23973439325, "AG 8 - Fest og event lyd"): [
+        "udlejning af festudstyr",
     ],
 }
 
@@ -111,10 +137,10 @@ def gaql_escape(s: str) -> str:
 def read_state(client, customer_id: str):
     ga = client.get_service("GoogleAdsService")
     q = f"""
-        SELECT ad_group.resource_name, ad_group.name, ad_group.status,
+        SELECT campaign.id, ad_group.resource_name, ad_group.name, ad_group.status,
                ad_group_criterion.keyword.text
         FROM ad_group_criterion
-        WHERE campaign.id = {CAMPAIGN_ID}
+        WHERE campaign.id IN ({", ".join(str(c) for c in CAMPAIGNS)})
           AND ad_group_criterion.type = 'KEYWORD'
           AND ad_group_criterion.negative = FALSE
           AND ad_group_criterion.status = 'ENABLED'
@@ -123,11 +149,13 @@ def read_state(client, customer_id: str):
     groups, owner = {}, {}
     for b in ga.search_stream(customer_id=customer_id, query=q):
         for r in b.results:
-            n = r.ad_group.name
-            groups.setdefault(n, {"resource_name": r.ad_group.resource_name, "keywords": set()})
+            key = (r.campaign.id, r.ad_group.name)
+            groups.setdefault(key, {"resource_name": r.ad_group.resource_name, "keywords": set()})
             t = r.ad_group_criterion.keyword.text.lower()
-            groups[n]["keywords"].add(t)
-            owner[t] = n
+            groups[key]["keywords"].add(t)
+            # Ejerskab holdes PR. KAMPAGNE — samme frase i to kampagner med
+            # hver sin geografi er tilsigtet.
+            owner[(r.campaign.id, t)] = r.ad_group.name
     return groups, owner
 
 
@@ -162,34 +190,40 @@ def main() -> int:
     customer_id = normalize_customer_id(args.customer_id)
     groups, owner = read_state(client, customer_id)
 
-    missing_groups = [g for g in ADDITIONS if g not in groups]
+    missing_groups = [f"{CAMPAIGNS[c]} / {n}" for (c, n) in ADDITIONS if (c, n) not in groups]
     if missing_groups:
         logger.error("Fandt ikke tændte grupper: %s", ", ".join(missing_groups))
         return 1
 
     plan, skipped, total = {}, [], 0
-    for name, kws in ADDITIONS.items():
+    for key, kws in ADDITIONS.items():
+        cid, name = key
         new = []
         for k in kws:
-            if k.lower() in groups[name]["keywords"]:
+            if k.lower() in groups[key]["keywords"]:
                 continue
-            if k.lower() in owner:
-                skipped.append((k, owner[k.lower()]))
+            if (cid, k.lower()) in owner:
+                skipped.append((CAMPAIGNS[cid], k, owner[(cid, k.lower())]))
                 continue
             new.append(k)
         if new:
-            plan[name] = new
+            plan[key] = new
             total += len(new)
 
-    print(f"\n{total} nye keywords i {len(plan)} grupper, alle mærket {LABEL_NAME!r}\n")
-    for name in sorted(plan):
-        print(f"  {name}")
-        for k in plan[name]:
-            print(f"      {k}")
+    print(f"\n{total} nye keywords i {len(plan)} grupper, alle mærket {LABEL_NAME!r}")
+    for cid, cname in CAMPAIGNS.items():
+        rows = {k: v for k, v in plan.items() if k[0] == cid}
+        if not rows:
+            continue
+        print(f"\n  === {cname} ===")
+        for (_, name) in sorted(rows, key=lambda x: x[1]):
+            print(f"  {name}")
+            for k in rows[(cid, name)]:
+                print(f"      {k}")
     if skipped:
-        print(f"\n  Sprunget over — findes allerede i en anden tændt gruppe ({len(skipped)}):")
-        for k, g in skipped:
-            print(f"      {k:<30} ligger i {g}")
+        print(f"\n  Sprunget over — findes i samme kampagne ({len(skipped)}):")
+        for cname, k, g in skipped:
+            print(f"      {k:<32} {cname} / {g}")
 
     if not plan:
         print("\nIntet at gøre.")
@@ -205,12 +239,12 @@ def main() -> int:
 
     svc = client.get_service("AdGroupCriterionService")
     try:
-        for name, kws in plan.items():
+        for key, kws in plan.items():
             ops = []
             for text in kws:
                 op = client.get_type("AdGroupCriterionOperation")
                 c = op.create
-                c.ad_group = groups[name]["resource_name"]
+                c.ad_group = groups[key]["resource_name"]
                 c.status = client.enums.AdGroupCriterionStatusEnum.ENABLED
                 c.keyword.text = text
                 c.keyword.match_type = client.enums.KeywordMatchTypeEnum.PHRASE
@@ -233,7 +267,7 @@ def main() -> int:
             client.get_service("AdGroupCriterionLabelService").mutate_ad_group_criterion_labels(
                 customer_id=customer_id, operations=lbl
             )
-            logger.info("%s: %d keywords", name, len(rns))
+            logger.info("%s / %s: %d keywords", CAMPAIGNS[key[0]], key[1], len(rns))
     except GoogleAdsException as e:
         logger.error("Google Ads afviste (request_id %s):", e.request_id)
         for err in e.failure.errors:
@@ -241,24 +275,25 @@ def main() -> int:
         return 1
 
     after, after_owner = read_state(client, customer_id)
-    mangler = [f"{n}: {k}" for n, kws in plan.items() for k in kws
-               if k.lower() not in after[n]["keywords"]]
+    mangler = [f"{k}" for key, kws in plan.items() for k in kws
+               if k.lower() not in after[key]["keywords"]]
     if mangler:
         logger.error("Ikke registreret: %s", "; ".join(mangler))
         return 1
 
+    # Dubletter tjekkes PR. KAMPAGNE: samme frase i begge kampagner er
+    # tilsigtet, fordi de rammer hver sin geografi.
     import collections
-    dupes = collections.Counter(after_owner)  # owner er allerede unik pr. tekst
     seen = collections.defaultdict(list)
-    for n, g in after.items():
+    for (cid, n), g in after.items():
         for k in g["keywords"]:
-            seen[k].append(n)
+            seen[(cid, k)].append(n)
     cross = {k: v for k, v in seen.items() if len(v) > 1}
     if cross:
-        logger.error("Dubletter på tværs af grupper: %s", cross)
+        logger.error("Dubletter inden for en kampagne: %s", cross)
         return 1
 
-    logger.info("Tilføjede %d keywords. Ingen dubletter på tværs af tændte grupper.", total)
+    logger.info("Tilføjede %d keywords. Ingen dubletter inden for nogen kampagne.", total)
     return 0
 
 
