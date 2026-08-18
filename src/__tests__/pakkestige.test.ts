@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
+import fs from "node:fs";
 import {
   LADDER_FEST,
+  OCCASION_PACKAGES,
   LADDER_TALE,
   addons,
   bundleListPrice,
@@ -90,8 +92,31 @@ describe("Pakkestigen", () => {
     }
   });
 
-  it("de nye pakker ligger i sitemap", async () => {
-    const fs = await import("node:fs");
+  it("hver anledning har en pakke — ikke et enkeltprodukt", () => {
+    for (const [anledning, id] of Object.entries(OCCASION_PACKAGES)) {
+      const p = findProdukt(id);
+      expect(p, `${anledning} peger på ${id}, som ikke findes`).toBeTruthy();
+      expect(isBundleProduct(p!), `${anledning} anbefaler ${id}, som ikke er en pakke`).toBe(true);
+    }
+  });
+
+  it("anledningssiden bruger den pakke den er tildelt", () => {
+    for (const [anledning, id] of Object.entries(OCCASION_PACKAGES)) {
+      const kilde = fs.readFileSync(`src/app/${anledning}/page.tsx`, "utf8");
+      expect(kilde, `${anledning} anbefaler noget andet end ${id}`).toContain(`primaryProductId="${id}"`);
+      const pris = findProdukt(id)!.price;
+      expect(kilde, `${anledning} viser en anden pris end pakkens ${pris} kr`).toContain(`primaryPrice={${pris}}`);
+    }
+  });
+
+  it("hver pakke med en side kan findes i menuen", () => {
+    const links = NAV_CATEGORIES.flatMap((c) => c.links.map((l) => l.href));
+    const pakkerMedSide = rentalProducts.filter((p) => isBundleProduct(p) && p.page);
+    const savnet = pakkerMedSide.filter((p) => !links.includes(p.page!)).map((p) => p.name_da);
+    expect(savnet, `pakker uden for menuen: ${savnet.join(", ")}`).toEqual([]);
+  });
+
+  it("de nye pakker ligger i sitemap", () => {
     const xml = fs.readFileSync("public/sitemap.xml", "utf8");
     for (const href of ["/lydanlaeg", "/festpakke-150", "/festpakke-250", "/konferencepakke-150"]) {
       expect(xml, `${href} mangler i sitemap`).toContain(`https://lejhojtaler.dk${href}<`);

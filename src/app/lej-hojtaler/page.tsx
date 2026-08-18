@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import BundleGrid from "@/components/BundleGrid";
+import { FEST_LADDER_IDS } from "@/lib/products";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { LocationKicker } from "@/components/PhoneLink";
@@ -91,7 +92,11 @@ export default function LejHojtalerPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        <BundleGrid />
+        <BundleGrid
+          ids={FEST_LADDER_IDS}
+          title="Vælg anlæg efter antal gæster"
+          subtitle="Sig hvor mange der kommer, så er pakken sat sammen på forhånd — højtalere, bas, stativer, lys og kabler i ét."
+        />
         <SpeakerCompare bookLinks="booking" />
 
         {/* USP section */}

@@ -76,6 +76,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/bryllupspakke</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/discokugle</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -137,6 +142,16 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/festpakke-stor</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/filmaften</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/firmafestpakke</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -336,7 +351,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/stemningslys</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/studenterkoersel</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/studenterpakke</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -352,6 +377,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/traadloes-mikrofon-pro</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/udendorspakke</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

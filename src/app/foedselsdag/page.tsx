@@ -23,14 +23,14 @@ export default function Page() {
       headline={"Lyd til fødselsdag"}
       headlinePrice={"fra 495 kr."}
       intro={"Fra børnefødselsdag med discolys til den runde dag med taler. Vi har pakkerne, og alle kabler følger med — I skal bare tilslutte telefonen."}
-      primaryProductId="pakke_fest_lille"
-      primaryName={"Lille festpakke"}
-      primaryPrice={495}
-      primaryWhy={"To Alto-højtalere og en lyseffekt dækker den typiske fødselsdag hjemme eller i et festlokale med op til 40 gæster. Skal der holdes taler, tilkøber I en trådløs mikrofon for 295 kr."}
-      gridItems={[{"id": "pakke_fest_lille", "tag": "Anbefalet"}, {"id": "traadloes_mikrofon"}, {"id": "discokugle"}, {"id": "pakke_karaoke"}]}
+      primaryProductId="pakke_fest_stor"
+      primaryName={"Stor festpakke"}
+      primaryPrice={895}
+      primaryWhy={"To 12\" EV-højtalere på stativer fylder stuen eller festlokalet uden at blive skingre, og lys-pakken gør at der er forskel på middagen og festen bagefter. Rækker til op til 100 gæster."}
+      gridItems={[{"id": "pakke_fest_stor", "tag": "Anbefalet"}, {"id": "pakke_fest_lille"}, {"id": "traadloes_mikrofon"}, {"id": "discokugle"}, {"id": "pakke_karaoke"}]}
       tips={[{"title": "Til de runde: husk mikrofon", "text": "50- og 60-års fødselsdage er talefester. En trådløs mikrofon sikrer, at alle taler kan høres — også når stemmen bliver tynd af rørelse."}, {"title": "Til børnefødselsdag: discolys", "text": "En discokugle til 245 kr eller en enkelt lyseffekt til 195 kr forvandler stuen til et diskotek. Børn er lette at underholde med lys og musik."}, {"title": "Karaoke er en sikker vinder", "text": "Karaokepakken med to mikrofoner og skærm til 1.100 kr fungerer for både børn og voksne — og fylder en hel eftermiddag."}, {"title": "Book weekenden, ikke dagen", "text": "Prisen er den samme for 1 til 5 dages leje, så hent fredag og aflever mandag, selvom festen kun er lørdag. Så har I tid til at sætte op i ro."}]}
       faq={[{"q": "Hvad koster lyd til en fødselsdag?", "a": "Den lille festpakke med to højtalere og en enkelt lyseffekt koster 495 kr for op til 5 dages leje. Vil I kun have højtalere, koster den lille højtalerpakke 395 kr."}, {"q": "Kan I levere til adressen?", "a": "Ja. Levering og opsætning i København koster 495 kr — vi kommer ud, sætter op klar til brug og henter igen efter festen."}, {"q": "Er det svært at sætte op?", "a": "Nej. Højtalerne tilsluttes strøm, og telefonen forbindes via Bluetooth. Det tager under fem minutter, og alle kabler følger med."}, {"q": "Har I noget til børnefødselsdag?", "a": "Discokugle til 245 kr, en enkelt lyseffekt til 195 kr og karaokepakken er de mest populære til børn. Alt kan tilvælges direkte i bookingen."}]}
-      related={[{"href": "/havefest", "label": "Lyd til havefest"}, {"href": "/konfirmation", "label": "Lyd til konfirmation"}, {"href": "/blog/foedselsdagsfest-lyd", "label": "Guide: lyd til fødselsdag"}]}
+      related={[{"href": "/festpakke-stor", "label": "Stor festpakke – 895 kr"}, {"href": "/havefest", "label": "Lyd til havefest"}, {"href": "/konfirmation", "label": "Lyd til konfirmation"}, {"href": "/blog/foedselsdagsfest-lyd", "label": "Guide: lyd til fødselsdag"}]}
     />
   );
 }
