@@ -1047,24 +1047,20 @@
       "src/components/admin/SmsSettings.tsx": "SMS-sektionen i /admin/kommunikation: til/fra pr. type, tekst, forhåndsvisning med tegn- og beskedtæller, testbesked, saldo og manuel kørsel af påmindelserne.",
       "src/components/admin/SendSmsBox.tsx": "Send SMS på den enkelte ordre i /admin — skabelonen er udgangspunktet, teksten kan rettes før afsendelse."
     },
-    "model": "BESLUTNING 2026-08-18 (Philip): SMS er IKKE et flow som mailene. Det er Frederik, der står med én ordre i overblikket og skal sige én ting til én kunde. Derfor er al automatik slukket som udgangspunkt, og tyngdepunktet er 💬-knappen ved telefonnummeret i tabel og mobilkort, som åbner beskedfeltet oven på listen. Mailene kører fortsat det automatiske flow.",
-    "hurtigbeskeder": "Fire færdigskrevne beskeder til den enkelte ordre (KV: sms_settings.snippets): »Vi er på vej«, »Udstyret er klar«, »Vi står udenfor«, »Vi henter i dag«. Ingen automatik, intet til/fra — de er skrevet på forhånd, så en besked er ét tryk. Skabelonteksterne fra automatikken kan også vælges i samme dropdown.",
     "types": {
-      "_status": "Alle fem er SLUKKET som standard efter beslutningen 2026-08-18. De findes stadig som skabeloner, man kan vælge manuelt, og kan tændes type for type i /admin/kommunikation.",
-      "booking_modtaget": "Straks ved bestilling. Bekræftelsesmailen siger det samme.",
-      "bekraeftet": "Når ordren sættes til »bekræftet« i /admin.",
-      "afhentning_i_morgen": "Kl. 9 på afhentningsdagen (id'et er historisk; påmindelsen gælder dagen selv).",
-      "retur_i_morgen": "Kl. 9 på afleveringsdagen — færre for sene afleveringer.",
-      "tak": "Anmeldelsesmailen sendes allerede ved retur; SMS oveni er et tilvalg. Indeholder {{link}}, som kræver godkendt domæne hos udbyderen."
+      "booking_modtaget": "Straks ved bestilling. SLUKKET som standard — bekræftelsesmailen siger det samme.",
+      "bekraeftet": "Tændt. Sendes når ordren sættes til »bekræftet« i /admin.",
+      "afhentning_i_morgen": "Tændt. Kl. 9 på afhentningsdagen (id'et er historisk; påmindelsen gælder dagen selv).",
+      "retur_i_morgen": "Tændt. Kl. 9 på afleveringsdagen — færre for sene afleveringer.",
+      "tak": "Slukket som standard. Anmeldelsesmailen sendes allerede ved retur; SMS oveni er et tilvalg."
     },
-    "cron": "Pages Functions har ingen cron. .github/workflows/sms-paamindelser.yml kører 07:00 UTC (09:00 dansk sommertid) og POST'er til /api/sms-paamindelser. Jobbet har sin EGEN nøgle (SMS_CRON_SECRET, sat både på Cloudflare og som GitHub-secret) i stedet for ADMIN_SECRET: admin-adgangskoden ville give adgang til hele /admin fra en GitHub-log, og jobbet skal kun kunne sende dagens påmindelser. Kørslen sender kun for de påmindelsestyper der er tændt — med automatikken slukket gennemgår den ordrerne og sender ingenting. Kan også trykkes manuelt i /admin/kommunikation.",
+    "cron": "Pages Functions har ingen cron. .github/workflows/sms-paamindelser.yml kører 07:00 UTC (09:00 dansk sommertid) og POST'er til /api/sms-paamindelser. Mangler ADMIN_SECRET som GitHub-secret, springer jobbet over uden at fejle. Kan også trykkes manuelt i /admin/kommunikation.",
     "decisions": [
       "Beskederne bygges ALDRIG af det klienten sender: teksten kommer fra skabelonen i KV, og datoer/adresser fyldes ud server-side fra ordren.",
       "Ingen tavs fejl: uden SMS_API_TOKEN returneres sms_ikke_konfigureret, og admin får fejlteksten oversat (token, saldo, afsendernavn).",
       "Hver sendt besked mærkes på ordren (smsSent[type]) — en dobbeltkørsel af påmindelserne rammer ikke kunden to gange, og et statusskift tilbage og frem sender ikke igen.",
       "En SMS må aldrig kunne vælte en booking eller en statusopdatering: alle kald ligger i try/catch og fejler blødt.",
       "Standardteksterne holdes under 160 tegn på en typisk ordre og uden emoji — et enkelt emoji tvinger beskeden over i UCS-2 og halverer grænsen til 70 tegn. Pilen i periodeteksten (»→«) oversættes til bindestreg af samme grund. Admin ser tegn- og beskedtælleren live.",
-      "Webadresser i teksten bliver afvist af operatørerne, hvis domænet ikke står på udbyderens hvidliste for kontoen — og afvisningen kommer EFTER at gatewayen har kvitteret og trukket pengene. Set 2026-08-17: \"contained non-allowed-links: Lejhojtaler.dk\" på en tekst hvor domænet kun stod som underskrift. Standardteksterne er derfor uden webadresser (»Mvh Lejhøjtaler«), admin advarer når en tekst indeholder et link, og testknappen slår leveringen op hos udbyderen bagefter i stedet for at melde succes på kvitteringen alene.",
       "Hele korrespondancen står på ordren: SMS'er lægges i samme communications-log som mails, med den fulde tekst — en SMS kan ikke slås op andre steder bagefter."
     ],
     "status": "Kode live 2026-08-17. Venter kun på at nøglerne til den valgte udbyder lægges på Cloudflare + saldo på kontoen; indtil da gemmes teksterne, men intet sendes. /admin/kommunikation viser hvilken udbyder nøglerne peger på."
@@ -1152,6 +1148,338 @@
         "Ingen random slushice hvis ikke i katalog/lager",
         "Max ét tilbud pr. booking-mail"
       ]
+    }
+  },
+  "strategi_event_2026_08": {
+    "opdateret": "2026-08-18",
+    "beslutning": "Fra produktudlejning til kompakt eventudlejning. Lyd er stadig indgangen, men kunden skal kunne købe en større del af eventets tekniske setup. Positionering: 'Lyd, lys og teknik til private og mindre professionelle events i København' — ikke 'vi udlejer Soundboks'. Formålet er højere ordreværdi (AOV) på den trafik vi allerede har, ikke flere kunder.",
+    "hvorfor_nu": "Målt i Google Ads 18. aug 2026 (seneste 30 dage): søgekampagnen brugte 2.414 kr og gav 6 bookinger til 3.020 kr. AOV 503 kr, annoncepris 402 kr pr. booking — 80 % af ordreværdien. Trafikken er ikke flaskehalsen (41,8 % impression share, 57 % tabt på rank, kun 1,4 % tabt på budget, 80 kr brugt af 1.000 kr dagsbudget). Ordreværdien er. Flere klik til samme AOV gør hullet større, ikke mindre.",
+    "maal": {
+      "aov_baseline_dkk": 503,
+      "aov_maal_dkk": 900,
+      "hvordan": "Attach rate frem for flere kunder. Levering+opsætning (495 kr) på 30 % af ordrer giver +149 kr i AOV. Lys på 25 % af lydordrer giver +124 kr. Tilsammen ~776 kr uden ét ekstra klik i Ads. Resten hentes ved at pakken — ikke enkeltproduktet — er det man kan klikke på først.",
+      "maal_pr_udkoersel": "Frederik er én mand med én bil og 6 m² lager. Den bindende ressource er hans tid, ikke udstyret. Mål derfor kr. pr. udkørsel, ikke antal ordrer."
+    },
+    "tre_lag": {
+      "1_wedge_hojtaler": {
+        "status": "urørt",
+        "regel": "Højttalerudlejning må ikke forringes. Ingen nye trin, valg eller sektioner over booking-knappen på /lej-hojtaler, /soundboks-4 og de øvrige produktsider. Al eventpakning lægges ved siden af — ikke foran.",
+        "hvorfor": "Alle 6 målte bookinger kom fra enkeltprodukt-søgninger (lej soundboks, lej højtaler, lej diskolys). Wedgen er den eneste kanal der virker i dag."
+      },
+      "2_event_losninger": {
+        "status": "delvist bygget",
+        "har": "8 anledningssider (bryllup, fødselsdag, havefest, julefrokost, konfirmation, nytår, polterabend, studenterkørsel) + festpakker og AV-pakker i katalog.",
+        "mangler": "Siderne er SEO-landingssider, ikke løsningssider. Der mangler 'sådan ser setuppet ud til X' med tre niveauer — basis / populær / fuld — hvor det midterste indeholder lyd + lys + levering og kan bookes med ét klik. Anledningen skal vælge udstyret for kunden.",
+        "beslutning": "Eventtype er indgangen på lag 2; enkeltprodukt forbliver indgangen på lag 1."
+      },
+      "3_stoerre_events_b2b": {
+        "status": "forældreløs side",
+        "har": "/erhverv med seks use cases og pakker.",
+        "mangler": "Siden er ikke i NAV_CATEGORIES (linkes kun fra /julefrokost), dens CTA sender til det almindelige DIY-bookingflow, og AG 32 - Erhverv står PAUSED i Ads. Der er ingen tilbudsvej: ingen formular med antal gæster/sted/dato, ingen EAN/faktura-signal, intet om at større udstyr skaffes via partner.",
+        "beslutning": "B2B sælges som teknik + levering + opsætning + tilstedeværelse — ikke som mere udstyr. Pengene ligger i arbejdet og ansvaret, ikke i grej vi ikke ejer. Partnergrej lægges kun på ordren når det følger med en udkørsel vi alligevel laver."
+      }
+    },
+    "raekkefoelge": [
+      "1. AOV på nuværende trafik: pakke før enkeltprodukt, levering synlig og tidligt, ét kontekstuelt tilvalg i kurven. Koster 0 kr i medier.",
+      "2. Ads: værdibaseret budgivning + negativliste + tænd de pakke- og eventtype-grupper der allerede peger på færdige sider.",
+      "3. Lag 2 løsningssider med tre niveauer pr. eventtype.",
+      "4. B2B-tilbudsflow på /erhverv og AG 32 tændt bagefter — først når der er noget at sende folk hen til."
+    ],
+    "vi_goer_ikke": [
+      "Ikke ny kampagne til eventudstyr. Søgetermerne viser næsten ingen efterspørgsel på 'eventudstyr'/'AV-udlejning' i København — folk søger på produktet. Efterspørgslen efter løsninger skal hentes via anledningssider, GBP og partnerskaber, ikke via nye ad groups på fraser ingen skriver.",
+      "Ikke forudvalgte tilvalg i bookingflowet. Et forkrydset felt der koster 495 kr ekstra er i strid med forbrugeraftaleloven — levering skal være et aktivt valg. Løftestangen er placering og formulering, ikke et flueben.",
+      "Ikke indkøb af stort grej til 6 m² lager. Større udstyr skaffes via partner, og kun mod tilbud på en konkret opgave.",
+      "Ikke fjerne produktindgangen. Wedgen betaler regningen."
+    ],
+    "risici": [
+      "Positionsudvanding: 'lyd, lys og teknik' er sværere at rangere på end 'lej Soundboks'. Derfor beholder forsiden og produktsiderne lejeordet, og eventsproget lever på anledningssider og /erhverv.",
+      "Tidsforbrug: hver udkørsel binder Frederik i 1-2 timer. Bliver levering solgt uden prisregulering, falder kr./time selvom AOV stiger.",
+      "Partnergrej: leje af udstyr vi ikke ejer giver tynd margin og fuldt ansvar. Kun mod skriftligt tilbud og depositum."
+    ],
+    "epic": "AOV-arbejdet er samlet i epic_aov — mål, stories, målemetode og færdig-kriterium. Denne sektion er positioneringen; epicet er arbejdet."
+  },
+  "epic_aov": {
+    "id": "epic-aov",
+    "titel": "Løft ordreværdien — fra produktudlejning til eventsetup",
+    "opdateret": "2026-08-18",
+    "status": "aktiv",
+    "ejer": "Frederik",
+    "hoerer_til": "strategi_event_2026_08",
+    "problem": "En booking er i dag 503 kr i gennemsnit (målt på 6 annoncebetalte ordrer til 3.020 kr, 30 dage frem til 18. aug 2026). Annoncerne koster 402 kr pr. booking. Uanset hvor mange kunder vi henter, bliver forretningen ikke større af ordrer i den størrelse — én udkørsel binder Frederik 1-2 timer, og en ordre på 345 kr kan ikke bære den tid. Epicet handler om at gøre den enkelte ordre større, ikke om at hente flere ordrer.",
+    "hypotese": "Kunden køber det, der bliver stillet op som ét valg. I dag stiller vi enkeltprodukter op og lader kunden selv sammensætte et event; derfor køber de ét produkt. Stiller vi setuppet op — lyd + lys + levering, valgt ud fra anledningen — køber de setuppet.",
+    "maal": {
+      "primaer": "AOV fra 503 kr til 900 kr, målt over 20 sammenhængende rigtige bookinger",
+      "sekundaer": [
+        "Attach rate levering+opsætning ≥ 30 % (baseline ukendt — måles i story aov-0)",
+        "Attach rate lys på lydordrer ≥ 25 %",
+        "Andel ordrer med mindst to produktlinjer ≥ 50 %",
+        "Kr. pr. udkørsel op — det er Frederiks tid, ikke lageret, der er flaskehalsen"
+      ],
+      "vagtvaerdi": "Antal bookinger må ikke falde. Falder de mere end 20 % over 20 ordrer, er wedgen blevet ramt, og ændringen rulles tilbage."
+    },
+    "maalemetode": {
+      "kilde": "Bookinger i KV — ikke Google Ads. Ads ser kun de ordrer der kom fra annoncer og bruger GA4-værdi; regnskabet i /admin har alle ordrer og de rigtige beløb.",
+      "kadence": "Måles pr. 20 bookinger, ikke pr. uge. Med ~10-15 ordrer om måneden er ugetal støj.",
+      "ingen_ab_test": "Volumen er for lav til A/B-test. Ændringer besluttes fagligt, indføres helt, og vurderes på retning over 20 ordrer. Det skal stå her, så ingen senere venter på statistisk signifikans der aldrig kommer."
+    },
+    "stories": [
+      {
+        "id": "aov-0",
+        "titel": "Vi kan se ordreværdien uden at regne den ud",
+        "story": "Som udlejer vil jeg se AOV, attach rate og antal linjer pr. ordre i /admin, så jeg kan se om ændringerne virker i stedet for at gætte.",
+        "accept": [
+          "Regnskabssiden viser AOV for valgt periode og for de seneste 20 ordrer",
+          "Attach rate vises for levering+opsætning og for lys",
+          "Andel ordrer med ≥2 produktlinjer vises",
+          "Testbookinger tælles ikke med"
+        ],
+        "hvorfor_foerst": "Uden dette er hele epicet umåleligt, og de 503 kr er kun et Ads-tal.",
+        "status": "todo"
+      },
+      {
+        "id": "aov-1",
+        "titel": "Setuppet før enkeltproduktet",
+        "story": "Som kunde til en fest vil jeg kunne vælge et færdigt setup i ét klik, så jeg ikke selv skal regne ud hvad der mangler.",
+        "accept": [
+          "Anbefalet setup står øverst med 'populær'-mærke; enkeltprodukterne under",
+          "Setuppet viser hvad der er med og hvad man sparer",
+          "Produktsiderne for højttalere er uændrede over booking-knappen"
+        ],
+        "forventet_effekt": "Den største enkeltpost. Flytter typisk ordren fra 395-595 kr til 790-1.090 kr.",
+        "status": "todo"
+      },
+      {
+        "id": "aov-2",
+        "titel": "Levering + opsætning ses før kassen",
+        "story": "Som kunde vil jeg tidligt vide at I kan levere og sætte op, så jeg ikke først opdager det som et tilvalg jeg klikker forbi.",
+        "accept": [
+          "Pakke- og produktkort viser 'Kan leveres og sættes op — 495 kr'",
+          "Kørselsvalget står som et aktivt valg i flowet, uden forudvalgt mulighed",
+          "Adressen kræves når der er valgt kørsel"
+        ],
+        "regel": "Må ikke forudvælges. Forudkrydsede tillægsydelser er i strid med forbrugeraftaleloven — løftestangen er placering og formulering, ikke et flueben.",
+        "forventet_effekt": "+149 kr i AOV ved 30 % attach.",
+        "status": "todo"
+      },
+      {
+        "id": "aov-3",
+        "titel": "Lys hører til lyd",
+        "story": "Som kunde der har valgt højttalere vil jeg blive mødt af lyset som det naturlige næste, så festen bliver komplet i samme booking.",
+        "accept": [
+          "Har kurven lyd og intet lys, vises lys-pakken som næste skridt med begrundelse — ikke som en liste over alt tilbehør",
+          "Maksimalt ét forslag ad gangen",
+          "Forslaget forsvinder når det er valgt eller afvist"
+        ],
+        "forventet_effekt": "+124 kr i AOV ved 25 % attach på lydordrer.",
+        "noter": "Reglen findes allerede i bekræftelsesmailen (fulfillment_and_upsell.post_booking_upsell). Den skal frem i selve flowet — en upsell efter betaling kræver manuel opfølgning og lander sjældnere.",
+        "status": "todo"
+      },
+      {
+        "id": "aov-4",
+        "titel": "Anledningen vælger udstyret",
+        "story": "Som kunde til et bryllup vil jeg se hvad man plejer at bruge til et bryllup i tre niveauer, så jeg kan vælge niveau i stedet for at vælge udstyr.",
+        "accept": [
+          "Hver anledningsside har basis / populær / fuld med pris og ét-kliks booking",
+          "Populær indeholder lyd + lys + levering",
+          "Niveauerne kommer fra produktkataloget, så priser ikke skal vedligeholdes to steder"
+        ],
+        "omfang": "bryllup, fødselsdag, havefest, julefrokost, konfirmation, nytår, polterabend, studenterkørsel",
+        "status": "todo"
+      },
+      {
+        "id": "aov-5",
+        "titel": "Erhverv kan bede om et tilbud",
+        "story": "Som virksomhed vil jeg beskrive mit arrangement og få et tilbud, i stedet for at skulle presse et firmaarrangement ned i et bookingflow bygget til én højttaler.",
+        "accept": [
+          "/erhverv har en formular: dato, sted, antal gæster, hvad skal der ske, EAN/CVR",
+          "Forespørgslen lander som en sag i /admin, ikke kun som en mail",
+          "Siden nævner faktura/EAN, at vi leverer og sætter op, og at større udstyr skaffes via partner",
+          "/erhverv ligger i NAV_CATEGORIES"
+        ],
+        "forventet_effekt": "Få ordrer, 3-5× ordreværdien. Det er her de 6 m² lager holder op med at være en begrænsning, fordi vi sælger arbejde og ansvar frem for grej.",
+        "status": "todo"
+      },
+      {
+        "id": "aov-6",
+        "titel": "Ads byder på værdi, ikke på klik",
+        "story": "Som annoncør vil jeg have kampagnen til at byde mere for en ordre på 1.500 kr end for en på 345 kr.",
+        "accept": [
+          "Kun purchase er konverteringshandling; de syv sekundære GA4-handlinger er væk",
+          "Søgekampagnen kører på konverteringsværdi, ikke manuel CPC",
+          "Sitelinks peger på pakke, levering og erhverv — ikke kun enkeltprodukter"
+        ],
+        "rolle": "Understøttende. Ads kan forstærke en højere AOV, men kan ikke skabe den — de detaljerede annonceopgaver ligger i tasks med præfiks ads- og i google_ads.status_2026_08_18.",
+        "status": "todo"
+      }
+    ],
+    "raekkefoelge": "aov-0 først (ellers er intet målbart), derefter aov-1 og aov-2 som er de to største og billigste. aov-3 og aov-4 bagefter. aov-5 til sidst — B2B-klik må ikke tændes før der er en tilbudsvej at sende dem til. aov-6 løber ved siden af.",
+    "ikke_i_scope": [
+      "Rabatter. Højere AOV skal komme fra mere indhold i ordren, ikke fra lavere pris pr. enhed.",
+      "Nyt udstyr på lager. Alt i epicet kan bygges med det katalog der findes.",
+      "Ny kampagnestruktur i Ads. Én kampagne, flere grupper — som besluttet.",
+      "Ændringer over booking-knappen på højttalerproduktsiderne. Wedgen er fredet."
+    ],
+    "faerdig_naar": "AOV ≥ 900 kr over 20 sammenhængende bookinger, attach rate på levering ≥ 30 %, og antallet af bookinger er ikke faldet.",
+    "pakkearkitektur": {
+      "opdateret": "2026-08-18",
+      "hoerer_til": "epic_aov (story aov-1 og aov-4) — dette er den konkrete udmøntning",
+      "princip": "Pakker navngives efter antal gæster, ikke efter grej. Kunden ved hvor mange der kommer; han ved ikke hvad 2× 12\" EV betyder. 'Lydpakke 150' sælger, '2 aktive 12-tommere + sub' gør ikke.",
+      "regler": [
+        "Fra 150 gæster og op er levering + opsætning + afhentning INKLUDERET i prisen, ikke tilvalg. Ingen cykler hjem med fire tops og to subs, og et 'tilvalg' til 795 kr på en ordre til 1.100 kr er en forhandling vi taber. Inkluderet er det både højere AOV og mindre friktion.",
+        "Op til 100 gæster er kørsel stadig tilvalg — der er DIY-afhentning et ægte alternativ, og wedgen skal ikke gøres dyrere.",
+        "Over 400 gæster er der ingen bookingknap. Der er en tilbudsformular, fordi grejet skal skaffes via partner og prisen afhænger af stedet.",
+        "Tilvalgslaget (lys, røg, skærm, mikrofon, tekniker) ligger oven på ENHVER pakke og er det samme hele vejen op. Ét lag, ikke ét pr. pakke.",
+        "Kapacitetstallene gælder indendørs. Udendørs uden vægge halveres de — det skal stå på siden, ellers lover Frederik for meget."
+      ],
+      "stige_fest": [
+        {
+          "id": "fest_50",
+          "navn": "Festpakke 50",
+          "gaester": "op til 50",
+          "grej": "2× 10\" Alto + enkelt lyseffekt",
+          "pris_dkk": 495,
+          "levering": "tilvalg",
+          "status": "findes (pakke_fest_lille)"
+        },
+        {
+          "id": "fest_100",
+          "navn": "Festpakke 100",
+          "gaester": "50-100",
+          "grej": "2× 12\" EV + stativer + lys-pakke",
+          "pris_dkk": 995,
+          "levering": "tilvalg",
+          "status": "findes næsten (pakke_fest_stor 895 — mangler stativer)"
+        },
+        {
+          "id": "fest_150",
+          "navn": "Festpakke 150",
+          "gaester": "100-150",
+          "grej": "2× 12\" EV + 2× 12\" sub + stativer + lys-pakke + røgmaskine",
+          "pris_dkk": 2495,
+          "levering": "inkluderet",
+          "status": "kan bygges af lager i dag"
+        },
+        {
+          "id": "fest_250",
+          "navn": "Festpakke 250",
+          "gaester": "150-250",
+          "grej": "4× 12\" EV + 4× sub + mixer + kabelsæt + stativer + lys-pakke + røg",
+          "pris_dkk": 3995,
+          "levering": "inkluderet",
+          "status": "kræver mixer + kabelsæt"
+        },
+        {
+          "id": "fest_400",
+          "navn": "Over 250 gæster",
+          "gaester": "250+",
+          "grej": "15\" tops + 18\" subs via partner, tekniker på stedet",
+          "pris_dkk": null,
+          "levering": "inkluderet",
+          "status": "kun tilbud — vi ejer ikke grejet"
+        }
+      ],
+      "stige_tale": [
+        {
+          "id": "tale_50",
+          "navn": "Talepakke 50",
+          "gaester": "op til 50",
+          "grej": "2× 10\" Alto + stativer + 1 trådløs mikrofon",
+          "pris_dkk": 795,
+          "levering": "tilvalg",
+          "status": "findes næsten (pakke_tale_musik 695 bruger 12\")"
+        },
+        {
+          "id": "moede_100",
+          "navn": "Mødepakke 100",
+          "gaester": "50-100",
+          "grej": "2× 12\" EV + stativer + mixer + 2 mikrofoner (håndholdt + headset)",
+          "pris_dkk": 1695,
+          "levering": "tilvalg",
+          "status": "kræver mixer"
+        },
+        {
+          "id": "konference_150",
+          "navn": "Konferencepakke 150",
+          "gaester": "100-150",
+          "grej": "2× 12\" EV + stativer + mixer + 4 mikrofoner + 55\" skærm eller Projektor Pro + lærred",
+          "pris_dkk": 3495,
+          "levering": "inkluderet",
+          "status": "kræver mixer + flere trådløse mikrofoner"
+        },
+        {
+          "id": "hybrid",
+          "navn": "Hybrid-tilvalg (Teams/Zoom)",
+          "gaester": "alle",
+          "grej": "USB-mixer sender salens lyd til mødet og mødets lyd i højtalerne",
+          "pris_dkk": 495,
+          "levering": "n/a",
+          "status": "kræver mixer med USB — det er hele forskellen på en talepakke og en B2B-ordre"
+        }
+      ],
+      "tilvalgslag": "Samme liste oven på alle pakker: lys-pakke 495 · uplight 4-pak 395 · discokugle 245 · røgmaskine 245 · low fog 295 · lyskæder 195 · trådløs mikrofon 295 (PRO 495) · headset 345 (PRO 495) · 55\" skærm 595 · 32\" skærm 395 · projektor 495 (Pro 795) · lærred 195 · karaokemaskine 695 · subwoofer 295 · stativer 100.",
+      "nye_produkter": {
+        "hvorfor": "Mixeren er det manglende led. Uden den kan vi køre to mikrofoner direkte i højtalernes indgange og intet andet — ingen musik samtidig med taler, ingen fjerde mikrofon, ingen lyd til Teams. Alt over 'sæt en Bluetooth-forbindelse op' er spærret af udstyr til under 7.000 kr.",
+        "indkoeb": [
+          {
+            "hvad": "Mixer med USB (Yamaha MG10XU / Soundcraft Notepad-8FX)",
+            "ca_pris_dkk": 2000,
+            "laaser_op": "4+ mikrofoner, musik og tale samtidig, hybridmøder"
+          },
+          {
+            "hvad": "Mikrofonstativer — 2 gulv, 2 bord",
+            "ca_pris_dkk": 600,
+            "laaser_op": "taler og paneler"
+          },
+          {
+            "hvad": "XLR-kabler 10 og 20 m, 6 stk.",
+            "ca_pris_dkk": 800,
+            "laaser_op": "scene og mixer kan stå hver sit sted"
+          },
+          {
+            "hvad": "DI-boks ×2",
+            "ca_pris_dkk": 700,
+            "laaser_op": "laptop og DJ-pult uden brum"
+          },
+          {
+            "hvad": "Kabeltromle/forlængere ×2",
+            "ca_pris_dkk": 600,
+            "laaser_op": "strøm i den anden ende af salen"
+          },
+          {
+            "hvad": "Flightcase/rack til mixer og kabler",
+            "ca_pris_dkk": 1000,
+            "laaser_op": "at det kan transporteres uden at gå i stykker"
+          }
+        ],
+        "samlet_ca_dkk": 5700,
+        "tilbagebetaling": "To ordrer på Mødepakke 100 eller én Konferencepakke 150. Plads: ét rack — det er den billigste kvadratmeter i hele forretningen.",
+        "service_uden_lager": [
+          {
+            "id": "tekniker",
+            "navn": "Tekniker på stedet",
+            "pris_dkk": 2500,
+            "omfang": "4 timer — passer lyd og lys under arrangementet",
+            "hvorfor": "Højeste dækningsbidrag i hele kataloget og fylder nul på lageret. Det er her 'vi sælger arbejde, ikke grej' bliver til kroner.",
+            "ekstra_time_dkk": 500
+          }
+        ]
+      },
+      "sider": {
+        "ny_oversigtsside": "/lydanlaeg — stigen som én side: fem niveauer, gæsteantal, hvad der er med, hvad det koster, book eller få tilbud. Det er den side annoncerne skal lande på når nogen søger bredt (PA-anlæg, lydanlæg, musikanlæg til fest).",
+        "en_side_pr_niveau": "Fra 150 og op får hvert niveau sin egen side med billede af det opstillede setup, hvad der er med, og hvad vi laver når vi kommer.",
+        "eksisterende": "/festpakke-lille, /festpakke-stor, /pakke-tale-musik, /pakke-konference, /pakke-praesentation absorberes i stigen — de skal ikke ligge som en parallel verden."
+      },
+      "aabne_datafejl": [
+        "AV-produkterne (projektor, skærme, mikrofoner, headset, lærred, karaoke, uplights, low fog) har slet intet lagertal. De er dermed allerede ubegrænsede — men også usynlige: de kan ikke få overbooking (koden giver kun overbooking til produkter med et loft), og de dukker aldrig op på 'Skal skaffes'-listen. Sælger Konferencepakke 150 fire mikrofoner ad gangen, får Frederik ingen besked. Giv dem et ejet antal + overbooking, så de bliver lige så bookbare som nu, men synlige."
+      ],
+      "lager_overbooking": {
+        "beslutning": "2026-08-18: pakkerne må aldrig vise udsolgt. Overbooking sat til +10 på alle ti produkter der har et lagertal (thumpgo, party, soundboks, festival, lys, rog, stativer, taske, subwoofer, lyskaeder). Vi tager altså imod ti mere end vi ejer af hver — resten lejes eller købes ind til dagen.",
+        "hvorfor": "Stigen kan ikke sælges hvis Festpakke 250 er udsolgt hver anden weekend fordi vi kun ejer to festivalpakker. Frederiks vurdering: skaf grejet, spørgsmålet om hvor mange vi ejer er underordnet.",
+        "hvor": "KV-nøglen inventory_overbook. Sat direkte 18. aug 2026; nøglen fandtes ikke før, så der var ingen overbooking overhovedet. Kan rettes pr. produkt i /admin/lager og /admin/produkter (+N JIT-mærket).",
+        "virkning": "bookable = ejet + overbooking. Bekræftet live på /api/availability: festival 5 → 15, subwoofer 4 → 14. Ingen deploy nødvendig — det er data, ikke kode.",
+        "hvor_ser_vi_regningen": "/admin/lager viser listen 'Skal skaffes', og belægningskalenderen markerer de dage der ligger ud over det ejede som overbooking. Det er dér Frederik ser hvad han har lovet væk.",
+        "risiko": "Overbooking er et løfte om at skaffe. Bliver 'Skal skaffes'-listen ikke set i tide, står vi med en aflysning på en ordre til 4.000 kr i stedet for 500 kr. Jo større pakker, jo dyrere er en glemt liste."
+      }
     }
   },
   "i18n": {
@@ -1301,6 +1629,24 @@
       "status": "done",
       "date": "2026-08-17",
       "description": "De seks GOOGLE_ADS_*-secrets ligger nu i Cloudflare Pages-projektet speaker-rental (developer token, client id/secret, refresh token, LOGIN_CUSTOMER_ID=6231006021, CUSTOMER_ID=4410207627 — Lejhøjtaler, ikke OpenOceans 3104575490 fra google-ads.yaml). Uden dem svarede /api/ads-spend 503 'ikke konfigureret', og /admin/ads havde aldrig virket i produktion. Kildeværdierne ligger lokalt i ~/gitprojects/openocean-promo/google-ads.yaml. Bemærk at refresh-tokenet giver adgang til hele MCC'en, og at /admin/ads kan sætte annoncegrupper på pause for enhver med adminkoden."
+    },
+    "status_2026_08_18": {
+      "maalt": "2026-08-18, seneste 30 dage, konto 441-020-7627",
+      "soegekampagne": "Højtaler Udlejning - Search: 2.132 visninger, 215 klik, 2.414 kr, gns. CPC 11,23 kr, 6 køb til 3.020 kr. ROAS 1,25 — 606 kr tilbage før Frederiks tid.",
+      "impression_share": "41,8 % · tabt på rank 56,8 % · tabt på budget 1,4 %. Dagsbudget 1.000 kr, forbrug ~80 kr/dag. Kampagnen er rangbegrænset, ikke budgetbegrænset — flere penge alene flytter ingenting.",
+      "pmax": "Lejhøjtaler — Performance Max (PAUSED): 72.627 visninger, 2.701 klik, 1.224 kr, 0 konverteringer, CPC 0,45 kr. Bekræfter at billige klik uden søgeintention ikke bliver til bookinger. Skal blive slukket.",
+      "konvertering": "Kun 'LejHojtaler.dk (web) purchase' er primary (6 konverteringer, 3.020 kr i værdi — værdien går altså rigtigt ind). De øvrige syv GA4-handlinger (page_view, session_start, user_engagement, scroll, first_visit, form_start, click) er sekundære: de forurener rapporterne med 180 falske konverteringer, men styrer ikke bud. De skal væk før smart bidding tændes.",
+      "geo": "PRESENCE på begge kampagner — det gamle PRESENCE_OR_INTEREST-problem er lukket.",
+      "aabne_fund": {
+        "vaerdibudgivning_mangler": "Begge kampagner kører MANUAL_CPC. Manuel CPC byder på klik, ikke på ordreværdi, og kan derfor pr. definition ikke prioritere en booking på 1.500 kr over en på 345 kr. Maksimér konverteringsværdi (evt. med tROAS) er den direkte AOV-løftestang i Ads — men kræver rene konverteringshandlinger og ~15 køb/30 dage først.",
+        "hoej_vaerdi_grupper_slukket": "Alle eventtype-grupper (AG 16-23), pakkegrupper (AG 27, 28, 30, 31) og AG 32 - Erhverv står PAUSED, selvom landingssiderne er live. De 18 tændte grupper er næsten alle enkeltprodukt — altså er præcis det lag der skulle løfte AOV det eneste der ikke kører.",
+        "dublet_grupper": "AG 16-47 findes i to eksemplarer, hvor den ene har 0,01 kr i bud. Ryd op, ellers tændes den forkerte.",
+        "yderomraader_landmine": "Kampagnen 'Lejhøjtaler — Yderområder' har 400 kr/dag budget, 8 tændte grupper med godkendte annoncer og 0 visninger på 30 dage — men indeholder keywords som 'restaurant', 'bar', 'app', 'youtube', 'telt', 'borde', 'stole', 'catering', 'bluetooth', 'bilstereo' og 'hjemmebiograf' med status ELIGIBLE og 15 kr bud. Begynder den at servere, brænder den budgettet af på ingenting.",
+        "koeb_intent_uden_negativer": "AG 1 er den dyreste gruppe (1.022 kr) og serverer bl.a. 'jbl partybox', 'jbl partybox sale', 'partybox 320', 'bedste party højtaler', 'bluetooth party speaker' og 'disco ball' — folk der vil købe, ikke leje. Negativliste mangler: køb, pris, til salg, brugt, bedste, test, anmeldelse, jbl partybox, samt geo-ord uden for området (fyn, odense, smukfest, roskilde).",
+        "ag1_kannibaliserer": "AG 1 - Højtalere & Lyd serverer stadig 'lej en soundboks', 'leje af soundbox' og 'soundboks leje' i konkurrence med AG 4 - Soundboks. Samme forespørgsel købes to gange til forskellig pris.",
+        "sitelinks_er_produkter": "De seks sitelinks er Lej Soundboks, Lej festlys, Om os, Rent speakers in CPH, Lej Røgmaskine, Lej AV udstyr. Ingen af dem sælger en pakke, levering eller erhverv. Sitelinks til 'Fest­pakke med lys', 'Levering + opsætning' og 'Til firmafest' er den billigste AOV-løftestang der findes: de koster ingenting og flytter klikket op i pris før kunden lander.",
+        "ingen_efterspoergsel_paa_eventsprog": "Søgetermerne på 30 dage er stort set alle enkeltprodukt. De eneste løsningsagtige fraser er 'leje af mikrofon og højtaler', 'leje af festudstyr' og 'leje af musikanlæg til fest' — få visninger hver. Eventpositioneringen kan altså ikke bygges på søgevolumen alene."
+      }
     }
   },
   "tasks": [
@@ -1914,6 +2260,48 @@
       "status": "done"
     },
     {
+      "id": "komm-oversigt",
+      "title": "Kommunikation: opdeling af hver mail og SMS",
+      "description": "/admin/kommunikation viser forløbet som kort: bestilling, godkendt ordre, afhentning, aflevering, betaling. Hvert kort er mail eller SMS, live eller mangler. Tak-mailen redigeres stadig her. SMS-skabeloner (GatewayAPI) ligger under kortene.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "sms-gateway-token",
+      "title": "SMS: SMS_API_TOKEN i Cloudflare + GitHub ADMIN_SECRET til cron",
+      "description": "GatewayAPI-token som Pages-secret SMS_API_TOKEN. Uden den gemmes tekster, men intet sendes. GitHub-secret ADMIN_SECRET skal sættes så workflowet .github/workflows/sms-paamindelser.yml (kl. 9 dansk sommertid) kan kalde /api/sms-paamindelser. Testbesked fra /admin/kommunikation.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "sms-afhentning-retur-dag",
+      "title": "SMS auto på afhentnings- og afleveringsdagen",
+      "description": "Kl. 9 på selve dagen (ikke dagen før): afhentning og retur. Mærkes på booking.smsSent så dobbeltkørsel ikke rammer kunden to gange. Kode er live; mangler token + at cron kører.",
+      "priority": "high",
+      "status": "done"
+    },
+    {
+      "id": "mail-ordre-godkendt",
+      "title": "Mail: ordre godkendt når status sættes til bekræftet",
+      "description": "Skabelon i KV som tak-mailen. Sendes ved status=bekraeftet. SMS sendes allerede. Shortcodes: fornavn, produkter, periode, sted, telefon.",
+      "priority": "medium",
+      "status": "todo"
+    },
+    {
+      "id": "mail-afhentning-retur-dag",
+      "title": "Mail auto på afhentnings- og afleveringsdagen",
+      "description": "Samme cron som SMS kl. 9. To skabeloner: afhentning i dag og aflevering i dag. Må ikke dobbeltsende. SMS kører allerede samme morgen.",
+      "priority": "medium",
+      "status": "todo"
+    },
+    {
+      "id": "mail-skabeloner-booking-faktura",
+      "title": "Gør bookingbekræftelse og fakturamaile redigerbare",
+      "description": "Booking-mailen i book.ts og fakturaen i invoiceMail.ts er hardkodet. Flyt til KV-skabeloner som tak-mailen, så de kan rettes i /admin/kommunikation uden deploy.",
+      "priority": "low",
+      "status": "todo"
+    },
+    {
       "id": "ads-geo-presence",
       "title": "Ads: geo-målretning til PRESENCE, ikke PRESENCE_OR_INTEREST",
       "description": "Søgekampagnen 'Højtaler Udlejning - Search' står på PRESENCE_OR_INTEREST og viser derfor annoncer til folk der blot er interesserede i København. Kilde til søgetermer som 'leje af lyskæder fyn', 'soundboks leje odense', 'leje soundboks smukfest'. PMax-kampagnen kører allerede PRESENCE. Ét felt: campaign.geo_target_type_setting.positive_geo_target_type.",
@@ -1947,6 +2335,216 @@
       "description": "Billedarbejdet 16. aug er målt på payload i build-output (12,0 MB → 370 KB pr. landingsside), ikke på faktiske LCP/CLS/INP. Kræver Chrome DevTools MCP: npx -y chrome-devtools-mcp@latest. Philip skal tilføje den i MCP-konfigurationen; kan ikke gøres fra en session.",
       "priority": "medium",
       "status": "blocked"
+    },
+    {
+      "id": "aov-pakke-foer-enkeltprodukt",
+      "title": "AOV: pakken skal kunne klikkes før enkeltproduktet",
+      "description": "På anledningssider og i produktgrid skal det anbefalede setup (lyd + lys, evt. + levering) stå som førstevalg med 'populær'-mærke, og enkeltproduktet under. Mål: hæve AOV fra målte 503 kr mod 900 kr uden ekstra annoncekroner. Wedge-reglen gælder: ingenting nyt over booking-knappen på produktsiderne.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-1"
+    },
+    {
+      "id": "aov-tre-niveauer-pr-eventtype",
+      "title": "Løsningssider: tre niveauer pr. eventtype",
+      "description": "Hver anledningsside (bryllup, konfirmation, julefrokost, havefest, fødselsdag, nytår, polterabend, studenterkørsel) får basis / populær / fuld setup med pris og ét-kliks booking. Populær indeholder lyd + lys + levering. Erstatter dagens SEO-tekst uden valg.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-4"
+    },
+    {
+      "id": "aov-levering-tidligere-i-flowet",
+      "title": "Levering + opsætning skal ses før betaling",
+      "description": "Kørselsvalget ligger i tilvalgs-trinnet og bliver ofte sprunget over. Det skal fremgå med pris og fordel allerede på pakke-/produktkortet ('Kan leveres og sættes op — 495 kr'). Må IKKE forudvælges (forudkrydsede tillægsydelser er ulovlige) — løftestangen er synlighed og formulering.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-2"
+    },
+    {
+      "id": "erhverv-tilbudsflow",
+      "title": "/erhverv: tilbudsformular og plads i menuen",
+      "description": "Siden er forældreløs: ikke i NAV_CATEGORIES, CTA sender til DIY-flowet, AG 32 er paused. Tilføj den til navigationen, byg en tilbudsformular (dato, sted, antal gæster, hvad skal der ske, EAN/CVR) der lander som en forespørgsel i /admin, og skriv faktura/EAN, forsikring og 'større udstyr skaffes via partner' på siden. Først derefter tændes AG 32.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-5"
+    },
+    {
+      "id": "ads-ryd-konverteringshandlinger",
+      "title": "Ads: fjern de syv sekundære GA4-handlinger",
+      "description": "page_view, session_start, user_engagement, scroll, first_visit, form_start og click er importeret som konverteringer (sekundære). De forurener rapporterne med ~180 falske konverteringer og blokerer for smart bidding. Kun purchase skal stå tilbage. Forudsætning for ads-vaerdibudgivning.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-6"
+    },
+    {
+      "id": "ads-vaerdibudgivning",
+      "title": "Ads: skift fra manuel CPC til værdibaseret budgivning",
+      "description": "Begge kampagner kører MANUAL_CPC og byder derfor ens på en ordre til 345 kr og en til 1.500 kr. Skift søgekampagnen til Maksimér konverteringsværdi når konverteringshandlingerne er ryddet og der er ~15 køb på 30 dage; tROAS lægges på først når datagrundlaget bærer det.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-6"
+    },
+    {
+      "id": "ads-negativliste-koeb",
+      "title": "Ads: negativliste mod købs- og geo-spild",
+      "description": "Delt negativliste på kontoen: køb, pris, til salg, brugt, bedste, test, anmeldelse, jbl partybox, partybox, soundboks pris — plus fyn, odense, smukfest, aarhus. AG 1 (dyreste gruppe, 1.022 kr/30 dage) serverer i dag købsintention.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "ads-sitelinks-til-pakker",
+      "title": "Ads: sitelinks der sælger pakke, levering og erhverv",
+      "description": "De seks nuværende sitelinks peger alle på enkeltprodukter. Tilføj 'Festpakke med lys', 'Levering + opsætning', 'Til firmafest' og 'Karaokepakke'. Koster ingenting og hæver ordreværdien før klikket.",
+      "priority": "medium",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-6"
+    },
+    {
+      "id": "ads-taend-pakkegrupper",
+      "title": "Ads: tænd pakke- og eventtype-grupperne",
+      "description": "AG 16-23 (anledninger), AG 27/28 (festpakker), AG 30/31 (konference/præsentation) står PAUSED selvom landingssiderne er live. Tændes gruppevis efter at løsningssiderne har fået tre niveauer — ikke før, ellers sender vi dyre klik til sider uden valg.",
+      "priority": "medium",
+      "status": "todo"
+    },
+    {
+      "id": "ads-ryd-yderomraader",
+      "title": "Ads: ryd 'Yderområder' før den begynder at servere",
+      "description": "400 kr/dag budget, 8 tændte grupper, 0 visninger — men keywords som restaurant, bar, app, youtube, telt, borde, stole, catering, bluetooth, bilstereo og hjemmebiograf står ELIGIBLE med 15 kr bud. Slet dem, eller sæt kampagnen på pause indtil den har rigtige lejefraser.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "ads-fjern-dublet-grupper",
+      "title": "Ads: fjern dublerede annoncegrupper",
+      "description": "AG 16-47 findes i to eksemplarer, hvor den ene har 0,01 kr i bud og aldrig kan servere. Slet dubletterne så det er entydigt hvad der tændes.",
+      "priority": "medium",
+      "status": "todo"
+    },
+    {
+      "id": "ads-ag1-kannibalisering",
+      "title": "Ads: stop AG 1's kannibalisering af Soundboks",
+      "description": "AG 1 - Højtalere & Lyd serverer 'lej en soundboks', 'leje af soundbox' og 'soundboks leje', som AG 4 - Soundboks også byder på. Læg soundboks/soundbox som negativer i AG 1.",
+      "priority": "medium",
+      "status": "todo"
+    },
+    {
+      "id": "aov-maaling-i-admin",
+      "title": "AOV og attach rate i /admin",
+      "description": "Regnskabssiden skal vise AOV for perioden og for de seneste 20 ordrer, attach rate for levering+opsætning og for lys, og andel ordrer med mindst to linjer. Testbookinger tælles fra. Uden dette kan epic_aov ikke afgøres — de 503 kr er i dag kun et Google Ads-tal.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-0"
+    },
+    {
+      "id": "aov-lys-forslag-i-flowet",
+      "title": "Lysforslag i bookingflowet, ikke kun i mailen",
+      "description": "Har kurven lyd og intet lys, vises lys-pakken som ét begrundet næste skridt i flowet. Reglen findes allerede i bekræftelsesmailen (post_booking_upsell) og kræver manuel opfølgning; flyttet frem i flowet lander den af sig selv. Maksimalt ét forslag ad gangen.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-3"
+    },
+    {
+      "id": "pakke-stige-lydanlaeg",
+      "title": "Byg pakkestigen efter gæsteantal",
+      "description": "Fem niveauer fest (50/100/150/250/250+) og fire tale (50/100/150 + hybrid), navngivet efter antal gæster. Fra 150 og op er levering+opsætning inkluderet i prisen. Eksisterende festpakker og AV-pakker absorberes i stigen. Se epic_aov.pakkearkitektur.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-1"
+    },
+    {
+      "id": "side-lydanlaeg",
+      "title": "/lydanlaeg — stigen som én side",
+      "description": "Oversigtsside med de fem niveauer: gæsteantal, indhold, pris, book eller få tilbud. Landingsside for de brede søgninger (pa-anlæg, lydanlæg, musikanlæg til fest) som i dag lander på enkeltprodukter.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-1"
+    },
+    {
+      "id": "indkoeb-mixer-kabelsaet",
+      "title": "Indkøb: mixer, mikrofonstativer, XLR, DI, strøm",
+      "description": "Ca. 5.700 kr samlet. Mixeren er det manglende led — uden den kan vi kun køre to mikrofoner direkte i højtalerne, og hverken Mødepakke 100, Konferencepakke 150, hybridmøder eller Festpakke 250 kan leveres. Tjener sig hjem på to ordrer og fylder ét rack.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-1"
+    },
+    {
+      "id": "produkt-tekniker-paa-stedet",
+      "title": "Nyt produkt: tekniker på stedet",
+      "description": "2.500 kr for 4 timer, 500 kr pr. ekstra time. Højeste dækningsbidrag i kataloget, nul lagerplads. Tilvalg på alle pakker fra 150 gæster og op.",
+      "priority": "medium",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-5"
+    },
+    {
+      "id": "lager-bekraeft-antal",
+      "title": "Lagertal: afklaret med overbooking i stedet",
+      "description": "AFVIST 2026-08-18. Vi tæller ikke op. I stedet er overbooking sat til +10 på alle produkter med lagertal, så pakkerne aldrig viser udsolgt og manglende grej skaffes til dagen. Se epic_aov.pakkearkitektur.lager_overbooking.",
+      "priority": "high",
+      "status": "afvist",
+      "epic": "epic-aov",
+      "story": "aov-0"
+    },
+    {
+      "id": "lager-av-produkter",
+      "title": "Lagertal på AV-produkterne — så de kan overbookes synligt",
+      "description": "Projektor, skærme, mikrofoner, headset, lærred, karaoke, uplights og low fog har intet lagertal og kan derfor ikke få overbooking; de er ubegrænsede uden at nogen får besked om hvad der skal skaffes. Sæt ejet antal + overbooking som på de øvrige, så de forbliver altid-bookbare men dukker op på 'Skal skaffes'.",
+      "priority": "medium",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-0"
+    },
+    {
+      "id": "aov-lyskaeder-bryllup",
+      "area": "AOV",
+      "title": "AOV: lyskæder til bryllup — 100 søgn./md helt udækket",
+      "description": "Keyword Planner: 'lyskæder til bryllup' 50/md og 'lyskæder bryllup' 50/md. Vi har hverken frasen eller nogen variant af den — AG 5 har 'lej lyskæder til bryllup', men phrase match kræver lejeordet i søgningen, så den fanger ikke de 100. AG 16 - Bryllup er pauset og peger på /bryllup, som allerede fremhæver lyskæder (9 gange), uplights (12) og festpakker (27). Bryllup er kontoens højeste ordreværdi: der bookes lyd + lys + mikrofon samlet, ikke ét produkt. Handling: tænd AG 16 med anledning×produkt-fraser frem for generiske bryllupsord.",
+      "priority": "high",
+      "status": "pending"
+    },
+    {
+      "id": "aov-lys-havefest",
+      "area": "AOV",
+      "title": "AOV: lys til havefest — 70 søgn./md udækket",
+      "description": "'lys til havefest' 20/md, 'lyskæder til havefest' 20/md, 'lyskæde havefest' 20/md, 'havefest lys' 10/md. Ingen dækning. AG 18 - Havefest er pauset og peger på /havefest, som nævner lyskæder 28 gange og uplights 12. Sæsonbetonet: relevant fra maj til september, så den bør tændes nu og pauses igen i oktober.",
+      "priority": "high",
+      "status": "pending"
+    },
+    {
+      "id": "aov-negative-stearinlys",
+      "area": "AOV",
+      "title": "AOV: negative keywords før vi byder på 'lys til <anledning>'",
+      "description": "Volumen på de bare 'lys til X'-fraser er forurenet. Planner viser 'stearinlys bryllup', 'stearinlys til konfirmation', 'bryllupssang med lys' og 'bryllupssange med lys' i samme klynge — det er stearinlys og bryllupssange, ikke festbelysning. Byder vi på 'lys til bryllup' i phrase match uden værn, betaler vi for begge dele. Tilføj negative: stearinlys, lysestage, levende lys, bloklys, kalenderlys, sang, sange, salme. Skal på plads FØR aov-lyskaeder-bryllup og aov-lys-havefest tændes.",
+      "priority": "high",
+      "status": "pending"
+    },
+    {
+      "id": "aov-anledninger-saeson",
+      "area": "AOV",
+      "title": "AOV: tænd anledningsgrupperne efter sæson",
+      "description": "Otte anledningsgrupper (AG 16-23: bryllup, fødselsdag, havefest, julefrokost, konfirmation, nytår, polterabend, studenterkørsel) er pausede, men har rigtige landingssider og fik brugbare bud 17. august. Anledningssøgninger har højere ordreværdi end produktsøgninger, fordi kunden skal bruge et samlet setup. De skal tændes og pauses efter sæson frem for at stå tændt året rundt: julefrokost i september, konfirmation og bryllup i det tidlige forår, havefest maj-september, studenterkørsel i juni, nytår i december.",
+      "priority": "medium",
+      "status": "pending"
+    },
+    {
+      "id": "aov-maal-ordrevaerdi-pr-gruppe",
+      "area": "AOV",
+      "title": "AOV: mål faktisk ordreværdi pr. annoncegruppe",
+      "description": "Antagelsen om at anledningssøgninger giver højere ordreværdi er ubekræftet på egne data. Når konverteringsvinduet er rent (junk-handlingerne ruller ud af 30-dages-vinduet omkring 10. september), så træk conversions_value pr. ad_group og se om bryllup/havefest reelt ligger over produktgrupperne. Kan segmenteres på labelen 'BOFU — købsintention' (customers/4410207627/labels/22270631751). Uden det tal er sæsonprioriteringen et gæt.",
+      "priority": "medium",
+      "status": "pending"
     }
   ],
   "status": {
@@ -2160,7 +2758,7 @@
     "navigation_2026_08_16": {
       "status": "done",
       "date": "2026-08-16",
-      "description": "Én menu for hele admin: src/components/AdminNav.tsx med ADMIN_MENU grupperet i Drift (Bookinger, Kalender, Udlevering, Lejeseddel, Lager, Udsolgt), Katalog & priser (Produkter, Rabatkoder, Udsalg), Markedsføring (Ads, Regler, Kanaler, Nyhedsbrev) og System (Indstillinger). Før havde hver side sin egen håndplukkede stribe links — Rabatkoder pegede kun på Ads og Regler, Lejeseddel på Lager og Nyhedsbrev — så man skulle om forsiden for at komme videre. Menuen markerer den aktuelle side, henter sidens navn fra stien og folder til én dropdown med optgroups på telefon. En test låser at hver admin-side bruger AdminNav og ikke har sin egen linkstribe. OPDATERET samme dag: på skærm er de fjorten links foldet ind i én dropdown pr. gruppe (Drift ▾ / Katalog & priser ▾ …). Knappen for den gruppe man står i skriver også sidens navn (\"Katalog & priser · Rabatkoder\"), og hvert punkt i dropdownen har sin korte forklaring under navnet. Kun én gruppe er åben ad gangen; menuen lukker på Escape og ved klik udenfor. Telefonen beholder den ene grupperede select."
+      "description": "Én menu for hele admin: src/components/AdminNav.tsx med ADMIN_MENU. OPDATERET 2026-08-17: gruppen Katalog & priser er fjernet. Produkter ligger under Drift; Rabatkoder og Fredagsudsalg under Markedsføring. Grupper: Drift (Bookinger, Kalender, Udlevering, Lejeseddel, Lager, Udsolgt, Produkter), Markedsføring (Ads, Regler, Rabatkoder, Fredagsudsalg, Kanaler, Nyhedsbrev, Kommunikation), Økonomi (Regnskab), System (Indstillinger, Notifikationer, Brugere). Menuen markerer den aktuelle side, henter sidens navn fra stien og folder til én dropdown med optgroups på telefon. En test låser at hver admin-side bruger AdminNav og ikke har sin egen linkstribe."
     },
     "lagerlogik_hovedprodukt": {
       "status": "done",
@@ -2169,7 +2767,8 @@
     },
     "kommunikation": {
       "status": "done",
-      "description": "/admin/kommunikation (2026-08-16): opfølgningsmailen efter en ordre er flyttet fra hardkodet HTML i bookings-update.ts til en skabelon i KV, så teksten kan rettes uden deploy. Shortcodes udfyldes server-side: {{fornavn}} {{navn}} {{produkter}} {{periode}} {{ansvarlig}} {{hilsen}} {{besked}} {{rabatkode}} {{rabatpct}} {{anmeldelseslink}} {{udsalg}}. VALG: skabelonen er ren tekst, ikke HTML — admin skal ikke kunne ødelægge en mail, og teksten escapes. Ukendte shortcodes fjernes helt, så en tastefejl aldrig ender i kundens indbakke som '{{fornvan}}'. Et afsnit hvor alle shortcodes blev tomme droppes, så en ordre uden personlig besked ikke får et hul midt i mailen. ANSVARLIG: bookingen har handledBy (hvem stod for udlejningen) og personalNote (personlig besked), begge sat i den udfoldede ordre i /admin. handledBy vælger underskriften fra personalelisten; tom underskrift falder tilbage på navnet. DELEKODE: default DEL10 = 10%, oprettes som rigtig rabatkode ved gem. FORBUNDET MED UDSALG: {{udsalg}} bliver til en PS-linje når weekendudsalget er tændt, og til ingenting når det er slukket — samme kontakt styrer begge dele. Engelske bookinger (locale=en) får stadig den hardkodede engelske mail; skabelonen er dansk. Fejler skabelonen, sendes standardmailen — en skabelonfejl må ikke koste en mail. Delt kode: src/lib/commTemplates.ts, så admin-siden laver live-forhåndsvisning med præcis samme funktion som serveren sender med."
+      "date": "2026-08-17",
+      "description": "/admin/kommunikation viser hele forløbet som kort (mail+SMS): bestilling, godkendt ordre, afhentning, aflevering, betaling. Live: booking-mail, tak-mail (redigerbar), faktura-mail, SMS ved booking/bekræftet/tak, SMS kl. 9 på afhentnings- og afleveringsdagen. Mangler: mail ved godkendt ordre, mail på afhentnings-/afleveringsdagen, rykker, redigerbar booking- og fakturaskabelon. SMS: GatewayAPI, tekster i KV sms_settings, cron via GitHub Actions. Kræver SMS_API_TOKEN i Cloudflare og ADMIN_SECRET i GitHub før noget går ud."
     },
     "push_app": {
       "status": "done",
@@ -2433,8 +3032,8 @@
     }
   },
   "task_overblik": {
-    "opdateret": "2026-08-17",
-    "antal_opgaver_i_alt": 84,
+    "opdateret": "2026-08-18",
+    "antal_opgaver_i_alt": 89,
     "bygget_og_deployet": 62,
     "afvist": [
       {
@@ -2488,6 +3087,36 @@
         "id": "core-web-vitals-maaling",
         "title": "Mål rigtige Core Web Vitals (blokeret: mangler MCP)",
         "status": "blocked"
+      },
+      {
+        "id": "aov-lyskaeder-bryllup",
+        "title": "AOV: lyskæder til bryllup — 100 søgn./md helt udækket",
+        "status": "pending",
+        "area": "AOV"
+      },
+      {
+        "id": "aov-lys-havefest",
+        "title": "AOV: lys til havefest — 70 søgn./md udækket",
+        "status": "pending",
+        "area": "AOV"
+      },
+      {
+        "id": "aov-negative-stearinlys",
+        "title": "AOV: negative keywords før vi byder på 'lys til <anledning>'",
+        "status": "pending",
+        "area": "AOV"
+      },
+      {
+        "id": "aov-anledninger-saeson",
+        "title": "AOV: tænd anledningsgrupperne efter sæson",
+        "status": "pending",
+        "area": "AOV"
+      },
+      {
+        "id": "aov-maal-ordrevaerdi-pr-gruppe",
+        "title": "AOV: mål faktisk ordreværdi pr. annoncegruppe",
+        "status": "pending",
+        "area": "AOV"
       }
     ],
     "note": "'cancelled' betyder afvist/rullet tilbage — IKKE åbent arbejde. Booking er og forbliver en drawer-kurv, se booking_drawer-sektionen."
