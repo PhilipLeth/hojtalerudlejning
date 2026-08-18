@@ -3,7 +3,9 @@
  * POST /api/sms-paamindelser?secret=…  (også ?dryRun=1)
  *
  * Kaldes én gang om dagen af GitHub Actions (.github/workflows/sms-paamindelser.yml)
- * — Pages Functions har ingen cron. Kan også trykkes manuelt fra
+ * — Pages Functions har ingen cron. Jobbet bruger sin egen nøgle
+ * (SMS_CRON_SECRET) i stedet for admin-adgangskoden: det skal kun kunne sende
+ * dagens påmindelser, ikke se kundedata. Kan også trykkes manuelt fra
  * /admin/kommunikation, hvis en dag skal køres om.
  *
  * Hver sendt påmindelse mærkes på ordren (smsSent), så to kørsler samme dag
@@ -24,12 +26,18 @@ import { smsAutoEnabled } from "../../src/lib/smsTemplates";
 
 interface Env extends SmsEnv {
   ADMIN_SECRET: string;
+  /**
+   * Egen nøgle til cron-jobbet. Dét job skal kun kunne én ting, så det skal
+   * ikke have admin-adgangskoden — den ville give adgang til hele /admin,
+   * inklusive kundedata, fra en GitHub-log.
+   */
+  SMS_CRON_SECRET?: string;
 }
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, X-Admin-Token",
+  "Access-Control-Allow-Headers": "Content-Type, X-Admin-Token, X-Cron-Secret",
   "Content-Type": "application/json",
 };
 
@@ -59,9 +67,25 @@ async function allBookings(kv: KVNamespace): Promise<Array<Record<string, unknow
   return out;
 }
 
+/** Sammenligning uden at afsløre hvor langt man kom — nøglen må ikke kunne gættes tegn for tegn */
+function sameSecret(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const auth = await requireAdmin(context, corsHeaders);
-  if (auth instanceof Response) return auth;
+  // Enten en indlogget admin (knappen i /admin/kommunikation) eller cron-jobbet
+  // med sin egen nøgle. Uden nøglen svarer vi som før: 401 fra requireAdmin.
+  const cronKey = context.request.headers.get("X-Cron-Secret");
+  const cronOk =
+    !!cronKey && !!context.env.SMS_CRON_SECRET && sameSecret(cronKey, context.env.SMS_CRON_SECRET);
+
+  if (!cronOk) {
+    const auth = await requireAdmin(context, corsHeaders);
+    if (auth instanceof Response) return auth;
+  }
 
   const dryRun = new URL(context.request.url).searchParams.get("dryRun") === "1";
   const kv = context.env.BOOKINGS;

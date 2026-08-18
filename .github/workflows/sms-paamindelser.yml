@@ -15,14 +15,17 @@ jobs:
     steps:
       - name: Send dagens påmindelser
         env:
-          ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
+          # Egen nøgle til jobbet — ikke admin-adgangskoden. Den ville give
+          # adgang til hele /admin fra en GitHub-log, og jobbet skal kun
+          # kunne sende dagens påmindelser.
+          CRON_SECRET: ${{ secrets.SMS_CRON_SECRET }}
         run: |
-          if [ -z "$ADMIN_SECRET" ]; then
-            echo "ADMIN_SECRET mangler som GitHub-secret — springer over uden at fejle."
+          if [ -z "$CRON_SECRET" ]; then
+            echo "SMS_CRON_SECRET mangler som GitHub-secret — springer over uden at fejle."
             exit 0
           fi
           out=$(curl -sS -w '\n%{http_code}' -X POST \
-            -H "X-Admin-Token: $ADMIN_SECRET" \
+            -H "X-Cron-Secret: $CRON_SECRET" \
             https://lejhojtaler.dk/api/sms-paamindelser)
           code=$(printf '%s' "$out" | tail -n1)
           printf '%s\n' "$out" | sed '$d'
