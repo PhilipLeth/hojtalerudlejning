@@ -107,7 +107,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
     const text =
       (typeof body.text === "string" && body.text.trim().slice(0, MAX_TEXT)) ||
-      "Test fra Lejhøjtaler.dk — SMS virker.";
+      "Test fra Lejhojtaler.dk - SMS virker.";
 
     const ctx = await smsContext(context.env);
     const outcome = await sendBookingSms(

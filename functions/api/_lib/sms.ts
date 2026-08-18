@@ -6,7 +6,7 @@
  * — så en besked og dens log lander i samme KV-skrivning.
  */
 
-import { smsFromEnv, smsConfigured, toE164Dk } from "../../../src/lib/sms";
+import { gsmSafe, smsFromEnv, smsConfigured, toE164Dk } from "../../../src/lib/sms";
 import {
   KV_SMS_SETTINGS,
   DEFAULT_SMS_SETTINGS,
@@ -125,7 +125,10 @@ export async function sendBookingSms(
   }
 
   const vars = smsVarsFor(booking, { telefon: ctx.telefon, link: ctx.link });
-  const text = (opts.text ?? (type === "manuel" ? "" : buildSms(ctx.settings, type, vars).text)).trim();
+  // Også en besked skrevet i hånden renses for pile og typografiske tankestreger:
+  // ét tegn uden for GSM-7 tvinger hele beskeden over i UCS-2 og fordobler prisen.
+  // Emoji bliver stående — dem vælger man bevidst, og tælleren i admin advarer.
+  const text = gsmSafe(opts.text ?? (type === "manuel" ? "" : buildSms(ctx.settings, type, vars).text)).trim();
   if (!text) return { ok: false, skipped: "tom_tekst", type, to };
 
   const gateway = smsFromEnv(env, ctx.settings.sender);
