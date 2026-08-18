@@ -49,7 +49,7 @@ export default function Konferencepakke150Page() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/erhverv"
+              href="/erhverv#tilbud"
               className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
             >
               Få et tilbud

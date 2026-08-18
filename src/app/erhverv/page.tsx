@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import TopBar from "@/components/TopBar";
 import PhoneLink from "@/components/PhoneLink";
+import EventInquiryForm from "@/components/EventInquiryForm";
 
 export const metadata: Metadata = {
   title: "Erhverv — Lyd, lys og AV til professionelle events | Lejhøjtaler.dk",
@@ -101,8 +102,14 @@ export default function ErhvervPage() {
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <a
-              href="#pakker"
+              href="#tilbud"
               className="rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
+            >
+              Få et tilbud
+            </a>
+            <a
+              href="#pakker"
+              className="rounded-full border border-white/20 px-8 py-4 text-lg font-medium transition hover:bg-white/5"
             >
               Se pakker
             </a>
@@ -171,14 +178,27 @@ export default function ErhvervPage() {
         </div>
         <div className="mt-12 text-center">
           <a
-            href="/#book"
+            href="#tilbud"
             className="inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book erhvervspakke
+            Få et tilbud på jeres arrangement
           </a>
           <p className="mt-3 text-sm text-white/40">
             Eller ring til os på <PhoneLink className="text-brand-400 hover:underline" /> for en skræddersyet løsning
           </p>
+        </div>
+      </section>
+
+      {/* Tilbudsformular — det er her et arrangement bliver til en sag */}
+      <section id="tilbud" className="relative z-10 mx-auto max-w-3xl px-4 pb-20">
+        <h2 className="mb-3 text-center text-3xl font-bold">Fortæl om jeres arrangement</h2>
+        <p className="mx-auto mb-8 max-w-xl text-center text-white/50">
+          Skal I bare bruge en højttaler, kan I booke direkte. Skal der sørges for lyd, mikrofoner og lys til et helt
+          arrangement, er det nemmere at fortælle os hvad der skal ske — så sætter vi det sammen og sender en pris med
+          levering og opsætning.
+        </p>
+        <div className="glass rounded-2xl p-6 sm:p-8">
+          <EventInquiryForm />
         </div>
       </section>
 
@@ -194,8 +214,8 @@ export default function ErhvervPage() {
             <p className="mt-1 text-sm text-white/50">Levering mulig i KBH</p>
           </div>
           <div className="glass rounded-2xl p-6">
-            <p className="text-3xl font-bold text-brand-400">Betal ved afhentning</p>
-            <p className="mt-1 text-sm text-white/50">Betal ved afhentning</p>
+            <p className="text-3xl font-bold text-brand-400">Faktura</p>
+            <p className="mt-1 text-sm text-white/50">EAN eller CVR — betal efter arrangementet</p>
           </div>
         </div>
       </section>

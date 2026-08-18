@@ -57,7 +57,7 @@ describe("Pakkestigen", () => {
     for (const trin of alleTrin.filter((t) => t.productId === null)) {
       expect(trin.pris).toBeNull();
       expect(trin.koersel).toBe("tilbud");
-      expect(trin.href).toBe("/erhverv");
+      expect(trin.href).toBe("/erhverv#tilbud");
     }
   });
 

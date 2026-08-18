@@ -844,7 +844,7 @@ export const LADDER_FEST: LadderStep[] = [
   { productId: "pakke_fest_stor", navn: "Festpakke 100", gaester: "50-100", maxGaester: 100, href: "/festpakke-stor", pris: 895, hvad: '2× 12" højtalere + lys-pakke', koersel: "tilvalg" },
   { productId: "pakke_fest_150", navn: "Festpakke 150", gaester: "100-150", maxGaester: 150, href: "/festpakke-150", pris: 1495, hvad: '2× 12" + sub + stativer + lys + røg', koersel: "anbefalet" },
   { productId: "pakke_fest_250", navn: "Festpakke 250", gaester: "150-250", maxGaester: 250, href: "/festpakke-250", pris: 2295, hvad: '4× 12" + 2 subs + stativer + lys + røg', koersel: "anbefalet" },
-  { productId: null, navn: "Over 250 gæster", gaester: "250+", maxGaester: 9999, href: "/erhverv", pris: null, hvad: "Større tops og subs skaffes — tekniker med på dagen", koersel: "tilbud" },
+  { productId: null, navn: "Over 250 gæster", gaester: "250+", maxGaester: 9999, href: "/erhverv#tilbud", pris: null, hvad: "Større tops og subs skaffes — tekniker med på dagen", koersel: "tilbud" },
 ];
 
 /** Pakkerne fra feststigen, i rækkefølge — det forsiden viser. Lejlighedspakkerne
@@ -858,7 +858,7 @@ export const LADDER_TALE: LadderStep[] = [
   { productId: "pakke_praesentation", navn: "Præsentation", gaester: "op til 50", maxGaester: 50, href: "/pakke-praesentation", pris: 695, hvad: "Projektor + lærred + mikrofon", koersel: "tilvalg" },
   { productId: "pakke_konference", navn: "Møde 100", gaester: "50-100", maxGaester: 100, href: "/pakke-konference", pris: 1195, hvad: '55" skærm + headset + 2× 10" højtalere', koersel: "tilvalg" },
   { productId: "pakke_konference_150", navn: "Konference 150", gaester: "100-150", maxGaester: 150, href: "/konferencepakke-150", pris: 1795, hvad: '2× 12" + stativer + Shure mic + headset + 55" skærm', koersel: "anbefalet" },
-  { productId: null, navn: "Flere end to mikrofoner", gaester: "panel / hybrid", maxGaester: 9999, href: "/erhverv", pris: null, hvad: "Mixer, panelmikrofoner og lyd til Teams/Zoom", koersel: "tilbud" },
+  { productId: null, navn: "Flere end to mikrofoner", gaester: "panel / hybrid", maxGaester: 9999, href: "/erhverv#tilbud", pris: null, hvad: "Mixer, panelmikrofoner og lyd til Teams/Zoom", koersel: "tilbud" },
 ];
 
 /** Price multiplier by number of rental days — flat price regardless of duration */

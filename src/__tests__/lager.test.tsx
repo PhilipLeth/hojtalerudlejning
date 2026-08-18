@@ -356,13 +356,16 @@ function feltFor(name: string): HTMLInputElement {
 }
 
 describe("/admin/produkter", () => {
+  // Siden render­er hele kataloget, og det er vokset med pakkestigen og
+  // lejlighedspakkerne. Under fuld parallel kørsel tager første render over
+  // fem sekunder i jsdom — derfor mere luft her end standardgrænsen.
   it("har lagertallet på produktet", async () => {
     mockApi({ party: 2 });
     renderAdmin(<ProdukterPage />);
     await waitFor(() => expect(screen.getAllByText("Lager (antal)").length).toBeGreaterThan(0));
     expect(screen.getAllByText(/lager ikke sat/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/2 stk\./).length).toBeGreaterThan(0);
-  });
+  }, 15000);
 
   it("har overbooking ved siden af lageret", async () => {
     mockApi({ party: 2 }, { overbook: { party: 1 } });
