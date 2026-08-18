@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import AdminNav from "@/components/AdminNav";
 import AdminLogin from "@/components/AdminLogin";
 import SmsSettings from "@/components/admin/SmsSettings";
+import ConfirmationMail from "@/components/admin/ConfirmationMail";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import {
   DEFAULT_SETTINGS,
@@ -306,6 +307,9 @@ export default function KommunikationPage() {
               {saving ? "Gemmer…" : dirty ? "Gem" : "Gemt"}
             </button>
           </div>
+
+          {/* Bekræftelsen sendes ved statusskiftet og gemmes for sig */}
+          <ConfirmationMail secret={secret} />
 
           {/* SMS har sine egne skabeloner og sin egen afbryder — gemmes for sig */}
           <SmsSettings secret={secret} />

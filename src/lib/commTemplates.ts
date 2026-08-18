@@ -37,6 +37,11 @@ export const SHORTCODES: Shortcode[] = [
   { key: "rabatpct", label: "Rabatprocent på delekoden", example: "10" },
   { key: "anmeldelseslink", label: "Knap til Google-anmeldelse", example: "[knap: Anmeld os på Google]" },
   { key: "udsalg", label: "Weekendudsalget — tomt når det er slukket", example: "PS: Vi har weekendudsalg …" },
+  // Til bekræftelsen: hvor, hvornår og hvad der skal betales
+  { key: "sted", label: "Levering eller afhentning, med adresse", example: "Hentes hos os: Halvtolv 9, 1. th, 1436 København K" },
+  { key: "telefon", label: "Vores telefonnummer", example: "31 13 28 52" },
+  { key: "total", label: "Ordrens pris", example: "1.995 kr" },
+  { key: "betaling", label: "Hvad der mangler at blive betalt, og hvordan", example: "Betales ved afhentning — MobilePay eller kontant" },
 ];
 
 const SHORTCODE_KEYS = new Set(SHORTCODES.map((s) => s.key));
@@ -56,6 +61,16 @@ export interface CommTemplate {
 export interface CommSettings {
   /** Opfølgning når udstyret er registreret retur */
   followUp: CommTemplate;
+  /**
+   * Bekræftelsen når ordren godkendes.
+   *
+   * Kunden har fået en kvittering ved bestilling, men den siger kun "vi vender
+   * tilbage". Det her er beskeden, der gør aftalen fast: hvad, hvornår, hvor og
+   * hvad der skal betales. Den sendes ved at sætte ordren til bekræftet.
+   */
+  confirmation: CommTemplate;
+  /** Bekræftelsen sendes ved statusskiftet. Slået fra = ingen mail. */
+  confirmationAutoSend: boolean;
   /** Sendes automatisk ved retur. Slået fra = kun manuelt. */
   autoSend: boolean;
   staff: CommStaff[];
@@ -66,6 +81,30 @@ export interface CommSettings {
 
 export const DEFAULT_SETTINGS: CommSettings = {
   autoSend: true,
+  confirmationAutoSend: true,
+  confirmation: {
+    subject: "Din booking er bekræftet, {{fornavn}} 🔊",
+    body: `Hej {{fornavn}},
+
+Så er det på plads — vi har reserveret udstyret til dig.
+
+{{besked}}
+
+Du får: {{produkter}}
+Periode: {{periode}}
+{{sted}}
+
+{{betaling}}
+
+Alle kabler er med (iPhone m/ USB-C adapter, AUX og strøm), så du kan sætte til og spille med det samme. Vi viser dig, hvordan det virker, når du henter.
+
+Skal noget ændres — tidspunkt, adresse eller udstyr — så ring til os på {{telefon}}. Det er nemmere at flytte end at aflyse.
+
+Vi glæder os til at hjælpe jer godt i gang.
+
+Bedste hilsner,
+{{hilsen}}`,
+  },
   staff: [{ name: "Frederik", signature: "Frederik fra Lejhøjtaler.dk" }],
   referralCode: "del10",
   referralPct: 10,
@@ -241,6 +280,7 @@ export function normalizeCommCode(raw: unknown): string {
 export function parseCommSettings(raw: unknown): CommSettings {
   const obj = (raw ?? {}) as Partial<CommSettings>;
   const tpl = (obj.followUp ?? {}) as Partial<CommTemplate>;
+  const conf = (obj.confirmation ?? {}) as Partial<CommTemplate>;
 
   const staff = Array.isArray(obj.staff)
     ? obj.staff
@@ -260,6 +300,11 @@ export function parseCommSettings(raw: unknown): CommSettings {
       subject: cleanText(tpl.subject, DEFAULT_SETTINGS.followUp.subject, 200),
       body: cleanText(tpl.body, DEFAULT_SETTINGS.followUp.body),
     },
+    confirmation: {
+      subject: cleanText(conf.subject, DEFAULT_SETTINGS.confirmation.subject, 200),
+      body: cleanText(conf.body, DEFAULT_SETTINGS.confirmation.body),
+    },
+    confirmationAutoSend: obj.confirmationAutoSend !== false,
     autoSend: obj.autoSend !== false,
     staff: staff.length ? staff : DEFAULT_SETTINGS.staff,
     referralCode: /^[a-z0-9-]{2,30}$/.test(code) ? code : DEFAULT_SETTINGS.referralCode,
@@ -275,4 +320,57 @@ export function parseCommSettings(raw: unknown): CommSettings {
 export function signatureFor(settings: CommSettings, name?: string): string {
   if (!name) return "";
   return settings.staff.find((s) => s.name === name)?.signature || name;
+}
+
+export interface ConfirmationContext {
+  fornavn?: string;
+  navn?: string;
+  produkter?: string;
+  periode?: string;
+  /** "Vi leverer til …" eller "Hentes hos os: …" */
+  sted?: string;
+  /** Hvad der mangler at blive betalt, og hvordan */
+  betaling?: string;
+  total?: number;
+  telefon?: string;
+  ansvarlig?: string;
+  hilsen?: string;
+  besked?: string;
+  footer?: string;
+}
+
+/**
+ * Bekræftelsen på en godkendt ordre.
+ *
+ * Kvitteringen ved bestilling siger kun "vi vender tilbage". Det her er den
+ * besked, kunden gemmer og finder frem igen fredag eftermiddag, så den skal
+ * kunne stå alene: hvad, hvornår, hvor, og hvad der skal betales.
+ */
+export function buildConfirmationMail(
+  settings: CommSettings,
+  ctx: ConfirmationContext,
+): { subject: string; html: string } {
+  const FOOTER = ctx.footer || DEFAULT_FOOTER;
+  const vars: TemplateVars = {
+    fornavn: ctx.fornavn ?? "",
+    navn: ctx.navn ?? "",
+    produkter: ctx.produkter ?? "",
+    periode: ctx.periode ?? "",
+    sted: ctx.sted ?? "",
+    betaling: ctx.betaling ?? "",
+    total: ctx.total != null && Number.isFinite(ctx.total) ? `${Math.round(ctx.total).toLocaleString("da-DK")} kr` : "",
+    telefon: ctx.telefon ?? "",
+    ansvarlig: ctx.ansvarlig ?? "",
+    hilsen: ctx.hilsen || "Lejhøjtaler.dk",
+    besked: ctx.besked ?? "",
+  };
+
+  const subject = renderTemplate(settings.confirmation.subject, vars).trim() || "Din booking er bekræftet";
+  const body = renderTemplate(settings.confirmation.body, vars);
+  const html = `<div style="font-family:sans-serif;max-width:480px;color:#111;">
+${textToHtml(body)}
+${FOOTER}
+</div>`;
+
+  return { subject, html };
 }

@@ -7,6 +7,7 @@ import {
 } from "../../src/lib/commTemplates";
 import { KV_SALE_CAMPAIGN, parseCampaign } from "./_lib/weekendSale";
 import { recordSms, sendBookingSms } from "./_lib/sms";
+import { sendConfirmationMail } from "./_lib/confirmMail";
 import { paymentMail, sendOwnerMail } from "./_lib/ownerMail";
 
 import { requireAdmin } from "./_lib/adminAuth";
@@ -467,6 +468,21 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       } catch (e) {
         // Statusopdateringen må ikke fejle pga. mailen
         console.error("Review mail error:", e);
+      }
+    }
+
+    // Bekræftelsen på en godkendt ordre. Den er selve handlingen i at sætte
+    // ordren til bekræftet: kunden har indtil nu kun fået "vi vender tilbage".
+    // Sendes én gang — et skift frem og tilbage sender ikke igen.
+    if (body.status === "bekraeftet" && previousStatus !== "bekraeftet") {
+      try {
+        const result = await sendConfirmationMail(context.env, booking);
+        if (!result.ok && !result.skipped) {
+          console.error(`[bekraeftelse] mail fejlede på ${body.id}:`, result.error);
+        }
+      } catch (e) {
+        // Statusskiftet er det vigtige — det må en mail ikke kunne vælte
+        console.error("[bekraeftelse] uventet fejl:", e);
       }
     }
 

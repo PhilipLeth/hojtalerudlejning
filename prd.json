@@ -1036,6 +1036,14 @@
     "gendannelse": "Manuel og med vilje: hent filen i /admin/indstillinger og skriv de nøgler tilbage, der mangler. En automatisk gendannelses-knap ville kunne overskrive rigtige data med gamle ved et fejlklik.",
     "status": "Live 2026-08-18."
   },
+  "bekraeftelsesmail": {
+    "problem": "Kunden fik en kvittering ved bestilling (»vi vender tilbage hurtigst muligt«) og derefter ingenting, før udstyret skulle hentes. Statusskiftet til »bekræftet« sendte kun en SMS — og SMS-automatikken blev slukket 2026-08-18, så en godkendt ordre gav kunden ingen besked overhovedet.",
+    "loesning_2026_08_18": "Mail på skabelon i KV (comm_settings.confirmation), sendt når ordren skifter til bekraeftet. Én gang pr. ordre: confirmMailSentAt sættes, så et skift frem og tilbage ikke sender igen, og linjen står i ordrens kommunikationslog. Kan slås fra med confirmationAutoSend. Teksten redigeres i /admin/kommunikation med forhåndsvisning.",
+    "indhold": "Skal kunne stå alene, fordi det er den mail kunden finder frem igen fredag eftermiddag: hvad han får, perioden, hvor han henter (eller at vi kører ud), hvad der mangler at blive betalt og hvordan, at alle kabler er med, og nummeret han skal ringe til, hvis noget skal ændres.",
+    "shortcodes": "Ud over de eksisterende: {{sted}} (levering vs. afhentning, med adresse fra /admin/indstillinger), {{betaling}} (rest og metode — en online betalt ordre må ikke se ud som en regning), {{total}}, {{telefon}}.",
+    "faelde": "levering_begge og det gamle levering_opsaetning dækker BEGGE veje i ét tilvalg. Talte man dem som »kun levering«, ville kunden få besked på selv at aflevere udstyr, vi har lovet at hente. Dækket af en test.",
+    "status": "Live 2026-08-18."
+  },
   "sms_flow": {
     "provider": "Valgfri — GatewayAPI, CPSMS eller Twilio. Alle tre taler REST over fetch, så ingen kræver en SDK i en Worker. BESLUTNING 2026-08-17: udbyderen er ikke støbt ind i koden, fordi Frederik ikke kunne oprette sig hos GatewayAPI. resolveProvider() i src/lib/sms.ts vælger ud fra hvilke nøgler der ligger i Cloudflare; SMS_PROVIDER kan tvinge valget. Et skifte kræver kun nye secrets — hverken skabeloner, kommunikationslog eller påmindelser ved hvem der sender.",
     "providers": {
