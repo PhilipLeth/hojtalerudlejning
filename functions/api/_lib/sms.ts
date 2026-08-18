@@ -7,8 +7,8 @@
  */
 
 import { gsmSafe, smsFromEnv, smsConfigured, toE164Dk } from "../../../src/lib/sms";
-import {
 import { loadSiteSettings } from "./siteSettings";
+import {
   KV_SMS_SETTINGS,
   DEFAULT_SMS_SETTINGS,
   buildSms,
