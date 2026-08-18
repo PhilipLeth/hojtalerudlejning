@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180">
+  <rect width="240" height="180" fill="#f5efe6"/>
+  <g fill="none" stroke="#7a5c3e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- bordplade i perspektiv -->
+    <path d="M28 74 L196 60 L216 84 L44 100 Z" fill="#c9a678"/>
+    <path d="M28 74 L44 100" />
+    <!-- planker -->
+    <path d="M40 86 L204 71 M34 80 L200 66" stroke-width="2.5"/>
+    <!-- vanger og ben -->
+    <path d="M52 100 v46 M200 86 v44 M96 96 v48 M160 90 v46 M52 128 h48 M156 118 h44"/>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="28" fill="#2f6b46"/>
+  <!-- stol i søgeren: kamera-ramme + møbel -->
+  <g fill="none" stroke="#faf7f2" stroke-width="7" stroke-linecap="round">
+    <path d="M24 40 v-8 a8 8 0 0 1 8-8 h8"/>
+    <path d="M104 40 v-8 a8 8 0 0 0-8-8 h-8"/>
+    <path d="M24 88 v8 a8 8 0 0 0 8 8 h8"/>
+    <path d="M104 88 v8 a8 8 0 0 1-8 8 h-8"/>
+    <path d="M48 44 v22 h32 M48 66 v24 M80 66 v24 M48 66 h-8 v10 M80 66 h8 v10"/>
+  </g>
+</svg>

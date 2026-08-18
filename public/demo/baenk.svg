@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180">
+  <rect width="240" height="180" fill="#f5efe6"/>
+  <g fill="none" stroke="#27402f" stroke-width="5" stroke-linecap="round">
+    <!-- svungne gavle -->
+    <path d="M46 52 c-14 18 -12 40 -2 52 c-8 8 -8 30 0 44 M194 52 c14 18 12 40 2 52 c8 8 8 30 0 44"/>
+    <path d="M46 52 q10 -10 20 2 M194 52 q-10 -10 -20 2"/>
+    <!-- ryg-tremmer -->
+    <path d="M60 58 h120 M60 76 h120 M60 94 h120" stroke="#8a6a4a"/>
+    <!-- sæde-tremmer -->
+    <path d="M52 108 h136 M56 118 h128" stroke="#8a6a4a"/>
+    <!-- armlæn -->
+    <path d="M44 104 q18 -8 24 2 M196 104 q-18 -8 -24 2"/>
+  </g>
+</svg>

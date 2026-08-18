@@ -1,0 +1,12 @@
+{
+  "name": "Se møblerne i dit eget billede",
+  "short_name": "Møbelviz",
+  "description": "Tag et billede og se butikkens møbler stå i det, før du køber.",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#faf7f2",
+  "theme_color": "#2f6b46",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

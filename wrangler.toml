@@ -1,0 +1,15 @@
+name = "furniture-viz"
+pages_build_output_dir = "out"
+# Moderne compat-dato er vigtig — ellers konverterer formData() fil-parts til
+# strings i produktion (kendt bug fra lejhojtaler-projektet).
+compatibility_date = "2026-08-01"
+
+# Udfyld id efter: npx wrangler kv namespace create furniture-viz-data
+[[kv_namespaces]]
+binding = "DATA"
+id = "INDSAET-KV-NAMESPACE-ID-HER"
+
+# Opret bucket med: npx wrangler r2 bucket create furniture-viz-media
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "furniture-viz-media"
