@@ -1499,7 +1499,30 @@
         "virkning": "bookable = ejet + overbooking. Bekræftet live på /api/availability: festival 5 → 15, subwoofer 4 → 14. Ingen deploy nødvendig — det er data, ikke kode.",
         "hvor_ser_vi_regningen": "/admin/lager viser listen 'Skal skaffes', og belægningskalenderen markerer de dage der ligger ud over det ejede som overbooking. Det er dér Frederik ser hvad han har lovet væk.",
         "risiko": "Overbooking er et løfte om at skaffe. Bliver 'Skal skaffes'-listen ikke set i tide, står vi med en aflysning på en ordre til 4.000 kr i stedet for 500 kr. Jo større pakker, jo dyrere er en glemt liste."
+      },
+      "bygget_2026_08_18": {
+        "hvad": "Første halvdel af stigen er i kataloget og har egne sider: Festpakke 150 (1.495 kr), Festpakke 250 (2.295 kr) og Konferencepakke 150 (1.795 kr). Ny oversigtsside /lydanlaeg viser begge stiger — fest og tale — med gæsteantal, indhold, pris og book/tilbud pr. trin. Menuen har stigen øverst under Lyd & Højtalere, og de nye sider er i sitemap (72 sider).",
+        "kontrakt": "LADDER_FEST og LADDER_TALE i src/lib/products.ts er den ene kilde til /lydanlaeg. src/__tests__/pakkestige.test.ts låser at hvert trin peger på et produkt der findes, at prisen på siden er produktets pris (ellers står der ét beløb på siden og et andet i kurven), at stigen stiger, at hver pakke er billigere end delene, og at siderne er i menu og sitemap.",
+        "priser_uden_koersel": "Pakkerne er prissat UDEN kørsel, selvom reglen siger inkluderet fra 150 gæster. Bookingflowet har ét kørselsfelt der spørger alle, så en pakke med kørsel i prisen ville lade kunden vælge og betale for kørsel igen. Sider og kort skubber i stedet levering (795 kr begge veje) som det anbefalede valg. Inkluderet kørsel kræver flow-support og hører til story aov-2.",
+        "kendt_begraensning": "Festpakke 250 består af to festivalpakker og to subwoofere, men expandProductIds() i occupancy.ts folder pakkens dele ud gennem et Set — så belægningen reserverer ét af hvert, ikke to. Med overbooking på +10 blokerer det ingen bookinger, men kalenderen viser én bane hvor der burde stå to. Skal rettes hvis en pakke nogensinde skal kunne blive udsolgt korrekt.",
+        "mixer_status": "Mixeren er IKKE en blokering for det der er bygget. To trådløse mikrofoner går direkte i højtalernes indgange, og fire tops kan kædes fra én kilde. Mixeren er nødvendig fra tre mikrofoner, ved panel, og ved hybridmøder med lyd til Teams/Zoom — de tilfælde sendes til tilbud på /erhverv indtil den er købt."
+      },
+      "lejlighedspakker_2026_08_18": {
+        "hvad": "Seks nye pakker, én pr. område kunden faktisk søger på: Bryllupspakke 1.695, Firmafestpakke 1.795, Udendørspakke 795 (Soundboks + ekstra batteri + lyskæde, ingen strøm), Studenterpakken 745, Filmaften-pakken 995 (projektor + lærred + højtalere) og Stemningslys-pakken 695 (4 uplights + lyskæde + discokugle). Alle med egen side, i menuen og i sitemap (78 sider).",
+        "anledningssiderne_peger_paa_pakker": "Før anbefalede anledningssiderne et enkeltprodukt eller en generisk festpakke: polterabend anbefalede en højtaler til 345 kr, studenterkørsel en Soundboks til 595, fødselsdag og konfirmation den lille festpakke til 495. Nu peger hver side på en pakke — bryllup 1.695, julefrokost 1.795, havefest og polterabend 795, studenterkørsel 745, fødselsdag og konfirmation 895, nytår 1.495. Ankeret på siden er dermed 1,5-5× højere end før, på trafik vi allerede har.",
+        "kontrakt": "OCCASION_PACKAGES i src/lib/products.ts kobler anledning → pakke, og testen læser anledningssidens kildekode og kræver at både produkt-id og pris står på siden. Ellers siger siden ét og kurven noget andet. En anden test kræver at HVER pakke med en side kan findes i menuen — den fandt med det samme fem pakker (Præsentation, Konference, Tale & musik og de to karaokepakker) der aldrig har været i menuen.",
+        "forsiden_er_strammet": "Der er nu otte lyd-pakker, og forsiden viste før dem alle. Forsiden og /lej-hojtaler viser i stedet FEST_LADDER_IDS — de fire trin i feststigen — under overskriften 'Vælg anlæg efter antal gæster'. Lejlighedspakkerne hører til på deres egne sider og på anledningssiderne.",
+        "stemningslys_rammer_annoncerne": "AG 2 (Festlys & diskokugle) og AG 5 (Lyskæder) bruger rigtige penge på lys-søgninger og landede før på enkeltprodukter til 195-495 kr. Stemningslys-pakken på 695 kr er det første pakketilbud den trafik kan lande på."
       }
+    },
+    "forespoergselsflow": {
+      "opdateret": "2026-08-18",
+      "hvorfor": "To slags henvendelser, to veje. 'Jeg skal bruge en Soundboks på fredag' er en booking: kunden ved hvad han vil have, prisen står fast, og /book klarer den uden et menneske. 'Vi er 80 til reception på torsdag, kan I sørge for lyd, mikrofoner og lys?' er en forespørgsel: der er et arrangement der skal forstås først, og svaret er et tilbud. Før havde vi kun den første vej — og en kontaktformular med ét fritekstfelt.",
+      "hvad_der_manglede": "Tilbudsknapperne på /lydanlaeg, /festpakke-250 og /konferencepakke-150 pegede på /erhverv, hvor der ikke var nogen formular; sidens egen knap hed 'Book erhvervspakke' og sendte folk tilbage i DIY-flowet. Den eneste vej ind var /kontakt?emne=erhverv, som kun var linket fra burgermenuen — og som spørger om ingenting.",
+      "bygget": "EventInquiryForm på /erhverv#tilbud spørger om de fem ting vi altid mangler: hvornår, hvor mange, hvor (inde/ude), hvad er det for et arrangement, og hvad skal vi sørge for (lyd, mikrofoner, lys, skærm, røg, levering, tekniker) — plus firma og EAN til fakturaen. Sendes gennem /api/contact og lander i firmaets indbakke (info@, fra /admin/indstillinger) med kundens adresse som reply-to.",
+      "emnelinjen": "Emnet bliver 'Forespørgsel · 80 gæster · Reception: Mette Hansen', så størrelsen kan ses i indbakken uden at åbne mailen. Serveren skærer emnet ved 40 tegn, og en test låser at vi holder os under.",
+      "valgt": "Beskeden sættes sammen i klienten og sendes som ét tekstfelt gennem den eksisterende /api/contact. Endpointet blev bevidst ikke rørt — en anden session arbejder i filen lige nu, og resultatet i indbakken er det samme.",
+      "mangler": "Forespørgslen findes kun som en mail. Den bliver ikke til en sag i /admin, har ingen status, kan ikke følges op og bliver ikke til en booking uden at nogen taster den ind igen. Det er næste skridt (story aov-5)."
     }
   },
   "i18n": {
@@ -2386,7 +2409,7 @@
     {
       "id": "erhverv-tilbudsflow",
       "title": "/erhverv: tilbudsformular og plads i menuen",
-      "description": "Siden er forældreløs: ikke i NAV_CATEGORIES, CTA sender til DIY-flowet, AG 32 er paused. Tilføj den til navigationen, byg en tilbudsformular (dato, sted, antal gæster, hvad skal der ske, EAN/CVR) der lander som en forespørgsel i /admin, og skriv faktura/EAN, forsikring og 'større udstyr skaffes via partner' på siden. Først derefter tændes AG 32.",
+      "description": "Siden er forældreløs: ikke i NAV_CATEGORIES, CTA sender til DIY-flowet, AG 32 er paused. Tilføj den til navigationen, byg en tilbudsformular (dato, sted, antal gæster, hvad skal der ske, EAN/CVR) der lander som en forespørgsel i /admin, og skriv faktura/EAN, forsikring og 'større udstyr skaffes via partner' på siden. Først derefter tændes AG 32. DELVIST BYGGET 2026-08-18: formularen er live på /erhverv#tilbud og siden er i menuen. Mangler stadig at forespørgslen bliver en sag i /admin — se task forespoergsel-som-sag.",
       "priority": "high",
       "status": "todo",
       "epic": "epic-aov",
@@ -2565,6 +2588,40 @@
       "priority": "medium",
       "status": "pending",
       "hoerer_til": "epic_aov / aov-6"
+    },
+    {
+      "id": "pakke-lejligheder",
+      "title": "Lejlighedspakker: bryllup, firmafest, udendørs, student, film, lys",
+      "description": "Seks pakker med egne sider, koblet til anledningssiderne via OCCASION_PACKAGES. BYGGET 2026-08-18 — se epic_aov.pakkearkitektur.lejlighedspakker_2026_08_18.",
+      "priority": "high",
+      "status": "done",
+      "epic": "epic-aov",
+      "story": "aov-4"
+    },
+    {
+      "id": "ads-landingssider-pakker",
+      "title": "Ads: send lys- og anledningsgrupper til de nye pakkesider",
+      "description": "AG 2 og AG 5 lander på enkeltprodukter til 195-495 kr; de bør lande på /stemningslys (695). Anledningsgrupperne AG 16-23 peger på anledningssider der nu anbefaler en pakke — det er først nu de er værd at tænde.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-6"
+    },
+    {
+      "id": "forespoergsel-som-sag",
+      "title": "Forespørgsler skal blive til sager i /admin",
+      "description": "EventInquiryForm sender i dag kun en mail. En forespørgsel bør gemmes i KV med status (ny / tilbud sendt / vundet / tabt), kunne følges op, og kunne konverteres til en booking uden at taste alt ind igen. Ellers lever de største ordrer i en indbakke.",
+      "priority": "high",
+      "status": "todo",
+      "epic": "epic-aov",
+      "story": "aov-5"
+    },
+    {
+      "id": "erhverv-500-paastand",
+      "title": "'500+ erhvervsudlejninger' på /erhverv er ikke sandt",
+      "description": "Trust-boksen på /erhverv påstår 500+ erhvervsudlejninger. Der er 14 bookinger i KV i alt. Påstanden skal væk eller erstattes af noget der kan dokumenteres — den står nu lige over en tilbudsformular til B2B-kunder.",
+      "priority": "high",
+      "status": "todo"
     }
   ],
   "status": {
