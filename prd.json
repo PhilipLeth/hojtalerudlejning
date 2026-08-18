@@ -2527,44 +2527,44 @@
       "story": "aov-0"
     },
     {
-      "id": "aov-lyskaeder-bryllup",
-      "area": "AOV",
+      "id": "ads-lyskaeder-bryllup",
       "title": "AOV: lyskæder til bryllup — 100 søgn./md helt udækket",
       "description": "Keyword Planner: 'lyskæder til bryllup' 50/md og 'lyskæder bryllup' 50/md. Vi har hverken frasen eller nogen variant af den — AG 5 har 'lej lyskæder til bryllup', men phrase match kræver lejeordet i søgningen, så den fanger ikke de 100. AG 16 - Bryllup er pauset og peger på /bryllup, som allerede fremhæver lyskæder (9 gange), uplights (12) og festpakker (27). Bryllup er kontoens højeste ordreværdi: der bookes lyd + lys + mikrofon samlet, ikke ét produkt. Handling: tænd AG 16 med anledning×produkt-fraser frem for generiske bryllupsord.",
       "priority": "high",
-      "status": "pending"
+      "status": "pending",
+      "hoerer_til": "epic_aov / aov-6"
     },
     {
-      "id": "aov-lys-havefest",
-      "area": "AOV",
+      "id": "ads-lys-havefest",
       "title": "AOV: lys til havefest — 70 søgn./md udækket",
       "description": "'lys til havefest' 20/md, 'lyskæder til havefest' 20/md, 'lyskæde havefest' 20/md, 'havefest lys' 10/md. Ingen dækning. AG 18 - Havefest er pauset og peger på /havefest, som nævner lyskæder 28 gange og uplights 12. Sæsonbetonet: relevant fra maj til september, så den bør tændes nu og pauses igen i oktober.",
       "priority": "high",
-      "status": "pending"
+      "status": "pending",
+      "hoerer_til": "epic_aov / aov-6"
     },
     {
-      "id": "aov-negative-stearinlys",
-      "area": "AOV",
+      "id": "ads-negative-stearinlys",
       "title": "AOV: negative keywords før vi byder på 'lys til <anledning>'",
       "description": "Volumen på de bare 'lys til X'-fraser er forurenet. Planner viser 'stearinlys bryllup', 'stearinlys til konfirmation', 'bryllupssang med lys' og 'bryllupssange med lys' i samme klynge — det er stearinlys og bryllupssange, ikke festbelysning. Byder vi på 'lys til bryllup' i phrase match uden værn, betaler vi for begge dele. Tilføj negative: stearinlys, lysestage, levende lys, bloklys, kalenderlys, sang, sange, salme. Skal på plads FØR aov-lyskaeder-bryllup og aov-lys-havefest tændes.",
       "priority": "high",
-      "status": "pending"
+      "status": "pending",
+      "hoerer_til": "epic_aov / aov-6"
     },
     {
-      "id": "aov-anledninger-saeson",
-      "area": "AOV",
+      "id": "ads-anledninger-saeson",
       "title": "AOV: tænd anledningsgrupperne efter sæson",
       "description": "Otte anledningsgrupper (AG 16-23: bryllup, fødselsdag, havefest, julefrokost, konfirmation, nytår, polterabend, studenterkørsel) er pausede, men har rigtige landingssider og fik brugbare bud 17. august. Anledningssøgninger har højere ordreværdi end produktsøgninger, fordi kunden skal bruge et samlet setup. De skal tændes og pauses efter sæson frem for at stå tændt året rundt: julefrokost i september, konfirmation og bryllup i det tidlige forår, havefest maj-september, studenterkørsel i juni, nytår i december.",
       "priority": "medium",
-      "status": "pending"
+      "status": "pending",
+      "hoerer_til": "epic_aov / aov-6"
     },
     {
-      "id": "aov-maal-ordrevaerdi-pr-gruppe",
-      "area": "AOV",
+      "id": "ads-maal-ordrevaerdi-pr-gruppe",
       "title": "AOV: mål faktisk ordreværdi pr. annoncegruppe",
       "description": "Antagelsen om at anledningssøgninger giver højere ordreværdi er ubekræftet på egne data. Når konverteringsvinduet er rent (junk-handlingerne ruller ud af 30-dages-vinduet omkring 10. september), så træk conversions_value pr. ad_group og se om bryllup/havefest reelt ligger over produktgrupperne. Kan segmenteres på labelen 'BOFU — købsintention' (customers/4410207627/labels/22270631751). Uden det tal er sæsonprioriteringen et gæt.",
       "priority": "medium",
-      "status": "pending"
+      "status": "pending",
+      "hoerer_til": "epic_aov / aov-6"
     }
   ],
   "status": {
@@ -3109,34 +3109,29 @@
         "status": "blocked"
       },
       {
-        "id": "aov-lyskaeder-bryllup",
+        "id": "ads-lyskaeder-bryllup",
         "title": "AOV: lyskæder til bryllup — 100 søgn./md helt udækket",
-        "status": "pending",
-        "area": "AOV"
+        "status": "pending"
       },
       {
-        "id": "aov-lys-havefest",
+        "id": "ads-lys-havefest",
         "title": "AOV: lys til havefest — 70 søgn./md udækket",
-        "status": "pending",
-        "area": "AOV"
+        "status": "pending"
       },
       {
-        "id": "aov-negative-stearinlys",
+        "id": "ads-negative-stearinlys",
         "title": "AOV: negative keywords før vi byder på 'lys til <anledning>'",
-        "status": "pending",
-        "area": "AOV"
+        "status": "pending"
       },
       {
-        "id": "aov-anledninger-saeson",
+        "id": "ads-anledninger-saeson",
         "title": "AOV: tænd anledningsgrupperne efter sæson",
-        "status": "pending",
-        "area": "AOV"
+        "status": "pending"
       },
       {
-        "id": "aov-maal-ordrevaerdi-pr-gruppe",
+        "id": "ads-maal-ordrevaerdi-pr-gruppe",
         "title": "AOV: mål faktisk ordreværdi pr. annoncegruppe",
-        "status": "pending",
-        "area": "AOV"
+        "status": "pending"
       }
     ],
     "note": "'cancelled' betyder afvist/rullet tilbage — IKKE åbent arbejde. Booking er og forbliver en drawer-kurv, se booking_drawer-sektionen."
