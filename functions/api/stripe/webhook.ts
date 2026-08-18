@@ -4,11 +4,15 @@
  * async WebCrypto).
  */
 import Stripe from "stripe";
+import { paymentMail, sendOwnerMail } from "../_lib/ownerMail";
 
 interface Env {
   BOOKINGS: KVNamespace;
   STRIPE_SECRET_KEY: string;
   STRIPE_WEBHOOK_SECRET: string;
+  /** Kvittering til os selv — ellers findes online-betalingen kun i KV */
+  RESEND_API_KEY?: string;
+  NOTIFY_EMAIL?: string;
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -68,6 +72,23 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           booking.payments = payments;
           await context.env.BOOKINGS.put(bookingId, JSON.stringify(booking));
           console.log("[stripe] booking marked paid:", bookingId, session.amount_total);
+
+          // Online betalinger stod ellers kun i KV: ingen mail, ingen kvittering
+          // at slå op i, når regnskabet skal stemme.
+          const paidSum = payments.reduce((sum: number, p: { amount?: number }) => sum + (Number(p?.amount) || 0), 0);
+          await sendOwnerMail(
+            context.env,
+            paymentMail({
+              bookingId,
+              name: String(booking.name || "Ukendt"),
+              period: typeof booking.period === "string" ? booking.period : undefined,
+              total: Number(booking.total) || 0,
+              paid: paidSum,
+              amount: kr,
+              method: "Kort (Stripe)",
+              note: session.id,
+            }),
+          ).catch((e) => console.error("[stripe] kvitteringsmail fejlede:", e));
         } catch (e) {
           console.error("[stripe] could not update booking:", bookingId, e);
         }

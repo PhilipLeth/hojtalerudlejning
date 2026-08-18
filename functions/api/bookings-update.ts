@@ -7,6 +7,7 @@ import {
 } from "../../src/lib/commTemplates";
 import { KV_SALE_CAMPAIGN, parseCampaign } from "./_lib/weekendSale";
 import { recordSms, sendBookingSms } from "./_lib/sms";
+import { paymentMail, sendOwnerMail } from "./_lib/ownerMail";
 
 import { requireAdmin } from "./_lib/adminAuth";
 import { loadSiteSettings, mailFooter } from "./_lib/siteSettings";
@@ -15,6 +16,8 @@ interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
   RESEND_API_KEY: string;
+  /** Kvitteringer til os selv, så betalinger også findes i indbakken */
+  NOTIFY_EMAIL?: string;
   /** Direkte "skriv en anmeldelse"-link fra Google Business Profile (g.page/r/…/review) */
   GOOGLE_REVIEW_URL?: string;
   /** SMS via GatewayAPI — se /admin/kommunikation */
@@ -321,6 +324,28 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       // Den gamle model holdes i sync, så alt der endnu læser paidManual
       // ser det samme som betalingslisten
       const paidSum = booking.payments.reduce((s: number, p: { amount?: number }) => s + (Number(p?.amount) || 0), 0);
+
+      // Kvittering til os selv. KV er ellers eneste sted en betaling findes,
+      // og en fejlsletning i admin ville tage den med sig.
+      if (body.action === "add_payment" || body.action === "delete_payment") {
+        const changed = body.action === "add_payment"
+          ? booking.payments[booking.payments.length - 1]
+          : { amount: 0, method: "—" };
+        const mail = paymentMail({
+          bookingId: body.id,
+          name: String(booking.name || "Ukendt"),
+          period: typeof booking.period === "string" ? booking.period : undefined,
+          total: Number(booking.total) || 0,
+          paid: paidSum,
+          amount: Number(changed?.amount) || 0,
+          method: String(changed?.method || "—"),
+          note: typeof changed?.note === "string" ? changed.note : undefined,
+          by: updatedBy,
+          removed: body.action === "delete_payment",
+        });
+        // Må ikke kunne vælte registreringen — betalingen er det vigtige
+        await sendOwnerMail(context.env, mail).catch((e) => console.error("[betaling] mail fejlede:", e));
+      }
       booking.paidManual = paidSum > 0 && paidSum >= (Number(booking.total) || 0) - 1;
       booking.updatedAt = now;
       booking.updatedBy = updatedBy;

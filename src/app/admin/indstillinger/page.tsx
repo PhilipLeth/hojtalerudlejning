@@ -1,6 +1,7 @@
 "use client";
 
 import AdminNav from "@/components/AdminNav";
+import BackupPanel from "@/components/admin/BackupPanel";
 import AdminLogin from "@/components/AdminLogin";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 
@@ -329,6 +330,9 @@ export default function IndstillingerPage() {
           </button>
         }
       />
+
+      {/* KV har ingen fortryd — kopierne skal kunne ses, ikke bare tages */}
+      <BackupPanel secret={secret} />
       <div style={{ maxWidth: "640px", margin: "0 auto", padding: "20px" }}>
         <p style={{ color: "#888", fontSize: "12px", margin: "0 0 20px" }}>
           Ændringer slår igennem med det samme på hjemmesiden (header, footer, book-knap

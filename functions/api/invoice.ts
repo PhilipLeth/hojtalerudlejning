@@ -11,11 +11,14 @@ import { formatAddress } from "../../src/lib/siteInfo";
 import { formatDkPhone } from "../../src/lib/phone";
 
 import { requireAdmin } from "./_lib/adminAuth";
+import { notifyRecipients } from "./_lib/notify";
 
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET: string;
   RESEND_API_KEY: string;
+  /** Kopi af udstedte fakturaer til os selv */
+  NOTIFY_EMAIL?: string;
 }
 
 const cors = {
@@ -145,6 +148,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     body: JSON.stringify({
       from: "Lejhøjtaler.dk <info@lejhojtaler.dk>",
       to: [booking.email],
+      // Kopi til os selv: en udstedt faktura skal kunne findes igen, og
+      // fakturanumrene er en løbende serie vi skal kunne dokumentere
+      bcc: notifyRecipients(context.env.NOTIFY_EMAIL),
       reply_to: site.company.email,
       subject,
       html,

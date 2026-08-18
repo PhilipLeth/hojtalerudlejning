@@ -296,6 +296,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       ${data.deliveryAddress ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Adresse:</td><td>${data.deliveryAddress}</td></tr>` : ""}
       ${discountRow}
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Total:</td><td><strong>${data.total} kr</strong></td></tr>
+      <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Betaling:</td><td>${data.paymentChoice === "online" ? "Kunden betaler online (Stripe)" : "Betales ved afhentning"}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Upsell tilbudt:</td><td>${upsell ? `${upsell.title} @ ${upsell.offerPrice} kr (norm. ${upsell.listPrice})` : "Ingen"}</td></tr>
       <tr><td colspan="2" style="padding-top:12px;border-top:1px solid #ddd;"></td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Navn:</td><td>${data.name}</td></tr>

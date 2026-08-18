@@ -869,6 +869,12 @@
       "description": "Opdater booking-status eller slet (action=delete). Ved status=afleveret sendes automatisk follow-up anmeldelsesmail (Google review, Resend) — kun én gang pr. booking (reviewMailSentAt). Review-link: env GOOGLE_REVIEW_URL, fallback Google Maps-søgning.",
       "status": "live"
     },
+    "backup": {
+      "path": "/api/backup",
+      "method": "GET/POST",
+      "description": "Admin. POST: tag dagens kopi af KV til R2 og ryd kopier ældre end 90 dage (også med cron-nøglen X-Cron-Secret fra .github/workflows/backup.yml). GET: liste over kopier, eller ?file=backups/…json for at hente en ned. Kun login kan hente filerne.",
+      "status": "live"
+    },
     "sms": {
       "path": "/api/sms",
       "method": "GET/POST",
@@ -1019,6 +1025,16 @@
       "ui": "Udstyrs-dropdownen i admin skriver '↳ sender anmeldelsesmail til kunden' når næste trin er Returneret og mailen ikke er sendt endnu.",
       "logges_i": "booking.communications — admin viser 'Sendte mails' i detaljevisningen."
     }
+  },
+  "backup_og_kvitteringer": {
+    "problem": "Alt hvad forretningen ved — ordrer, betalinger, fakturanumre, depositum, kommunikationslog — lå kun i KV, og KV har ingen fortryd: en overskrevet eller slettet nøgle er væk. Sletteknappen i /admin fjerner en ordre permanent. Samtidig fik vi INGEN mail om betalinger: Stripe-webhooken skrev kun i KV, manuelle MobilePay/kontant-registreringer og depositum sendte intet, og fakturaen gik kun til kunden — ikke en kopi til os selv. Ordre-mailen viste ikke engang om kunden valgte at betale online eller ved afhentning.",
+    "loesning_2026_08_18": {
+      "kvitteringer_til_info": "functions/api/_lib/ownerMail.ts sender til NOTIFY_EMAIL ved: manuel betaling registreret eller fjernet (bookings-update.ts), gennemført online betaling (stripe/webhook.ts). Mailen siger beløb, metode, hvem der kvitterede, betalt i alt og hvad der mangler. Fakturaen bcc'es nu til NOTIFY_EMAIL, og ordre-mailen har fået en Betaling-række (online vs. ved afhentning). Fejler blødt: en mail til os selv må aldrig kunne vælte den betaling, den hænger på.",
+      "natlig_kopi": "functions/api/_lib/backup.ts + functions/api/backup.ts. Hele KV som én JSON-fil i R2 under backups/YYYY-MM-DD.json, 90 dages historik, én fil pr. dag. Sessioner (admin_session_*) og gamle base64-billeder (image:*) springes over — sessioner ville lade en gammel kopi genskabe et udløbet login. .github/workflows/backup.yml kører 01:30 UTC (03:30 dansk) med samme cron-nøgle som SMS-påmindelserne. /admin/indstillinger viser kopierne, kan hente dem ned og advarer, hvis den nyeste er over to døgn gammel.",
+      "hvorfor_r2": "Samme Cloudflare-konto, men en anden tjeneste end KV, så en fejl ét sted ikke tager det andet med. Repoet er OFFENTLIGT, så kundedata må aldrig lægges i git som backup. Filerne kan ikke hentes udefra: /api/image/[key] slår kun op under img/, og /api/backup kræver login — cron-nøglen kan tage en kopi, men ikke hente den ned."
+    },
+    "gendannelse": "Manuel og med vilje: hent filen i /admin/indstillinger og skriv de nøgler tilbage, der mangler. En automatisk gendannelses-knap ville kunne overskrive rigtige data med gamle ved et fejlklik.",
+    "status": "Live 2026-08-18."
   },
   "sms_flow": {
     "provider": "Valgfri — GatewayAPI, CPSMS eller Twilio. Alle tre taler REST over fetch, så ingen kræver en SDK i en Worker. BESLUTNING 2026-08-17: udbyderen er ikke støbt ind i koden, fordi Frederik ikke kunne oprette sig hos GatewayAPI. resolveProvider() i src/lib/sms.ts vælger ud fra hvilke nøgler der ligger i Cloudflare; SMS_PROVIDER kan tvinge valget. Et skifte kræver kun nye secrets — hverken skabeloner, kommunikationslog eller påmindelser ved hvem der sender.",
