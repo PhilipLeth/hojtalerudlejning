@@ -101,6 +101,43 @@ const SMS_KEYS = new Set(SMS_SHORTCODES.map((s) => s.key));
 
 // ---------------------------------------------------------------- indstillinger
 
+/**
+ * Hurtigbeskeder til den enkelte ordre.
+ *
+ * Det er DEM, SMS i praksis handler om: Frederik står med telefonen og skal
+ * sige én ting til én kunde. De har ingen automatik og intet til/fra — de er
+ * blot færdigskrevne, så en besked tager ét tryk i stedet for at skulle
+ * formuleres i døren med en højtaler under armen.
+ */
+export interface SmsSnippet {
+  id: string;
+  label: string;
+  text: string;
+}
+
+export const DEFAULT_SNIPPETS: SmsSnippet[] = [
+  {
+    id: "paa_vej",
+    label: "Vi er på vej",
+    text: "Hej {{fornavn}}! Vi er på vej med {{produkter}} og er hos jer om ca. 30 min. Mvh Lejhøjtaler",
+  },
+  {
+    id: "klar",
+    label: "Udstyret er klar",
+    text: "Hej {{fornavn}}! {{produkter}} står klar til afhentning. {{sted}}. Ring {{telefon}} når du er på vej.",
+  },
+  {
+    id: "udenfor",
+    label: "Vi står udenfor",
+    text: "Hej {{fornavn}}! Vi holder udenfor med udstyret. Ring {{telefon}} hvis vi skal hjælpe det ind.",
+  },
+  {
+    id: "hentes_i_dag",
+    label: "Vi henter i dag",
+    text: "Hej {{fornavn}}! Vi henter udstyret i dag som aftalt. Stil det gerne samlet og klar. Ring {{telefon}} hvis tidspunktet driller.",
+  },
+]
+
 export interface SmsTemplateSetting {
   enabled: boolean;
   text: string;
@@ -112,6 +149,8 @@ export interface SmsSettings {
   /** Afsendernavn hos GatewayAPI: max 11 tegn, kun bogstaver og tal */
   sender: string;
   templates: Record<SmsTypeId, SmsTemplateSetting>;
+  /** Færdigskrevne beskeder til den enkelte ordre — manuelle, uden automatik */
+  snippets: SmsSnippet[];
 }
 
 /**
@@ -130,6 +169,7 @@ export interface SmsSettings {
 export const DEFAULT_SMS_SETTINGS: SmsSettings = {
   enabled: true,
   sender: "Lejhojtaler",
+  snippets: DEFAULT_SNIPPETS,
   templates: {
     // Mailen dækker det samme, så den er slukket som udgangspunkt
     booking_modtaget: {
@@ -179,8 +219,21 @@ export function parseSmsSettings(raw: unknown): SmsSettings {
 
   const sender = String(obj.sender ?? "").replace(/[^A-Za-z0-9]/g, "").slice(0, 11);
 
+  const snippets = Array.isArray(obj.snippets)
+    ? obj.snippets
+        .filter((sn): sn is SmsSnippet => !!sn && typeof sn.id === "string" && typeof sn.text === "string")
+        .map((sn) => ({
+          id: String(sn.id).slice(0, 40),
+          label: String(sn.label ?? sn.id).trim().slice(0, 40) || String(sn.id),
+          text: String(sn.text).trim().slice(0, 480),
+        }))
+        .filter((sn) => sn.text.length > 0)
+        .slice(0, 12)
+    : [];
+
   return {
     enabled: obj.enabled !== false,
+    snippets: snippets.length ? snippets : DEFAULT_SNIPPETS,
     sender: sender || DEFAULT_SMS_SETTINGS.sender,
     templates,
   };
@@ -288,7 +341,7 @@ export function renderSms(text: string, vars: TemplateVars): string {
 }
 
 export interface BuiltSms {
-  type: SmsTypeId;
+  type: SmsTypeId | "manuel";
   text: string;
   length: SmsLength;
 }
@@ -327,4 +380,12 @@ export function smsLogEntry(type: string, to: string, text: string, sentAt = new
     sentAt,
     note: text.slice(0, 300),
   };
+}
+
+/** En hurtigbesked som den ville blive sendt */
+export function buildSnippet(settings: SmsSettings, id: string, vars: TemplateVars): BuiltSms | null {
+  const snippet = (settings.snippets ?? DEFAULT_SNIPPETS).find((s) => s.id === id);
+  if (!snippet) return null;
+  const text = renderSms(snippet.text, vars);
+  return { type: "manuel", text, length: smsLength(text) };
 }

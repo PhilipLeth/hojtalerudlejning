@@ -41,7 +41,7 @@ import {
 } from "@/lib/payments";
 import AdminNav from "@/components/AdminNav";
 import AdminLogin from "@/components/AdminLogin";
-import SendSmsBox from "@/components/admin/SendSmsBox";
+import SendSmsBox, { SmsModal } from "@/components/admin/SendSmsBox";
 import { useAdminAuth, getAdminToken, adminFetch } from "@/lib/useAdminAuth";
 
 interface Booking extends OrderBooking {
@@ -356,6 +356,8 @@ export default function AdminPage() {
   const [filterStatus, setFilterStatus] = useState<string>("alle");
   const [sortBy, setSortBy] = useState<SortField>("status");
   const [expanded, setExpanded] = useState<string | null>(null);
+  /** Ordren hvis SMS-felt er åbent oven på listen */
+  const [smsFor, setSmsFor] = useState<Booking | null>(null);
   const isMobile = useIsMobile();
 
   const fetchBookings = useCallback(async () => {
@@ -693,13 +695,25 @@ export default function AdminPage() {
                 <span style={{ color: "#aaa", fontSize: "12px" }}>{group.length} booking{group.length !== 1 ? "er" : ""}</span>
                 {hint && <span style={{ color: "#bbb", fontSize: "12px" }}>· {hint}</span>}
               </div>
-              <BookingList mobile={isMobile} payments={paymentActions} bookings={group} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
+              <BookingList mobile={isMobile} openSms={setSmsFor} payments={paymentActions} bookings={group} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
             </div>
           ))
         ) : (
-          <BookingList mobile={isMobile} payments={paymentActions} bookings={filtered} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
+          <BookingList mobile={isMobile} openSms={setSmsFor} payments={paymentActions} bookings={filtered} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
         )}
       </main>
+
+      {/* SMS oven på listen. Sendte beskeder skrives ind på ordren med det
+          samme, så kommunikationsloggen er opdateret uden at hente listen igen. */}
+      <SmsModal
+        booking={smsFor}
+        secret={getAdminToken()}
+        onClose={() => setSmsFor(null)}
+        onUpdated={(updated: Record<string, unknown>) => {
+          const id = String((updated as { id?: unknown }).id ?? "");
+          setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, ...(updated as Partial<Booking>) } : b)));
+        }}
+      />
     </div>
   );
 }
@@ -880,6 +894,8 @@ export interface PaymentActions {
 }
 
 interface ListProps {
+  /** Åbn SMS-feltet for en ordre direkte fra listen */
+  openSms: (b: Booking) => void;
   bookings: Booking[];
   payments: PaymentActions;
   expanded: string | null;
@@ -1135,7 +1151,7 @@ function shortDate(d: Date): string {
  * folder den ud. Før fyldte ét kort en halv skærm, og man kunne se tre
  * bookinger ved at scrolle længe; nu er hele weekenden synlig på én gang.
  */
-function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments }: ListProps) {
+function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments, openSms }: ListProps) {
   if (bookings.length === 0) return null;
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
@@ -1174,6 +1190,14 @@ function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                 >
                   {b.phone}
                 </a>
+                {/* Ét tryk fra listen til en besked — det er sådan SMS bruges */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); openSms(b); }}
+                  title="Send SMS"
+                  style={{ background: "none", border: "none", padding: "0 2px", fontSize: "14px", cursor: "pointer", lineHeight: 1 }}
+                >
+                  💬
+                </button>
                 {callBadge(b) && (
                   <span title={b.callNote || "Vi har ringet kunden op"} style={{ color: "#2f7a4d", fontSize: "12px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                     {callBadge(b)}
@@ -1223,7 +1247,7 @@ function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBoo
   );
 }
 
-function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments }: ListProps) {
+function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments, openSms }: ListProps) {
   if (bookings.length === 0) return null;
 
   const thStyle: React.CSSProperties = { padding: "8px 12px", fontSize: "11px", fontWeight: 700, textAlign: "left", color: "#888", textTransform: "uppercase", letterSpacing: "0.05em", borderBottom: "1px solid #eee", whiteSpace: "nowrap" };
@@ -1258,6 +1282,18 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                       {new Date(b.createdAt).toLocaleDateString("da-DK", { day: "numeric", month: "short", year: "numeric" })}
                       {" · "}
                       <span style={{ color: "#0070f3" }}>{isExpanded ? "skjul ordre" : "vis ordre"}</span>
+                    </div>
+                    <div style={{ paddingLeft: "16px", marginTop: "3px" }} onClick={(e) => e.stopPropagation()}>
+                      <a href={`tel:${b.phone}`} style={{ fontSize: "11px", color: "#0070f3", textDecoration: "none" }}>
+                        {b.phone}
+                      </a>
+                      {" · "}
+                      <button
+                        onClick={() => openSms(b)}
+                        style={{ background: "none", border: "none", padding: 0, fontSize: "11px", color: "#0070f3", cursor: "pointer" }}
+                      >
+                        💬 SMS
+                      </button>
                     </div>
                     {callBadge(b) && (
                       <div title={b.callNote || "Vi har ringet kunden op"} style={{ fontSize: "11px", color: "#2f7a4d", paddingLeft: "16px" }}>

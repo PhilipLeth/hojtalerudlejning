@@ -15,6 +15,7 @@ import {
   DEFAULT_SMS_SETTINGS,
   SMS_TYPES,
   buildSms,
+  buildSnippet,
   smsVarsFor,
   type SmsBooking,
   type SmsSettings,
@@ -52,12 +53,18 @@ interface Props {
   secret: string;
   /** Ordren som den ser ud efter beskeden er skrevet i loggen */
   onUpdated?: (booking: Record<string, unknown>) => void;
+  /** Åbn med det samme — brugt af SmsModal fra overblikket */
+  startOpen?: boolean;
+  /** Modalen har selv ramme og lukkeknap */
+  hideToggle?: boolean;
 }
 
-export default function SendSmsBox({ booking, secret, onUpdated }: Props) {
-  const [open, setOpen] = useState(false);
+export default function SendSmsBox({ booking, secret, onUpdated, startOpen, hideToggle }: Props) {
+  const [open, setOpen] = useState(!!startOpen);
   const [config, setConfig] = useState<SmsConfig>({ settings: DEFAULT_SMS_SETTINGS });
-  const [type, setType] = useState<SmsTypeId>("bekraeftet");
+  // "snippet:paa_vej" eller en skabelon-type. Hurtigbeskederne står øverst,
+  // fordi det er dem der bruges, når man står med en kunde.
+  const [choice, setChoice] = useState<string>("");
   const [text, setText] = useState("");
   const [touched, setTouched] = useState(false);
   const [sending, setSending] = useState(false);
@@ -77,7 +84,15 @@ export default function SendSmsBox({ booking, secret, onUpdated }: Props) {
     () => smsVarsFor(booking, { telefon: config.telefon, link: config.link }),
     [booking, config.telefon, config.link],
   );
-  const suggestion = useMemo(() => buildSms(config.settings, type, vars).text, [config.settings, type, vars]);
+  const snippets = config.settings.snippets ?? DEFAULT_SMS_SETTINGS.snippets;
+  // Uden et valg: den første hurtigbesked — den bruges oftest
+  const active = choice || (snippets[0] ? `snippet:${snippets[0].id}` : "bekraeftet");
+  const type: SmsTypeId | "manuel" = active.startsWith("snippet:") ? "manuel" : (active as SmsTypeId);
+
+  const suggestion = useMemo(() => {
+    if (active.startsWith("snippet:")) return buildSnippet(config.settings, active.slice(8), vars)?.text ?? "";
+    return buildSms(config.settings, active as SmsTypeId, vars).text;
+  }, [config.settings, active, vars]);
 
   // Skabelonen fylder feltet, indtil man selv har rettet i teksten
   useEffect(() => {
@@ -123,30 +138,47 @@ export default function SendSmsBox({ booking, secret, onUpdated }: Props) {
   }
 
   return (
-    <div style={{ gridColumn: "1 / -1", background: "#fffdf6", border: "1px solid #e2dcc8", borderRadius: "8px", padding: "10px 12px" }}>
+    <div
+      style={
+        hideToggle
+          ? { gridColumn: "1 / -1" }
+          : { gridColumn: "1 / -1", background: "#fffdf6", border: "1px solid #e2dcc8", borderRadius: "8px", padding: "10px 12px" }
+      }
+    >
       <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "8px" }}>
-        <strong style={{ fontSize: "12px" }}>💬 SMS til {to ? displayPhone(to) : "—"}</strong>
+        <strong style={{ fontSize: "12px" }}>💬 {to ? displayPhone(to) : "—"}</strong>
         <select
-          value={type}
+          value={active}
           onChange={(e) => {
-            setType(e.target.value as SmsTypeId);
+            setChoice(e.target.value);
             setTouched(false);
           }}
           style={{ fontSize: "12px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "6px", background: "#fff", color: "#111", cursor: "pointer" }}
         >
-          {SMS_TYPES.map((t) => (
-            <option key={t.id} value={t.id}>
-              {t.label}
-            </option>
-          ))}
+          <optgroup label="Hurtigbeskeder">
+            {snippets.map((sn) => (
+              <option key={sn.id} value={`snippet:${sn.id}`}>
+                {sn.label}
+              </option>
+            ))}
+          </optgroup>
+          <optgroup label="Samme tekst som automatikken">
+            {SMS_TYPES.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.label}
+              </option>
+            ))}
+          </optgroup>
         </select>
-        <button
-          onClick={() => setOpen(false)}
-          style={{ marginLeft: "auto", background: "none", border: "none", color: "#bbb", cursor: "pointer", fontSize: "16px" }}
-          title="Luk"
-        >
-          ×
-        </button>
+        {!hideToggle && (
+          <button
+            onClick={() => setOpen(false)}
+            style={{ marginLeft: "auto", background: "none", border: "none", color: "#bbb", cursor: "pointer", fontSize: "16px" }}
+            title="Luk"
+          >
+            ×
+          </button>
+        )}
       </div>
 
       {!to && (
@@ -196,6 +228,60 @@ export default function SendSmsBox({ booking, secret, onUpdated }: Props) {
       )}
       {error && <div style={{ fontSize: "11px", color: "#c0392b", marginTop: "6px" }}>{error}</div>}
       {sent && <div style={{ fontSize: "11px", color: "#2f7a4d", marginTop: "6px" }}>{sent}</div>}
+    </div>
+  );
+}
+
+/**
+ * SMS fra overblikket: samme felt, lagt oven på listen.
+ *
+ * Det er sådan beskeder faktisk sendes — man står med én ordre og skal sige én
+ * ting. At folde hele bookingen ud først er et skridt for meget, når man har
+ * en højtaler under den anden arm.
+ */
+export function SmsModal({
+  booking,
+  secret,
+  onClose,
+  onUpdated,
+}: {
+  booking: (SmsBooking & { id: string; name?: unknown }) | null;
+  secret: string;
+  onClose: () => void;
+  onUpdated?: (booking: Record<string, unknown>) => void;
+}) {
+  useEffect(() => {
+    if (!booking) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [booking, onClose]);
+
+  if (!booking) return null;
+
+  return (
+    <div
+      onClick={onClose}
+      style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "40px 12px", zIndex: 1000 }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{ background: "#fff", borderRadius: "12px", padding: "14px", width: "100%", maxWidth: "460px", boxShadow: "0 8px 30px rgba(0,0,0,0.2)" }}
+      >
+        <div style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "10px" }}>
+          <strong style={{ fontSize: "14px" }}>SMS til {String(booking.name ?? "kunden")}</strong>
+          <button
+            onClick={onClose}
+            style={{ marginLeft: "auto", background: "none", border: "none", color: "#999", cursor: "pointer", fontSize: "20px", lineHeight: 1 }}
+            title="Luk (Esc)"
+          >
+            ×
+          </button>
+        </div>
+        <SendSmsBox booking={booking} secret={secret} onUpdated={onUpdated} startOpen hideToggle />
+      </div>
     </div>
   );
 }
