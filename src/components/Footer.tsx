@@ -5,6 +5,7 @@ import Link from "next/link";
 import { type Locale, t } from "@/lib/i18n";
 import PhoneLink from "@/components/PhoneLink";
 import { useSiteSettings } from "@/lib/useSiteSettings";
+import { CompanyBlock, CompanyEmail, CompanyEmailLink } from "@/components/CompanyInfo";
 import { formatDateLine, formatOneLine, openDays, upcomingExceptions } from "@/lib/openingHours";
 
 /**
@@ -100,9 +101,7 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
   const newsletterLabel = locale === "da" ? "Få tilbud og nyheder" : "Get deals and news";
   return (
     <footer className="relative z-20 border-t border-white/5 bg-[#07060b] px-4 py-12 text-center text-sm text-white/30">
-      <p className="font-medium text-white/50">Scharling Studio</p>
-      <p className="mt-1">Halvtolv 9, 1. th &middot; 1436 København K</p>
-      <p className="mt-1">CVR 40994904</p>
+      <CompanyBlock />
       <OpeningHoursLine locale={locale} />
       <p className="mt-3">
         <PhoneLink
@@ -110,13 +109,15 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
           prefix={locale === "da" ? "Ring" : "Call"}
         />
         {" · "}
-        <a href="mailto:info@lejhojtaler.dk" className="inline-flex items-center gap-1.5 font-semibold text-brand-400 hover:text-brand-300 transition">
-          <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="shrink-0">
-            <rect x="2" y="4" width="20" height="16" rx="2" />
-            <path d="m22 7-10 6L2 7" />
-          </svg>
-          info@lejhojtaler.dk
-        </a>
+        <CompanyEmailLink className="inline-flex items-center gap-1.5 font-semibold text-brand-400 hover:text-brand-300 transition">
+          <>
+            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="shrink-0">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m22 7-10 6L2 7" />
+            </svg>
+            <CompanyEmail />
+          </>
+        </CompanyEmailLink>
         {" · "}
         <a href="/kontakt" className="font-semibold text-brand-400 hover:text-brand-300 transition">
           {locale === "da" ? "Kontakt" : "Contact"}

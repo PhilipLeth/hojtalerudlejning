@@ -9,6 +9,8 @@
  * fjerne sit eget afsnit i stedet for at efterlade et hul.
  */
 
+import { DEFAULT_COMPANY, formatCompanyLine } from "@/lib/siteInfo";
+
 export const KV_COMM_SETTINGS = "comm_settings";
 
 export interface Shortcode {
@@ -176,16 +178,23 @@ export interface FollowUpContext {
   /** Tom streng når udsalget er slukket */
   udsalg?: string;
   reviewUrl?: string;
+  /** Firmalinjen i bunden — kommer fra /admin/indstillinger */
+  footer?: string;
 }
 
-const FOOTER =
-  '<p style="margin-top:16px;color:#bbb;font-size:12px;">Scharling Studio &middot; Halvtolv 9, 1. th &middot; 1436 København K &middot; CVR 40994904</p>';
+/**
+ * Firmalinjen i bunden. Standarden er koden; kalderen kan sende de levende
+ * oplysninger fra /admin/indstillinger med, så en flytning slår igennem i
+ * mailen samtidig med på sitet.
+ */
+const DEFAULT_FOOTER = `<p style="margin-top:16px;color:#bbb;font-size:12px;">${formatCompanyLine(DEFAULT_COMPANY).replace(/ · /g, " &middot; ")}</p>`;
 
 /** Byg den færdige opfølgningsmail */
 export function buildFollowUpMail(
   settings: CommSettings,
   ctx: FollowUpContext,
 ): { subject: string; html: string } {
+  const FOOTER = ctx.footer || DEFAULT_FOOTER;
   const vars: TemplateVars = {
     fornavn: ctx.fornavn ?? "",
     navn: ctx.navn ?? "",

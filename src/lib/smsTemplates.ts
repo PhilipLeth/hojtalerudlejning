@@ -18,7 +18,11 @@ export const KV_SMS_SETTINGS = "sms_settings";
  * Hvor udstyret hentes, når vi ikke kører ud med det. Kort skrevet — adressen
  * skal kunne stå i en besked på 160 tegn sammen med resten.
  */
-export const PICKUP_ADDRESS = "Halvtolv 9, 1. th, 1436 Kbh K";
+/**
+ * Standardadressen i SMS-skabelonerne. Den levende adresse kommer fra
+ * /admin/indstillinger — se functions/api/_lib/sms.ts, der sætter den ind.
+ */
+export const PICKUP_ADDRESS = "Vermlandsgade 66, 2300 København";
 
 export type SmsTypeId =
   | "booking_modtaget"
@@ -217,7 +221,7 @@ function formatDay(raw: unknown): string {
  * Levering eller afhentning i klartekst. Kører vi ud, er adressen kundens; ellers
  * er det vores — en påmindelse uden sted er ubrugelig i begge tilfælde.
  */
-export function placeLine(b: SmsBooking): string {
+export function placeLine(b: SmsBooking, pickupAddress?: string): string {
   const ids = new Set<string>([
     ...(b.deliveryOptionId ? [String(b.deliveryOptionId)] : []),
     ...((b.addonIds as string[]) || []).map(String),
@@ -228,7 +232,7 @@ export function placeLine(b: SmsBooking): string {
   if (delivers || (!ids.has("afhentning_retur") && address)) {
     return address ? `Vi leverer til ${address}` : "Vi leverer som aftalt";
   }
-  return `Hentes hos os: ${PICKUP_ADDRESS}`;
+  return `Hentes hos os: ${pickupAddress || PICKUP_ADDRESS}`;
 }
 
 export interface SmsVarOptions {
@@ -236,6 +240,8 @@ export interface SmsVarOptions {
   telefon?: string;
   /** Link til Google-anmeldelse */
   link?: string;
+  /** Afhentningsadressen fra /admin/indstillinger */
+  afhentningsadresse?: string;
 }
 
 export function smsVarsFor(b: SmsBooking, opts: SmsVarOptions = {}): TemplateVars {
@@ -248,7 +254,7 @@ export function smsVarsFor(b: SmsBooking, opts: SmsVarOptions = {}): TemplateVar
     periode: String(b.period ?? ""),
     dato: formatDay(b.pickup),
     returdato: formatDay(b.returnDate),
-    sted: placeLine(b),
+    sted: placeLine(b, opts.afhentningsadresse),
     telefon: opts.telefon ?? "31 13 28 52",
     total: Number.isFinite(total) && total > 0 ? `${total.toLocaleString("da-DK")} kr` : "",
     link: opts.link ?? "",

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import PhoneLink, { PhoneText } from "@/components/PhoneLink";
 import PickupSummary from "@/components/PickupSummary";
+import { CompanyEmail } from "@/components/CompanyInfo";
 
 export const metadata: Metadata = {
   title: "Kontakt os | Lejhøjtaler.dk",
@@ -26,7 +27,7 @@ export default function KontaktPage() {
           <span className="text-2xl">✉️</span>
           <span>
             <span className="block text-sm text-white/50">Email</span>
-            <span className="font-semibold text-brand-400">info@lejhojtaler.dk</span>
+            <span className="font-semibold text-brand-400"><CompanyEmail /></span>
           </span>
         </a>
         <PhoneLink hideNumber className="glass flex items-center gap-3 rounded-2xl p-4 transition hover:bg-white/5">
@@ -44,7 +45,7 @@ export default function KontaktPage() {
         <ContactForm />
       </div>
 
-      <PickupSummary className="mt-8 text-sm text-white/40" suffix="CVR 40994904" />
+      <PickupSummary className="mt-8 text-sm text-white/40" withCvr />
     </section>
   );
 }

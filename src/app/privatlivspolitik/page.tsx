@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import PhoneLink from "@/components/PhoneLink";
+import SiteText from "@/components/SiteText";
+import { CompanyEmailLink } from "@/components/CompanyInfo";
 
 export const metadata: Metadata = {
   title: "Privatlivspolitik | Lejhøjtaler.dk",
@@ -36,14 +38,11 @@ export default function PrivatlivspolitikPage() {
           <div className="mt-12">
             <Section title="Hvem er dataansvarlig?">
               <p>
-                Scharling Studio (CVR 40994904), Halvtolv 9, 1. th, 1436 København K, er
-                dataansvarlig for de personoplysninger, du giver os på lejhojtaler.dk.
+                <SiteText>{"{{firma}} (CVR {{cvr}}), {{firmaadresse}}, er dataansvarlig for de personoplysninger, du giver os på lejhojtaler.dk."}</SiteText>
               </p>
               <p>
                 Har du spørgsmål til vores behandling af dine oplysninger, kan du skrive til{" "}
-                <a href="mailto:info@lejhojtaler.dk" className="text-brand-400 hover:underline">
-                  info@lejhojtaler.dk
-                </a>{" "}
+                <CompanyEmailLink className="text-brand-400 hover:underline" />{" "}
                 eller ringe på{" "}
                 <PhoneLink className="text-brand-400 hover:underline" />
                 .
@@ -128,9 +127,7 @@ export default function PrivatlivspolitikPage() {
               </ul>
               <p>
                 Skriv til{" "}
-                <a href="mailto:info@lejhojtaler.dk" className="text-brand-400 hover:underline">
-                  info@lejhojtaler.dk
-                </a>
+                <CompanyEmailLink className="text-brand-400 hover:underline" />
                 , så svarer vi inden for en måned.
               </p>
             </Section>

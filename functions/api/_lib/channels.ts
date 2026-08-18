@@ -1,6 +1,7 @@
 /** Shared feed + channel helpers for Pages Functions */
 
 import { INVENTORY_KEY, loadInventoryPair } from "./inventory";
+import { DEFAULT_PICKUP_ADDRESS } from "../../../src/lib/pickup";
 
 export const SITE = "https://lejhojtaler.dk";
 export const CATALOG_KEY = "products_catalog";
@@ -279,14 +280,15 @@ export function toFacebookCsv(items: FeedItem[]): string {
   return [header, ...lines].join("\n");
 }
 
-export function hyggloPaste(item: FeedItem): string {
+/** Annonceteksten til Hygglo. Afhentningsadressen kommer fra indstillingerne. */
+export function hyggloPaste(item: FeedItem, pickupAddress = DEFAULT_PICKUP_ADDRESS): string {
   return `Titel: ${item.title} til leje i København
 
 Beskrivelse:
 ${item.description}
 
 Pris forslag: ${item.price} kr / weekend (op til 5 dage samme pris)
-Afhentning: Halvtolv 9, 1. th, 1436 København K
+Afhentning: ${pickupAddress}
 Book også direkte: ${item.link}
 
 Billede: ${item.image}`;

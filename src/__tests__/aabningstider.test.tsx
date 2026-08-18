@@ -34,6 +34,7 @@ import {
 } from "@/lib/openingHours";
 import BookingFlow from "@/components/BookingFlow";
 import { DEFAULT_PICKUP_ADDRESS, normalizePickupAddress } from "@/lib/pickup";
+import { DEFAULT_COMPANY, formatAddress, formatCompanyLine, normalizeCompany, validateCompany } from "@/lib/siteInfo";
 import { clearSiteSettingsCache } from "@/lib/useSiteSettings";
 
 /** Åbningstider med kun de dage man nævner — resten lukket */
@@ -180,12 +181,14 @@ describe("Strukturerede data til Google", () => {
     ]);
   });
 
-  it("bygges af samme kilde på alle tre sider — de var uenige før", () => {
+  it("bygges af samme komponent på alle tre sider — de var uenige før", () => {
     const read = (p: string) => readFileSync(join(process.cwd(), p), "utf8");
     for (const f of ["src/app/page.tsx", "src/app/en/page.tsx", "src/app/kobenhavn/page.tsx"]) {
       const src = read(f);
-      expect(src, f).toContain("openingHoursSpecification()");
+      // Markup'en bygges nu af indstillingerne — ingen egen adresse eller tider
+      expect(src, f).toContain("LocalBusinessJsonLd");
       expect(src, f).not.toMatch(/opens: "1[45]:00"/);
+      expect(src, f).not.toMatch(/streetAddress:/);
     }
   });
 });
@@ -312,7 +315,7 @@ describe("Den tekniske indstilling", () => {
 
 /* ───── sitet og admin ───── */
 
-function mockSettings(hours?: unknown, pickupAddress = DEFAULT_PICKUP_ADDRESS) {
+function mockSettings(hours?: unknown, pickupAddress = DEFAULT_PICKUP_ADDRESS, company = DEFAULT_COMPANY) {
   (global.fetch as any).mockImplementation((url: string) => {
     if (String(url).startsWith("/api/site-settings")) {
       return Promise.resolve({
@@ -325,6 +328,7 @@ function mockSettings(hours?: unknown, pickupAddress = DEFAULT_PICKUP_ADDRESS) {
           href: "tel:+4531132852",
           hours: hours ?? DEFAULT_OPENING_HOURS,
           pickupAddress,
+          company,
           updatedAt: "2026-08-17T10:00:00.000Z",
         }),
       });
@@ -384,6 +388,98 @@ describe("Footeren", () => {
     render(<Footer />);
     await waitFor(() => expect(screen.getByText(/CVR 40994904/)).toBeInTheDocument());
     expect(screen.queryByText("Åbningstider:")).not.toBeInTheDocument();
+  });
+});
+
+
+describe("Firmaoplysningerne", () => {
+  it("har standarden fra koden", () => {
+    expect(formatCompanyLine(DEFAULT_COMPANY)).toBe("Scharling Studio · Halvtolv 9, 1. th · 1436 København K · CVR 40994904");
+    expect(formatAddress(DEFAULT_COMPANY)).toBe("Halvtolv 9, 1. th, 1436 København K");
+  });
+
+  it("falder tilbage felt for felt ved skrald i KV", () => {
+    const c = normalizeCompany({ name: "", cvr: "40 99 49 04", city: "Aarhus" });
+    expect(c.name).toBe(DEFAULT_COMPANY.name);
+    expect(c.cvr).toBe("40994904");
+    expect(c.city).toBe("Aarhus");
+  });
+
+  it("siger fra ved gemning, hvis noget mangler eller er forkert", () => {
+    const gyldig = { ...DEFAULT_COMPANY };
+    expect(validateCompany(gyldig).ok).toBe(true);
+    expect(validateCompany({ ...gyldig, cvr: "123" }).ok).toBe(false);
+    expect(validateCompany({ ...gyldig, email: "ikke en mail" }).ok).toBe(false);
+    expect(validateCompany({ ...gyldig, street: "" }).ok).toBe(false);
+    expect(validateCompany({ ...gyldig, name: "" }).ok).toBe(false);
+  });
+
+  it("står i footeren, hentet fra indstillingerne", async () => {
+    mockSettings(undefined, DEFAULT_PICKUP_ADDRESS, {
+      ...DEFAULT_COMPANY,
+      name: "Nyt Firma ApS",
+      street: "Testvej 1",
+      postalCode: "2100",
+      city: "København Ø",
+      cvr: "12345678",
+      email: "hej@example.dk",
+    });
+    render(<Footer />);
+
+    await waitFor(() => expect(screen.getByText("Nyt Firma ApS")).toBeInTheDocument());
+    expect(screen.getByText(/Testvej 1/)).toBeInTheDocument();
+    expect(screen.getByText("CVR 12345678")).toBeInTheDocument();
+    expect(screen.getByText("hej@example.dk").closest("a")).toHaveAttribute("href", "mailto:hej@example.dk");
+  });
+
+  it("kan rettes i admin og gemmes for sig", async () => {
+    mockSettings();
+    renderAdmin(<IndstillingerPage />);
+    await waitFor(() => expect(screen.getByText("Firmaoplysninger")).toBeInTheDocument());
+
+    fireEvent.change(screen.getByDisplayValue("Scharling Studio"), { target: { value: "Nyt Firma ApS" } });
+    fireEvent.click(screen.getByText("Gem firmaoplysninger"));
+
+    await waitFor(() => {
+      const post = (global.fetch as any).mock.calls.find(
+        (c: unknown[]) => (c[1] as { method?: string })?.method === "POST",
+      );
+      const body = JSON.parse((post[1] as { body: string }).body);
+      expect(body.company.name).toBe("Nyt Firma ApS");
+      expect(body.hours).toBeUndefined();
+      expect(body.phone).toBeUndefined();
+    });
+  });
+});
+
+describe("Ingen hardkodede oplysninger tilbage", () => {
+  const read = (p: string) => readFileSync(join(process.cwd(), p), "utf8");
+
+  it("footeren, de juridiske sider og lejesedlen henter alt fra indstillingerne", () => {
+    for (const f of [
+      "src/components/Footer.tsx",
+      "src/app/lejevilkaar/page.tsx",
+      "src/app/en/lejevilkaar/page.tsx",
+      "src/app/privatlivspolitik/page.tsx",
+      "src/app/kobenhavn/page.tsx",
+      "src/app/kontakt/page.tsx",
+      "src/app/admin/lejeseddel/page.tsx",
+    ]) {
+      const src = read(f);
+      expect(src, f).not.toMatch(/Halvtolv/);
+      expect(src, f).not.toMatch(/40994904/);
+    }
+  });
+
+  it("mails og SMS bygger firmalinjen af indstillingerne", () => {
+    expect(read("functions/api/book.ts")).toContain("mailFooter(site)");
+    expect(read("functions/api/bookings-update.ts")).toContain("mailFooter(");
+    expect(read("functions/api/invoice.ts")).toContain("loadSiteSettings");
+    expect(read("functions/api/_lib/sms.ts")).toContain("loadSiteSettings");
+    // Ingen af dem har deres egen adresse længere
+    for (const f of ["functions/api/book.ts", "functions/api/bookings-update.ts"]) {
+      expect(read(f), f).not.toMatch(/Halvtolv/);
+    }
   });
 });
 

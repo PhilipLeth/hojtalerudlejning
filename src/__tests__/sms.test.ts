@@ -308,7 +308,9 @@ describe("skabeloner", () => {
     expect(placeLine({ addonIds: ["afhentning_retur"], deliveryAddress: "Nørrebrogade 1" })).toContain(
       "Hentes hos os",
     );
-    expect(placeLine({})).toContain("Halvtolv 9");
+    // Standardadressen; den levende kommer fra /admin/indstillinger
+    expect(placeLine({})).toContain("Vermlandsgade 66");
+    expect(placeLine({}, "Testvej 1, 2100 København Ø")).toContain("Testvej 1");
   });
 
   it("standardteksterne bliver én besked på en almindelig ordre", () => {

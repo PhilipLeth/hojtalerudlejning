@@ -8,6 +8,7 @@ import { useState, useEffect, useCallback } from "react";
 import { phoneFromInput } from "@/lib/phone";
 import { clearSiteSettingsCache } from "@/lib/useSiteSettings";
 import { DEFAULT_PICKUP_ADDRESS } from "@/lib/pickup";
+import { DEFAULT_COMPANY, formatCompanyLine, normalizeCompany, type CompanyInfo } from "@/lib/siteInfo";
 import {
   DAY_PURPOSES,
   DEFAULT_OPENING_HOURS,
@@ -215,11 +216,12 @@ export default function IndstillingerPage() {
   const { secret, ready, isLoggedIn, unauthorized } = useAdminAuth();
   const [phone, setPhone] = useState("");
   const [pickupAddress, setPickupAddress] = useState(DEFAULT_PICKUP_ADDRESS);
+  const [company, setCompany] = useState<CompanyInfo>(DEFAULT_COMPANY);
   const [savedDisplay, setSavedDisplay] = useState("");
   const [hours, setHours] = useState<OpeningHours>(DEFAULT_OPENING_HOURS);
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState<"kontakt" | "hours" | null>(null);
+  const [saving, setSaving] = useState<"kontakt" | "hours" | "company" | null>(null);
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
 
@@ -234,10 +236,12 @@ export default function IndstillingerPage() {
         phone?: string;
         hours?: unknown;
         pickupAddress?: string;
+        company?: unknown;
         updatedAt?: string | null;
       };
       setPhone(json.display || json.phone || "");
       setPickupAddress(json.pickupAddress || DEFAULT_PICKUP_ADDRESS);
+      setCompany(normalizeCompany(json.company));
       setSavedDisplay(json.display || "");
       setHours(normalizeOpeningHours(json.hours));
       setUpdatedAt(json.updatedAt ?? null);
@@ -253,7 +257,7 @@ export default function IndstillingerPage() {
   }, [load]);
 
   /** Gem enten telefon eller åbningstider — serveren tager imod ét felt ad gangen */
-  async function save(what: "kontakt" | "hours") {
+  async function save(what: "kontakt" | "hours" | "company") {
     setSaving(what);
     setError("");
     setOk("");
@@ -261,7 +265,9 @@ export default function IndstillingerPage() {
       const res = await fetch(`/api/site-settings?secret=${encodeURIComponent(secret)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(what === "kontakt" ? { phone, pickupAddress } : { hours }),
+        body: JSON.stringify(
+          what === "kontakt" ? { phone, pickupAddress } : what === "company" ? { company } : { hours },
+        ),
       });
       const json = (await res.json()) as { error?: string; display?: string; hours?: unknown; updatedAt?: string };
       if (!res.ok) {
@@ -273,6 +279,9 @@ export default function IndstillingerPage() {
         setSavedDisplay(json.display || phoneFromInput(phone).display);
         setPhone(json.display || phone);
         setOk(`Gemt — sitet viser nu ${json.display} og ${pickupAddress}. Ingen deploy nødvendig.`);
+      } else if (what === "company") {
+        setCompany(normalizeCompany((json as { company?: unknown }).company));
+        setOk("Firmaoplysningerne er gemt — de står i footeren, på fakturaen og i mails.");
       } else {
         setHours(normalizeOpeningHours(json.hours));
         setOk("Åbningstiderne er gemt — de står på sitet med det samme.");
@@ -371,6 +380,85 @@ export default function IndstillingerPage() {
 
           <button type="submit" disabled={saving !== null} style={knap}>
             {saving === "kontakt" ? "Gemmer…" : "Gem nummer og adresse"}
+          </button>
+        </form>
+
+        <form onSubmit={(e) => { e.preventDefault(); save("company"); }} style={card}>
+          <h2 style={{ margin: "0 0 4px", fontSize: "16px" }}>Firmaoplysninger</h2>
+          <p style={{ margin: "0 0 12px", fontSize: "12px", color: "#888", lineHeight: 1.5 }}>
+            Står i footeren, i lejevilkårene, i privatlivspolitikken, på lejesedlen, i bunden
+            af hver mail vi sender, på fakturaen og i den markup Google læser. Er det den
+            adresse CVR-nummeret er registreret på, skal den også rettes hos Erhvervsstyrelsen
+            og på Google Business Profile.
+          </p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "12px" }}>
+            <div>
+              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px" }}>Firmanavn</label>
+              <input
+                type="text"
+                value={company.name}
+                onChange={(e) => setCompany((c) => ({ ...c, name: e.target.value }))}
+                style={{ width: "100%", padding: "10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
+              />
+            </div>
+            <div>
+              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px" }}>CVR</label>
+              <input
+                type="text"
+                inputMode="numeric"
+                value={company.cvr}
+                onChange={(e) => setCompany((c) => ({ ...c, cvr: e.target.value.replace(/\D/g, "").slice(0, 8) }))}
+                style={{ width: "100%", padding: "10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
+              />
+            </div>
+            <div style={{ gridColumn: "1 / -1" }}>
+              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px" }}>Adresse</label>
+              <input
+                type="text"
+                value={company.street}
+                onChange={(e) => setCompany((c) => ({ ...c, street: e.target.value }))}
+                style={{ width: "100%", padding: "10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
+              />
+            </div>
+            <div>
+              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px" }}>Postnummer</label>
+              <input
+                type="text"
+                value={company.postalCode}
+                onChange={(e) => setCompany((c) => ({ ...c, postalCode: e.target.value }))}
+                style={{ width: "100%", padding: "10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
+              />
+            </div>
+            <div>
+              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px" }}>By</label>
+              <input
+                type="text"
+                value={company.city}
+                onChange={(e) => setCompany((c) => ({ ...c, city: e.target.value }))}
+                style={{ width: "100%", padding: "10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
+              />
+            </div>
+            <div style={{ gridColumn: "1 / -1" }}>
+              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px" }}>Mailadresse</label>
+              <input
+                type="text"
+                value={company.email}
+                onChange={(e) => setCompany((c) => ({ ...c, email: e.target.value }))}
+                style={{ width: "100%", padding: "10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
+              />
+            </div>
+          </div>
+
+          <div style={{ marginTop: "14px", padding: "10px 12px", background: "#fafafa", border: "1px solid #eee", borderRadius: "8px" }}>
+            <div style={{ fontSize: "11px", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+              Sådan står det i mails og på fakturaen
+            </div>
+            <div style={{ fontSize: "13px", marginTop: "4px" }}>{formatCompanyLine(company)}</div>
+          </div>
+
+          <button type="submit" disabled={saving !== null} style={knap}>
+            {saving === "company" ? "Gemmer…" : "Gem firmaoplysninger"}
           </button>
         </form>
 

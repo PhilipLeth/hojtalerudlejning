@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { localeAlternates } from "@/lib/hreflang";
+import SiteText from "@/components/SiteText";
 
 export const metadata: Metadata = {
   title: "Rental Terms | Lejhøjtaler.dk",
@@ -59,13 +60,12 @@ Current prices are shown in the booking form on the front page.`,
     title: "8. Pickup and return",
     content: `Equipment is picked up and returned at:
 
-Halvtolv 9, 1. th
-1436 København K
+{{afhentningsadresse}}
 
-Pickup: Friday 2:00–6:00 PM
-Return: Monday 3:00–5:00 PM
+{{aabningstider}}
+{{gebyr}}
 
-Other times can be arranged when booking. Equipment is delivered with all necessary cables.`,
+Equipment is delivered with all necessary cables.`,
   },
   {
     title: "9. Payment",
@@ -115,7 +115,7 @@ export default function RentalTermsEn() {
           <div key={i} className="glass rounded-2xl p-6 sm:p-8">
             <h2 className="text-xl font-semibold mb-4">{section.title}</h2>
             <div className="text-sm leading-relaxed text-white/60 whitespace-pre-line">
-              {section.content}
+              <SiteText locale="en">{section.content}</SiteText>
             </div>
           </div>
         ))}
@@ -124,10 +124,10 @@ export default function RentalTermsEn() {
         <div className="glass rounded-2xl p-6 sm:p-8">
           <h2 className="text-xl font-semibold mb-4">Rental company</h2>
           <div className="text-sm leading-relaxed text-white/60 space-y-1">
-            <p className="font-medium text-white/80">Scharling Studio</p>
-            <p>CVR: 40994904</p>
-            <p>Halvtolv 9, 1. th</p>
-            <p>1436 København K</p>
+            <p className="font-medium text-white/80"><SiteText locale="en">{"{{firma}}"}</SiteText></p>
+            <p>CVR: <SiteText locale="en">{"{{cvr}}"}</SiteText></p>
+            <p><SiteText locale="en">{"{{vej}}"}</SiteText></p>
+            <p><SiteText locale="en">{"{{postby}}"}</SiteText></p>
           </div>
         </div>
 

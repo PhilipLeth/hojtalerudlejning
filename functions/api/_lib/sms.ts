@@ -8,6 +8,7 @@
 
 import { gsmSafe, smsFromEnv, smsConfigured, toE164Dk } from "../../../src/lib/sms";
 import {
+import { loadSiteSettings } from "./siteSettings";
   KV_SMS_SETTINGS,
   DEFAULT_SMS_SETTINGS,
   buildSms,
@@ -72,6 +73,8 @@ export interface SmsContext {
   settings: SmsSettings;
   telefon: string;
   link: string;
+  /** Afhentningsadressen fra /admin/indstillinger */
+  afhentningsadresse: string;
 }
 
 /**
@@ -79,8 +82,17 @@ export interface SmsContext {
  * beskeder sendes i samme kørsel (påmindelserne).
  */
 export async function smsContext(env: SmsEnv): Promise<SmsContext> {
-  const [settings, telefon] = await Promise.all([loadSmsSettings(env.BOOKINGS), ourPhone(env.BOOKINGS)]);
-  return { settings, telefon, link: env.GOOGLE_REVIEW_URL || GOOGLE_REVIEW_FALLBACK };
+  const [settings, telefon, site] = await Promise.all([
+    loadSmsSettings(env.BOOKINGS),
+    ourPhone(env.BOOKINGS),
+    loadSiteSettings(env.BOOKINGS),
+  ]);
+  return {
+    settings,
+    telefon,
+    link: env.GOOGLE_REVIEW_URL || GOOGLE_REVIEW_FALLBACK,
+    afhentningsadresse: site.pickupAddress,
+  };
 }
 
 export interface SendSmsOutcome {
@@ -124,7 +136,7 @@ export async function sendBookingSms(
     return { ok: false, skipped: "ugyldigt_nummer", type };
   }
 
-  const vars = smsVarsFor(booking, { telefon: ctx.telefon, link: ctx.link });
+  const vars = smsVarsFor(booking, { telefon: ctx.telefon, link: ctx.link, afhentningsadresse: ctx.afhentningsadresse });
   // Også en besked skrevet i hånden renses for pile og typografiske tankestreger:
   // ét tegn uden for GSM-7 tvinger hele beskeden over i UCS-2 og fordobler prisen.
   // Emoji bliver stående — dem vælger man bevidst, og tælleren i admin advarer.

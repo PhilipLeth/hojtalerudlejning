@@ -7,7 +7,7 @@ import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import StickyBookBar from "@/components/StickyBookBar";
 import { PHONE_E164 } from "@/lib/phone";
-import { openingHoursSpecification } from "@/lib/openingHours";
+import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 
 export default function Home() {
   return (
@@ -21,31 +21,13 @@ export default function Home() {
       <Footer />
       <StickyBookBar />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            name: "Scharling Studio / Lejhøjtaler.dk",
-            legalName: "Scharling Studio",
-            taxID: "DK40994904",
-            telephone: PHONE_E164,
-            priceRange: "95-1195 kr",
-            image: "https://lejhojtaler.dk/images/logo-lejhojtaler.webp",
-            description:
-              "Højtalerudlejning i København. Lej højtaler, PA-anlæg, batterihøjtaler og lydudstyr til fest, event og party. Billig levering i hele København. Festudstyr til leje fra 345 kr/weekend.",
-            url: "https://lejhojtaler.dk",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "Halvtolv 9, 1. th",
-              postalCode: "1436",
-              addressLocality: "København K",
-              addressCountry: "DK",
-            },
-            areaServed: { "@type": "City", name: "København" },
-            openingHoursSpecification: openingHoursSpecification(),
-          }),
+      <LocalBusinessJsonLd
+        extra={{
+          priceRange: "95-1195 kr",
+          image: "https://lejhojtaler.dk/images/logo-lejhojtaler.webp",
+          description:
+            "Højtalerudlejning i København. Lej højtaler, PA-anlæg, batterihøjtaler og lydudstyr til fest, event og party. Billig levering i hele København. Festudstyr til leje fra 345 kr/weekend.",
+          url: "https://lejhojtaler.dk",
         }}
       />
     </main>

@@ -9,6 +9,7 @@ import { KV_SALE_CAMPAIGN, parseCampaign } from "./_lib/weekendSale";
 import { recordSms, sendBookingSms } from "./_lib/sms";
 
 import { requireAdmin } from "./_lib/adminAuth";
+import { loadSiteSettings, mailFooter } from "./_lib/siteSettings";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -27,7 +28,7 @@ interface Env {
 // Sender videre til search.google.com/local/writereview?placeid=ChIJ9UxZq-xTUkYRsiSY3hvy-MY
 const GOOGLE_REVIEW_FALLBACK = "https://g.page/r/CbIkmN4b8vjGEBM/review";
 
-function reviewMailHtml(name: string, reviewUrl: string, locale?: string): { subject: string; html: string } {
+function reviewMailHtml(name: string, reviewUrl: string, locale: string | undefined, footer: string): { subject: string; html: string } {
   if (locale === "en") {
     return {
       subject: "Thanks for renting with us — got 30 seconds? ⭐",
@@ -42,7 +43,7 @@ function reviewMailHtml(name: string, reviewUrl: string, locale?: string): { sub
           <p>If you have any questions, or need gear for your next party, you're always welcome to reply to this email.</p>
           <p>Thanks again!</p>
           <p>Best regards,<br>Lejhøjtaler.dk</p>
-          <p style="margin-top:16px;color:#bbb;font-size:12px;">Scharling Studio &middot; Halvtolv 9, 1. th &middot; 1436 København K &middot; CVR 40994904</p>
+          ${footer}
         </div>`,
     };
   }
@@ -59,7 +60,7 @@ function reviewMailHtml(name: string, reviewUrl: string, locale?: string): { sub
         <p>Har du spørgsmål, eller mangler du udstyr til næste fest, er du altid velkommen til at svare på denne mail.</p>
         <p>Mange tak for denne gang!</p>
         <p>Bedste hilsner,<br>Lejhøjtaler.dk</p>
-        <p style="margin-top:16px;color:#bbb;font-size:12px;">Scharling Studio &middot; Halvtolv 9, 1. th &middot; 1436 København K &middot; CVR 40994904</p>
+        ${footer}
       </div>`,
   };
 }
@@ -74,8 +75,10 @@ async function followUpMail(
   booking: Record<string, unknown>,
   reviewUrl: string,
 ): Promise<{ subject: string; html: string }> {
+  // Firmaoplysningerne i bunden kommer fra /admin/indstillinger
+  const footer = mailFooter(await loadSiteSettings(kv));
   if (booking.locale === "en") {
-    return reviewMailHtml(String(booking.name || ""), reviewUrl, "en");
+    return reviewMailHtml(String(booking.name || ""), reviewUrl, "en", footer);
   }
   try {
     const raw = await kv.get(KV_COMM_SETTINGS);
@@ -109,11 +112,12 @@ async function followUpMail(
       rabatpct: settings.referralPct,
       udsalg,
       reviewUrl,
+      footer,
     });
   } catch (e) {
     // Skabelonen må ikke kunne forhindre mailen i at blive sendt
     console.error("[kommunikation] faldt tilbage på standardmail:", e);
-    return reviewMailHtml(String(booking.name || ""), reviewUrl, undefined);
+    return reviewMailHtml(String(booking.name || ""), reviewUrl, undefined, footer);
   }
 }
 
@@ -415,7 +419,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
             to: [booking.email],
             // Svar på anmeldelsesmailen skal kunne modtages — booking@ har
             // ingen rute i Cloudflare
-            reply_to: "info@lejhojtaler.dk",
+            reply_to: (await loadSiteSettings(context.env.BOOKINGS)).company.email,
             subject: mail.subject,
             html: mail.html,
           }),

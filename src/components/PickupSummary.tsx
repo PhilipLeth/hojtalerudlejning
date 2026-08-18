@@ -11,19 +11,19 @@ import { type Locale } from "@/lib/i18n";
 export default function PickupSummary({
   locale = "da",
   className = "",
-  suffix,
+  withCvr = false,
 }: {
   locale?: Locale;
   className?: string;
-  /** Fx CVR-nummeret, der hører til firmaet og ikke til afhentningen */
-  suffix?: string;
+  /** Tag CVR-nummeret med til sidst — det hører til firmaet, ikke afhentningen */
+  withCvr?: boolean;
 }) {
-  const { hours, pickupAddress } = useSiteSettings();
+  const { hours, pickupAddress, company } = useSiteSettings();
   const dele = [
     `${locale === "en" ? "Pickup" : "Afhentning"}: ${pickupAddress}`,
     formatSentence(hours, locale).replace(/\.$/, ""),
     formatAfterHours(hours, locale).replace(/\.$/, ""),
-    suffix,
+    withCvr ? `CVR ${company.cvr}` : "",
   ].filter(Boolean);
 
   return <p className={className}>{dele.join(" · ")}</p>;

@@ -6,6 +6,9 @@
  * allerede er betalt, hvad der mangler, og hvordan man betaler.
  */
 
+import { DEFAULT_COMPANY, formatAddress } from "../../../src/lib/siteInfo";
+import { DEFAULT_PHONE } from "../../../src/lib/phone";
+
 export interface InvoiceLine {
   label: string;
   qty: number;
@@ -32,14 +35,29 @@ export interface InvoiceMailData {
   note?: string;
   /** Fast fodnote fra regnskabsindstillingerne, fx moms-oplysning */
   footer?: string;
+  /** Sælgeren — udelades den, bruges standarden fra koden */
+  seller?: InvoiceSeller;
 }
 
-const COMPANY = {
-  name: "Scharling Studio (lejhøjtaler.dk)",
-  address: "Halvtolv 9, 1. th · 1436 København K",
-  cvr: "40994904",
-  email: "info@lejhojtaler.dk",
-  phone: "31 13 28 52",
+/**
+ * Sælgeren på fakturaen. Standarden er koden, men invoice.ts sender de levende
+ * oplysninger fra /admin/indstillinger med, så en flytning eller en ny mail
+ * også står på fakturaen.
+ */
+export interface InvoiceSeller {
+  name: string;
+  address: string;
+  cvr: string;
+  email: string;
+  phone: string;
+}
+
+export const DEFAULT_SELLER: InvoiceSeller = {
+  name: `${DEFAULT_COMPANY.name} (lejhøjtaler.dk)`,
+  address: formatAddress(DEFAULT_COMPANY),
+  cvr: DEFAULT_COMPANY.cvr,
+  email: DEFAULT_COMPANY.email,
+  phone: DEFAULT_PHONE.display,
 };
 
 function kr(n: number): string {
@@ -57,6 +75,8 @@ export function invoiceSubject(data: InvoiceMailData): string {
 }
 
 export function invoiceHtml(data: InvoiceMailData): string {
+  // Sælgeren kommer fra /admin/indstillinger; standarden er koden
+  const seller = data.seller ?? DEFAULT_SELLER;
   const rows = data.lines
     .map(
       (l) => `
@@ -105,10 +125,10 @@ export function invoiceHtml(data: InvoiceMailData): string {
           ${data.email}
         </td>
         <td style="vertical-align:top;text-align:right;">
-          <strong style="color:#111;">${COMPANY.name}</strong><br />
-          ${COMPANY.address}<br />
-          CVR ${COMPANY.cvr}<br />
-          ${COMPANY.email} · ${COMPANY.phone}
+          <strong style="color:#111;">${seller.name}</strong><br />
+          ${seller.address}<br />
+          CVR ${seller.cvr}<br />
+          ${seller.email} · ${seller.phone}
         </td>
       </tr>
     </table>
@@ -130,14 +150,14 @@ export function invoiceHtml(data: InvoiceMailData): string {
 
     <div style="background:#f7f7f7;border-radius:8px;padding:14px;margin:20px 0;font-size:13px;">
       <p style="margin:0 0 8px;font-weight:bold;">Betaling senest ${dkDate(data.dueDate)}</p>
-      ${betalingsmuligheder ? `<ul style="margin:0;padding-left:18px;color:#444;">${betalingsmuligheder}</ul>` : `<p style="margin:0;color:#444;">Kontakt os på ${COMPANY.email} for betalingsoplysninger.</p>`}
+      ${betalingsmuligheder ? `<ul style="margin:0;padding-left:18px;color:#444;">${betalingsmuligheder}</ul>` : `<p style="margin:0;color:#444;">Kontakt os på ${seller.email} for betalingsoplysninger.</p>`}
     </div>
 
     ${data.note ? `<p style="font-size:13px;color:#444;">${data.note}</p>` : ""}
 
     <p style="font-size:13px;color:#444;">Spørgsmål til fakturaen? Svar på denne mail, så kigger vi på det.</p>
     <p style="margin-top:20px;color:#999;font-size:12px;">
-      ${COMPANY.name} · ${COMPANY.address} · CVR ${COMPANY.cvr}${data.footer ? `<br />${data.footer}` : ""}
+      ${seller.name} · ${seller.address} · CVR ${seller.cvr}${data.footer ? `<br />${data.footer}` : ""}
     </p>
   </div>`;
 }

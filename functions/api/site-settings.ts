@@ -15,6 +15,7 @@ import {
   type OpeningHours,
 } from "../../src/lib/openingHours";
 import { DEFAULT_PICKUP_ADDRESS, normalizePickupAddress } from "../../src/lib/pickup";
+import { DEFAULT_COMPANY, normalizeCompany, validateCompany, type CompanyInfo } from "../../src/lib/siteInfo";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -50,7 +51,13 @@ function formatDk(digits: string): string {
   return digits;
 }
 
-function toResponse(digits: string, hours: OpeningHours, pickupAddress: string, updatedAt: string | null) {
+function toResponse(
+  digits: string,
+  hours: OpeningHours,
+  pickupAddress: string,
+  company: CompanyInfo,
+  updatedAt: string | null,
+) {
   const d = digits.length === 8 ? digits : DEFAULT_DIGITS;
   const e164 = `+45${d}`;
   return {
@@ -61,6 +68,7 @@ function toResponse(digits: string, hours: OpeningHours, pickupAddress: string, 
     href: `tel:${e164}`,
     hours,
     pickupAddress,
+    company,
     updatedAt,
   };
 }
@@ -71,19 +79,28 @@ export const onRequestOptions: PagesFunction<Env> = async () =>
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
     const raw = await context.env.BOOKINGS.get(KV_KEY);
-    if (!raw) return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, null));
-    const doc = JSON.parse(raw) as { phone?: string; hours?: unknown; pickupAddress?: unknown; updatedAt?: string };
+    if (!raw) {
+      return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, DEFAULT_COMPANY, null));
+    }
+    const doc = JSON.parse(raw) as {
+      phone?: string;
+      hours?: unknown;
+      pickupAddress?: unknown;
+      company?: unknown;
+      updatedAt?: string;
+    };
     return json(
       toResponse(
         digitsOnly(doc.phone || ""),
         normalizeOpeningHours(doc.hours),
         normalizePickupAddress(doc.pickupAddress),
+        normalizeCompany(doc.company),
         doc.updatedAt ?? null,
       ),
     );
   } catch (e) {
     console.error("[site-settings] GET failed:", e);
-    return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, null));
+    return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, DEFAULT_COMPANY, null));
   }
 };
 
@@ -91,7 +108,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const auth = await requireAdmin(context, cors);
   if (auth instanceof Response) return auth;
 
-  let body: { phone?: unknown; hours?: unknown; pickupAddress?: unknown };
+  let body: { phone?: unknown; hours?: unknown; pickupAddress?: unknown; company?: unknown };
   try {
     body = await context.request.json();
   } catch {
@@ -99,7 +116,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   // Det gemte er udgangspunktet: admin kan sende kun telefon eller kun tider
-  let stored: { phone?: string; hours?: unknown; pickupAddress?: unknown } = {};
+  let stored: { phone?: string; hours?: unknown; pickupAddress?: unknown; company?: unknown } = {};
   try {
     const raw = await context.env.BOOKINGS.get(KV_KEY);
     if (raw) stored = JSON.parse(raw);
@@ -135,8 +152,21 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     pickupAddress = normalizePickupAddress(adresse);
   }
 
+  let company = normalizeCompany(stored.company);
+  if (body.company !== undefined) {
+    const valid = validateCompany(body.company);
+    if (!valid.ok) {
+      console.warn("[site-settings] ugyldige firmaoplysninger:", valid.error);
+      return json({ error: valid.error }, 400);
+    }
+    company = valid.company;
+  }
+
   const updatedAt = new Date().toISOString();
-  await context.env.BOOKINGS.put(KV_KEY, JSON.stringify({ phone: digits, hours, pickupAddress, updatedAt }));
+  await context.env.BOOKINGS.put(
+    KV_KEY,
+    JSON.stringify({ phone: digits, hours, pickupAddress, company, updatedAt }),
+  );
   console.log("[site-settings] gemt telefon", digits, "og", Object.values(hours.days).filter((d) => !d.closed).length, "åbne dage");
-  return json({ ok: true, ...toResponse(digits, hours, pickupAddress, updatedAt) });
+  return json({ ok: true, ...toResponse(digits, hours, pickupAddress, company, updatedAt) });
 };

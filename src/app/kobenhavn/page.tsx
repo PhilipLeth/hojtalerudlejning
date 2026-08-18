@@ -3,7 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-import { openingHoursSpecification } from "@/lib/openingHours";
+import SiteText from "@/components/SiteText";
+import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 
 export const metadata: Metadata = {
   title:
@@ -54,33 +55,7 @@ export default function KobenhavnPage() {
     ],
   };
 
-  const localBusinessLd = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "Lejhøjtaler.dk",
-    description:
-      "Københavns billigste højtalerudlejning. Lej højtalere, PA-anlæg, lys og røgmaskine fra 395 kr/weekend.",
-    url: "https://lejhojtaler.dk/kobenhavn",
-    telephone: "",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Halvtolv 9, 1. th",
-      addressLocality: "København K",
-      postalCode: "1436",
-      addressCountry: "DK",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 55.6761,
-      longitude: 12.5683,
-    },
-    areaServed: {
-      "@type": "City",
-      name: "København",
-    },
-    priceRange: "345-695 DKK",
-    openingHoursSpecification: openingHoursSpecification(),
-  };
+  // LocalBusiness-markup bygges af indstillingerne — se LocalBusinessJsonLd
 
   return (
     <>
@@ -88,9 +63,13 @@ export default function KobenhavnPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessLd) }}
+      <LocalBusinessJsonLd
+        extra={{
+          name: "Lejhøjtaler.dk",
+          description:
+            "Københavns billigste højtalerudlejning. Lej højtalere, PA-anlæg, lys og røgmaskine fra 395 kr/weekend.",
+          url: "https://lejhojtaler.dk/kobenhavn",
+        }}
       />
 
       {/* Hero */}
@@ -311,8 +290,8 @@ export default function KobenhavnPage() {
             <div className="grid gap-4 sm:grid-cols-2 text-sm text-white/60">
               <div>
                 <h3 className="mb-2 font-semibold text-white">Afhentning (gratis)</h3>
-                <p>K&oslash;benhavn K &middot; Halvtolv 9, 1. th &middot; 1436 K&oslash;benhavn</p>
-                <p className="mt-1 text-white/40">Fredag 15-18, aflevering mandag 9-12</p>
+                <p><SiteText>{"{{afhentningsadresse}}"}</SiteText></p>
+                <p className="mt-1 text-white/40"><SiteText>{"{{aabningstider}}"}</SiteText></p>
               </div>
               <div>
                 <h3 className="mb-2 font-semibold text-white">Billig levering (495 kr inkl. ops&aelig;tning)</h3>

@@ -2,6 +2,7 @@ import { resolveDiscountFor } from "./_lib/discounts";
 import { sendPush } from "../../src/lib/webpush";
 import { KV_PUSH_SUBS, loadSubscriptions } from "./push";
 import { notifyOverbooking } from "./_lib/overbooking";
+import { loadSiteSettings, mailFooter } from "./_lib/siteSettings";
 import { recordSms, sendBookingSms, type SendSmsOutcome } from "./_lib/sms";
 import type { SaleContext } from "./_lib/weekendSale";
 
@@ -280,6 +281,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   const delivery = deliveryLine(data);
   const upsell = pickUpsell(data);
+  // Adresse, CVR og mail i bekræftelsen kommer fra /admin/indstillinger
+  const site = await loadSiteSettings(context.env.BOOKINGS);
   console.log("[book] upsell:", upsell?.id ?? "none", "addonIds:", data.addonIds);
 
   const ownerHtml = `
@@ -311,7 +314,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         <p style="margin:4px 0 8px;"><strong>Din ordre:</strong></p>
         ${orderTableHtml}
         <p style="margin:12px 0 4px;"><strong>Periode:</strong> ${data.period}</p>
-        ${delivery ? `<p style="margin:4px 0;"><strong>Kørsel:</strong> ${delivery}${data.deliveryAddress ? ` — ${data.deliveryAddress}` : ""}</p>` : `<p style="margin:4px 0;"><strong>Afhentning:</strong> Halvtolv 9, 1. th, København K</p>`}
+        ${delivery ? `<p style="margin:4px 0;"><strong>Kørsel:</strong> ${delivery}${data.deliveryAddress ? ` — ${data.deliveryAddress}` : ""}</p>` : `<p style="margin:4px 0;"><strong>Afhentning:</strong> ${site.pickupAddress}</p>`}
         ${discount ? `<p style="margin:4px 0;color:#1e7e34;"><strong>Rabat:</strong> ${discount.code} (−${discount.pct}%)</p>` : ""}
         <p style="margin:8px 0 0;font-size:20px;"><strong>Total: ${data.total} kr</strong></p>
         <p style="margin:0;font-size:12px;color:#888;">Betales ved afhentning (MobilePay eller kontant)</p>
@@ -319,7 +322,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       <p><strong>Inkluderet:</strong> Alle kabler (iPhone m/ USB-C adapter, AUX, strøm).</p>
       ${upsell ? upsellCustomerHtml(upsell) : ""}
       <p style="margin-top:16px;color:#888;font-size:13px;">Ved spørgsmål er du velkommen til at svare på denne mail.</p>
-      <p style="margin-top:8px;color:#bbb;font-size:12px;">Scharling Studio &middot; Halvtolv 9, 1. th &middot; 1436 København K &middot; CVR 40994904</p>
+      ${mailFooter(site)}
     </div>
   `;
 
@@ -338,7 +341,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       to: [data.email],
       // Kundesvar skal til info@ — booking@ er kun afsenderidentitet og har
       // ingen modtage-rute i Cloudflare (svar dertil bouncer)
-      reply_to: "info@lejhojtaler.dk",
+      reply_to: site.company.email,
       subject: "Booking bekræftelse — Lejhøjtaler.dk",
       html: customerHtml,
     },

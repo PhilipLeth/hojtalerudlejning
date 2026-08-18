@@ -6,6 +6,9 @@
  * pengene registreres — fakturering er en tilstand, ikke en betaling.
  */
 import { invoiceHtml, invoiceSubject, type InvoiceLine } from "./_lib/invoiceMail";
+import { loadSiteSettings } from "./_lib/siteSettings";
+import { formatAddress } from "../../src/lib/siteInfo";
+import { formatDkPhone } from "../../src/lib/phone";
 
 import { requireAdmin } from "./_lib/adminAuth";
 
@@ -121,6 +124,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     note: body.note,
   };
 
+  // Sælger, adresse, CVR og mail kommer fra /admin/indstillinger
+  const site = await loadSiteSettings(context.env.BOOKINGS);
+  mailData.seller = {
+    name: `${site.company.name} (lejhøjtaler.dk)`,
+    address: formatAddress(site.company),
+    cvr: site.company.cvr,
+    email: site.company.email,
+    phone: formatDkPhone(site.phone),
+  };
   const html = invoiceHtml(mailData);
   const subject = invoiceSubject(mailData);
 
@@ -133,7 +145,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     body: JSON.stringify({
       from: "Lejhøjtaler.dk <booking@lejhojtaler.dk>",
       to: [booking.email],
-      reply_to: "info@lejhojtaler.dk",
+      reply_to: site.company.email,
       subject,
       html,
     }),

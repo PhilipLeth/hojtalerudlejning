@@ -7,6 +7,7 @@ import { useAdminAuth } from "@/lib/useAdminAuth";
 import { useState, useEffect, useCallback } from "react";
 import { orderLines, deliveryInfo, type OrderBooking } from "@/lib/orderLines";
 import { useSiteSettings } from "@/lib/useSiteSettings";
+import { formatCompanyLine } from "@/lib/siteInfo";
 
 interface Booking extends OrderBooking {
   id: string;
@@ -41,7 +42,7 @@ export default function LejeseddelPage() {
   const [payMethod, setPayMethod] = useState("MobilePay");
   // Afhentningsstedet kommer fra /admin/indstillinger, men kan rettes på den
   // enkelte seddel (fx hvis udstyret afleveres et andet sted)
-  const { pickupAddress } = useSiteSettings();
+  const { pickupAddress, company } = useSiteSettings();
   const [pickupPlace, setPickupPlace] = useState("");
   useEffect(() => {
     setPickupPlace((prev) => prev || pickupAddress);
@@ -217,7 +218,7 @@ export default function LejeseddelPage() {
           <h1 style={{ margin: "0 0 4px", fontSize: "22px", fontWeight: 700, letterSpacing: "0.02em" }}>
             Lejekontrakt &mdash; udlejning af højtalerudstyr
           </h1>
-          <p style={{ margin: 0, fontSize: "13px", color: "#666" }}>lejhøjtaler.dk &mdash; Scharling Studio &mdash; CVR 40994904</p>
+          <p style={{ margin: 0, fontSize: "13px", color: "#666" }}>lejhøjtaler.dk &mdash; {company.name} &mdash; CVR {company.cvr}</p>
         </div>
 
         <p style={{ fontSize: "13px", color: "#444", marginBottom: "20px" }}>
@@ -228,7 +229,7 @@ export default function LejeseddelPage() {
         <h3 className="section-title">1. Parter</h3>
         <table className="rental-table">
           <tbody>
-            <tr><td>Udlejer:</td><td>Scharling Studio (lejhøjtaler.dk) — CVR 40994904</td></tr>
+            <tr><td>Udlejer:</td><td>{company.name} (lejhøjtaler.dk) — CVR {company.cvr}</td></tr>
             <tr><td>Kontakt:</td><td>31 13 28 52 / hey@lejhojtaler.dk</td></tr>
           </tbody>
         </table>
@@ -343,7 +344,7 @@ export default function LejeseddelPage() {
         {/* 9. Øvrige bestemmelser */}
         <h3 className="section-title">9. Øvrige bestemmelser</h3>
         <ul style={{ fontSize: "12px", color: "#444", paddingLeft: "20px", margin: "0 0 8px" }}>
-          <li>Det lejede udstyr forbliver til enhver tid Scharling Studios ejendom.</li>
+          <li>Det lejede udstyr forbliver til enhver tid {company.name}s ejendom.</li>
           <li>Lejer skal være myndig (18 år eller derover).</li>
           <li>Tvister afgøres efter dansk ret ved de danske domstole.</li>
         </ul>
@@ -366,7 +367,7 @@ export default function LejeseddelPage() {
             <tr>
               <td style={{ width: "50%", height: "100px", verticalAlign: "bottom", paddingBottom: "12px" }}>
                 <div style={{ borderTop: "1px solid #111", paddingTop: "6px", fontSize: "12px" }}>
-                  Udlejer (lejhøjtaler.dk / Scharling Studio)<br />
+                  Udlejer (lejhøjtaler.dk / {company.name})<br />
                   Dato: ____________________
                 </div>
               </td>

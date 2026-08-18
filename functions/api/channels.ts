@@ -1,4 +1,6 @@
 import { requireAdmin } from "./_lib/adminAuth";
+import { loadSiteSettings } from "./_lib/siteSettings";
+import { formatAddress } from "../../src/lib/siteInfo";
 import {
   CHANNEL_DEFS,
   CHANNELS_KEY,
@@ -211,11 +213,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       await context.env.BOOKINGS.put(CHANNELS_KEY, JSON.stringify(doc));
       console.log("[channels] run_setup complete,", items.length, "products");
 
+      // Firmaoplysninger og adresse fra /admin/indstillinger
+      const site = await loadSiteSettings(context.env.BOOKINGS);
+
       // Hygglo paste pack for top products
       const pastePack = items.slice(0, 12).map((i) => ({
         id: i.id,
         title: i.title,
-        paste: hyggloPaste(i),
+        paste: hyggloPaste(i, site.pickupAddress),
       }));
 
       return new Response(
@@ -253,10 +258,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
 Vi driver Lejhøjtaler.dk (udlejning af Soundboks, festlys m.m. i København) og ønsker at tilslutte Boost Connect / automatiske virksomhedsannoncer.
 
-Firma: Scharling Studio
-CVR: 40994904
+Firma: ${site.company.name}
+CVR: ${site.company.cvr}
 Web: https://lejhojtaler.dk
-Kontakt: info@lejhojtaler.dk
+Kontakt: ${site.company.email}
 
 Vi har et live XML-produktfeed (${items.length} produkter):
 ${doc.feedXmlUrl}
@@ -266,7 +271,7 @@ Kan I aktivere Boost Connect på vores konto og pege på feedet ovenfor? Vi send
 Venlig hilsen
 Frederik Scharling
 Lejhøjtaler.dk
-Halvtolv 9, 1. th, 1436 København K`,
+${formatAddress(site.company)}`,
             },
             {
               channel: "guloggratis",
@@ -277,9 +282,9 @@ Halvtolv 9, 1. th, 1436 København K`,
 Vi vil gerne have en erhvervsaftale og synke vores produkter via eget produktfeed (uden Koongo/Avecdo).
 
 Firma: Scharling Studio / Lejhøjtaler.dk
-CVR: 40994904
+CVR: ${site.company.cvr}
 Web: https://lejhojtaler.dk
-Kontakt: info@lejhojtaler.dk
+Kontakt: ${site.company.email}
 Branche: Udlejning af festudstyr (højtalere, lys, AV)
 
 XML-feed:
@@ -293,7 +298,7 @@ Kan I bekræfte, hvordan vi tilslutter feedet direkte, og sende tilbud på erhve
 Venlig hilsen
 Frederik Scharling
 Lejhøjtaler.dk
-Halvtolv 9, 1. th, 1436 København K
+${formatAddress(site.company)}
 Tlf. kan oplyses ved behov`,
             },
             {
@@ -304,10 +309,10 @@ Tlf. kan oplyses ved behov`,
 
 Vi udlejer Soundboks, festlys og AV i København via Lejhøjtaler.dk og vil gerne oprette/optimere udlejningsopslag hos jer.
 
-Firma: Scharling Studio
-CVR: 40994904
+Firma: ${site.company.name}
+CVR: ${site.company.cvr}
 Web: https://lejhojtaler.dk
-Kontakt: info@lejhojtaler.dk
+Kontakt: ${site.company.email}
 
 Har I mulighed for bulk-import eller partner-setup? Ellers opretter vi manuelt. Produktfeed til reference:
 ${doc.feedXmlUrl}

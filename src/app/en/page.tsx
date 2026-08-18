@@ -5,7 +5,7 @@ import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
 import { localeAlternates } from "@/lib/hreflang";
-import { openingHoursSpecification } from "@/lib/openingHours";
+import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 
 export const metadata: Metadata = {
   title: "Rent Speaker Copenhagen | From 345 DKK/weekend | Lejhøjtaler.dk",
@@ -48,31 +48,12 @@ export default function EnHome() {
       <Footer locale="en" />
 
       {/* JSON-LD: LocalBusiness */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            name: "Scharling Studio / Lejhøjtaler.dk",
-            legalName: "Scharling Studio",
-            taxID: "DK40994904",
-            description:
-              "Speaker rental in Copenhagen. Rent speakers, PA systems and sound equipment for parties, events and celebrations. Equipment for hire from 345 DKK/weekend.",
-            url: "https://lejhojtaler.dk/en",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "Halvtolv 9, 1. th",
-              postalCode: "1436",
-              addressLocality: "København K",
-              addressCountry: "DK",
-            },
-            areaServed: {
-              "@type": "City",
-              name: "Copenhagen",
-            },
-            openingHoursSpecification: openingHoursSpecification(),
-          }),
+      <LocalBusinessJsonLd
+        extra={{
+          description:
+            "Speaker rental in Copenhagen. Rent speakers, PA systems and sound equipment for parties, events and celebrations. Equipment for hire from 345 DKK/weekend.",
+          url: "https://lejhojtaler.dk/en",
+          areaServed: { "@type": "City", name: "Copenhagen" },
         }}
       />
 
