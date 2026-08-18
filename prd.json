@@ -1522,7 +1522,8 @@
       "bygget": "EventInquiryForm på /erhverv#tilbud spørger om de fem ting vi altid mangler: hvornår, hvor mange, hvor (inde/ude), hvad er det for et arrangement, og hvad skal vi sørge for (lyd, mikrofoner, lys, skærm, røg, levering, tekniker) — plus firma og EAN til fakturaen. Sendes gennem /api/contact og lander i firmaets indbakke (info@, fra /admin/indstillinger) med kundens adresse som reply-to.",
       "emnelinjen": "Emnet bliver 'Forespørgsel · 80 gæster · Reception: Mette Hansen', så størrelsen kan ses i indbakken uden at åbne mailen. Serveren skærer emnet ved 40 tegn, og en test låser at vi holder os under.",
       "valgt": "Beskeden sættes sammen i klienten og sendes som ét tekstfelt gennem den eksisterende /api/contact. Endpointet blev bevidst ikke rørt — en anden session arbejder i filen lige nu, og resultatet i indbakken er det samme.",
-      "mangler": "Forespørgslen findes kun som en mail. Den bliver ikke til en sag i /admin, har ingen status, kan ikke følges op og bliver ikke til en booking uden at nogen taster den ind igen. Det er næste skridt (story aov-5)."
+      "mangler": "Forespørgslen findes kun som en mail. Den bliver ikke til en sag i /admin, har ingen status, kan ikke følges op og bliver ikke til en booking uden at nogen taster den ind igen. Det er næste skridt (story aov-5).",
+      "slide_in": "InquiryDrawer i src/components/InquiryDrawer.tsx, monteret i layout ved siden af BookingDrawer. Fanen 'Spørg om et event' sidder på højre kant under kurv-fanen, så de to ikke ligger oven i hinanden. Draweren åbner på #foresp (enhver side), på #tilbud (så alle eksisterende 'Få et tilbud'-links åbner den frem for at hoppe til /erhverv) og på ?forespoergsel=1. Klik på et tilbudslink opsnappes, men href'en bliver stående, så linket stadig fører til formularen som sektion på /erhverv uden JavaScript. Skjult på /admin, /accounting og /book — der er den i vejen frem for til hjælp."
     }
   },
   "i18n": {

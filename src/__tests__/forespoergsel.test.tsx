@@ -131,3 +131,57 @@ describe("Vejen til forespørgslen", () => {
     }
   });
 });
+
+describe("InquiryDrawer — den lille slide-in", () => {
+  beforeEach(() => {
+    window.history.pushState({}, "", "/lydanlaeg");
+  });
+
+  it("er lukket til at begynde med, men har en fane man kan åbne den med", async () => {
+    const { default: InquiryDrawer } = await import("@/components/InquiryDrawer");
+    render(<InquiryDrawer />);
+    const dialog = screen.getByRole("dialog", { hidden: true });
+    expect(dialog.parentElement).toHaveAttribute("aria-hidden", "true");
+    expect(screen.getByTestId("foresp-fane")).toBeInTheDocument();
+  });
+
+  it("åbner når man klikker på fanen", async () => {
+    const { default: InquiryDrawer } = await import("@/components/InquiryDrawer");
+    const user = userEvent.setup();
+    render(<InquiryDrawer />);
+    await user.click(screen.getByTestId("foresp-fane"));
+    await waitFor(() => expect(screen.getByRole("dialog")).toBeInTheDocument());
+    expect(screen.getByLabelText(/Hvor mange gæster/)).toBeInTheDocument();
+  });
+
+  it("åbner af sig selv når URL'en beder om det (#foresp)", async () => {
+    window.history.pushState({}, "", "/lydanlaeg#foresp");
+    const { default: InquiryDrawer } = await import("@/components/InquiryDrawer");
+    render(<InquiryDrawer />);
+    await waitFor(() => expect(screen.getByRole("dialog")).toBeInTheDocument());
+  });
+
+  it("et 'Få et tilbud'-link åbner draweren i stedet for at forlade siden", async () => {
+    const { default: InquiryDrawer } = await import("@/components/InquiryDrawer");
+    const user = userEvent.setup();
+    render(
+      <>
+        <a href="/erhverv#tilbud">Få et tilbud</a>
+        <InquiryDrawer />
+      </>,
+    );
+    await user.click(screen.getByRole("link", { name: "Få et tilbud" }));
+    await waitFor(() => expect(screen.getByRole("dialog")).toBeInTheDocument());
+  });
+
+  it("holder sig væk fra admin", async () => {
+    window.history.pushState({}, "", "/admin");
+    vi.resetModules();
+    vi.doMock("next/navigation", () => ({ usePathname: () => "/admin" }));
+    const { default: InquiryDrawer } = await import("@/components/InquiryDrawer");
+    const { container } = render(<InquiryDrawer />);
+    expect(container).toBeEmptyDOMElement();
+    vi.doUnmock("next/navigation");
+    vi.resetModules();
+  });
+});

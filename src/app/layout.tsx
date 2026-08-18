@@ -4,6 +4,7 @@ import BurgerMenu from "@/components/BurgerMenu";
 import TopBar from "@/components/TopBar";
 import SiteHeader from "@/components/SiteHeader";
 import BookingDrawer from "@/components/BookingDrawer";
+import InquiryDrawer from "@/components/InquiryDrawer";
 import WeekendSalePopup from "@/components/WeekendSalePopup";
 import { localeAlternates } from "@/lib/hreflang";
 import { ADS_CONVERSION_ID } from "@/lib/analytics";
@@ -113,6 +114,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <BookingDrawer />
+        <InquiryDrawer />
         <WeekendSalePopup />
       </body>
     </html>
