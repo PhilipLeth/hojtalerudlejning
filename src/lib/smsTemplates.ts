@@ -235,6 +235,8 @@ export function parseSmsSettings(raw: unknown): SmsSettings {
           text: String(sn.text).trim().slice(0, 480),
         }))
         .filter((sn) => sn.text.length > 0)
+        // Ét id kan kun pege på én skabelon — ellers vælger ordresiden i blinde
+        .filter((sn, i, all) => all.findIndex((x) => x.id === sn.id) === i)
         .slice(0, 12)
     : [];
 

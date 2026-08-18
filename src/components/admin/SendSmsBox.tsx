@@ -155,7 +155,7 @@ export default function SendSmsBox({ booking, secret, onUpdated, startOpen, hide
           }}
           style={{ fontSize: "12px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "6px", background: "#fff", color: "#111", cursor: "pointer" }}
         >
-          <optgroup label="Hurtigbeskeder">
+          <optgroup label="Dine skabeloner">
             {snippets.map((sn) => (
               <option key={sn.id} value={`snippet:${sn.id}`}>
                 {sn.label}

@@ -16,6 +16,7 @@ import {
   SMS_SHORTCODES,
   SMS_TYPES,
   buildSms,
+  renderSms,
   smsVarsFor,
   type SmsSettings as Settings,
   type SmsTypeId,
@@ -284,6 +285,94 @@ export default function SmsSettings({ secret }: { secret: string }) {
         </div>
       )}
 
+      {/* Skabelonerne Frederik selv skriver og bruger fra ordren */}
+      <div style={{ border: "1px solid #e8dca8", background: "#fffdf6", borderRadius: "8px", padding: "11px 12px", marginBottom: "14px" }}>
+        <strong style={{ fontSize: "13px" }}>Dine skabeloner</strong>
+        <p style={{ fontSize: "11px", color: "#8a7a4a", margin: "3px 0 10px", lineHeight: 1.5 }}>
+          Det er dem, der står i dropdownen, når du trykker 💬 på en ordre. Ingen af dem sender af sig selv —
+          de er skrevet på forhånd, så en besked er ét tryk. Shortcodes udfyldes fra ordren.
+        </p>
+
+        {(settings.snippets ?? []).map((sn, i) => {
+          const len = smsLength(renderSms(sn.text, vars));
+          return (
+            <div key={sn.id} style={{ marginBottom: "10px" }}>
+              <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "4px" }}>
+                <input
+                  value={sn.label}
+                  placeholder="Navn på skabelonen, fx »Vi er på vej«"
+                  onChange={(e) => {
+                    const snippets = settings.snippets.map((x, j) => (j === i ? { ...x, label: e.target.value } : x));
+                    patch({ snippets });
+                  }}
+                  style={{ ...input, flex: 1, fontWeight: 600 }}
+                />
+                <span style={{ fontSize: "11px", color: len.segments > 1 ? "#c0392b" : "#aaa", whiteSpace: "nowrap" }}>
+                  {len.chars} tegn · {len.segments} besked{len.segments === 1 ? "" : "er"}
+                </span>
+                <button
+                  onClick={() => patch({ snippets: settings.snippets.filter((_, j) => j !== i) })}
+                  title="Fjern skabelonen"
+                  style={{ background: "none", border: "none", color: "#bbb", cursor: "pointer", fontSize: "16px" }}
+                >
+                  ×
+                </button>
+              </div>
+              <textarea
+                value={sn.text}
+                onChange={(e) => {
+                  const snippets = settings.snippets.map((x, j) => (j === i ? { ...x, text: e.target.value } : x));
+                  patch({ snippets });
+                }}
+                rows={2}
+                maxLength={480}
+                style={{ ...input, width: "100%", boxSizing: "border-box", lineHeight: 1.45, resize: "vertical" }}
+              />
+              <div style={{ fontSize: "11px", color: "#999", marginTop: "3px" }}>
+                Hos kunden: {renderSms(sn.text, vars) || <span style={{ color: "#c0392b" }}>tom</span>}
+              </div>
+            </div>
+          );
+        })}
+
+        <div style={{ display: "flex", gap: "5px", flexWrap: "wrap", marginTop: "8px" }}>
+          {SMS_SHORTCODES.map((sc) => (
+            <span
+              key={sc.key}
+              title={`${sc.label} — fx "${sc.example}"`}
+              style={{ padding: "2px 8px", fontSize: "11px", fontFamily: "ui-monospace, monospace", background: "#f4f4f4", color: "#666", border: "1px solid #e2e2e2", borderRadius: "20px" }}
+            >
+              {`{{${sc.key}}}`}
+            </span>
+          ))}
+        </div>
+
+        <button
+          onClick={() =>
+            patch({
+              snippets: [
+                ...(settings.snippets ?? []),
+                // Tidsstempel som id: sletter man en og tilføjer en ny, må de
+                // to ikke kunne ende med samme id og skygge for hinanden
+                { id: `egen_${Date.now().toString(36)}`, label: "Ny skabelon", text: "Hej {{fornavn}}! " },
+              ],
+            })
+          }
+          style={{ background: "none", border: "none", color: "#0070f3", cursor: "pointer", fontSize: "12px", padding: "8px 0 0" }}
+        >
+          + Tilføj skabelon
+        </button>
+      </div>
+
+      <details style={{ marginBottom: "12px" }}>
+        <summary style={{ cursor: "pointer", fontSize: "13px", fontWeight: 600, color: "#666" }}>
+          Automatiske SMS'er (slukket)
+        </summary>
+        <p style={{ fontSize: "11px", color: "#999", margin: "6px 0 10px", lineHeight: 1.5 }}>
+          Fem beskeder, der kan sendes af sig selv ved bestilling, godkendelse, afhentnings- og
+          afleveringsdagen. De er slukket, fordi SMS sendes fra ordren — men teksterne kan vælges manuelt
+          i samme dropdown som dine egne skabeloner.
+        </p>
       {SMS_TYPES.map((def) => {
         const tpl = settings.templates[def.id];
         const built = buildSms(settings, def.id, vars);
@@ -360,6 +449,8 @@ export default function SmsSettings({ secret }: { secret: string }) {
           </div>
         );
       })}
+
+      </details>
 
       <div style={{ display: "flex", gap: "10px", alignItems: "flex-end", flexWrap: "wrap", marginTop: "14px" }}>
         <div>

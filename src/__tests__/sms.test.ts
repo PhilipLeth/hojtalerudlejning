@@ -379,6 +379,23 @@ describe("skabeloner", () => {
     expect(Object.keys(s.templates).sort()).toEqual(SMS_TYPES.map((t) => t.id).sort());
   });
 
+  it("Frederiks egne skabeloner overlever en tur gennem KV", () => {
+    const s = parseSmsSettings({
+      snippets: [
+        { id: "paa_vej", label: "  Vi er på vej  ", text: "  Hej {{fornavn}}!  " },
+        // Dobbelt id ville lade ordresiden vælge i blinde
+        { id: "paa_vej", label: "Kopi", text: "Noget andet" },
+        { id: "tom", label: "Tom", text: "   " },
+      ],
+    });
+    expect(s.snippets).toEqual([{ id: "paa_vej", label: "Vi er på vej", text: "Hej {{fornavn}}!" }]);
+  });
+
+  it("uden egne skabeloner falder man tilbage på de fire færdige", () => {
+    expect(parseSmsSettings({ snippets: [] }).snippets).toEqual(DEFAULT_SMS_SETTINGS.snippets);
+    expect(parseSmsSettings({}).snippets.map((s) => s.id)).toContain("paa_vej");
+  });
+
   it("tom skabelon falder tilbage i stedet for at sende en tom besked", () => {
     expect(parseSmsSettings({ templates: { bekraeftet: { text: "   " } } }).templates.bekraeftet.text).toBe(
       DEFAULT_SMS_SETTINGS.templates.bekraeftet.text,

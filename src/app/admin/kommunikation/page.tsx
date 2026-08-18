@@ -55,6 +55,19 @@ const PREVIEW = {
   reviewUrl: "https://g.page/r/CbIkmN4b8vjGEBM/review",
 };
 
+/** Nummereret overskrift, så siden læses som kundens forløb og ikke som en bunke felter */
+function SectionTitle({ n, title, hint }: { n: number; title: string; hint: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "baseline", gap: "8px", margin: "22px 0 8px", flexWrap: "wrap" }}>
+      <span style={{ background: "#111", color: "#fff", borderRadius: "50%", width: "20px", height: "20px", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: 700, flexShrink: 0 }}>
+        {n}
+      </span>
+      <strong style={{ fontSize: "15px" }}>{title}</strong>
+      <span style={{ fontSize: "12px", color: "#999" }}>{hint}</span>
+    </div>
+  );
+}
+
 export default function KommunikationPage() {
   const { secret, user, ready, isLoggedIn, logout, unauthorized } = useAdminAuth();
   const [settings, setSettings] = useState<CommSettings>(DEFAULT_SETTINGS);
@@ -168,8 +181,9 @@ export default function KommunikationPage() {
       />
 
       <div style={{ background: "#e8f0fe", color: "#174ea6", padding: "12px 14px", borderRadius: "8px", margin: "0 0 18px", fontSize: "13px" }}>
-        <strong>Opfølgning efter ordre.</strong> Mailen sendes automatisk, når du markerer udstyret som
-        returneret — én gang pr. ordre. Teksten herunder er den, kunden får; shortcodes udfyldes fra ordren.
+        <strong>Alt hvad kunden hører fra os.</strong> Mailene sendes af sig selv på hvert sit tidspunkt i
+        forløbet — hver skabelon siger selv, hvornår den går ud, og om den er aktiv. SMS er anderledes: dine
+        skabeloner nederst bruges, når du selv skriver til en kunde fra ordren.
         {saleActive
           ? " Weekendudsalget er tændt, så {{udsalg}} har noget at sige lige nu."
           : " Weekendudsalget er slukket, så {{udsalg}} er tomt og dets afsnit falder helt væk."}
@@ -183,8 +197,27 @@ export default function KommunikationPage() {
 
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,420px)", gap: "18px", alignItems: "start" }}>
         <div>
+          <SectionTitle n={1} title="Når du godkender ordren" hint="Mail til kunden med hvad, hvornår, hvor og betaling" />
+          <ConfirmationMail secret={secret} />
+
+          <SectionTitle n={2} title="Når udstyret er afleveret" hint="Tak for denne gang + anmeldelse og delekode" />
           {/* Skabelonen */}
           <div style={card}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", marginBottom: "8px" }}>
+              <strong style={{ fontSize: "14px" }}>Tak for denne gang</strong>
+              <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", cursor: "pointer" }}>
+                <input
+                  type="checkbox"
+                  checked={settings.autoSend}
+                  onChange={(e) => patch({ autoSend: e.target.checked })}
+                  style={{ width: "16px", height: "16px", cursor: "pointer" }}
+                />
+                Send når udstyret markeres afleveret
+              </label>
+              <span style={{ fontSize: "11px", color: settings.autoSend ? "#2f7a4d" : "#c0392b", fontWeight: 600 }}>
+                {settings.autoSend ? "Aktiv" : "Slukket — sendes ikke"}
+              </span>
+            </div>
             <label style={label}>Emne</label>
             <input
               value={settings.followUp.subject}
@@ -219,6 +252,7 @@ export default function KommunikationPage() {
             </div>
           </div>
 
+          <SectionTitle n={4} title="Afsender og delekode" hint="Hvem der underskriver, og koden vennerne kan bruge" />
           {/* Hvem står for udlejningen */}
           <div style={card}>
             <label style={label}>Hvem kan stå for en udlejning</label>
@@ -290,15 +324,9 @@ export default function KommunikationPage() {
           </div>
 
           <div style={{ ...card, display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
-            <label style={{ display: "flex", alignItems: "center", gap: "7px", fontSize: "13px", cursor: "pointer" }}>
-              <input
-                type="checkbox"
-                checked={settings.autoSend}
-                onChange={(e) => patch({ autoSend: e.target.checked })}
-                style={{ width: "16px", height: "16px", cursor: "pointer" }}
-              />
-              Send automatisk ved retur
-            </label>
+            <span style={{ fontSize: "12px", color: "#999" }}>
+              Gemmer tak-mailen, personerne og delekoden
+            </span>
             <button
               onClick={save}
               disabled={saving || !dirty}
@@ -308,10 +336,7 @@ export default function KommunikationPage() {
             </button>
           </div>
 
-          {/* Bekræftelsen sendes ved statusskiftet og gemmes for sig */}
-          <ConfirmationMail secret={secret} />
-
-          {/* SMS har sine egne skabeloner og sin egen afbryder — gemmes for sig */}
+          <SectionTitle n={3} title="SMS du selv sender" hint="Dine skabeloner — bruges fra 💬 på ordren" />
           <SmsSettings secret={secret} />
         </div>
 
