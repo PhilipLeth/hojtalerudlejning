@@ -447,6 +447,11 @@ export default function IndstillingerPage() {
                 onChange={(e) => setCompany((c) => ({ ...c, email: e.target.value }))}
                 style={{ width: "100%", padding: "10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
               />
+              <p style={{ margin: "6px 0 0", fontSize: "12px", color: "#777" }}>
+                Nye ordrer og beskeder fra kontaktformularen sendes hertil. Adressen står
+                også på sitet og som svaradresse i mails til kunder. Flere modtagere
+                adskilles med komma.
+              </p>
             </div>
           </div>
 

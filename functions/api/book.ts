@@ -332,7 +332,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const emails = [
     {
       from: fromEmail,
-      to: notifyRecipients(NOTIFY_EMAIL),
+      // Ordren går til firmaets mailadresse, så Frederik kan flytte modtageren
+      // i /admin/indstillinger uden et deploy. NOTIFY_EMAIL er nødsporet hvis
+      // KV ikke svarer — en ordre må aldrig gå tabt, fordi en indstilling er væk.
+      to: notifyRecipients(site.company.email || NOTIFY_EMAIL),
       reply_to: data.email,
       subject: `Ny booking: ${data.speaker}${(data.cartItems?.length ?? 0) > 0 ? ` + ${data.cartItems!.length} mere` : ""} — ${data.period} — ${data.name}`,
       html: ownerHtml,

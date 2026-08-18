@@ -8,10 +8,12 @@
  */
 
 import { notifyRecipients } from "./_lib/notify";
+import { loadSiteSettings } from "./_lib/siteSettings";
 
 interface Env {
   RESEND_API_KEY: string;
   NOTIFY_EMAIL: string;
+  BOOKINGS: KVNamespace;
 }
 
 const corsHeaders = {
@@ -95,6 +97,11 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     <p style="font-family:sans-serif;white-space:pre-wrap;background:#f8f8f8;padding:14px;border-radius:8px;">${escapeHtml(v.message)}</p>
   `;
 
+  // Samme modtager som ordremails: firmaets adresse fra /admin/indstillinger,
+  // med NOTIFY_EMAIL som nødspor hvis KV ikke svarer.
+  const site = await loadSiteSettings(context.env.BOOKINGS);
+  const modtagere = site.company.email || NOTIFY_EMAIL;
+
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -103,7 +110,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     },
     body: JSON.stringify({
       from: "Lejhøjtaler.dk <info@lejhojtaler.dk>",
-      to: notifyRecipients(NOTIFY_EMAIL),
+      to: notifyRecipients(modtagere),
       reply_to: v.email,
       subject: v.topic ? `${v.topic}: ${v.name}` : `Kontaktformular: ${v.name}`,
       html,

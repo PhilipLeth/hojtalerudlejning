@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { notifyRecipients } from "../../functions/api/_lib/notify";
+import { validateCompany } from "../lib/siteInfo";
 
 describe("notifyRecipients", () => {
   it("holder én adresse uændret", () => {
@@ -27,5 +28,44 @@ describe("notifyRecipients", () => {
     expect(notifyRecipients(undefined)).toEqual([]);
     expect(notifyRecipients("")).toEqual([]);
     expect(notifyRecipients("   ")).toEqual([]);
+  });
+});
+
+describe("validateCompany — mailfeltet rummer modtagerne", () => {
+  const base = {
+    name: "Scharling Studio",
+    street: "Halvtolv 9, 1. th",
+    postalCode: "1436",
+    city: "København K",
+    cvr: "40994904",
+  };
+
+  it("tager én adresse", () => {
+    const r = validateCompany({ ...base, email: "info@lejhojtaler.dk" });
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.company.email).toBe("info@lejhojtaler.dk");
+  });
+
+  it("tager flere adskilt af komma og normaliserer mellemrum", () => {
+    const r = validateCompany({ ...base, email: "info@lejhojtaler.dk ,lejhojtaler@gmail.com" });
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.company.email).toBe("info@lejhojtaler.dk, lejhojtaler@gmail.com");
+  });
+
+  it("afviser hele feltet hvis én adresse er forkert — ellers ryger den lydløst", () => {
+    const r = validateCompany({ ...base, email: "info@lejhojtaler.dk, ikke-en-mail" });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error).toContain("ikke-en-mail");
+  });
+
+  it("afviser et tomt felt", () => {
+    expect(validateCompany({ ...base, email: "  ,  " }).ok).toBe(false);
+  });
+
+  it("klipper ikke midt i den sidste adresse ved tre modtagere", () => {
+    const email = "frederikemil8@gmail.com, lejhojtaler@gmail.com, info@lejhojtaler.dk";
+    const r = validateCompany({ ...base, email });
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(notifyRecipients(r.company.email)).toHaveLength(3);
   });
 });

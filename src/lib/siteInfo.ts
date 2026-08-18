@@ -19,7 +19,7 @@ export interface CompanyInfo {
   city: string;
   /** Kun cifre */
   cvr: string;
-  /** Mailadressen kunden skriver til */
+  /** Mailadressen kunden skriver til, og som ordrer sendes til. Flere adskilt af komma. */
   email: string;
 }
 
@@ -48,7 +48,10 @@ export function normalizeCompany(input: unknown): CompanyInfo {
     postalCode: felt(raw.postalCode, DEFAULT_COMPANY.postalCode, 10),
     city: felt(raw.city, DEFAULT_COMPANY.city, 40),
     cvr: felt(String(raw.cvr ?? "").replace(/\D/g, ""), DEFAULT_COMPANY.cvr, 12),
-    email: felt(raw.email, DEFAULT_COMPANY.email, 80),
+    // Rummer flere modtagere adskilt af komma. Loftet er sat efter det, ikke
+    // efter én adresse: klippes der midt i den sidste, fejler afsendelsen
+    // lydløst til netop den modtager.
+    email: felt(raw.email, DEFAULT_COMPANY.email, 200),
   };
 }
 
@@ -76,8 +79,21 @@ export function validateCompany(
   const cvr = String(raw.cvr ?? "").replace(/\D/g, "");
   if (cvr.length !== 8) return { ok: false, error: "CVR skal være 8 cifre" };
 
-  const email = String(raw.email ?? "").trim();
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return { ok: false, error: "Mailadressen ser forkert ud" };
+  // Feltet må rumme flere modtagere adskilt af komma: ordrer og
+  // kontaktformular sendes hertil, og de skal kunne gå til både firmaet og en
+  // medarbejder uden at kræve et deploy. Hver adresse valideres for sig, så én
+  // slåfejl ikke sender resten ud i ingenting.
+  const adresser = String(raw.email ?? "")
+    .split(",")
+    .map((a) => a.trim())
+    .filter(Boolean);
+  if (adresser.length === 0) return { ok: false, error: "Mailadressen mangler" };
+  for (const adresse of adresser) {
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(adresse)) {
+      return { ok: false, error: `Mailadressen ser forkert ud: ${adresse}` };
+    }
+  }
+  const email = adresser.join(", ");
 
   return { ok: true, company: normalizeCompany({ ...raw, cvr, email }) };
 }
