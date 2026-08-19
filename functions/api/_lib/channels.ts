@@ -116,7 +116,7 @@ function rentalFeedTitle(title: string): string {
 function rentalDescription(productDesc: string, price: number, addon = false): string {
   const body = productDesc.trim();
   const priceLine = `Lejepris ${price} kr/weekend (op til 5 dage).`;
-  const suffix = "Afhentning København K. Book online.";
+  const suffix = "Afhentning København S. Book online.";
   if (addon) {
     return `Udlejning — ikke salg. Tilvalg til leje. ${body} ${priceLine} ${suffix}`.trim();
   }
@@ -273,7 +273,7 @@ export function toFacebookCsv(items: FeedItem[]): string {
       csvCell("Electronics"),
       csvCell("For rent"),
       csvCell(i.description),
-      csvCell("København K, Danmark"),
+      csvCell("København S, Danmark"),
       csvCell(i.link),
     ].join(",")
   );

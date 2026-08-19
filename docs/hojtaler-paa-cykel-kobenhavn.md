@@ -1,6 +1,6 @@
 ---
 title: "Lej en højtaler du kan tage med på cyklen i København"
-description: "Vores lille højtalerpakke vejer kun 12 kg og passer i en bæretaske. Perfekt til københavnere uden bil. Hent på cykel i København K eller få levering for 495 kr."
+description: "Vores lille højtalerpakke vejer kun 12 kg og passer i en bæretaske. Perfekt til københavnere uden bil. Hent på cykel i København S eller få levering for 495 kr."
 date: "2025-06-05"
 keywords:
   - højtaler cykel
@@ -27,9 +27,9 @@ At en højtaler er let betyder ikke at den lyder svagt. Vores små højtalere er
 
 Professionel lyd behøver ikke betyde tung logistik. Det var faktisk en af grundene til at lejhøjtaler.dk blev skabt - ideen om at lydudlejning i København skulle tilpasses det liv folk faktisk lever i en storby, hvor cyklen er det primære transportmiddel.
 
-## Hent på Halvtolv 9, København K
+## Hent på Vermlandsgade 66, København
 
-Afhentning foregår på vores adresse: **Halvtolv 9, 1. th, 1436 København K**. Adressen ligger centralt, og der er altid gratis parkering i én time lige ved døren, hvis du alligevel kommer i bil.
+Afhentning foregår på vores adresse: **Vermlandsgade 66, 2300 København**. Der er altid gratis parkering i én time lige ved døren, hvis du alligevel kommer i bil.
 
 De fleste henter fredag mellem kl. 14 og 18 og afleverer mandag kl. 15-17. Du møder op, betaler med MobilePay eller kontant, og får tasken med ud ad døren. Ingen kontrakter, ingen ventetid.
 
@@ -45,7 +45,7 @@ Her er et par gode råd når du henter udstyret på cykel:
 
 - **Brug bagagebæreren.** Tasken har en flad bund og ligger stabilt. En elastik eller bagagestrop holder den på plads.
 - **Tag det roligt.** 12 kg ændrer balancen en smule, men det svarer til en stor indkøbspose. De fleste vænner sig til det med det samme.
-- **Planlæg ruten.** Halvtolv 9 ligger i indre København med gode cykelstier i alle retninger. Det er nemt at komme til fra Nørrebro, Vesterbro, Frederiksberg og Amager.
+- **Planlæg ruten.** Vermlandsgade ligger på Amager med cykelsti hele vejen. Ind mod byen går turen over Langebro eller Knippelsbro, og fra Islands Brygge og Christianshavn er der ganske kort.
 
 ## Fra 395 kr. for en hel weekend
 

@@ -394,8 +394,8 @@ describe("Footeren", () => {
 
 describe("Firmaoplysningerne", () => {
   it("har standarden fra koden", () => {
-    expect(formatCompanyLine(DEFAULT_COMPANY)).toBe("Scharling Studio · Halvtolv 9, 1. th · 1436 København K · CVR 40994904");
-    expect(formatAddress(DEFAULT_COMPANY)).toBe("Halvtolv 9, 1. th, 1436 København K");
+    expect(formatCompanyLine(DEFAULT_COMPANY)).toBe("Scharling Studio · Vermlandsgade 66 · 2300 København · CVR 40994904");
+    expect(formatAddress(DEFAULT_COMPANY)).toBe("Vermlandsgade 66, 2300 København");
   });
 
   it("falder tilbage felt for felt ved skrald i KV", () => {
@@ -466,7 +466,7 @@ describe("Ingen hardkodede oplysninger tilbage", () => {
       "src/app/admin/lejeseddel/page.tsx",
     ]) {
       const src = read(f);
-      expect(src, f).not.toMatch(/Halvtolv/);
+      expect(src, f).not.toMatch(/Vermlandsgade/);
       expect(src, f).not.toMatch(/40994904/);
     }
   });
@@ -478,7 +478,7 @@ describe("Ingen hardkodede oplysninger tilbage", () => {
     expect(read("functions/api/_lib/sms.ts")).toContain("loadSiteSettings");
     // Ingen af dem har deres egen adresse længere
     for (const f of ["functions/api/book.ts", "functions/api/bookings-update.ts"]) {
-      expect(read(f), f).not.toMatch(/Halvtolv/);
+      expect(read(f), f).not.toMatch(/Vermlandsgade/);
     }
   });
 });

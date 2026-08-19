@@ -34,9 +34,9 @@ describe("notifyRecipients", () => {
 describe("validateCompany — mailfeltet rummer modtagerne", () => {
   const base = {
     name: "Scharling Studio",
-    street: "Halvtolv 9, 1. th",
-    postalCode: "1436",
-    city: "København K",
+    street: "Vermlandsgade 66",
+    postalCode: "2300",
+    city: "København",
     cvr: "40994904",
   };
 

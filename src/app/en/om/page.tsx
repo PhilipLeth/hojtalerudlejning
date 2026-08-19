@@ -101,10 +101,10 @@ export default function AboutPageEn() {
               </div>
             </section>
 
-            {/* Speaker rental in Copenhagen K */}
+            {/* Speaker rental in Copenhagen S */}
             <section className="glass rounded-2xl p-8">
               <h2 className="mb-4 text-xl font-semibold text-brand-400">
-                Speaker rental in Copenhagen K &ndash; for cyclists
+                Speaker rental in Copenhagen S &ndash; for cyclists
               </h2>
               <div className="space-y-4 text-sm leading-relaxed text-white/70">
                 <p>
@@ -131,7 +131,7 @@ export default function AboutPageEn() {
                 <p>
                   We&rsquo;ve deliberately cut away everything unnecessary. No
                   long contracts. No hidden fees — you pay at pickup. You book online in
-                  three minutes, show up in Copenhagen K, pay when you pick up
+                  three minutes, show up in Copenhagen S, pay when you pick up
                   &ndash; and you&rsquo;re good to go.
                 </p>
                 <p>
@@ -206,7 +206,7 @@ export default function AboutPageEn() {
                 <p>
                   It takes three minutes to book on lejh&oslash;jtaler.dk. Choose
                   your equipment, pick your date, and we&rsquo;ll take care of the
-                  rest. Pickup is in Copenhagen K, where there&rsquo;s always free
+                  rest. Pickup is in Copenhagen S, where there&rsquo;s always free
                   parking for one hour &ndash; or you just cycle there.
                 </p>
                 <p>

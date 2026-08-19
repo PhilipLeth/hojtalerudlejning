@@ -12,7 +12,7 @@
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import { formatAddress, formatCompanyLine } from "@/lib/siteInfo";
 
-/** "Halvtolv 9, 1. th, 1436 København K" */
+/** "Vermlandsgade 66, 2300 København" */
 export function CompanyAddress() {
   const { company } = useSiteSettings();
   return <>{formatAddress(company)}</>;

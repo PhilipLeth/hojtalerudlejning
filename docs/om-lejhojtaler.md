@@ -33,11 +33,11 @@ København er en cykelby. De fleste af vores kunder har ikke bil, og det skal de
 
 Vores lille højtalerpakke vejer kun 12 kg og kommer i en polstret bæretaske. To kompakte højtalere med alle kabler inkluderet - klar til at smide bag på cyklen og køre hjem. For dem der lejer den store pakke eller bare foretrækker at slippe for transporten, tilbyder vi levering i Storkøbenhavn for 495 kr.
 
-Afhentning foregår på Halvtolv 9 i København K, hvor der altid er gratis parkering i én time. De fleste henter fredag eftermiddag og afleverer mandag - en hel weekends lyd for én fast pris.
+Afhentning foregår på Vermlandsgade 66 i København, hvor der altid er gratis parkering i én time. De fleste henter fredag eftermiddag og afleverer mandag - en hel weekends lyd for én fast pris.
 
 ## Hvad vi tror på
 
-Vi har bevidst skåret alt det unødvendige væk. Ingen lange kontrakter. Ingen skjulte gebyrer. Du booker online på tre minutter, møder op i København K, betaler når du henter - og så er du klar.
+Vi har bevidst skåret alt det unødvendige væk. Ingen lange kontrakter. Ingen skjulte gebyrer. Du booker online på tre minutter, møder op i København S, betaler når du henter - og så er du klar.
 
 Vi tror på at lyd til fest i København ikke behøver at koste en formue. Vores priser starter fra **395 kr.** for en komplet højtalerpakke med kabler inkluderet. Sammenlign det med hvad andre opkræver, og du vil hurtigt se forskellen.
 

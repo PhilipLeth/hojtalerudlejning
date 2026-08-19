@@ -176,7 +176,7 @@ export default function OccasionLanding({
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Klar til at booke?</h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent i København K eller få det leveret. Betal ved afhentning eller online.
+            Book online på 2 minutter. Hent i København S eller få det leveret. Betal ved afhentning eller online.
           </p>
           <a
             href={book}

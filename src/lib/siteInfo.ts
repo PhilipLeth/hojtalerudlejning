@@ -13,7 +13,7 @@
 export interface CompanyInfo {
   /** Firmanavnet på fakturaen og i footeren */
   name: string;
-  /** Vej og nummer, fx "Halvtolv 9, 1. th" */
+  /** Vej og nummer, fx "Vermlandsgade 66" */
   street: string;
   postalCode: string;
   city: string;
@@ -25,9 +25,9 @@ export interface CompanyInfo {
 
 export const DEFAULT_COMPANY: CompanyInfo = {
   name: "Scharling Studio",
-  street: "Halvtolv 9, 1. th",
-  postalCode: "1436",
-  city: "København K",
+  street: "Vermlandsgade 66",
+  postalCode: "2300",
+  city: "København",
   cvr: "40994904",
   email: "info@lejhojtaler.dk",
 };
@@ -98,7 +98,7 @@ export function validateCompany(
   return { ok: true, company: normalizeCompany({ ...raw, cvr, email }) };
 }
 
-/** "Halvtolv 9, 1. th, 1436 København K" */
+/** "Vermlandsgade 66, 2300 København" */
 export function formatAddress(c: CompanyInfo): string {
   return `${c.street}, ${c.postalCode} ${c.city}`;
 }

@@ -47,10 +47,10 @@ export default function About() {
           </div>
         </div>
 
-        {/* Højtalerudlejning i København K */}
+        {/* Højtalerudlejning i København S */}
         <div className="glass rounded-2xl p-8">
           <h3 className="mb-4 text-xl font-semibold text-brand-400">
-            H&oslash;jtalerudlejning i K&oslash;benhavn K - til dig der cykler
+            H&oslash;jtalerudlejning i K&oslash;benhavn S - til dig der cykler
           </h3>
           <div className="space-y-4 text-sm leading-relaxed text-white/70">
             <p>
@@ -78,7 +78,7 @@ export default function About() {
               Vi har bevidst sk&aring;ret alt det un&oslash;dvendige v&aelig;k.
               Ingen lange kontrakter. Ingen skjulte gebyrer. Betal ved afhentning. Du
               booker online p&aring; tre minutter, m&oslash;der op i
-              K&oslash;benhavn K, betal n&aring;r du henter - og s&aring; er du
+              K&oslash;benhavn S, betal n&aring;r du henter - og s&aring; er du
               klar.
             </p>
             <p>
@@ -153,7 +153,7 @@ export default function About() {
             <p>
               Det tager tre minutter at booke p&aring; lejh&oslash;jtaler.dk.
               V&aelig;lg dit udstyr, v&aelig;lg din dato, og vi s&oslash;rger
-              for resten. Afhentning foreg&aring;r i K&oslash;benhavn K, hvor
+              for resten. Afhentning foreg&aring;r i K&oslash;benhavn S, hvor
               der altid er gratis parkering i &eacute;n time - eller du cykler
               bare derhen.
             </p>

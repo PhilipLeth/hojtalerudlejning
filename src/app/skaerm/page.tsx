@@ -169,7 +169,7 @@ export default function SkaermPage() {
             Klar til at booke storskærm?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 595 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København S, aflever mandag. Kun 595 kr/weekend.
           </p>
           <a
             href="/?product=skaerm_55#book"

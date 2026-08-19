@@ -63,7 +63,7 @@ describe("telefonnumre", () => {
 
 describe("beskedlængde", () => {
   it("tæller dansk tekst som GSM-7 — æ, ø og å fylder ét tegn", () => {
-    const text = "Husk at aflevere højtaleren i dag på Halvtolv 9. Ring hvis I mangler mere tid.";
+    const text = "Husk at aflevere højtaleren i dag på Vermlandsgade 66. Ring hvis I mangler mere tid.";
     const t = smsLength(text);
     expect(t.unicode).toBe(false);
     expect(t.segments).toBe(1);

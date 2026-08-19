@@ -153,7 +153,7 @@ export default function FestlysPage() {
             Klar til at lyse festen op?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag.
+            Book online på 2 minutter. Hent fredag i København S, aflever mandag.
           </p>
           <a
             href="/?product=lys#book"

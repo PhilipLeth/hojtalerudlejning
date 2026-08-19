@@ -45,7 +45,7 @@ Sammenlign det med en Soundboks-leje til 400-495 kr., hvor du får én batteriba
 
 ## Afhentning eller levering i København
 
-Du kan hente udstyret på vores adresse på **Halvtolv 9, København K**, hvor der altid er gratis parkering i én time. Vores lille højtalerpakke vejer kun 12 kg og kan sagtens være med på cyklen.
+Du kan hente udstyret på vores adresse på **Vermlandsgade 66, København**, hvor der altid er gratis parkering i én time. Vores lille højtalerpakke vejer kun 12 kg og kan sagtens være med på cyklen.
 
 Foretrækker du levering? Vi kører det ud til dig i Storkøbenhavn for **495 kr.**
 

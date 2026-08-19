@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title:
     "Billigste Højtalerudlejning København | Fra 395 kr | Lejhøjtaler.dk",
   description:
-    "Københavns billigste højtalerudlejning fra 395 kr/weekend. Lej højtalere, PA-anlæg, lys og røgmaskine. Afhentning i København K eller levering. Book online på 2 min.",
+    "Københavns billigste højtalerudlejning fra 395 kr/weekend. Lej højtalere, PA-anlæg, lys og røgmaskine. Afhentning i København S eller levering. Book online på 2 min.",
   keywords: [
     "billigste højtalerudlejning københavn",
     "billig højtaler leje københavn",
@@ -82,7 +82,7 @@ export default function KobenhavnPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            K&oslash;benhavn K &middot; Fra 395 kr/weekend
+            K&oslash;benhavn S &middot; Fra 395 kr/weekend
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Billigste h&oslash;jtalerudlejning
@@ -94,7 +94,7 @@ export default function KobenhavnPage() {
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             Professionel lyd til din fest fra 395 kr.
             <br />
-            Afhent i K&oslash;benhavn K eller f&aring; det leveret.
+            Afhent i K&oslash;benhavn S eller f&aring; det leveret.
           </p>
           <a
             href="/#book"
@@ -226,9 +226,9 @@ export default function KobenhavnPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-white">K&oslash;benhavn K</h3>
+              <h3 className="font-semibold text-white">K&oslash;benhavn S</h3>
               <p className="mt-2 text-sm text-white/50">
-                Centralt afhentningssted. Eller billig levering i hele K&oslash;benhavn — kun 495 kr inkl. ops&aelig;tning og afhentning.
+                Afhentning p&aring; Amager. Eller billig levering i hele K&oslash;benhavn — kun 495 kr inkl. ops&aelig;tning og afhentning.
               </p>
             </div>
           </div>
@@ -311,7 +311,7 @@ export default function KobenhavnPage() {
             Klar til K&oslash;benhavns billigste festlyd?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online p&aring; 2 minutter. Hent fredag i K&oslash;benhavn K, aflever mandag. Fra 395 kr/weekend.
+            Book online p&aring; 2 minutter. Hent fredag i K&oslash;benhavn S, aflever mandag. Fra 395 kr/weekend.
           </p>
           <a
             href="/#book"

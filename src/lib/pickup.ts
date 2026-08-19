@@ -4,8 +4,11 @@
  * Den er den vigtigste sætning på hele sitet for en kunde der står med
  * bilnøglerne i hånden, så den skal kunne rettes uden deploy.
  *
- * Bemærk at firmaadressen (Scharling Studio, CVR) er noget andet: den står i
- * footeren, i lejevilkårene og på fakturaen, og den følger ikke med her.
+ * Fra 19. august 2026 er firmaadressen den SAMME som denne — Frederik driver
+ * kun fra Vermlandsgade. De to felter findes stadig hver for sig, fordi
+ * firmaadressen bærer CVR-registreringen og kan skulle afvige igen; men står
+ * de to forskelligt, er det en fejl indtil nogen bevidst adskiller dem.
+ * DEFAULT_COMPANY i siteInfo.ts skal derfor holdes i sync med linjen herunder.
  */
 
 export const DEFAULT_PICKUP_ADDRESS = "Vermlandsgade 66, 2300 København";

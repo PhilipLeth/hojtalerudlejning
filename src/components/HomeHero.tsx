@@ -31,7 +31,7 @@ export default function HomeHero() {
         </p>
         <p className="mx-auto mt-4 max-w-md text-lg text-white/55">
           Højtalere, festlys og AV-udstyr til leje — book online på 2 minutter.
-          Hent i København K eller få det leveret.
+          Hent i København S eller få det leveret.
         </p>
 
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">

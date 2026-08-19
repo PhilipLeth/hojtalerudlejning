@@ -169,7 +169,7 @@ export default function TraadloesMikrofonPage() {
             Klar til at blive hørt?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 295 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København S, aflever mandag. Kun 295 kr/weekend.
           </p>
           <a
             href="/?product=traadloes_mikrofon#book"

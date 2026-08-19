@@ -101,7 +101,7 @@ export const t = {
     compare: {
       title: "Hvilket anlæg passer til din fest?",
       subtitle:
-        "Mobilt anlæg på batteri eller kabel-anlæg med maks power — vi har lille og stor i begge. Alle kan bookes online og hentes i København K, eller leveres billigt i hele København.",
+        "Mobilt anlæg på batteri eller kabel-anlæg med maks power — vi har lille og stor i begge. Alle kan bookes online og hentes i København S, eller leveres billigt i hele København.",
       groupBattery: "Mobil — batteridrevet",
       groupCable: "Kabel-anlæg — 230V",
       colSystem: "Anlæg",
@@ -144,7 +144,7 @@ export const t = {
     },
     howItWorks: {
       title: "Sådan lejer du en højtaler i København",
-      subtitle: "At leje en højtaler behøver ikke være besværligt. Hos os booker du online, henter dit lydudstyr på vores adresse i indre København og afleverer igen efter festen. Betal først ved afhentning — ingen lange kontrakter.",
+      subtitle: "At leje en højtaler behøver ikke være besværligt. Hos os booker du online, henter dit lydudstyr på vores adresse på Amager og afleverer igen efter festen. Betal først ved afhentning — ingen lange kontrakter.",
       subtitle2: "Vi udlejer PA-anlæg og festudstyr til private fester, firmaarrangementer og events i hele Københavnsområdet. Vores højtalere leveres med alle kabler, så du kan tilslutte din telefon med det samme og komme i gang.",
       steps: [
         {

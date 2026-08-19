@@ -169,7 +169,7 @@ export default function ProjektorPage() {
             Klar til den store præsentation?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København K, aflever mandag. Kun 495 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København S, aflever mandag. Kun 495 kr/weekend.
           </p>
           <a
             href="/?product=projektor#book"
