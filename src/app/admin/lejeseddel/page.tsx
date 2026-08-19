@@ -25,6 +25,12 @@ interface Booking extends OrderBooking {
   status: string;
   /** Depositum registreret i ordreoverblikket — 0 betyder intet depositum */
   depositAmount?: number;
+  /** Indbetalinger på ordren — sedlen skal vise hvad der mangler, ikke kun prisen */
+  payments?: Array<{ amount?: number; method?: string }>;
+  invoice?: { number?: string } | null;
+  pickup?: string;
+  returnDate?: string;
+  personalNote?: string;
   /** Kundens underskrift ved udlevering (metadata — billedet hentes for sig) */
   handover?: { signedAt: string; signerName?: string; note?: string; items?: string[] };
   createdAt: string;
@@ -48,6 +54,8 @@ export default function LejeseddelPage() {
     setPickupPlace((prev) => prev || pickupAddress);
   }, [pickupAddress]);
   const [notes, setNotes] = useState("");
+  /** "seddel" er én A4-side til udlevering; "bilag" er de fulde lejevilkår */
+  const [mode, setMode] = useState<"seddel" | "bilag">("seddel");
   const [signatureImg, setSignatureImg] = useState<string | null>(null);
 
 
@@ -118,11 +126,9 @@ export default function LejeseddelPage() {
       qty: String(l.qty),
     }));
     rows.push({ item: "Strømkabel", qty: "1" });
-    rows.push({ item: "AUX-kabel", qty: "1" });
-    // Plads til håndskrevne tilføjelser
-    while (rows.length < 8) {
-      rows.push({ item: "", qty: "" });
-    }
+    rows.push({ item: "AUX-kabel + iPhone-adapter", qty: "1" });
+    // Tre tomme linjer til det, der bliver aftalt i døren
+    for (let i = 0; i < 3; i++) rows.push({ item: "", qty: "" });
     return rows;
   }
 
@@ -158,237 +164,258 @@ export default function LejeseddelPage() {
     );
   }
 
+
   const equipment = getEquipmentRows(selected);
+  const paid = (selected.payments ?? []).reduce((sum, p) => sum + (Number(p?.amount) || 0), 0);
+  const rest = Math.max(0, (Number(selected.total) || 0) - paid);
+  const kr = (n: number) => `${Math.round(n).toLocaleString("da-DK")} kr`;
+  const delivery = deliveryInfo(selected);
+  const koersel = !delivery
+    ? "Lejer henter og afleverer selv"
+    : delivery.out && delivery.back
+      ? "Vi leverer og henter igen"
+      : delivery.out
+        ? "Vi leverer — lejer afleverer selv"
+        : "Lejer henter — vi henter igen";
+  const bemaerkninger = [selected.comment, selected.personalNote, notes].filter(Boolean).join(" · ");
 
   return (
     <>
-      {/* Override dark theme + print styles */}
       <style>{`
         body { background: #f5f5f5 !important; color: #111 !important; }
+        @page { size: A4; margin: 12mm; }
         @media print {
           .no-print { display: none !important; }
           body { margin: 0; padding: 0; background: #fff !important; }
-          .print-page { padding: 20mm 15mm !important; font-size: 11pt !important; max-width: none !important; background: #fff !important; }
-          .print-page table { page-break-inside: avoid; }
+          .print-page { padding: 0 !important; margin: 0 !important; max-width: none !important; box-shadow: none !important; border-radius: 0 !important; }
+          .seddel { font-size: 10pt; }
+          .seddel table { page-break-inside: avoid; }
+          /* Én side er hele pointen — hellere lidt mindre skrift end to sider */
+          .seddel .udstyr td { padding: 2.5px 6px; }
         }
-        .rental-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
-        .rental-table td, .rental-table th { border: 1px solid #ccc; padding: 8px 10px; text-align: left; font-size: 13px; }
-        .rental-table th { background: #f7f7f7; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.02em; }
-        .rental-table td:first-child { width: 180px; font-weight: 500; color: #444; }
-        .section-title { font-size: 15px; font-weight: 700; margin: 20px 0 8px; padding-bottom: 4px; border-bottom: 2px solid #111; }
+        .seddel { font-family: system-ui, -apple-system, sans-serif; color: #111; line-height: 1.35; }
+        .seddel h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #666; margin: 12px 0 4px; font-weight: 700; }
+        .seddel table { width: 100%; border-collapse: collapse; }
+        .seddel .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; }
+        .seddel .box { border: 1px solid #ddd; border-radius: 6px; padding: 8px 10px; }
+        .seddel .row { display: flex; gap: 6px; font-size: 12.5px; padding: 1px 0; }
+        .seddel .row b { color: #555; font-weight: 600; min-width: 74px; }
+        .udstyr th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; color: #777; border-bottom: 1.5px solid #111; padding: 3px 6px; }
+        .udstyr td { border-bottom: 1px solid #eee; padding: 4px 6px; font-size: 12.5px; }
+        .udstyr .midt { text-align: center; width: 42px; }
+        .rental-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+        .rental-table td, .rental-table th { border: 1px solid #ccc; padding: 7px 9px; text-align: left; font-size: 12px; }
+        .rental-table td:first-child { width: 170px; font-weight: 500; color: #444; }
+        .section-title { font-size: 14px; font-weight: 700; margin: 16px 0 6px; padding-bottom: 3px; border-bottom: 2px solid #111; }
       `}</style>
 
-      {/* Controls bar (hidden on print) */}
+      {/* Værktøjslinje — kommer ikke med på tryk */}
       <div className="no-print" style={{ background: "#fff", borderBottom: "1px solid #eee", padding: "12px 16px", display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", fontFamily: "system-ui, sans-serif" }}>
         <button onClick={() => setSelected(null)} style={{ padding: "8px 16px", fontSize: "14px", background: "#f0f0f0", border: "1px solid #ddd", borderRadius: "6px", cursor: "pointer", color: "#111" }}>
           &larr; Vælg anden booking
         </button>
-        <div style={{ flex: 1, minWidth: "8px" }} />
+        <div style={{ display: "flex", border: "1px solid #ddd", borderRadius: "6px", overflow: "hidden" }}>
+          {(["seddel", "bilag"] as const).map((m) => (
+            <button
+              key={m}
+              onClick={() => setMode(m)}
+              style={{ padding: "8px 14px", fontSize: "13px", border: "none", cursor: "pointer", background: mode === m ? "#111" : "#fff", color: mode === m ? "#fff" : "#555" }}
+            >
+              {m === "seddel" ? "Lejeseddel (1 side)" : "Bilag: lejevilkår"}
+            </button>
+          ))}
+        </div>
         <label style={{ fontSize: "13px", color: "#666" }}>
           Depositum:
-          <input value={deposit} onChange={(e) => setDeposit(e.target.value)} style={{ marginLeft: "6px", width: "80px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "4px", fontSize: "13px", color: "#111" }} />
+          <input value={deposit} onChange={(e) => setDeposit(e.target.value)} style={{ marginLeft: "6px", width: "70px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "4px", fontSize: "13px", color: "#111" }} />
         </label>
         <label style={{ fontSize: "13px", color: "#666" }}>
-          Betaling:
-          <input value={payMethod} onChange={(e) => setPayMethod(e.target.value)} style={{ marginLeft: "6px", width: "100px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "4px", fontSize: "13px", color: "#111" }} />
+          Betales med:
+          <input value={payMethod} onChange={(e) => setPayMethod(e.target.value)} style={{ marginLeft: "6px", width: "90px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "4px", fontSize: "13px", color: "#111" }} />
         </label>
-        <label style={{ fontSize: "13px", color: "#666" }}>
-          Afhentning:
-          <input value={pickupPlace} onChange={(e) => setPickupPlace(e.target.value)} style={{ marginLeft: "6px", width: "100%", maxWidth: "220px", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "4px", fontSize: "13px", color: "#111" }} />
+        <label style={{ fontSize: "13px", color: "#666", flex: 1, minWidth: "200px" }}>
+          Bemærkning:
+          <input value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Fx »henter kl. 16 i stedet«" style={{ marginLeft: "6px", width: "70%", padding: "4px 8px", border: "1px solid #ddd", borderRadius: "4px", fontSize: "13px", color: "#111" }} />
         </label>
         <button onClick={() => window.print()} style={{ padding: "8px 20px", fontSize: "14px", fontWeight: 600, background: "#111", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer" }}>
           Print
         </button>
       </div>
 
-      {/* Editable notes (hidden on print) */}
-      <div className="no-print" style={{ maxWidth: "700px", margin: "12px auto 0", padding: "0 24px", fontFamily: "system-ui, sans-serif" }}>
-        <label style={{ fontSize: "13px", color: "#666" }}>
-          Bemærkninger (vises på sedlen):
-          <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2}
-            style={{ display: "block", width: "100%", marginTop: "4px", padding: "8px", border: "1px solid #ddd", borderRadius: "6px", fontSize: "13px", resize: "vertical", boxSizing: "border-box", color: "#111" }}
-            placeholder="Evt. ekstra noter..." />
-        </label>
-      </div>
+      <div className="print-page" style={{ maxWidth: "760px", margin: "16px auto 24px", padding: "26px 28px", background: "#fff", borderRadius: "12px" }}>
+        {mode === "seddel" ? (
+          <div className="seddel">
+            {/* Hoved: hvem, hvad og hvilken ordre */}
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", borderBottom: "2px solid #111", paddingBottom: "8px" }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: "20px", fontWeight: 800, letterSpacing: "-0.01em" }}>Lejeseddel</div>
+                <div style={{ fontSize: "11.5px", color: "#666" }}>{formatCompanyLine(company)}</div>
+              </div>
+              <div style={{ textAlign: "right", fontSize: "11.5px", color: "#666" }}>
+                <div>Ordre <strong style={{ color: "#111" }}>{selected.id.replace("booking_", "")}</strong></div>
+                <div>{new Date().toLocaleDateString("da-DK", { day: "numeric", month: "long", year: "numeric" })}</div>
+              </div>
+            </div>
 
-      {/* Printable rental slip */}
-      <div className="print-page" style={{ maxWidth: "700px", margin: "0 auto", padding: "24px", fontFamily: "Georgia, 'Times New Roman', serif", color: "#111", lineHeight: 1.5, background: "#fff", borderRadius: "12px", marginTop: "16px", marginBottom: "24px" }}>
-        {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "24px" }}>
-          <h1 style={{ margin: "0 0 4px", fontSize: "22px", fontWeight: 700, letterSpacing: "0.02em" }}>
-            Lejekontrakt &mdash; udlejning af højtalerudstyr
-          </h1>
-          <p style={{ margin: 0, fontSize: "13px", color: "#666" }}>lejhøjtaler.dk &mdash; {company.name} &mdash; CVR {company.cvr}</p>
-        </div>
+            {/* Kunde og leje ved siden af hinanden — det man skal bruge i døren */}
+            <div className="grid" style={{ marginTop: "10px" }}>
+              <div className="box">
+                <h2 style={{ margin: "0 0 3px" }}>Lejer</h2>
+                <div className="row"><b>Navn</b> <span>{selected.name}</span></div>
+                <div className="row"><b>Telefon</b> <span>{selected.phone}</span></div>
+                <div className="row"><b>E-mail</b> <span>{selected.email}</span></div>
+                <div className="row"><b>Adresse</b> <span>{selected.deliveryAddress || "—"}</span></div>
+              </div>
+              <div className="box">
+                <h2 style={{ margin: "0 0 3px" }}>Leje</h2>
+                <div className="row"><b>Periode</b> <span>{selected.period} ({selected.days} {selected.days === 1 ? "dag" : "dage"})</span></div>
+                <div className="row"><b>Kørsel</b> <span>{koersel}</span></div>
+                <div className="row"><b>Sted</b> <span>{delivery?.address || pickupPlace}</span></div>
+                <div className="row"><b>Bestilt</b> <span>{new Date(selected.createdAt).toLocaleDateString("da-DK", { day: "numeric", month: "short", year: "numeric" })}</span></div>
+              </div>
+            </div>
 
-        <p style={{ fontSize: "13px", color: "#444", marginBottom: "20px" }}>
-          Denne kontrakt indgås mellem udlejer og lejer i forbindelse med udlejning af lydudstyr (herunder højttalere, stativer, kabler og evt. tilbehør). Begge parter bekræfter ved underskrift, at de har læst og accepteret vilkårene nedenfor.
-        </p>
+            {/* Pakkelisten: krydses af på vej ud og på vej ind */}
+            <h2>Udstyr</h2>
+            <table className="udstyr">
+              <thead>
+                <tr>
+                  <th className="midt">Antal</th>
+                  <th>Udstyr</th>
+                  <th className="midt">Ud</th>
+                  <th className="midt">Ind</th>
+                </tr>
+              </thead>
+              <tbody>
+                {equipment.map((eq, i) => (
+                  <tr key={i}>
+                    <td className="midt">{eq.qty}</td>
+                    <td>{eq.item}</td>
+                    <td className="midt">☐</td>
+                    <td className="midt">☐</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
-        {/* 1. Parter */}
-        <h3 className="section-title">1. Parter</h3>
-        <table className="rental-table">
-          <tbody>
-            <tr><td>Udlejer:</td><td>{company.name} (lejhøjtaler.dk) — CVR {company.cvr}</td></tr>
-            <tr><td>Kontakt:</td><td>31 13 28 52 / hey@lejhojtaler.dk</td></tr>
-          </tbody>
-        </table>
-        <table className="rental-table">
-          <tbody>
-            <tr><td>Lejers navn:</td><td>{selected.name}</td></tr>
-            <tr><td>Telefon:</td><td>{selected.phone}</td></tr>
-            <tr><td>E-mail:</td><td>{selected.email}</td></tr>
-            <tr><td>Adresse:</td><td>{selected.deliveryAddress || "______________________________________"}</td></tr>
-          </tbody>
-        </table>
-
-        {/* 2. Lejeperiode */}
-        <h3 className="section-title">2. Lejeperiode</h3>
-        <table className="rental-table">
-          <tbody>
-            <tr><td>Periode:</td><td>{selected.period} ({selected.days} {selected.days === 1 ? "dag" : "dage"})</td></tr>
-            <tr><td>Afhentningssted:</td><td>{pickupPlace}</td></tr>
-            <tr>
-              <td>Kørsel:</td>
-              <td>
-                {(() => {
-                  const d = deliveryInfo(selected);
-                  if (!d) return "Lejer henter og afleverer selv";
-                  const dir = d.out && d.back
-                    ? "Udlejer leverer og henter igen"
-                    : d.out
-                      ? "Udlejer leverer — lejer afleverer selv"
-                      : "Lejer henter — udlejer henter igen";
-                  return d.address ? `${dir} — ${d.address}` : dir;
-                })()}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        {/* 3. Udlejet udstyr */}
-        <h3 className="section-title">3. Udlejet udstyr</h3>
-        <table className="rental-table">
-          <thead>
-            <tr>
-              <th style={{ width: "24px" }}>&#10003;</th>
-              <th>Udstyr</th>
-              <th style={{ width: "50px" }}>Antal</th>
-              <th>Stand ved udlevering</th>
-              <th>Stand ved retur</th>
-            </tr>
-          </thead>
-          <tbody>
-            {equipment.map((eq, i) => (
-              <tr key={i}>
-                <td style={{ textAlign: "center" }}>{eq.item ? "☐" : ""}</td>
-                <td>{eq.item || <span style={{ color: "#ccc" }}>___________________________</span>}</td>
-                <td style={{ textAlign: "center" }}>{eq.qty}</td>
-                <td></td>
-                <td></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <p style={{ fontSize: "12px", color: "#666", marginTop: "-8px" }}>
-          Lejer bekræfter ved underskrift at have modtaget ovenstående udstyr i den anførte stand på afhentningstidspunktet, samt at udstyret er funktionsdueligt og uden synlige skader, medmindre andet er noteret ovenfor.
-        </p>
-        {selected.handover && (
-          <p style={{ fontSize: "12px", color: "#155724", marginTop: "4px" }}>
-            Kvitteret digitalt ved udlevering {new Date(selected.handover.signedAt).toLocaleString("da-DK")}
-            {selected.handover.note ? ` — bemærkning: ${selected.handover.note}` : ""}
-          </p>
-        )}
-
-        {/* 4. Betaling og depositum */}
-        <h3 className="section-title">4. Betaling og depositum</h3>
-        <table className="rental-table">
-          <tbody>
-            <tr><td>Lejepris:</td><td>{selected.total} kr.</td></tr>
-            <tr><td>Depositum:</td><td>{deposit} kr.</td></tr>
-            <tr><td>Betalingsmetode:</td><td>{payMethod}</td></tr>
-          </tbody>
-        </table>
-        <p style={{ fontSize: "12px", color: "#666", marginTop: "-8px" }}>
-          Depositum tilbagebetales ved retur af udstyret i samme stand som ved udlevering, og når det er konstateret, at udstyret er intakt og fuldt funktionsdueligt. Ved skade, mangler eller forsinket retur kan depositummet helt eller delvist tilbageholdes.
-        </p>
-
-        {/* 5. Lejers ansvar */}
-        <h3 className="section-title">5. Lejers ansvar og hæftelse</h3>
-        <ul style={{ fontSize: "12px", color: "#444", paddingLeft: "20px", margin: "0 0 8px" }}>
-          <li>Lejer hæfter fra modtagelse til aflevering for enhver skade, bortkomst eller beskadigelse — uanset årsag.</li>
-          <li>Udstyret skal beskyttes mod regn, fugt, stød og overbelastning.</li>
-          <li>Ved skade eller bortkomst erstattes udlejers fulde udgift til reparation eller nyanskaffelse.</li>
-          <li>Udstyret må ikke videreudlejes eller udlånes til tredjepart.</li>
-          <li>Fejl eller skader skal meddeles udlejer hurtigst muligt.</li>
-        </ul>
-
-        {/* 6. Forsinket retur */}
-        <h3 className="section-title">6. Forsinket retur</h3>
-        <p style={{ fontSize: "12px", color: "#444", margin: "0 0 8px" }}>
-          Returneres udstyret senere end aftalt uden forudgående aftale, kan udlejer opkræve gebyr svarende til normal lejepris pr. ekstra døgn, samt kompensation for tabt indtjening.
-        </p>
-
-        {/* 7. Annullering */}
-        <h3 className="section-title">7. Annullering</h3>
-        <p style={{ fontSize: "12px", color: "#444", margin: "0 0 8px" }}>
-          Annullering skal ske skriftligt (sms eller e-mail). Vilkår for tilbagebetaling aftales individuelt.
-        </p>
-
-        {/* 8. Ansvarsfraskrivelse */}
-        <h3 className="section-title">8. Ansvarsfraskrivelse</h3>
-        <p style={{ fontSize: "12px", color: "#444", margin: "0 0 8px" }}>
-          Udlejer er ikke ansvarlig for driftstab, følgeskader eller andre indirekte skader. Udlejer er heller ikke ansvarlig for personskade eller skade på tredjemands ejendom forårsaget af lejers brug af udstyret.
-        </p>
-
-        {/* 9. Øvrige bestemmelser */}
-        <h3 className="section-title">9. Øvrige bestemmelser</h3>
-        <ul style={{ fontSize: "12px", color: "#444", paddingLeft: "20px", margin: "0 0 8px" }}>
-          <li>Det lejede udstyr forbliver til enhver tid {company.name}s ejendom.</li>
-          <li>Lejer skal være myndig (18 år eller derover).</li>
-          <li>Tvister afgøres efter dansk ret ved de danske domstole.</li>
-        </ul>
-
-        {/* Notes */}
-        {notes && (
-          <>
-            <h3 className="section-title">Bemærkninger</h3>
-            <p style={{ fontSize: "12px", color: "#444", margin: "0 0 8px", whiteSpace: "pre-wrap" }}>{notes}</p>
-          </>
-        )}
-
-        {/* Signatures */}
-        <h3 className="section-title">Underskrifter</h3>
-        <p style={{ fontSize: "12px", color: "#666", marginBottom: "16px" }}>
-          Ved underskrift bekræfter begge parter at have læst og accepteret ovenstående vilkår.
-        </p>
-        <table className="rental-table">
-          <tbody>
-            <tr>
-              <td style={{ width: "50%", height: "100px", verticalAlign: "bottom", paddingBottom: "12px" }}>
-                <div style={{ borderTop: "1px solid #111", paddingTop: "6px", fontSize: "12px" }}>
-                  Udlejer (lejhøjtaler.dk / {company.name})<br />
-                  Dato: ____________________
+            {/* Økonomi: hvad der er betalt, og hvad der mangler */}
+            <div className="grid" style={{ marginTop: "12px" }}>
+              <div className="box">
+                <h2 style={{ margin: "0 0 3px" }}>Betaling</h2>
+                <div className="row"><b>Lejepris</b> <span>{kr(Number(selected.total) || 0)}</span></div>
+                <div className="row"><b>Betalt</b> <span>{paid > 0 ? kr(paid) : "—"}</span></div>
+                <div className="row">
+                  <b>Rest</b>{" "}
+                  <span style={{ fontWeight: 700 }}>
+                    {rest > 0 ? `${kr(rest)} — ${payMethod} ved afhentning` : "Betalt"}
+                  </span>
                 </div>
-              </td>
-              <td style={{ width: "50%", height: "100px", verticalAlign: "bottom", paddingBottom: "12px" }}>
-                {signatureImg && (
-                  <img
-                    src={signatureImg}
-                    alt="Lejers underskrift"
-                    style={{ display: "block", maxWidth: "100%", maxHeight: "70px", objectFit: "contain" }}
-                  />
+                <div className="row"><b>Depositum</b> <span>{Number(deposit) > 0 ? kr(Number(deposit)) : "Intet"}</span></div>
+              </div>
+              <div className="box">
+                <h2 style={{ margin: "0 0 3px" }}>Bemærkninger</h2>
+                <div style={{ fontSize: "12.5px", minHeight: "48px", whiteSpace: "pre-wrap" }}>{bemaerkninger || " "}</div>
+              </div>
+            </div>
+
+            {/* Det korte, der skrives under på. Resten står i bilaget. */}
+            <h2>Det du skriver under på</h2>
+            <ul style={{ margin: "0 0 8px", paddingLeft: "18px", fontSize: "11.5px", color: "#333", lineHeight: 1.4 }}>
+              <li>Udstyret er modtaget i god og funktionsdygtig stand, medmindre andet er noteret ovenfor.</li>
+              <li>Lejer hæfter for skade og bortkomst fra udlevering til aflevering, og udstyret må ikke lånes videre.</li>
+              <li>Afleveres udstyret for sent uden aftale, kan der opkræves leje pr. påbegyndt døgn.</li>
+              <li>De fulde lejevilkår står i bilaget og er en del af denne aftale.</li>
+            </ul>
+
+            {/* Underskrift: kundens er det eneste der skal indhentes i døren */}
+            <div className="grid" style={{ marginTop: "14px" }}>
+              <div>
+                {signatureImg ? (
+                  <img src={signatureImg} alt="Lejers underskrift" style={{ display: "block", maxWidth: "100%", maxHeight: "56px", objectFit: "contain" }} />
+                ) : (
+                  <div style={{ height: "56px" }} />
                 )}
-                <div style={{ borderTop: "1px solid #111", paddingTop: "6px", fontSize: "12px" }}>
-                  Lejer: {selected.handover?.signerName || selected.name}<br />
-                  Dato: {selected.handover?.signedAt
+                <div style={{ borderTop: "1px solid #111", paddingTop: "4px", fontSize: "11.5px" }}>
+                  Lejers underskrift — {selected.handover?.signerName || selected.name}
+                  <br />
+                  Dato:{" "}
+                  {selected.handover?.signedAt
                     ? new Date(selected.handover.signedAt).toLocaleString("da-DK")
-                    : "____________________"}
+                    : "________________"}
                 </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+              <div>
+                <div style={{ height: "56px" }} />
+                <div style={{ borderTop: "1px solid #111", paddingTop: "4px", fontSize: "11.5px" }}>
+                  Udleveret af ({company.name})
+                  <br />
+                  Dato: ________________
+                </div>
+              </div>
+            </div>
+
+            {selected.handover && (
+              <p style={{ fontSize: "11px", color: "#155724", margin: "8px 0 0" }}>
+                Kvitteret digitalt ved udlevering {new Date(selected.handover.signedAt).toLocaleString("da-DK")}
+                {selected.handover.note ? ` — ${selected.handover.note}` : ""}
+              </p>
+            )}
+          </div>
+        ) : (
+          <div style={{ fontFamily: "Georgia, 'Times New Roman', serif", lineHeight: 1.5 }}>
+            <div style={{ textAlign: "center", marginBottom: "18px" }}>
+              <h1 style={{ margin: "0 0 4px", fontSize: "20px", fontWeight: 700 }}>Bilag — lejevilkår</h1>
+              <p style={{ margin: 0, fontSize: "12px", color: "#666" }}>
+                Hører til lejeseddel for ordre {selected.id.replace("booking_", "")} · {formatCompanyLine(company)}
+              </p>
+            </div>
+
+            <h3 className="section-title">1. Lejers ansvar og hæftelse</h3>
+            <ul style={{ fontSize: "12px", color: "#444", paddingLeft: "20px", margin: "0 0 8px" }}>
+              <li>Lejer hæfter fra modtagelse til aflevering for enhver skade, bortkomst eller beskadigelse — uanset årsag.</li>
+              <li>Udstyret skal beskyttes mod regn, fugt, stød og overbelastning.</li>
+              <li>Ved skade eller bortkomst erstattes udlejers fulde udgift til reparation eller nyanskaffelse.</li>
+              <li>Udstyret må ikke videreudlejes eller udlånes til tredjepart.</li>
+              <li>Fejl eller skader skal meddeles udlejer hurtigst muligt.</li>
+            </ul>
+
+            <h3 className="section-title">2. Depositum</h3>
+            <p style={{ fontSize: "12px", color: "#444", margin: "0 0 8px" }}>
+              Depositum tilbagebetales ved retur af udstyret i samme stand som ved udlevering, og når det er
+              konstateret, at udstyret er intakt og fuldt funktionsdueligt. Ved skade, mangler eller forsinket
+              retur kan depositummet helt eller delvist tilbageholdes.
+            </p>
+
+            <h3 className="section-title">3. Forsinket retur</h3>
+            <p style={{ fontSize: "12px", color: "#444", margin: "0 0 8px" }}>
+              Returneres udstyret senere end aftalt uden forudgående aftale, kan udlejer opkræve gebyr svarende
+              til normal lejepris pr. ekstra døgn, samt kompensation for tabt indtjening.
+            </p>
+
+            <h3 className="section-title">4. Annullering</h3>
+            <p style={{ fontSize: "12px", color: "#444", margin: "0 0 8px" }}>
+              Annullering skal ske skriftligt (sms eller e-mail). Vilkår for tilbagebetaling aftales individuelt.
+            </p>
+
+            <h3 className="section-title">5. Ansvarsfraskrivelse</h3>
+            <p style={{ fontSize: "12px", color: "#444", margin: "0 0 8px" }}>
+              Udlejer er ikke ansvarlig for driftstab, følgeskader eller andre indirekte skader. Udlejer er
+              heller ikke ansvarlig for personskade eller skade på tredjemands ejendom forårsaget af lejers brug
+              af udstyret.
+            </p>
+
+            <h3 className="section-title">6. Øvrige bestemmelser</h3>
+            <ul style={{ fontSize: "12px", color: "#444", paddingLeft: "20px", margin: "0 0 8px" }}>
+              <li>Det lejede udstyr forbliver til enhver tid {company.name}s ejendom.</li>
+              <li>Lejer skal være myndig (18 år eller derover).</li>
+              <li>Tvister afgøres efter dansk ret ved de danske domstole.</li>
+            </ul>
+
+            <p style={{ fontSize: "11.5px", color: "#666", marginTop: "16px" }}>
+              Vilkårene er en del af lejeaftalen og accepteres ved underskrift på lejesedlen.
+            </p>
+          </div>
+        )}
       </div>
     </>
   );

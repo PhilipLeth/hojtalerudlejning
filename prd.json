@@ -1036,6 +1036,13 @@
     "gendannelse": "Manuel og med vilje: hent filen i /admin/indstillinger og skriv de nøgler tilbage, der mangler. En automatisk gendannelses-knap ville kunne overskrive rigtige data med gamle ved et fejlklik.",
     "status": "Live 2026-08-18."
   },
+  "lejeseddel": {
+    "problem": "Lejesedlen var en fuld lejekontrakt på flere sider: ni afsnit vilkår, ansvarsfraskrivelse og domstolsværneting, med ordrens oplysninger spredt imellem. Den blev derfor ikke printet — og så stod Frederik i døren uden hverken pakkeliste eller underskrift.",
+    "loesning_2026_08_19": "/admin/lejeseddel har to udgaver af samme ordre. »Lejeseddel (1 side)« er A4-arket der tages med ud: kunde, periode, kørsel og sted, pakkeliste med afkrydsning UD og IND, betaling med hvad der MANGLER (ikke bare prisen), depositum, bemærkninger, fire korte punkter om hvad man skriver under på, og underskriftsfelt. »Bilag: lejevilkår« er de fulde vilkår, som printes for sig og henviser til ordrenummeret.",
+    "beslutning": "Kun de fire vigtigste vilkår står på selve sedlen (modtaget i god stand, hæftelse, for sen aflevering, og at bilaget er en del af aftalen). Resten er bilag. En kontrakt der fylder to sider bliver ikke printet, og en seddel uden pakkeliste bliver ikke brugt.",
+    "detaljer": "Pakkelisten er ordrens egne linjer via orderLines() plus strømkabel og AUX/iPhone-adapter, med tre tomme linjer til det der aftales i døren. Er der kvitteret digitalt ved udlevering (/admin/udlevering), trykkes kundens underskrift med på sedlen sammen med tidspunktet. Depositum og betalingsmetode kan rettes pr. seddel før print.",
+    "status": "Live 2026-08-19."
+  },
   "bekraeftelsesmail": {
     "problem": "Kunden fik en kvittering ved bestilling (»vi vender tilbage hurtigst muligt«) og derefter ingenting, før udstyret skulle hentes. Statusskiftet til »bekræftet« sendte kun en SMS — og SMS-automatikken blev slukket 2026-08-18, så en godkendt ordre gav kunden ingen besked overhovedet.",
     "loesning_2026_08_18": "Mail på skabelon i KV (comm_settings.confirmation), sendt når ordren skifter til bekraeftet. Én gang pr. ordre: confirmMailSentAt sættes, så et skift frem og tilbage ikke sender igen, og linjen står i ordrens kommunikationslog. Kan slås fra med confirmationAutoSend. Teksten redigeres i /admin/kommunikation med forhåndsvisning.",

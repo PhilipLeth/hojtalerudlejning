@@ -98,7 +98,9 @@ describe("Lejesedlen", () => {
 
   it("skriver hvilken vej der køres", () => {
     expect(src).toContain("deliveryInfo(selected)");
-    expect(src).toContain("Kørsel:");
+    // Feltet hedder nu bare »Kørsel« i sedlens to-kolonne-hoved
+    expect(src).toMatch(/Kørsel<\/b>/);
+    expect(src).toContain("Vi leverer og henter igen");
   });
 });
 
