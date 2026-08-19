@@ -2,6 +2,7 @@
 
 import AdminNav from "@/components/AdminNav";
 import BackupPanel from "@/components/admin/BackupPanel";
+import FejlPanel from "@/components/admin/FejlPanel";
 import AdminLogin from "@/components/AdminLogin";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 
@@ -332,6 +333,8 @@ export default function IndstillingerPage() {
       />
 
       {/* KV har ingen fortryd — kopierne skal kunne ses, ikke bare tages */}
+      {/* Det kunderne oplevede, men ikke skrev til os om */}
+      <FejlPanel secret={secret} />
       <BackupPanel secret={secret} />
       <div style={{ maxWidth: "640px", margin: "0 auto", padding: "20px" }}>
         <p style={{ color: "#888", fontSize: "12px", margin: "0 0 20px" }}>

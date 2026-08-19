@@ -869,6 +869,12 @@
       "description": "Opdater booking-status eller slet (action=delete). Ved status=afleveret sendes automatisk follow-up anmeldelsesmail (Google review, Resend) — kun én gang pr. booking (reviewMailSentAt). Review-link: env GOOGLE_REVIEW_URL, fallback Google Maps-søgning.",
       "status": "live"
     },
+    "fejl": {
+      "path": "/api/fejl",
+      "method": "POST/GET/DELETE",
+      "description": "POST: offentlig — kundens browser melder en fejl ind (hvidlistede typer, felter klippes af, 20 pr. IP pr. time, 30 dages levetid). GET: admin — alle rapporter plus opsummering grupperet efter type og besked. DELETE: admin — ryd listen.",
+      "status": "live"
+    },
     "backup": {
       "path": "/api/backup",
       "method": "GET/POST",
@@ -1035,6 +1041,17 @@
     },
     "gendannelse": "Manuel og med vilje: hent filen i /admin/indstillinger og skriv de nøgler tilbage, der mangler. En automatisk gendannelses-knap ville kunne overskrive rigtige data med gamle ved et fejlklik.",
     "status": "Live 2026-08-18."
+  },
+  "fejlopsamling": {
+    "problem": "En kunde ringede og sagde at han fik »mange fejl« ved booking af en Soundboks. Fire testordrer gik igennem, alle endepunkter svarede 200, alle filer på produktsiden svarede 200, og hele klikforløbet kunne gennemføres i test — fejlen kunne ikke genskabes. Vi så kun de bookinger der LYKKEDES; kunder der gav op undervejs efterlod intet spor. BookingFlow fangede oven i købet sine egne fejl i et tomt catch og viste kunden »prøv igen«, så selv serverens svar gik tabt.",
+    "loesning_2026_08_19": {
+      "klient": "src/lib/errorReport.ts sender en rapport til /api/fejl når noget går galt: mislykket booking (med HTTP-status og serverens svar), mislykket Stripe-kald, ledighed der ikke kunne hentes, og ufangede JavaScript-fejl/promise-fejl på hele sitet (installeret via src/components/Fejlopsamling.tsx i layoutet). »Udsolgt« tælles også — det er ikke en fejl, men en mistet booking.",
+      "server": "functions/api/fejl.ts. POST er offentligt (fejlen sker hos en kunde der ikke er logget ind), derfor: typerne er en hvidliste, felterne klippes af, max 20 rapporter pr. IP pr. time, og alt udløber efter 30 dage. GET/DELETE kræver admin.",
+      "varsling": "Mislykket booking eller betaling giver push til telefonen med det samme — det er en kunde der stod med pengene fremme. Højst én push pr. kvarter, så en fejl der rammer alle ikke ringer 50 gange.",
+      "admin": "/admin/indstillinger viser fejlene grupperet efter type og besked: hvor mange gange, hvornår senest, og på hvilke enheder. Panelet skriver også »X af de seneste Y på telefon«, fordi det var det første spørgsmål."
+    },
+    "privatliv": "Der gemmes ALDRIG navn, mail, telefon eller IP. IP bruges kun som nøgle til en tæller, der selv udløber efter en time. Enheden gemmes som »Safari · iOS · telefon«, ikke som fingeraftryk — nok til at se om fejlene sidder på mobil eller i en app-browser som Instagrams, der ofte blokerer Stripes scripts.",
+    "status": "Live 2026-08-19."
   },
   "lejeseddel": {
     "problem": "Lejesedlen var en fuld lejekontrakt på flere sider: ni afsnit vilkår, ansvarsfraskrivelse og domstolsværneting, med ordrens oplysninger spredt imellem. Den blev derfor ikke printet — og så stod Frederik i døren uden hverken pakkeliste eller underskrift.",

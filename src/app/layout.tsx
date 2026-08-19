@@ -4,6 +4,7 @@ import BurgerMenu from "@/components/BurgerMenu";
 import TopBar from "@/components/TopBar";
 import SiteHeader from "@/components/SiteHeader";
 import BookingDrawer from "@/components/BookingDrawer";
+import Fejlopsamling from "@/components/Fejlopsamling";
 import InquiryDrawer from "@/components/InquiryDrawer";
 import WeekendSalePopup from "@/components/WeekendSalePopup";
 import { localeAlternates } from "@/lib/hreflang";
@@ -109,6 +110,8 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        {/* Fanger fejl hos kunderne — de skriver dem ikke til os selv */}
+        <Fejlopsamling />
         <TopBar />
         <BurgerMenu />
         <SiteHeader />

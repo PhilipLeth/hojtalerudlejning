@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useCallback, useRef, FormEvent } from "react";
+import { rapporterFejl } from "@/lib/errorReport";
 import { type Locale, t } from "@/lib/i18n";
 
 import { dayMultiplier, isSummerSale, applyDiscount, DELIVERY_ADDON_IDS } from "@/lib/products";
@@ -607,6 +608,14 @@ export default function BookingFlow({
         const isKnownInventory = data.inventory[speaker] !== undefined;
         if (isKnownInventory && (remaining <= 0 || blocked)) {
           setSoldOutMsg(s.soldOutPeriod);
+          // Ikke en fejl — men en mistet booking. Tælles, så vi kan se om vi
+          // afviser kunder på datoer, hvor vi burde have haft mere udstyr.
+          rapporterFejl("udsolgt", `${speaker} er optaget i den valgte periode`, {
+            trin: 1,
+            produkt: speaker,
+            fra: dateKey(pickup),
+            til: dateKey(ret),
+          });
         }
         // Also check lys if it's an addon
         if (selectedAddons.includes("lys")) {
@@ -616,8 +625,15 @@ export default function BookingFlow({
           }
         }
       }
-    } catch {
-      // Don't block booking on fetch failure
+    } catch (e) {
+      // Bookingen blokeres ikke af et fejlet opslag — men vi skal vide det:
+      // kunden vælger så datoer uden at vide, om udstyret er ledigt
+      rapporterFejl("ledighed_fejlede", e instanceof Error ? e.message : "ukendt", {
+        trin: 1,
+        produkt: speaker ?? undefined,
+        fra: dateKey(pickup),
+        til: dateKey(ret),
+      });
     }
   }, [speaker, selectedAddons, s]);
 
@@ -794,7 +810,20 @@ export default function BookingFlow({
         }),
       });
 
-      if (!res.ok) throw new Error(s.bookingFailed);
+      if (!res.ok) {
+        // Den vigtigste fejl i hele forløbet: kunden var klar til at købe.
+        // Uden det her så vi kun de bookinger der lykkedes.
+        const svar = await res.text().catch(() => "");
+        rapporterFejl("booking_fejlede", `HTTP ${res.status} fra /api/book`, {
+          trin: 3,
+          produkt: speaker ?? undefined,
+          fra: pickupDate ? dateKey(pickupDate) : undefined,
+          til: returnDate ? dateKey(returnDate) : undefined,
+          status: res.status,
+          svar: svar.slice(0, 300),
+        });
+        throw new Error(s.bookingFailed);
+      }
       const bookResult = await res.json().catch(() => ({}));
       // Subscribe to newsletter if checked
       if (newsletter && form.email) {
@@ -841,7 +870,16 @@ export default function BookingFlow({
             returnDate: returnDate?.toISOString(),
           }),
         });
-        if (!payRes.ok) throw new Error("payment");
+        if (!payRes.ok) {
+          const svar = await payRes.text().catch(() => "");
+          rapporterFejl("betaling_fejlede", `HTTP ${payRes.status} fra Stripe-kaldet`, {
+            trin: 4,
+            produkt: speaker ?? undefined,
+            status: payRes.status,
+            svar: svar.slice(0, 300),
+          });
+          throw new Error("payment");
+        }
         const { clientSecret } = await payRes.json();
         setCheckoutSecret(clientSecret);
         return;
