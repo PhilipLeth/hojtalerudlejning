@@ -3317,5 +3317,15 @@
     ],
     "regnskabsindstillinger": "KV: accounting_settings — månedsmål, bank reg/konto, MobilePay, betalingsfrist og fodnote på fakturaen. Redigeres på /accounting.",
     "noter": "Omsætning bogføres som standard på bestillingsdatoen (booket), så den kan holdes op mod annonceudgiften i samme periode. Skift til 'Leje' for at se hvornår udstyret var i arbejde. Weekendgrupperingen bruger altid lejeperioden. 'Denne måned' dækker hele måneden, ikke kun til i dag — ellers falder kommende afhentninger ud af tallet. Annullerede ordrer indgår ikke. Beløb pr. produkt er ordrens total fordelt efter katalogpriser."
+  },
+  "pakkebilleder_150_250_2026_08": {
+    "status": "done",
+    "date": "2026-08-20",
+    "description": "Festpakke 150 og 250 havde lånte billeder: 150 viste Festpakke 100's composite (to højtalere + lysbar, ingen sub), og 250 viste den almindelige store højtalerpakke (to højtalere, ingen subs) — altså halvdelen af det siden lover. Begge har nu deres eget billede, bygget af de eksisterende studiefotos: product-pakke-fest-150.png viser 2× EV 12\" på stativer, 12\" sub, lys-pakke og røgmaskine; product-pakke-fest-250.png viser 4× EV 12\", 2 subs, to sæt stativer, lys og røg. Metode (scriptet ligger ikke i repoet): baggrunden i hvert kildefoto males væk ved vægtet udglatning, og elementet flyttes over som tre lag — grejet kopieres med sine egne farver, skygger ganges ind, lysspild lægges til. Kvadratiske max-filtre skal undgås; de efterlader firkantede plateauer der tegner sig som rektangler i det færdige billede. Festpakke 150 tabte sit cardImageCrop, fordi det nye billede er en hel scene og skal vises med object-contain."
+  },
+  "aabent_spoergsmaal_kapacitet_150_250": {
+    "status": "open",
+    "date": "2026-08-20",
+    "description": "BESLUTNING MANGLER. Grejet er 2× (eller 4×) EV ZLX-12BT (12\", 1000 W peak, 126 dB peak, 65 Hz nedre grænse) og Behringer B1200D-PRO (12\", 500 W, 122 dB, 45-180 Hz). Toppene rækker til gæstetallene; subsene gør ikke. Én 12\" sub til 150 dansende og to 12\" subs til 250 er under det en udlejer normalt sætter op — dér er standarden 15\" eller 18\". Dertil to konkrete huller: (1) Festpakke 250 har ingen mixer eller signalsplitter med, og B1200D-PRO'ens gennemsløjfning rækker kun til ét par toppe, så fire toppe kan ikke fodres fra én telefon som pakken er skruet sammen nu. (2) festival står som '30-50 pers.' på /hojtalerpakke-normal og '40-100 personer' i prd.json, men de samme to højtalere plus én sub sælges som 100-150 på /festpakke-150. Enten skal tallene ned, eller også skal der købes større subs og en lille mixer."
   }
 }
