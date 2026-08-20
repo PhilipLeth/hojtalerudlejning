@@ -2,6 +2,9 @@ import { Metadata } from "next";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import AVBookingWizard from "@/components/AVBookingWizard";
+import BundleGrid from "@/components/BundleGrid";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
+import { AV_PAKKER } from "@/lib/products";
 import { LocationKicker } from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
@@ -89,8 +92,40 @@ export default function AVUdstyrPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
+        {/* Pakkerne først. Siden havde før hverken pakker eller produktlinks —
+            alt AV-udstyr kunne kun findes gennem menuen, og da menuen blev
+            kortet ned, ville det have været usynligt. */}
+        <BundleGrid
+          ids={AV_PAKKER}
+          eyebrow="AV-pakker"
+          title="Færdige opsætninger"
+          subtitle="Skærm, projektor, mikrofon og lyd sat sammen til det der skal ske — billigere end delene hver for sig."
+        />
+
         {/* AV Booking Wizard */}
         <AVBookingWizard />
+
+        <section className="mx-auto max-w-6xl px-4 pb-16">
+          <h2 className="mb-2 text-center text-3xl font-bold">Enkeltdele</h2>
+          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
+            Mangler du kun én ting til opsætningen, kan alt lejes hver for sig.
+          </p>
+          <CategoryProductGrid
+            items={[
+              { id: "projektor", href: "/projektor" },
+              { id: "projektor_pro", href: "/projektor-pro" },
+              { id: "laerred_160", href: "/laerred-160" },
+              { id: "skaerm_55", href: "/skaerm" },
+              { id: "skaerm_32", href: "/skaerm-32" },
+              { id: "traadloes_mikrofon", href: "/traadloes-mikrofon" },
+              { id: "traadloes_mikrofon_pro", href: "/traadloes-mikrofon-pro" },
+              { id: "headset", href: "/headset-mikrofon" },
+              { id: "headset_pro", href: "/headset-pro" },
+              { id: "haandholdt_mikrofon", href: "/haandholdt-mikrofon" },
+              { id: "haandholdt_mikrofon_pro", href: "/haandholdt-mikrofon-pro" },
+            ]}
+          />
+        </section>
 
         {/* Upsell */}
         <section className="mx-auto max-w-3xl px-4 pb-24">
@@ -103,7 +138,7 @@ export default function AVUdstyrPage() {
               Kombiner med AV-udstyr for det komplette setup.
             </p>
             <a
-              href="/"
+              href="/lydanlaeg"
               className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
             >
               Se højtalerpakker

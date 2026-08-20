@@ -707,6 +707,18 @@ export const rentalProducts: RentalProduct[] = [
 export interface NavLink { href: string; label: string }
 export interface NavCategory { id: string; title: string; href: string; links: NavLink[] }
 
+/**
+ * Menuen er en vej ind i en kategori — ikke et katalog.
+ *
+ * Da pakkestigen og lejlighedspakkerne kom til, voksede menuen til 44 links,
+ * hvoraf fjorten lå under Lyd alene. Det gør det sværere at vælge, ikke
+ * nemmere: en liste man skal læse er ikke en menu, den er en opgave. Hver
+ * kategori viser derfor kun det man oftest booker, og slutter med "Se alle",
+ * hvor kategorisiden har hele udvalget.
+ *
+ * Reglen holdes af en test: højst seks links pr. kategori, og hvert produkt
+ * skal kunne nås fra sin kategoriside — ikke fra menuen.
+ */
 export const NAV_CATEGORIES: NavCategory[] = [
   {
     id: "lyd",
@@ -714,19 +726,9 @@ export const NAV_CATEGORIES: NavCategory[] = [
     href: "/lej-hojtaler",
     links: [
       { href: "/lydanlaeg", label: "Anlæg efter antal gæster" },
-      { href: "/festpakke-lille", label: "Festpakke 50" },
-      { href: "/festpakke-stor", label: "Festpakke 100" },
-      { href: "/festpakke-150", label: "Festpakke 150" },
-      { href: "/festpakke-250", label: "Festpakke 250" },
-      { href: "/bryllupspakke", label: "Bryllupspakke" },
-      { href: "/firmafestpakke", label: "Firmafestpakke" },
-      { href: "/udendorspakke", label: "Udendørspakke (uden strøm)" },
-      { href: "/studenterpakke", label: "Studenterpakken" },
       { href: "/soundboks-4", label: "Soundboks 4" },
-      { href: "/mackie-thump-go", label: "Mackie Thump GO" },
-      { href: "/hojtalerpakke-lille", label: "Højtalerpakke lille" },
-      { href: "/hojtalerpakke-normal", label: "Højtalerpakke normal" },
-      { href: "/subwoofer", label: "Subwoofer 12\"" },
+      { href: "/festpakke-stor", label: "Festpakke 100" },
+      { href: "/lej-hojtaler", label: "Se alle højtalere og pakker" },
     ],
   },
   {
@@ -735,11 +737,9 @@ export const NAV_CATEGORIES: NavCategory[] = [
     href: "/festlys",
     links: [
       { href: "/stemningslys", label: "Stemningslys-pakken" },
-      { href: "/enkelt-lyseffekt", label: "Enkelt lyseffekt" },
       { href: "/lys-pakke", label: "Lys-pakke" },
-      { href: "/uplights", label: "Uplights" },
       { href: "/discokugle", label: "Discokugle" },
-      { href: "/lyskaeder", label: "Lyskæder" },
+      { href: "/festlys", label: "Se alt lys" },
     ],
   },
   {
@@ -747,10 +747,9 @@ export const NAV_CATEGORIES: NavCategory[] = [
     title: "Karaoke",
     href: "/karaoke",
     links: [
-      { href: "/karaoke", label: "Karaoke & underholdning" },
       { href: "/pakke-karaoke", label: "Karaokepakken" },
-      { href: "/pakke-karaoke-fest", label: "Karaoke-festpakken" },
       { href: "/karaoke-maskine", label: "Karaokemaskine" },
+      { href: "/karaoke", label: "Se alt karaoke" },
     ],
   },
   {
@@ -758,23 +757,21 @@ export const NAV_CATEGORIES: NavCategory[] = [
     title: "Røg",
     href: "/roeg",
     links: [
-      { href: "/roeg", label: "Røg til fest" },
       { href: "/roegmaskine", label: "Røgmaskine" },
+      { href: "/roeg", label: "Low fog — røggulv" },
     ],
   },
   {
-    id: "lejligheder",
-    title: "Til din lejlighed",
-    href: "/konfirmation",
+    id: "anledning",
+    title: "Til din anledning",
+    href: "/bryllup",
     links: [
-      { href: "/konfirmation", label: "Konfirmation" },
       { href: "/bryllup", label: "Bryllup" },
-      { href: "/polterabend", label: "Polterabend" },
-      { href: "/studenterkoersel", label: "Studenterkørsel" },
+      { href: "/konfirmation", label: "Konfirmation" },
       { href: "/foedselsdag", label: "Fødselsdag" },
+      { href: "/julefrokost", label: "Julefrokost & firmafest" },
       { href: "/havefest", label: "Havefest" },
-      { href: "/julefrokost", label: "Julefrokost" },
-      { href: "/nytaar", label: "Nytårsfest" },
+      { href: "/studenterkoersel", label: "Studenterkørsel" },
     ],
   },
   {
@@ -783,17 +780,50 @@ export const NAV_CATEGORIES: NavCategory[] = [
     href: "/av-udstyr",
     links: [
       { href: "/konferencepakke-150", label: "Konferencepakke 150" },
-      { href: "/pakke-konference", label: "Konferencepakken" },
-      { href: "/pakke-praesentation", label: "Præsentationspakken" },
-      { href: "/pakke-tale-musik", label: "Tale & musik-pakken" },
       { href: "/filmaften", label: "Filmaften-pakken" },
       { href: "/projektor", label: "Projektor" },
-      { href: "/skaerm", label: 'Storskærm 55"' },
-      { href: "/skaerm-32", label: 'Skærm 32"' },
-      { href: "/traadloes-mikrofon", label: "Trådløs mikrofon" },
-      { href: "/headset-mikrofon", label: "Headset-mikrofon" },
+      { href: "/av-udstyr", label: "Se alt AV-udstyr" },
     ],
   },
+];
+
+/**
+ * Hvilke pakker der bor på hvilken kategoriside. Menuen viser dem ikke længere,
+ * så det her er kontrakten for at de stadig kan findes — en test kræver at hver
+ * pakke med en egen side står på præcis én kategoriside.
+ */
+export const KATEGORI_PAKKER: Record<string, string[]> = {
+  "/lej-hojtaler": [
+    "pakke_fest_lille",
+    "pakke_fest_stor",
+    "pakke_fest_150",
+    "pakke_fest_250",
+    "pakke_bryllup",
+    "pakke_firmafest",
+    "pakke_udendors",
+    "pakke_student",
+  ],
+  "/festlys": ["pakke_stemningslys"],
+  "/karaoke": ["pakke_karaoke", "pakke_karaoke_fest"],
+  "/av-udstyr": [
+    "pakke_konference_150",
+    "pakke_konference",
+    "pakke_praesentation",
+    "pakke_tale_musik",
+    "pakke_filmaften",
+  ],
+};
+
+/** Lejlighedspakkerne — vises under stigen på /lej-hojtaler */
+export const LYD_LEJLIGHEDSPAKKER = ["pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student"];
+
+/** AV-pakkerne — vises samlet på /av-udstyr */
+export const AV_PAKKER = [
+  "pakke_konference_150",
+  "pakke_konference",
+  "pakke_praesentation",
+  "pakke_tale_musik",
+  "pakke_filmaften",
 ];
 
 /* ───── Pakkestigen ─────

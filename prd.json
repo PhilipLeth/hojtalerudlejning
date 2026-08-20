@@ -1545,6 +1545,13 @@
         "kontrakt": "OCCASION_PACKAGES i src/lib/products.ts kobler anledning → pakke, og testen læser anledningssidens kildekode og kræver at både produkt-id og pris står på siden. Ellers siger siden ét og kurven noget andet. En anden test kræver at HVER pakke med en side kan findes i menuen — den fandt med det samme fem pakker (Præsentation, Konference, Tale & musik og de to karaokepakker) der aldrig har været i menuen.",
         "forsiden_er_strammet": "Der er nu otte lyd-pakker, og forsiden viste før dem alle. Forsiden og /lej-hojtaler viser i stedet FEST_LADDER_IDS — de fire trin i feststigen — under overskriften 'Vælg anlæg efter antal gæster'. Lejlighedspakkerne hører til på deres egne sider og på anledningssiderne.",
         "stemningslys_rammer_annoncerne": "AG 2 (Festlys & diskokugle) og AG 5 (Lyskæder) bruger rigtige penge på lys-søgninger og landede før på enkeltprodukter til 195-495 kr. Stemningslys-pakken på 695 kr er det første pakketilbud den trafik kan lande på."
+      },
+      "menu_2026_08_20": {
+        "problem": "Menuen voksede til 44 links da pakkestigen og lejlighedspakkerne kom til — fjorten under Lyd alene. En liste man skal læse er ikke en menu, den er en opgave.",
+        "beslutning": "Menuen er en vej ind i en kategori, ikke et katalog. Højst seks links pr. kategori, og hver kategori slutter med 'Se alle'. Nu 23 links i alt. Produkterne bor på kategorisiderne.",
+        "kontrakt": "KATEGORI_PAKKER i products.ts siger hvilken kategoriside hver pakke bor på. Tre tests: ingen kategori over seks links (og højst 30 i alt), hvert menupunkt fører til en side der findes, og hver pakke står på præcis én kategoriside — og nævnes rent faktisk i den sides kildekode.",
+        "hul_der_blev_fundet": "/av-udstyr havde nul produktlinks — kun en booking-wizard. Alt AV-udstyr kunne udelukkende findes gennem menuen, så en kortere menu ville have gjort det usynligt. Siden har nu AV-pakkerne øverst og alle elleve enkeltdele under wizarden.",
+        "ogsaa_rettet": "Kategorien hed 'Til din lejlighed', hvilket læses som 'til din lejlighed' og ikke 'til din anledning'. Hedder nu 'Til din anledning'. /av-udstyr's 'Se højtalerpakker' pegede på forsiden; peger nu på /lydanlaeg."
       }
     },
     "forespoergselsflow": {

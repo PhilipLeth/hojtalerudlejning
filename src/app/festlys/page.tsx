@@ -101,6 +101,7 @@ export default function FestlysPage() {
 
           <CategoryProductGrid
             items={[
+              { id: "pakke_stemningslys", href: "/stemningslys", tag: "Spar 140,-" },
               { id: "lyseffekt", href: "/enkelt-lyseffekt" },
               { id: "uplight", href: "/uplights" },
               { id: "uplight_4", href: "/uplights", tag: "Spar 105,-" },

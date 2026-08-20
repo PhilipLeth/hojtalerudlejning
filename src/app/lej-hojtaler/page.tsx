@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import BundleGrid from "@/components/BundleGrid";
-import { FEST_LADDER_IDS } from "@/lib/products";
+import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER } from "@/lib/products";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { LocationKicker } from "@/components/PhoneLink";
@@ -97,6 +97,13 @@ export default function LejHojtalerPage() {
           title="Vælg anlæg efter antal gæster"
           subtitle="Sig hvor mange der kommer, så er pakken sat sammen på forhånd — højtalere, bas, stativer, lys og kabler i ét."
         />
+        <BundleGrid
+          ids={LYD_LEJLIGHEDSPAKKER}
+          eyebrow="Til anledningen"
+          title="Pakker bygget til det du skal holde"
+          subtitle="Samme udstyr, sat sammen efter hvad der skal ske: taler til brylluppet, bas til firmafesten, batteri når der ikke er strøm."
+        />
+
         <SpeakerCompare bookLinks="booking" />
 
         {/* USP section */}
