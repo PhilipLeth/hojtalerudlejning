@@ -16,6 +16,7 @@ import {
   bundleSlots,
   loadInventoryPair,
 } from "./_lib/inventory";
+import { hentBookingIndex } from "./_lib/bookingIndex";
 import { expandProductIds } from "./_lib/occupancy";
 
 interface Env {
@@ -63,17 +64,11 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     const qFrom = from.slice(0, 10);
     const qTo = to.slice(0, 10);
 
-    const list = await context.env.BOOKINGS.list({ prefix: "booking_" });
-    for (const key of list.keys) {
-      const value = await context.env.BOOKINGS.get(key.name);
-      if (!value) continue;
-
-      let booking: Record<string, unknown>;
-      try {
-        booking = JSON.parse(value);
-      } catch {
-        continue;
-      }
+    // Bookingerne kommer fra kantens cache, ikke fra et KV-list pr. besøg —
+    // se _lib/bookingIndex.ts for hvorfor (gratis-kvoten på 1.000 list/døgn)
+    const index = await hentBookingIndex(context.env.BOOKINGS, context as unknown as ExecutionContext);
+    for (const post of index.bookinger) {
+      const booking = post.data;
 
       // Kun aktive bookinger — afleveret udstyr er tilbage på hylden, og en
       // annulleret booking skal frigive sine datoer med det samme
@@ -102,25 +97,25 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     }
 
     // Blokerede datoer i perioden
-    const blockedDates: Array<{ date: string; reason: string; products: string[] }> = [];
-    const blockedList = await context.env.BOOKINGS.list({ prefix: "blocked_" });
-    for (const key of blockedList.keys) {
-      const date = key.name.replace("blocked_", "");
-      if (date < qFrom || date > qTo) continue;
-      const val = await context.env.BOOKINGS.get(key.name);
-      if (!val) continue;
-      try {
-        const parsed = JSON.parse(val);
-        blockedDates.push({ date, reason: parsed.reason || "", products: parsed.products || [] });
-      } catch {
-        blockedDates.push({ date, reason: "", products: [] });
-      }
-    }
+    const blockedDates = index.blokerede.filter((b) => b.date >= qFrom && b.date <= qTo);
 
-    return new Response(JSON.stringify({ inventory, booked, blocked_dates: blockedDates }), {
-      status: 200,
-      headers: corsHeaders,
-    });
+    return new Response(
+      JSON.stringify({
+        inventory,
+        booked,
+        blocked_dates: blockedDates,
+        // Sat når tallene kommer fra nødkopien: bedre end en fejl, men værd at vide
+        ...(index.forældet ? { foraeldet: true, hentet: index.hentet } : {}),
+      }),
+      {
+        status: 200,
+        headers: {
+          ...corsHeaders,
+          // Kundens egen browser genbruger svaret i et minut
+          "Cache-Control": "public, max-age=60",
+        },
+      },
+    );
   } catch (e) {
     console.error("Availability error:", e);
     return new Response(JSON.stringify({ error: "Failed to check availability" }), {

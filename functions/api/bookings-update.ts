@@ -8,6 +8,7 @@ import {
 import { KV_SALE_CAMPAIGN, parseCampaign } from "./_lib/weekendSale";
 import { recordSms, sendBookingSms } from "./_lib/sms";
 import { sendConfirmationMail } from "./_lib/confirmMail";
+import { nulstilBookingIndex } from "./_lib/bookingIndex";
 import { paymentMail, sendOwnerMail } from "./_lib/ownerMail";
 
 import { requireAdmin } from "./_lib/adminAuth";
@@ -235,6 +236,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         });
       }
       await context.env.BOOKINGS.delete(body.id);
+      await nulstilBookingIndex(context as unknown as ExecutionContext);
       return new Response(JSON.stringify({ ok: true, deleted: body.id }), {
         status: 200,
         headers: corsHeaders,
@@ -508,6 +510,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
 
     await context.env.BOOKINGS.put(body.id, JSON.stringify(booking));
+    // Annullering og retur frigiver udstyr — det skal ses i kalenderen straks
+    await nulstilBookingIndex(context as unknown as ExecutionContext);
 
     return new Response(JSON.stringify({ ok: true, booking }), {
       status: 200,

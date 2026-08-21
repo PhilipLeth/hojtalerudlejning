@@ -4,6 +4,7 @@ import { KV_PUSH_SUBS, loadSubscriptions } from "./push";
 import { notifyOverbooking } from "./_lib/overbooking";
 import { loadSiteSettings, mailFooter } from "./_lib/siteSettings";
 import { recordSms, sendBookingSms, type SendSmsOutcome } from "./_lib/sms";
+import { nulstilBookingIndex } from "./_lib/bookingIndex";
 import type { SaleContext } from "./_lib/weekendSale";
 import { notifyRecipients } from "./_lib/notify";
 
@@ -229,6 +230,31 @@ function upsellCustomerHtml(offer: UpsellOffer): string {
       </div>`;
 }
 
+/**
+ * Nøgle for "denne kunde har lige bestilt netop det her".
+ *
+ * Kunder trykker to gange: knappen ser ikke ud til at ske noget, forbindelsen
+ * er langsom, eller de går tilbage og sender igen. Uden en spærre bliver det
+ * til to ordrer på samme udstyr, som nogen skal opdage og rydde op i — og
+ * kunden tror, han har booket dobbelt.
+ */
+async function dubletNøgle(data: BookingData): Promise<string> {
+  const grundlag = [
+    String(data.email ?? "").trim().toLowerCase(),
+    String(data.phone ?? "").replace(/\D/g, ""),
+    String(data.pickup ?? "").slice(0, 10),
+    String(data.returnDate ?? "").slice(0, 10),
+    String(data.total ?? ""),
+  ].join("|");
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(grundlag));
+  const hex = [...new Uint8Array(digest)].slice(0, 8).map((b) => b.toString(16).padStart(2, "0")).join("");
+  return `booking_dublet_${hex}`;
+}
+
+/** Ti minutter: længe nok til en langsom forbindelse og et fortrudt tilbage-klik,
+ *  kort nok til at en kunde der VIL leje to gange samme dag ikke spærres ude. */
+const DUBLET_VINDUE_SEK = 600;
+
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { RESEND_API_KEY, NOTIFY_EMAIL } = context.env;
 
@@ -240,6 +266,24 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   const data: BookingData = await context.request.json();
+
+  // Har vi lige taget imod præcis denne ordre? Så er det et dobbelttryk, ikke
+  // en ny booking. Kunden får samme kvittering som første gang — han skal ikke
+  // i tvivl om, at det gik igennem.
+  const dubletKey = await dubletNøgle(data);
+  try {
+    const tidligere = await context.env.BOOKINGS.get(dubletKey);
+    if (tidligere) {
+      console.log("[book] dobbelttryk afvist, henviser til", tidligere);
+      return new Response(JSON.stringify({ ok: true, bookingId: tidligere, duplikat: true }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+  } catch (e) {
+    // Kan spærren ikke læses, er det bedre at tage imod ordren end at afvise den
+    console.error("[book] kunne ikke tjekke dublet:", e);
+  }
 
   // Rabatkode valideres mod serverens liste — klientens ord alene tæller ikke.
   // Weekendudsalgets kode tjekkes desuden mod lageret: den gælder kun udstyr,
@@ -413,6 +457,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     };
     if (smsOutcome) recordSms(booking, smsOutcome);
     await context.env.BOOKINGS.put(key, JSON.stringify(booking));
+    // Ledigheden læser fra en cache — uden det her ville udstyret stå ledigt i
+    // op til fem minutter efter det var booket
+    await nulstilBookingIndex(context as unknown as ExecutionContext);
+    // Spærren sættes FØRST når ordren ligger i KV: fejler skrivningen, skal
+    // kunden kunne prøve igen
+    await context.env.BOOKINGS.put(dubletKey, key, { expirationTtl: DUBLET_VINDUE_SEK });
   } catch (e) {
     console.error("KV save error:", e);
     // Don't fail the booking if KV save fails — emails were already sent

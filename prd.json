@@ -1042,6 +1042,15 @@
     "gendannelse": "Manuel og med vilje: hent filen i /admin/indstillinger og skriv de nøgler tilbage, der mangler. En automatisk gendannelses-knap ville kunne overskrive rigtige data med gamle ved et fejlklik.",
     "status": "Live 2026-08-18."
   },
+  "kv_kvote_og_dubletter": {
+    "nedbrud_2026_08_21": "/api/availability svarede 500 til ALLE besøgende. Årsag: endepunktet lavede to KV list-opslag pr. besøg (bookinger + blokerede datoer) plus et get pr. booking, og Cloudflares gratis KV tillader 1.000 list-operationer i døgnet. Cirka 500 besøg brugte dagens kvote, og derefter kunne ingen se ledighed. Fejlen var usynlig for os, fordi BookingFlow fangede den i et tomt catch — den blev først fundet, da vi undersøgte hvorfor kunder bestilte flere gange.",
+    "loesning": "functions/api/_lib/bookingIndex.ts henter alle bookinger og blokerede datoer ÉN gang og lægger dem i kantens cache i fem minutter. Alle besøg deler kopien uanset hvilke datoer de spørger om, fordi den indeholder alt og filtreres i hukommelsen. Værste fald: ~576 list-opslag i døgnet mod 1.000 tilladte. book.ts og bookings-update.ts rydder cachen ved skrivning, så en ny booking eller en annullering slår igennem straks.",
+    "nedfaldsplan": "Svigter KV alligevel, serveres den sidst kendte kopi (gemt i et døgn). Findes den heller ikke, svares med rigtige lagertal og tom belægning frem for en 500'er: en kalender med ukendt belægning kan bruges, en fejlbesked kan ikke — og det er fejlen, der får kunder til at prøve igen.",
+    "dubletter": "Kunder bestilte flere gange ved en fejl. book.ts har nu en spærre: SHA-256 af mail, telefon, datoer og beløb gemmes i ti minutter, og et gentaget tryk får FØRSTE ordres nummer tilbage med duplikat:true — kunden ser sin kvittering, ikke en fejl. Spærren sættes først når ordren ligger i KV, så en fejlet skrivning ikke låser kunden ude, og en ulæselig spærre lader ordren gå igennem.",
+    "kvittering": "Kvitteringen viser nu ordrenummeret og siger eksplicit: »Din booking er registreret — du skal ikke sende den igen«, med henvisning til spam-mappen og telefonnummeret. Tvivlen var halvdelen af årsagen til dobbeltbestillingerne.",
+    "naeste_skridt": "Hvis trafikken vokser, er 1.000 list/døgn stadig loftet. Workers Paid (5 USD/md) hæver grænserne markant. Alternativt kan bookingerne holdes i én samlet KV-nøgle, så list-opslaget forsvinder helt.",
+    "status": "Live 2026-08-21."
+  },
   "fejlopsamling": {
     "problem": "En kunde ringede og sagde at han fik »mange fejl« ved booking af en Soundboks. Fire testordrer gik igennem, alle endepunkter svarede 200, alle filer på produktsiden svarede 200, og hele klikforløbet kunne gennemføres i test — fejlen kunne ikke genskabes. Vi så kun de bookinger der LYKKEDES; kunder der gav op undervejs efterlod intet spor. BookingFlow fangede oven i købet sine egne fejl i et tomt catch og viste kunden »prøv igen«, så selv serverens svar gik tabt.",
     "loesning_2026_08_19": {
