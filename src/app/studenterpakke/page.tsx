@@ -29,6 +29,7 @@ export default function StudenterpakkePage() {
       image="/images/product-soundboks.webp"
       imageAlt="Studenterpakken med Soundboks 4, ekstra batteri og bæretaske"
       productId="pakke_student"
+      faqPhrase="studenterpakken"
       capacity={{ level: 2, label: "op til 50 pers." }}
       bullets={[
         "Soundboks 4 — den der kan høres over motoren",

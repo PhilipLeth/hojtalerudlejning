@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
+import { AUTHOR, authorLd } from "@/lib/author";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -26,6 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: "da_DK",
       type: "article",
       publishedTime: post.date,
+      modifiedTime: post.updated,
+      authors: [AUTHOR.url],
       ...(post.image ? { images: [{ url: post.image }] } : {}),
     },
   };
@@ -66,14 +69,18 @@ export default async function BlogPostPage({ params }: Props) {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    author: {
-      "@type": "Organization",
-      name: "Scharling Studio",
-    },
+    dateModified: post.updated,
+    // En navngiven person med dokumenteret erfaring, ikke et firmanavn:
+    // det er forskellen på et råd nogen står inde for, og en tekst uden afsender.
+    author: authorLd(),
     publisher: {
       "@type": "Organization",
       name: "Lejhøjtaler.dk",
       url: "https://lejhojtaler.dk",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://lejhojtaler.dk/icon-512.png",
+      },
     },
     mainEntityOfPage: `https://lejhojtaler.dk/blog/${post.slug}`,
     ...(post.image ? { image: post.image } : {}),
@@ -115,6 +122,27 @@ export default async function BlogPostPage({ params }: Props) {
           <h1 className="mt-2 text-3xl font-bold text-white sm:text-4xl leading-tight">
             {post.title}
           </h1>
+
+          {/* Forfatterlinje: hvem der skriver, og hvorfor man kan bruge rådet til noget */}
+          <p className="mt-4 text-sm text-white/40">
+            Skrevet af{" "}
+            <Link href="/om" className="text-brand-400 transition hover:text-brand-300">
+              {AUTHOR.name}
+            </Link>
+            , der {AUTHOR.bio}.
+            {post.updated !== post.date && (
+              <>
+                {" "}
+                Opdateret{" "}
+                {new Date(post.updated).toLocaleDateString("da-DK", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+                .
+              </>
+            )}
+          </p>
 
           <div
             className="prose-blog mt-10"

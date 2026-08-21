@@ -29,6 +29,7 @@ export default function FestpakkeLillePage() {
       image="/images/product-pakke-fest-lille.webp"
       imageAlt="Lille festpakke med Alto højtalere og lyseffekt"
       productId="pakke_fest_lille"
+      faqPhrase="den lille festpakke"
       bullets={[
         "2× Alto 10\" højtalere med Bluetooth (op til 40 pers.)",
         "Enkelt lyseffekt: 1 LED-par-lys med farveeffekter (uden stativ)",

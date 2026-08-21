@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import FaqSection from "@/components/FaqSection";
+import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import AVBookingWizard from "@/components/AVBookingWizard";
 import BundleGrid from "@/components/BundleGrid";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
@@ -145,6 +147,8 @@ export default function AVUdstyrPage() {
             </a>
           </div>
         </section>
+
+        <FaqSection items={CATEGORY_FAQ["av-udstyr"]} />
 
         <Testimonials />
         <Footer />

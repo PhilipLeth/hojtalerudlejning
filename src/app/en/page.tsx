@@ -4,6 +4,8 @@ import SpeakerCompare from "@/components/SpeakerCompare";
 import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
+import FaqSection from "@/components/FaqSection";
+import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { localeAlternates } from "@/lib/hreflang";
 import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 
@@ -43,6 +45,8 @@ export default function EnHome() {
     <main className="min-h-screen" lang="en">
       <Hero locale="en" />
       <SpeakerCompare locale="en" />
+      <FaqSection items={CATEGORY_FAQ["en"]} title="Frequently asked questions" />
+
       <Testimonials locale="en" />
       <HowItWorks locale="en" />
       <Footer locale="en" />

@@ -11,6 +11,13 @@ export interface PostMeta {
   title: string;
   description: string;
   date: string;
+  /**
+   * Sidst opdateret. Sættes med `updated:` i frontmatter, når et indlæg
+   * gennemgås — fx når en pris ændrer sig. Uden den ser en guide fra 2026
+   * lige så gammel ud om to år, og både Google og svarmaskinerne foretrækker
+   * indhold, de kan se er vedligeholdt. Falder tilbage på udgivelsesdatoen.
+   */
+  updated: string;
   keywords: string[];
   image?: string;
 }
@@ -32,6 +39,7 @@ export function getAllPosts(): PostMeta[] {
       title: data.title ?? slug,
       description: data.description ?? "",
       date: data.date ?? "2026-01-01",
+      updated: data.updated ?? data.date ?? "2026-01-01",
       keywords: data.keywords ?? [],
       image: data.image,
     };
@@ -53,6 +61,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     title: data.title ?? slug,
     description: data.description ?? "",
     date: data.date ?? "2026-01-01",
+    updated: data.updated ?? data.date ?? "2026-01-01",
     keywords: data.keywords ?? [],
     image: data.image,
     contentHtml: result.toString(),

@@ -27,6 +27,7 @@ export default function Page() {
       image="/images/product-mikrofon-kabel.webp"
       imageAlt="Håndholdt mikrofon med kabel til leje"
       productId="haandholdt_mikrofon"
+      faqPhrase="en håndholdt mikrofon med kabel"
       bullets={["Klassisk håndholdt dynamisk mikrofon", "XLR-kabel inkluderet", "Tilslut direkte til vores højtalere", "Perfekt til taler og fest", "Kun 95 kr/weekend"]}
     />
   );

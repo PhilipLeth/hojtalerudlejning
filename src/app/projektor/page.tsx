@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
+import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
+import { buildProductFaq } from "@/lib/productFaq";
 import { LocationKicker } from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
@@ -159,6 +161,11 @@ export default function ProjektorPage() {
             </div>
           </div>
         </section>
+
+        <FaqSection
+          items={buildProductFaq({ name: "Projektor", price: 495, productId: "projektor", phrase: "en projektor" })}
+          title="Ofte stillede spørgsmål om projektor"
+        />
 
         {/* Testimonials */}
         <Testimonials />

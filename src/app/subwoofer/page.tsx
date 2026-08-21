@@ -35,6 +35,7 @@ export default function Page() {
       image="/images/product-subwoofer-v2.webp"
       imageAlt={'Behringer 12" aktiv subwoofer til leje i København'}
       productId="subwoofer"
+      faqPhrase="en subwoofer"
       bullets={[
         'Behringer 12" aktiv subwoofer med indbygget forstærker',
         "Tilføjer dyb bas til alle vores højtalerpakker",

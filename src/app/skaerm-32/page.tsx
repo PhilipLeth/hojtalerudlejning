@@ -36,6 +36,7 @@ export default function Page() {
       image="/images/product-skaerm-32.webp"
       imageAlt={'32" LED-skærm på 3-fod stativ til leje i København'}
       productId="skaerm_32"
+      faqPhrase={'en 32" skærm'}
       bullets={[
         '32" LED-skærm i Full HD',
         "3-fod stativ med justerbar højde",

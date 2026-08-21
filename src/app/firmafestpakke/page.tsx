@@ -29,6 +29,7 @@ export default function FirmafestpakkePage() {
       image="/images/product-pakke-fest-stor.webp"
       imageAlt="Firmafestpakke med højtalere, subwoofer, lys og røgmaskine"
       productId="pakke_firmafest"
+      faqPhrase="firmafestpakken"
       capacity={{ level: 3, label: "op til 120 pers." }}
       bullets={[
         '2× EV 12" højtalere på stativer',

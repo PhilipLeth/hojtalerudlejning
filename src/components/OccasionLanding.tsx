@@ -1,19 +1,18 @@
 import Link from "next/link";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
+import FaqSection, { type FaqItem } from "@/components/FaqSection";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { bookHref } from "@/lib/bookUrl";
-import { PhoneText, LivePhoneCopy } from "@/components/PhoneLink";
+import { PhoneText, LiveCopy } from "@/components/PhoneLink";
 
 export interface OccasionTip {
   title: string;
   text: string;
 }
 
-export interface OccasionFaq {
-  q: string;
-  a: string;
-}
+/** Samme form som FaqSections FaqItem — beholdt som navn, siderne bruger den. */
+export type OccasionFaq = FaqItem;
 
 export interface OccasionLandingProps {
   /** URL-slug uden skråstreg, fx "konfirmation" */
@@ -68,20 +67,9 @@ export default function OccasionLanding({
     ],
   };
 
-  const faqLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faq.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
 
       {/* Hero */}
       <section className="relative flex min-h-[60vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
@@ -146,29 +134,13 @@ export default function OccasionLanding({
             {tips.map((t) => (
               <div key={t.title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
                 <h3 className="mb-2 font-semibold text-white">{t.title}</h3>
-                <p className="text-sm text-white/50"><LivePhoneCopy text={t.text} /></p>
+                <p className="text-sm text-white/50"><LiveCopy text={t.text} /></p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* FAQ */}
-        <section className="mx-auto max-w-3xl px-4 pb-20">
-          <h2 className="mb-8 text-center text-2xl font-bold sm:text-3xl">Ofte stillede spørgsmål</h2>
-          <div className="space-y-3">
-            {faq.map((f) => (
-              <details key={f.q} className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                <summary className="cursor-pointer list-none font-semibold text-white marker:hidden">
-                  <span className="flex items-start justify-between gap-4">
-                    {f.q}
-                    <span className="mt-1 shrink-0 text-brand-400 transition group-open:rotate-45">+</span>
-                  </span>
-                </summary>
-                <p className="mt-3 text-sm text-white/50"><LivePhoneCopy text={f.a} /></p>
-              </details>
-            ))}
-          </div>
-        </section>
+        <FaqSection items={faq} />
 
         <Testimonials />
 

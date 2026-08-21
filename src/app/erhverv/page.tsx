@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
+import FaqSection from "@/components/FaqSection";
+import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import TopBar from "@/components/TopBar";
 import PhoneLink from "@/components/PhoneLink";
 import EventInquiryForm from "@/components/EventInquiryForm";
@@ -219,6 +221,8 @@ export default function ErhvervPage() {
           </div>
         </div>
       </section>
+
+      <FaqSection items={CATEGORY_FAQ["erhverv"]} />
 
       <Footer />
     </main>

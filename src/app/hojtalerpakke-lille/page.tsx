@@ -28,7 +28,7 @@ export default function HojtalerpakkeLillePage() {
       image="/images/product-party.webp"
       imageAlt="Lille højtalerpakke til leje i København"
       productId="party"
-      reviewed={{ ratingValue: "5.0", reviewCount: "2" }}
+      faqPhrase="den lille højtalerpakke"
       capacity={{ level: 1, label: "0-30 pers." }}
       bullets={[
         '2× 10" Alto med Bluetooth',

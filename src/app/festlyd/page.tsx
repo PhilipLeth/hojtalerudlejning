@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import FaqSection from "@/components/FaqSection";
+import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 
 export const metadata: Metadata = {
   title: "Lyd til Fest København | Fra 395 kr | Lejhøjtaler.dk",
@@ -195,6 +197,8 @@ export default function FestlydPage() {
         </section>
 
         {/* Testimonials */}
+        <FaqSection items={CATEGORY_FAQ["festlyd"]} />
+
         <Testimonials />
 
         {/* Final CTA */}

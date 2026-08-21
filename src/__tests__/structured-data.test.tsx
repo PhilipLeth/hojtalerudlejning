@@ -35,17 +35,20 @@ describe("Structured data — ingen opdigtede anmeldelser", () => {
     expect(offenders, `aggregateRating hårdkodet i:\n${offenders.join("\n")}`).toEqual([]);
   });
 
-  it("kun produkter anmeldelserne handler om har rating (ikke hele kataloget)", () => {
+  it("ingen produktside sætter rating, så længe testimonials er opdigtede", () => {
+    // Denne test krævede før at MINDST én produktside havde rating — og pegede
+    // på hojtalerpakke-lille og -normal, fordi to af de opdigtede testimonials
+    // nævner dem. Den håndhævede altså det stik modsatte af filens egen
+    // overskrift, og koden fulgte testen: 5,0 stjerner lå live i markup'en.
+    //
+    // Kravet er vendt om. Kommer der ægte, verificerbare anmeldelser, sættes
+    // reviewed-proppen på netop de produkter anmeldelserne handler om — og
+    // denne test rettes i samme ombæring, som en bevidst beslutning.
     const landingPages = files.filter(
       (f) => f.includes("/app/") && f.endsWith("page.tsx") && readFileSync(f, "utf8").includes("<ProductLanding")
     );
     const withRating = landingPages.filter((f) => readFileSync(f, "utf8").includes("reviewed="));
-    // De 4 testimonials nævner: lille + stor højtalerpakke. Resten må ikke have rating.
-    expect(withRating.length).toBeGreaterThan(0);
-    expect(withRating.length).toBeLessThan(landingPages.length / 2);
-    for (const f of withRating) {
-      expect(f).toMatch(/hojtalerpakke-(lille|normal)/);
-    }
+    expect(withRating, `rating sat på:\n${withRating.join("\n")}`).toEqual([]);
   });
 
   it("ingen individuelle Review-objekter (vi har ikke anmeldelser pr. produkt)", () => {

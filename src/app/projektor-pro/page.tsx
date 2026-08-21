@@ -27,6 +27,7 @@ export default function Page() {
       image="/images/product-projektor-pro.webp"
       imageAlt="5000 lumen projektor til leje"
       productId="projektor_pro"
+      faqPhrase="Projektor Pro"
       bullets={["5000 ANSI lumen — virker i dagslys", "Full HD-opløsning", "HDMI + strømkabel inkluderet", "Perfekt til konferencer og store rum", "Kombinér med lærred for 195 kr"]}
     />
   );

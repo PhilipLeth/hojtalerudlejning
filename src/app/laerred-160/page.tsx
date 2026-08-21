@@ -27,6 +27,7 @@ export default function Page() {
       image="/images/product-laerred.webp"
       imageAlt="Projektorlærred 160 cm på stativ til leje"
       productId="laerred_160"
+      faqPhrase="et 160 cm lærred"
       bullets={["160 cm bredt lærred", "Stabilt trefods-stativ", "Sat op på 2 minutter", "Kombinér med projektor fra 495 kr", "Hent fredag, aflever mandag"]}
     />
   );

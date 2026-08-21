@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
+import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
+import { buildProductFaq } from "@/lib/productFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 
@@ -123,6 +125,11 @@ export default function LyskaederPage() {
             </div>
           </div>
         </section>
+
+        <FaqSection
+          items={buildProductFaq({ name: "Lyskæder", price: 195, productId: "lyskaeder", phrase: "en lyskæde" })}
+          title="Ofte stillede spørgsmål om lyskæder"
+        />
 
         {/* Testimonials */}
         <Testimonials />

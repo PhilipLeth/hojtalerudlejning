@@ -9,7 +9,7 @@
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "postbuild": "python3 scripts/generate-sitemap.py --write"
+    "postbuild": "python3 scripts/generate-sitemap.py --write && python3 scripts/generate-llms-txt.py --write"
   },
   "dependencies": {
     "@stripe/stripe-js": "^9.12.1",

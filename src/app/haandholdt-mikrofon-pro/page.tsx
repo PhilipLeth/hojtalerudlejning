@@ -27,6 +27,7 @@ export default function Page() {
       image="/images/product-mikrofon-kabel-pro.webp"
       imageAlt="Shure Beta 58A mikrofon til leje"
       productId="haandholdt_mikrofon_pro"
+      faqPhrase="en håndholdt PRO-mikrofon med kabel"
       bullets={["Shure Beta 58A — industristandarden", "XLR-kabel inkluderet", "Perfekt til sang og taler", "Tilslut direkte til vores højtalere", "195 kr/weekend"]}
     />
   );

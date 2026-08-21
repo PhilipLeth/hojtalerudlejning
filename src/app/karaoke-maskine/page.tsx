@@ -27,6 +27,7 @@ export default function Page() {
       image="/images/product-karaoke.webp"
       imageAlt="Singing Machine karaokemaskine med to trådløse mikrofoner til leje"
       productId="karaoke"
+      faqPhrase="en karaokemaskine"
       bullets={["Singing Machine med indbygget skærm", "2 trådløse mikrofoner medfølger", "Festlys i højtaleren", "HDMI til TV/projektor + Bluetooth", "Klar på 5 minutter", "Billigst i Karaokepakken — spar 385 kr"]}
     />
   );

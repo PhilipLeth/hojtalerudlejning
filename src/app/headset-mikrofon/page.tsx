@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
+import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
+import { buildProductFaq } from "@/lib/productFaq";
 import { LocationKicker } from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
@@ -158,6 +160,11 @@ export default function HeadsetMikrofonPage() {
             </div>
           </div>
         </section>
+
+        <FaqSection
+          items={buildProductFaq({ name: "Headset-mikrofon", price: 345, productId: "headset", phrase: "et trådløst headset" })}
+          title="Ofte stillede spørgsmål om headset-mikrofon"
+        />
 
         {/* Testimonials */}
         <Testimonials />

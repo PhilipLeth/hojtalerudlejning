@@ -27,6 +27,7 @@ export default function Page() {
       image="/images/product-headset-pro.webp"
       imageAlt="Professionelt trådløst headset til leje"
       productId="headset_pro"
+      faqPhrase="et trådløst PRO-headset"
       bullets={["PRO headset-mikrofon i broadcast-kvalitet", "Bodypack-sender + modtager", "Kabelforbindelse til højtaler/mixer", "Perfekt til konference og scene", "Hent fredag, aflever mandag"]}
     />
   );

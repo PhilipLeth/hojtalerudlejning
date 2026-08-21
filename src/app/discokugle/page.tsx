@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
+import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
+import { buildProductFaq } from "@/lib/productFaq";
 import { LocationKicker } from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
@@ -154,6 +156,11 @@ export default function DiscokuglePage() {
             </div>
           </div>
         </section>
+
+        <FaqSection
+          items={buildProductFaq({ name: "Discokugle", price: 245, productId: "discokugle", phrase: "en discokugle" })}
+          title="Ofte stillede spørgsmål om discokugle"
+        />
 
         {/* Testimonials */}
         <Testimonials />

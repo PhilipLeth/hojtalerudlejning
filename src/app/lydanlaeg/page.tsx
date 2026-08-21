@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import FaqSection from "@/components/FaqSection";
+import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { LADDER_FEST, LADDER_TALE, type LadderStep } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
 
@@ -148,6 +150,8 @@ export default function LydanlaegPage() {
           </p>
         </div>
       </section>
+
+      <FaqSection items={CATEGORY_FAQ["lydanlaeg"]} />
 
       <Footer />
     </>

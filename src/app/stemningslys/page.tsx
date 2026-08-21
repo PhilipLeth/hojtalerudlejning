@@ -29,6 +29,7 @@ export default function StemningslysPage() {
       image="/images/product-uplight-4.webp"
       imageAlt="Stemningslys-pakken med uplights, lyskæde og discokugle"
       productId="pakke_stemningslys"
+      faqPhrase="stemningslys-pakken"
       capacity={{ level: 2, label: "et helt lokale" }}
       bullets={[
         "4× LED uplight — vasker vægge og hjørner i farvet lys",

@@ -29,6 +29,7 @@ export default function BryllupspakkePage() {
       image="/images/product-lowfog.webp"
       imageAlt="Bryllupspakke med højtalere, mikrofon, lys og low fog"
       productId="pakke_bryllup"
+      faqPhrase="bryllupspakken"
       capacity={{ level: 3, label: "op til 100 pers." }}
       bullets={[
         '2× EV 12" højtalere på stativer — taler under middagen, fest bagefter',

@@ -12,3 +12,8 @@ Disallow: /accounting
 Disallow: /book/tak
 
 Sitemap: https://lejhojtaler.dk/sitemap.xml
+
+# Svarmaskinerne (ChatGPT-søgning, Perplexity, Claude) leder efter llms.txt:
+# samme sider som sitemap'et, men med priser og betydning i klartekst.
+# Genereres af scripts/generate-llms-txt.py ved hver bygning.
+# https://lejhojtaler.dk/llms.txt

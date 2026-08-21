@@ -28,6 +28,7 @@ export default function MackieThumpGoPage() {
       image="/images/product-thumpgo.webp"
       imageAlt="Mackie Thump GO batterihøjtaler til leje"
       productId="thumpgo"
+      faqPhrase="Mackie Thump GO"
       bullets={[
         '8" batterihøjtaler med Bluetooth',
         "Op til 12 timers batteri",

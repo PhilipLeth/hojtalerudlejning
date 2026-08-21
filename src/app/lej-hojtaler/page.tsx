@@ -5,6 +5,8 @@ import BundleGrid from "@/components/BundleGrid";
 import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER } from "@/lib/products";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import FaqSection from "@/components/FaqSection";
+import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { LocationKicker } from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
@@ -173,6 +175,8 @@ export default function LejHojtalerPage() {
             </div>
           </div>
         </section>
+
+        <FaqSection items={CATEGORY_FAQ["lej-hojtaler"]} />
 
         {/* Testimonials */}
         <Testimonials />

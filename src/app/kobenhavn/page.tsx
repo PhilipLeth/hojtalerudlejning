@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import FaqSection from "@/components/FaqSection";
+import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import SiteText from "@/components/SiteText";
 import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 
@@ -303,6 +305,8 @@ export default function KobenhavnPage() {
         </section>
 
         {/* Testimonials */}
+        <FaqSection items={CATEGORY_FAQ["kobenhavn"]} />
+
         <Testimonials />
 
         {/* Final CTA */}

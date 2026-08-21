@@ -29,6 +29,7 @@ export default function UdendorspakkePage() {
       image="/images/product-soundboks.webp"
       imageAlt="Udendørspakke med Soundboks 4, ekstra batteri og lyskæde"
       productId="pakke_udendors"
+      faqPhrase="udendørspakken"
       capacity={{ level: 2, label: "op til 50 pers." }}
       bullets={[
         "Soundboks 4 — kraftig bas, batteridrevet, Bluetooth",

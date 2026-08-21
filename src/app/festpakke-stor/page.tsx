@@ -29,6 +29,7 @@ export default function FestpakkeStorPage() {
       image="/images/product-pakke-fest-stor.webp"
       imageAlt="Stor festpakke med store EV højtalere og lys-pakke"
       productId="pakke_fest_stor"
+      faqPhrase="den store festpakke"
       bullets={[
         "2× EV 12\" aktive højtalere med Bluetooth (op til 100 pers.)",
         "Stativer kan tilkøbes (100 kr) — lyden op i øjenhøjde",

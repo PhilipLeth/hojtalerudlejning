@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import FaqSection from "@/components/FaqSection";
+import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 
@@ -146,6 +148,8 @@ export default function FestlysPage() {
         </section>
 
         {/* Testimonials */}
+        <FaqSection items={CATEGORY_FAQ["festlys"]} />
+
         <Testimonials />
 
         {/* Final CTA */}

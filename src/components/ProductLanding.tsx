@@ -3,10 +3,12 @@ import CapacityBadge from "@/components/CapacityBadge";
 import LivePrice from "@/components/LivePrice";
 import ProductVideo from "@/components/ProductVideo";
 import ProductYouTube from "@/components/ProductYouTube";
+import FaqSection, { type FaqItem } from "@/components/FaqSection";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
 import { PhoneText } from "@/components/PhoneLink";
+import { buildProductFaq } from "@/lib/productFaq";
 
 export interface ProductLandingProps {
   slug: string;
@@ -21,12 +23,32 @@ export interface ProductLandingProps {
   productId: string;
   bookLabel?: string;
   /**
-   * Sæt kun på produkter som de synlige anmeldelser rent faktisk handler om.
-   * Må ikke sættes blankt på hele kataloget — se prd.json → seo.reviews_policy.
+   * Stjerner i Product-schema. **Ingen side sætter den i dag, og det er med
+   * vilje** — de synlige testimonials er opdigtede, og markup bygget på dem er
+   * spammy structured markup hos Google og en falsk anmeldelse efter
+   * markedsføringsloven. structured-data.test.tsx fejler hvis proppen tages i
+   * brug igen.
+   *
+   * Mekanikken bliver stående, fordi den skal bruges den dag der ligger ægte
+   * Google-anmeldelser — men kun på de produkter anmeldelserne handler om.
+   * Se prd.json → seo.reviews_policy.
    */
   reviewed?: { ratingValue: string; reviewCount: string };
   /** Kapacitets-ikon: personfigurer + interval (fx 30-50 pers.) */
   capacity?: { level: 1 | 2 | 3; label: string };
+  /**
+   * Spørgsmål der kun giver mening på netop denne side. Resten — pris, hvad
+   * der er med, kapacitet, afhentning og lejeperiode — bygges automatisk af
+   * produktets egne tal i buildProductFaq, så de ikke kan drive fra prisen
+   * øverst på siden.
+   */
+  faqExtra?: FaqItem[];
+  /**
+   * Navnet midt i en sætning, når produktnavnet er et fællesnavn:
+   * "Hvad koster det at leje Stor højtalerpakke?" er ikke dansk, men
+   * "…at leje den store højtalerpakke?" er. Se buildProductFaq.
+   */
+  faqPhrase?: string;
   /** Optional extra section under product detail */
   children?: React.ReactNode;
 }
@@ -44,10 +66,13 @@ export default function ProductLanding({
   bookLabel,
   reviewed,
   capacity,
+  faqExtra,
+  faqPhrase,
   children,
 }: ProductLandingProps) {
   const bookHref = toBook(productId);
   const cta = bookLabel ?? `Book ${name} nu`;
+  const faq = buildProductFaq({ name, price, productId, phrase: faqPhrase, capacity: capacity?.label, extra: faqExtra });
 
   // Product-schema med pris, lagerstatus og leveringspris (rich results i Google)
   const productLd = {
@@ -193,6 +218,8 @@ export default function ProductLanding({
         <ProductYouTube productId={productId} name={name} />
 
         {children}
+
+        <FaqSection items={faq} title={`Ofte stillede spørgsmål om ${name}`} />
 
         <Testimonials />
 

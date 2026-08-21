@@ -35,6 +35,7 @@ export default function Page() {
       image="/images/product-lyseffekt.webp"
       imageAlt="Enkelt LED-festlys til leje i København"
       productId="lyseffekt"
+      faqPhrase="en enkelt lyseffekt"
       bullets={[
         "1 LED-par-lys (uden stativ) med automatiske farveeffekter",
         "Plug and play — tilslut strøm og den kører",

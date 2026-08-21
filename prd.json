@@ -1578,47 +1578,28 @@
       "LocalBusiness",
       "Product",
       "BreadcrumbList",
-      "FAQPage"
+      "FAQPage",
+      "Article"
     ],
-    "sitemap_paths": [
-      "/",
-      "/soundboks-4",
-      "/festpakke-lille",
-      "/festpakke-stor",
-      "/mackie-thump-go",
-      "/hojtalerpakke-lille",
-      "/hojtalerpakke-normal",
-      "/lej-hojtaler",
-      "/festlys",
-      "/festlyd",
-      "/lydudstyr",
-      "/soundboks-alternativ",
-      "/roegmaskine",
-      "/kobenhavn",
-      "/om",
-      "/lejevilkaar",
-      "/blog",
-      "/en",
-      "/discokugle",
-      "/lyskaeder",
-      "/av-udstyr",
-      "/projektor",
-      "/skaerm",
-      "/traadloes-mikrofon",
-      "/headset-mikrofon"
-    ],
+    "sitemap_paths": {
+      "note": "Listen her er historik, ikke facit. sitemap.xml genereres af scripts/generate-sitemap.py ud fra de sider, bygningen faktisk producerede — en håndholdt liste drev sidst fra 55 URL'er mod 89 sider.",
+      "generator": "scripts/generate-sitemap.py (kører i postbuild)"
+    },
     "structured_data": {
-      "Product": "Alle produktsider (via ProductLanding) + /en: pris, InStock, priceValidUntil, aggregateRating (5.0/4 anmeldelser, matcher synlige testimonials) og OfferShippingDetails (levering 495 kr, region København/DK)",
-      "LocalBusiness": "Forside: telefon, priceRange 95-1195 kr, logo, aggregateRating, adresse, åbningstider",
-      "øvrige": "FAQPage, BreadcrumbList, Article (blog), metadataBase sat så OG-billeder resolver korrekt"
+      "Product": "Alle produktsider (via ProductLanding) + /en: pris, InStock, priceValidUntil og OfferShippingDetails (levering 495 kr, region København/DK). INGEN aggregateRating — se reviews_policy.",
+      "LocalBusiness": "Forside, /en og /kobenhavn: telefon, CVR, adresse og åbningstider, bygget af site_settings via LocalBusinessJsonLd.",
+      "FAQPage": "59 sider (var 8): forsiden, 8 lejlighedssider, 30 produktsider via ProductLanding, 9 enkeltproduktsider, 10 kategorisider og /en. Én FAQPage pr. side — faq-markup.test.ts fejler ved dubletter.",
+      "Article": "Blogindlæg: author er Person (Frederik Scharling) med jobTitle, erfaring og link til /om, plus datePublished og dateModified.",
+      "BreadcrumbList": "Alle sider på nær forsiden, /en, /book, /kontakt og /erhverv."
     },
     "reviews_policy": {
-      "status": "Rating kun på anmeldte produkter",
-      "date": "2026-08-05",
-      "description": "Ejeren har bekræftet at de 4 testimonials er ægte (fra tidligere udlejningsvirksomhed). aggregateRating er derfor genindført — men KUN via ProductLandings reviewed-prop og kun på /hojtalerpakke-lille (2 anmeldelser) og /hojtalerpakke-normal (1), som anmeldelserne rent faktisk handler om. Ikke blankt på hele kataloget: en 5,0-vurdering på fx subwooferen, som ingen har lejet endnu, er præcis det Google slår ned på som spammy structured markup.",
-      "guard": "src/__tests__/structured-data.test.tsx fejler hvis aggregateRating eller Review-schema genindføres.",
-      "next": "Ægte Google-anmeldelser samles nu ind automatisk via review-mailen (sendes når booking markeres 'afleveret'). Når der er ægte anmeldelser af konkrete produkter, må aggregateRating/review tilføjes igen — kun for de produkter anmeldelserne handler om.",
-      "note_search_console": "Search Console-advarslerne 'Missing field aggregateRating/review' er valgfrie forbedringer, ikke fejl. Produktsiderne er fortsat valide og får rich results med pris, valuta, lagerstatus og leveringsomkostning."
+      "status": "Rating fjernet — modstridende oplysninger om testimonials",
+      "date": "2026-08-21",
+      "description": "aggregateRating (5,0) lå live på /hojtalerpakke-lille og /hojtalerpakke-normal og er nu fjernet. Grunden er, at projektets to kilder siger hver sit om de 4 testimonials i src/lib/i18n.ts, begge dateret 2026-08-05: denne fil har hidtil sagt, at ejeren bekræftede dem som ÆGTE (fra en tidligere udlejningsvirksomhed), mens src/__tests__/structured-data.test.tsx og sessionshukommelsen siger, at ejeren bekræftede dem som OPDIGTEDE. Testen var i øvrigt selvmodsigende: dens egen overskrift sagde, at markup'en var 'bevidst fjernet', mens dens assertion krævede, at mindst én produktside HAVDE rating.",
+      "beslutning": "Fjernet indtil Frederik siger klart, hvad der gælder. Er de opdigtede, er markup'en både spammy structured markup hos Google og en ulovlig falsk anmeldelse efter markedsføringsloven/Omnibus-direktivet. Er de ægte, koster fjernelsen kun en valgfri rich-result-udvidelse. Risikoen er asymmetrisk.",
+      "guard": "src/__tests__/structured-data.test.tsx kræver nu, at INGEN produktside sætter reviewed-proppen. Mekanikken i ProductLanding er bevaret til den dag, der er ægte anmeldelser.",
+      "aabent_spoergsmaal": "Er de 4 testimonials (Caroline V., Rune K., Mikkel L., Matthew H.) ægte? Svaret afgør både markup og om teksterne må blive stående synligt på sitet.",
+      "next": "Ægte Google-anmeldelser samles ind via review-mailen. Når de findes, må aggregateRating tilføjes igen — kun for de produkter anmeldelserne handler om."
     },
     "onpage_audit_2026_08": {
       "date": "2026-08-05",
@@ -1639,6 +1620,26 @@
       ],
       "loesning": "Ny src/lib/analytics.ts med trackPurchase(): initialiserer dataLayer hvis den mangler, sender GA4's standard purchase-event via gtag (virker uden GTM-opsætning), beholder booking_complete til eksisterende triggers, og deduplikerer på booking-id via sessionStorage. Afhentningsbetaling spores ved indsendelse; online betaling spores først på /book/tak når Stripe har bekræftet. 5 regressionstests.",
       "husk": "Marker 'purchase' som nøglebegivenhed i GA4 (Admin → Begivenheder), hvis det ikke sker automatisk. Data er 24-48 timer om at vise sig."
+    },
+    "aeo_2026_08": {
+      "date": "2026-08-21",
+      "hvorfor": "Svarmaskinerne (Googles AI Overviews, ChatGPT-søgning, Perplexity) citerer spørgsmål-svar og navngivne afsendere. Sitet havde stærk Product- og Breadcrumb-markup, men FAQ på kun 8 af 81 sider, ingen llms.txt og blogindlæg uden forfatter.",
+      "gjort": [
+        "FaqSection: fælles server-komponent der udsender både synlig <details>-FAQ og FAQPage-markup. Bevidst uden useState — svarmaskinernes crawlere kører ikke JavaScript.",
+        "productFaq.ts bygger produktsidernes FAQ af kataloget (pris, contents, kapacitet), så svarene ikke kan modsige prisen på siden.",
+        "categoryFaq.ts: håndskrevne spørgsmål til de 10 kategorisider + /en, hvor spørgsmålet handler om valget mellem produkter.",
+        "Article-markup fik Person-forfatter (Frederik Scharling, 15 års erfaring, link til /om) og dateModified. Blogindlæg understøtter nu 'updated:' i frontmatter.",
+        "llms.txt genereres af scripts/generate-llms-txt.py ud fra out/: firmafakta fra LocalBusiness-markup, priser fra Product-markup, inddeling efter hvilken markup siden bærer. robots.txt henviser til den."
+      ],
+      "faktafejl_rettet": "Forsidens FAQ — som fodrede FAQPage-markup — påstod 695 kr for den store højtalerpakke (koster 495), at bæretasken var inkluderet (tilkøb, 95 kr), og at Holmen var adressen. På fem sider stod levering til 495 kr som 'vi sætter op og henter igen'; 495 kr er kun den ene vej, begge veje koster 795 kr. Alle rettet.",
+      "guards": [
+        "src/__tests__/faq-markup.test.ts: hvert beløb i et FAQ-svar skal findes i products.ts, 495 må ikke beskrives som begge veje, og ingen side må have to FAQPage-blokke.",
+        "src/__tests__/eeat.test.ts: forfatterens navn og erfaring skal have dækning på /om."
+      ],
+      "ikke_gjort": [
+        "Blogindlæggene har ikke FAQ — de har Article-markup, og en FAQ oveni ville være markup for markup'ens skyld.",
+        "/kontakt, /om, /lejevilkaar og /privatlivspolitik har ingen FAQ; de svarer ikke på købsspørgsmål."
+      ]
     }
   },
   "design": {
