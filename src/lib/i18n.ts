@@ -87,6 +87,8 @@ export const t = {
       pickupDesc2: "Mixere og lignende kan forespørges ved booking.",
       // Success page
       successTitle: "Booking modtaget!",
+      orderNumber: "Ordrenummer",
+      noNeedToRebook: "Din booking er registreret — du skal ikke sende den igen. Har du ikke fået mailen om et par minutter, så tjek spam eller ring til os.",
       successEmailSent: "Bekræftelse sendt til",
       successChecking: "Vi tjekker din booking nu",
       successCheckingDesc: "Du hører fra os inden for få minutter med bekræftelse og praktiske detaljer.",
@@ -263,6 +265,8 @@ export const t = {
       pickupDesc2: "Mixers and similar can be requested when booking.",
       // Success page
       successTitle: "Booking received!",
+      orderNumber: "Order number",
+      noNeedToRebook: "Your booking is registered — there is no need to submit it again. If the email hasn't arrived in a couple of minutes, check your spam folder or give us a call.",
       successEmailSent: "Confirmation sent to",
       successChecking: "We're reviewing your booking now",
       successCheckingDesc: "You'll hear from us within a few minutes with confirmation and practical details.",

@@ -488,6 +488,8 @@ export default function BookingFlow({
   }
   const [checkoutSecret, setCheckoutSecret] = useState<string | null>(null);
   const [done, setDone] = useState(false);
+  /** Ordrenummeret fra serveren — vises på kvitteringen, så kunden har noget at henvise til */
+  const [ordreNr, setOrdreNr] = useState<string>("");
   const [error, setError] = useState("");
 
   // Availability state — only checked for the selected dates (step 2).
@@ -825,6 +827,7 @@ export default function BookingFlow({
         throw new Error(s.bookingFailed);
       }
       const bookResult = await res.json().catch(() => ({}));
+      if (bookResult?.bookingId) setOrdreNr(String(bookResult.bookingId).replace("booking_", ""));
       // Subscribe to newsletter if checked
       if (newsletter && form.email) {
         fetch("/api/newsletter", {
@@ -1008,6 +1011,16 @@ export default function BookingFlow({
             <h2 className="text-3xl font-bold">{s.successTitle}</h2>
             <p className="mt-3 text-white/50">
               {s.successEmailSent} <strong className="text-white">{form.email}</strong>
+            </p>
+            {ordreNr && (
+              <p className="mt-2 text-sm text-white/40">
+                {s.orderNumber} <span className="font-mono text-white/70">{ordreNr}</span>
+              </p>
+            )}
+            {/* Den vigtigste linje på siden: kunder bestiller igen, fordi de er
+                i tvivl om, om det gik igennem */}
+            <p className="mt-4 rounded-xl bg-green-500/10 px-4 py-3 text-sm text-green-200/90">
+              {s.noNeedToRebook}
             </p>
           </div>
 
