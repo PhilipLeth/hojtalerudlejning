@@ -1042,6 +1042,36 @@
     "gendannelse": "Manuel og med vilje: hent filen i /admin/indstillinger og skriv de nøgler tilbage, der mangler. En automatisk gendannelses-knap ville kunne overskrive rigtige data med gamle ved et fejlklik.",
     "status": "Live 2026-08-18."
   },
+  "tilvalgstrinnet": {
+    "problem": "Trin 3 viste otte tilvalg OG seks krydssalgsprodukter åbne på én gang — fjorten valg på én skærm, som ingen læser. Kørsel, det eneste spørgsmål kunden faktisk skal svare på, lå nedenunder det hele. Og havde man kun ét produkt, kunne det ikke fjernes fra kurven: krydset fandtes kun på de EKSTRA varer, så et forkert produktvalg krævede en genindlæsning.",
+    "loesning_2026_08_22": {
+      "raekkefoelge": "Kørsel først, så tilvalg, så søgefeltet, så resten af sortimentet. Det mest bindende valg står øverst.",
+      "fem_tilvalg": "TILVALG_RELEVANS i BookingFlow.tsx: lys, røg, stativer, subwoofer, mikrofon vises; resten (lyseffekt, batteri, taske) ligger bag »Vis alle tilvalg (N mere)«. Et valgt tilvalg bliver stående, også når listen er foldet sammen, og en søgning viser altid alt.",
+      "krydssalg": "Skåret fra seks til tre produkter. Tre er nok til at vise, at der findes mere; seks var en liste til.",
+      "kurven": "Hovedproduktet står nu øverst i kurven med samme kryds som resten. Fjerner man det og kurven er tom, ryger man tilbage til produktvalget i stedet for at stå i en blindgyde. Kørsel bliver stående, fordi den hører til ordren og ikke til produktet."
+    },
+    "status": "Live 2026-08-22."
+  },
+  "kvitteringen": {
+    "problem": "Efter en gennemført booking stod URL'en stadig på /?product=thumpgo#book. Kunden kunne ikke opdatere siden (så røg han tilbage i bookingflowet), ikke gemme et bogmærke, ikke printe, og intet sted stod der, at bekræftelsen først kommer, når en medarbejder har set ordren — så kvitteringen blev læst som en endelig ordrebekræftelse.",
+    "loesning_2026_08_22": {
+      "url": "Ved gennemført booking skiftes URL'en med replaceState til /?kvittering=ORDRENR. Kvitteringen gemmes samtidig i kundens egen browser, så et sideskift, en opdatering eller et bogmærke viser den igen i stedet for et tomt flow.",
+      "print": "Knappen »Print kvittering« med print-CSS, der skjuler resten af siden og tvinger sort på hvidt — sitet er mørkt, og en kvittering trykt hvid-på-sort er ulæselig og tømmer en blækpatron.",
+      "forbehold": "»Dette er ikke din endelige ordrebekræftelse. En medarbejder gennemgår bestillingen, og du får den endelige bekræftelse på mail.« Står både på kvitteringen efter købet og på den genskabte side.",
+      "ny_booking": "Den genskabte kvittering har et »Lej noget mere«-link, så bogmærket ikke spærrer for en ny ordre."
+    },
+    "status": "Live 2026-08-22."
+  },
+  "nedbrud_paa_kvitteringen": {
+    "fundet": "2026-08-22 via fejlopsamlingen, som havde kørt i et døgn. Otte rapporter: »Uncaught ReferenceError: pickupAddress is not defined« fra Chrome/Windows, Chrome/Mac og Safari/iOS, på flere sider.",
+    "fejlen": "BookingFlow brugte pickupAddress på kvitteringsskærmen (linje 1070), men hentede den aldrig i hovedkomponenten — kun i to underkomponenter. Resultat: kunden trykkede »send booking«, ordren blev gemt i KV, mailen blev sendt, og så kastede React en ReferenceError i stedet for at vise bekræftelsen. Kunden så et brud og troede, det var mislykkedes. Det forklarer både »jeg kan ikke booke online« og dobbeltbestillingerne.",
+    "hvorfor_den_slap_igennem": "TypeScript flaggede den som TS2304 hele tiden, men next.config.ts har ignoreBuildErrors: true, så byggeriet sagde god for den. Testene rørte aldrig kvitteringsskærmen.",
+    "rettet": "pickupAddress hentes nu i hovedkomponenten. To nye tests: en der gennemfører en booking og kræver at kvitteringen vises med adresse og ordrenummer, og src/__tests__/typefejl.test.ts, som kører tsc og fejler på enhver TS2304 i klientkoden — den kategori er ALTID en ægte fejl. Verificeret ved at genindføre fejlen: vagten pegede på linjen.",
+    "ogsaa_rettet": "Ledighedssvaret parses nu defensivt. Under KV-nedbruddet 21. august svarede /api/availability uden inventory-feltet, og klienten kastede »Cannot read properties of undefined (reading 'soundboks')« midt i kundens datovalg — seks af de fjorten rapporter.",
+    "flervare_ordrer": "Testet: kurven med to produkter sender begge med i payload'en, og serverens prisberegning tager imod seks varer på én ordre (Stripe-session oprettet uden fejl).",
+    "laering": "Fejlopsamlingen betalte sig selv på under et døgn. Uden den ville vi stadig gætte — fejlen var usynlig i logs, i tests og for os selv, fordi den kun rammer efter et gennemført køb.",
+    "status": "Live 2026-08-22."
+  },
   "kv_kvote_og_dubletter": {
     "nedbrud_2026_08_21": "/api/availability svarede 500 til ALLE besøgende. Årsag: endepunktet lavede to KV list-opslag pr. besøg (bookinger + blokerede datoer) plus et get pr. booking, og Cloudflares gratis KV tillader 1.000 list-operationer i døgnet. Cirka 500 besøg brugte dagens kvote, og derefter kunne ingen se ledighed. Fejlen var usynlig for os, fordi BookingFlow fangede den i et tomt catch — den blev først fundet, da vi undersøgte hvorfor kunder bestilte flere gange.",
     "loesning": "functions/api/_lib/bookingIndex.ts henter alle bookinger og blokerede datoer ÉN gang og lægger dem i kantens cache i fem minutter. Alle besøg deler kopien uanset hvilke datoer de spørger om, fordi den indeholder alt og filtreres i hukommelsen. Værste fald: ~576 list-opslag i døgnet mod 1.000 tilladte. book.ts og bookings-update.ts rydder cachen ved skrivning, så en ny booking eller en annullering slår igennem straks.",
@@ -1991,7 +2021,7 @@
     {
       "id": "dba-boost-connect",
       "title": "DBA: opret produkter via Boost Connect feed",
-      "description": "Mål: produkter fra kataloget skal være synlige som DBA-annoncer. Fremgangsmåde: 1) Log ind på boost.dba.dk med info@lejhojtaler.dk 2) Aktivér Boost Connect 3) Indsæt https://lejhojtaler.dk/api/feeds/products?format=xml 4) Verificér at Soundboks, Thump GO, party, festival, lys, røg m.fl. er synlige 5) Sæt kanal-status Live i /admin/kanaler. Ingen mail til DBA nødvendig hvis selvbetjening virker.",
+      "description": "Mål: produkter fra kataloget skal være synlige som DBA-annoncer. Fremgangsmåde: 1) Log ind på boost.dba.dk med info@lejhojtaler.dk 2) Aktivér Boost Connect 3) Indsæt https://lejhojtaler.dk/api/feeds/products?format=xml 4) Verificér at Soundboks, Thump GO, party, festival, lys, røg m.fl. er synlige 5) Sæt kanal-status Live i /admin/kanaler. Ingen mail til DBA nødvendig hvis selvbetjening virker. OPDATERET 2026-08-22: to ting rettet. (1) LOKATION — alle 37 annoncer stod i Højbjerg. Feedet sender ingen lokation overhovedet (ingen zip/city/location-felter i XML'en), og CVR står på København, så Boost tager adressen fra kontoprofilen. Kan kun rettes ved login på boost.dba.dk; ligger hos Frederik. Spørg samtidig DBA hvilket feltnavn Boost Connect læser postnummer fra, så det kan bindes til vores egne data. (2) UDVALG — XML-feedet er skåret fra 37 til 10 via DBA_FEED_IDS i functions/api/_lib/channels.ts. Boost opretter én annonce pr. item, og bæretaske, stativer og ekstra batteri er tilvalg, ikke selvstændige annoncer. De ti: soundboks, festival, party, thumpgo, pakke_fest_stor, pakke_fest_lille, karaoke, lys, rog, discokugle. VIGTIGT: kun format=xml er filtreret — csv/facebook/json leverer stadig hele kataloget til Meta. Det holder kun så længe DBA er eneste XML-forbruger; GulogGratis fik samme URL, men har aldrig synket noget. dbaSelection falder tilbage på hele kataloget hvis intet id matcher, fordi et tomt feed læses af Boost som 'fjern alle annoncer'.",
       "priority": "high",
       "status": "pending"
     },

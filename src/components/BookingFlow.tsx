@@ -392,6 +392,132 @@ function LightBar() {
 
 /* ───── Component ───── */
 
+interface KvitteringData {
+  nr: string;
+  oprettet: string;
+  navn: string;
+  email: string;
+  telefon: string;
+  periode: string;
+  sted: string;
+  linjer: Array<{ label: string; value: string }>;
+  total: number;
+  betaling: "online" | "pickup";
+}
+
+const KVITTERING_NØGLE = "booking_kvittering_";
+
+/**
+ * Rækkefølgen tilvalgene vises i — de fem første er dem, folk faktisk tilføjer
+ * til en fest. Resten er ikke væk, men foldet sammen: en liste på otte plus
+ * seks krydssalg bliver ikke læst, den bliver scrollet forbi.
+ */
+const TILVALG_RELEVANS = ["lys", "rog", "stativer", "subwoofer", "mikrofon", "lyseffekt", "batteri", "taske"];
+const ANTAL_SYNLIGE_TILVALG = 5;
+
+
+/**
+ * Print af kvitteringen.
+ *
+ * Sitet er mørkt; en kvittering trykt hvid-på-sort er ulæselig og tømmer en
+ * blækpatron. Derfor skjules alt andet, og kvitteringen sættes til sort på
+ * hvidt, mens den er på papir.
+ */
+const PRINT_CSS = `
+@media print {
+  body * { visibility: hidden !important; }
+  #kvittering, #kvittering * { visibility: visible !important; }
+  #kvittering {
+    position: absolute !important; left: 0; top: 0; width: 100%;
+    max-width: none !important; padding: 0 !important;
+    color: #111 !important; background: #fff !important;
+  }
+  #kvittering * { color: #111 !important; background: transparent !important; border-color: #ccc !important; }
+  #kvittering img, .no-print { display: none !important; }
+}
+`;
+
+/**
+ * Kvitteringen genskabt fra det, der blev gemt i browseren — det man ser, hvis
+ * man opdaterer siden eller vender tilbage til bogmærket.
+ */
+function Kvitteringsside({
+  data,
+  locale,
+  s,
+}: {
+  data: KvitteringData;
+  locale: "da" | "en";
+  /** Oversættelserne, som resten af flowet bruger dem — dansk eller engelsk */
+  s: (typeof t)["da"]["booking"] | (typeof t)["en"]["booking"];
+}) {
+  const dato = new Date(data.oprettet).toLocaleString(locale === "en" ? "en-GB" : "da-DK", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return (
+    <section className="relative z-20 mx-auto max-w-lg px-4 py-16">
+      <div id="kvittering">
+        <style>{PRINT_CSS}</style>
+        <h2 className="text-2xl font-bold">{s.successTitle}</h2>
+        <p className="mt-1 text-sm text-white/50">
+          {s.orderNumber} <span className="font-mono text-white/80">{data.nr}</span> · {dato}
+        </p>
+
+        <p className="mt-4 rounded-xl bg-amber-500/10 px-4 py-3 text-sm text-amber-200/90">
+          <strong>{s.notFinalTitle}</strong> {s.notFinalBody}
+        </p>
+
+        <div className="glass mt-5 rounded-2xl p-5 text-sm">
+          <div className="text-white/70">{data.periode}</div>
+          <div className="mt-1 text-white/70">{data.sted}</div>
+          <div className="mt-1 text-white/70">
+            {data.navn} &middot; {data.telefon} &middot; {data.email}
+          </div>
+
+          <div className="mt-4 space-y-1.5 border-t border-white/10 pt-3">
+            {data.linjer.map((l, i) => (
+              <div key={i} className="flex justify-between">
+                <span className="text-white/50">{l.label}</span>
+                <span className="text-white/70">{l.value}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
+            <span>{s.total}</span>
+            <span className="text-brand-400">{data.total} kr</span>
+          </div>
+          <p className="mt-1 text-xs text-white/40">
+            {data.betaling === "online" ? s.paidOnlineNote : s.payAtPickupNote}
+          </p>
+        </div>
+
+        <div className="no-print mt-5 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white/60 transition hover:border-white/30 hover:text-white"
+          >
+            {s.printReceipt}
+          </button>
+          {/* Bogmærket må ikke spærre for at leje igen */}
+          <a
+            href={locale === "en" ? "/en" : "/"}
+            className="rounded-xl px-4 py-2 text-sm text-white/40 underline underline-offset-2 transition hover:text-white/70"
+          >
+            {s.newBooking}
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function BookingFlow({
   locale = "da",
   variant = "inline",
@@ -436,7 +562,13 @@ export default function BookingFlow({
 
   const [step, setStep] = useState(1);
   const [addonSearch, setAddonSearch] = useState("");
+  /** Er hele tilvalgslisten foldet ud? Som udgangspunkt vises kun de fem øverste */
+  const [visAlleTilvalg, setVisAlleTilvalg] = useState(false);
   const [speaker, setSpeaker] = useState<string | null>(null);
+  // Afhentningsadressen bruges på kvitteringen. Den manglede her, så hele
+  // bekræftelsesskærmen kastede en ReferenceError, når kunden havde bestilt:
+  // ordren blev gemt og mailen sendt, men kunden så et brud og bestilte igen.
+  const { pickupAddress } = useSiteSettings();
   const [pickupDate, setPickupDate] = useState<Date | null>(null);
   const [returnDate, setReturnDate] = useState<Date | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
@@ -444,11 +576,35 @@ export default function BookingFlow({
   /** Adresse-fejlen vises først når man forsøger at gå videre */
   const [showDeliveryError, setShowDeliveryError] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", comment: "", company: "" });
+
+  /*
+   * Kunden skal ikke skrive navn, mail og telefon igen, hver gang han lejer.
+   * Oplysningerne bliver i HANS egen browser — de sendes ingen steder hen, og
+   * kommentaren gemmes ikke, fordi den hører til den enkelte fest.
+   */
+  useEffect(() => {
+    try {
+      const gemt = localStorage.getItem("booking_kontakt");
+      if (!gemt) return;
+      const k = JSON.parse(gemt) as Partial<typeof form>;
+      setForm((f) => ({
+        ...f,
+        name: k.name ?? f.name,
+        email: k.email ?? f.email,
+        phone: k.phone ?? f.phone,
+        company: k.company ?? f.company,
+      }));
+    } catch {
+      /* ugyldigt indhold ignoreres */
+    }
+  }, []);
   // GDPR: markedsføringssamtykke skal være aktivt tilvalg — må ikke være forudkrydset
   const [newsletter, setNewsletter] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [payMethod, setPayMethod] = useState<"pickup" | "online">("online");
   const [couponInput, setCouponInput] = useState("");
+  /** Rabatfeltet er foldet væk, indtil kunden selv siger, at han har en kode */
+  const [visRabat, setVisRabat] = useState(false);
   const [coupon, setCoupon] = useState<{ code: string; pct: number } | null>(null);
   const [couponError, setCouponError] = useState(false);
   const [couponChecking, setCouponChecking] = useState(false);
@@ -490,6 +646,13 @@ export default function BookingFlow({
   const [done, setDone] = useState(false);
   /** Ordrenummeret fra serveren — vises på kvitteringen, så kunden har noget at henvise til */
   const [ordreNr, setOrdreNr] = useState<string>("");
+  /**
+   * Kvitteringen som data. Gemmes i kundens egen browser og lægges i URL'en,
+   * så han kan opdatere siden, gemme et bogmærke og printe den — i stedet for
+   * at stå på /?product=thumpgo#book, hvor et enkelt tryk på Opdater sender
+   * ham tilbage i bookingflowet.
+   */
+  const [kvittering, setKvittering] = useState<KvitteringData | null>(null);
   const [error, setError] = useState("");
 
   // Availability state — only checked for the selected dates (step 2).
@@ -584,6 +747,25 @@ export default function BookingFlow({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [speakers, rentalProducts, addons, urlTick, speaker, selectedAddons, stashSelectionToCart]);
 
+  /**
+   * Kommer man tilbage til /?kvittering=NR — opdatering, bogmærke, en mail til
+   * sig selv — så skal kvitteringen stå der igen, ikke et tomt bookingflow.
+   */
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const nr = new URLSearchParams(window.location.search).get("kvittering");
+    if (!nr) return;
+    try {
+      const gemt = localStorage.getItem(KVITTERING_NØGLE + nr);
+      if (!gemt) return;
+      setKvittering(JSON.parse(gemt) as KvitteringData);
+      setOrdreNr(nr);
+      setDone(true);
+    } catch {
+      /* ugyldigt indhold: så viser vi bare bookingflowet */
+    }
+  }, []);
+
   // Fetch availability for selected date range (step 2 validation)
   const checkDateAvailability = useCallback(async (pickup: Date, ret: Date) => {
     setSoldOutMsg("");
@@ -591,7 +773,14 @@ export default function BookingFlow({
       const from = dateKey(pickup);
       const to = dateKey(ret);
       const r = await fetch(`/api/availability?from=${from}&to=${to}`);
-      const data: AvailabilityData = await r.json();
+      const rå = (await r.json()) as Partial<AvailabilityData> | null;
+      // Serveren kan svare uden tallene — fx når den kører på nødsvar. Så skal
+      // kalenderen vise ukendt belægning, ikke kaste midt i kundens datovalg.
+      const data: AvailabilityData = {
+        inventory: rå?.inventory ?? {},
+        booked: rå?.booked ?? {},
+        blocked_dates: rå?.blocked_dates ?? [],
+      };
       setAvailSelected(data);
 
       // Check if the selected product is available
@@ -766,6 +955,21 @@ export default function BookingFlow({
     setCartItems((prev) => prev.filter((_, i) => i !== idx));
   }
 
+  /**
+   * Fjern det produkt, man er i gang med.
+   *
+   * Kurven viste kun de EKSTRA varer, så havde man ét produkt, var der intet
+   * kryds — og ingen vej ud af et forkert valg uden at genindlæse siden.
+   * Er kurven tom bagefter, ryger man tilbage til produktvalget; ellers
+   * fortsætter man med resten af kurven.
+   */
+  function fjernHovedprodukt() {
+    setSpeaker(null);
+    // Tilvalg hører til produktet — kørsel gælder hele ordren og bliver
+    setSelectedAddons((prev) => prev.filter((id) => (DELIVERY_ADDON_IDS as readonly string[]).includes(id)));
+    if (cartItems.length === 0) setStep(1);
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     // Har kunden valgt kørsel, skal vi vide hvorhen — ellers bliver leveringen
@@ -827,7 +1031,50 @@ export default function BookingFlow({
         throw new Error(s.bookingFailed);
       }
       const bookResult = await res.json().catch(() => ({}));
-      if (bookResult?.bookingId) setOrdreNr(String(bookResult.bookingId).replace("booking_", ""));
+      if (bookResult?.bookingId) {
+        const nr = String(bookResult.bookingId).replace("booking_", "");
+        setOrdreNr(nr);
+
+        const data: KvitteringData = {
+          nr,
+          oprettet: new Date().toISOString(),
+          navn: form.name,
+          email: form.email,
+          telefon: form.phone,
+          periode: periodLabel,
+          sted: hasDelivery && deliveryAddress ? `${s.successDelivery} ${deliveryAddress}` : `${s.successPickup} ${pickupAddress}`,
+          linjer: [
+            ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
+            ...(isRentalOnly && rentalName ? [{ label: rentalName, value: `${speakerPrice} kr` }] : []),
+            ...cartItems.map((c) => ({ label: c.name, value: `${c.price} kr` })),
+            ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: a.label, value: `${a.price} kr` })),
+          ],
+          total,
+          betaling: payMethod,
+        };
+        setKvittering(data);
+        try {
+          localStorage.setItem(KVITTERING_NØGLE + nr, JSON.stringify(data));
+        } catch {
+          /* privat tilstand: så kan kvitteringen ikke hentes frem igen */
+        }
+        // URL'en skal pege på kvitteringen, ikke på produktet man kom fra
+        try {
+          window.history.replaceState(null, "", `${locale === "en" ? "/en" : "/"}?kvittering=${nr}`);
+        } catch {
+          /* ikke kritisk */
+        }
+      }
+      try {
+        // Først når bookingen er gået igennem — en halv udfyldt formular skal
+        // ikke kunne lægge sig til rette i browseren
+        localStorage.setItem(
+          "booking_kontakt",
+          JSON.stringify({ name: form.name, email: form.email, phone: form.phone, company: form.company }),
+        );
+      } catch {
+        /* privat tilstand: så husker vi ikke noget */
+      }
       // Subscribe to newsletter if checked
       if (newsletter && form.email) {
         fetch("/api/newsletter", {
@@ -978,6 +1225,15 @@ export default function BookingFlow({
     );
   }
 
+  /*
+   * Er siden hentet forfra på /?kvittering=NR, findes der ingen levende
+   * tilstand at bygge den rige visning af. Så viser vi kvitteringen fra det,
+   * der blev gemt — samme oplysninger, og den der kan printes.
+   */
+  if (done && kvittering && !speaker) {
+    return <Kvitteringsside data={kvittering} locale={locale} s={s} />;
+  }
+
   if (done) {
     const orderItems = [
       ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
@@ -1000,7 +1256,8 @@ export default function BookingFlow({
           </>
         )}
 
-        <div className={inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-6" : "relative z-20 mx-auto max-w-lg px-4 py-16"}>
+        <div id="kvittering" className={inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-6" : "relative z-20 mx-auto max-w-lg px-4 py-16"}>
+          <style>{PRINT_CSS}</style>
           {/* Success header */}
           <div className="text-center mb-8">
             <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20">
@@ -1022,6 +1279,17 @@ export default function BookingFlow({
             <p className="mt-4 rounded-xl bg-green-500/10 px-4 py-3 text-sm text-green-200/90">
               {s.noNeedToRebook}
             </p>
+            {/* Og lige så vigtigt: at det her IKKE er den endelige bekræftelse */}
+            <p className="mt-2 rounded-xl bg-amber-500/10 px-4 py-3 text-sm text-amber-200/90">
+              <strong>{s.notFinalTitle}</strong> {s.notFinalBody}
+            </p>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="no-print mt-4 rounded-xl border border-white/15 px-4 py-2 text-sm text-white/60 transition hover:border-white/30 hover:text-white"
+            >
+              {s.printReceipt}
+            </button>
           </div>
 
           {/* Status card */}
@@ -1429,30 +1697,44 @@ export default function BookingFlow({
             <h2 className="text-center text-2xl font-bold">{s.step3Title}</h2>
             <p className="text-center text-sm text-white/50">{s.step3Desc}</p>
 
-            {/* Simpel søgning: tilvalg + andet udstyr */}
-            <div className="relative">
-              <svg className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="7" /><path d="m21 21-4.35-4.35" />
-              </svg>
-              <input
-                type="search"
-                value={addonSearch}
-                onChange={(e) => setAddonSearch(e.target.value)}
-                placeholder={s.addonSearchPlaceholder}
-                className="w-full rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
-              />
-            </div>
+            <DeliveryPicker
+              locale={locale}
+              options={addons
+                .filter((a) => DELIVERY_IDS.includes(a.id))
+                .map((a) => ({ id: a.id, label: a.label, desc: a.desc, price: a.price }))}
+              value={deliveryChoice}
+              onSelect={(id) => {
+                setSelectedAddons((prev) => {
+                  const rest = prev.filter((x) => !DELIVERY_IDS.includes(x));
+                  return id ? [...rest, id] : rest;
+                });
+                if (!id) setDeliveryAddress("");
+              }}
+              address={deliveryAddress}
+              onAddressChange={setDeliveryAddress}
+              addressMissing={deliveryAddressMissing && showDeliveryError}
+            />
 
-            {/* Kompakte tilvalgs-rækker — passer på én skærm.
-                Kørsel har sit eget felt nederst og er ikke med her. */}
+            {/* Tilvalgene. Kun de fem mest relevante vises — resten kan foldes
+                ud. Før stod otte tilvalg og seks krydssalg åbne på én gang, og
+                så holder man op med at læse. Kørsel står ovenfor, fordi det er
+                det spørgsmål kunden faktisk skal tage stilling til. */}
             <div className="space-y-2">
-              {visibleAddons
-                .filter((a) => !DELIVERY_IDS.includes(a.id))
-                .filter((a) => {
-                  const q = addonSearch.trim().toLowerCase();
-                  if (!q) return true;
-                  return a.label.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q);
-                })
+              {(() => {
+                const q = addonSearch.trim().toLowerCase();
+                const rang = (id: string) => {
+                  const i = TILVALG_RELEVANS.indexOf(id);
+                  return i === -1 ? TILVALG_RELEVANS.length : i;
+                };
+                const alle = visibleAddons
+                  .filter((a) => !DELIVERY_IDS.includes(a.id))
+                  .filter((a) => !q || a.label.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q))
+                  .sort((a, b) => rang(a.id) - rang(b.id));
+                // Et valgt tilvalg skal blive stående, også når listen er foldet sammen
+                return q || visAlleTilvalg
+                  ? alle
+                  : alle.filter((a, i) => i < ANTAL_SYNLIGE_TILVALG || selectedAddons.includes(a.id));
+              })()
                 .map((a) => {
                   const selected = selectedAddons.includes(a.id);
                   return (
@@ -1486,25 +1768,38 @@ export default function BookingFlow({
                     </div>
                   );
                 })}
+
+              {/* Resten er ét tryk væk — ikke skjult, bare ikke i vejen */}
+              {(() => {
+                const antalSkjulte =
+                  visibleAddons.filter((a) => !DELIVERY_IDS.includes(a.id)).length - ANTAL_SYNLIGE_TILVALG;
+                if (visAlleTilvalg || addonSearch.trim() || antalSkjulte <= 0) return null;
+                return (
+                  <button
+                    type="button"
+                    onClick={() => setVisAlleTilvalg(true)}
+                    className="w-full rounded-xl border border-dashed border-white/10 py-2 text-xs text-white/40 transition hover:border-white/25 hover:text-white/70"
+                  >
+                    {locale === "en" ? `Show all add-ons (${antalSkjulte} more)` : `Vis alle tilvalg (${antalSkjulte} mere)`}
+                  </button>
+                );
+              })()}
             </div>
 
-            <DeliveryPicker
-              locale={locale}
-              options={addons
-                .filter((a) => DELIVERY_IDS.includes(a.id))
-                .map((a) => ({ id: a.id, label: a.label, desc: a.desc, price: a.price }))}
-              value={deliveryChoice}
-              onSelect={(id) => {
-                setSelectedAddons((prev) => {
-                  const rest = prev.filter((x) => !DELIVERY_IDS.includes(x));
-                  return id ? [...rest, id] : rest;
-                });
-                if (!id) setDeliveryAddress("");
-              }}
-              address={deliveryAddress}
-              onAddressChange={setDeliveryAddress}
-              addressMissing={deliveryAddressMissing && showDeliveryError}
-            />
+            {/* Søgningen finder resten af sortimentet — den hører hjemme
+                efter de relevante tilvalg, ikke før dem */}
+            <div className="relative">
+              <svg className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="7" /><path d="m21 21-4.35-4.35" />
+              </svg>
+              <input
+                type="search"
+                value={addonSearch}
+                onChange={(e) => setAddonSearch(e.target.value)}
+                placeholder={s.addonSearchPlaceholder}
+                className="w-full rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              />
+            </div>
 
             {/* Resten af sortimentet — vises ALTID, ikke kun når man søger.
                 Tidligere skulle man gætte sig til at skrive i søgefeltet for at
@@ -1535,7 +1830,8 @@ export default function BookingFlow({
                     const rank = (x: typeof a) => (x.category === currentCategory ? 0 : 1);
                     return rank(a) - rank(b);
                   });
-              const shown = matches.slice(0, q ? 6 : 6);
+              // Tre er nok til at vise, at der findes mere — seks var en liste til
+              const shown = matches.slice(0, q ? 6 : 3);
               if (!shown.length) return null;
 
               return (
@@ -1566,10 +1862,28 @@ export default function BookingFlow({
               );
             })()}
 
-            {/* Cart: already added items */}
-            {cartItems.length > 0 && (
+            {/* Kurven — hovedproduktet står øverst og kan fjernes som resten */}
+            {(cartItems.length > 0 || !!speaker) && (
               <div className="glass rounded-xl p-4">
-                <p className="text-xs text-white/40 mb-2">{locale === "en" ? "Already in cart:" : "Allerede i kurven:"}</p>
+                <p className="text-xs text-white/40 mb-2">{locale === "en" ? "In your cart:" : "I din kurv:"}</p>
+                {!!speaker && (
+                  <div className="flex items-center justify-between text-sm py-1">
+                    <span className="text-white/70">
+                      {isEffectsOnly ? effectsLabel : isRentalOnly ? rentalName : selectedSpeaker?.name}
+                    </span>
+                    <span className="flex items-center gap-3">
+                      <span className="text-brand-400">{speakerPrice} kr</span>
+                      <button
+                        type="button"
+                        onClick={fjernHovedprodukt}
+                        aria-label={locale === "en" ? "Remove" : "Fjern"}
+                        className="text-white/30 hover:text-red-400 text-xs"
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  </div>
+                )}
                 {cartItems.map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between text-sm py-1">
                     <span className="text-white/70">{item.name}</span>
@@ -1817,10 +2131,24 @@ export default function BookingFlow({
                       ✕
                     </button>
                   </div>
+                ) : !visRabat ? (
+                  /*
+                   * Et åbent rabatfelt sender folk ud at lede efter en kode, de
+                   * ikke har — og nogle vender ikke tilbage. Derfor en lille
+                   * linje, der kun betyder noget for dem, der HAR en kode.
+                   */
+                  <button
+                    type="button"
+                    onClick={() => setVisRabat(true)}
+                    className="text-xs text-white/30 underline underline-offset-2 transition hover:text-white/60"
+                  >
+                    {s.haveDiscountCode}
+                  </button>
                 ) : (
                   <div className="flex gap-2">
                     <input
                       type="text"
+                      autoFocus
                       value={couponInput}
                       onChange={(e) => { setCouponInput(e.target.value); setCouponError(false); }}
                       onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyCoupon(); } }}

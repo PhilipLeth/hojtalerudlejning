@@ -178,6 +178,10 @@ describe("BookingFlow - Step 3: Addons", () => {
       expect(screen.getByText("Lys-pakke")).toBeInTheDocument();
       expect(screen.getByText("Røgmaskine")).toBeInTheDocument();
       expect(screen.getByText("Højtalerstativer")).toBeInTheDocument();
+      // Bæretasken ligger nederst i relevansrækkefølgen og er foldet væk, indtil
+      // man beder om hele listen — se tilvalgstrin.test.tsx
+      expect(screen.queryByText("Bæretaske")).not.toBeInTheDocument();
+      fireEvent.click(screen.getByText(/Vis alle tilvalg/));
       expect(screen.getByText("Bæretaske")).toBeInTheDocument();
       // Kørslen har sit eget felt med de tre valgmuligheder — ikke bare endnu
       // en tilvalgs-række
