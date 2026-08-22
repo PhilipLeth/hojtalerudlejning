@@ -407,6 +407,14 @@ interface KvitteringData {
 
 const KVITTERING_NØGLE = "booking_kvittering_";
 
+/**
+ * Rækkefølgen tilvalgene vises i — de fem første er dem, folk faktisk tilføjer
+ * til en fest. Resten er ikke væk, men foldet sammen: en liste på otte plus
+ * seks krydssalg bliver ikke læst, den bliver scrollet forbi.
+ */
+const TILVALG_RELEVANS = ["lys", "rog", "stativer", "subwoofer", "mikrofon", "lyseffekt", "batteri", "taske"];
+const ANTAL_SYNLIGE_TILVALG = 5;
+
 
 /**
  * Print af kvitteringen.
@@ -554,6 +562,8 @@ export default function BookingFlow({
 
   const [step, setStep] = useState(1);
   const [addonSearch, setAddonSearch] = useState("");
+  /** Er hele tilvalgslisten foldet ud? Som udgangspunkt vises kun de fem øverste */
+  const [visAlleTilvalg, setVisAlleTilvalg] = useState(false);
   const [speaker, setSpeaker] = useState<string | null>(null);
   // Afhentningsadressen bruges på kvitteringen. Den manglede her, så hele
   // bekræftelsesskærmen kastede en ReferenceError, når kunden havde bestilt:
@@ -943,6 +953,21 @@ export default function BookingFlow({
 
   function removeCartItem(idx: number) {
     setCartItems((prev) => prev.filter((_, i) => i !== idx));
+  }
+
+  /**
+   * Fjern det produkt, man er i gang med.
+   *
+   * Kurven viste kun de EKSTRA varer, så havde man ét produkt, var der intet
+   * kryds — og ingen vej ud af et forkert valg uden at genindlæse siden.
+   * Er kurven tom bagefter, ryger man tilbage til produktvalget; ellers
+   * fortsætter man med resten af kurven.
+   */
+  function fjernHovedprodukt() {
+    setSpeaker(null);
+    // Tilvalg hører til produktet — kørsel gælder hele ordren og bliver
+    setSelectedAddons((prev) => prev.filter((id) => (DELIVERY_ADDON_IDS as readonly string[]).includes(id)));
+    if (cartItems.length === 0) setStep(1);
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -1672,30 +1697,44 @@ export default function BookingFlow({
             <h2 className="text-center text-2xl font-bold">{s.step3Title}</h2>
             <p className="text-center text-sm text-white/50">{s.step3Desc}</p>
 
-            {/* Simpel søgning: tilvalg + andet udstyr */}
-            <div className="relative">
-              <svg className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="7" /><path d="m21 21-4.35-4.35" />
-              </svg>
-              <input
-                type="search"
-                value={addonSearch}
-                onChange={(e) => setAddonSearch(e.target.value)}
-                placeholder={s.addonSearchPlaceholder}
-                className="w-full rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
-              />
-            </div>
+            <DeliveryPicker
+              locale={locale}
+              options={addons
+                .filter((a) => DELIVERY_IDS.includes(a.id))
+                .map((a) => ({ id: a.id, label: a.label, desc: a.desc, price: a.price }))}
+              value={deliveryChoice}
+              onSelect={(id) => {
+                setSelectedAddons((prev) => {
+                  const rest = prev.filter((x) => !DELIVERY_IDS.includes(x));
+                  return id ? [...rest, id] : rest;
+                });
+                if (!id) setDeliveryAddress("");
+              }}
+              address={deliveryAddress}
+              onAddressChange={setDeliveryAddress}
+              addressMissing={deliveryAddressMissing && showDeliveryError}
+            />
 
-            {/* Kompakte tilvalgs-rækker — passer på én skærm.
-                Kørsel har sit eget felt nederst og er ikke med her. */}
+            {/* Tilvalgene. Kun de fem mest relevante vises — resten kan foldes
+                ud. Før stod otte tilvalg og seks krydssalg åbne på én gang, og
+                så holder man op med at læse. Kørsel står ovenfor, fordi det er
+                det spørgsmål kunden faktisk skal tage stilling til. */}
             <div className="space-y-2">
-              {visibleAddons
-                .filter((a) => !DELIVERY_IDS.includes(a.id))
-                .filter((a) => {
-                  const q = addonSearch.trim().toLowerCase();
-                  if (!q) return true;
-                  return a.label.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q);
-                })
+              {(() => {
+                const q = addonSearch.trim().toLowerCase();
+                const rang = (id: string) => {
+                  const i = TILVALG_RELEVANS.indexOf(id);
+                  return i === -1 ? TILVALG_RELEVANS.length : i;
+                };
+                const alle = visibleAddons
+                  .filter((a) => !DELIVERY_IDS.includes(a.id))
+                  .filter((a) => !q || a.label.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q))
+                  .sort((a, b) => rang(a.id) - rang(b.id));
+                // Et valgt tilvalg skal blive stående, også når listen er foldet sammen
+                return q || visAlleTilvalg
+                  ? alle
+                  : alle.filter((a, i) => i < ANTAL_SYNLIGE_TILVALG || selectedAddons.includes(a.id));
+              })()
                 .map((a) => {
                   const selected = selectedAddons.includes(a.id);
                   return (
@@ -1729,25 +1768,38 @@ export default function BookingFlow({
                     </div>
                   );
                 })}
+
+              {/* Resten er ét tryk væk — ikke skjult, bare ikke i vejen */}
+              {(() => {
+                const antalSkjulte =
+                  visibleAddons.filter((a) => !DELIVERY_IDS.includes(a.id)).length - ANTAL_SYNLIGE_TILVALG;
+                if (visAlleTilvalg || addonSearch.trim() || antalSkjulte <= 0) return null;
+                return (
+                  <button
+                    type="button"
+                    onClick={() => setVisAlleTilvalg(true)}
+                    className="w-full rounded-xl border border-dashed border-white/10 py-2 text-xs text-white/40 transition hover:border-white/25 hover:text-white/70"
+                  >
+                    {locale === "en" ? `Show all add-ons (${antalSkjulte} more)` : `Vis alle tilvalg (${antalSkjulte} mere)`}
+                  </button>
+                );
+              })()}
             </div>
 
-            <DeliveryPicker
-              locale={locale}
-              options={addons
-                .filter((a) => DELIVERY_IDS.includes(a.id))
-                .map((a) => ({ id: a.id, label: a.label, desc: a.desc, price: a.price }))}
-              value={deliveryChoice}
-              onSelect={(id) => {
-                setSelectedAddons((prev) => {
-                  const rest = prev.filter((x) => !DELIVERY_IDS.includes(x));
-                  return id ? [...rest, id] : rest;
-                });
-                if (!id) setDeliveryAddress("");
-              }}
-              address={deliveryAddress}
-              onAddressChange={setDeliveryAddress}
-              addressMissing={deliveryAddressMissing && showDeliveryError}
-            />
+            {/* Søgningen finder resten af sortimentet — den hører hjemme
+                efter de relevante tilvalg, ikke før dem */}
+            <div className="relative">
+              <svg className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="7" /><path d="m21 21-4.35-4.35" />
+              </svg>
+              <input
+                type="search"
+                value={addonSearch}
+                onChange={(e) => setAddonSearch(e.target.value)}
+                placeholder={s.addonSearchPlaceholder}
+                className="w-full rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              />
+            </div>
 
             {/* Resten af sortimentet — vises ALTID, ikke kun når man søger.
                 Tidligere skulle man gætte sig til at skrive i søgefeltet for at
@@ -1778,7 +1830,8 @@ export default function BookingFlow({
                     const rank = (x: typeof a) => (x.category === currentCategory ? 0 : 1);
                     return rank(a) - rank(b);
                   });
-              const shown = matches.slice(0, q ? 6 : 6);
+              // Tre er nok til at vise, at der findes mere — seks var en liste til
+              const shown = matches.slice(0, q ? 6 : 3);
               if (!shown.length) return null;
 
               return (
@@ -1809,10 +1862,28 @@ export default function BookingFlow({
               );
             })()}
 
-            {/* Cart: already added items */}
-            {cartItems.length > 0 && (
+            {/* Kurven — hovedproduktet står øverst og kan fjernes som resten */}
+            {(cartItems.length > 0 || !!speaker) && (
               <div className="glass rounded-xl p-4">
-                <p className="text-xs text-white/40 mb-2">{locale === "en" ? "Already in cart:" : "Allerede i kurven:"}</p>
+                <p className="text-xs text-white/40 mb-2">{locale === "en" ? "In your cart:" : "I din kurv:"}</p>
+                {!!speaker && (
+                  <div className="flex items-center justify-between text-sm py-1">
+                    <span className="text-white/70">
+                      {isEffectsOnly ? effectsLabel : isRentalOnly ? rentalName : selectedSpeaker?.name}
+                    </span>
+                    <span className="flex items-center gap-3">
+                      <span className="text-brand-400">{speakerPrice} kr</span>
+                      <button
+                        type="button"
+                        onClick={fjernHovedprodukt}
+                        aria-label={locale === "en" ? "Remove" : "Fjern"}
+                        className="text-white/30 hover:text-red-400 text-xs"
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  </div>
+                )}
                 {cartItems.map((item, idx) => (
                   <div key={idx} className="flex items-center justify-between text-sm py-1">
                     <span className="text-white/70">{item.name}</span>

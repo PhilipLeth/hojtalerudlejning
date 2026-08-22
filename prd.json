@@ -1042,6 +1042,16 @@
     "gendannelse": "Manuel og med vilje: hent filen i /admin/indstillinger og skriv de nøgler tilbage, der mangler. En automatisk gendannelses-knap ville kunne overskrive rigtige data med gamle ved et fejlklik.",
     "status": "Live 2026-08-18."
   },
+  "tilvalgstrinnet": {
+    "problem": "Trin 3 viste otte tilvalg OG seks krydssalgsprodukter åbne på én gang — fjorten valg på én skærm, som ingen læser. Kørsel, det eneste spørgsmål kunden faktisk skal svare på, lå nedenunder det hele. Og havde man kun ét produkt, kunne det ikke fjernes fra kurven: krydset fandtes kun på de EKSTRA varer, så et forkert produktvalg krævede en genindlæsning.",
+    "loesning_2026_08_22": {
+      "raekkefoelge": "Kørsel først, så tilvalg, så søgefeltet, så resten af sortimentet. Det mest bindende valg står øverst.",
+      "fem_tilvalg": "TILVALG_RELEVANS i BookingFlow.tsx: lys, røg, stativer, subwoofer, mikrofon vises; resten (lyseffekt, batteri, taske) ligger bag »Vis alle tilvalg (N mere)«. Et valgt tilvalg bliver stående, også når listen er foldet sammen, og en søgning viser altid alt.",
+      "krydssalg": "Skåret fra seks til tre produkter. Tre er nok til at vise, at der findes mere; seks var en liste til.",
+      "kurven": "Hovedproduktet står nu øverst i kurven med samme kryds som resten. Fjerner man det og kurven er tom, ryger man tilbage til produktvalget i stedet for at stå i en blindgyde. Kørsel bliver stående, fordi den hører til ordren og ikke til produktet."
+    },
+    "status": "Live 2026-08-22."
+  },
   "kvitteringen": {
     "problem": "Efter en gennemført booking stod URL'en stadig på /?product=thumpgo#book. Kunden kunne ikke opdatere siden (så røg han tilbage i bookingflowet), ikke gemme et bogmærke, ikke printe, og intet sted stod der, at bekræftelsen først kommer, når en medarbejder har set ordren — så kvitteringen blev læst som en endelig ordrebekræftelse.",
     "loesning_2026_08_22": {
