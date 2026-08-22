@@ -392,6 +392,124 @@ function LightBar() {
 
 /* ───── Component ───── */
 
+interface KvitteringData {
+  nr: string;
+  oprettet: string;
+  navn: string;
+  email: string;
+  telefon: string;
+  periode: string;
+  sted: string;
+  linjer: Array<{ label: string; value: string }>;
+  total: number;
+  betaling: "online" | "pickup";
+}
+
+const KVITTERING_NØGLE = "booking_kvittering_";
+
+
+/**
+ * Print af kvitteringen.
+ *
+ * Sitet er mørkt; en kvittering trykt hvid-på-sort er ulæselig og tømmer en
+ * blækpatron. Derfor skjules alt andet, og kvitteringen sættes til sort på
+ * hvidt, mens den er på papir.
+ */
+const PRINT_CSS = `
+@media print {
+  body * { visibility: hidden !important; }
+  #kvittering, #kvittering * { visibility: visible !important; }
+  #kvittering {
+    position: absolute !important; left: 0; top: 0; width: 100%;
+    max-width: none !important; padding: 0 !important;
+    color: #111 !important; background: #fff !important;
+  }
+  #kvittering * { color: #111 !important; background: transparent !important; border-color: #ccc !important; }
+  #kvittering img, .no-print { display: none !important; }
+}
+`;
+
+/**
+ * Kvitteringen genskabt fra det, der blev gemt i browseren — det man ser, hvis
+ * man opdaterer siden eller vender tilbage til bogmærket.
+ */
+function Kvitteringsside({
+  data,
+  locale,
+  s,
+}: {
+  data: KvitteringData;
+  locale: "da" | "en";
+  /** Oversættelserne, som resten af flowet bruger dem — dansk eller engelsk */
+  s: (typeof t)["da"]["booking"] | (typeof t)["en"]["booking"];
+}) {
+  const dato = new Date(data.oprettet).toLocaleString(locale === "en" ? "en-GB" : "da-DK", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return (
+    <section className="relative z-20 mx-auto max-w-lg px-4 py-16">
+      <div id="kvittering">
+        <style>{PRINT_CSS}</style>
+        <h2 className="text-2xl font-bold">{s.successTitle}</h2>
+        <p className="mt-1 text-sm text-white/50">
+          {s.orderNumber} <span className="font-mono text-white/80">{data.nr}</span> · {dato}
+        </p>
+
+        <p className="mt-4 rounded-xl bg-amber-500/10 px-4 py-3 text-sm text-amber-200/90">
+          <strong>{s.notFinalTitle}</strong> {s.notFinalBody}
+        </p>
+
+        <div className="glass mt-5 rounded-2xl p-5 text-sm">
+          <div className="text-white/70">{data.periode}</div>
+          <div className="mt-1 text-white/70">{data.sted}</div>
+          <div className="mt-1 text-white/70">
+            {data.navn} &middot; {data.telefon} &middot; {data.email}
+          </div>
+
+          <div className="mt-4 space-y-1.5 border-t border-white/10 pt-3">
+            {data.linjer.map((l, i) => (
+              <div key={i} className="flex justify-between">
+                <span className="text-white/50">{l.label}</span>
+                <span className="text-white/70">{l.value}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
+            <span>{s.total}</span>
+            <span className="text-brand-400">{data.total} kr</span>
+          </div>
+          <p className="mt-1 text-xs text-white/40">
+            {data.betaling === "online" ? s.paidOnlineNote : s.payAtPickupNote}
+          </p>
+        </div>
+
+        <div className="no-print mt-5 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white/60 transition hover:border-white/30 hover:text-white"
+          >
+            {s.printReceipt}
+          </button>
+          {/* Bogmærket må ikke spærre for at leje igen */}
+          <a
+            href={locale === "en" ? "/en" : "/"}
+            className="rounded-xl px-4 py-2 text-sm text-white/40 underline underline-offset-2 transition hover:text-white/70"
+          >
+            {s.newBooking}
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function BookingFlow({
   locale = "da",
   variant = "inline",
@@ -518,6 +636,13 @@ export default function BookingFlow({
   const [done, setDone] = useState(false);
   /** Ordrenummeret fra serveren — vises på kvitteringen, så kunden har noget at henvise til */
   const [ordreNr, setOrdreNr] = useState<string>("");
+  /**
+   * Kvitteringen som data. Gemmes i kundens egen browser og lægges i URL'en,
+   * så han kan opdatere siden, gemme et bogmærke og printe den — i stedet for
+   * at stå på /?product=thumpgo#book, hvor et enkelt tryk på Opdater sender
+   * ham tilbage i bookingflowet.
+   */
+  const [kvittering, setKvittering] = useState<KvitteringData | null>(null);
   const [error, setError] = useState("");
 
   // Availability state — only checked for the selected dates (step 2).
@@ -611,6 +736,25 @@ export default function BookingFlow({
     console.log("[booking] Product not found yet, waiting:", product);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [speakers, rentalProducts, addons, urlTick, speaker, selectedAddons, stashSelectionToCart]);
+
+  /**
+   * Kommer man tilbage til /?kvittering=NR — opdatering, bogmærke, en mail til
+   * sig selv — så skal kvitteringen stå der igen, ikke et tomt bookingflow.
+   */
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const nr = new URLSearchParams(window.location.search).get("kvittering");
+    if (!nr) return;
+    try {
+      const gemt = localStorage.getItem(KVITTERING_NØGLE + nr);
+      if (!gemt) return;
+      setKvittering(JSON.parse(gemt) as KvitteringData);
+      setOrdreNr(nr);
+      setDone(true);
+    } catch {
+      /* ugyldigt indhold: så viser vi bare bookingflowet */
+    }
+  }, []);
 
   // Fetch availability for selected date range (step 2 validation)
   const checkDateAvailability = useCallback(async (pickup: Date, ret: Date) => {
@@ -862,7 +1006,40 @@ export default function BookingFlow({
         throw new Error(s.bookingFailed);
       }
       const bookResult = await res.json().catch(() => ({}));
-      if (bookResult?.bookingId) setOrdreNr(String(bookResult.bookingId).replace("booking_", ""));
+      if (bookResult?.bookingId) {
+        const nr = String(bookResult.bookingId).replace("booking_", "");
+        setOrdreNr(nr);
+
+        const data: KvitteringData = {
+          nr,
+          oprettet: new Date().toISOString(),
+          navn: form.name,
+          email: form.email,
+          telefon: form.phone,
+          periode: periodLabel,
+          sted: hasDelivery && deliveryAddress ? `${s.successDelivery} ${deliveryAddress}` : `${s.successPickup} ${pickupAddress}`,
+          linjer: [
+            ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
+            ...(isRentalOnly && rentalName ? [{ label: rentalName, value: `${speakerPrice} kr` }] : []),
+            ...cartItems.map((c) => ({ label: c.name, value: `${c.price} kr` })),
+            ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: a.label, value: `${a.price} kr` })),
+          ],
+          total,
+          betaling: payMethod,
+        };
+        setKvittering(data);
+        try {
+          localStorage.setItem(KVITTERING_NØGLE + nr, JSON.stringify(data));
+        } catch {
+          /* privat tilstand: så kan kvitteringen ikke hentes frem igen */
+        }
+        // URL'en skal pege på kvitteringen, ikke på produktet man kom fra
+        try {
+          window.history.replaceState(null, "", `${locale === "en" ? "/en" : "/"}?kvittering=${nr}`);
+        } catch {
+          /* ikke kritisk */
+        }
+      }
       try {
         // Først når bookingen er gået igennem — en halv udfyldt formular skal
         // ikke kunne lægge sig til rette i browseren
@@ -1023,6 +1200,15 @@ export default function BookingFlow({
     );
   }
 
+  /*
+   * Er siden hentet forfra på /?kvittering=NR, findes der ingen levende
+   * tilstand at bygge den rige visning af. Så viser vi kvitteringen fra det,
+   * der blev gemt — samme oplysninger, og den der kan printes.
+   */
+  if (done && kvittering && !speaker) {
+    return <Kvitteringsside data={kvittering} locale={locale} s={s} />;
+  }
+
   if (done) {
     const orderItems = [
       ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
@@ -1045,7 +1231,8 @@ export default function BookingFlow({
           </>
         )}
 
-        <div className={inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-6" : "relative z-20 mx-auto max-w-lg px-4 py-16"}>
+        <div id="kvittering" className={inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-6" : "relative z-20 mx-auto max-w-lg px-4 py-16"}>
+          <style>{PRINT_CSS}</style>
           {/* Success header */}
           <div className="text-center mb-8">
             <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20">
@@ -1067,6 +1254,17 @@ export default function BookingFlow({
             <p className="mt-4 rounded-xl bg-green-500/10 px-4 py-3 text-sm text-green-200/90">
               {s.noNeedToRebook}
             </p>
+            {/* Og lige så vigtigt: at det her IKKE er den endelige bekræftelse */}
+            <p className="mt-2 rounded-xl bg-amber-500/10 px-4 py-3 text-sm text-amber-200/90">
+              <strong>{s.notFinalTitle}</strong> {s.notFinalBody}
+            </p>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="no-print mt-4 rounded-xl border border-white/15 px-4 py-2 text-sm text-white/60 transition hover:border-white/30 hover:text-white"
+            >
+              {s.printReceipt}
+            </button>
           </div>
 
           {/* Status card */}

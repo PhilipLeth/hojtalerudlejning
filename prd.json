@@ -1042,6 +1042,16 @@
     "gendannelse": "Manuel og med vilje: hent filen i /admin/indstillinger og skriv de nøgler tilbage, der mangler. En automatisk gendannelses-knap ville kunne overskrive rigtige data med gamle ved et fejlklik.",
     "status": "Live 2026-08-18."
   },
+  "kvitteringen": {
+    "problem": "Efter en gennemført booking stod URL'en stadig på /?product=thumpgo#book. Kunden kunne ikke opdatere siden (så røg han tilbage i bookingflowet), ikke gemme et bogmærke, ikke printe, og intet sted stod der, at bekræftelsen først kommer, når en medarbejder har set ordren — så kvitteringen blev læst som en endelig ordrebekræftelse.",
+    "loesning_2026_08_22": {
+      "url": "Ved gennemført booking skiftes URL'en med replaceState til /?kvittering=ORDRENR. Kvitteringen gemmes samtidig i kundens egen browser, så et sideskift, en opdatering eller et bogmærke viser den igen i stedet for et tomt flow.",
+      "print": "Knappen »Print kvittering« med print-CSS, der skjuler resten af siden og tvinger sort på hvidt — sitet er mørkt, og en kvittering trykt hvid-på-sort er ulæselig og tømmer en blækpatron.",
+      "forbehold": "»Dette er ikke din endelige ordrebekræftelse. En medarbejder gennemgår bestillingen, og du får den endelige bekræftelse på mail.« Står både på kvitteringen efter købet og på den genskabte side.",
+      "ny_booking": "Den genskabte kvittering har et »Lej noget mere«-link, så bogmærket ikke spærrer for en ny ordre."
+    },
+    "status": "Live 2026-08-22."
+  },
   "nedbrud_paa_kvitteringen": {
     "fundet": "2026-08-22 via fejlopsamlingen, som havde kørt i et døgn. Otte rapporter: »Uncaught ReferenceError: pickupAddress is not defined« fra Chrome/Windows, Chrome/Mac og Safari/iOS, på flere sider.",
     "fejlen": "BookingFlow brugte pickupAddress på kvitteringsskærmen (linje 1070), men hentede den aldrig i hovedkomponenten — kun i to underkomponenter. Resultat: kunden trykkede »send booking«, ordren blev gemt i KV, mailen blev sendt, og så kastede React en ReferenceError i stedet for at vise bekræftelsen. Kunden så et brud og troede, det var mislykkedes. Det forklarer både »jeg kan ikke booke online« og dobbeltbestillingerne.",

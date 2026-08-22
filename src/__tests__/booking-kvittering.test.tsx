@@ -16,6 +16,8 @@ let sendtPayload: any = null;
 
 beforeEach(() => {
   sendtPayload = null;
+  // Kvitteringen lægger sig i URL'en; uden det her starter næste test på den
+  window.history.replaceState(null, "", "/");
   (global.fetch as any) = vi.fn((url: string, init?: RequestInit) => {
     const u = String(url);
     if (u.includes("/api/availability")) {
@@ -96,6 +98,63 @@ describe("Kvitteringen efter en booking", () => {
     await waitFor(() => expect(screen.getByText("Booking modtaget!")).toBeInTheDocument(), { timeout: 4000 });
     expect(screen.getByText("1787347874016_kvc5a0")).toBeInTheDocument();
     expect(screen.getByText(/du skal ikke sende den igen/i)).toBeInTheDocument();
+  }, 20000);
+});
+
+describe("Kvitteringen kan gemmes, hentes frem og printes", () => {
+  function mockStorage() {
+    const store = new Map<string, string>();
+    const api = {
+      getItem: (k: string) => store.get(k) ?? null,
+      setItem: (k: string, v: string) => void store.set(k, v),
+      removeItem: (k: string) => void store.delete(k),
+      clear: () => store.clear(),
+      key: (i: number) => [...store.keys()][i] ?? null,
+      get length() { return store.size; },
+    };
+    Object.defineProperty(window, "localStorage", { value: api, configurable: true });
+    return store;
+  }
+
+  it("flytter URL'en væk fra produktsiden og over på kvitteringen", async () => {
+    mockStorage();
+    const replaceState = vi.spyOn(window.history, "replaceState");
+    await tilKontakt();
+    udfyld();
+    fireEvent.click(screen.getByText(/Send booking|Videre til betaling/).closest("button")!);
+    await waitFor(() => expect(screen.getByText("Booking modtaget!")).toBeInTheDocument(), { timeout: 4000 });
+
+    // Stod før på /?product=thumpgo#book — et tryk på Opdater sendte kunden
+    // tilbage i bookingflowet i stedet for til sin kvittering
+    const url = replaceState.mock.calls.at(-1)?.[2];
+    expect(String(url)).toContain("kvittering=1787347874016_kvc5a0");
+  }, 20000);
+
+  it("gemmer kvitteringen, så den kan hentes frem igen", async () => {
+    const store = mockStorage();
+    await tilKontakt();
+    udfyld();
+    fireEvent.click(screen.getByText(/Send booking|Videre til betaling/).closest("button")!);
+    await waitFor(() => expect(screen.getByText("Booking modtaget!")).toBeInTheDocument(), { timeout: 4000 });
+
+    const gemt = store.get("booking_kvittering_1787347874016_kvc5a0");
+    expect(gemt, "kvitteringen blev ikke gemt").toBeTruthy();
+    const data = JSON.parse(gemt!);
+    expect(data.navn).toBe("Agnes Dahle Stæhr");
+    expect(data.total).toBeGreaterThan(0);
+    expect(data.linjer.length).toBeGreaterThan(0);
+  }, 20000);
+
+  it("siger tydeligt at det ikke er den endelige bekræftelse, og kan printes", async () => {
+    mockStorage();
+    await tilKontakt();
+    udfyld();
+    fireEvent.click(screen.getByText(/Send booking|Videre til betaling/).closest("button")!);
+    await waitFor(() => expect(screen.getByText("Booking modtaget!")).toBeInTheDocument(), { timeout: 4000 });
+
+    expect(screen.getByText(/ikke din endelige ordrebekræftelse/i)).toBeInTheDocument();
+    expect(screen.getByText(/gennemgår bestillingen/i)).toBeInTheDocument();
+    expect(screen.getByText("Print kvittering")).toBeInTheDocument();
   }, 20000);
 });
 
