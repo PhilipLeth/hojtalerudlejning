@@ -5,6 +5,7 @@ import {
   toCsv,
   toFacebookCsv,
   toXml,
+  dbaSelection,
   SITE,
 } from "../_lib/channels";
 
@@ -67,8 +68,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       });
     }
 
-    // default xml
-    return new Response(toXml(items), {
+    // Default xml — det er den URL DBA Boost Connect står med. Den er
+    // skåret ned til DBA_FEED_IDS; CSV og Facebook beholder hele kataloget.
+    return new Response(toXml(dbaSelection(items)), {
       status: 200,
       headers: {
         ...cors,

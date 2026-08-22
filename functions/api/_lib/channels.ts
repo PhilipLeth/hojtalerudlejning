@@ -202,6 +202,47 @@ export function buildFeedItems(
   return items;
 }
 
+/**
+ * DBA-udvalget — de eneste produkter der sendes i XML-feedet.
+ *
+ * Boost Connect opretter én annonce pr. produkt i feedet, og alle 37 gav ikke
+ * mening: bæretaske, stativer og ekstra batteri er tilvalg man lægger til en
+ * leje, ikke noget nogen søger efter på DBA. Tilbage står de ti der kan bære
+ * en annonce alene — lyd, festpakker, lys og karaoke.
+ *
+ * Kun XML filtreres. CSV og Facebook-eksporten leverer stadig hele kataloget,
+ * fordi Meta-kataloget bruger dem og gerne må være bredt. Det virker kun så
+ * længe DBA er eneste forbruger af XML — GulogGratis fik samme URL udleveret,
+ * men har aldrig synket noget.
+ */
+export const DBA_FEED_IDS = [
+  "soundboks",
+  "festival",
+  "party",
+  "thumpgo",
+  "pakke_fest_stor",
+  "pakke_fest_lille",
+  "karaoke",
+  "lys",
+  "rog",
+  "discokugle",
+] as const;
+
+/**
+ * Skær feedet ned til DBA-udvalget.
+ *
+ * Falder tilbage på hele listen hvis intet matcher. Et tomt feed er ikke en
+ * lille fejl: Boost Connect ville læse det som "alle annoncer skal væk" og
+ * rydde kontoen. Skifter et produkt-id navn i kataloget, er det bedre at DBA
+ * står med 37 annoncer end med nul.
+ */
+export function dbaSelection(items: FeedItem[]): FeedItem[] {
+  const rank = new Map(DBA_FEED_IDS.map((id, i) => [id as string, i]));
+  const picked = items.filter((i) => rank.has(i.id));
+  if (picked.length === 0) return items;
+  return picked.sort((a, b) => rank.get(a.id)! - rank.get(b.id)!);
+}
+
 export function toXml(items: FeedItem[]): string {
   const rows = items
     .map(
