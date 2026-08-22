@@ -86,6 +86,7 @@ export const t = {
       pickupDesc: "Leveres med alle kabler (iPhone, USB-C, AUX). Bæretaske kan tilkøbes.",
       pickupDesc2: "Mixere og lignende kan forespørges ved booking.",
       // Success page
+      haveDiscountCode: "Har du en rabatkode?",
       successTitle: "Booking modtaget!",
       orderNumber: "Ordrenummer",
       noNeedToRebook: "Din booking er registreret — du skal ikke sende den igen. Har du ikke fået mailen om et par minutter, så tjek spam eller ring til os.",
@@ -264,6 +265,7 @@ export const t = {
       pickupDesc: "Delivered with all cables (iPhone, USB-C, AUX). Carry bag available as add-on.",
       pickupDesc2: "Mixers and similar can be requested when booking.",
       // Success page
+      haveDiscountCode: "Have a discount code?",
       successTitle: "Booking received!",
       orderNumber: "Order number",
       noNeedToRebook: "Your booking is registered — there is no need to submit it again. If the email hasn't arrived in a couple of minutes, check your spam folder or give us a call.",

@@ -448,11 +448,35 @@ export default function BookingFlow({
   /** Adresse-fejlen vises først når man forsøger at gå videre */
   const [showDeliveryError, setShowDeliveryError] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", comment: "", company: "" });
+
+  /*
+   * Kunden skal ikke skrive navn, mail og telefon igen, hver gang han lejer.
+   * Oplysningerne bliver i HANS egen browser — de sendes ingen steder hen, og
+   * kommentaren gemmes ikke, fordi den hører til den enkelte fest.
+   */
+  useEffect(() => {
+    try {
+      const gemt = localStorage.getItem("booking_kontakt");
+      if (!gemt) return;
+      const k = JSON.parse(gemt) as Partial<typeof form>;
+      setForm((f) => ({
+        ...f,
+        name: k.name ?? f.name,
+        email: k.email ?? f.email,
+        phone: k.phone ?? f.phone,
+        company: k.company ?? f.company,
+      }));
+    } catch {
+      /* ugyldigt indhold ignoreres */
+    }
+  }, []);
   // GDPR: markedsføringssamtykke skal være aktivt tilvalg — må ikke være forudkrydset
   const [newsletter, setNewsletter] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [payMethod, setPayMethod] = useState<"pickup" | "online">("online");
   const [couponInput, setCouponInput] = useState("");
+  /** Rabatfeltet er foldet væk, indtil kunden selv siger, at han har en kode */
+  const [visRabat, setVisRabat] = useState(false);
   const [coupon, setCoupon] = useState<{ code: string; pct: number } | null>(null);
   const [couponError, setCouponError] = useState(false);
   const [couponChecking, setCouponChecking] = useState(false);
@@ -839,6 +863,16 @@ export default function BookingFlow({
       }
       const bookResult = await res.json().catch(() => ({}));
       if (bookResult?.bookingId) setOrdreNr(String(bookResult.bookingId).replace("booking_", ""));
+      try {
+        // Først når bookingen er gået igennem — en halv udfyldt formular skal
+        // ikke kunne lægge sig til rette i browseren
+        localStorage.setItem(
+          "booking_kontakt",
+          JSON.stringify({ name: form.name, email: form.email, phone: form.phone, company: form.company }),
+        );
+      } catch {
+        /* privat tilstand: så husker vi ikke noget */
+      }
       // Subscribe to newsletter if checked
       if (newsletter && form.email) {
         fetch("/api/newsletter", {
@@ -1828,10 +1862,24 @@ export default function BookingFlow({
                       ✕
                     </button>
                   </div>
+                ) : !visRabat ? (
+                  /*
+                   * Et åbent rabatfelt sender folk ud at lede efter en kode, de
+                   * ikke har — og nogle vender ikke tilbage. Derfor en lille
+                   * linje, der kun betyder noget for dem, der HAR en kode.
+                   */
+                  <button
+                    type="button"
+                    onClick={() => setVisRabat(true)}
+                    className="text-xs text-white/30 underline underline-offset-2 transition hover:text-white/60"
+                  >
+                    {s.haveDiscountCode}
+                  </button>
                 ) : (
                   <div className="flex gap-2">
                     <input
                       type="text"
+                      autoFocus
                       value={couponInput}
                       onChange={(e) => { setCouponInput(e.target.value); setCouponError(false); }}
                       onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyCoupon(); } }}
