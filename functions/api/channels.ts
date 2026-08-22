@@ -5,6 +5,7 @@ import {
   CHANNEL_DEFS,
   CHANNELS_KEY,
   buildFeedItems,
+  dbaSelection,
   defaultChannelsDoc,
   hyggloPaste,
   loadCatalog,
@@ -237,7 +238,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           nextExternal: [
             {
               channel: "dba",
-              message: `DBA Boost Connect (selvbetjening):\n1) Log ind / opret på https://boost.dba.dk med info@lejhojtaler.dk\n2) Vælg Boost Connect / automatiske annoncer\n3) Indsæt feed-URL:\n${doc.feedXmlUrl}\n4) Synk — produkterne oprettes automatisk som annoncer (${items.length} stk)`,
+              message: `DBA Boost Connect (selvbetjening):\n1) Log ind / opret på https://boost.dba.dk med info@lejhojtaler.dk\n2) Vælg Boost Connect / automatiske annoncer\n3) Indsæt feed-URL:\n${doc.feedXmlUrl}\n4) Synk — produkterne oprettes automatisk som annoncer (${dbaSelection(items).length} stk)`,
             },
             {
               channel: "guloggratis",
