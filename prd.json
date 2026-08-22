@@ -1649,6 +1649,34 @@
         "Blogindlæggene har ikke FAQ — de har Article-markup, og en FAQ oveni ville være markup for markup'ens skyld.",
         "/kontakt, /om, /lejevilkaar og /privatlivspolitik har ingen FAQ; de svarer ikke på købsspørgsmål."
       ]
+    },
+    "struktur_2026_08_22": {
+      "date": "2026-08-22",
+      "anledning": "Gennemgang af sitets struktur efter AEO-arbejdet dagen før.",
+      "rettet": {
+        "dobbelt_h1": "Alle 11 blogindlæg havde to H1 — markdown startede med '# Overskrift' oveni sidens egen. stripLeadingH1 i src/lib/blog.ts fjerner den indledende H1, så det heller ikke kan ske for næste indlæg.",
+        "foraeldreloese_sider": "/festlyd, /lydudstyr og /kobenhavn havde ingen indgående interne links — Ads-landingssider, der kun kunne nås via sitemap'et. Lagt i footeren, ikke i menuen (menuen er en vej ind, ikke et katalog). generate-sitemap.py advarer nu ved hver bygning.",
+        "doede_links": "/headset, /mikrofon og /tradlos-mikrofon var 'Se trådløs mikrofon'-knapper, der førte til 404. Rettet, og generate-sitemap.py sammenholder nu hvert href med de byggede sider.",
+        "ni_produktsider": "discokugle, roegmaskine, skaerm, traadloes-mikrofon, headset-mikrofon, lys-pakke og projektor var håndbyggede kopier af ProductLanding — 1.639 linjer i alt. Lagt om til ProductLanding med upsellet som children (ny UpsellBox-komponent). De fik Product-markup i købet: 31 → 38 sider. lyskaeder og uplights blev IKKE lagt om: de viser to varianter via CategoryProductGrid og er små kategorisider, ikke enkeltproduktsider.",
+        "entitet": "LocalBusiness fik fast @id, sameAs til Google Business Profile, hasMap med Place ID og logo. Tilføjet på /kontakt og /om, som begge handler om virksomheden. Bevidst IKKE på de 30 produktsider — en produktside handler om et produkt.",
+        "blogfakta": "Seks indlæg sendte kunden til Vesterbro; adressen er Vermlandsgade 66 på Amager. Prislister nævnte pakker der ikke findes ('Party 395', 'Festival 1.200'), påstod dagstillæg (prisen er flad 1-5 dage), og at mixer og stativer var inkluderet. Soundboks-artiklen talte Soundboks ned, selvom vi selv udlejer en Soundboks 4 til 595 kr. Alt rettet, og updated: sat på de syv rettede indlæg."
+      },
+      "engelsk": {
+        "hvorfor": "Sitet havde 5 engelske sider mod 78 danske, /en/blog delte title med den danske /blog, og /en linkede sine besøgende videre til danske produktsider.",
+        "gjort": [
+          "ProductLanding, BundleGrid og SpeakerCompare tager nu locale — ingen kopierede komponenter.",
+          "buildProductFaq har en engelsk gren; svarene er skrevet på engelsk, ikke maskinoversat.",
+          "8 engelske produktsider: de 4 højtalere og de 4 festpakker, med hreflang begge veje.",
+          "src/lib/enPages.ts + localizedHref: interne links følger læserens sprog.",
+          "/en fik pakkestigen, som kun fandtes på dansk."
+        ],
+        "gaeld": "Ca. 65 danske sider har stadig ingen engelsk udgave — lysprodukter, AV, anledningssider og kategorisider. CLAUDE.md kræver nu, at nye og ændrede sider laves på begge sprog, men den regel lukker ikke efterslæbet af sig selv."
+      },
+      "guards": [
+        "en-sider.test.ts: EN_PAGES skal svare til mapperne i src/app/en, hver engelsk side skal have et dansk modstykke, og hreflang skal stå begge veje.",
+        "blog-fakta.test.ts: priser i indlæg skal findes i kataloget, ingen forkert bydel, intet dagstillæg, updated ikke før date.",
+        "generate-sitemap.py advarer om forældreløse sider og døde interne links ved hver bygning."
+      ]
     }
   },
   "design": {

@@ -9,6 +9,37 @@ import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
 import { PhoneText } from "@/components/PhoneLink";
 import { buildProductFaq } from "@/lib/productFaq";
+import type { Locale } from "@/lib/i18n";
+
+/**
+ * Sidens faste tekster på begge sprog.
+ *
+ * Komponenten var dansk hele vejen igennem, så en engelsk produktside var
+ * ikke mulig uden at kopiere hele filen. Teksterne står her, så de to sprog
+ * ikke kan komme til at vise hver sin side.
+ */
+const COPY = {
+  da: {
+    kicker: "Betal ved afhentning · Ring",
+    perWeekend: "/weekend",
+    book: (navn: string) => `Book ${navn} nu`,
+    faqTitle: (navn: string) => `Ofte stillede spørgsmål om ${navn}`,
+    ctaTitle: "Klar til at booke?",
+    ctaText: "Book online på 2 minutter. Hent fredag i København S, aflever mandag.",
+    allProducts: "← Se alle produkter",
+    home: "/",
+  },
+  en: {
+    kicker: "Pay on pickup · Call",
+    perWeekend: "/weekend",
+    book: (navn: string) => `Book ${navn} now`,
+    faqTitle: (navn: string) => `Frequently asked questions about ${navn}`,
+    ctaTitle: "Ready to book?",
+    ctaText: "Book online in 2 minutes. Collect on Friday in Copenhagen, return Monday.",
+    allProducts: "← See all products",
+    home: "/en",
+  },
+} as const;
 
 export interface ProductLandingProps {
   slug: string;
@@ -49,6 +80,8 @@ export interface ProductLandingProps {
    * "…at leje den store højtalerpakke?" er. Se buildProductFaq.
    */
   faqPhrase?: string;
+  /** Sprog. Styrer sidens faste tekster, FAQ'en og hvor "se alle produkter" fører hen. */
+  locale?: Locale;
   /** Optional extra section under product detail */
   children?: React.ReactNode;
 }
@@ -68,11 +101,13 @@ export default function ProductLanding({
   capacity,
   faqExtra,
   faqPhrase,
+  locale = "da",
   children,
 }: ProductLandingProps) {
   const bookHref = toBook(productId);
-  const cta = bookLabel ?? `Book ${name} nu`;
-  const faq = buildProductFaq({ name, price, productId, phrase: faqPhrase, capacity: capacity?.label, extra: faqExtra });
+  const c = COPY[locale];
+  const cta = bookLabel ?? c.book(name);
+  const faq = buildProductFaq({ name, price, productId, phrase: faqPhrase, capacity: capacity?.label, extra: faqExtra, locale });
 
   // Product-schema med pris, lagerstatus og leveringspris (rich results i Google)
   const productLd = {
@@ -152,7 +187,7 @@ export default function ProductLanding({
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Betal ved afhentning · Ring <PhoneText />
+            København · {c.kicker} <PhoneText />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             {headline}
@@ -193,7 +228,7 @@ export default function ProductLanding({
             <div>
               <h2 className="mb-4 text-3xl font-bold">{name}</h2>
               <p className="mb-6 text-3xl font-bold text-brand-400">
-                <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" /><span className="text-lg font-normal text-white/40">/weekend</span>
+                <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" /><span className="text-lg font-normal text-white/40">{c.perWeekend}</span>
               </p>
               <ul className="space-y-3 text-white/60">
                 {bullets.map((b) => (
@@ -219,14 +254,14 @@ export default function ProductLanding({
 
         {children}
 
-        <FaqSection items={faq} title={`Ofte stillede spørgsmål om ${name}`} />
+        <FaqSection items={faq} title={c.faqTitle(name)} />
 
         <Testimonials />
 
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">Klar til at booke?</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">{c.ctaTitle}</h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København S, aflever mandag. <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" />/weekend.
+            {c.ctaText} <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" />{c.perWeekend}.
           </p>
           <a
             href={bookHref}
@@ -235,13 +270,13 @@ export default function ProductLanding({
             {cta}
           </a>
           <p className="mt-4">
-            <Link href="/" className="text-sm text-white/40 transition hover:text-brand-400">
-              ← Se alle produkter
+            <Link href={c.home} className="text-sm text-white/40 transition hover:text-brand-400">
+              {c.allProducts}
             </Link>
           </p>
         </section>
 
-        <Footer />
+        <Footer locale={locale} />
       </main>
     </>
   );

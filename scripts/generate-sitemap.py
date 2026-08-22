@@ -85,6 +85,74 @@ def discover() -> tuple[list[str], list[tuple[str, str]]]:
     return keep, disclaimed
 
 
+def orphans(paths: list[str]) -> list[str]:
+    """Sider ingen anden side linker til.
+
+    /festlyd, /lydudstyr og /kobenhavn stod sådan: med i sitemap.xml, men uden
+    ét eneste internt link. En side, der kun kan nås via sitemap'et, crawles
+    sjældnere og arver ingen linkværdi — og det var netop Ads-landingssider.
+    Rapporteres ved hver bygning, så det ikke skal opdages ved et tilfælde igen.
+    """
+    import re
+
+    linked: set[str] = set()
+    for dirpath, _, names in os.walk(OUT_DIR):
+        for n in names:
+            if not n.endswith(".html"):
+                continue
+            with open(os.path.join(dirpath, n), encoding="utf-8") as f:
+                for href in re.findall(r'href="(/[^"#?]*)"', f.read()):
+                    linked.add(href.rstrip("/") or "/")
+
+    # Forsiden linker sig selv via logoet; /book er forsiden med bookingen åben.
+    undtaget = {"/", "/book", "/en/book"}
+    return [p for p in paths if p not in undtaget and (p.rstrip("/") or "/") not in linked]
+
+
+def dead_links() -> dict[str, list[str]]:
+    """Interne links der peger på en side, der ikke findes.
+
+    Tre af dem lå på sitet uopdaget: /headset, /mikrofon og /tradlos-mikrofon —
+    "Se trådløs mikrofon"-knapper på tre produktsider, der sendte kunden i en
+    404. De findes kun ved at sammenholde hvert href med de sider, bygningen
+    rent faktisk producerede, så det gøres her.
+    """
+    import re
+
+    sider, redirects = set(), set()
+    for dirpath, _, names in os.walk(OUT_DIR):
+        for n in names:
+            if n.endswith(".html"):
+                rel = os.path.relpath(os.path.join(dirpath, n), OUT_DIR)
+                p = "/" + rel[: -len(".html")]
+                sider.add((p[: -len("/index")] or "/") if p.endswith("/index") else p)
+
+    red_fil = os.path.join(OUT_DIR, "_redirects")
+    if os.path.exists(red_fil):
+        for line in open(red_fil, encoding="utf-8"):
+            dele = line.split()
+            if dele and dele[0].startswith("/"):
+                redirects.add(dele[0].rstrip("/"))
+
+    doede: dict[str, list[str]] = {}
+    for dirpath, _, names in os.walk(OUT_DIR):
+        for n in names:
+            if not n.endswith(".html"):
+                continue
+            rel = os.path.relpath(os.path.join(dirpath, n), OUT_DIR)
+            if any(x in rel for x in ("404", "admin", "accounting")):
+                continue
+            with open(os.path.join(dirpath, n), encoding="utf-8") as f:
+                for href in set(re.findall(r'href="(/[^"#?]*)"', f.read())):
+                    h = href.rstrip("/") or "/"
+                    if h in sider or h in redirects or h.startswith("/_next"):
+                        continue
+                    if "." in os.path.basename(h):  # filer, ikke sider
+                        continue
+                    doede.setdefault(h, []).append(rel)
+    return doede
+
+
 def priority(p: str) -> str:
     if p in PRIORITY:
         return PRIORITY[p]
@@ -136,6 +204,18 @@ def main() -> int:
         print(f"\nUdeladt — canonical peger et andet sted ({len(disclaimed)}):")
         for p, c in disclaimed:
             print(f"    {p}  →  {c}")
+    doede = dead_links()
+    if doede:
+        print(f"\nADVARSEL — interne links til sider der ikke findes ({len(doede)}):")
+        for h, hvor in sorted(doede.items()):
+            print(f"    {h}  ← {', '.join(sorted(hvor))}")
+
+    forladte = orphans(paths)
+    if forladte:
+        print(f"\nADVARSEL — ingen intern link peger på ({len(forladte)}):")
+        for p in forladte:
+            print("   ", p)
+
     if added:
         print(f"\nTilføjet ({len(added)}):")
         for p in added:

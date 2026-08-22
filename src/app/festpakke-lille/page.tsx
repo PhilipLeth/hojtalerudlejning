@@ -1,13 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lille festpakke | Højtalere + lys | 495 kr | Lejhøjtaler.dk",
   description:
     "Lille festpakke: 2× Alto 10\" højtalere + enkelt lyseffekt for 495 kr — spar 95 kr. Lyd og lys til op til 40 personer. Levering og opsætning kan tilvælges. Book online.",
   keywords: ["festpakke", "lej festpakke", "højtaler og lys leje", "lille festpakke københavn", "fest lyd og lys"],
-  alternates: { canonical: "https://lejhojtaler.dk/festpakke-lille" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/festpakke-lille",
+    languages: localeAlternates("/festpakke-lille"),
+  },
   openGraph: {
     title: "Lille festpakke | Højtalere + lys | 495 kr",
     description: "2× Alto 10\" højtalere + enkelt lyseffekt — lyd og lys til op til 40 pers. Spar 95 kr.",

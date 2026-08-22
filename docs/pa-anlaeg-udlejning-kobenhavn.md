@@ -2,6 +2,7 @@
 title: "PA-anlæg udlejning i København – hvad skal du vide?"
 description: "Alt om PA-anlæg udlejning i København. Hvad er et PA-system, hvornår har du brug for det, og hvad koster det? Lej fra 395 kr/weekend."
 date: "2026-06-12"
+updated: "2026-08-22"
 keywords:
   - PA-anlæg udlejning
   - PA anlæg leje københavn
@@ -47,7 +48,7 @@ Du skal ikke være lydtekniker. Systemet er plug-and-play: stil det op, tilslut 
 
 ## Afhentning og levering
 
-Vi holder til på Vesterbro i København. Du henter udstyret fredag og afleverer det mandag – så du har det hele weekenden. Vi gennemgår altid setupmet med dig ved afhentning, så du føler dig tryg.
+Vi holder til på Vermlandsgade 66, 2300 København. Du henter udstyret fredag og afleverer det mandag – så du har det hele weekenden. Vi gennemgår altid setupmet med dig ved afhentning, så du føler dig tryg.
 
 ## Hvad koster det?
 
@@ -60,6 +61,6 @@ For flerdagsleje ganges prisen med antal dage (fredag-mandag tæller som 1 weeke
 1. Gå til vores [booking-side](/#book)
 2. Vælg din pakke og dato
 3. Du får en bekræftelse med det samme
-4. Hent udstyret på Vesterbro
+4. Hent udstyret på Vermlandsgade 66
 
 Hele processen tager under 2 minutter. [Book dit PA-anlæg nu](/#book).

@@ -2,13 +2,17 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import SoundboksAltPopup from "@/components/SoundboksAltPopup";
 import Link from "next/link";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Soundboks 4 København | Fra 595 kr | Lejhøjtaler.dk",
   description:
     "Lej Soundboks 4 i København fra 595 kr/weekend. Batteridrevet højtaler med kraftig bas. Betal ved afhentning. Book online.",
   keywords: ["lej soundboks", "soundboks 4 leje", "soundboks udlejning københavn", "lej soundboks 4"],
-  alternates: { canonical: "https://lejhojtaler.dk/soundboks-4" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/soundboks-4",
+    languages: localeAlternates("/soundboks-4"),
+  },
   openGraph: {
     title: "Lej Soundboks 4 København | Fra 595 kr",
     description: "Lej Soundboks 4 i København fra 595 kr/weekend. Book online.",

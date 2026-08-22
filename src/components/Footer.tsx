@@ -137,6 +137,28 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
           {s.privacy}
         </Link>
       </p>
+      {/*
+        Indgange der ellers står forældreløse. /festlyd, /lydudstyr og
+        /kobenhavn er landingssider for Google Ads, men ingen side på sitet
+        linkede til dem — de blev crawlet som blindgyder uden intern linkværdi.
+        De hører ikke hjemme i menuen, som bevidst er en vej ind og ikke et
+        katalog; footeren er stedet, hvor de kan stå uden at støje.
+        Kun på dansk: siderne findes ikke på engelsk.
+      */}
+      {locale === "da" && (
+        <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs">
+          <Link href="/festlyd" className="text-white/30 hover:text-brand-400 transition">
+            Lyd til fest
+          </Link>
+          <Link href="/lydudstyr" className="text-white/30 hover:text-brand-400 transition">
+            PA-anlæg &amp; lydudstyr
+          </Link>
+          <Link href="/kobenhavn" className="text-white/30 hover:text-brand-400 transition">
+            Højtalerudlejning i København
+          </Link>
+        </p>
+      )}
+
       <p className="mt-5 text-white/40 text-xs">{newsletterLabel}</p>
       <NewsletterForm locale={locale} />
       <p className="mt-6">&copy; {new Date().getFullYear()} Lejhøjtaler.dk</p>

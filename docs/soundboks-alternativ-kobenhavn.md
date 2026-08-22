@@ -2,6 +2,7 @@
 title: "Soundboks-alternativ i København: Derfor er lejede højtalere bedre"
 description: "Leder du efter et Soundboks-alternativ i København? Se hvorfor professionelle højtalere til leje slår en Soundboks på lyd, pris og batteritid. Fra 395 kr."
 date: "2025-06-10"
+updated: "2026-08-22"
 keywords:
   - soundboks alternativ
   - soundboks leje
@@ -23,31 +24,31 @@ En Soundboks er designet til udendørs brug med batteri. Det lyder smart i teori
 
 **Batteriet dør.** En Soundboks holder typisk 4-8 timer afhængig af lydstyrke og temperatur. Skruer du op - og det gør du, for det er jo fest - kan batteriet løbe ud efter bare et par timer. Forestil dig scenen: klokken er 23, stemningen er på sit højeste, og så dør musikken. Det er præcis den situation, Frederik Scharling, stifter af lejhøjtaler.dk, oplevede da han skulle holde fødselsdagsfest og lånte en Soundboks. Batteriet løb ud efter 20 minutter.
 
-**Prisen løber op.** En ny Soundboks koster over 6.000 kr. At leje en koster typisk 300-495 kr. per dag - og så får du kun én enkelt højtaler med begrænset lydkvalitet.
+**Prisen løber op.** En ny Soundboks koster over 6.000 kr. Vi udlejer selv en Soundboks 4 til 595 kr. for en hel weekend, hvis det er den, du vil have — men for de samme penge kan du få to højtalere med mere lyd.
 
 **Lyden skalerer ikke.** En Soundboks er fin til en lille samling i parken. Men når selskabet vokser til 30, 50 eller 80 gæster, kan den simpelthen ikke følge med. Du ender med at stille to eller tre op for at få nok lyd, og så er prisen pludselig astronomisk.
 
 ## Vores løsning: Professionel lyd fra stikkontakten
 
-Hos lejhøjtaler.dk bruger vores højtalere strøm fra en normal stikkontakt - og ja, der er strøm næsten overalt. Det er ikke en begrænsning, det er bare virkeligheden. Til gengæld får du professionel lyd der faktisk fylder rummet, til en lavere pris end de fleste alternativer på markedet.
+Hos lejhøjtaler.dk kan du få begge dele. Skal der ikke være en stikkontakt i nærheden, har vi Mackie Thump GO til 345 kr. og Soundboks 4 til 595 kr. — begge batteridrevne med op til 12 timers spilletid. Men er der strøm, og det er der næsten altid, får du mere lyd for pengene med et sæt aktive højtalere.
 
 Det betyder:
 
-- **Ingen batteristress.** Lyden kører hele natten uden afbrydelser.
+- **Ingen batteristress.** Med strøm i stikket kører lyden hele natten uden afbrydelser.
 - **Professionel lydkvalitet.** Aktive højtalere med klar diskant og dyb bas - ikke den komprimerede lyd du kender fra en batterihøjtaler.
-- **Skalérbar løsning.** Vores lille pakke dækker op til 40 personer. Vores store pakke med stereo-toppe og subwoofer klarer 100+ gæster uden problemer.
+- **Skalérbar løsning.** Den lille højtalerpakke dækker op til 30 personer, den store 30-50. Skal I være flere, tager Festpakke 150 (1.495 kr.) og Festpakke 250 (2.295 kr.) over med subwoofer og stativer.
 
 ## Hvad koster det?
 
-Vores priser starter fra **395 kr.** for en komplet højtalerpakke med alle kabler inkluderet. Ingen skjulte gebyrer. Du betaler ved afhentning med MobilePay eller kontant.
+Priserne starter ved **345 kr.** for Mackie Thump GO og **395 kr.** for den lille højtalerpakke med alle kabler inkluderet. Ingen skjulte gebyrer, og prisen er den samme for 1-5 dage. Du kan betale med kort online eller ved afhentning.
 
-Sammenlign det med en Soundboks-leje til 400-495 kr., hvor du får én batteribaseret højtaler uden subwoofer, uden mixer og uden professionel lydkvalitet.
+Til sammenligning koster en Soundboks 4 hos os 595 kr. for weekenden. Du får én batteridrevet højtaler — fri for ledninger, men uden den stereobredde to højtalere giver.
 
 ## Afhentning eller levering i København
 
 Du kan hente udstyret på vores adresse på **Vermlandsgade 66, København**, hvor der altid er gratis parkering i én time. Vores lille højtalerpakke vejer kun 12 kg og kan sagtens være med på cyklen.
 
-Foretrækker du levering? Vi kører det ud til dig i Storkøbenhavn for **495 kr.**
+Foretrækker du levering? Vi kører ud i hele København for **495 kr.** — eller **795 kr.**, hvis vi også skal hente igen efter festen.
 
 ## Hvornår vinder en Soundboks?
 

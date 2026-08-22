@@ -50,11 +50,27 @@ export function getAllPosts(): PostMeta[] {
   );
 }
 
+/**
+ * Fjerner en indledende H1 fra brødteksten.
+ *
+ * Alle 11 indlæg begyndte med "# Overskrift", samtidig med at siden selv satte
+ * `<h1>{post.title}</h1>`. Læseren så overskriften to gange, og siden havde to
+ * H1'er — en crawler kan ikke afgøre, hvad den så handler om. Frontmatterens
+ * `title` er den rigtige kilde: den bruges også i <title>, i OG-tags og i
+ * Article-markup.
+ *
+ * Gøres her og ikke ved at rette de 11 filer, så det næste indlæg heller ikke
+ * kan komme til at gøre det. En H2 længere nede i teksten røres ikke.
+ */
+function stripLeadingH1(content: string): string {
+  return content.replace(/^\s*#\s+.*(\r?\n)+/, "");
+}
+
 export async function getPostBySlug(slug: string): Promise<Post> {
   const raw = fs.readFileSync(path.join(docsDir, `${slug}.md`), "utf-8");
   const { data, content } = matter(raw);
 
-  const result = await remark().use(html).process(content);
+  const result = await remark().use(html).process(stripLeadingH1(content));
 
   return {
     slug,

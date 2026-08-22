@@ -1,13 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Festpakke 250 | Dobbelt anlæg til 250 gæster | 2.295 kr | Lejhøjtaler.dk",
   description:
     "Festpakke 250: 4× EV 12\" højtalere, 2× 12\" subwoofer, stativer, lys og røgmaskine for 2.295 kr — spar 225 kr. Anlæg til sal, gård eller hal med op til 250 gæster i København.",
   keywords: ["lydanlæg 250 personer", "anlæg til stor fest", "pa anlæg til firmafest", "lej lydanlæg til sal", "festpakke 200 personer"],
-  alternates: { canonical: "https://lejhojtaler.dk/festpakke-250" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/festpakke-250",
+    languages: localeAlternates("/festpakke-250"),
+  },
   openGraph: {
     title: "Festpakke 250 | Dobbelt anlæg til 250 gæster | 2.295 kr",
     description: "4× EV 12\" + 2 subwoofere + lys + røg. Til sal, gård eller hal — spar 225 kr.",

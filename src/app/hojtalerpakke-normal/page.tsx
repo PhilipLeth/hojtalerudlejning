@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Stor Højtalerpakke København | Fra 495 kr | Lejhøjtaler.dk",
   description:
     "Lej stor højtalerpakke i København fra 495 kr/weekend. 2× 12\" EV aktive højtalere. Stativer kan tilkøbes. Book online.",
   keywords: ["stor højtalerpakke", "lej PA anlæg", "EV højtaler leje", "højtalerudlejning københavn"],
-  alternates: { canonical: "https://lejhojtaler.dk/hojtalerpakke-normal" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/hojtalerpakke-normal",
+    languages: localeAlternates("/hojtalerpakke-normal"),
+  },
   openGraph: {
     title: "Lej Stor Højtalerpakke | Fra 495 kr",
     description: "2× 12\" EV højtalere fra 495 kr/weekend. Book online.",
@@ -32,7 +36,6 @@ export default function HojtalerpakkeNormalPage() {
       capacity={{ level: 2, label: "30-50 pers." }}
       bullets={[
         '2× 12" EV aktive højtalere',
-        
         "Alle kabler inkl. — stativer kan tilkøbes (100 kr)",
         "Bluetooth",
         "Hent fredag, aflever mandag",

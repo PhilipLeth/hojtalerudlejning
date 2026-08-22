@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import SpeakerCompare from "@/components/SpeakerCompare";
+import BundleGrid from "@/components/BundleGrid";
 import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { localeAlternates } from "@/lib/hreflang";
+import { FEST_LADDER_IDS } from "@/lib/products";
 import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 
 export const metadata: Metadata = {
@@ -44,6 +46,11 @@ export default function EnHome() {
   return (
     <main className="min-h-screen" lang="en">
       <Hero locale="en" />
+      {/* Pakkestigen manglede på engelsk — den engelske forside viste kun
+          enkelthøjtalere, mens den danske havde hele stigen efter antal gæster.
+          Det var også grunden til, at de engelske pakkesider stod uden ét
+          eneste indgående link. */}
+      <BundleGrid locale="en" ids={FEST_LADDER_IDS} title="Choose a package by number of guests" />
       <SpeakerCompare locale="en" />
       <FaqSection items={CATEGORY_FAQ["en"]} title="Frequently asked questions" />
 

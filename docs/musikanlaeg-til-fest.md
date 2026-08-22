@@ -2,6 +2,7 @@
 title: "Musikanlæg til fest – sådan vælger du rigtigt"
 description: "Forskellen på en Bluetooth-højtaler og et rigtigt musikanlæg til fest. Guide til at vælge det rigtige PA-system til din fest."
 date: "2026-06-10"
+updated: "2026-08-22"
 keywords:
   - musikanlæg til fest
   - musikanlæg udlejning
@@ -70,4 +71,4 @@ Vi gennemgår altid setupmet med dig, når du henter udstyret. Du får også en 
 
 ## Book dit musikanlæg
 
-Lej et komplet musikanlæg til din fest fra 395 kr/weekend. [Book nu](/#book) og hent på Vesterbro.
+Lej et komplet musikanlæg til din fest fra 395 kr/weekend. [Book nu](/#book) og hent på Vermlandsgade 66 på Amager.

@@ -5,6 +5,7 @@ import { type Locale, t } from "@/lib/i18n";
 import { applyDiscount, isSummerSale, type Speaker, type PowerType } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 import { thumbSrcSet, GRID_IMAGE_SIZES } from "@/lib/imageSrcSet";
+import { localizedHref } from "@/lib/enPages";
 
 function PowerIcon({ power }: { power: PowerType }) {
   if (power === "batteri") {
@@ -122,12 +123,16 @@ export default function SpeakerCompare({
         {groups.flatMap((g) => g.items).map((sp) => {
           const text = sp[locale];
           const href = bookLinks === "booking" ? `/?product=${sp.id}#book` : "/#book";
+          // Produktsiden på læserens eget sprog. sp.page fra kataloget er altid
+          // den danske sti, så uden det her sendte /en sine besøgende ind i
+          // dansk tekst.
+          const infoHref = sp.page ? localizedHref(sp.page, locale) : null;
           return (
             <article
               key={`card-${sp.id}`}
               className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:border-brand-500/40"
             >
-              <a href={sp.page ?? href} className="relative block bg-[#0d0c12] p-6">
+              <a href={infoHref ?? href} className="relative block bg-[#0d0c12] p-6">
                 {sp.power === "batteri" && (
                   <span className="absolute left-4 top-4 rounded-full bg-green-500/15 px-2.5 py-0.5 text-[11px] font-bold text-green-400">
                     🔋 {c.noPower}
@@ -158,9 +163,9 @@ export default function SpeakerCompare({
                     >
                       {c.book}
                     </a>
-                    {sp.page && (
+                    {infoHref && (
                       <a
-                        href={sp.page}
+                        href={infoHref}
                         className="rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white/70 transition hover:border-brand-500/40 hover:text-brand-400"
                       >
                         Info

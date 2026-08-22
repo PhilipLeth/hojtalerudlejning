@@ -18,6 +18,7 @@
 import { DEFAULT_PICKUP_ADDRESS } from "@/lib/pickup";
 import { addons, rentalProducts, speakers } from "@/lib/products";
 import type { FaqItem } from "@/components/FaqSection";
+import type { Locale } from "@/lib/i18n";
 
 /** Levering: én vej og begge veje er to selvstændige priser, jf. products.ts */
 export const DELIVERY_ONE_WAY = 495;
@@ -44,6 +45,8 @@ export interface ProductFaqInput {
   capacity?: string;
   /** Sidespecifikke spørgsmål, lagt først */
   extra?: FaqItem[];
+  /** Sprog. Svarene skrives for hver sprog for sig — ikke oversat maskinelt. */
+  locale?: Locale;
 }
 
 /**
@@ -58,9 +61,12 @@ export interface ProductFaqInput {
  * products_catalog slår først igennem ved næste deploy. Samme afvejning som
  * LocalBusinessJsonLd.
  */
-function catalogFacts(productId: string): { contents?: string[]; capacity?: string } {
+function catalogFacts(productId: string, locale: Locale): { contents?: string[]; capacity?: string } {
   const speaker = speakers.find((s) => s.id === productId);
-  if (speaker) return { contents: speaker.contents, capacity: speaker.da.capacity };
+  // `contents` findes kun på dansk i kataloget — pakkelisten er tekniske ord
+  // ("2× Alto 10\" højtalere"), som er læsbare på begge sprog. Kapaciteten
+  // findes derimod på begge, og der bruges den rigtige.
+  if (speaker) return { contents: speaker.contents, capacity: speaker[locale].capacity };
 
   const rental = rentalProducts.find((r) => r.id === productId);
   if (rental) return { contents: rental.contents };
@@ -84,9 +90,34 @@ function upperFirst(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-export function buildProductFaq({ name, price, productId, phrase, capacity, extra = [] }: ProductFaqInput): FaqItem[] {
-  const facts = catalogFacts(productId);
+export function buildProductFaq({
+  name,
+  price,
+  productId,
+  phrase,
+  capacity,
+  extra = [],
+  locale = "da",
+}: ProductFaqInput): FaqItem[] {
+  const facts = catalogFacts(productId, locale);
   const it = phrase ?? name;
+  const included = joinBullets(facts.contents ?? []);
+  const guests = capacity ?? facts.capacity;
+
+  return locale === "en"
+    ? buildEn({ it, price, included, guests, extra })
+    : buildDa({ it, price, included, guests, extra });
+}
+
+interface Bygget {
+  it: string;
+  price: number;
+  included: string;
+  guests?: string;
+  extra: FaqItem[];
+}
+
+function buildDa({ it, price, included, guests, extra }: Bygget): FaqItem[] {
   const items: FaqItem[] = [...extra];
 
   items.push({
@@ -97,7 +128,6 @@ export function buildProductFaq({ name, price, productId, phrase, capacity, extr
       `og alle nødvendige kabler er med i prisen. Du kan betale online med kort eller ved afhentning.`,
   });
 
-  const included = joinBullets(facts.contents ?? []);
   if (included) {
     items.push({
       q: `Hvad er inkluderet, når jeg lejer ${it}?`,
@@ -105,7 +135,6 @@ export function buildProductFaq({ name, price, productId, phrase, capacity, extr
     });
   }
 
-  const guests = capacity ?? facts.capacity;
   if (guests) {
     items.push({
       q: `Hvor mange gæster rækker ${it} til?`,
@@ -129,6 +158,52 @@ export function buildProductFaq({ name, price, productId, phrase, capacity, extr
     a:
       `Fra 1 til ${MAX_RENTAL_DAYS} dage til samme pris — ${price} kr. De fleste henter fredag og afleverer mandag. ` +
       `Skal du bruge det længere, så ring på 31 13 28 52, så finder vi ud af det.`,
+  });
+
+  return items;
+}
+
+function buildEn({ it, price, included, guests, extra }: Bygget): FaqItem[] {
+  const items: FaqItem[] = [...extra];
+
+  items.push({
+    q: `How much does it cost to rent ${it}?`,
+    a:
+      `${upperFirst(it)} costs ${price} DKK for a weekend from Lejhøjtaler.dk in Copenhagen. ` +
+      `The price is the same whether you keep it for 1 or ${MAX_RENTAL_DAYS} days, and all the cables you need ` +
+      `are included. You can pay by card online or in cash when you collect.`,
+  });
+
+  if (included) {
+    items.push({
+      q: `What is included when I rent ${it}?`,
+      a: `${upperFirst(it)} comes with ${included}. You do not need to buy or bring anything yourself — it is ready to use when you collect it.`,
+    });
+  }
+
+  if (guests) {
+    items.push({
+      q: `How many guests is ${it} enough for?`,
+      a:
+        `${upperFirst(it)} is intended for ${guests.toLowerCase()}. That number is for indoor use — outdoors the ` +
+        `sound carries less far, so count on slightly fewer. If you are a larger group, call us on 31 13 28 52 and ` +
+        `we will recommend the right package.`,
+    });
+  }
+
+  items.push({
+    q: `Where do I collect ${it}, and can you deliver?`,
+    a:
+      `You collect ${it} yourself at ${DEFAULT_PICKUP_ADDRESS}. If you would rather have it delivered, we drive ` +
+      `anywhere in Copenhagen: ${DELIVERY_ONE_WAY} DKK for delivery and setup, where you return it yourself, or ` +
+      `${DELIVERY_BOTH_WAYS} DKK if we both deliver and collect it again after the party. You choose in the booking.`,
+  });
+
+  items.push({
+    q: `How long can I rent ${it} for?`,
+    a:
+      `From 1 to ${MAX_RENTAL_DAYS} days at the same price — ${price} DKK. Most customers collect on Friday and ` +
+      `return on Monday. Call 31 13 28 52 if you need it for longer.`,
   });
 
   return items;

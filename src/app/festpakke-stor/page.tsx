@@ -1,13 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Stor festpakke | Højtalere + lys til 100 pers. | 895 kr | Lejhøjtaler.dk",
   description:
     "Stor festpakke: 2× EV 12\" højtalere + lys-pakke for 895 kr — spar 95 kr. Lyd og lys til op til 100 personer. Levering og opsætning kan tilvælges. Book online.",
   keywords: ["stor festpakke", "lej festpakke", "højtaler og lys leje", "fest 100 personer lyd", "festpakke københavn"],
-  alternates: { canonical: "https://lejhojtaler.dk/festpakke-stor" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/festpakke-stor",
+    languages: localeAlternates("/festpakke-stor"),
+  },
   openGraph: {
     title: "Stor festpakke | Højtalere + lys til 100 pers. | 895 kr",
     description: "2× EV 12\" højtalere + lys-pakke — lyd og lys til op til 100 pers. Spar 95 kr.",

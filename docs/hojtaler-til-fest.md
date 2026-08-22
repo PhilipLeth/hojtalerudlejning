@@ -2,6 +2,7 @@
 title: "Hvilken højtaler skal du leje til din fest?"
 description: "Guide til at vælge den rigtige højtaler til din fest. Party-pakke til 40 personer eller Festival-pakke til 100+. Se priser og book fra 395 kr."
 date: "2026-06-12"
+updated: "2026-08-22"
 keywords:
   - højtaler til fest
   - lej højtaler
@@ -56,4 +57,4 @@ Her er en simpel tommelfingerregel:
 
 ## Klar til at booke?
 
-Vi gør det nemt: book online på 2 minutter, hent udstyret på Vesterbro, og aflever det igen mandag. [Book din højtaler nu](/#book).
+Vi gør det nemt: book online på 2 minutter, hent udstyret på Vermlandsgade 66 på Amager, og aflever det igen mandag. [Book din højtaler nu](/#book).

@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Mackie Thump GO København | Fra 345 kr | Lejhøjtaler.dk",
   description:
     "Lej Mackie Thump GO i København fra 345 kr/weekend. Batteridrevet 8\" højtaler med Bluetooth. Ingen strøm nødvendig. Book online.",
   keywords: ["mackie thump go leje", "batterihøjtaler leje", "lej mackie go", "mobil højtaler københavn"],
-  alternates: { canonical: "https://lejhojtaler.dk/mackie-thump-go" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/mackie-thump-go",
+    languages: localeAlternates("/mackie-thump-go"),
+  },
   openGraph: {
     title: "Lej Mackie Thump GO København | Fra 345 kr",
     description: "Batteridrevet 8\" højtaler fra 345 kr/weekend. Book online.",

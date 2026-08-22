@@ -4,12 +4,12 @@ import { getAllPosts } from "@/lib/blog";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Blog | Lejhøjtaler.dk",
+  title: "Sound & Party Guides Copenhagen | Lejhøjtaler.dk",
   description:
     "Guides and tips for speaker rental, PA systems, party sound and party lights in Copenhagen. Read our blog and learn more about sound for your next party.",
   alternates: { canonical: "https://lejhojtaler.dk/en/blog", languages: localeAlternates("/blog") },
   openGraph: {
-    title: "Blog | Lejhøjtaler.dk",
+    title: "Sound & Party Guides Copenhagen | Lejhøjtaler.dk",
     description:
       "Guides and tips for speaker rental, PA systems, party sound and party lights in Copenhagen.",
     url: "https://lejhojtaler.dk/en/blog",

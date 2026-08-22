@@ -1,13 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Festpakke 150 | Lyd, bas, lys og røg til 150 gæster | 1.495 kr | Lejhøjtaler.dk",
   description:
     "Festpakke 150: 2× EV 12\" højtalere, 12\" subwoofer, stativer, lys-pakke og røgmaskine for 1.495 kr — spar 135 kr. Lyd og lys til op til 150 gæster i København. Levering og opsætning kan tilvælges.",
   keywords: ["festpakke 150 personer", "lydanlæg 150 personer", "lej lyd og lys til fest", "anlæg til stor fest", "højtalere og sub leje"],
-  alternates: { canonical: "https://lejhojtaler.dk/festpakke-150" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/festpakke-150",
+    languages: localeAlternates("/festpakke-150"),
+  },
   openGraph: {
     title: "Festpakke 150 | Lyd, bas, lys og røg til 150 gæster | 1.495 kr",
     description: "2× EV 12\" + subwoofer + stativer + lys + røg. Alt til festen — spar 135 kr.",

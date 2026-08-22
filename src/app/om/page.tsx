@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { localeAlternates } from "@/lib/hreflang";
+import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 
 export const metadata: Metadata = {
   title: "Om os | Lejhøjtaler.dk",
@@ -40,6 +41,7 @@ export default function OmPage() {
 
   return (
     <>
+      <LocalBusinessJsonLd />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
