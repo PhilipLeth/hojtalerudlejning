@@ -437,6 +437,10 @@ export default function BookingFlow({
   const [step, setStep] = useState(1);
   const [addonSearch, setAddonSearch] = useState("");
   const [speaker, setSpeaker] = useState<string | null>(null);
+  // Afhentningsadressen bruges på kvitteringen. Den manglede her, så hele
+  // bekræftelsesskærmen kastede en ReferenceError, når kunden havde bestilt:
+  // ordren blev gemt og mailen sendt, men kunden så et brud og bestilte igen.
+  const { pickupAddress } = useSiteSettings();
   const [pickupDate, setPickupDate] = useState<Date | null>(null);
   const [returnDate, setReturnDate] = useState<Date | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
@@ -591,7 +595,14 @@ export default function BookingFlow({
       const from = dateKey(pickup);
       const to = dateKey(ret);
       const r = await fetch(`/api/availability?from=${from}&to=${to}`);
-      const data: AvailabilityData = await r.json();
+      const rå = (await r.json()) as Partial<AvailabilityData> | null;
+      // Serveren kan svare uden tallene — fx når den kører på nødsvar. Så skal
+      // kalenderen vise ukendt belægning, ikke kaste midt i kundens datovalg.
+      const data: AvailabilityData = {
+        inventory: rå?.inventory ?? {},
+        booked: rå?.booked ?? {},
+        blocked_dates: rå?.blocked_dates ?? [],
+      };
       setAvailSelected(data);
 
       // Check if the selected product is available

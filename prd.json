@@ -1042,6 +1042,16 @@
     "gendannelse": "Manuel og med vilje: hent filen i /admin/indstillinger og skriv de nøgler tilbage, der mangler. En automatisk gendannelses-knap ville kunne overskrive rigtige data med gamle ved et fejlklik.",
     "status": "Live 2026-08-18."
   },
+  "nedbrud_paa_kvitteringen": {
+    "fundet": "2026-08-22 via fejlopsamlingen, som havde kørt i et døgn. Otte rapporter: »Uncaught ReferenceError: pickupAddress is not defined« fra Chrome/Windows, Chrome/Mac og Safari/iOS, på flere sider.",
+    "fejlen": "BookingFlow brugte pickupAddress på kvitteringsskærmen (linje 1070), men hentede den aldrig i hovedkomponenten — kun i to underkomponenter. Resultat: kunden trykkede »send booking«, ordren blev gemt i KV, mailen blev sendt, og så kastede React en ReferenceError i stedet for at vise bekræftelsen. Kunden så et brud og troede, det var mislykkedes. Det forklarer både »jeg kan ikke booke online« og dobbeltbestillingerne.",
+    "hvorfor_den_slap_igennem": "TypeScript flaggede den som TS2304 hele tiden, men next.config.ts har ignoreBuildErrors: true, så byggeriet sagde god for den. Testene rørte aldrig kvitteringsskærmen.",
+    "rettet": "pickupAddress hentes nu i hovedkomponenten. To nye tests: en der gennemfører en booking og kræver at kvitteringen vises med adresse og ordrenummer, og src/__tests__/typefejl.test.ts, som kører tsc og fejler på enhver TS2304 i klientkoden — den kategori er ALTID en ægte fejl. Verificeret ved at genindføre fejlen: vagten pegede på linjen.",
+    "ogsaa_rettet": "Ledighedssvaret parses nu defensivt. Under KV-nedbruddet 21. august svarede /api/availability uden inventory-feltet, og klienten kastede »Cannot read properties of undefined (reading 'soundboks')« midt i kundens datovalg — seks af de fjorten rapporter.",
+    "flervare_ordrer": "Testet: kurven med to produkter sender begge med i payload'en, og serverens prisberegning tager imod seks varer på én ordre (Stripe-session oprettet uden fejl).",
+    "laering": "Fejlopsamlingen betalte sig selv på under et døgn. Uden den ville vi stadig gætte — fejlen var usynlig i logs, i tests og for os selv, fordi den kun rammer efter et gennemført køb.",
+    "status": "Live 2026-08-22."
+  },
   "kv_kvote_og_dubletter": {
     "nedbrud_2026_08_21": "/api/availability svarede 500 til ALLE besøgende. Årsag: endepunktet lavede to KV list-opslag pr. besøg (bookinger + blokerede datoer) plus et get pr. booking, og Cloudflares gratis KV tillader 1.000 list-operationer i døgnet. Cirka 500 besøg brugte dagens kvote, og derefter kunne ingen se ledighed. Fejlen var usynlig for os, fordi BookingFlow fangede den i et tomt catch — den blev først fundet, da vi undersøgte hvorfor kunder bestilte flere gange.",
     "loesning": "functions/api/_lib/bookingIndex.ts henter alle bookinger og blokerede datoer ÉN gang og lægger dem i kantens cache i fem minutter. Alle besøg deler kopien uanset hvilke datoer de spørger om, fordi den indeholder alt og filtreres i hukommelsen. Værste fald: ~576 list-opslag i døgnet mod 1.000 tilladte. book.ts og bookings-update.ts rydder cachen ved skrivning, så en ny booking eller en annullering slår igennem straks.",
