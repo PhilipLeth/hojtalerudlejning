@@ -78,3 +78,33 @@ describe("Kurven med ét produkt", () => {
     await waitFor(() => expect(screen.getByText("Vælg højtalere")).toBeInTheDocument());
   }, 20000);
 });
+
+/**
+ * Kalenderen står på trin 2, kørslen på trin 3. Vælger kunden "Jeg henter og
+ * afleverer selv", stod der ikke længere noget om HVORNÅR døren er åben — man
+ * skulle huske tiderne fra forrige trin. Nu står åbningstiderne for netop de
+ * valgte datoer under valget.
+ */
+describe("Åbningstider ved 'jeg henter selv'", () => {
+  it("skriver tiderne for de valgte dage under valget", async () => {
+    await tilTilvalg();
+    // Teksten → tekstkolonnen → knappen → rækken med åbningstiderne under
+    const selv = screen.getByText("Jeg henter og afleverer selv").closest("div")!.parentElement!
+      .parentElement!;
+    const tekst = selv.textContent ?? "";
+    // Fredag hentes, mandag afleveres — standardtiderne, dag for dag
+    expect(tekst).toMatch(/Afhentning:\s*Fredag 14–18/);
+    expect(tekst).toMatch(/Aflevering:\s*Mandag 15–17/);
+    // Og gebyret for at møde uden for åbningstid, så det ikke kommer bagefter
+    expect(tekst).toMatch(/Uden for åbningstid/);
+  }, 20000);
+
+  it("fjerner tiderne igen, når kunden vælger levering", async () => {
+    await tilTilvalg();
+    expect(document.body.textContent).toMatch(/Afhentning:\s*Fredag 14–18/);
+
+    fireEvent.click(screen.getByText("Levering + afhentning (begge veje)").closest("button")!);
+
+    await waitFor(() => expect(document.body.textContent).not.toMatch(/Afhentning:\s*Fredag 14–18/));
+  }, 20000);
+});

@@ -15,6 +15,7 @@ import {
   formatAfterHours,
   formatDateLine,
   formatOneLine,
+  formatSentence,
   hoursForDate,
   upcomingExceptions,
   type OpeningHours,
@@ -197,17 +198,33 @@ function MiniCalendar({
  * særlig åbning (fx 30. december), står noten med, så det er tydeligt hvorfor
  * en tirsdag pludselig er mulig.
  */
-function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da" }: {
+function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da", whenEmpty = "hide" }: {
   hours: OpeningHours;
   pickupDate: Date | null;
   returnDate: Date | null;
   locale?: Locale;
+  /**
+   * Hvad der sker uden valgte datoer. Under kalenderen: ingenting — man er ved
+   * at vælge dem. I kørselsfeltet: de almindelige åbningstider, så feltet
+   * aldrig står tomt om hvornår man kan hente.
+   */
+  whenEmpty?: "hide" | "sentence";
 }) {
   const afterHours = formatAfterHours(hours, locale);
   const rows: Array<{ key: string; label: string; iso: string }> = [];
   if (pickupDate) rows.push({ key: "pickup", label: locale === "en" ? "Pickup" : "Afhentning", iso: dateKey(pickupDate) });
   if (returnDate) rows.push({ key: "return", label: locale === "en" ? "Return" : "Aflevering", iso: dateKey(returnDate) });
-  if (rows.length === 0) return null;
+  if (rows.length === 0) {
+    if (whenEmpty === "hide") return null;
+    const sætning = formatSentence(hours, locale);
+    if (!sætning) return null;
+    return (
+      <div className="mt-3 space-y-1 rounded-lg bg-white/5 px-3 py-2 text-xs">
+        <p className="text-brand-300">{sætning}</p>
+        {afterHours && <p className="pt-1 text-white/40">{afterHours}</p>}
+      </div>
+    );
+  }
 
   return (
     <div className="mt-3 space-y-1 rounded-lg bg-white/5 px-3 py-2 text-xs">
@@ -296,6 +313,8 @@ function DeliveryPicker({
   address,
   onAddressChange,
   addressMissing,
+  pickupDate,
+  returnDate,
   locale = "da",
 }: {
   options: Array<{ id: string; label: string; desc: string; price: number }>;
@@ -304,12 +323,16 @@ function DeliveryPicker({
   address: string;
   onAddressChange: (v: string) => void;
   addressMissing: boolean;
+  /** Datoerne fra trin 2 — henter kunden selv, skal åbningstiderne for netop
+      de dage stå her, ikke kun ovre ved kalenderen */
+  pickupDate: Date | null;
+  returnDate: Date | null;
   locale?: Locale;
 }) {
   const s = t[locale].booking;
   if (options.length === 0) return null;
 
-  const { pickupAddress } = useSiteSettings();
+  const { hours, pickupAddress } = useSiteSettings();
   const selfLabel = locale === "en" ? "I pick up and return it myself" : "Jeg henter og afleverer selv";
   const selfDesc = `${pickupAddress} — ${locale === "en" ? "free" : "gratis"}`;
 
@@ -332,29 +355,41 @@ function DeliveryPicker({
         {rows.map((o) => {
           const selected = value === o.id;
           return (
-            <button
-              key={o.id ?? "selv"}
-              type="button"
-              onClick={() => onSelect(o.id)}
-              className={`flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left transition active:scale-[0.99] ${
-                selected ? "border-brand-500 bg-brand-500/10" : "border-white/10 bg-white/[0.03] hover:border-white/25"
-              }`}
-            >
-              <div
-                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition ${
-                  selected ? "border-brand-500 bg-brand-500" : "border-white/20 bg-white/5"
+            <div key={o.id ?? "selv"}>
+              <button
+                type="button"
+                onClick={() => onSelect(o.id)}
+                className={`flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left transition active:scale-[0.99] ${
+                  selected ? "border-brand-500 bg-brand-500/10" : "border-white/10 bg-white/[0.03] hover:border-white/25"
                 }`}
               >
-                {selected && <span className="h-2 w-2 rounded-full bg-black" />}
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold">{o.label}</p>
-                <p className="text-xs text-white/40">{o.desc}</p>
-              </div>
-              <p className={`shrink-0 text-sm font-bold ${o.price ? "text-brand-400" : "text-white/40"}`}>
-                {o.price ? `+${o.price},-` : s.deliveryFree}
-              </p>
-            </button>
+                <div
+                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition ${
+                    selected ? "border-brand-500 bg-brand-500" : "border-white/20 bg-white/5"
+                  }`}
+                >
+                  {selected && <span className="h-2 w-2 rounded-full bg-black" />}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold">{o.label}</p>
+                  <p className="text-xs text-white/40">{o.desc}</p>
+                </div>
+                <p className={`shrink-0 text-sm font-bold ${o.price ? "text-brand-400" : "text-white/40"}`}>
+                  {o.price ? `+${o.price},-` : s.deliveryFree}
+                </p>
+              </button>
+              {/* Henter kunden selv, skal det stå her hvornår døren er åben —
+                  for netop de datoer der er valgt, ikke som en generel liste */}
+              {o.id === null && selected && (
+                <SelectedDayHours
+                  hours={hours}
+                  pickupDate={pickupDate}
+                  returnDate={returnDate}
+                  locale={locale}
+                  whenEmpty="sentence"
+                />
+              )}
+            </div>
           );
         })}
       </div>
@@ -1713,6 +1748,8 @@ export default function BookingFlow({
               address={deliveryAddress}
               onAddressChange={setDeliveryAddress}
               addressMissing={deliveryAddressMissing && showDeliveryError}
+              pickupDate={pickupDate}
+              returnDate={returnDate}
             />
 
             {/* Tilvalgene. Kun de fem mest relevante vises — resten kan foldes
