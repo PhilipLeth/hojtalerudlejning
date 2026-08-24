@@ -14,6 +14,9 @@ interface Booking extends OrderBooking {
   speaker: string;
   speakerSize: string;
   period: string;
+  /** Hvornår kunden henter og afleverer — aftalt i checkout, ikke i telefonen */
+  pickupTime?: string;
+  returnTime?: string;
   days: number;
   addons: string[];
   deliveryAddress?: string;
@@ -269,6 +272,8 @@ export default function LejeseddelPage() {
               <div className="box">
                 <h2 style={{ margin: "0 0 3px" }}>Leje</h2>
                 <div className="row"><b>Periode</b> <span>{selected.period} ({selected.days} {selected.days === 1 ? "dag" : "dage"})</span></div>
+                {selected.pickupTime && <div className="row"><b>Henter</b> <span>{selected.pickupTime}</span></div>}
+                {selected.returnTime && <div className="row"><b>Afleverer</b> <span>{selected.returnTime}</span></div>}
                 <div className="row"><b>Kørsel</b> <span>{koersel}</span></div>
                 <div className="row"><b>Sted</b> <span>{delivery?.address || pickupPlace}</span></div>
                 <div className="row"><b>Bestilt</b> <span>{new Date(selected.createdAt).toLocaleDateString("da-DK", { day: "numeric", month: "short", year: "numeric" })}</span></div>

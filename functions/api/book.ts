@@ -7,6 +7,8 @@ import { recordSms, sendBookingSms, type SendSmsOutcome } from "./_lib/sms";
 import { nulstilBookingIndex } from "./_lib/bookingIndex";
 import type { SaleContext } from "./_lib/weekendSale";
 import { notifyRecipients } from "./_lib/notify";
+import { afterHoursLegs } from "./_lib/pricing";
+import { formatTimeSlot } from "../../src/lib/openingHours";
 
 interface Env {
   RESEND_API_KEY: string;
@@ -34,6 +36,16 @@ interface BookingData {
   /** Lejeperioden som ISO — sendes af kalenderen, bruges til weekendudsalget */
   pickup?: string;
   returnDate?: string;
+  /**
+   * Lejeperioden som kalenderdage ("YYYY-MM-DD"). pickup er et tidspunkt, og
+   * kundens lokale midnat er 22:00 dagen før i UTC — et .slice(0,10) på den
+   * ramte den forkerte dag hele sommeren.
+   */
+  pickupDay?: string;
+  returnDay?: string;
+  /** Hvornår kunden vil mødes: open | early | late | unknown */
+  pickupSlot?: string;
+  returnSlot?: string;
   deliveryAddress?: string;
   /** levering_ud | afhentning_retur | levering_begge — hvilken vej vi kører */
   deliveryOptionId?: string;
@@ -101,6 +113,14 @@ async function notifyPhones(env: Env, data: BookingData, bookingId: string): Pro
   }
 }
 
+const ISO_DAG = /^\d{4}-\d{2}-\d{2}$/;
+
+/** Kalenderdagen: klientens egen dato, ellers det bedste vi kan læse ud af tidspunktet */
+function bookingDay(day: string | undefined, iso: string | undefined): string {
+  const d = String(day ?? "");
+  return ISO_DAG.test(d) ? d : String(iso ?? "").slice(0, 10);
+}
+
 /** Produkt-ids i ordren — grundlaget for at afgøre om weekendudsalget gælder */
 function orderProductIds(data: BookingData): string[] {
   const ids = new Set<string>(data.addonIds || []);
@@ -113,9 +133,9 @@ function orderProductIds(data: BookingData): string[] {
 
 /** Ordren som weekendudsalget skal vurderes imod. null når datoerne mangler. */
 function saleContext(data: BookingData): SaleContext | null {
-  const pickup = String(data.pickup ?? "").slice(0, 10);
-  const returnDate = String(data.returnDate ?? "").slice(0, 10);
-  const isDate = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s);
+  const pickup = bookingDay(data.pickupDay, data.pickup);
+  const returnDate = bookingDay(data.returnDay, data.returnDate);
+  const isDate = (s: string) => ISO_DAG.test(s);
   if (!isDate(pickup) || !isDate(returnDate)) return null;
   const productIds = orderProductIds(data);
   return productIds.length ? { pickup, returnDate, productIds } : null;
@@ -298,6 +318,26 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const addonsText =
     data.addons.length > 0 ? data.addons.join(", ") : "Ingen";
 
+  // Adresse, CVR, åbningstider og mail i bekræftelsen kommer fra /admin/indstillinger
+  const site = await loadSiteSettings(context.env.BOOKINGS);
+
+  // Vil kunden mødes uden for åbningstid, koster turen et gebyr. Beløbet slås
+  // op i åbningstiderne — aldrig i det klienten sendte.
+  const pickupDag = bookingDay(data.pickupDay, data.pickup);
+  const returnDag = bookingDay(data.returnDay, data.returnDate);
+  const gebyrer = afterHoursLegs(site.hours, {
+    pickup: pickupDag,
+    returnDate: returnDag,
+    pickupSlot: data.pickupSlot,
+    returnSlot: data.returnSlot,
+    productIds: orderProductIds(data),
+  });
+  const afterHoursFee = gebyrer.reduce((sum, l) => sum + l.fee, 0);
+  // Tidsrummene som læsbar tekst — de skal stå i mailen og på lejesedlen, ikke
+  // kun som "early" i KV
+  const pickupTime = formatTimeSlot(site.hours, pickupDag, data.pickupSlot);
+  const returnTime = formatTimeSlot(site.hours, returnDag, data.returnSlot);
+
   // Fuld ordreoversigt — kurv-varer blev tidligere slet ikke vist i mailen,
   // så ordrer med flere produkter så ud som ét produkt.
   const orderLines: Array<{ label: string; price?: number }> = [];
@@ -311,6 +351,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
   for (const a of data.addons || []) {
     orderLines.push({ label: a });
+  }
+  for (const g of gebyrer) {
+    orderLines.push({ label: g.name, price: g.fee });
   }
   const orderRowsHtml = orderLines.length
     ? orderLines
@@ -326,8 +369,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   const delivery = deliveryLine(data);
   const upsell = pickUpsell(data);
-  // Adresse, CVR og mail i bekræftelsen kommer fra /admin/indstillinger
-  const site = await loadSiteSettings(context.env.BOOKINGS);
   console.log("[book] upsell:", upsell?.id ?? "none", "addonIds:", data.addonIds);
 
   const ownerHtml = `
@@ -335,6 +376,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     <table style="border-collapse:collapse;font-family:sans-serif;">
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;vertical-align:top;">Ordre:</td><td>${orderTableHtml}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Periode:</td><td>${data.period}</td></tr>
+      ${pickupTime ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Henter:</td><td>${pickupTime}</td></tr>` : ""}
+      ${returnTime ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Afleverer:</td><td>${returnTime}</td></tr>` : ""}
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Dage:</td><td>${data.days}</td></tr>
       ${delivery ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Kørsel:</td><td><strong>${delivery}</strong></td></tr>` : `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Kørsel:</td><td>Kunden henter og afleverer selv</td></tr>`}
       ${data.deliveryAddress ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Adresse:</td><td>${data.deliveryAddress}</td></tr>` : ""}
@@ -360,6 +403,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         <p style="margin:4px 0 8px;"><strong>Din ordre:</strong></p>
         ${orderTableHtml}
         <p style="margin:12px 0 4px;"><strong>Periode:</strong> ${data.period}</p>
+        ${pickupTime ? `<p style="margin:4px 0;"><strong>Afhentning:</strong> ${pickupTime}</p>` : ""}
+        ${returnTime ? `<p style="margin:4px 0;"><strong>Aflevering:</strong> ${returnTime}</p>` : ""}
         ${delivery ? `<p style="margin:4px 0;"><strong>Kørsel:</strong> ${delivery}${data.deliveryAddress ? ` — ${data.deliveryAddress}` : ""}</p>` : `<p style="margin:4px 0;"><strong>Afhentning:</strong> ${site.pickupAddress}</p>`}
         ${discount ? `<p style="margin:4px 0;color:#1e7e34;"><strong>Rabat:</strong> ${discount.code} (−${discount.pct}%)</p>` : ""}
         <p style="margin:8px 0 0;font-size:20px;"><strong>Total: ${data.total} kr</strong></p>
@@ -438,6 +483,11 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       id: key,
       status: "ny",
       createdAt: sentAt,
+      // Tidsrummene som tekst, så admin og lejesedlen kan vise dem uden at
+      // regne åbningstiderne ud igen
+      pickupTime,
+      returnTime,
+      afterHoursFee,
       // Valideret server-side; null hvis koden var ukendt
       discount: discount ?? null,
       upsellOffered: upsell

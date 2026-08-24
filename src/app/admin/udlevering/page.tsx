@@ -33,6 +33,9 @@ interface Booking extends OrderBooking {
   days: number;
   pickup?: string;
   returnDate?: string;
+  /** Hvornår kunden henter og afleverer — aftalt i checkout */
+  pickupTime?: string;
+  returnTime?: string;
   comment?: string;
   status: string;
   paid?: boolean;
@@ -370,6 +373,13 @@ export default function UdleveringPage() {
             <div style={card}>
               <div style={{ fontSize: "20px", fontWeight: 800 }}>{booking.name}</div>
               <div style={{ fontSize: "14px", color: "#555", marginTop: "2px" }}>{booking.period}</div>
+              {(booking.pickupTime || booking.returnTime) && (
+                <div style={{ fontSize: "13px", color: "#555", marginTop: "2px" }}>
+                  {booking.pickupTime ? `Henter: ${booking.pickupTime}` : ""}
+                  {booking.pickupTime && booking.returnTime ? " · " : ""}
+                  {booking.returnTime ? `Afleverer: ${booking.returnTime}` : ""}
+                </div>
+              )}
               <div style={{ marginTop: "8px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <a href={`tel:${booking.phone}`} style={{ color: "#0070f3", fontSize: "14px" }}>{booking.phone}</a>
                 <a href={`mailto:${booking.email}`} style={{ color: "#0070f3", fontSize: "14px" }}>{booking.email}</a>

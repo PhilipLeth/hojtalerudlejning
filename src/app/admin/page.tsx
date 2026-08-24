@@ -52,6 +52,11 @@ interface Booking extends OrderBooking {
   /** Lejeperiodens start/slut som ISO — findes på alle bookinger fra kalenderen */
   pickup?: string;
   returnDate?: string;
+  /** Hvornår kunden vil mødes — tekst fra checkout, fx "Før 14 (6.30–14)" */
+  pickupTime?: string;
+  returnTime?: string;
+  /** Gebyret for at mødes uden for åbningstid, i kr */
+  afterHoursFee?: number;
   days: number;
   addons: string[];
   deliveryAddress?: string;
@@ -1084,6 +1089,8 @@ function BookingDetails({ b, today, setFields }: { b: Booking; today: Date; setF
       <div><strong>Telefon:</strong> <a href={`tel:${b.phone}`} style={{ color: "#0070f3" }}>{b.phone}</a></div>
       {b.company && <div><strong>Firma:</strong> {b.company}</div>}
       <div><strong>Dage:</strong> {b.days}</div>
+      {b.pickupTime && <div><strong>Henter:</strong> {b.pickupTime}</div>}
+      {b.returnTime && <div><strong>Afleverer:</strong> {b.returnTime}</div>}
       {b.deliveryAddress && <div><strong>Adresse:</strong> {b.deliveryAddress}</div>}
       <div>
         <strong>Sagsstatus:</strong>{" "}

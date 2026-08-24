@@ -8,6 +8,10 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/__tests__/setup.ts"],
     globals: true,
+    // .claude/worktrees rummer andre sessioners udgaver af det samme repo.
+    // Uden det her kører npm test deres tests med — mod deres kode — og
+    // suiten er rød af noget der ikke findes i denne checkout.
+    exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**", "**/.claude/**"],
   },
   resolve: {
     alias: {

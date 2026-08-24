@@ -3,8 +3,15 @@
  * Beløb beregnes altid server-side ud fra kataloget — klienten sender kun produkt-id'er.
  */
 import Stripe from "stripe";
-import { loadPriceTable, buildLineItems, type LineItemInput } from "../_lib/pricing";
+import {
+  loadPriceTable,
+  buildLineItems,
+  afterHoursLegs,
+  afterHoursLineItems,
+  type LineItemInput,
+} from "../_lib/pricing";
 import { resolveDiscountFor, discountOre } from "../_lib/discounts";
+import { loadSiteSettings } from "../_lib/siteSettings";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -25,6 +32,25 @@ interface Body {
   /** Lejeperioden — weekendudsalgets kode gælder kun bestemte datoer */
   pickup?: string;
   returnDate?: string;
+  /**
+   * Lejeperioden som kalenderdage ("YYYY-MM-DD"). Sendes ved siden af pickup,
+   * fordi pickup er et tidspunkt: klientens lokale midnat bliver til 22:00 dagen
+   * før i UTC, og et .slice(0,10) på den ramte derfor den forkerte dag hele
+   * sommeren.
+   */
+  pickupDay?: string;
+  returnDay?: string;
+  /** Hvornår kunden vil mødes: open | early | late | unknown */
+  pickupSlot?: string;
+  returnSlot?: string;
+}
+
+const ISO_DAG = /^\d{4}-\d{2}-\d{2}$/;
+
+/** Kalenderdagen: klientens egen dato, ellers det bedste vi kan læse ud af tidspunktet */
+function dagAf(day: string | undefined, iso: string | undefined): string {
+  const d = String(day ?? "");
+  return ISO_DAG.test(d) ? d : String(iso ?? "").slice(0, 10);
 }
 
 /**
@@ -69,6 +95,31 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return json({ error: e instanceof Error ? e.message : "Invalid items" }, 400);
   }
 
+  // Vil kunden hente eller aflevere uden for åbningstid, koster turen et gebyr.
+  // Beløbet slås op i åbningstiderne fra /admin/indstillinger — klienten sender
+  // kun hvilket tidsrum der blev valgt, aldrig et beløb.
+  try {
+    const { hours } = await loadSiteSettings(context.env.BOOKINGS);
+    const legs = afterHoursLegs(
+      hours,
+      {
+        pickup: dagAf(body.pickupDay, body.pickup),
+        returnDate: dagAf(body.returnDay, body.returnDate),
+        pickupSlot: body.pickupSlot,
+        returnSlot: body.returnSlot,
+        productIds: body.items.map((i) => String(i?.id ?? "")).filter(Boolean),
+      },
+      body.locale === "en" ? "en" : "da",
+    );
+    const ekstra = afterHoursLineItems(legs);
+    lineItems = [...lineItems, ...ekstra.lineItems];
+    totalOre += ekstra.totalOre;
+  } catch (e) {
+    // Et gebyr må aldrig spærre for betalingen — så mangler linjen, og vi
+    // opkræver den ved afhentningen i stedet
+    console.error("[stripe] gebyr uden for åbningstid kunne ikke beregnes:", e);
+  }
+
   const stripe = new Stripe(context.env.STRIPE_SECRET_KEY, {
     httpClient: Stripe.createFetchHttpClient(),
   });
@@ -81,9 +132,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   // og afvise den rabat, kunden lige fik godkendt.
   let discount: { code: string; pct: number } | null = null;
   if (body.discountCode) {
-    const pickup = String(body.pickup ?? "").slice(0, 10);
-    const returnDate = String(body.returnDate ?? "").slice(0, 10);
-    const isDate = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s);
+    const pickup = dagAf(body.pickupDay, body.pickup);
+    const returnDate = dagAf(body.returnDay, body.returnDate);
+    const isDate = (s: string) => ISO_DAG.test(s);
     const ctx =
       isDate(pickup) && isDate(returnDate)
         ? { pickup, returnDate, productIds: body.items.map((i) => String(i?.id ?? "")).filter(Boolean) }

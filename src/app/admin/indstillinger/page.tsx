@@ -494,7 +494,7 @@ export default function IndstillingerPage() {
             value={hours.other}
             maxLength={200}
             onChange={(e) => setHours((prev) => ({ ...prev, other: e.target.value }))}
-            placeholder="Andre tidspunkter efter aftale — skriv i kommentarfeltet ved booking."
+            placeholder="Andre tidspunkter vælges direkte i bookingen."
             style={{ width: "100%", padding: "10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
           />
 

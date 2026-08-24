@@ -15,24 +15,37 @@ beforeEach(() => {
 });
 afterEach(() => window.history.pushState({}, "", "/"));
 
-/** Vælg produkt via ?product=, vælg to datoer i indeværende måned, gå til tilvalg */
+/**
+ * Vælg produkt via ?product=, vælg fredag → mandag, gå til tilvalg.
+ *
+ * Datoerne er bevidst to ÅBNE dage: på en lukket dag lægger checkout gebyret
+ * for at mødes uden for åbningstid oveni, og så handler testen pludselig om
+ * noget andet end kørslen.
+ */
 async function toAddonStep() {
   window.history.pushState({}, "", "/?product=festival#book");
   render(<BookingFlow />);
   await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
 
   const today = new Date();
-  const last = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-  // To dage frem i samme måned, ellers skal kalenderen bladres
-  const from = today.getDate() + 1 <= last - 2 ? today.getDate() + 1 : 1;
+  const fredag = new Date(today);
+  fredag.setDate(fredag.getDate() + ((5 - fredag.getDay() + 7) % 7 || 7));
+  const mandag = new Date(fredag);
+  mandag.setDate(mandag.getDate() + 3);
+
   const click = (day: number) => {
     const btn = screen
       .getAllByRole("button")
       .find((x) => x.textContent === String(day) && !(x as HTMLButtonElement).disabled);
     if (btn) fireEvent.click(btn);
   };
-  click(from);
-  click(from + 2);
+  const næsteMåned = () => fireEvent.click(screen.getByLabelText("Næste måned"));
+
+  // Fredagen kan ligge i næste måned — så skal kalenderen bladres derhen først
+  if (fredag.getMonth() !== today.getMonth()) næsteMåned();
+  click(fredag.getDate());
+  if (mandag.getMonth() !== fredag.getMonth()) næsteMåned();
+  click(mandag.getDate());
   await waitFor(() => {
     const next = screen.getByText("Videre") as HTMLButtonElement;
     expect(next.disabled).toBe(false);

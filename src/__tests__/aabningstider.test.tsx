@@ -373,7 +373,8 @@ describe("Footeren", () => {
   it("viser linjen under tiderne", async () => {
     mockSettings();
     render(<Footer />);
-    await waitFor(() => expect(screen.getByText(/Andre tidspunkter efter aftale/)).toBeInTheDocument());
+    // Teksten er admins egen — testen skal følge standarden, ikke fastholde en gammel formulering
+    await waitFor(() => expect(screen.getByText(DEFAULT_OPENING_HOURS.other)).toBeInTheDocument());
   });
 
   it("viser engelske dagnavne på den engelske side", async () => {
@@ -490,7 +491,7 @@ describe("Uden for åbningstid", () => {
 
   it("skriver noten som en mulighed, ikke som en advarsel", () => {
     expect(formatAfterHours(DEFAULT_OPENING_HOURS))
-      .toBe("Uden for åbningstid kan du hente og aflevere mellem 6.30 og 21 for 50 kr ekstra — skriv tidspunktet i kommentarfeltet.");
+      .toBe("Uden for åbningstid kan du hente og aflevere mellem 6.30 og 21 for 50 kr ekstra — tidspunktet vælges ved booking.");
     expect(formatAfterHours(DEFAULT_OPENING_HOURS, "en"))
       .toContain("between 6:30 AM and 9 PM for 50 kr extra");
   });
@@ -647,7 +648,7 @@ describe("Checkout", () => {
 
     const lukkede = screen.getAllByRole("button").filter((b) => b.getAttribute("title")?.includes("lukket"));
     expect(lukkede.length).toBeGreaterThan(0);
-    // Som hidtil: man kan vælge dagen og aftale tidspunktet i kommentarfeltet
+    // Som hidtil: man kan vælge dagen — tidspunktet vælges bagefter i checkout
     const fremtidige = lukkede.filter((b) => !b.className.includes("cursor-not-allowed"));
     expect(fremtidige.length).toBeGreaterThan(0);
   });

@@ -100,7 +100,7 @@ export const DEFAULT_OPENING_HOURS: OpeningHours = {
     sat: { ...LUKKET },
     sun: { ...LUKKET },
   },
-  other: "Andre tidspunkter efter aftale — skriv i kommentarfeltet ved booking.",
+  other: "Andre tidspunkter vælges direkte i bookingen.",
   exceptions: [],
   onlyOpenDays: false,
   afterHours: { enabled: true, from: "06:30", to: "21:00", fee: 50 },
@@ -237,9 +237,9 @@ export function formatAfterHours(hours: OpeningHours, locale: "da" | "en" = "da"
   const fra = formatTime(a.from, locale);
   const til = formatTime(a.to, locale);
   if (locale === "en") {
-    return `Outside opening hours you can pick up and return between ${fra} and ${til} for ${a.fee} kr extra — write the time in the comment field.`;
+    return `Outside opening hours you can pick up and return between ${fra} and ${til} for ${a.fee} kr extra — choose the time when you book.`;
   }
-  return `Uden for åbningstid kan du hente og aflevere mellem ${fra} og ${til} for ${a.fee} kr ekstra — skriv tidspunktet i kommentarfeltet.`;
+  return `Uden for åbningstid kan du hente og aflevere mellem ${fra} og ${til} for ${a.fee} kr ekstra — tidspunktet vælges ved booking.`;
 }
 
 /** Kort udgave til en linje i footeren eller under kalenderen */
@@ -332,6 +332,169 @@ export function upcomingExceptions(
   return hours.exceptions
     .filter((e) => e.date >= todayIso && e.date <= max)
     .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+/* ─────────────────────────── tidsrum ─────────────────────────── */
+
+/**
+ * Hvornår kunden vil hente eller aflevere.
+ *
+ * Før stod der bare "andre tidspunkter efter aftale — skriv i kommentarfeltet",
+ * og så ringede vi frem og tilbage bagefter. Nu vælger kunden et tidsrum i
+ * checkout, og ligger det uden for åbningstiden, lægges gebyret på ordren med
+ * det samme i stedet for at blive en pinlig samtale ved døren.
+ *
+ * Fire muligheder er nok — flere valg koster konverteringer:
+ *   open    i åbningstiden (gratis, valgt på forhånd på en åben dag)
+ *   early   før vi åbner
+ *   late    efter vi lukker
+ *   unknown ved det ikke endnu — vi ringer og aftaler
+ *
+ * På en lukket dag findes "open" ikke, og så koster alle tidsrum gebyr —
+ * også "ved det ikke endnu", for uanset hvornår vi mødes, er det uden for
+ * åbningstid. Det står på knappen, så det ikke kommer bag på nogen.
+ */
+export type TimeSlotId = "open" | "early" | "late" | "unknown";
+
+export const TIME_SLOT_IDS: TimeSlotId[] = ["open", "early", "late", "unknown"];
+
+export interface TimeSlot {
+  id: TimeSlotId;
+  /** Teksten på knappen — "I åbningstiden 14–18" */
+  label: string;
+  /** Selve tidsrummet — "6.30–14". Tom når vi ikke ved det endnu. */
+  window: string;
+  /** Gebyr i kr. 0 når tidsrummet ligger inden for åbningstiden. */
+  fee: number;
+}
+
+/** Midt på dagen — skillelinjen mellem "før" og "efter" på en lukket dag */
+const MIDDAG = "12:00";
+
+/**
+ * De tidsrum kunden kan vælge på en bestemt dato.
+ *
+ * Tom liste betyder "intet at vælge": afhentning uden for åbningstid er slået
+ * fra i /admin/indstillinger, og så gælder den gamle tekst om at aftale det i
+ * kommentarfeltet.
+ */
+export function timeSlots(
+  hours: OpeningHours,
+  isoDate: string,
+  locale: "da" | "en" = "da",
+): TimeSlot[] {
+  const a = hours.afterHours;
+  if (!a.enabled) return [];
+  const r = hoursForDate(hours, isoDate);
+  const en = locale === "en";
+  const tid = (t: string) => formatTime(t, locale);
+  const uvist: TimeSlot = {
+    id: "unknown",
+    label: en ? "I don't know yet" : "Ved jeg ikke endnu",
+    window: "",
+    fee: 0,
+  };
+
+  if (!r.closed) {
+    const slots: TimeSlot[] = [
+      {
+        id: "open",
+        label: `${en ? "During opening hours" : "I åbningstiden"} ${formatRange(r, locale)}`,
+        window: formatRange(r, locale),
+        fee: 0,
+      },
+    ];
+    if (minutesOf(a.from) < minutesOf(r.open)) {
+      slots.push({
+        id: "early",
+        label: `${en ? "Before" : "Før"} ${tid(r.open)}`,
+        window: `${tid(a.from)}–${tid(r.open)}`,
+        fee: a.fee,
+      });
+    }
+    if (minutesOf(r.close) < minutesOf(a.to)) {
+      slots.push({
+        id: "late",
+        label: `${en ? "After" : "Efter"} ${tid(r.close)}`,
+        window: `${tid(r.close)}–${tid(a.to)}`,
+        fee: a.fee,
+      });
+    }
+    slots.push(uvist);
+    return slots;
+  }
+
+  // Lukket dag: hele dagen ligger uden for åbningstid, så alt koster gebyr
+  const slots: TimeSlot[] = [];
+  if (minutesOf(a.from) < minutesOf(MIDDAG)) {
+    slots.push({
+      id: "early",
+      label: `${en ? "Before" : "Før"} ${tid(MIDDAG)}`,
+      window: `${tid(a.from)}–${tid(MIDDAG)}`,
+      fee: a.fee,
+    });
+  }
+  if (minutesOf(MIDDAG) < minutesOf(a.to)) {
+    slots.push({
+      id: "late",
+      label: `${en ? "After" : "Efter"} ${tid(MIDDAG)}`,
+      window: `${tid(MIDDAG)}–${tid(a.to)}`,
+      fee: a.fee,
+    });
+  }
+  slots.push({ ...uvist, window: `${tid(a.from)}–${tid(a.to)}`, fee: a.fee });
+  return slots;
+}
+
+/**
+ * Det tidsrum der er valgt på forhånd.
+ *
+ * Åbningstiden på en åben dag — den er gratis, og så koster tidsvalget ikke
+ * kunden et eneste klik. På en lukket dag kan vi ikke vælge et betalt tidsrum
+ * for kunden, så der står "ved jeg ikke endnu", indtil han selv vælger.
+ */
+export function defaultTimeSlot(hours: OpeningHours, isoDate: string): TimeSlotId {
+  const slots = timeSlots(hours, isoDate);
+  if (slots.length === 0) return "unknown";
+  return slots.find((s) => s.fee === 0)?.id ?? "unknown";
+}
+
+/** Findes tidsrummet på datoen? Ellers falder vi tilbage på standardvalget. */
+export function resolveTimeSlot(
+  hours: OpeningHours,
+  isoDate: string,
+  slot: string | null | undefined,
+): TimeSlotId {
+  const slots = timeSlots(hours, isoDate);
+  const match = slots.find((s) => s.id === slot);
+  return match ? match.id : defaultTimeSlot(hours, isoDate);
+}
+
+/** Gebyret for at mødes i det valgte tidsrum. 0 når det ligger i åbningstiden. */
+export function timeSlotFee(
+  hours: OpeningHours,
+  isoDate: string,
+  slot: string | null | undefined,
+): number {
+  return timeSlots(hours, isoDate).find((s) => s.id === slot)?.fee ?? 0;
+}
+
+/**
+ * Tidsrummet som én linje til mails, lejesedlen og admin — "Før 14 (6.30–14)".
+ * Tom når der intet er valgt, så en gammel booking ikke får en tom række.
+ */
+export function formatTimeSlot(
+  hours: OpeningHours,
+  isoDate: string,
+  slot: string | null | undefined,
+  locale: "da" | "en" = "da",
+): string {
+  const match = timeSlots(hours, isoDate, locale).find((s) => s.id === slot);
+  if (!match) return "";
+  const gebyr = match.fee > 0 ? ` — ${locale === "en" ? "outside opening hours" : "uden for åbningstid"} ${match.fee} kr` : "";
+  return match.window && match.id !== "open"
+    ? `${match.label} (${match.window})${gebyr}`
+    : `${match.label}${gebyr}`;
 }
 
 /* ─────────────────────────── validering ─────────────────────────── */
