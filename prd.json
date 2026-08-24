@@ -1744,7 +1744,8 @@
       "binding": "MEDIA",
       "keys": "img/<key> (billeder), vid/<key> (videoer)",
       "note": "Oprettet 2026-08-04 til medie-uploads fra admin. Bindes via wrangler.toml."
-    }
+    },
+    "rsc_txt_fald": "FEJL 24. august 2026 (Frederik): klik på et produkt endte på https://lejhojtaler.dk/festlys.txt — rå RSC-data i Chrome. Philip kunne ikke genskabe det. ÅRSAG: med output: 'export' henter Next sidens data fra <sti>.txt ved klientnavigation. Fejler eller AFBRYDES den fetch, går Next i catch-grenen og returnerer 'flightData: url.toString()' — url'en er på det tidspunkt ALLEREDE gjort til .txt, så browseren navigeres hen til nyttelasten i stedet for til siden. De øvrige fald (build-id-mismatch, ikke-200) går gennem doMpaNavigation(), som strikker .txt af igen, og er derfor uskadelige — kun catch-grenen rammer forkert. HVORFOR HVER GANG, KUN FOR FREDERIK: Next deler ÉN AbortController mellem alle RSC-fetches og afbryder den på 'pagehide'. Fryser Chrome en fane i baggrunden, er signalet afbrudt, og så rammer hvert eneste klik .txt'en indtil siden hentes forfra. En frisk fane kan ikke genskabe det. RETTET: functions/_middleware.ts sender et rigtigt sideskift (Sec-Fetch-Dest: document) til en .txt videre til siden med 302 + no-store. Next' egen hentning (Sec-Fetch-Dest: empty) går uberørt igennem — ellers dør klientnavigationen. /robots.txt og /llms.txt er undtaget; de ER deres egen side. Dækket af src/__tests__/rsc-txt.test.ts. RODEN LIGGER I NEXT: rettet i Next 16 (returnerer originalUrl), stadig i stykker i 15.5.23, som er det nyeste på vores 15.5-spor. Opgraderes der til 16, kan middlewaren blive stående som sikkerhedsnet."
   },
   "google_ads": {
     "customer_id": "3936363454",
