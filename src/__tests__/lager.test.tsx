@@ -356,18 +356,22 @@ function feltFor(name: string): HTMLInputElement {
 }
 
 describe("/admin/produkter", () => {
-  // Siden render­er hele kataloget, og det er vokset med pakkestigen og
-  // lejlighedspakkerne. Under fuld parallel kørsel tager første render over
-  // fem sekunder i jsdom — derfor mere luft end standardgrænsen i ALLE tre
-  // tests herunder. Kun den første havde den, og de to andre faldt derfor
-  // sporadisk, når resten af suiten kørte samtidig.
+  // Siden render­er hele kataloget, og det bliver ved med at vokse: pakke-
+  // stigen, lejlighedspakkerne og senest mixere, lysshow-pakker og
+  // højtalertrinnet til 50-100 — 57 produkter mod 40 i august. Første render
+  // i jsdom skalerer med det, og 15 sekunder rakte ikke længere under fuld
+  // parallel kørsel.
+  //
+  // Grænsen er hævet frem for at skrumpe mockApi til et lille katalog: de 36
+  // tests i filen deler den mock, og et katalog uden fx pakker ville gøre de
+  // andre tests svagere for at gøre disse tre hurtigere.
   it("har lagertallet på produktet", async () => {
     mockApi({ party: 2 });
     renderAdmin(<ProdukterPage />);
     await waitFor(() => expect(screen.getAllByText("Lager (antal)").length).toBeGreaterThan(0));
     expect(screen.getAllByText(/lager ikke sat/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/2 stk\./).length).toBeGreaterThan(0);
-  }, 15000);
+  }, 30000);
 
   it("har overbooking ved siden af lageret", async () => {
     mockApi({ party: 2 }, { overbook: { party: 1 } });
@@ -375,7 +379,7 @@ describe("/admin/produkter", () => {
     await waitFor(() => expect(screen.getAllByText("Overbooking (kan skaffes)").length).toBeGreaterThan(0));
     expect(screen.getAllByText(/tager imod 3/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/\+1 JIT/).length).toBeGreaterThan(0);
-  }, 15000);
+  }, 30000);
 
   it("gemmer lagertallet med det samme, uden at publicere hele kataloget", async () => {
     mockApi({ thumpgo: 1 });
@@ -396,7 +400,7 @@ describe("/admin/produkter", () => {
       (c: unknown[]) => String(c[0]).startsWith("/api/products") && (c[1] as { method?: string })?.method === "POST",
     );
     expect(katalogPosts).toHaveLength(0);
-  }, 15000);
+  }, 30000);
 });
 
 describe("Ingen anden produktliste tilbage", () => {
