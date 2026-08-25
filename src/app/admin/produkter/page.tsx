@@ -117,6 +117,36 @@ function Field({
 }
 
 /** Lagertallet i produktets sammenfoldede linje — tomt lager er værd at se */
+/**
+ * Pause et produkt uden at slette det.
+ *
+ * Feltet er `hidden`, som allerede filtrerer produktet væk overalt hos kunden
+ * (useProducts) og i DBA-feedet. Kontakten fandtes i forvejen, men lå nederst
+ * inde i det foldede kort, hvor Frederik ikke kunne finde den — derfor står
+ * den nu i hovedet ved siden af Slet, så man kan pause uden at folde ud.
+ *
+ * Bevidst ikke det samme som udsolgt: udsolgt er et lagertal, pause er et
+ * valg. Et pauset produkt beholder sin side og sine links, men kan ikke
+ * bookes og optræder ikke i grid eller feed.
+ */
+function PauseKnap({ pauset, onToggle }: { pauset: boolean; onToggle: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={(e) => { e.preventDefault(); onToggle(); }}
+      title={pauset ? "Vis produktet igen" : "Skjul produktet for kunderne — det kan ikke bookes imens"}
+      style={{
+        fontSize: "12px", cursor: "pointer", borderRadius: "999px", padding: "3px 10px",
+        border: `1px solid ${pauset ? "#28a745" : "#d0d0d0"}`,
+        background: pauset ? "#e8f6ec" : "#fff",
+        color: pauset ? "#1c7430" : "#666",
+      }}
+    >
+      {pauset ? "Genoptag" : "Pause"}
+    </button>
+  );
+}
+
 function StockBadge({ value, overbook }: { value: number | undefined; overbook?: number }) {
   if (value === undefined) {
     return (
@@ -360,6 +390,7 @@ export default function AdminProdukterPage() {
                 <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                   <StockBadge value={lager.stock[sp.id]} overbook={lager.overbook[sp.id]} />
                   <span style={{ color: "#0070f3" }}>{sp.price} kr</span>
+                  <PauseKnap pauset={!!sp.hidden} onToggle={() => updateSpeaker(i, { hidden: !sp.hidden })} />
                   <button type="button" onClick={(e) => { e.preventDefault(); removeSpeaker(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
                 </span>
               </summary>
@@ -450,6 +481,7 @@ export default function AdminProdukterPage() {
                     <StockBadge value={lager.stock[r.id]} overbook={lager.overbook[r.id]} />
                   )}
                   <span style={{ color: "#0070f3" }}>{r.price} kr</span>
+                  <PauseKnap pauset={!!r.hidden} onToggle={() => updateRental(i, { hidden: !r.hidden })} />
                   <button type="button" onClick={(e) => { e.preventDefault(); removeRental(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
                 </span>
               </summary>
@@ -523,6 +555,7 @@ export default function AdminProdukterPage() {
                 <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                   {!isDeliveryAddon(a.id) && <StockBadge value={lager.stock[a.id]} overbook={lager.overbook[a.id]} />}
                   <span style={{ color: "#0070f3" }}>{a.price} kr</span>
+                  <PauseKnap pauset={!!a.hidden} onToggle={() => updateAddon(i, { hidden: !a.hidden })} />
                   <button type="button" onClick={(e) => { e.preventDefault(); removeAddon(i); }} style={{ fontSize: "12px", color: "#dc3545", background: "none", border: "none", cursor: "pointer" }}>Slet</button>
                 </span>
               </summary>
