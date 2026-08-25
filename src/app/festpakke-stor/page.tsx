@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import LivePrice from "@/components/LivePrice";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
@@ -46,13 +47,14 @@ export default function FestpakkeStorPage() {
         <div className="glass rounded-2xl p-8 text-center">
           <h2 className="mb-3 text-2xl font-bold">Mindre fest?</h2>
           <p className="mx-auto mb-6 max-w-md text-white/50">
-            Lille festpakke: kompakt Alto-sæt + enkelt lyseffekt — til op til 40 personer for 495 kr.
+            Lille festpakke: kompakt Alto-sæt + enkelt lyseffekt — til op til 40 personer for{" "}
+            <LivePrice productId="pakke_fest_lille" prefix="" suffix=" kr" />.
           </p>
           <Link
             href="/festpakke-lille"
             className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
           >
-            Se Lille festpakke – 495 kr
+            Se Lille festpakke – <LivePrice productId="pakke_fest_lille" prefix="" suffix=" kr" />
           </Link>
         </div>
       </section>

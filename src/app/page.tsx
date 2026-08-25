@@ -1,6 +1,6 @@
 import HomeHero from "@/components/HomeHero";
 import BundleGrid from "@/components/BundleGrid";
-import { FEST_LADDER_IDS } from "@/lib/products";
+import { FEST_LADDER_IDS, prisSpaend, startPrisKr } from "@/lib/products";
 import ProductGrid from "@/components/ProductGrid";
 import Testimonials from "@/components/Testimonials";
 import HowItWorks from "@/components/HowItWorks";
@@ -28,10 +28,10 @@ export default function Home() {
 
       <LocalBusinessJsonLd
         extra={{
-          priceRange: "95-1195 kr",
+          priceRange: prisSpaend(),
           image: "https://lejhojtaler.dk/images/logo-lejhojtaler.webp",
           description:
-            "Højtalerudlejning i København. Lej højtaler, PA-anlæg, batterihøjtaler og lydudstyr til fest, event og party. Billig levering i hele København. Festudstyr til leje fra 345 kr/weekend.",
+            `Højtalerudlejning i København. Lej højtaler, PA-anlæg, batterihøjtaler og lydudstyr til fest, event og party. Billig levering i hele København. Festudstyr til leje fra ${startPrisKr()}/weekend.`,
           url: "https://lejhojtaler.dk",
         }}
       />

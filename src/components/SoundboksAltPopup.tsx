@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import LivePrice from "@/components/LivePrice";
 
 const STORAGE_KEY = "soundboks_mackie_popup_dismissed";
 
@@ -46,7 +47,8 @@ export default function SoundboksAltPopup() {
           Overvej Mackie Thump GO
         </h2>
         <p className="mb-6 text-sm text-white/50">
-          Billigere batterihøjtaler — mobil, let at tage med, og ofte nok til de fleste fester. Fra 345 kr.
+          Billigere batterihøjtaler — mobil, let at tage med, og ofte nok til de fleste fester.{" "}
+          <LivePrice productId="thumpgo" prefix="Fra " suffix=" kr." />
         </p>
         <Link
           href="/mackie-thump-go"

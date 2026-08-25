@@ -51,8 +51,8 @@ export default function LysPakkePage() {
         title="Kombiner med røg og lyd"
         text="Røg gør lyset 10× federe. Tilføj højtalere for den komplette festpakke."
         links={[
-          { href: "/roegmaskine", label: "Se røgmaskine – 245 kr" },
-          { href: "/lej-hojtaler", label: "Se højtalere – fra 345 kr" },
+          { href: "/roegmaskine", label: "Se røgmaskine", priceId: "rog" },
+          { href: "/lej-hojtaler", label: "Se højtalere", startpris: true },
         ]}
       />
     </ProductLanding>

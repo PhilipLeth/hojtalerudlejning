@@ -24,13 +24,13 @@ En Soundboks er designet til udendørs brug med batteri. Det lyder smart i teori
 
 **Batteriet dør.** En Soundboks holder typisk 4-8 timer afhængig af lydstyrke og temperatur. Skruer du op - og det gør du, for det er jo fest - kan batteriet løbe ud efter bare et par timer. Forestil dig scenen: klokken er 23, stemningen er på sit højeste, og så dør musikken. Det er præcis den situation, Frederik Scharling, stifter af lejhøjtaler.dk, oplevede da han skulle holde fødselsdagsfest og lånte en Soundboks. Batteriet løb ud efter 20 minutter.
 
-**Prisen løber op.** En ny Soundboks koster over 6.000 kr. Vi udlejer selv en Soundboks 4 til 595 kr. for en hel weekend, hvis det er den, du vil have — men for de samme penge kan du få to højtalere med mere lyd.
+**Prisen løber op.** En ny Soundboks koster over 6.000 kr. Vi udlejer selv en Soundboks 4 til 795 kr. for en hel weekend, hvis det er den, du vil have — men for de samme penge kan du få to højtalere med mere lyd.
 
 **Lyden skalerer ikke.** En Soundboks er fin til en lille samling i parken. Men når selskabet vokser til 30, 50 eller 80 gæster, kan den simpelthen ikke følge med. Du ender med at stille to eller tre op for at få nok lyd, og så er prisen pludselig astronomisk.
 
 ## Vores løsning: Professionel lyd fra stikkontakten
 
-Hos lejhøjtaler.dk kan du få begge dele. Skal der ikke være en stikkontakt i nærheden, har vi Mackie Thump GO til 345 kr. og Soundboks 4 til 595 kr. — begge batteridrevne med op til 12 timers spilletid. Men er der strøm, og det er der næsten altid, får du mere lyd for pengene med et sæt aktive højtalere.
+Hos lejhøjtaler.dk kan du få begge dele. Skal der ikke være en stikkontakt i nærheden, har vi Mackie Thump GO til 395 kr. og Soundboks 4 til 795 kr. — begge batteridrevne med op til 12 timers spilletid. Men er der strøm, og det er der næsten altid, får du mere lyd for pengene med et sæt aktive højtalere.
 
 Det betyder:
 
@@ -40,9 +40,9 @@ Det betyder:
 
 ## Hvad koster det?
 
-Priserne starter ved **345 kr.** for Mackie Thump GO og **395 kr.** for den lille højtalerpakke med alle kabler inkluderet. Ingen skjulte gebyrer, og prisen er den samme for 1-5 dage. Du kan betale med kort online eller ved afhentning.
+Priserne starter ved **395 kr.** for Mackie Thump GO og **595 kr.** for den lille højtalerpakke med alle kabler inkluderet. Ingen skjulte gebyrer, og prisen er den samme for 1-5 dage. Du kan betale med kort online eller ved afhentning.
 
-Til sammenligning koster en Soundboks 4 hos os 595 kr. for weekenden. Du får én batteridrevet højtaler — fri for ledninger, men uden den stereobredde to højtalere giver.
+Til sammenligning koster en Soundboks 4 hos os 795 kr. for weekenden. Du får én batteridrevet højtaler — fri for ledninger, men uden den stereobredde to højtalere giver.
 
 ## Afhentning eller levering i København
 

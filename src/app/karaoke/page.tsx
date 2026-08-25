@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { catalogDiscount, prisKr } from "@/lib/products";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
@@ -8,10 +9,13 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import BundleGrid from "@/components/BundleGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 
+/** Den største rabat, en karaokepakke giver — tallet i "spar op til …". */
+const MAX_RABAT = Math.max(catalogDiscount("pakke_karaoke"), catalogDiscount("pakke_karaoke_fest"));
+
 export const metadata: Metadata = {
   title: "Lej Karaoke København | Maskine, storskærm & lyd | Lejhøjtaler.dk",
   description:
-    "Lej karaoke i København: Karaokepakker med maskine, skærm og højtalere fra 1.300 kr — spar op til 485 kr. Singing Machine med 2 trådløse mikrofoner. Book på 2 min.",
+    `Lej karaoke i København: Karaokepakker med maskine, skærm og højtalere fra ${prisKr("pakke_karaoke")} — spar op til ${MAX_RABAT} kr. Singing Machine med 2 trådløse mikrofoner. Book på 2 min.`,
   keywords: [
     "lej karaoke",
     "karaoke maskine leje",
@@ -22,8 +26,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/karaoke" },
   openGraph: {
-    title: "Lej Karaoke København | Pakker fra 1.300 kr — spar op til 485 kr",
-    description: "Karaokepakker fra 1.300 kr — spar op til 485 kr. Maskine, skærm og højtalere. Book online.",
+    title: `Lej Karaoke København | Pakker fra ${prisKr("pakke_karaoke")} — spar op til ${MAX_RABAT} kr`,
+    description: `Karaokepakker fra ${prisKr("pakke_karaoke")} — spar op til ${MAX_RABAT} kr. Maskine, skærm og højtalere. Book online.`,
     url: "https://lejhojtaler.dk/karaoke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -58,12 +62,12 @@ export default function KaraokePage() {
             Lej karaoke til festen
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              pakker fra 1.300 kr.
+              pakker fra {prisKr("pakke_karaoke")}.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             Singing Machine med 2 trådløse mikrofoner, skærm til teksterne og festlys.
-            Book en pakke og spar op til 485 kr i forhold til enkeltpriserne.
+            Book en pakke og spar op til {MAX_RABAT} kr i forhold til enkeltpriserne.
           </p>
           <a
             href="#pakker"
@@ -79,7 +83,7 @@ export default function KaraokePage() {
             listet og "Spar X kr"-badge direkte på kortet */}
         <BundleGrid
           ids={["pakke_karaoke", "pakke_karaoke_fest"]}
-          eyebrow="Spar op til 485 kr"
+          eyebrow={`Spar op til ${MAX_RABAT} kr`}
           title="Karaokepakkerne"
           subtitle="Maskine, skærm til teksterne og lyd der kan følge med — samlet til én pris. Markant billigere end at leje delene hver for sig."
         />

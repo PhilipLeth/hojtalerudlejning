@@ -102,8 +102,11 @@ describe("Pakkestigen", () => {
     for (const [anledning, id] of Object.entries(OCCASION_PACKAGES)) {
       const kilde = fs.readFileSync(`src/app/${anledning}/page.tsx`, "utf8");
       expect(kilde, `${anledning} anbefaler noget andet end ${id}`).toContain(`primaryProductId="${id}"`);
-      const pris = findProdukt(id)!.price;
-      expect(kilde, `${anledning} viser en anden pris end pakkens ${pris} kr`).toContain(`primaryPrice={${pris}}`);
+      // Prisen står ikke længere i siden — OccasionLanding slår den op i
+      // kataloget, så et sidetal ikke kan blive stående efter en prisstigning.
+      expect(kilde, `${anledning} skriver prisen i stedet for at slå den op`).not.toMatch(
+        /primaryPrice=/
+      );
     }
   });
 

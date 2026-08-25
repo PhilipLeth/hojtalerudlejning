@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
 import Testimonials from "@/components/Testimonials";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
@@ -114,13 +115,13 @@ export default function LyskaederPage() {
                 href="/lej-hojtaler"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se højtalere – fra 395 kr
+                Se højtalere – <LiveStartPrice />
               </Link>
               <Link
                 href="/discokugle"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se discokugle – 245 kr
+                Se discokugle – <LivePrice productId="discokugle" prefix="" suffix=" kr" />
               </Link>
             </div>
           </div>

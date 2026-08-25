@@ -16,6 +16,7 @@
  * på spørgsmålet.
  */
 import type { FaqItem } from "@/components/FaqSection";
+import { prisKr, rabatKr, startPrisKr } from "@/lib/products";
 
 /** Går igen på alle kategorisider — afhentning og de to kørselspriser. */
 const AFHENTNING: FaqItem = {
@@ -134,8 +135,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje højtalere i København?",
       a:
-        "Fra 345 kr for en hel weekend. Den batteridrevne Mackie Thump GO koster 395 kr, den lille højtalerpakke " +
-        "med to 10\" Alto-højtalere 395 kr, den store pakke med to 12\" EV-højtalere 995 kr og Soundboks 4 795 kr. " +
+        `Fra ${startPrisKr()} for en hel weekend. Den batteridrevne Mackie Thump GO koster ${prisKr("thumpgo")}, den lille højtalerpakke ` +
+        `med to 10" Alto-højtalere ${prisKr("party")}, den store pakke med to 12" EV-højtalere ${prisKr("festival")} og Soundboks 4 ${prisKr("soundboks")}. ` +
         "Prisen er den samme, uanset om du har udstyret 1 eller 5 dage, og alle kabler er med.",
     },
     {
@@ -304,8 +305,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan jeg leje delene enkeltvis?",
       a:
-        "Ja. Karaokemaskinen koster 695 kr, en 32\" skærm 395 kr, en 55\" storskærm 595 kr og den store " +
-        "højtalerpakke 495 kr. Pakkerne er billigere end delene hver for sig — Karaokepakken sparer 385 kr.",
+        `Ja. Karaokemaskinen koster ${prisKr("karaoke")}, en 32" skærm ${prisKr("skaerm_32")}, en 55" storskærm ${prisKr("skaerm_55")} og den store ` +
+        `højtalerpakke ${prisKr("festival")}. Pakkerne er billigere end delene hver for sig — Karaokepakken sparer ${rabatKr("pakke_karaoke")}.`,
     },
     AFHENTNING,
   ],
@@ -386,8 +387,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er det billigste anlæg, I har?",
       a:
-        "Den batteridrevne Mackie Thump GO til 395 kr for en hel weekend. Skal der to højtalere til, koster den " +
-        "lille højtalerpakke 395 kr. Begge priser gælder for op til 5 dage, og alle kabler er med.",
+        `Den batteridrevne Mackie Thump GO til ${prisKr("thumpgo")} for en hel weekend. Skal der to højtalere til, koster den ` +
+        `lille højtalerpakke ${prisKr("party")}. Begge priser gælder for op til 5 dage, og alle kabler er med.`,
     },
     {
       q: "Kan jeg hente udstyret på cykel?",
@@ -436,8 +437,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How much does it cost to rent a speaker in Copenhagen?",
       a:
-        "From 345 kr for a whole weekend. The battery-powered Mackie Thump GO is 395 kr, the small speaker " +
-        "package 395 kr, the large package 995 kr and Soundboks 4 795 kr. The price is the same whether you keep " +
+        `From ${startPrisKr()} for a whole weekend. The battery-powered Mackie Thump GO is ${prisKr("thumpgo")}, the small speaker ` +
+        `package ${prisKr("party")}, the large package ${prisKr("festival")} and Soundboks 4 ${prisKr("soundboks")}. The price is the same whether you keep ` +
         "the gear for 1 or 5 days, and all cables are included.",
     },
     {

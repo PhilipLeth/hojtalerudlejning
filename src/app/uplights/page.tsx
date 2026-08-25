@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import LivePrice from "@/components/LivePrice";
 import Testimonials from "@/components/Testimonials";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
@@ -110,7 +111,7 @@ export default function UplightsPage() {
                 href="/roegmaskine"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se røgmaskine – 245 kr
+                Se røgmaskine – <LivePrice productId="rog" prefix="" suffix=" kr" />
               </Link>
             </div>
           </div>

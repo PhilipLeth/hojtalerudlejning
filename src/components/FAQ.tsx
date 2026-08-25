@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import { formatSentence } from "@/lib/openingHours";
+import { prisKr } from "@/lib/products";
 
 const faqs = [
   {
     question: "Hvad koster det at leje en højtaler?",
     answer:
-      "Vores batteridrevne Mackie Thump GO koster 345 kr/weekend, den lille højtalerpakke 395 kr, den store højtalerpakke 495 kr og Soundboks 4 595 kr. Prisen er den samme uanset antal dage (1-5), og alle kabler er inkluderet.",
+      `Vores batteridrevne Mackie Thump GO koster ${prisKr("thumpgo")}/weekend, den lille højtalerpakke ${prisKr("party")}, den store højtalerpakke ${prisKr("festival")} og Soundboks 4 ${prisKr("soundboks")}. Prisen er den samme uanset antal dage (1-5), og alle kabler er inkluderet.`,
   },
   {
     question: "Hvordan fungerer afhentning?",
@@ -18,12 +19,12 @@ const faqs = [
   {
     question: "Hvad er inkluderet i prisen?",
     answer:
-      "Alle kabler er inkluderet: iPhone med USB-C adapter, AUX-kabel og strømkabel. Bæretaske (95 kr) og højtalerstativer (100 kr) er tilkøb, du vælger i bookingen.",
+      `Alle kabler er inkluderet: iPhone med USB-C adapter, AUX-kabel og strømkabel. Bæretaske (${prisKr("taske")}) og højtalerstativer (${prisKr("stativer")}) er tilkøb, du vælger i bookingen.`,
   },
   {
     question: "Kan I levere udstyret?",
     answer:
-      "Ja — vi kører ud i hele København. Levering + opsætning koster 495 kr, hvor vi sætter op klar til brug og du selv afleverer bagefter. Skal vi også hente igen efter festen, koster begge veje 795 kr. Skriv din adresse i bookingflowet, så klarer vi resten.",
+      `Ja — vi kører ud i hele København. Levering + opsætning koster ${prisKr("levering_ud")}, hvor vi sætter op klar til brug og du selv afleverer bagefter. Skal vi også hente igen efter festen, koster begge veje ${prisKr("levering_begge")}. Skriv din adresse i bookingflowet, så klarer vi resten.`,
   },
   {
     question: "Kan jeg leje en højtaler uden strøm?",

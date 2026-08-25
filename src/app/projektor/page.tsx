@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 
 export const metadata: Metadata = {
-  title: "Lej Projektor København | Fra 495 kr | Lejhøjtaler.dk",
+  title: "Lej Projektor København — udlejes ikke lige nu | Lejhøjtaler.dk",
   description:
-    "Lej projektor i København fra 495 kr/weekend. Full HD projektor til præsentationer, film og events. HDMI inkluderet. Betal ved afhentning.",
+    "Full HD projektor til præsentationer og film. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
   keywords: [
     "lej projektor",
     "projektor udlejning",
@@ -15,9 +15,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/projektor" },
   openGraph: {
-    title: "Lej Projektor København | Fra 495 kr",
+    title: "Lej Projektor København — udlejes ikke lige nu",
     description:
-      "Lej projektor i København fra 495 kr/weekend. Full HD projektor til præsentationer, film og events. Book online.",
+      "Full HD projektor til præsentationer og film. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
     url: "https://lejhojtaler.dk/projektor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -52,8 +52,8 @@ export default function ProjektorPage() {
         text="Projektoren hører sammen med et lærred — ikke en LED-storskærm.
               Tilføj lærred og trådløs mikrofon, så er præsentationen komplet."
         links={[
-          { href: "/?product=laerred_160#book", label: "Book lærred 160 cm – 195 kr" },
-          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon – fra 295 kr" },
+          { href: "/?product=laerred_160#book", label: "Book lærred 160 cm", priceId: "laerred_160" },
+          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "traadloes_mikrofon", fra: true },
         ]}
       />
     </ProductLanding>

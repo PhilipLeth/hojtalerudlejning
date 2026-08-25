@@ -1102,3 +1102,75 @@ export function catalogPartsPrice(id: string): number {
 export function prisTekst(n: number): string {
   return n.toLocaleString("da-DK");
 }
+/* ───── Priser i sidetekst ─────
+ *
+ * Hver produktside, kategoriside og lejlighedsside skrev sine egne beløb ind i
+ * titel, brødtekst og "se også"-knapper. Da Frederiks prisstigning ramte
+ * kataloget, blev de tal ikke til løgn ét sted, men hundrede: /soundboks-4
+ * sendte kunden videre til Mackie Thump GO "– 345 kr", mens bookingen tog 395.
+ *
+ * Derfor slås beløb i tekst op her frem for at blive skrevet af. Et ukendt id
+ * er en fejl ved build, ikke en tavs nul-pris.
+ */
+
+/** Katalogpris for et produkt-id (default-kataloget — brug LivePrice for admin-redigerede tal). */
+export function catalogPrice(id: string): number {
+  const p =
+    speakers.find((s) => s.id === id) ??
+    addons.find((a) => a.id === id) ??
+    rentalProducts.find((r) => r.id === id);
+  if (!p) throw new Error(`catalogPrice: ukendt produkt-id "${id}"`);
+  return p.price;
+}
+
+/** Rabatten i kr på en pakke — "spar X kr". */
+export function catalogDiscount(id: string): number {
+  const p = rentalProducts.find((r) => r.id === id);
+  if (!p?.bundle) throw new Error(`catalogDiscount: "${id}" er ikke en pakke`);
+  return p.bundle.discount;
+}
+
+/** Hvad delene koster hver for sig — "1.300 kr i stedet for 1.685 kr". */
+export function catalogPartsPrice(id: string): number {
+  const p = rentalProducts.find((r) => r.id === id);
+  if (!p?.bundle) throw new Error(`catalogPartsPrice: "${id}" er ikke en pakke`);
+  return p.bundle.parts.reduce((sum, part) => sum + part.price, 0);
+}
+
+/** Beløb som det skrives i tekst: 2345 → "2.345". */
+export function prisTekst(n: number): string {
+  return n.toLocaleString("da-DK");
+}
+
+/** "595 kr" — prisen som den skrives midt i en sætning. */
+export function prisKr(id: string): string {
+  return `${prisTekst(catalogPrice(id))} kr`;
+}
+
+/** "spar 385 kr"-beløbet som tekst. */
+export function rabatKr(id: string): string {
+  return `${prisTekst(catalogDiscount(id))} kr`;
+}
+
+/** "fra 395 kr" som tekst — billigste højtaler, til sidetitler og meta. */
+export function startPrisKr(): string {
+  return `${prisTekst(startPrice)} kr`;
+}
+
+/** "95-3645 kr" — LocalBusiness priceRange over hele det synlige katalog. */
+export function prisSpaend(): string {
+  const alle = [...speakers, ...addons, ...rentalProducts]
+    .filter((p) => !p.hidden)
+    .map((p) => p.price);
+  return `${Math.min(...alle)}-${Math.max(...alle)} kr`;
+}
+
+/** "595 DKK" — samme tal, engelsk valutakode. Til /en-sider. */
+export function prisDkk(id: string): string {
+  return `${prisTekst(catalogPrice(id))} DKK`;
+}
+
+/** "395 DKK" — billigste højtaler, engelsk. */
+export function startPrisDkk(): string {
+  return `${prisTekst(startPrice)} DKK`;
+}

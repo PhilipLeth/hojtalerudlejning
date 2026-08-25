@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import BundleGrid from "@/components/BundleGrid";
-import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER } from "@/lib/products";
+import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER, startPrisKr } from "@/lib/products";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
@@ -10,9 +11,9 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { LocationKicker } from "@/components/PhoneLink";
 
 export const metadata: Metadata = {
-  title: "Lej Højtalere København | Fra 345 kr/weekend | Lejhøjtaler.dk",
+  title: `Lej Højtalere København | Fra ${startPrisKr()}/weekend | Lejhøjtaler.dk`,
   description:
-    "Lej højtalere i København fra 345 kr/weekend. Batterihøjtalere (Mackie Thump GO, Soundboks 4) og PA-pakker. Betal ved afhentning, kabler inkluderet. Book online.",
+    `Lej højtalere i København fra ${startPrisKr()}/weekend. Batterihøjtalere (Mackie Thump GO, Soundboks 4) og PA-pakker. Betal ved afhentning, kabler inkluderet. Book online.`,
   keywords: [
     "lej højtalere københavn",
     "lej højtaler",
@@ -25,9 +26,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/lej-hojtaler" },
   openGraph: {
-    title: "Lej Højtalere København | Fra 345 kr/weekend",
+    title: `Lej Højtalere København | Fra ${startPrisKr()}/weekend`,
     description:
-      "Lej højtalere i København fra 345 kr/weekend. Batterihøjtalere og PA-pakker. Betal ved afhentning. Book online.",
+      `Lej højtalere i København fra ${startPrisKr()}/weekend. Batterihøjtalere og PA-pakker. Betal ved afhentning. Book online.`,
     url: "https://lejhojtaler.dk/lej-hojtaler",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -82,7 +83,7 @@ export default function LejHojtalerPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Batterihøjtalere og PA-pakker fra 345 kr — book online, betal først ved afhentning.
+            Batterihøjtalere og PA-pakker <LiveStartPrice /> — book online, betal først ved afhentning.
           </p>
           <a
             href="/#book"
@@ -164,13 +165,13 @@ export default function LejHojtalerPage() {
                 href="/festlys"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se festlys – fra 495 kr
+                Se festlys – <LivePrice productId="lys" prefix="fra " suffix=" kr" />
               </Link>
               <Link
                 href="/roegmaskine"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se røgmaskine – fra 245 kr
+                Se røgmaskine – <LivePrice productId="rog" prefix="" suffix=" kr" />
               </Link>
             </div>
           </div>
@@ -187,7 +188,8 @@ export default function LejHojtalerPage() {
             Klar til at leje højtalere?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København S, aflever mandag. Fra 345 kr/weekend.
+            Book online på 2 minutter. Hent fredag i København S, aflever mandag.{" "}
+            <LiveStartPrice prefix="Fra " suffix=" kr/weekend." />
           </p>
           <a
             href="/#book"

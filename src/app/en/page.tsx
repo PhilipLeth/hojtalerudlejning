@@ -10,11 +10,12 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { localeAlternates } from "@/lib/hreflang";
 import { FEST_LADDER_IDS } from "@/lib/products";
 import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
+import { catalogPrice, prisDkk, startPrisDkk } from "@/lib/products";
 
 export const metadata: Metadata = {
-  title: "Rent Speaker Copenhagen | From 345 DKK/weekend | Lejhøjtaler.dk",
+  title: `Rent Speaker Copenhagen | From ${startPrisDkk()}/weekend | Lejhøjtaler.dk`,
   description:
-    "Rent speakers in Copenhagen from 345 DKK/weekend. PA system rental for parties, events and celebrations. Sound equipment for hire — pick up Friday, return Monday. Book online in 2 minutes.",
+    `Rent speakers in Copenhagen from ${startPrisDkk()}/weekend. PA system rental for parties, events and celebrations. Sound equipment for hire — pick up Friday, return Monday. Book online in 2 minutes.`,
   keywords: [
     "rent speaker copenhagen",
     "speaker rental copenhagen",
@@ -28,9 +29,9 @@ export const metadata: Metadata = {
     "lejhojtaler",
   ],
   openGraph: {
-    title: "Rent Speaker Copenhagen | From 345 DKK/weekend | Lejhøjtaler.dk",
+    title: `Rent Speaker Copenhagen | From ${startPrisDkk()}/weekend | Lejhøjtaler.dk`,
     description:
-      "Rent speakers and PA systems for your party in Copenhagen. Sound equipment rental from 345 DKK/weekend. Book online in 2 minutes.",
+      `Rent speakers and PA systems for your party in Copenhagen. Sound equipment rental from ${startPrisDkk()}/weekend. Book online in 2 minutes.`,
     url: "https://lejhojtaler.dk/en",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -62,7 +63,7 @@ export default function EnHome() {
       <LocalBusinessJsonLd
         extra={{
           description:
-            "Speaker rental in Copenhagen. Rent speakers, PA systems and sound equipment for parties, events and celebrations. Equipment for hire from 345 DKK/weekend.",
+            `Speaker rental in Copenhagen. Rent speakers, PA systems and sound equipment for parties, events and celebrations. Equipment for hire from ${startPrisDkk()}/weekend.`,
           url: "https://lejhojtaler.dk/en",
           areaServed: { "@type": "City", name: "Copenhagen" },
         }}
@@ -85,17 +86,17 @@ export default function EnHome() {
             },
             offers: {
               "@type": "Offer",
-              price: "395",
+              price: String(catalogPrice("thumpgo")),
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
                             availability: "https://schema.org/InStock",
               shippingDetails: {
                 "@type": "OfferShippingDetails",
-                shippingRate: { "@type": "MonetaryAmount", value: "495", currency: "DKK" },
+                shippingRate: { "@type": "MonetaryAmount", value: String(catalogPrice("levering_ud")), currency: "DKK" },
                 shippingDestination: { "@type": "DefinedRegion", addressCountry: "DK", addressRegion: "Copenhagen" },
               },
               url: "https://lejhojtaler.dk/en#book",
-              description: "From 345 DKK/weekend (Fri-Mon). Speaker rental Copenhagen.",
+              description: `From ${prisDkk("thumpgo")}/weekend (Fri-Mon). Speaker rental Copenhagen.`,
             },
           }),
         }}
@@ -118,17 +119,17 @@ export default function EnHome() {
             },
             offers: {
               "@type": "Offer",
-              price: "495",
+              price: String(catalogPrice("festival")),
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
                             availability: "https://schema.org/InStock",
               shippingDetails: {
                 "@type": "OfferShippingDetails",
-                shippingRate: { "@type": "MonetaryAmount", value: "495", currency: "DKK" },
+                shippingRate: { "@type": "MonetaryAmount", value: String(catalogPrice("levering_ud")), currency: "DKK" },
                 shippingDestination: { "@type": "DefinedRegion", addressCountry: "DK", addressRegion: "Copenhagen" },
               },
               url: "https://lejhojtaler.dk/en#book",
-              description: "From 495 DKK/weekend (Fri-Mon). PA system rental Copenhagen.",
+              description: `From ${prisDkk("festival")}/weekend (Fri-Mon). PA system rental Copenhagen.`,
             },
           }),
         }}
@@ -151,17 +152,17 @@ export default function EnHome() {
             },
             offers: {
               "@type": "Offer",
-              price: "495",
+              price: String(catalogPrice("lys")),
               priceCurrency: "DKK",
               priceValidUntil: "2026-12-31",
                             availability: "https://schema.org/InStock",
               shippingDetails: {
                 "@type": "OfferShippingDetails",
-                shippingRate: { "@type": "MonetaryAmount", value: "495", currency: "DKK" },
+                shippingRate: { "@type": "MonetaryAmount", value: String(catalogPrice("levering_ud")), currency: "DKK" },
                 shippingDestination: { "@type": "DefinedRegion", addressCountry: "DK", addressRegion: "Copenhagen" },
               },
               url: "https://lejhojtaler.dk/en#book",
-              description: "495 DKK add-on. Party equipment rental Copenhagen.",
+              description: `${prisDkk("lys")} add-on. Party equipment rental Copenhagen.`,
             },
           }),
         }}

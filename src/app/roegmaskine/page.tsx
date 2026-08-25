@@ -52,8 +52,8 @@ export default function RoegmaskinePage() {
         title="Kombiner med lyd og lys"
         text="Røgmaskinen er perfekt sammen med højtalere og festlys. Skab den fulde festoplevelse."
         links={[
-          { href: "/lej-hojtaler", label: "Se højtalere – fra 395 kr" },
-          { href: "/festlys", label: "Se festlys – fra 495 kr" },
+          { href: "/lej-hojtaler", label: "Se højtalere", startpris: true },
+          { href: "/festlys", label: "Se festlys", priceId: "lys", fra: true },
         ]}
       />
     </ProductLanding>

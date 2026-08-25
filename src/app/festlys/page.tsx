@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import LivePrice from "@/components/LivePrice";
+import { catalogPrice, prisKr, prisTekst } from "@/lib/products";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
@@ -7,10 +9,13 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 
+/** Højtaler + lysbar + røgmaskine hver for sig — tallet i "komplet festpakke fra …". */
+const KOMPLET_FEST = prisTekst(catalogPrice("party") + catalogPrice("lys") + catalogPrice("rog"));
+
 export const metadata: Metadata = {
   title: "Lej Festlys, Diskokugle og Røgmaskine København | Lejhøjtaler.dk",
   description:
-    "Lej festlys i København: lysbar fra 495 kr, røgmaskine fra 245 kr, discokugle og lyskæder. Kombiner med lyd til komplet festpakke fra 1.135 kr. Betal ved afhentning.",
+    `Lej festlys i København: lysbar fra ${prisKr("lys")}, røgmaskine fra ${prisKr("rog")}, discokugle og lyskæder. Kombiner med lyd til komplet festpakke fra ${KOMPLET_FEST} kr. Betal ved afhentning.`,
   keywords: [
     "lej festlys københavn",
     "festlys udlejning",
@@ -25,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Festlys, Diskokugle og Røgmaskine København | Lejhøjtaler.dk",
     description:
-      "Lysbar fra 495 kr, røgmaskine fra 245 kr, discokugle og lyskæder. Book online.",
+      `Lysbar fra ${prisKr("lys")}, røgmaskine fra ${prisKr("rog")}, discokugle og lyskæder. Book online.`,
     url: "https://lejhojtaler.dk/festlys",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -80,7 +85,10 @@ export default function FestlysPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Enkelt lyseffekt fra 195 kr. · Uplights fra 125 kr. · Lys-pakke fra 495 kr. · Røgmaskine fra 245 kr.
+            Enkelt lyseffekt <LivePrice productId="lyseffekt" />{" · "}
+            Uplights <LivePrice productId="uplight" />{" · "}
+            Lys-pakke <LivePrice productId="lys" />{" · "}
+            Røgmaskine <LivePrice productId="rog" />
           </p>
           <a
             href="/?product=lys#book"
@@ -119,7 +127,7 @@ export default function FestlysPage() {
         <section className="mx-auto max-w-3xl px-4 pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">
-              Kombiner med lyd – komplet festpakke fra 1.135 kr
+              Kombiner med lyd – komplet festpakke fra {KOMPLET_FEST} kr
             </h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
               Lej højtalere, lys og røgmaskine samlet. Alt hvad du skal bruge til den perfekte fest.
@@ -127,15 +135,15 @@ export default function FestlysPage() {
             <div className="mb-6 grid gap-4 sm:grid-cols-3">
               <div className="glass rounded-xl p-4 text-center">
                 <p className="text-lg font-bold text-white">Party-højtaler</p>
-                <p className="text-xl font-bold text-brand-400">395 kr</p>
+                <p className="text-xl font-bold text-brand-400"><LivePrice productId="party" prefix="" suffix=" kr" /></p>
               </div>
               <div className="glass rounded-xl p-4 text-center">
                 <p className="text-lg font-bold text-white">Lysbar</p>
-                <p className="text-xl font-bold text-brand-400">495 kr</p>
+                <p className="text-xl font-bold text-brand-400"><LivePrice productId="lys" prefix="" suffix=" kr" /></p>
               </div>
               <div className="glass rounded-xl p-4 text-center">
                 <p className="text-lg font-bold text-white">Røgmaskine</p>
-                <p className="text-xl font-bold text-brand-400">245 kr</p>
+                <p className="text-xl font-bold text-brand-400"><LivePrice productId="rog" prefix="" suffix=" kr" /></p>
               </div>
             </div>
             <Link

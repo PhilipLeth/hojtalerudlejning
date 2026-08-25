@@ -39,7 +39,7 @@ Afhentning foregår på Vermlandsgade 66 i København, hvor der altid er gratis 
 
 Vi har bevidst skåret alt det unødvendige væk. Ingen lange kontrakter. Ingen skjulte gebyrer. Du booker online på tre minutter, møder op i København S, betaler når du henter - og så er du klar.
 
-Vi tror på at lyd til fest i København ikke behøver at koste en formue. Vores priser starter fra **395 kr.** for en komplet højtalerpakke med kabler inkluderet. Sammenlign det med hvad andre opkræver, og du vil hurtigt se forskellen.
+Vi tror på at lyd til fest i København ikke behøver at koste en formue. Vores priser starter fra **595 kr.** for en komplet højtalerpakke med kabler inkluderet. Sammenlign det med hvad andre opkræver, og du vil hurtigt se forskellen.
 
 ## Mere end bare højtalere
 

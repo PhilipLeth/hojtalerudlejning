@@ -1,6 +1,6 @@
 ---
-title: "Speaker Rental Copenhagen – Rent a Party Speaker from 345 DKK"
-description: "Rent speakers and PA systems in Copenhagen from 345 DKK/weekend. Pick up Friday, return Monday. Easy online booking for parties and events."
+title: "Speaker Rental Copenhagen – Rent a Party Speaker from 395 DKK"
+description: "Rent speakers and PA systems in Copenhagen from 395 DKK/weekend. Pick up Friday, return Monday. Easy online booking for parties and events."
 date: "2026-06-10"
 updated: "2026-08-22"
 keywords:
@@ -11,7 +11,7 @@ keywords:
   - sound equipment rental copenhagen
 ---
 
-# Speaker Rental Copenhagen – Rent a Party Speaker from 345 DKK
+# Speaker Rental Copenhagen – Rent a Party Speaker from 395 DKK
 
 Planning a party in Copenhagen? Whether you are an expat throwing a birthday, a student hosting a dorm party, or organising a company event, you need decent sound. Here is everything you need to know about renting speakers in Copenhagen.
 
@@ -24,7 +24,7 @@ We rent out professional PA systems for parties and events. No consumer-grade Bl
 - 8" battery-powered speaker with Bluetooth
 - Up to 12 hours of battery — no power outlet needed
 - Charger and AUX cable included
-- **Price: 345 DKK/weekend**
+- **Price: 395 DKK/weekend**
 
 Perfect for the park, the beach or a courtyard where there is nowhere to plug in.
 
@@ -32,7 +32,7 @@ Perfect for the park, the beach or a courtyard where there is nowhere to plug in
 
 - 2× 10" Alto active speakers with Bluetooth
 - All cables included, only 12 kg in total
-- **Price: 395 DKK/weekend**
+- **Price: 595 DKK/weekend**
 
 Perfect for apartment parties, birthday dinners and small gatherings.
 
@@ -40,7 +40,7 @@ Perfect for apartment parties, birthday dinners and small gatherings.
 
 - 2× 12" EV active speakers with Bluetooth
 - All cables included; stands available for 100 DKK
-- **Price: 495 DKK/weekend**
+- **Price: 995 DKK/weekend**
 
 The right choice for garden parties, corporate events and confirmations.
 

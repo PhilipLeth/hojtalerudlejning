@@ -3,6 +3,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import FaqSection, { type FaqItem } from "@/components/FaqSection";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import LivePrice from "@/components/LivePrice";
 import { bookHref } from "@/lib/bookUrl";
 import { PhoneText, LiveCopy } from "@/components/PhoneLink";
 
@@ -19,22 +20,26 @@ export interface OccasionLandingProps {
   slug: string;
   /** H1 — skal bære søgeordet, fx "Lyd til konfirmation" */
   headline: string;
-  /** Gul del af H1, fx "fra 500 kr." */
-  headlinePrice: string;
+  /**
+   * Produktet, sidens "fra"-pris i H1 handler om — typisk den billigste
+   * løsning, siden sælger. Prisen slås op i kataloget; da den stod som tekst,
+   * lovede /bryllup "fra 895 kr." et halvt år efter at den store festpakke var
+   * steget til 1.290.
+   */
+  headlinePriceId: string;
   /** Kort salgstekst under H1 */
   intro: string;
-  /** Anbefalet pakke: id + hvorfor lige den */
+  /** Anbefalet pakke: id + hvorfor lige den. Prisen kommer fra kataloget. */
   primaryProductId: string;
   primaryName: string;
-  primaryPrice: number;
   primaryWhy: string;
   /** Produkter der vises i gridet (anbefalet først) */
   gridItems: Array<{ id: string; href?: string; tag?: string }>;
   /** Praktiske råd til netop denne lejlighed */
   tips: OccasionTip[];
   faq: OccasionFaq[];
-  /** Interne links til beslægtede lejligheder */
-  related?: Array<{ href: string; label: string }>;
+  /** Interne links til beslægtede lejligheder. `priceId` skriver katalogprisen efter label'en. */
+  related?: Array<{ href: string; label: string; priceId?: string }>;
 }
 
 /**
@@ -45,11 +50,10 @@ export interface OccasionLandingProps {
 export default function OccasionLanding({
   slug,
   headline,
-  headlinePrice,
+  headlinePriceId,
   intro,
   primaryProductId,
   primaryName,
-  primaryPrice,
   primaryWhy,
   gridItems,
   tips,
@@ -84,7 +88,7 @@ export default function OccasionLanding({
             {headline}
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              {headlinePrice}
+              <LivePrice productId={headlinePriceId} prefix="fra " suffix=" kr." />
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-lg text-lg text-white/60">{intro}</p>
@@ -92,7 +96,7 @@ export default function OccasionLanding({
             href={book}
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book {primaryName} — {primaryPrice} kr
+            Book {primaryName} — <LivePrice productId={primaryProductId} prefix="" suffix=" kr" />
           </a>
         </div>
       </section>
@@ -108,7 +112,7 @@ export default function OccasionLanding({
             <p className="mt-3 max-w-xl text-white/60">{primaryWhy}</p>
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <span className="text-3xl font-bold text-brand-400">
-                {primaryPrice} kr
+                <LivePrice productId={primaryProductId} prefix="" suffix=" kr" />
                 <span className="ml-1 text-sm font-normal text-white/40">/weekend</span>
               </span>
               <a
@@ -154,13 +158,19 @@ export default function OccasionLanding({
             href={book}
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book {primaryName} — {primaryPrice} kr
+            Book {primaryName} — <LivePrice productId={primaryProductId} prefix="" suffix=" kr" />
           </a>
           {related.length > 0 && (
             <p className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-white/40">
               {related.map((r) => (
                 <Link key={r.href} href={r.href} className="transition hover:text-brand-400">
                   {r.label}
+                  {r.priceId && (
+                    <>
+                      {" – "}
+                      <LivePrice productId={r.priceId} prefix="" suffix=" kr" />
+                    </>
+                  )}
                 </Link>
               ))}
             </p>

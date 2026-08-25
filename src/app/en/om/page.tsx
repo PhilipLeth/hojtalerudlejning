@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { localeAlternates } from "@/lib/hreflang";
+import { prisDkk } from "@/lib/products";
 
 export const metadata: Metadata = {
   title: "About us | Lejhøjtaler.dk",
@@ -117,7 +118,8 @@ export default function AboutPageEn() {
                 <p>
                   If you&rsquo;d rather not cycle with equipment, we&rsquo;ll
                   deliver it to you. Delivery + setup in greater Copenhagen is
-                  495 DKK. Drop-off only (no setup) is 295 DKK.
+                  {prisDkk("levering_ud")}. Delivery and collection both ways is{" "}
+                  {prisDkk("levering_begge")}.
                 </p>
               </div>
             </section>
@@ -136,7 +138,7 @@ export default function AboutPageEn() {
                 </p>
                 <p>
                   We believe that sound for a party in Copenhagen doesn&rsquo;t
-                  have to cost a fortune. Our prices start from 395 DKK for a
+                  have to cost a fortune. Our prices start from {prisDkk("party")} for a
                   complete speaker package with all cables included. Compare that
                   with what others charge, and you&rsquo;ll quickly see the
                   difference.

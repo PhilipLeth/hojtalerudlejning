@@ -1,11 +1,13 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import LivePrice from "@/components/LivePrice";
+import { catalogDiscount, catalogPartsPrice, prisTekst } from "@/lib/products";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: 'Lej 32" Skærm på Stativ København | 395 kr | Lejhøjtaler.dk',
+  title: 'Lej 32" Skærm på Stativ København — udlejes ikke lige nu | Lejhøjtaler.dk',
   description:
-    'Lej 32" LED-skærm på 3-fod stativ i København for 395 kr/weekend. Kompakt og nem at flytte — perfekt til karaoke, præsentationer og mindre events. Book online.',
+    "32 tommer LED-skærm på stativ. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
   keywords: [
     "lej skærm",
     "32 tommer skærm leje",
@@ -15,9 +17,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/skaerm-32" },
   openGraph: {
-    title: 'Lej 32" Skærm på Stativ | 395 kr',
+    title: 'Lej 32" Skærm på Stativ — udlejes ikke lige nu',
     description:
-      '32" LED-skærm på 3-fod stativ — kompakt og nem at flytte. Perfekt til karaoke. Book online.',
+      "32 tommer LED-skærm på stativ. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
     url: "https://lejhojtaler.dk/skaerm-32",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -49,15 +51,16 @@ export default function Page() {
         <div className="glass rounded-2xl p-8 text-center">
           <h2 className="mb-3 text-2xl font-bold">Skal den bruges til karaoke?</h2>
           <p className="mx-auto mb-6 max-w-md text-white/50">
-            Så får du den billigere i Karaokepakken sammen med maskine og højtalere —
-            1.300 kr i stedet for 1.685 kr.
+            Så får du den billigere i Karaokepakken sammen med maskine og højtalere —{" "}
+            <LivePrice productId="pakke_karaoke" prefix="" suffix=" kr" /> i stedet for{" "}
+            {prisTekst(catalogPartsPrice("pakke_karaoke"))} kr.
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/pakke-karaoke"
               className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
             >
-              Se Karaokepakken – spar 385 kr
+              Se Karaokepakken – spar {catalogDiscount("pakke_karaoke")} kr
             </Link>
             <Link
               href="/skaerm"

@@ -48,11 +48,10 @@ export default function HeadsetMikrofonPage() {
       ]}
     >
       <UpsellBox
-        title="Kombiner med mikrofon og projektor"
-        text="Headsettet er perfekt sammen med en trådløs mikrofon og projektor. Skab den fulde præsentationsoplevelse."
+        title="Kombiner med mikrofon og højtalere"
+        text="Headsettet holder hænderne fri, mens en trådløs mikrofon går rundt i salen til spørgsmål. Højtaleren skal med — headsettet forstærker ingenting selv."
         links={[
-          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon – fra 295 kr" },
-          { href: "/projektor", label: "Se projektor – fra 495 kr" },
+          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "traadloes_mikrofon", fra: true },
         ]}
       />
     </ProductLanding>

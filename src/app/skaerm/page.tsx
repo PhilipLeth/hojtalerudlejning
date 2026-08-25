@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 
 export const metadata: Metadata = {
-  title: "Lej Storskærm København | Fra 595 kr | Lejhøjtaler.dk",
+  title: "Lej Storskærm København — udlejes ikke lige nu | Lejhøjtaler.dk",
   description:
-    "Lej 55\" LED-storskærm i København fra 595 kr/weekend. Skærm på 3-fod stativ til præsentationer og events. Fungerer i dagslys. Betal ved afhentning.",
+    "55 tommer LED-storskærm på stativ. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
   keywords: [
     "lej storskærm",
     "skærm udlejning",
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/skaerm" },
   openGraph: {
-    title: "Lej Storskærm København | Fra 595 kr",
+    title: "Lej Storskærm København — udlejes ikke lige nu",
     description:
-      "Lej 55\" LED-storskærm i København fra 595 kr/weekend. 3-fod stativ inkluderet. Book online.",
+      "55 tommer LED-storskærm på stativ. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
     url: "https://lejhojtaler.dk/skaerm",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -52,8 +52,8 @@ export default function SkaermPage() {
         title="Kombiner med projektor og mikrofon"
         text="Storskærmen er perfekt sammen med en projektor eller trådløs mikrofon til præsentationer og events."
         links={[
-          { href: "/projektor", label: "Se projektor – fra 495 kr" },
-          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon – fra 295 kr" },
+          { href: "/projektor", label: "Se projektor", priceId: "projektor", fra: true },
+          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "traadloes_mikrofon", fra: true },
         ]}
       />
     </ProductLanding>

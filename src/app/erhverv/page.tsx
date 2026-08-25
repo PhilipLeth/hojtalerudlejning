@@ -5,11 +5,13 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import TopBar from "@/components/TopBar";
 import PhoneLink from "@/components/PhoneLink";
 import EventInquiryForm from "@/components/EventInquiryForm";
+import LivePrice from "@/components/LivePrice";
+import { prisKr, rentalProducts } from "@/lib/products";
 
 export const metadata: Metadata = {
   title: "Erhverv — Lyd, lys og AV til professionelle events | Lejhøjtaler.dk",
   description:
-    "Professionelt udstyr til firmafester, konferencer, præsentationer og events i København. Højtalere, skærme, projektorer og mikrofoner til leje.",
+    "Professionelt udstyr til firmafester, konferencer og events i København. Højtalere, mikrofoner, festlys og røg til leje — vi leverer og sætter op.",
   // Uden denne arvede siden root-layoutets canonical og pegede dermed på
   // forsiden — altså bad den Google om ikke at indeksere /erhverv. Det er
   // landingssiden for PMax-asset group 08 og AG 32 i søgekampagnen.
@@ -25,14 +27,14 @@ const useCases = [
   },
   {
     title: "Konference & seminar",
-    desc: "Skærm eller projektor med trådløs mikrofon og højtaler, så alle kan høre og se præsentationen.",
-    equipment: "75\" skærm + trådløs mikrofon + højtalere",
+    desc: "Trådløs mikrofon og højtalere på stativer, så taleren kan høres bagest i salen — også uden at hæve stemmen.",
+    equipment: "2× 12\" højtalere + Shure trådløs mikrofon + headset",
     icon: "🎤",
   },
   {
     title: "Produktlancering",
-    desc: "Imponér gæsterne med professionel lyd, lys og storskærm. Vi klarer opsætningen.",
-    equipment: "Højtalere + lys + projektor + mikrofon",
+    desc: "Imponér gæsterne med professionel lyd og lys. Vi klarer opsætningen.",
+    equipment: "Højtalere + lys-pakke + trådløs mikrofon",
     icon: "🚀",
   },
   {
@@ -43,38 +45,34 @@ const useCases = [
   },
   {
     title: "Workshop & undervisning",
-    desc: "Projektor eller skærm med headset-mikrofon, så underviseren kan bevæge sig frit.",
-    equipment: "55\" skærm + headset-mikrofon + højtalere",
+    desc: "Headset-mikrofon og højtalere, så underviseren kan bevæge sig frit og stadig høres i hele lokalet.",
+    equipment: "Trådløst headset + 2× højtalere på stativer",
     icon: "📚",
   },
   {
     title: "Pop-up & messe",
-    desc: "Kompakt opsætning med skærm, lyd og mikrofon til din messestand eller pop-up butik.",
-    equipment: "55\" skærm + lille højtalerpakke + mikrofon",
+    desc: "Kompakt opsætning med lyd og mikrofon til din messestand eller pop-up butik.",
+    equipment: "Lille højtalerpakke + trådløs mikrofon",
     icon: "🏪",
   },
 ];
 
-const packages = [
-  {
-    name: "Firmafest-pakke",
-    price: "fra 1.145",
-    items: ["Stor højtalerpakke (2× 12\" EV)", "Lys-pakke (2 LED + centereffekt)", "Røgmaskine", "Alle kabler"],
-    note: "Op til 100 gæster",
-  },
-  {
-    name: "Konference-pakke",
-    price: "fra 1.195",
-    items: ["55\" skærm med stativ", "Trådløs mikrofon", "Lille højtalerpakke (2× 10\")", "HDMI + alle kabler"],
-    note: "Op til 50 deltagere",
-  },
-  {
-    name: "Storskærm-pakke",
-    price: "fra 1.695",
-    items: ["75\" skærm med stativ", "Trådløs mikrofon", "Stor højtalerpakke (2× 12\" EV)", "HDMI + alle kabler"],
-    note: "50–100+ deltagere",
-  },
-];
+/**
+ * Erhvervspakkerne er katalogets egne pakker — ikke en håndskrevet prisliste.
+ *
+ * De tre kort lovede "fra 1.145 kr" for stor højtalerpakke + lys + røg (i dag
+ * 2.645 kr som Firmafestpakke) og en 75" skærm, vi aldrig har haft. Nu står
+ * navn, pris og indhold i products.ts, så en prisstigning følger med.
+ */
+const packages = ["pakke_firmafest", "pakke_konference", "pakke_konference_150"].map((id) => {
+  const p = rentalProducts.find((r) => r.id === id)!;
+  return {
+    id,
+    name: p.name_da,
+    items: p.contents ?? [],
+    note: p.bundle?.usecase_da ?? "",
+  };
+});
 
 export default function ErhvervPage() {
   return (
@@ -100,7 +98,7 @@ export default function ErhvervPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-lg text-lg text-white/60">
-            Højtalere, skærme, projektorer og mikrofoner til firmafester, konferencer og events i København. Vi leverer, sætter op og henter.
+            Højtalere, mikrofoner, festlys og røg til firmafester, konferencer og events i København. Vi leverer, sætter op og henter.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <a
@@ -154,7 +152,7 @@ export default function ErhvervPage() {
           Populære erhvervspakker
         </h2>
         <p className="mx-auto mb-12 max-w-xl text-center text-white/50">
-          Faste priser, ingen overraskelser. Levering og opsætning i København fra 495 kr.
+          Faste priser, ingen overraskelser. Levering og opsætning i København fra {prisKr("levering_ud")}.
         </p>
         <div className="grid gap-6 sm:grid-cols-3">
           {packages.map((pkg) => (
@@ -164,7 +162,7 @@ export default function ErhvervPage() {
             >
               <h3 className="mb-1 text-lg font-bold">{pkg.name}</h3>
               <p className="mb-4 text-2xl font-bold text-brand-400">
-                {pkg.price} kr
+                <LivePrice productId={pkg.id} prefix="fra " suffix=" kr" />
               </p>
               <ul className="mb-4 space-y-2 text-sm text-white/60">
                 {pkg.items.map((item) => (

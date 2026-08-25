@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import LivePrice from "@/components/LivePrice";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
@@ -52,7 +53,7 @@ export default function FestpakkeLillePage() {
             href="/festpakke-stor"
             className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
           >
-            Se Stor festpakke – 895 kr
+            Se Stor festpakke – <LivePrice productId="pakke_fest_stor" prefix="" suffix=" kr" />
           </Link>
         </div>
       </section>

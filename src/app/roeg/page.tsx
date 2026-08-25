@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import LivePrice from "@/components/LivePrice";
+import { prisKr } from "@/lib/products";
 import Link from "next/link";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
@@ -10,7 +12,7 @@ import { LocationKicker } from "@/components/PhoneLink";
 export const metadata: Metadata = {
   title: "Lej Røgmaskine & Low Fog København | Røggulv med is | Lejhøjtaler.dk",
   description:
-    "Lej røg til festen i København: klassisk røgmaskine fra 245 kr inkl. røgvæske, eller low fog-maskine (røggulv med is) til 'dansen på skyer'. Betal ved afhentning.",
+    `Lej røg til festen i København: klassisk røgmaskine fra ${prisKr("rog")} inkl. røgvæske, eller low fog-maskine (røggulv med is) til 'dansen på skyer'. Betal ved afhentning.`,
   keywords: [
     "lej røgmaskine",
     "low fog maskine leje",
@@ -24,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Røgmaskine & Low Fog København | Lejhøjtaler.dk",
     description:
-      "Klassisk røgmaskine fra 245 kr inkl. røgvæske. Book online.",
+      `Klassisk røgmaskine fra ${prisKr("rog")} inkl. røgvæske. Book online.`,
     url: "https://lejhojtaler.dk/roeg",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -65,7 +67,7 @@ export default function RoegPage() {
             Lej røg til festen
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 245 kr.
+              <LivePrice productId="rog" />
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">

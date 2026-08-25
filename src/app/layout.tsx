@@ -9,6 +9,7 @@ import InquiryDrawer from "@/components/InquiryDrawer";
 import WeekendSalePopup from "@/components/WeekendSalePopup";
 import { localeAlternates } from "@/lib/hreflang";
 import { ADS_CONVERSION_ID } from "@/lib/analytics";
+import { startPrisKr } from "@/lib/products";
 import "./globals.css";
 
 const GTM_ID = "GTM-M52R25VF";
@@ -24,9 +25,9 @@ export const metadata: Metadata = {
     icon: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
-  title: "Lej Højtaler København | Fra 345 kr/weekend | Lejhøjtaler.dk",
+  title: `Lej Højtaler København | Fra ${startPrisKr()}/weekend | Lejhøjtaler.dk`,
   description:
-    "Lej højtaler i København fra 345 kr/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje — hent fredag, aflever mandag. Book online på 2 min.",
+    `Lej højtaler i København fra ${startPrisKr()}/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje — hent fredag, aflever mandag. Book online på 2 min.`,
   keywords: [
     "lej højtaler københavn",
     "højtalerudlejning københavn",
@@ -41,9 +42,9 @@ export const metadata: Metadata = {
     "lejhojtaler",
   ],
   openGraph: {
-    title: "Lej Højtaler København | Fra 345 kr/weekend | Lejhøjtaler.dk",
+    title: `Lej Højtaler København | Fra ${startPrisKr()}/weekend | Lejhøjtaler.dk`,
     description:
-      "Lej højtaler og PA-anlæg til din fest i København. Lydudstyr udlejning fra 345 kr/weekend. Festudstyr til leje — book online på 2 minutter.",
+      `Lej højtaler og PA-anlæg til din fest i København. Lydudstyr udlejning fra ${startPrisKr()}/weekend. Festudstyr til leje — book online på 2 minutter.`,
     url: "https://lejhojtaler.dk",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

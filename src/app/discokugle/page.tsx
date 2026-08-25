@@ -50,8 +50,8 @@ export default function DiscokuglePage() {
         title="Kombiner med røg og lys"
         text="Discokuglen er perfekt sammen med røgmaskine og festlys. Skab den fulde festoplevelse."
         links={[
-          { href: "/roegmaskine", label: "Se røgmaskine – 595 kr" },
-          { href: "/festlys", label: "Se festlys – fra 495 kr" },
+          { href: "/roegmaskine", label: "Se røgmaskine", priceId: "rog" },
+          { href: "/festlys", label: "Se festlys", priceId: "lys", fra: true },
         ]}
       />
     </ProductLanding>

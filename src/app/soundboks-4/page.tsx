@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import SoundboksAltPopup from "@/components/SoundboksAltPopup";
 import Link from "next/link";
+import LivePrice from "@/components/LivePrice";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
@@ -54,7 +55,7 @@ export default function Soundboks4Page() {
               href="/mackie-thump-go"
               className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
             >
-              Se Mackie Thump GO – 345 kr
+              Se Mackie Thump GO – <LivePrice productId="thumpgo" prefix="" suffix=" kr" />
             </Link>
           </div>
         </section>

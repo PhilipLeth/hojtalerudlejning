@@ -47,9 +47,9 @@ Her er et par gode råd når du henter udstyret på cykel:
 - **Tag det roligt.** 12 kg ændrer balancen en smule, men det svarer til en stor indkøbspose. De fleste vænner sig til det med det samme.
 - **Planlæg ruten.** Vermlandsgade ligger på Amager med cykelsti hele vejen. Ind mod byen går turen over Langebro eller Knippelsbro, og fra Islands Brygge og Christianshavn er der ganske kort.
 
-## Fra 395 kr. for en hel weekend
+## Fra 595 kr. for en hel weekend
 
-Prisen for den lille højtalerpakke starter fra **395 kr.** for en weekend. Alle kabler er inkluderet, og der er ingen skjulte gebyrer. Du betaler først ved afhentning.
+Prisen for den lille højtalerpakke starter fra **595 kr.** for en weekend. Alle kabler er inkluderet, og der er ingen skjulte gebyrer. Du betaler først ved afhentning.
 
 Det er billigere end de fleste alternativer - og du slipper for at bøvle med batterier, dyre lejeaftaler eller tungt udstyr du ikke kan transportere.
 

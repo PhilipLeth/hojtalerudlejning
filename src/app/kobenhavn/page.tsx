@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
+import { prisKr, startPrisKr } from "@/lib/products";
 import Link from "next/link";
 import Image from "next/image";
 import Testimonials from "@/components/Testimonials";
@@ -10,9 +12,9 @@ import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 
 export const metadata: Metadata = {
   title:
-    "Billigste Højtalerudlejning København | Fra 395 kr | Lejhøjtaler.dk",
+    `Billigste Højtalerudlejning København | Fra ${startPrisKr()} | Lejhøjtaler.dk`,
   description:
-    "Københavns billigste højtalerudlejning fra 395 kr/weekend. Lej højtalere, PA-anlæg, lys og røgmaskine. Afhentning i København S eller levering. Book online på 2 min.",
+    `Københavns billigste højtalerudlejning fra ${startPrisKr()}/weekend. Lej højtalere, PA-anlæg, lys og røgmaskine. Afhentning i København S eller levering. Book online på 2 min.`,
   keywords: [
     "billigste højtalerudlejning københavn",
     "billig højtaler leje københavn",
@@ -27,9 +29,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/kobenhavn" },
   openGraph: {
-    title: "Billigste Højtalerudlejning København | Fra 395 kr",
+    title: `Billigste Højtalerudlejning København | Fra ${startPrisKr()}`,
     description:
-      "Københavns billigste højtalerudlejning fra 395 kr/weekend. PA-anlæg, lys og røgmaskine til leje. Book online.",
+      `Københavns billigste højtalerudlejning fra ${startPrisKr()}/weekend. PA-anlæg, lys og røgmaskine til leje. Book online.`,
     url: "https://lejhojtaler.dk/kobenhavn",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -69,7 +71,7 @@ export default function KobenhavnPage() {
         extra={{
           name: "Lejhøjtaler.dk",
           description:
-            "Københavns billigste højtalerudlejning. Lej højtalere, PA-anlæg, lys og røgmaskine fra 395 kr/weekend.",
+            `Københavns billigste højtalerudlejning. Lej højtalere, PA-anlæg, lys og røgmaskine fra ${startPrisKr()}/weekend.`,
           url: "https://lejhojtaler.dk/kobenhavn",
         }}
       />
@@ -84,7 +86,7 @@ export default function KobenhavnPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            K&oslash;benhavn S &middot; Fra 395 kr/weekend
+            K&oslash;benhavn S &middot; <LiveStartPrice prefix="Fra " suffix=" kr/weekend" />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             Billigste h&oslash;jtalerudlejning
@@ -94,7 +96,7 @@ export default function KobenhavnPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Professionel lyd til din fest fra 395 kr.
+            Professionel lyd til din fest <LiveStartPrice />.
             <br />
             Afhent i K&oslash;benhavn S eller f&aring; det leveret.
           </p>
@@ -136,7 +138,7 @@ export default function KobenhavnPage() {
                 2&times; 10&quot; Alto TS410 &middot; 12 kg total &middot; Kabler inkluderet
               </p>
               <p className="mt-4 text-3xl font-bold text-brand-400">
-                395 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                <LivePrice productId="party" prefix="" suffix=" kr" /><span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="mt-4 space-y-2 text-sm text-white/60">
                 <li>&bull; Perfekt til lejlighed, g&aring;rdhave, privat fest</li>
@@ -163,7 +165,7 @@ export default function KobenhavnPage() {
                 2&times; 12&quot; EV ZLX-12BT &middot; Bluetooth &middot; Kabler inkluderet
               </p>
               <p className="mt-4 text-3xl font-bold text-brand-400">
-                495 kr<span className="text-lg font-normal text-white/40">/weekend</span>
+                <LivePrice productId="festival" prefix="" suffix=" kr" /><span className="text-lg font-normal text-white/40">/weekend</span>
               </p>
               <ul className="mt-4 space-y-2 text-sm text-white/60">
                 <li>&bull; Til st&oslash;rre rum, fester og udend&oslash;rs events</li>
@@ -177,17 +179,17 @@ export default function KobenhavnPage() {
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             <div className="glass rounded-xl p-6 text-center">
               <p className="text-lg font-bold text-white">Festlys</p>
-              <p className="text-2xl font-bold text-brand-400">495 kr</p>
+              <p className="text-2xl font-bold text-brand-400"><LivePrice productId="lys" prefix="" suffix=" kr" /></p>
               <p className="mt-1 text-xs text-white/40">LED-lysbar med effekter</p>
             </div>
             <div className="glass rounded-xl p-6 text-center">
               <p className="text-lg font-bold text-white">R&oslash;gmaskine</p>
-              <p className="text-2xl font-bold text-brand-400">245 kr</p>
+              <p className="text-2xl font-bold text-brand-400"><LivePrice productId="rog" prefix="" suffix=" kr" /></p>
               <p className="mt-1 text-xs text-white/40">Inkl. r&oslash;gv&aelig;ske</p>
             </div>
             <div className="glass rounded-xl p-6 text-center">
               <p className="text-lg font-bold text-white">H&oslash;jtalerstativer</p>
-              <p className="text-2xl font-bold text-brand-400">95 kr</p>
+              <p className="text-2xl font-bold text-brand-400"><LivePrice productId="stativer" prefix="" suffix=" kr" /></p>
               <p className="mt-1 text-xs text-white/40">Par af professionelle stativer</p>
             </div>
           </div>
@@ -230,7 +232,8 @@ export default function KobenhavnPage() {
               </div>
               <h3 className="font-semibold text-white">K&oslash;benhavn S</h3>
               <p className="mt-2 text-sm text-white/50">
-                Afhentning p&aring; Amager. Eller billig levering i hele K&oslash;benhavn — kun 495 kr inkl. ops&aelig;tning og afhentning.
+                Afhentning p&aring; Amager. Eller billig levering i hele K&oslash;benhavn — kun{" "}
+                <LivePrice productId="levering_ud" prefix="" suffix=" kr" /> inkl. ops&aelig;tning.
               </p>
             </div>
           </div>
@@ -254,7 +257,7 @@ export default function KobenhavnPage() {
                 <tbody className="text-white/60">
                   <tr className="border-b border-white/5">
                     <td className="py-3">Pris/weekend</td>
-                    <td className="py-3 font-semibold text-brand-400">Fra 395 kr</td>
+                    <td className="py-3 font-semibold text-brand-400"><LiveStartPrice prefix="Fra " /></td>
                     <td className="py-3">500-800 kr</td>
                   </tr>
                   <tr className="border-b border-white/5">
@@ -296,7 +299,7 @@ export default function KobenhavnPage() {
                 <p className="mt-1 text-white/40"><SiteText>{"{{aabningstider}}"}</SiteText></p>
               </div>
               <div>
-                <h3 className="mb-2 font-semibold text-white">Billig levering (495 kr inkl. ops&aelig;tning)</h3>
+                <h3 className="mb-2 font-semibold text-white">Billig levering ({prisKr("levering_ud")} inkl. ops&aelig;tning)</h3>
                 <p>Hele Stork&oslash;benhavn: Indre By, &Oslash;sterbro, N&oslash;rrebro, Vesterbro, Frederiksberg, Amager, Valby, Vanl&oslash;se, Br&oslash;nsh&oslash;j</p>
                 <p className="mt-1 text-white/40">Vi bringer udstyret ud, s&aelig;tter det op og henter det igen — alt inkluderet i prisen</p>
               </div>
@@ -315,7 +318,8 @@ export default function KobenhavnPage() {
             Klar til K&oslash;benhavns billigste festlyd?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online p&aring; 2 minutter. Hent fredag i K&oslash;benhavn S, aflever mandag. Fra 395 kr/weekend.
+            Book online p&aring; 2 minutter. Hent fredag i K&oslash;benhavn S, aflever mandag.{" "}
+            <LiveStartPrice prefix="Fra " suffix=" kr/weekend." />
           </p>
           <a
             href="/#book"

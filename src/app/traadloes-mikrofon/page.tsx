@@ -52,8 +52,8 @@ export default function TraadloesMikrofonPage() {
         title="Kombiner med headset og højtalere"
         text="Mikrofonen er perfekt sammen med et headset og højtalere. Skab den fulde lydoplevelse til dit event."
         links={[
-          { href: "/headset-mikrofon", label: "Se headset – 345 kr" },
-          { href: "/lej-hojtaler", label: "Se højtalere – fra 395 kr" },
+          { href: "/headset-mikrofon", label: "Se headset", priceId: "headset" },
+          { href: "/lej-hojtaler", label: "Se højtalere", startpris: true },
         ]}
       />
     </ProductLanding>
