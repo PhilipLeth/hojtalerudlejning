@@ -243,10 +243,9 @@ describe("Addons data", () => {
   });
 
   it("all addons except kørsel have an image", () => {
-    // Kørsel er en ydelse og har aldrig haft et billede. Mixerne er nye og
-    // venter på fotos — de står med null frem for et lånt billede, fordi et
-    // mixerbillede der viser en mikrofon er værre end ingenting.
-    const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge", "mixer_lille", "mixer_stor"];
+    // Kørsel er en ydelse og har aldrig haft et billede. Alt andet skal have
+    // sit eget — mixerne fik deres genereret efter husstilen 25. august 2026.
+    const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge"];
     for (const a of addons) {
       if (udenFoto.includes(a.id)) {
         expect(a.image).toBeNull();

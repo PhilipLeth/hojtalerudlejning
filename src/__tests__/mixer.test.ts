@@ -5,9 +5,14 @@
  * fortalte hvad de faktisk er: den store er en Yamaha med effekter, den lille
  * en simpel 4-kanals. Fotos mangler stadig.
  *
- * Det farlige er ikke det manglende foto, men fallbacken: CategoryProductGrid
- * faldt tilbage på lys-pakkens billede, så en mixer blev vist som en
- * lyseffekt. Et forkert billede er værre end intet.
+ * Fotoene er siden genereret efter husstilen. Første forsøg brugte
+ * røgmaskinen som stilreference, og den styrede formen så meget, at den lille
+ * mixer kom ud som en røgmaskine med knapper — med "VF1300 EP" trykt på siden.
+ *
+ * Fallbacken bag det hele står stadig: CategoryProductGrid faldt tilbage på
+ * lys-pakkens billede for produkter uden foto, så en mixer blev vist som en
+ * lyseffekt. Et forkert billede er værre end intet, og den regel gælder alt
+ * fremtidigt uden foto — ikke kun mixerne.
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
@@ -37,8 +42,12 @@ describe("Mixerne", () => {
     for (const m of mixere) expect(m.page).toBe("/mixer");
   });
 
-  it("står uden billede frem for med et lånt", () => {
-    for (const m of mixere) expect(m.image).toBeNull();
+  it("har egne fotos — ikke et lånt fra et andet produkt", () => {
+    for (const m of mixere) {
+      expect(m.image).toMatch(/^\/images\/product-mixer-(lille|stor)\.webp$/);
+    }
+    // Hver sin — ellers ser de to størrelser ens ud i griddet
+    expect(new Set(mixere.map((m) => m.image)).size).toBe(2);
   });
 });
 

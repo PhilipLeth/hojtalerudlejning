@@ -367,9 +367,9 @@ export const addons: Addon[] = [
       desc: "We deliver, set up and collect again — save 195 DKK",
     },
   },
-  // Mixerne mangler stadig produktfotos og står derfor med image: null.
-  // CategoryProductGrid viser navnet i en neutral flade i stedet for at låne
-  // et andet produkts billede. Sæt stien ind, når fotoene findes.
+  // Fotoene er genereret med scripts/product-images/generate_product_photo.py
+  // efter husstilen i docs/_internal/produktbilleder-styleguide.md. De viser
+  // en generisk kompakt mixer uden mærkelogo — ikke Frederiks konkrete Yamaha.
   //
   // Modellen er bevidst ikke nævnt for den lille: den er "en simpel 4-kanals",
   // ikke et bestemt fabrikat. Den store er en Yamaha, og effekterne er dét,
@@ -378,7 +378,7 @@ export const addons: Addon[] = [
     id: "mixer_lille",
     page: "/mixer",
     price: 295,
-    image: null,
+    image: "/images/product-mixer-lille.webp",
     contents: ["4-kanals minimixer", "Strømforsyning", "Kabel til højtaler"],
     da: {
       label: "Mixer lille",
@@ -393,7 +393,7 @@ export const addons: Addon[] = [
     id: "mixer_stor",
     page: "/mixer",
     price: 395,
-    image: null,
+    image: "/images/product-mixer-stor.webp",
     contents: ["Yamaha-mixer med indbyggede effekter", "Strømforsyning", "Kabler til højtaler"],
     da: {
       label: "Mixer stor",
