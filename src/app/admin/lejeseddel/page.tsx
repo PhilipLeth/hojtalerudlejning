@@ -7,7 +7,6 @@ import { useAdminAuth } from "@/lib/useAdminAuth";
 import { useState, useEffect, useCallback } from "react";
 import { orderLines, deliveryInfo, type OrderBooking } from "@/lib/orderLines";
 import { useSiteSettings } from "@/lib/useSiteSettings";
-import { useProducts } from "@/lib/useProducts";
 import { formatCompanyLine } from "@/lib/siteInfo";
 
 interface Booking extends OrderBooking {
@@ -53,7 +52,6 @@ export default function LejeseddelPage() {
   // Afhentningsstedet kommer fra /admin/indstillinger, men kan rettes på den
   // enkelte seddel (fx hvis udstyret afleveres et andet sted)
   const { pickupAddress, company } = useSiteSettings();
-  const { speakers, rentalProducts } = useProducts();
   const [pickupPlace, setPickupPlace] = useState("");
   useEffect(() => {
     setPickupPlace((prev) => prev || pickupAddress);
@@ -121,27 +119,6 @@ export default function LejeseddelPage() {
   }, [selected, secret]);
 
   /**
-   * Har ordren noget, man kan sætte en telefon til?
-   *
-   * Slås op i kataloget frem for på navnet: et bundt hedder "Festpakke 150"
-   * og røber ikke i sig selv, at der er højtalere i. Bundter tælles med, hvis
-   * bare én af deres dele er lyd.
-   */
-  function harLydkilde(b: Booking) {
-    const ids = orderLines(b).map((l) => l.productId).filter(Boolean) as string[];
-    const erLyd = (id: string): boolean => {
-      if (speakers.some((sp) => sp.id === id)) return true;
-      const r = rentalProducts.find((x) => x.id === id);
-      if (r) {
-        if (r.category === "lyd") return true;
-        if (r.bundle?.parts?.some((del) => erLyd(del.productId))) return true;
-      }
-      return false;
-    };
-    return ids.some(erLyd);
-  }
-
-  /**
    * Udstyrslisten er ordrens egne linjer — hovedprodukt, kurv-varer og tilvalg.
    * Tidligere blev alt kaldt "Højttaler (...)", så en ordre på en lyskæde stod
    * som "Højttaler (Lyskæde varm hvid — —)" og kurv-varer manglede helt.
@@ -151,11 +128,9 @@ export default function LejeseddelPage() {
       item: l.label,
       qty: String(l.qty),
     }));
-    rows.push({ item: "Strømkabel", qty: "1" });
-    // AUX og iPhone-adapter hører til noget, man spiller musik igennem. Før
-    // stod de på hver eneste seddel, også når ordren var en lyskæde eller en
-    // røgmaskine — så listen påstod, at kunden fik kabler, der ikke fulgte med.
-    if (harLydkilde(b)) rows.push({ item: "AUX-kabel + iPhone-adapter", qty: "1" });
+    // Ingen kabellinjer. Strøm og AUX stod før på hver seddel som faste
+    // punkter, men de er ikke ordrelinjer — de følger med udstyret. Frederik
+    // vil have listen til at være dét, der er bestilt, og ikke andet.
     // Tre tomme linjer til det, der bliver aftalt i døren
     for (let i = 0; i < 3; i++) rows.push({ item: "", qty: "" });
     return rows;

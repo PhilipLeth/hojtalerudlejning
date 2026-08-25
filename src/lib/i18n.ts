@@ -166,15 +166,15 @@ export const t = {
         },
         {
           title: "2. Hent din højtaler",
-          text: "Hent hos os på ADRESSE — alle kabler følger med (iPhone, USB-C, AUX). Fredag eller efter aftale.",
+          text: "Hent hos os på ADRESSE. Højtalere kommer med alle kabler — iPhone, USB-C og AUX. Fredag eller efter aftale.",
         },
         {
           title: "3. Fest!",
           text: "Kraftig lyd til op til 100 personer. Tilkøb lys-pakke for den fulde oplevelse.",
         },
         {
-          title: "4. Aflever mandag",
-          text: "Aflever udstyret mandag. Betal online ved booking — eller ved afhentning.",
+          title: "4. Aflever igen",
+          text: "De fleste afleverer mandag, men 1 til 5 dage koster det samme. Betal online ved booking eller med MobilePay ved afhentning.",
         },
       ],
       // Tiderne selv kommer fra /admin/indstillinger — se src/lib/openingHours.ts
@@ -355,15 +355,15 @@ export const t = {
         },
         {
           title: "2. Pick up your speaker",
-          text: "Pick up at ADRESSE — all cables included (iPhone, USB-C, AUX). Friday or by appointment.",
+          text: "Pick up at ADRESSE. Speakers come with all cables — iPhone, USB-C and AUX. Friday or by appointment.",
         },
         {
           title: "3. Party!",
           text: "Powerful sound for up to 100 people. Add the light package for the full experience.",
         },
         {
-          title: "4. Return on Monday",
-          text: "Return the equipment Monday. Pay online at booking — or at pickup.",
+          title: "4. Bring it back",
+          text: "Most return on Monday, but 1 to 5 days costs the same. Pay online at booking or by MobilePay at pickup.",
         },
       ],
       // Hours themselves come from admin settings — see src/lib/openingHours.ts

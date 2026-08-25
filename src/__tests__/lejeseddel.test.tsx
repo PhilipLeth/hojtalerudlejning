@@ -92,10 +92,9 @@ describe("Lejesedlen", () => {
     await openSeddel();
     expect(screen.getByText("agnes@example.com")).toBeInTheDocument();
     expect(screen.getByText(/fre 21\. aug/)).toBeInTheDocument();
-    // Pakkelisten er ordrens egne linjer — plus kablerne der altid følger med
+    // Pakkelisten er ordrens egne linjer — og kun dem
     expect(screen.getByText("Stor højtalerpakke")).toBeInTheDocument();
     expect(screen.getByText("Lys-pakke")).toBeInTheDocument();
-    expect(screen.getByText("Strømkabel")).toBeInTheDocument();
   });
 
   it("siger hvad der MANGLER at blive betalt, ikke bare prisen", async () => {
@@ -152,49 +151,23 @@ describe("Lejesedlen", () => {
 });
 
 /**
- * Kablerne skal passe til ordren.
+ * Udstyrslisten er ordren — og ikke andet.
  *
- * Før stod "AUX-kabel + iPhone-adapter" på hver eneste seddel. På en ordre med
- * en lyskæde og en røgmaskine påstod sedlen dermed, at kunden fik kabler med,
- * som der ikke var noget at sætte i — og listen er dét, der tælles op i døren.
+ * Sedlen havde to faste linjer, "Strømkabel" og "AUX-kabel + iPhone-adapter",
+ * på hver eneste ordre. Først gjorde vi AUX betinget af, om der var noget at
+ * spille i; Frederik ville have dem helt væk. De er ikke ordrelinjer — de
+ * følger med udstyret — og på en optælling i døren står de bare og fylder.
  */
-describe("Lejeseddel — kabler følger ordren", () => {
-  const lysOrdre = {
-    ...booking,
-    id: "booking_1755500000001_lys",
-    speaker: "",
-    speakerId: "",
-    cartItems: [{ name: "Lyskæde varm hvid", price: 195, productId: "lyskaeder" }],
-    addonIds: ["rog"],
-    addons: ["Røgmaskine"],
-  };
-
-  async function aabn(b: unknown) {
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(async (url: string) => {
-        if (String(url).includes("/api/bookings")) {
-          return new Response(JSON.stringify({ bookings: [b] }), { status: 200 });
-        }
-        if (String(url).includes("/api/handover")) return new Response("{}", { status: 200 });
-        return new Response(JSON.stringify({ users: [] }), { status: 200 });
-      }),
-    );
-    renderAdmin(<LejeseddelPage />);
-    await waitFor(() => expect(screen.getByText(/Agnes/)).toBeInTheDocument());
-    fireEvent.click(screen.getByText(/Agnes/));
-    await waitFor(() => expect(screen.getByText(/Strømkabel/)).toBeInTheDocument());
-  }
-
-  it("nævner ikke AUX på en ordre uden noget at spille i", async () => {
-    await aabn(lysOrdre);
+describe("Lejeseddel — listen er ordren", () => {
+  it("har ingen faste kabellinjer", async () => {
+    await openSeddel();
     expect(screen.queryByText(/AUX-kabel/)).not.toBeInTheDocument();
-    // Strøm skal der stadig til — lyskæder og røgmaskiner kører ikke på luft
-    expect(screen.getByText(/Strømkabel/)).toBeInTheDocument();
+    expect(screen.queryByText(/^Strømkabel$/)).not.toBeInTheDocument();
   });
 
-  it("tager AUX med når der er en højtaler på ordren", async () => {
-    await aabn(booking);
-    expect(screen.getByText(/AUX-kabel \+ iPhone-adapter/)).toBeInTheDocument();
+  it("viser stadig det, der faktisk er bestilt", async () => {
+    await openSeddel();
+    expect(screen.getByText(/Stor højtalerpakke/)).toBeInTheDocument();
+    expect(screen.getByText(/Lys-pakke/)).toBeInTheDocument();
   });
 });
