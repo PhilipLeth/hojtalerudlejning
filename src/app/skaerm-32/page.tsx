@@ -50,7 +50,7 @@ export default function Page() {
           <h2 className="mb-3 text-2xl font-bold">Skal den bruges til karaoke?</h2>
           <p className="mx-auto mb-6 max-w-md text-white/50">
             Så får du den billigere i Karaokepakken sammen med maskine og højtalere —
-            1.100 kr i stedet for 1.485 kr.
+            1.300 kr i stedet for 1.685 kr.
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Link

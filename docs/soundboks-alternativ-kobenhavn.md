@@ -36,7 +36,7 @@ Det betyder:
 
 - **Ingen batteristress.** Med strøm i stikket kører lyden hele natten uden afbrydelser.
 - **Professionel lydkvalitet.** Aktive højtalere med klar diskant og dyb bas - ikke den komprimerede lyd du kender fra en batterihøjtaler.
-- **Skalérbar løsning.** Den lille højtalerpakke dækker op til 30 personer, den store 30-50. Skal I være flere, tager Festpakke 150 (1.495 kr.) og Festpakke 250 (2.295 kr.) over med subwoofer og stativer.
+- **Skalérbar løsning.** Den lille højtalerpakke dækker op til 30 personer, den store 30-50. Skal I være flere, tager Festpakke 150 (2.345 kr.) og Festpakke 250 (3.645 kr.) over med subwoofer og stativer.
 
 ## Hvad koster det?
 

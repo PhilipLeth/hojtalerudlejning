@@ -3,13 +3,13 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Firmafestpakke | Mikrofon, sub, lys og røg | 1.795 kr | Lejhøjtaler.dk",
+  title: "Firmafestpakke | Mikrofon, sub, lys og røg | 2.645 kr | Lejhøjtaler.dk",
   description:
-    "Firmafestpakke: 2× EV 12\" højtalere på stativer, trådløs mikrofon, 12\" subwoofer, lys-pakke og røgmaskine for 1.795 kr — spar 130 kr. Til julefrokost og firmafest i København.",
+    "Firmafestpakke: 2× EV 12\" højtalere på stativer, trådløs mikrofon, 12\" subwoofer, lys-pakke og røgmaskine for 2.645 kr — spar 130 kr. Til julefrokost og firmafest i København.",
   keywords: ["firmafest lyd", "julefrokost anlæg leje", "lyd til firmafest københavn", "mikrofon til tale", "anlæg til julefrokost"],
   alternates: { canonical: "https://lejhojtaler.dk/firmafestpakke" },
   openGraph: {
-    title: "Firmafestpakke | Mikrofon, sub, lys og røg | 1.795 kr | Lejhøjtaler.dk",
+    title: "Firmafestpakke | Mikrofon, sub, lys og røg | 2.645 kr | Lejhøjtaler.dk",
     description: "Højtalere på stativer, trådløs mikrofon, subwoofer, lys og røg. Til julefrokost og firmafest — spar 130 kr.",
     url: "https://lejhojtaler.dk/firmafestpakke",
     siteName: "Lejhøjtaler.dk",

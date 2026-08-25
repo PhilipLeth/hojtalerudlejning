@@ -67,7 +67,7 @@ const ORDRE = {
   addons: [],
   addonIds: [],
   cartItems: [],
-  total: 245,
+  total: 595,
   paymentChoice: "online",
   name: "Malthe",
   email: "malthe@example.com",

@@ -11,7 +11,7 @@ import { LocationKicker } from "@/components/PhoneLink";
 export const metadata: Metadata = {
   title: "Lej Karaoke København | Maskine, storskærm & lyd | Lejhøjtaler.dk",
   description:
-    "Lej karaoke i København: Karaokepakker med maskine, skærm og højtalere fra 1.100 kr — spar op til 485 kr. Singing Machine med 2 trådløse mikrofoner. Book på 2 min.",
+    "Lej karaoke i København: Karaokepakker med maskine, skærm og højtalere fra 1.300 kr — spar op til 485 kr. Singing Machine med 2 trådløse mikrofoner. Book på 2 min.",
   keywords: [
     "lej karaoke",
     "karaoke maskine leje",
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/karaoke" },
   openGraph: {
-    title: "Lej Karaoke København | Pakker fra 1.100 kr — spar op til 485 kr",
-    description: "Karaokepakker fra 1.100 kr — spar op til 485 kr. Maskine, skærm og højtalere. Book online.",
+    title: "Lej Karaoke København | Pakker fra 1.300 kr — spar op til 485 kr",
+    description: "Karaokepakker fra 1.300 kr — spar op til 485 kr. Maskine, skærm og højtalere. Book online.",
     url: "https://lejhojtaler.dk/karaoke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -58,7 +58,7 @@ export default function KaraokePage() {
             Lej karaoke til festen
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              pakker fra 1.100 kr.
+              pakker fra 1.300 kr.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">

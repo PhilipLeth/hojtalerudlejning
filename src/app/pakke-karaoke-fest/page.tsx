@@ -2,13 +2,13 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Lej Karaoke-festpakken København | 1.500 kr | Lejhøjtaler.dk",
-  description: "Karaokemaskine + 55\" storskærm + store højtalere. Spar 285 kr. 1.500 kr/weekend. Betal online. Book på 2 min.",
+  title: "Lej Karaoke-festpakken København | 2.000 kr | Lejhøjtaler.dk",
+  description: "Karaokemaskine + 55\" storskærm + store højtalere. Spar 285 kr. 2.000 kr/weekend. Betal online. Book på 2 min.",
   keywords: ["stor karaoke pakke", "karaoke anlæg til fest", "karaoke firmafest leje"],
   alternates: { canonical: "https://lejhojtaler.dk/pakke-karaoke-fest" },
   openGraph: {
-    title: "Lej Karaoke-festpakken København | 1.500 kr",
-    description: "Karaokemaskine + 55\" storskærm + store højtalere. Spar 285 kr. 1.500 kr/weekend. Betal online. Book på 2 min.",
+    title: "Lej Karaoke-festpakken København | 2.000 kr",
+    description: "Karaokemaskine + 55\" storskærm + store højtalere. Spar 285 kr. 2.000 kr/weekend. Betal online. Book på 2 min.",
     url: "https://lejhojtaler.dk/pakke-karaoke-fest",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -21,7 +21,7 @@ export default function Page() {
     <ProductLanding
       slug="pakke-karaoke-fest"
       name="Karaoke-festpakken"
-      price={1500}
+      price={2000}
       headline="Karaoke-festpakken — op til 100 pers."
       sub={'Karaokemaskine + 55" storskærm + store højtalere. Spar 285 kr.'}
       image="/images/product-pakke-karaoke-fest.webp"

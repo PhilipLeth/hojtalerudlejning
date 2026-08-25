@@ -25,7 +25,7 @@ export default function Page() {
       intro={"Musik i haven uden at genere naboerne. Vi hjælper med at vælge det rigtige anlæg til afstanden, antal gæster og om der overhovedet er strøm."}
       primaryProductId="pakke_udendors"
       primaryName={"Udendørspakke"}
-      primaryPrice={795}
+      primaryPrice={995}
       primaryWhy={"Der er sjældent en stikkontakt i haven. Soundboks 4 kører på batteri, det ekstra batteri holder festen kørende efter midnat, og lyskæden giver lys når solen er gået ned."}
       gridItems={[{"id": "pakke_udendors", "tag": "Anbefalet"}, {"id": "pakke_fest_lille"}, {"id": "thumpgo"}, {"id": "lyskaeder"}, {"id": "lyskaeder_farvet"}]}
       tips={[{"title": "To højtalere slår én stor", "text": "Udendørs er der ingen vægge til at kaste lyden tilbage. To højtalere fordelt i haven giver jævn lyd ved lavere lydstyrke — og dermed færre klager."}, {"title": "Vend lyden væk fra naboen", "text": "Peg højtalerne ind mod jeres eget hus i stedet for ud mod skel. Det giver samme oplevelse for gæsterne og markant mindre støj hos naboen."}, {"title": "Ingen strøm i haven?", "text": "Mackie Thump GO til 345 kr kører på batteri i op til 12 timer. Ingen forlængerledning gennem køkkenvinduet."}, {"title": "Lyskæder gør aftenen", "text": "10 meter lyskæde til 195 kr — varm hvid eller farvet. Det er den billigste måde at gøre en have til et festlokale, når det bliver mørkt."}]}

@@ -49,7 +49,7 @@ The right choice for garden parties, corporate events and confirmations.
 - 2× 12" EV speakers on stands
 - 12" subwoofer for the low end
 - Light package and fog machine included
-- **Price: 1,495 DKK/weekend**
+- **Price: 2,345 DKK/weekend**
 
 For the events where the sound has to carry a full room. Delivery and setup recommended at this size.
 

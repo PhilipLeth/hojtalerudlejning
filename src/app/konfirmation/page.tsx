@@ -25,7 +25,7 @@ export default function Page() {
       intro={"Taler der kan høres, og musik der holder festen kørende bagefter. Vi udlejer det hele samlet, så I bare skal tilslutte telefonen."}
       primaryProductId="pakke_fest_stor"
       primaryName={"Stor festpakke"}
-      primaryPrice={895}
+      primaryPrice={1290}
       primaryWhy={"En konfirmation har både taler og fest. De store højtalere klarer begge dele til op til 100 gæster, og lys-pakken laver lokalet om når bordene er ryddet til side."}
       gridItems={[{"id": "pakke_fest_stor", "tag": "Anbefalet"}, {"id": "pakke_fest_lille"}, {"id": "traadloes_mikrofon"}, {"id": "party"}, {"id": "lyskaeder"}]}
       tips={[{"title": "Husk mikrofon til talerne", "text": "Konfirmationer er talefester. En trådløs mikrofon til 295 kr er den billigste måde at sikre, at bedstemors tale også når det bagerste bord."}, {"title": "Book i god tid", "text": "April og maj er vores travleste måneder. Konfirmationsweekenderne bliver typisk booket 2-3 måneder i forvejen — især lørdagene."}, {"title": "Musik til både unge og voksne", "text": "Højtalerne kobles til telefonen via Bluetooth, så I kan skifte mellem playlister hen over dagen uden at rode med kabler."}, {"title": "Levering hvis I har travlt", "text": "Vi kan levere og sætte op i København for 495 kr, så I kan koncentrere jer om borddækning i stedet for teknik."}]}

@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Festpakke 150 | Lyd, bas, lys og røg til 150 gæster | 1.495 kr | Lejhøjtaler.dk",
+  title: "Festpakke 150 | Lyd, bas, lys og røg til 150 gæster | 2.345 kr | Lejhøjtaler.dk",
   description:
-    "Festpakke 150: 2× EV 12\" højtalere, 12\" subwoofer, stativer, lys-pakke og røgmaskine for 1.495 kr — spar 135 kr. Lyd og lys til op til 150 gæster i København. Levering og opsætning kan tilvælges.",
+    "Festpakke 150: 2× EV 12\" højtalere, 12\" subwoofer, stativer, lys-pakke og røgmaskine for 2.345 kr — spar 135 kr. Lyd og lys til op til 150 gæster i København. Levering og opsætning kan tilvælges.",
   keywords: ["festpakke 150 personer", "lydanlæg 150 personer", "lej lyd og lys til fest", "anlæg til stor fest", "højtalere og sub leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festpakke-150",
     languages: localeAlternates("/festpakke-150"),
   },
   openGraph: {
-    title: "Festpakke 150 | Lyd, bas, lys og røg til 150 gæster | 1.495 kr",
+    title: "Festpakke 150 | Lyd, bas, lys og røg til 150 gæster | 2.345 kr",
     description: "2× EV 12\" + subwoofer + stativer + lys + røg. Alt til festen — spar 135 kr.",
     url: "https://lejhojtaler.dk/festpakke-150",
     siteName: "Lejhøjtaler.dk",
@@ -27,7 +27,7 @@ export default function Festpakke150Page() {
     <ProductLanding
       slug="festpakke-150"
       name="Festpakke 150"
-      price={1495}
+      price={2345}
       headline="Festpakke 150 — når dansegulvet skal fungere"
       sub="2× EV 12&quot; højtalere, subwoofer, stativer, lys-pakke og røgmaskine. Til op til 150 gæster — spar 135 kr."
       image="/images/product-pakke-fest-150.webp"

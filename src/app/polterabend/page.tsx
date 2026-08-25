@@ -25,7 +25,7 @@ export default function Page() {
       intro={"Musik der kan følge med hele dagen — uden stikkontakt. Batteridrevne højtalere I kan tage med i parken, på havnen og videre til festen."}
       primaryProductId="pakke_udendors"
       primaryName={"Udendørspakke"}
-      primaryPrice={795}
+      primaryPrice={995}
       primaryWhy={"Polterabenden flytter sig — fra baggården til parken til stranden. Anlægget kører på batteri, det ekstra batteri gør at det ikke går ud midt i det hele, og lyskæden tager over når det bliver mørkt."}
       gridItems={[{"id": "pakke_udendors", "tag": "Anbefalet"}, {"id": "thumpgo"}, {"id": "soundboks"}, {"id": "traadloes_mikrofon"}, {"id": "rog"}]}
       tips={[{"title": "Batteri slår kabel", "text": "En polterabend flytter sig. Vælg batteridrevet, så I ikke er bundet til en stikkontakt — begge vores batterihøjtalere spiller hele dagen på én opladning."}, {"title": "Tag den med på cyklen", "text": "Thump GO vejer 10 kg og kan spændes fast på en ladcykel. Bæretaske kan tilkøbes for 95 kr, hvis den skal med i bagagerummet."}, {"title": "Hold øje med naboerne", "text": "Udendørs musik i København må ikke være til gene. Skru ned efter kl. 22, og flyt festen indenfor — så undgår I en klage."}, {"title": "Mikrofon til talerne", "text": "Skal der holdes tale eller laves konkurrencer undervejs, kan en trådløs mikrofon tilsluttes begge højtalere."}]}

@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Festpakke 250 | Dobbelt anlæg til 250 gæster | 2.295 kr | Lejhøjtaler.dk",
+  title: "Festpakke 250 | Dobbelt anlæg til 250 gæster | 3.645 kr | Lejhøjtaler.dk",
   description:
-    "Festpakke 250: 4× EV 12\" højtalere, 2× 12\" subwoofer, stativer, lys og røgmaskine for 2.295 kr — spar 225 kr. Anlæg til sal, gård eller hal med op til 250 gæster i København.",
+    "Festpakke 250: 4× EV 12\" højtalere, 2× 12\" subwoofer, stativer, lys og røgmaskine for 3.645 kr — spar 225 kr. Anlæg til sal, gård eller hal med op til 250 gæster i København.",
   keywords: ["lydanlæg 250 personer", "anlæg til stor fest", "pa anlæg til firmafest", "lej lydanlæg til sal", "festpakke 200 personer"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festpakke-250",
     languages: localeAlternates("/festpakke-250"),
   },
   openGraph: {
-    title: "Festpakke 250 | Dobbelt anlæg til 250 gæster | 2.295 kr",
+    title: "Festpakke 250 | Dobbelt anlæg til 250 gæster | 3.645 kr",
     description: "4× EV 12\" + 2 subwoofere + lys + røg. Til sal, gård eller hal — spar 225 kr.",
     url: "https://lejhojtaler.dk/festpakke-250",
     siteName: "Lejhøjtaler.dk",
@@ -27,7 +27,7 @@ export default function Festpakke250Page() {
     <ProductLanding
       slug="festpakke-250"
       name="Festpakke 250"
-      price={2295}
+      price={3645}
       headline="Festpakke 250 — anlægget til salen"
       sub="4× EV 12&quot; højtalere, 2 subwoofere, stativer, lys og røg. Til op til 250 gæster — spar 225 kr."
       image="/images/product-pakke-fest-250.webp"

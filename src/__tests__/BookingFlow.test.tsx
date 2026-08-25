@@ -44,7 +44,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
     expect(screen.getByText("Lys-pakke")).toBeInTheDocument();
     expect(screen.getByText("Røgmaskine")).toBeInTheDocument();
     expect(screen.getByText("Fra 495,-")).toBeInTheDocument();
-    expect(screen.getByText("Fra 245,-")).toBeInTheDocument();
+    expect(screen.getByText("Fra 595,-")).toBeInTheDocument();
   });
 
   it("renders in English when locale=en", () => {
@@ -76,7 +76,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
 
   it("advances to step 2 in effects-only mode when clicking røg", async () => {
     render(<BookingFlow />);
-    const rogButton = screen.getByText("Fra 245,-").closest("button")!;
+    const rogButton = screen.getByText("Fra 595,-").closest("button")!;
     fireEvent.click(rogButton);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
@@ -322,9 +322,9 @@ describe("BookingFlow - Preselect via ?product=", () => {
 
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
-      // Soundboks (595) ligger nu i kurven + projektor (495) er valgt
+      // Soundboks (795) ligger nu i kurven + projektor (495) er valgt
       expect(last?.count).toBe(2);
-      expect(last?.total).toBe(595 + 495);
+      expect(last?.total).toBe(795 + 495);
     });
   });
 
@@ -342,7 +342,7 @@ describe("BookingFlow - Preselect via ?product=", () => {
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
       expect(last?.count).toBe(1);
-      expect(last?.total).toBe(595);
+      expect(last?.total).toBe(795);
     });
   });
 });

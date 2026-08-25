@@ -171,10 +171,10 @@ describe("Ordren foldes ud når man klikker på den", () => {
     foldUd();
 
     await waitFor(() => expect(screen.getByText("Ordrelinjer")).toBeInTheDocument());
-    // Katalogpriser slået op pr. linje: lyskæde 195, uplight 125, røg 245, kørsel 795
+    // Katalogpriser slået op pr. linje: lyskæde 195, uplight 125, røg 595, kørsel 795
     expect(screen.getByText("195 kr")).toBeInTheDocument();
     expect(screen.getByText("125 kr")).toBeInTheDocument();
-    expect(screen.getByText("245 kr")).toBeInTheDocument();
+    expect(screen.getByText("595 kr")).toBeInTheDocument();
     expect(screen.getByText("795 kr")).toBeInTheDocument();
     expect(screen.getByText(/Levering \+ afhentning/)).toBeInTheDocument();
     expect(screen.getByText("Total på ordren")).toBeInTheDocument();

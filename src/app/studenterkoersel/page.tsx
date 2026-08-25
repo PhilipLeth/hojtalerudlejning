@@ -25,7 +25,7 @@ export default function Page() {
       intro={"Musik der kan høres over motoren og 30 syngende studenter. Batteridrevet, så den bare skal spændes fast på vognen."}
       primaryProductId="pakke_student"
       primaryName={"Studenterpakken"}
-      primaryPrice={745}
+      primaryPrice={945}
       primaryWhy={"Der er ingen strøm på ladet, og anlægget bliver løftet op og ned hele dagen. To batterier holder fra morgen til sidste adresse, og den polstrede taske gør at Soundboksen overlever turen."}
       gridItems={[{"id": "pakke_student", "tag": "Anbefalet"}, {"id": "soundboks"}, {"id": "thumpgo"}, {"id": "batteri"}, {"id": "traadloes_mikrofon"}]}
       tips={[{"title": "Spænd den godt fast", "text": "Soundboksen skal surres til vognen med spændbånd — den vejer 11 kg og må ikke kunne skride under opbremsning. Vi låner gerne bånd med ud."}, {"title": "Book tidligt i juni", "text": "Studenterkørsel er koncentreret på få uger i juni, og vores batterihøjtalere er udlejet først. Book gerne i april."}, {"title": "Ekstra batteri til lange dage", "text": "Kører I fra morgen til aften, kan et ekstra batteri tilkøbes for 145 kr — så er I sikre på musik hele vejen rundt."}, {"title": "Husk regnvejr", "text": "Dansk juni er uforudsigelig. Hav en presenning eller en plastikpose klar, så højtaleren kan dækkes til, hvis det står ned."}]}

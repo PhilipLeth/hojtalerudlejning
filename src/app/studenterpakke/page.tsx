@@ -3,13 +3,13 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Studenterpakken | Soundboks, ekstra batteri og taske | 745 kr | Lejhøjtaler.dk",
+  title: "Studenterpakken | Soundboks, ekstra batteri og taske | 945 kr | Lejhøjtaler.dk",
   description:
-    "Studenterpakken: Soundboks 4, ekstra batteri og polstret bæretaske for 745 kr — spar 90 kr. Spiller hele studenterkørslen uden strøm. Lejes i København.",
+    "Studenterpakken: Soundboks 4, ekstra batteri og polstret bæretaske for 945 kr — spar 90 kr. Spiller hele studenterkørslen uden strøm. Lejes i København.",
   keywords: ["studenterkørsel højtaler", "soundboks til studenterkørsel", "lej højtaler studenter", "musik til studentervogn"],
   alternates: { canonical: "https://lejhojtaler.dk/studenterpakke" },
   openGraph: {
-    title: "Studenterpakken | Soundboks, ekstra batteri og taske | 745 kr | Lejhøjtaler.dk",
+    title: "Studenterpakken | Soundboks, ekstra batteri og taske | 945 kr | Lejhøjtaler.dk",
     description: "Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet — spar 90 kr.",
     url: "https://lejhojtaler.dk/studenterpakke",
     siteName: "Lejhøjtaler.dk",
@@ -23,7 +23,7 @@ export default function StudenterpakkePage() {
     <ProductLanding
       slug="studenterpakke"
       name="Studenterpakken"
-      price={745}
+      price={945}
       headline="Studenterpakken — spiller hele vognturen"
       sub="Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet — spar 90 kr."
       image="/images/product-soundboks.webp"
