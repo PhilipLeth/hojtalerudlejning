@@ -64,7 +64,10 @@ const useCases = [
  * 2.645 kr som Firmafestpakke) og en 75" skærm, vi aldrig har haft. Nu står
  * navn, pris og indhold i products.ts, så en prisstigning følger med.
  */
-const packages = ["pakke_firmafest", "pakke_konference", "pakke_konference_150"].map((id) => {
+// Konferencepakkerne er på pause sammen med skærmene (se PAUSEDE_PRODUKTER).
+// Tale & musik-pakken er det, der er tilbage til mødet: højtalere og en
+// trådløs mikrofon — og Festpakke 250 til det store firmaarrangement.
+const packages = ["pakke_firmafest", "pakke_tale_musik", "pakke_fest_250"].map((id) => {
   const p = rentalProducts.find((r) => r.id === id)!;
   return {
     id,
