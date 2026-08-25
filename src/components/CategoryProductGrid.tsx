@@ -49,7 +49,7 @@ export default function CategoryProductGrid({
         name: ad.da.label,
         desc: ad.da.desc,
         price: ad.price,
-        image: ad.image ?? "/images/product-lys.webp",
+        image: ad.image,
         contents: ad.contents ?? [],
         href: `/?product=${ad.id}#book`,
         page: ad.page ?? (item.href && !item.href.includes("#book") && !item.href.startsWith("/book") ? item.href : undefined),
@@ -85,13 +85,23 @@ export default function CategoryProductGrid({
                   {p.tag}
                 </span>
               )}
-              <img loading="lazy" decoding="async"
-                src={p.image}
-                srcSet={thumbSrcSet(p.image)}
-                sizes={GRID_IMAGE_SIZES}
-                alt={p.name}
-                className="mx-auto h-40 w-full object-contain transition duration-300 group-hover:scale-105 group-hover:opacity-20"
-              />
+              {/* Nogle varer har endnu ikke et produktfoto. Før faldt de
+                  tilbage på lys-pakkens billede, så en mixer blev vist som en
+                  lyseffekt — et forkert billede er værre end intet. Nu står
+                  navnet i stedet, indtil fotoet findes. */}
+              {p.image ? (
+                <img loading="lazy" decoding="async"
+                  src={p.image}
+                  srcSet={thumbSrcSet(p.image)}
+                  sizes={GRID_IMAGE_SIZES}
+                  alt={p.name}
+                  className="mx-auto h-40 w-full object-contain transition duration-300 group-hover:scale-105 group-hover:opacity-20"
+                />
+              ) : (
+                <div className="mx-auto flex h-40 w-full items-center justify-center rounded-xl border border-dashed border-white/10 bg-white/[0.02] px-4 transition duration-300 group-hover:opacity-20">
+                  <span className="text-center text-sm font-medium text-white/40">{p.name}</span>
+                </div>
+              )}
               {p.contents.length > 0 && (
                 <div className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-center bg-[#0d0c12]/75 px-5 opacity-0 transition duration-300 group-hover:opacity-100">
                   <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-brand-400">

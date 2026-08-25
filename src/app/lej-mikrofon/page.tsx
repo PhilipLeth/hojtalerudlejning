@@ -138,6 +138,26 @@ export default function LejMikrofonPage() {
           />
         </section>
 
+        {/* Mixeren er svaret på "kan vi have to mikrofoner og musik på én gang" */}
+        <section className="mx-auto max-w-6xl px-4 pb-16">
+          <div className="mb-2 flex flex-wrap items-baseline justify-center gap-3">
+            <h2 className="text-center text-3xl font-bold">Flere mikrofoner på én gang?</h2>
+            <a href="/mixer" className="text-sm text-brand-400 hover:underline">
+              Lille eller stor mixer? →
+            </a>
+          </div>
+          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
+            Én mikrofon går direkte i højtaleren. Skal to mikrofoner og musik køre
+            samtidig, er det mixeren, der samler det.
+          </p>
+          <CategoryProductGrid
+            items={[
+              { id: "mixer_stor", tag: "Med effekter" },
+              { id: "mixer_lille" },
+            ]}
+          />
+        </section>
+
         <section className="mx-auto max-w-3xl px-4 pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Mangler du noget at spille i?</h2>

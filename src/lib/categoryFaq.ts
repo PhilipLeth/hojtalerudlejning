@@ -35,6 +35,37 @@ const LEJEPERIODE: FaqItem = {
 };
 
 export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
+  "mixer": [
+    {
+      q: "Hvad koster det at leje en mixer i København?",
+      a:
+        "Den lille 4-kanals minimixer koster 295 kr for hele lejeperioden. Den store Yamaha-mixer med " +
+        "indbyggede effekter koster 395 kr. Begge priser gælder 1 til 5 dage — der er ingen dagstillæg.",
+    },
+    {
+      q: "Hvornår har jeg brug for en mixer?",
+      a:
+        "Når der skal mere end én ting i højtaleren på samme tid. En enkelt mikrofon eller en telefon går " +
+        "direkte i højtaleren uden mixer. Skal to mikrofoner og musik køre samtidig — en tale med baggrundsmusik, " +
+        "et band, en duet — er det mixeren, der samler det og lader dig skrue på hver kilde for sig.",
+    },
+    {
+      q: "Hvad er forskellen på den lille og den store?",
+      a:
+        "Antallet af kanaler og effekterne. Den lille har fire kanaler og gør præcis det, den skal: samler to " +
+        "mikrofoner og en musikkilde. Den store er en Yamaha med indbyggede effekter, så du kan lægge rumklang " +
+        "på vokalen — det er dét, der får en stemme til at lyde som til en koncert frem for som en højtaler i " +
+        "et lokale. Vælg den store til band, kor og alt hvor der bliver sunget.",
+    },
+    {
+      q: "Følger kablerne med?",
+      a:
+        "Ja. Strømforsyning og kabel til højtaleren er med. Mikrofonkabler følger med mikrofonerne. " +
+        "Sig til ved booking, hvis du har noget særligt, der skal tilsluttes, så lægger vi det rigtige i.",
+    },
+    AFHENTNING,
+    LEJEPERIODE,
+  ],
   "lej-mikrofon": [
     {
       q: "Hvad koster det at leje en mikrofon i København?",
@@ -63,38 +94,6 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
         "To trådløse kan køre samtidig uden problemer. Skal I have flere — et band, en paneldebat — så ring " +
         "på 31 13 28 52, så finder vi den rigtige opsætning. Til mange kilder på én gang er en mixer det, " +
         "der binder det sammen.",
-    },
-    AFHENTNING,
-    LEJEPERIODE,
-  ],
-  "lej-projektor": [
-    {
-      q: "Hvad koster det at leje en projektor i København?",
-      a:
-        "Den almindelige projektor koster 495 kr for hele lejeperioden, og Projektor Pro med 5000 lumen " +
-        "795 kr. Et lærred på 160 cm koster 195 kr. Skal du hellere have en skærm, koster en 32\" 395 kr " +
-        "og en 55\" storskærm 595 kr.",
-    },
-    {
-      q: "Hvornår skal jeg vælge Pro-projektoren?",
-      a:
-        "Lumen er lysstyrke, og lysstyrke er det, der afgør om billedet kan ses uden at slukke lyset. Den " +
-        "almindelige projektor er til et mørkt rum om aftenen. Projektor Pro med 5000 lumen holder billedet " +
-        "synligt i et oplyst lokale og på et stort lærred — det er den, du vil have til en konference om dagen.",
-    },
-    {
-      q: "Skal jeg bruge lærred, eller kan jeg projicere på væggen?",
-      a:
-        "En hvid, glat væg virker overraskende godt og koster ingenting. Lærredet er svaret, når væggen er " +
-        "farvet, mønstret eller optaget — eller når billedet skal hænge et andet sted end der, hvor væggen er. " +
-        "Vores lærred er 160 cm og står på eget stativ.",
-    },
-    {
-      q: "Er kabler med, og hvad kan jeg tilslutte?",
-      a:
-        "HDMI følger altid med. Har din computer kun USB-C, siger du til ved booking, så lægger vi en adapter " +
-        "i. Lyd fra projektoren er svag, så skal der være film eller video med lyd, bør du leje en højtaler til " +
-        "— det er den detalje, folk oftest opdager for sent.",
     },
     AFHENTNING,
     LEJEPERIODE,
@@ -179,14 +178,14 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Kan jeg få mikrofon med til taler?",
       a:
         "Ja. En trådløs mikrofon koster 295 kr, en Shure BLX i scenekvalitet 595 kr og et trådløst headset 345 kr. " +
-        "Skal der både være tale og skærm, findes Præsentationspakken til 695 kr, Konferencepakken til 1.395 kr og " +
-        "Konferencepakke 150 til 2.395 kr.",
+        "Skal der både være tale og musik, findes Tale & musik-pakken til 1.195 kr med to 12\" højtalere og " +
+        "trådløs mikrofon. Projektor og skærm udlejer vi ikke lige nu.",
     },
     {
       q: "Hvad er forskellen på et festanlæg og et taleanlæg?",
       a:
         "Et festanlæg er bygget til musik og bas og skal kunne spille højt i mange timer. Et taleanlæg er bygget til " +
-        "at gøre en stemme tydelig — mikrofon, klar diskant og som regel en skærm. Skal I bruge begge dele, findes " +
+        "at gøre en stemme tydelig — mikrofon og klar diskant. Skal I bruge begge dele, findes " +
         "Tale & musik-pakken, der kan det samtidig.",
     },
     LEJEPERIODE,
@@ -282,34 +281,6 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     AFHENTNING,
   ],
 
-  karaoke: [
-    {
-      q: "Hvad koster det at leje karaoke i København?",
-      a:
-        "Karaokepakken koster 1.300 kr og indeholder karaokemaskine med to trådløse mikrofoner, 32\" skærm på " +
-        "stativ og to 10\" højtalere — nok til op til 40 personer. Karaoke-festpakken koster 2.000 kr og har 55\" " +
-        "storskærm og to 12\" højtalere til op til 100 personer. Karaokemaskinen alene koster 695 kr.",
-    },
-    {
-      q: "Hvor mange mikrofoner følger med?",
-      a:
-        "To trådløse mikrofoner følger med karaokemaskinen, så I kan synge duet uden at sende den samme mikrofon " +
-        "rundt i lokalet. Har I brug for flere, koster en ekstra trådløs mikrofon 295 kr.",
-    },
-    {
-      q: "Skal vi bruge internet til karaoke?",
-      a:
-        "Kun hvis I vil synge med på YouTube-karaoke via skærmen. Maskinen har indbyggede sange, og den har " +
-        "Bluetooth, så I også kan streame karaokeversioner fra en telefon.",
-    },
-    {
-      q: "Kan jeg leje delene enkeltvis?",
-      a:
-        `Ja. Karaokemaskinen koster ${prisKr("karaoke")}, en 32" skærm ${prisKr("skaerm_32")}, en 55" storskærm ${prisKr("skaerm_55")} og den store ` +
-        `højtalerpakke ${prisKr("festival")}. Pakkerne er billigere end delene hver for sig — Karaokepakken sparer ${rabatKr("pakke_karaoke")}.`,
-    },
-    AFHENTNING,
-  ],
 
   roeg: [
     {
@@ -341,36 +312,39 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     AFHENTNING,
   ],
 
+
+  /* Siden udlejer ikke længere projektor, skærm og lærred — se
+     PAUSEDE_PRODUKTER i products.ts. Svarene handler om det, der er tilbage:
+     mikrofonen og lyden til mødet. Spørgsmålet om billedet står tilbage, fordi
+     det er dét, folk kommer for at spørge om. */
   "av-udstyr": [
     {
-      q: "Hvad koster det at leje projektor og skærm i København?",
+      q: "Hvad koster det at leje mikrofon til et møde i København?",
       a:
-        "En Full HD-projektor koster 495 kr for en weekend, og Projektor Pro med 5000 lumen 795 kr. Et 160 cm " +
-        "lærred koster 195 kr, en 32\" skærm på stativ 395 kr og en 55\" storskærm 595 kr.",
+        "En trådløs håndholdt mikrofon koster 295 kr for hele lejeperioden, en Shure BLX i scenekvalitet " +
+        "595 kr, et trådløst headset 345 kr og et PRO-headset 595 kr. Skal der også være lyd, koster Tale & " +
+        "musik-pakken med to 12\" højtalere og trådløs mikrofon 1.195 kr.",
     },
     {
-      q: "Hvilken pakke passer til et møde eller en konference?",
+      q: "Udlejer I projektor, lærred og skærm?",
       a:
-        "Præsentationspakken (695 kr) med projektor, lærred og mikrofon rækker til op til 50 deltagere. " +
-        "Konferencepakken (1.395 kr) med 55\" skærm, trådløst headset og højtalere passer til 50-100. Til 100-150 " +
-        "tager du Konferencepakke 150 (2.395 kr) med Shure-mikrofon, headset og store højtalere.",
+        "Ikke lige nu. Vi har samlet udlejningen om højtalere, festlys og røg, så projektor, lærred og skærme " +
+        "står på pause. Lyden til mødet kan vi stadig levere — mikrofon, højtalere og stativer.",
     },
     {
-      q: "Kan projektoren bruges i dagslys?",
+      q: "Skal der en mixer imellem mikrofonen og højtaleren?",
       a:
-        "Den almindelige projektor kræver, at der kan mørklægges. Skal der vises noget i et lyst lokale, tager du " +
-        "Projektor Pro med 5000 lumen (795 kr), som er skarp selv i dagslys — eller en storskærm, der er upåvirket " +
-        "af lyset i rummet.",
+        "Nej. Alle vores mikrofoner går direkte i højtaleren med det kabel, der følger med. Skal der være " +
+        "flere end to mikrofoner, eller lyd til Teams og Zoom, så ring — det sætter vi op efter aftale.",
     },
     {
-      q: "Hvilke kabler følger med?",
+      q: "Hvor mange deltagere rækker lyden til?",
       a:
-        "HDMI-kabel, strømkabel og fjernbetjening følger med projektorer og skærme. Kommer I med en Mac eller en " +
-        "nyere pc uden HDMI-udgang, skal I selv have en adapter med — sig til, hvis I er i tvivl.",
+        "To 10\" højtalere dækker et mødelokale med op til 50 deltagere, og to 12\" på stativer rækker til " +
+        "en sal med 100-150. Udendørs uden vægge regner du med cirka det halve.",
     },
     AFHENTNING,
   ],
-
   kobenhavn: [
     {
       q: "Hvor i København henter jeg højtalerne?",
@@ -409,9 +383,9 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvilken pakke passer til en konference?",
       a:
-        "Præsentationspakken (695 kr) til op til 50 deltagere, Konferencepakken (1.395 kr) med 55\" skærm og " +
-        "trådløst headset til 50-100, og Konferencepakke 150 (2.395 kr) med Shure-mikrofon, headset, storskærm og " +
-        "to 12\" højtalere til 100-150.",
+        "Vi leverer lyden og mikrofonerne — projektor og skærm er på pause. Tale & musik-pakken (1.195 kr) med " +
+        "to 12\" højtalere og trådløs mikrofon rækker til en sal med 100-150 deltagere. Skal der bruges flere end " +
+        "to mikrofoner, eller lyd til Teams og Zoom, sætter vi det op efter aftale — skriv til os.",
     },
     {
       q: "Hvad gør vi, hvis vi er flere end 250 gæster?",
