@@ -61,7 +61,9 @@ describe("Søgning", () => {
   });
 
   it("sætter det, man skrev navnet på, øverst", () => {
-    expect(titler("karaokemaskine")[0]).toMatch(/karaokemaskine/i);
+    // Karaokemaskinen stod her før pausen. Discokuglen er samme prøve: et
+    // sammensat navn, hvor titlen skal slå de pakker, der indeholder den.
+    expect(titler("discokugle")[0]).toMatch(/discokugle/i);
     expect(titler("soundboks")[0]).toBe("Soundboks 4");
   });
 
@@ -71,7 +73,9 @@ describe("Søgning", () => {
   });
 
   it("finder kategorisider, når man søger bredt", () => {
-    expect(stier("karaoke")).toContain("/karaoke");
+    // Karaoke er på pause og står hverken i menuen eller i kataloget længere,
+    // så det er med vilje, at søgningen ikke fører nogen derhen.
+    expect(stier("mikrofon")).toContain("/lej-mikrofon");
     expect(stier("pa-anlæg")).toContain("/lydudstyr");
     expect(stier("erhverv")).toContain("/erhverv");
   });

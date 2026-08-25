@@ -1,33 +1,25 @@
 import { Metadata } from "next";
-import { catalogDiscount, prisKr } from "@/lib/products";
-import Link from "next/link";
-import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-import FaqSection from "@/components/FaqSection";
-import { CATEGORY_FAQ } from "@/lib/categoryFaq";
-import CategoryProductGrid from "@/components/CategoryProductGrid";
-import BundleGrid from "@/components/BundleGrid";
+import PausetKategori from "@/components/PausetKategori";
 import { LocationKicker } from "@/components/PhoneLink";
 
-/** Den største rabat, en karaokepakke giver — tallet i "spar op til …". */
-const MAX_RABAT = Math.max(catalogDiscount("pakke_karaoke"), catalogDiscount("pakke_karaoke_fest"));
-
+/**
+ * /karaoke — på pause.
+ *
+ * Karaoke er taget ud af sortimentet sammen med skærme, projektor og lærred
+ * (se PAUSEDE_PRODUKTER i src/lib/products.ts). Siden bliver liggende, fordi
+ * den har en placering i Google og pausen kan rulles tilbage — men den viser
+ * hverken pakker, priser eller en bookingknap, for der er ikke noget at booke.
+ * Teksten siger det ligeud og peger videre til lyd, lys og røg.
+ */
 export const metadata: Metadata = {
-  title: "Lej Karaoke København | Maskine, storskærm & lyd | Lejhøjtaler.dk",
+  title: "Lej Karaoke København — udlejes ikke lige nu | Lejhøjtaler.dk",
   description:
-    `Lej karaoke i København: Karaokepakker med maskine, skærm og højtalere fra ${prisKr("pakke_karaoke")} — spar op til ${MAX_RABAT} kr. Singing Machine med 2 trådløse mikrofoner. Book på 2 min.`,
-  keywords: [
-    "lej karaoke",
-    "karaoke maskine leje",
-    "karaoke anlæg udlejning",
-    "karaokemaskine københavn",
-    "lej karaoke med skærm",
-    "karaoke til fest",
-  ],
+    "Vi udlejer ikke karaoke lige nu. Vi har samlet udlejningen om højtalere, festlys og røg — se højtalerpakkerne til festen i stedet.",
   alternates: { canonical: "https://lejhojtaler.dk/karaoke" },
   openGraph: {
-    title: `Lej Karaoke København | Pakker fra ${prisKr("pakke_karaoke")} — spar op til ${MAX_RABAT} kr`,
-    description: `Karaokepakker fra ${prisKr("pakke_karaoke")} — spar op til ${MAX_RABAT} kr. Maskine, skærm og højtalere. Book online.`,
+    title: "Lej Karaoke København — udlejes ikke lige nu | Lejhøjtaler.dk",
+    description: "Karaoke er på pause. Vi udlejer højtalere, festlys og røg i København.",
     url: "https://lejhojtaler.dk/karaoke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -49,83 +41,29 @@ export default function KaraokePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
-      {/* Hero */}
-      <section className="relative flex min-h-[55vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+      <section className="relative flex min-h-[45vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div className="fixed inset-0 bg-cover bg-center opacity-55" style={{ backgroundImage: "url(/images/hero.webp)" }} />
         <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            <LocationKicker extra="Sikker onlinebetaling" />
+            <LocationKicker extra="Højtalere, lys og røg" />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Lej karaoke til festen
+            Karaoke
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              pakker fra {prisKr("pakke_karaoke")}.
+              udlejes ikke lige nu
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Singing Machine med 2 trådløse mikrofoner, skærm til teksterne og festlys.
-            Book en pakke og spar op til {MAX_RABAT} kr i forhold til enkeltpriserne.
-          </p>
-          <a
-            href="#pakker"
-            className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
-          >
-            Se karaokepakkerne
-          </a>
         </div>
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        {/* Pakker først — samme tilbudskort som på forsiden, med delene
-            listet og "Spar X kr"-badge direkte på kortet */}
-        <BundleGrid
-          ids={["pakke_karaoke", "pakke_karaoke_fest"]}
-          eyebrow={`Spar op til ${MAX_RABAT} kr`}
-          title="Karaokepakkerne"
-          subtitle="Maskine, skærm til teksterne og lyd der kan følge med — samlet til én pris. Markant billigere end at leje delene hver for sig."
+        <PausetKategori
+          hvad="karaoke"
+          detalje="Karaokemaskinen og skærmen til teksterne er sat på pause sammen med resten af AV-udstyret. Skal der synges alligevel, er en højtaler med mikrofon det, der skal til — og den udlejer vi stadig."
         />
-
-        {/* Enkeltdele */}
-        <section id="produkter" className="mx-auto max-w-4xl px-4 pb-24">
-          <h2 className="mb-4 text-center text-2xl font-bold sm:text-3xl">Eller lej delene enkeltvis</h2>
-          <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Har du allerede skærm eller højtalere? Så lej bare det du mangler.
-          </p>
-
-          <CategoryProductGrid
-            items={[
-              { id: "karaoke" },
-              { id: "skaerm_32", tag: "Ny" },
-              { id: "skaerm_55" },
-              { id: "festival" },
-            ]}
-          />
-        </section>
-
-        {/* Upsell */}
-        <section className="mx-auto max-w-3xl px-4 pb-24">
-          <div className="glass rounded-2xl p-8 text-center">
-            <h2 className="mb-4 text-2xl font-bold text-white">Gør karaoke-aftenen komplet</h2>
-            <p className="mx-auto mb-6 max-w-md text-white/50">
-              Røgmaskine og festlys løfter stemningen, når højskolesangbogen bliver til stadionrock.
-            </p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Link href="/roeg" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
-                Se røgmaskiner
-              </Link>
-              <Link href="/festlys" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
-                Se festlys
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <FaqSection items={CATEGORY_FAQ["karaoke"]} />
-
-        <Testimonials />
         <Footer />
       </main>
     </>

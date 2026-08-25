@@ -3,30 +3,37 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
-import AVBookingWizard from "@/components/AVBookingWizard";
 import BundleGrid from "@/components/BundleGrid";
+import PausetKategori from "@/components/PausetKategori";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { AV_PAKKER } from "@/lib/products";
 import { LocationKicker } from "@/components/PhoneLink";
 
+/**
+ * /av-udstyr efter pausen.
+ *
+ * Projektor, skærm og lærred er taget ud af sortimentet (se PAUSEDE_PRODUKTER
+ * i src/lib/products.ts), og siden er derfor skåret ned til det, den stadig
+ * kan levere: mikrofoner og lyd til mødet. Den siger selv, at billedet er på
+ * pause — ellers ville den, der kom efter en projektor, lede forgæves.
+ */
 export const metadata: Metadata = {
-  title: "Lej AV-udstyr København | Projektor, Skærm, Mikrofon | Lejhøjtaler.dk",
+  title: "Lej AV-udstyr København | Mikrofoner og lyd til møder | Lejhøjtaler.dk",
   description:
-    "Lej AV-udstyr i København. Projektor fra 495 kr, storskærm fra 595 kr, trådløs mikrofon fra 295 kr og højtalere med mikrofon fra 1.045 kr. Til præsentationer, konferencer og events.",
+    "Lej mikrofon og lyd til møder og konferencer i København. Trådløs mikrofon fra 295 kr, headset fra 345 kr og højtalere med mikrofon fra 1.045 kr. Projektor, skærm og lærred er på pause.",
   keywords: [
     "lej av-udstyr",
     "av udstyr udlejning",
-    "lej projektor",
-    "lej skærm",
     "lej mikrofon",
+    "mikrofon til konference",
+    "lyd til møde leje",
     "av-udstyr til event",
-    "præsentationsudstyr leje",
   ],
   alternates: { canonical: "https://lejhojtaler.dk/av-udstyr" },
   openGraph: {
-    title: "Lej AV-udstyr København | Projektor, Skærm, Mikrofon | Lejhøjtaler.dk",
+    title: "Lej AV-udstyr København | Mikrofoner og lyd til møder | Lejhøjtaler.dk",
     description:
-      "Projektor fra 495 kr, storskærm fra 595 kr, trådløs mikrofon fra 295 kr. Book online.",
+      "Trådløs mikrofon fra 295 kr, headset fra 345 kr og højtalere med mikrofon. Book online.",
     url: "https://lejhojtaler.dk/av-udstyr",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -81,14 +88,14 @@ export default function AVUdstyrPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Fortæl os om dit event — vi sammensætter den perfekte pakke
-            med projektor, skærm, mikrofon og mere.
+            Mikrofon og lyd til talen, mødet og konferencen. Projektor, skærm og
+            lærred udlejer vi ikke lige nu.
           </p>
           <a
-            href="#av-book"
+            href="#mikrofoner"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Sammensæt din pakke
+            Se mikrofoner
           </a>
         </div>
       </section>
@@ -99,13 +106,10 @@ export default function AVUdstyrPage() {
             kortet ned, ville det have været usynligt. */}
         <BundleGrid
           ids={AV_PAKKER}
-          eyebrow="AV-pakker"
-          title="Færdige opsætninger"
-          subtitle="Skærm, projektor, mikrofon og lyd sat sammen til det der skal ske — billigere end delene hver for sig."
+          eyebrow="AV-pakke"
+          title="Færdig opsætning"
+          subtitle="Højtalere og trådløs mikrofon sat sammen til talen — billigere end delene hver for sig."
         />
-
-        {/* AV Booking Wizard */}
-        <AVBookingWizard />
 
         {/* Højtalere hørte ikke til her før, og det var forkert: et møde
             uden lyd er lige så ubrugeligt som et uden billede, og
@@ -113,8 +117,8 @@ export default function AVUdstyrPage() {
         <section className="mx-auto max-w-6xl px-4 pb-16">
           <h2 className="mb-2 text-center text-3xl font-bold">Lyd til mødet</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            En projektor har svag lyd, og et lokale med mere end tyve mennesker
-            kræver forstærkning. Speakerpakken er højtaler og mikrofon i ét.
+            Et lokale med mere end tyve mennesker kræver forstærkning — en stemme
+            rækker ikke bagest i salen. Speakerpakken er højtaler og mikrofon i ét.
           </p>
           <CategoryProductGrid
             items={[
@@ -126,7 +130,7 @@ export default function AVUdstyrPage() {
           />
         </section>
 
-        <section className="mx-auto max-w-6xl px-4 pb-16">
+        <section id="mikrofoner" className="mx-auto max-w-6xl px-4 pb-16">
           <div className="mb-2 flex flex-wrap items-baseline justify-center gap-3">
             <h2 className="text-center text-3xl font-bold">Mikrofoner</h2>
             <a href="/lej-mikrofon" className="text-sm text-brand-400 hover:underline">
@@ -148,27 +152,10 @@ export default function AVUdstyrPage() {
           />
         </section>
 
-        <section className="mx-auto max-w-6xl px-4 pb-16">
-          <div className="mb-2 flex flex-wrap items-baseline justify-center gap-3">
-            <h2 className="text-center text-3xl font-bold">Projektor, skærm og lærred</h2>
-            <a href="/lej-projektor" className="text-sm text-brand-400 hover:underline">
-              Almindelig eller Pro? →
-            </a>
-          </div>
-          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Lumen afgør om billedet kan ses uden at slukke lyset. Er lokalet oplyst,
-            skal du have Pro.
-          </p>
-          <CategoryProductGrid
-            items={[
-              { id: "projektor", href: "/projektor" },
-              { id: "projektor_pro", href: "/projektor-pro", tag: "Til oplyste rum" },
-              { id: "laerred_160", href: "/laerred-160" },
-              { id: "skaerm_55", href: "/skaerm" },
-              { id: "skaerm_32", href: "/skaerm-32" },
-            ]}
-          />
-        </section>
+        <PausetKategori
+          hvad="projektor, skærm og lærred"
+          detalje="Billedet er på pause, lyden er ikke: mikrofoner og højtalere til mødet står klar."
+        />
 
         {/* Upsell */}
         <section className="mx-auto max-w-3xl px-4 pb-24">

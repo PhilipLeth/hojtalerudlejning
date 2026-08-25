@@ -35,7 +35,8 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
     // Original prices shown as strikethrough during summer sale, or as main price outside sale
     expect(screen.getAllByText("395,-").length).toBeGreaterThan(0);
     expect(screen.getAllByText("595,-").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("695,-").length).toBeGreaterThan(0);
+    // 695 var karaokemaskinen, som nu er på pause — 795 er Soundboks 4
+    expect(screen.getAllByText("795,-").length).toBeGreaterThan(0);
   });
 
   it("shows effects-only section with lys and røg", () => {
@@ -317,12 +318,12 @@ describe("BookingFlow - Preselect via ?product=", () => {
     });
 
     // Kunden klikker "Book" på et andet produkt → nyt ?product= + urlTick bump
-    window.history.pushState({}, "", "/?product=projektor#book");
+    window.history.pushState({}, "", "/?product=lys#book");
     rerender(<BookingFlow onSummaryChange={onSummary} urlTick={1} />);
 
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
-      // Soundboks (795) ligger nu i kurven + projektor (495) er valgt
+      // Soundboks (795) ligger nu i kurven + lys-pakken (495) er valgt
       expect(last?.count).toBe(2);
       expect(last?.total).toBe(795 + 495);
     });

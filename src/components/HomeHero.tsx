@@ -30,7 +30,7 @@ export default function HomeHero() {
           Lejhøjtaler.dk · Betal ved afhentning
         </p>
         <p className="mx-auto mt-4 max-w-md text-lg text-white/55">
-          Højtalere, festlys og AV-udstyr til leje — book online på 2 minutter.
+          Højtalere, festlys og røg til leje — book online på 2 minutter.
           Hent i København S eller få det leveret.
         </p>
 

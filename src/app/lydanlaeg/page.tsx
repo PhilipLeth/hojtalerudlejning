@@ -3,7 +3,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
-import { LADDER_FEST, LADDER_TALE, type LadderStep } from "@/lib/products";
+import { LADDER_FEST, type LadderStep } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
 
 export const metadata: Metadata = {
@@ -124,15 +124,34 @@ export default function LydanlaegPage() {
         </div>
       </section>
 
+      {/* Konference-stigen er væk: alle tre trin havde projektor eller skærm
+          med, og det udlejer vi ikke lige nu. Lyden til en tale kan vi stadig,
+          og det er den, afsnittet lover — hverken mere eller mindre. */}
       <section className="mx-auto max-w-6xl px-4 py-12">
-        <h2 className="mb-2 text-2xl font-bold">Til taler, møder og konferencer</h2>
+        <h2 className="mb-2 text-2xl font-bold">Til taler og møder</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">
-          Skal der siges noget, er mikrofonen vigtigere end bassen. Pakkerne her har mikrofon og skærm med fra start.
+          Skal der siges noget, er mikrofonen vigtigere end bassen. Vi udlejer lyden og mikrofonen —
+          projektor, lærred og skærm er på pause, så dem skal du have et andet sted fra.
         </p>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {LADDER_TALE.map((step) => (
-            <Trin key={step.navn} step={step} fremhaevet={step.productId === "pakke_konference_150"} />
-          ))}
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/pakke-tale-musik"
+            className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
+          >
+            Tale &amp; musik-pakken
+          </Link>
+          <Link
+            href="/lej-mikrofon"
+            className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
+          >
+            Se alle mikrofoner
+          </Link>
+          <Link
+            href="/erhverv#tilbud"
+            className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
+          >
+            Flere end to mikrofoner? Få et tilbud
+          </Link>
         </div>
       </section>
 

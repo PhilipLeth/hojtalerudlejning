@@ -33,7 +33,8 @@ export const BEHOV = [
   "Lyd og højtalere",
   "Mikrofoner til taler",
   "Lys",
-  "Skærm eller projektor",
+  // Skærm og projektor stod her, indtil de blev sat på pause — se
+  // PAUSEDE_PRODUKTER. Et afkrydsningsfelt er et løfte om at kunne levere.
   "Røg / low fog",
   "Levering + opsætning",
   "Tekniker på stedet",

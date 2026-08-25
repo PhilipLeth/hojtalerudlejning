@@ -8,7 +8,6 @@ import {
   LADDER_FEST,
   LYD_LEJLIGHEDSPAKKER,
   OCCASION_PACKAGES,
-  LADDER_TALE,
   addons,
   bundleListPrice,
   isBundleProduct,
@@ -24,7 +23,9 @@ import {
  * — så de to skal være enige. Ellers står der ét beløb på siden og et andet i
  * kurven, og det opdager vi først når en kunde har betalt.
  */
-const alleTrin: LadderStep[] = [...LADDER_FEST, ...LADDER_TALE];
+/* Konference-stigen (LADDER_TALE) er væk sammen med pausen på projektor og
+   skærm — se PAUSEDE_PRODUKTER. Tilbage står feststigen. */
+const alleTrin: LadderStep[] = [...LADDER_FEST];
 const medProdukt = alleTrin.filter((t) => t.productId !== null);
 
 function findProdukt(id: string) {
@@ -67,7 +68,7 @@ describe("Pakkestigen", () => {
   });
 
   it("stigen stiger — gæstetallene går kun opad", () => {
-    for (const stige of [LADDER_FEST, LADDER_TALE]) {
+    for (const stige of [LADDER_FEST]) {
       const tal = stige.map((t) => t.maxGaester);
       expect(tal).toEqual([...tal].sort((a, b) => a - b));
     }
@@ -133,7 +134,10 @@ describe("Pakkestigen", () => {
   });
 
   it("hver pakke med en side står på præcis én kategoriside", () => {
-    const pakkerMedSide = rentalProducts.filter((p) => isBundleProduct(p) && p.page).map((p) => p.id);
+    // Pausede pakker står ikke på nogen kategoriside — de kan ikke bookes
+    const pakkerMedSide = rentalProducts
+      .filter((p) => isBundleProduct(p) && p.page && !p.hidden)
+      .map((p) => p.id);
     for (const id of pakkerMedSide) {
       const sider = Object.entries(KATEGORI_PAKKER).filter(([, ids]) => ids.includes(id));
       expect(sider.length, `${id} står på ${sider.length} kategorisider`).toBe(1);
@@ -157,6 +161,7 @@ describe("Pakkestigen", () => {
 
   it("de nye pakker ligger i sitemap", () => {
     const xml = fs.readFileSync("public/sitemap.xml", "utf8");
+    // Også de pausede: siderne ligger der stadig, og de skal kunne findes igen
     const sider = rentalProducts.filter((p) => isBundleProduct(p) && p.page).map((p) => p.page!);
     for (const href of ["/lydanlaeg", ...sider]) {
       expect(xml, `${href} mangler i sitemap`).toContain(`https://lejhojtaler.dk${href}<`);

@@ -820,34 +820,44 @@
     ]
   },
   "navigation": {
-    "description": "Burger-menu i højre hjørne. Klik åbner slide-in panel fra højre med kategoriserede links (Lyd, Lys, AV) + footer-links + CTA.",
+    "description": "Burger-menu i højre hjørne. Klik åbner slide-in panel fra højre med kategoriserede links (Lyd, Lys, Røg, Til din anledning) + footer-links + CTA. Karaoke og AV-udstyr blev taget ud 25. august 2026, da sortimentet blev skåret ned — se pause_sortiment_2026_08. Mikrofonerne flyttede med over under Lyd, fordi de hører til talen, ikke til AV-udstyret. Kilden er NAV_CATEGORIES i src/lib/products.ts.",
     "sections": [
       {
         "title": "Lyd & Højtalere",
         "links": [
-          "/lej-hojtaler",
-          "/festlyd",
-          "/lydudstyr",
-          "/soundboks-alternativ"
+          "/lydanlaeg",
+          "/soundboks-4",
+          "/festpakke-stor",
+          "/lej-mikrofon",
+          "/lej-hojtaler"
         ]
       },
       {
         "title": "Lys & Effekter",
         "links": [
-          "/festlys",
+          "/stemningslys",
+          "/lys-pakke",
           "/discokugle",
-          "/lyskaeder",
-          "/roegmaskine"
+          "/lysshow",
+          "/festlys"
         ]
       },
       {
-        "title": "AV-udstyr",
+        "title": "Røg",
         "links": [
-          "/av-udstyr",
-          "/projektor",
-          "/skaerm",
-          "/traadloes-mikrofon",
-          "/headset-mikrofon"
+          "/roegmaskine",
+          "/roeg"
+        ]
+      },
+      {
+        "title": "Til din anledning",
+        "links": [
+          "/bryllup",
+          "/konfirmation",
+          "/foedselsdag",
+          "/julefrokost",
+          "/havefest",
+          "/studenterkoersel"
         ]
       }
     ],
@@ -3424,5 +3434,30 @@
     "sprog": "Tosproget fra start, jf. CLAUDE.md. Produkter vises med katalogets en-navne på /en og linkes via localizedHref, så engelske sider bruges hvor de findes. Danske kategorisider indekseres IKKE på engelsk — en dansk overskrift i en engelsk resultatliste er værre end ingen.",
     "tilgaengelighed": "role=dialog, listbox/option, aria-activedescendant, piletaster, Enter, Escape, og fokus tilbage til knappen ved luk.",
     "guard": "src/__tests__/soegning.test.ts dækker stavevarianter, rangering, dublet-stier og at EKSTRA_SIDER peger på sider der findes."
+  },
+  "pause_sortiment_2026_08": {
+    "status": "live",
+    "date": "2026-08-25",
+    "beslutning": "Sortimentet er skåret ned til det, forretningen lever af: højtalere, lys og røg. Skærme, projektor, lærred og karaoke udlejes ikke i denne omgang.",
+    "pausede_produkter": [
+      "projektor",
+      "projektor_pro",
+      "skaerm_55",
+      "skaerm_32",
+      "laerred_160",
+      "karaoke",
+      "pakke_praesentation",
+      "pakke_konference",
+      "pakke_konference_150",
+      "pakke_filmaften",
+      "pakke_karaoke",
+      "pakke_karaoke_fest"
+    ],
+    "ikke_paa_pause": "Mikrofoner (trådløs, headset, håndholdt — begge kvaliteter) og Tale & musik-pakken. De hører til lyden: mikrofonen lejes til talen ved brylluppet, hvor højtaleren alligevel er med.",
+    "mekanik": "hidden: true i src/lib/products.ts + listen PAUSEDE_PRODUKTER. hidden filtrerer produktet væk hos kunden (useProducts), i søgningen, i forsidens grid, i DBA-feedet og i serverens prisopslag (functions/api/_lib/pricing.ts afviser skjulte id'er), så et pauset produkt hverken kan findes eller betales. Pausen rulles tilbage ved at fjerne flaget — eller pr. produkt fra /admin/produkter.",
+    "sider": "Siderne bliver liggende for deres placering i Google, men uden pris og bookingknap: ProductLanding viser en pausebesked og sætter Product-schema til OutOfStock, /karaoke og /lej-projektor er skåret ned til komponenten PausetKategori, og /av-udstyr er nu mikrofoner og lyd til mødet. Titler beholder deres søgeord og får '— udlejes ikke lige nu'; beskrivelserne siger det ligeud, så klikket ikke bliver spildt. llms.txt-generatoren springer OutOfStock-sider over.",
+    "fjernet": "LADDER_TALE (konference-stigen på /lydanlaeg) og AVBookingWizard — begge byggede udelukkende på projektor og skærm. /lydanlaeg henviser i stedet til Tale & musik-pakken, mikrofonerne og /erhverv#tilbud.",
+    "google_ads": "De dedikerede projektor-, skærm-, lærred- og karaokegrupper var allerede PAUSED. Tilbage stod to aktive: 'YDER - Karaoke' (id 194293649970, kampagnen Yderområder, 33,52 kr/30 dage) skal pauses, og 'Ag 11 - AV-udstyr/PA anlæg' (id 199318678713, 138,30 kr/30 dage) bør gennemgås — dens keywords er av-udstyr-fraser, og landingssiden handler nu om mikrofoner og lyd.",
+    "aabent": "De pausede sider er stadig indekserbare. Det er med vilje — placeringen skal overleve pausen — men hvis de begynder at rangere på 'lej projektor københavn' med en pausebesked, kan det koste klikrate på hele domænet. Tages op igen, hvis pausen bliver permanent."
   }
 }

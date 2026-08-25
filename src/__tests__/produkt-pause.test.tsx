@@ -12,9 +12,17 @@
  * book.ts: her er spørgsmålet hvor knappen SIDDER, og det kan kilden svare på.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { speakers, addons, rentalProducts } from "@/lib/products";
+import {
+  NAV_CATEGORIES,
+  PAUSEDE_PRODUKTER,
+  PAUSEDE_SIDER,
+  addons,
+  erPaaPause,
+  rentalProducts,
+  speakers,
+} from "@/lib/products";
 
 const src = readFileSync(join(process.cwd(), "src/app/admin/produkter/page.tsx"), "utf8");
 
@@ -46,22 +54,68 @@ describe("/admin/produkter — pause", () => {
 
 describe("hidden virker hele vejen ud", () => {
   /**
-   * Intet står på pause lige nu. De tre nye produkter var skjulte, indtil
-   * Højtaler 100 fik sit rigtige foto og mixerne blev sat til at stå uden
-   * billede frem for med et lånt. Testen er her for at fange en utilsigtet
-   * pause — et produkt der pludselig er væk for kunderne uden en beslutning.
+   * Sortimentet er skåret ned til højtalere, lys og røg. Skærme, projektor,
+   * lærred og karaoke står på pause — se PAUSEDE_PRODUKTER i products.ts.
+   *
+   * Testen låser listen i begge retninger: et produkt der forsvinder for
+   * kunderne uden en beslutning bliver fanget, og et produkt der bliver
+   * genoptaget uden at komme ud af listen bliver det også.
    */
-  it("intet produkt står på pause", () => {
+  it("præcis de besluttede produkter står på pause", () => {
     const pausede = [
       ...speakers.filter((s) => s.hidden).map((s) => s.id),
       ...addons.filter((a) => a.hidden).map((a) => a.id),
       ...rentalProducts.filter((r) => r.hidden).map((r) => r.id),
     ];
-    expect(pausede).toEqual([]);
+    expect(pausede.sort()).toEqual([...PAUSEDE_PRODUKTER].sort());
+  });
+
+  it("mikrofonerne er ikke på pause — de hører til lyden", () => {
+    const mikrofoner = ["traadloes_mikrofon", "traadloes_mikrofon_pro", "headset", "headset_pro", "haandholdt_mikrofon", "haandholdt_mikrofon_pro"];
+    for (const id of mikrofoner) {
+      const p = rentalProducts.find((r) => r.id === id);
+      expect(p, `${id} findes ikke i kataloget`).toBeTruthy();
+      expect(p!.hidden, `${id} er sat på pause`).toBeFalsy();
+    }
+  });
+
+  it("en pakke med en pauset del er selv på pause", () => {
+    // Ellers sælger vi Konferencepakken uden den skærm, den lover
+    for (const p of rentalProducts) {
+      if (p.hidden) continue;
+      for (const del of p.bundle?.parts ?? []) {
+        expect(erPaaPause(del.productId), `${p.id} indeholder ${del.productId}, som er på pause`).toBe(false);
+      }
+    }
+  });
+
+  it("menuen viser hverken karaoke eller AV-udstyr", () => {
+    const ider = NAV_CATEGORIES.map((c) => c.id);
+    expect(ider).not.toContain("karaoke");
+    expect(ider).not.toContain("av");
+    // Mikrofonerne flyttede med over i Lyd, så de ikke forsvandt sammen med AV
+    const lyd = NAV_CATEGORIES.find((c) => c.id === "lyd")!;
+    expect(lyd.links.map((l) => l.href)).toContain("/lej-mikrofon");
+  });
+
+  it("de pausede sider ligger der stadig og siger det selv", () => {
+    for (const sti of PAUSEDE_SIDER) {
+      const fil = join(process.cwd(), `src/app${sti}/page.tsx`);
+      expect(existsSync(fil), `${sti} findes ikke længere`).toBe(true);
+      const kilde = readFileSync(fil, "utf8");
+      const siger =
+        kilde.includes("PausetKategori") || kilde.includes("udlejes ikke lige nu");
+      expect(siger, `${sti} står uden besked om pausen`).toBe(true);
+    }
   });
 
   it("useProducts filtrerer skjulte væk, så de ikke kan bookes", () => {
     const up = readFileSync(join(process.cwd(), "src/lib/useProducts.ts"), "utf8");
     expect(up).toMatch(/filter\(\(p\) => !p\.hidden\)/);
+  });
+
+  it("serveren afviser et pauset produkt, så det aldrig kan betales", () => {
+    const pricing = readFileSync(join(process.cwd(), "functions/api/_lib/pricing.ts"), "utf8");
+    expect(pricing).toMatch(/if \(!id \|\| hidden/);
   });
 });

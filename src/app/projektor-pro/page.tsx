@@ -2,13 +2,15 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Lej Projektor Pro (5000 lumen) København | 795 kr | Lejhøjtaler.dk",
-  description: "Kraftig 5000 lumen projektor — skarp selv i dagslys. 795 kr/weekend. Betal ved afhentning. Book online.",
+  title: "Lej Projektor Pro (5000 lumen) København — udlejes ikke lige nu | Lejhøjtaler.dk",
+  description:
+    "Kraftig 5000 lumen projektor til oplyste lokaler. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
   keywords: ["lej projektor pro", "5000 lumen projektor leje", "kraftig projektor udlejning"],
   alternates: { canonical: "https://lejhojtaler.dk/projektor-pro" },
   openGraph: {
-    title: "Lej Projektor Pro (5000 lumen) København | 795 kr",
-    description: "Kraftig 5000 lumen projektor — skarp selv i dagslys. 795 kr/weekend. Betal ved afhentning. Book online.",
+    title: "Lej Projektor Pro (5000 lumen) København — udlejes ikke lige nu",
+    description:
+      "Kraftig 5000 lumen projektor til oplyste lokaler. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
     url: "https://lejhojtaler.dk/projektor-pro",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

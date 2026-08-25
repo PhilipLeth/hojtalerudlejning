@@ -3,14 +3,15 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Filmaften-pakken | Projektor, lærred og højtalere | 1.195 kr | Lejhøjtaler.dk",
+  title: "Filmaften-pakken | Projektor, lærred og højtalere — udlejes ikke lige nu | Lejhøjtaler.dk",
   description:
-    "Filmaften-pakken: Full HD projektor, 160 cm lærred på stativ og 2× Alto 10\" højtalere for 1.195 kr — spar 90 kr. Biograf i gården eller haven. Lejes i København.",
+    "Filmaften-pakken med projektor, lærred og højtalere. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
   keywords: ["lej projektor og lærred", "udendørs biograf leje", "projektor til fest", "filmaften udstyr", "lærred leje københavn"],
   alternates: { canonical: "https://lejhojtaler.dk/filmaften" },
   openGraph: {
-    title: "Filmaften-pakken | Projektor, lærred og højtalere | 1.195 kr | Lejhøjtaler.dk",
-    description: "Full HD projektor, 160 cm lærred på stativ og to højtalere. Alt til filmaftenen — spar 90 kr.",
+    title: "Filmaften-pakken | Projektor, lærred og højtalere — udlejes ikke lige nu | Lejhøjtaler.dk",
+    description:
+      "Filmaften-pakken med projektor, lærred og højtalere. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
     url: "https://lejhojtaler.dk/filmaften",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

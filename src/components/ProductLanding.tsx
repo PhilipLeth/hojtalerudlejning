@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
 import { PhoneText } from "@/components/PhoneLink";
 import { buildProductFaq } from "@/lib/productFaq";
+import { erPaaPause } from "@/lib/products";
 import type { Locale } from "@/lib/i18n";
 
 /**
@@ -28,6 +29,12 @@ const COPY = {
     ctaText: "Book online på 2 minutter. Hent fredag i København S, aflever mandag.",
     allProducts: "← Se alle produkter",
     home: "/",
+    pausedTitle: "Udlejes ikke lige nu",
+    pausedBody:
+      "Vi har samlet udlejningen om højtalere, lys og røg. Skærme, projektor, lærred og karaoke er sat på pause, og derfor kan du ikke booke her.",
+    pausedSound: "Se højtalere",
+    pausedLight: "Se lys og effekter",
+    pausedCall: "Ring, hvis du er i tvivl",
   },
   en: {
     kicker: "Pay on pickup · Call",
@@ -38,6 +45,12 @@ const COPY = {
     ctaText: "Book online in 2 minutes. Collect on Friday in Copenhagen, return Monday.",
     allProducts: "← See all products",
     home: "/en",
+    pausedTitle: "Not available for rent right now",
+    pausedBody:
+      "We have narrowed our rental range to speakers, lighting and fog. Screens, projectors, projector screens and karaoke are paused, so this cannot be booked.",
+    pausedSound: "See speakers",
+    pausedLight: "See lighting",
+    pausedCall: "Call us if you are unsure",
   },
 } as const;
 
@@ -106,6 +119,13 @@ export default function ProductLanding({
 }: ProductLandingProps) {
   const bookHref = toBook(productId);
   const c = COPY[locale];
+  /**
+   * Produktet er sat på pause i kataloget (se PAUSEDE_PRODUKTER). Siden bliver
+   * liggende — den har sin plads i Google, og pausen kan rulles tilbage — men
+   * den må ikke stå med en bookingknap til noget, vi ikke udlejer. Knapperne
+   * bliver til en henvisning, og prisen forsvinder: en pris er et tilbud.
+   */
+  const paused = erPaaPause(productId);
   const cta = bookLabel ?? c.book(name);
   const faq = buildProductFaq({ name, price, productId, phrase: faqPhrase, capacity: capacity?.label, extra: faqExtra, locale });
 
@@ -135,7 +155,9 @@ export default function ProductLanding({
       price: String(price),
       priceCurrency: "DKK",
       priceValidUntil: "2027-12-31",
-      availability: "https://schema.org/InStock",
+      availability: erPaaPause(productId)
+        ? "https://schema.org/OutOfStock"
+        : "https://schema.org/InStock",
       url: `https://lejhojtaler.dk/${slug}`,
       shippingDetails: {
         "@type": "OfferShippingDetails",
@@ -193,7 +215,7 @@ export default function ProductLanding({
             {headline}
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              <LivePrice productId={productId} fallback={price} />
+              {paused ? c.pausedTitle : <LivePrice productId={productId} fallback={price} />}
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">{sub}</p>
@@ -202,12 +224,16 @@ export default function ProductLanding({
               <CapacityBadge level={capacity.level} label={capacity.label} />
             </div>
           )}
-          <a
-            href={bookHref}
-            className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
-          >
-            {cta}
-          </a>
+          {paused ? (
+            <PauseBoks c={c} className="mt-8" />
+          ) : (
+            <a
+              href={bookHref}
+              className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
+            >
+              {cta}
+            </a>
+          )}
         </div>
       </section>
 
@@ -227,9 +253,13 @@ export default function ProductLanding({
             </div>
             <div>
               <h2 className="mb-4 text-3xl font-bold">{name}</h2>
-              <p className="mb-6 text-3xl font-bold text-brand-400">
-                <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" /><span className="text-lg font-normal text-white/40">{c.perWeekend}</span>
-              </p>
+              {paused ? (
+                <p className="mb-6 text-xl font-bold text-white/40">{c.pausedTitle}</p>
+              ) : (
+                <p className="mb-6 text-3xl font-bold text-brand-400">
+                  <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" /><span className="text-lg font-normal text-white/40">{c.perWeekend}</span>
+                </p>
+              )}
               <ul className="space-y-3 text-white/60">
                 {bullets.map((b) => (
                   <li key={b} className="flex items-start gap-3">
@@ -240,12 +270,16 @@ export default function ProductLanding({
                   </li>
                 ))}
               </ul>
-              <a
-                href={bookHref}
-                className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95"
-              >
-                {cta}
-              </a>
+              {paused ? (
+                <PauseBoks c={c} className="mt-8" />
+              ) : (
+                <a
+                  href={bookHref}
+                  className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95"
+                >
+                  {cta}
+                </a>
+              )}
             </div>
           </div>
         </section>
@@ -254,21 +288,32 @@ export default function ProductLanding({
 
         {children}
 
-        <FaqSection items={faq} title={c.faqTitle(name)} />
+        {/* FAQ'en er bygget af prisen, lejeperioden og afhentningen — svar på
+            spørgsmål om noget, der ikke kan lejes. Den udgår på pausede sider. */}
+        {!paused && <FaqSection items={faq} title={c.faqTitle(name)} />}
 
         <Testimonials />
 
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">{c.ctaTitle}</h2>
-          <p className="mx-auto mt-4 max-w-md text-white/50">
-            {c.ctaText} <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" />{c.perWeekend}.
-          </p>
-          <a
-            href={bookHref}
-            className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
-          >
-            {cta}
-          </a>
+          <h2 className="text-3xl font-bold sm:text-4xl">{paused ? c.pausedTitle : c.ctaTitle}</h2>
+          {paused ? (
+            <>
+              <p className="mx-auto mt-4 max-w-md text-white/50">{c.pausedBody}</p>
+              <PauseBoks c={c} className="mt-8" />
+            </>
+          ) : (
+            <>
+              <p className="mx-auto mt-4 max-w-md text-white/50">
+                {c.ctaText} <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" />{c.perWeekend}.
+              </p>
+              <a
+                href={bookHref}
+                className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
+              >
+                {cta}
+              </a>
+            </>
+          )}
           <p className="mt-4">
             <Link href={c.home} className="text-sm text-white/40 transition hover:text-brand-400">
               {c.allProducts}
@@ -279,5 +324,41 @@ export default function ProductLanding({
         <Footer locale={locale} />
       </main>
     </>
+  );
+}
+
+/**
+ * Vejen videre fra en pauset side. Ikke en undskyldning, men de to kategorier
+ * vi rent faktisk udlejer — plus telefonnummeret, fordi den, der ledte efter
+ * en projektor til en firmafest, ofte også mangler lyd.
+ */
+function PauseBoks({
+  c,
+  className = "",
+}: {
+  c: (typeof COPY)["da"] | (typeof COPY)["en"];
+  className?: string;
+}) {
+  return (
+    <div className={`mx-auto max-w-md rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-left ${className}`}>
+      <p className="text-sm text-white/60">{c.pausedBody}</p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Link
+          href={c.home === "/en" ? "/en" : "/lej-hojtaler"}
+          className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-brand-400"
+        >
+          {c.pausedSound}
+        </Link>
+        <Link
+          href={c.home === "/en" ? "/en" : "/festlys"}
+          className="rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
+        >
+          {c.pausedLight}
+        </Link>
+      </div>
+      <p className="mt-3 text-sm text-white/40">
+        {c.pausedCall}: <PhoneText />
+      </p>
+    </div>
   );
 }

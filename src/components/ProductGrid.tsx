@@ -24,7 +24,6 @@ const GRID: Array<{
   { id: "rog", page: "/roegmaskine", name: "Røgmaskine", price: 250, image: "/images/product-rog.webp" },
   { id: "discokugle", page: "/discokugle", name: "Discokugle", price: 250, image: "/images/product-discokugle.webp" },
   { id: "lyskaeder", page: "/lyskaeder", name: "Lyskæder", price: 200, image: "/images/product-lyskaeder.webp" },
-  { id: "projektor", page: "/projektor", name: "Projektor", price: 500, image: "/images/product-projektor.webp" },
 ];
 
 export default function ProductGrid() {
@@ -53,7 +52,18 @@ export default function ProductGrid() {
       })),
   ];
 
-  const allProducts = [...GRID, ...extraFromCatalog];
+  /**
+   * GRID er en håndholdt rækkefølge, ikke en sandhed om sortimentet: et
+   * produkt kan stå her og være sat på pause i kataloget. Forsiden viser
+   * derfor kun de kort, der findes i det filtrerede katalog — ellers ville
+   * en pause i /admin/produkter være usynlig netop dér, hvor flest kigger.
+   */
+  const iKataloget = (id: string) =>
+    speakers.some((s) => s.id === id) ||
+    addons.some((a) => a.id === id) ||
+    rentalProducts.some((r) => r.id === id);
+
+  const allProducts = [...GRID.filter((g) => iKataloget(g.id)), ...extraFromCatalog];
 
   const priceFor = (id: string, fallback: number) => {
     const sp = speakers.find((s) => s.id === id);

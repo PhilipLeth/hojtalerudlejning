@@ -113,6 +113,21 @@ class Page:
             return None
 
     @property
+    def paused(self) -> bool:
+        """Er produktet sat på pause?
+
+        Product-markup'en siger OutOfStock på de sider, hvis produkt er
+        `hidden` i kataloget (se PAUSEDE_PRODUKTER i src/lib/products.ts).
+        Et indeks, der lover en projektor til 495 kr, som ikke kan bookes,
+        er værre end intet indeks — så de ryger ud her.
+        """
+        product = self.of_type("Product")
+        if not product:
+            return False
+        offers = product.get("offers") or {}
+        return str(offers.get("availability", "")).endswith("OutOfStock")
+
+    @property
     def short_title(self) -> str:
         """"Lej Soundboks 4 København | Fra 595 kr | Lejhøjtaler.dk" → "Lej Soundboks 4 København"."""
         return self.title.split("|")[0].strip() or self.path
@@ -140,6 +155,8 @@ def discover() -> list[Page]:
             # Sider hvis canonical peger et andet sted (fx /book → forsiden) hører
             # ikke hjemme i et indeks; de er den samme side under et andet navn.
             if page.canonical and page.canonical.rstrip("/") != page.url.rstrip("/"):
+                continue
+            if page.paused:
                 continue
             pages.append(page)
     return sorted(pages, key=lambda p: p.path)
@@ -235,7 +252,7 @@ def build(pages: list[Page]) -> str:
     out = [
         "# Lejhøjtaler.dk",
         "",
-        "> Udlejning af højtalere, lyd, lys og AV-udstyr i København. Book online, hent selv "
+        "> Udlejning af højtalere, festlys og røg i København. Book online, hent selv "
         "eller få det leveret. Samme pris for 1-5 dages leje, alle kabler inkluderet.",
         "",
     ]

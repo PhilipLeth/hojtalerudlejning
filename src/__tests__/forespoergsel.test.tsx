@@ -8,7 +8,7 @@ import fs from "node:fs";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import EventInquiryForm, { emnelinje, sammensaetBesked } from "@/components/EventInquiryForm";
-import { LADDER_FEST, LADDER_TALE } from "@/lib/products";
+import { LADDER_FEST } from "@/lib/products";
 
 const receptionen = {
   dato: "2026-09-10",
@@ -113,7 +113,7 @@ describe("EventInquiryForm", () => {
 
 describe("Vejen til forespørgslen", () => {
   it("stigens tilbudstrin peger på formularen, ikke bare på siden", () => {
-    for (const trin of [...LADDER_FEST, ...LADDER_TALE].filter((t) => t.productId === null)) {
+    for (const trin of LADDER_FEST.filter((t) => t.productId === null)) {
       expect(trin.href, `${trin.navn} sender folk til en side uden formular`).toBe("/erhverv#tilbud");
     }
   });
