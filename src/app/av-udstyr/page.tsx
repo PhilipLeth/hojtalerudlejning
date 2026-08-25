@@ -12,7 +12,7 @@ import { LocationKicker } from "@/components/PhoneLink";
 export const metadata: Metadata = {
   title: "Lej AV-udstyr København | Projektor, Skærm, Mikrofon | Lejhøjtaler.dk",
   description:
-    "Lej AV-udstyr i København. Projektor fra 495 kr, storskærm fra 595 kr, trådløs mikrofon fra 295 kr. Perfekt til præsentationer, konferencer og events.",
+    "Lej AV-udstyr i København. Projektor fra 495 kr, storskærm fra 595 kr, trådløs mikrofon fra 295 kr og højtalere med mikrofon fra 1.045 kr. Til præsentationer, konferencer og events.",
   keywords: [
     "lej av-udstyr",
     "av udstyr udlejning",
@@ -107,24 +107,65 @@ export default function AVUdstyrPage() {
         {/* AV Booking Wizard */}
         <AVBookingWizard />
 
+        {/* Højtalere hørte ikke til her før, og det var forkert: et møde
+            uden lyd er lige så ubrugeligt som et uden billede, og
+            Speakerpakken har mikrofonen med. */}
         <section className="mx-auto max-w-6xl px-4 pb-16">
-          <h2 className="mb-2 text-center text-3xl font-bold">Enkeltdele</h2>
+          <h2 className="mb-2 text-center text-3xl font-bold">Lyd til mødet</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Mangler du kun én ting til opsætningen, kan alt lejes hver for sig.
+            En projektor har svag lyd, og et lokale med mere end tyve mennesker
+            kræver forstærkning. Speakerpakken er højtaler og mikrofon i ét.
+          </p>
+          <CategoryProductGrid
+            items={[
+              { id: "pakke_speaker_mik", tag: "Højtaler + mikrofon" },
+              { id: "party", href: "/hojtalerpakke-lille" },
+              { id: "festival", href: "/hojtalerpakke-normal" },
+              { id: "soundboks", href: "/soundboks-4" },
+            ]}
+          />
+        </section>
+
+        <section className="mx-auto max-w-6xl px-4 pb-16">
+          <div className="mb-2 flex flex-wrap items-baseline justify-center gap-3">
+            <h2 className="text-center text-3xl font-bold">Mikrofoner</h2>
+            <a href="/lej-mikrofon" className="text-sm text-brand-400 hover:underline">
+              Se alle mikrofoner →
+            </a>
+          </div>
+          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
+            Alle går direkte i højtaleren — der skal ikke en mixer imellem.
+          </p>
+          <CategoryProductGrid
+            items={[
+              { id: "traadloes_mikrofon_pro", href: "/traadloes-mikrofon-pro", tag: "Bedst til tale" },
+              { id: "traadloes_mikrofon", href: "/traadloes-mikrofon" },
+              { id: "headset_pro", href: "/headset-pro" },
+              { id: "headset", href: "/headset-mikrofon" },
+              { id: "haandholdt_mikrofon_pro", href: "/haandholdt-mikrofon-pro" },
+              { id: "haandholdt_mikrofon", href: "/haandholdt-mikrofon" },
+            ]}
+          />
+        </section>
+
+        <section className="mx-auto max-w-6xl px-4 pb-16">
+          <div className="mb-2 flex flex-wrap items-baseline justify-center gap-3">
+            <h2 className="text-center text-3xl font-bold">Projektor, skærm og lærred</h2>
+            <a href="/lej-projektor" className="text-sm text-brand-400 hover:underline">
+              Almindelig eller Pro? →
+            </a>
+          </div>
+          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
+            Lumen afgør om billedet kan ses uden at slukke lyset. Er lokalet oplyst,
+            skal du have Pro.
           </p>
           <CategoryProductGrid
             items={[
               { id: "projektor", href: "/projektor" },
-              { id: "projektor_pro", href: "/projektor-pro" },
+              { id: "projektor_pro", href: "/projektor-pro", tag: "Til oplyste rum" },
               { id: "laerred_160", href: "/laerred-160" },
               { id: "skaerm_55", href: "/skaerm" },
               { id: "skaerm_32", href: "/skaerm-32" },
-              { id: "traadloes_mikrofon", href: "/traadloes-mikrofon" },
-              { id: "traadloes_mikrofon_pro", href: "/traadloes-mikrofon-pro" },
-              { id: "headset", href: "/headset-mikrofon" },
-              { id: "headset_pro", href: "/headset-pro" },
-              { id: "haandholdt_mikrofon", href: "/haandholdt-mikrofon" },
-              { id: "haandholdt_mikrofon_pro", href: "/haandholdt-mikrofon-pro" },
             ]}
           />
         </section>

@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import {
   AV_PAKKER,
+  LYSSHOW_PAKKER,
   FEST_LADDER_IDS,
   KATEGORI_PAKKER,
   LADDER_FEST,
@@ -144,7 +145,8 @@ describe("Pakkestigen", () => {
           kilde.includes(`"${id}"`) ||
           (kilde.includes("FEST_LADDER_IDS") && FEST_LADDER_IDS.includes(id)) ||
           (kilde.includes("LYD_LEJLIGHEDSPAKKER") && LYD_LEJLIGHEDSPAKKER.includes(id)) ||
-          (kilde.includes("AV_PAKKER") && AV_PAKKER.includes(id));
+          (kilde.includes("AV_PAKKER") && AV_PAKKER.includes(id)) ||
+          (kilde.includes("LYSSHOW_PAKKER") && LYSSHOW_PAKKER.includes(id));
         expect(nævnt, `${id} nævnes ikke på ${side}`).toBe(true);
       }
     }

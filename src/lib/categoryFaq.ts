@@ -34,6 +34,102 @@ const LEJEPERIODE: FaqItem = {
 };
 
 export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
+  "lej-mikrofon": [
+    {
+      q: "Hvad koster det at leje en mikrofon i København?",
+      a:
+        "En håndholdt mikrofon med kabel koster 95 kr for hele lejeperioden, og Shure-udgaven 395 kr. " +
+        "Skal du kunne bevæge dig, koster en trådløs mikrofon 295 kr og Shure BLX i scenekvalitet 595 kr. " +
+        "Et trådløst headset koster 345 kr, og PRO-udgaven 595 kr.",
+    },
+    {
+      q: "Hvilken mikrofon skal jeg vælge til taler?",
+      a:
+        "Til taler ved en middag er en håndholdt trådløs det rigtige: den bliver sendt rundt mellem talerne, og " +
+        "man kan holde den ned, når man ikke taler. Et headset er til den, der skal tale længe og bruge hænderne " +
+        "— en underviser eller en toastmaster. Skal mikrofonen kun stå ét sted, sparer du penge med kabel.",
+    },
+    {
+      q: "Kan mikrofonen tilsluttes jeres højtalere?",
+      a:
+        "Ja. Alle vores mikrofoner har XLR- eller jack-udgang, og højtalerpakkerne har indgange til begge. " +
+        "Modtageren til de trådløse sættes direkte i højtaleren — der skal ikke en mixer imellem. " +
+        "Kablerne følger med.",
+    },
+    {
+      q: "Hvor mange mikrofoner kan jeg bruge på samme tid?",
+      a:
+        "To trådløse kan køre samtidig uden problemer. Skal I have flere — et band, en paneldebat — så ring " +
+        "på 31 13 28 52, så finder vi den rigtige opsætning. Til mange kilder på én gang er en mixer det, " +
+        "der binder det sammen.",
+    },
+    AFHENTNING,
+    LEJEPERIODE,
+  ],
+  "lej-projektor": [
+    {
+      q: "Hvad koster det at leje en projektor i København?",
+      a:
+        "Den almindelige projektor koster 495 kr for hele lejeperioden, og Projektor Pro med 5000 lumen " +
+        "795 kr. Et lærred på 160 cm koster 195 kr. Skal du hellere have en skærm, koster en 32\" 395 kr " +
+        "og en 55\" storskærm 595 kr.",
+    },
+    {
+      q: "Hvornår skal jeg vælge Pro-projektoren?",
+      a:
+        "Lumen er lysstyrke, og lysstyrke er det, der afgør om billedet kan ses uden at slukke lyset. Den " +
+        "almindelige projektor er til et mørkt rum om aftenen. Projektor Pro med 5000 lumen holder billedet " +
+        "synligt i et oplyst lokale og på et stort lærred — det er den, du vil have til en konference om dagen.",
+    },
+    {
+      q: "Skal jeg bruge lærred, eller kan jeg projicere på væggen?",
+      a:
+        "En hvid, glat væg virker overraskende godt og koster ingenting. Lærredet er svaret, når væggen er " +
+        "farvet, mønstret eller optaget — eller når billedet skal hænge et andet sted end der, hvor væggen er. " +
+        "Vores lærred er 160 cm og står på eget stativ.",
+    },
+    {
+      q: "Er kabler med, og hvad kan jeg tilslutte?",
+      a:
+        "HDMI følger altid med. Har din computer kun USB-C, siger du til ved booking, så lægger vi en adapter " +
+        "i. Lyd fra projektoren er svag, så skal der være film eller video med lyd, bør du leje en højtaler til " +
+        "— det er den detalje, folk oftest opdager for sent.",
+    },
+    AFHENTNING,
+    LEJEPERIODE,
+  ],
+  "lysshow": [
+    {
+      q: "Hvad koster et lysshow?",
+      a:
+        "Lysshow med lys-pakke, discokugle og røgmaskine koster 1.495 kr. Det store lysshow med fire uplights " +
+        "og low fog i stedet koster 1.995 kr. Vil du have lys uden røg, er Stemningslys-pakken 1.045 kr. " +
+        "Alle priser er for hele lejeperioden, ikke pr. dag.",
+    },
+    {
+      q: "Hvorfor er røg med i et lysshow?",
+      a:
+        "Fordi en lysstråle kun kan ses, hvis der er noget i luften at ramme. Uden røg ser man farvede pletter " +
+        "på væggen; med røg bliver selve strålen synlig, og det er dét, der ligner et show. Det er den enkelte " +
+        "ting, der gør størst forskel for pengene.",
+    },
+    {
+      q: "Hvad er forskellen på røgmaskine og low fog?",
+      a:
+        "En almindelig røgmaskine (595 kr) fylder rummet med røg, der driver op i luften og gør lyset synligt. " +
+        "Low fog-maskinen (795 kr) bruger is og lægger røgen som et tæppe på gulvet — den er til første dans " +
+        "og til lokaler, hvor en røgalarm ikke må gå i gang.",
+    },
+    {
+      q: "Kan jeg få lysshowet sat op?",
+      a:
+        "Ja. Levering og opsætning i København koster 495 kr, og 795 kr hvis vi også henter igen bagefter. " +
+        "Til det store lysshow med uplights er det pengene værd — uplights skal placeres i hjørner og langs " +
+        "vægge for at virke, og det tager tid at finde de rigtige steder.",
+    },
+    AFHENTNING,
+    LEJEPERIODE,
+  ],
   "lej-hojtaler": [
     {
       q: "Hvad koster det at leje højtalere i København?",

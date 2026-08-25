@@ -721,6 +721,51 @@ export const rentalProducts: RentalProduct[] = [
       ],
     },
   },
+  {
+    id: "pakke_lysshow",
+    category: "lys",
+    price: 1495,
+    image: "/images/product-lys.webp",
+    name_da: "Lysshow",
+    name_en: "Light show",
+    desc_da: "Lys-pakke, discokugle og røgmaskine. Lyset bliver synligt i luften — spar 190 kr.",
+    desc_en: "Light package, disco ball and fog machine. The beams become visible in the air — save 190 DKK.",
+    contents: ["2× farvet LED-lyseffekt", "Centereffekt", "Discokugle 40 cm med motor og spot", "Røgmaskine med væske", "Stativer og kabler"],
+    allowedAddons: ["uplight_4", "lyskaeder", ...DELIVERY_ADDON_IDS],
+    bundle: {
+      discount: 190,
+      usecase_da: "Røgen er det, der gør forskellen. Uden den ser man kun farvede pletter på væggen; med den bliver strålerne synlige i luften, og lyseffekterne ligner et show.",
+      usecase_en: "The fog is what makes the difference. Without it you only see coloured dots on the wall; with it the beams become visible and the effects look like a show.",
+      parts: [
+        { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
+        { productId: "discokugle", label_da: "Discokugle 40 cm", label_en: "Disco ball 40 cm", price: 595 },
+        { productId: "rog", label_da: "Røgmaskine", label_en: "Fog machine", price: 595 },
+      ],
+    },
+  },
+  {
+    id: "pakke_lysshow_stor",
+    category: "lys",
+    price: 1995,
+    image: "/images/product-uplight-4.webp",
+    name_da: "Lysshow stort",
+    name_en: "Light show large",
+    desc_da: "Lys-pakke, fire uplights, discokugle og low fog. Hele rummet skifter karakter — spar 285 kr.",
+    desc_en: "Light package, four uplights, disco ball and low fog. The whole room changes — save 285 DKK.",
+    contents: ["2× farvet LED-lyseffekt", "Centereffekt", "4× LED uplight til vægge og hjørner", "Discokugle 40 cm", "Low fog-maskine (røggulv)", "Stativer og kabler"],
+    allowedAddons: ["lyskaeder", ...DELIVERY_ADDON_IDS],
+    bundle: {
+      discount: 285,
+      usecase_da: "Til den store fest eller det lejede lokale med lysstofrør i loftet. Uplights maler væggene, lyseffekterne dækker dansegulvet, og low fog lægger et røggulv i stedet for at fylde rummet med røg — så røgalarmen får fred.",
+      usecase_en: "For the big party or the rented venue with fluorescent ceiling lights. Uplights paint the walls, the effects cover the dancefloor, and low fog lays a carpet of fog instead of filling the room — so the smoke alarm stays quiet.",
+      parts: [
+        { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
+        { productId: "uplight_4", label_da: "Uplight 4-pak", label_en: "Uplight 4-pack", price: 395 },
+        { productId: "discokugle", label_da: "Discokugle 40 cm", label_en: "Disco ball 40 cm", price: 595 },
+        { productId: "low_fog", label_da: "Low fog-maskine", label_en: "Low fog machine", price: 795 },
+      ],
+    },
+  },
   { id: "discokugle", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 595, image: "/images/product-discokugle.webp", name_da: "Discokugle 40 cm", name_en: "Disco ball 40 cm", desc_da: "Komplet pakke: 40 cm roterende discokugle med motor, spot og stativ.", desc_en: "Complete package: 40 cm rotating disco ball with motor, spotlight and stand.", contents: ["Discokugle 40 cm", "Motor", "LED-spot", "Stativ/ophæng", "Strømkabel"] },
   // Samme pakke, mindre kugle. Egen side er ikke lavet — begge peger på
   // /discokugle, hvor størrelserne står beskrevet.
@@ -832,6 +877,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
       { href: "/stemningslys", label: "Stemningslys-pakken" },
       { href: "/lys-pakke", label: "Lys-pakke" },
       { href: "/discokugle", label: "Discokugle" },
+      { href: "/lysshow", label: "Lysshow — færdige pakker" },
       { href: "/festlys", label: "Se alt lys" },
     ],
   },
@@ -875,6 +921,8 @@ export const NAV_CATEGORIES: NavCategory[] = [
       { href: "/konferencepakke-150", label: "Konferencepakke 150" },
       { href: "/filmaften", label: "Filmaften-pakken" },
       { href: "/projektor", label: "Projektor" },
+      { href: "/lej-mikrofon", label: "Mikrofoner" },
+      { href: "/lej-projektor", label: "Projektor & lærred" },
       { href: "/av-udstyr", label: "Se alt AV-udstyr" },
     ],
   },
@@ -897,6 +945,7 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
     "pakke_student",
   ],
   "/festlys": ["pakke_stemningslys"],
+  "/lysshow": ["pakke_lysshow", "pakke_lysshow_stor"],
   "/karaoke": ["pakke_karaoke", "pakke_karaoke_fest"],
   "/av-udstyr": [
     "pakke_konference_150",
@@ -911,6 +960,12 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
 export const LYD_LEJLIGHEDSPAKKER = ["pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student"];
 
 /** AV-pakkerne — vises samlet på /av-udstyr */
+/** Lysshow-pakkerne — vises samlet på /lysshow */
+export const LYSSHOW_PAKKER = ["pakke_lysshow", "pakke_lysshow_stor", "pakke_stemningslys"];
+
+/** Lydpakker uden egen side — vises på /lej-hojtaler under stigen */
+export const LYD_EKSTRAPAKKER = ["pakke_speaker_mik", "pakke_soundboks_lys"];
+
 export const AV_PAKKER = [
   "pakke_konference_150",
   "pakke_konference",
