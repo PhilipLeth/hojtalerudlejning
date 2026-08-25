@@ -8,6 +8,7 @@
 import { describe, it, expect, vi, beforeAll, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import BookingFlow from "@/components/BookingFlow";
+import { speakers as kodeSpeakers, rentalProducts as kodeRentals } from "@/lib/products";
 
 vi.mock("next/image", () => ({ default: (props: any) => <img {...props} /> }));
 
@@ -58,11 +59,24 @@ function vælgDatoer() {
 }
 
 describe("Produktionens katalog og ledighed", () => {
+  /**
+   * /api/products svarer med null-lister, når der ikke er gemt et katalog i
+   * KV — og så falder klienten tilbage på defaults i products.ts. Det er den
+   * tilstand produktionen står i efter 25. august 2026, hvor det gemte
+   * katalog blev nulstillet: det var et forældet øjebliksbillede, der
+   * skyggede for nye priser, sytten produkter og WebP-billederne.
+   *
+   * Testen skal derfor kunne begge dele. Er der et katalog i KV, er DET
+   * sandheden; er der ikke, er koden det. Begge veje skal flowets produkter
+   * findes — ellers står kunden med en tom forside.
+   */
   it("indeholder de produkter flowet regner med", () => {
     const cat = katalog?.catalog ?? katalog ?? {};
-    const ids = [...(cat.speakers ?? []), ...(cat.rentalProducts ?? [])].map((p: any) => p.id);
+    const fraKv = [...(cat.speakers ?? []), ...(cat.rentalProducts ?? [])];
+    const brugtKilde = fraKv.length ? fraKv : [...kodeSpeakers, ...kodeRentals];
+    const ids = brugtKilde.map((p: any) => p.id);
     for (const id of ["soundboks", "party", "festival", "thumpgo"]) {
-      expect(ids, `${id} mangler i det live katalog`).toContain(id);
+      expect(ids, `${id} mangler i ${fraKv.length ? "det live katalog" : "kodens katalog"}`).toContain(id);
     }
   });
 

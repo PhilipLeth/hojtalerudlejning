@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Rent Soundboks 4 Copenhagen | 595 DKK/weekend | Lejhøjtaler.dk",
+  title: "Rent Soundboks 4 Copenhagen | 795 DKK/weekend | Lejhøjtaler.dk",
   description:
-    "Rent a Soundboks 4 in Copenhagen from 595 DKK/weekend. Battery-powered with powerful bass for outdoor parties, up to 50 guests. Pick up Friday, return Monday.",
+    "Rent a Soundboks 4 in Copenhagen from 795 DKK/weekend. Battery-powered with powerful bass for outdoor parties, up to 50 guests. Pick up Friday, return Monday.",
   keywords: [
     "rent soundboks copenhagen",
     "soundboks rental",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/soundboks-4"),
   },
   openGraph: {
-    title: "Rent Soundboks 4 Copenhagen | 595 DKK/weekend | Lejhøjtaler.dk",
+    title: "Rent Soundboks 4 Copenhagen | 795 DKK/weekend | Lejhøjtaler.dk",
     description:
-      "Rent a Soundboks 4 in Copenhagen from 595 DKK/weekend. Battery-powered with powerful bass for outdoor parties, up to 50 guests. Pick up Friday, return Monday.",
+      "Rent a Soundboks 4 in Copenhagen from 795 DKK/weekend. Battery-powered with powerful bass for outdoor parties, up to 50 guests. Pick up Friday, return Monday.",
     url: "https://lejhojtaler.dk/en/soundboks-4",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -36,7 +36,7 @@ export default function Soundboks4En() {
       locale="en"
       slug="en/soundboks-4"
       name="Soundboks 4"
-      price={595}
+      price={795}
       headline="Rent Soundboks 4 in Copenhagen"
       sub="Battery-powered speaker with heavy bass — no power outlet needed."
       image="/images/product-soundboks.webp"

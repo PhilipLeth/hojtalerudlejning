@@ -23,7 +23,7 @@ export default function FirmafestpakkePage() {
     <ProductLanding
       slug="firmafestpakke"
       name="Firmafestpakke"
-      price={1795}
+      price={2645}
       headline="Firmafestpakken — talen først, dansegulvet bagefter"
       sub="Højtalere på stativer, trådløs mikrofon, subwoofer, lys og røg. Til julefrokost og firmafest — spar 130 kr."
       image="/images/product-pakke-fest-stor.webp"

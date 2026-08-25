@@ -3,13 +3,13 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Udendørspakke | Soundboks, ekstra batteri og lyskæde | 795 kr | Lejhøjtaler.dk",
+  title: "Udendørspakke | Soundboks, ekstra batteri og lyskæde | 995 kr | Lejhøjtaler.dk",
   description:
-    "Udendørspakke: Soundboks 4, ekstra batteri og 10 m lyskæde for 795 kr — spar 140 kr. Fest i baggård, park eller på stranden helt uden strøm. Lejes i København.",
+    "Udendørspakke: Soundboks 4, ekstra batteri og 10 m lyskæde for 995 kr — spar 140 kr. Fest i baggård, park eller på stranden helt uden strøm. Lejes i København.",
   keywords: ["fest uden strøm", "soundboks leje", "havefest lyd", "polterabend højtaler", "batteri højtaler leje"],
   alternates: { canonical: "https://lejhojtaler.dk/udendorspakke" },
   openGraph: {
-    title: "Udendørspakke | Soundboks, ekstra batteri og lyskæde | 795 kr | Lejhøjtaler.dk",
+    title: "Udendørspakke | Soundboks, ekstra batteri og lyskæde | 995 kr | Lejhøjtaler.dk",
     description: "Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park — spar 140 kr.",
     url: "https://lejhojtaler.dk/udendorspakke",
     siteName: "Lejhøjtaler.dk",
@@ -23,7 +23,7 @@ export default function UdendorspakkePage() {
     <ProductLanding
       slug="udendorspakke"
       name="Udendørspakke"
-      price={795}
+      price={995}
       headline="Udendørspakken — hele festen uden en stikkontakt"
       sub="Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park — spar 140 kr."
       image="/images/product-soundboks.webp"

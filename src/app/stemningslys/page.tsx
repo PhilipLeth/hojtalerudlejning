@@ -3,13 +3,13 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 695 kr | Lejhøjtaler.dk",
+  title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.045 kr | Lejhøjtaler.dk",
   description:
-    "Stemningslys-pakken: 4 LED uplights, 10 m lyskæde og discokugle for 695 kr — spar 140 kr. Lys der laver et lejet lokale om. Lejes i København.",
+    "Stemningslys-pakken: 4 LED uplights, 10 m lyskæde og discokugle for 1.045 kr — spar 140 kr. Lys der laver et lejet lokale om. Lejes i København.",
   keywords: ["lej festlys", "uplights leje", "diskolys til fest", "lys til lokale leje", "lyskæder og discokugle"],
   alternates: { canonical: "https://lejhojtaler.dk/stemningslys" },
   openGraph: {
-    title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 695 kr | Lejhøjtaler.dk",
+    title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.045 kr | Lejhøjtaler.dk",
     description: "4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet — spar 140 kr.",
     url: "https://lejhojtaler.dk/stemningslys",
     siteName: "Lejhøjtaler.dk",
@@ -23,7 +23,7 @@ export default function StemningslysPage() {
     <ProductLanding
       slug="stemningslys"
       name="Stemningslys-pakken"
-      price={695}
+      price={1045}
       headline="Stemningslys-pakken — lys uden lyd"
       sub="4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet — spar 140 kr."
       image="/images/product-uplight-4.webp"

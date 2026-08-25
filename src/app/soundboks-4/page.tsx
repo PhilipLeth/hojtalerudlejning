@@ -5,17 +5,17 @@ import Link from "next/link";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Soundboks 4 København | Fra 595 kr | Lejhøjtaler.dk",
+  title: "Lej Soundboks 4 København | Fra 795 kr | Lejhøjtaler.dk",
   description:
-    "Lej Soundboks 4 i København fra 595 kr/weekend. Batteridrevet højtaler med kraftig bas. Betal ved afhentning. Book online.",
+    "Lej Soundboks 4 i København fra 795 kr/weekend. Batteridrevet højtaler med kraftig bas. Betal ved afhentning. Book online.",
   keywords: ["lej soundboks", "soundboks 4 leje", "soundboks udlejning københavn", "lej soundboks 4"],
   alternates: {
     canonical: "https://lejhojtaler.dk/soundboks-4",
     languages: localeAlternates("/soundboks-4"),
   },
   openGraph: {
-    title: "Lej Soundboks 4 København | Fra 595 kr",
-    description: "Lej Soundboks 4 i København fra 595 kr/weekend. Book online.",
+    title: "Lej Soundboks 4 København | Fra 795 kr",
+    description: "Lej Soundboks 4 i København fra 795 kr/weekend. Book online.",
     url: "https://lejhojtaler.dk/soundboks-4",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -30,7 +30,7 @@ export default function Soundboks4Page() {
       <ProductLanding
         slug="soundboks-4"
         name="Soundboks 4"
-        price={595}
+        price={795}
         headline="Lej Soundboks 4 i København"
         sub="Batteridrevet højtaler med kraftig bas - ingen strøm nødvendig."
         image="/images/product-soundboks.webp"

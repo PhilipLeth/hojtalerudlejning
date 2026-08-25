@@ -23,7 +23,7 @@ export default function BryllupspakkePage() {
     <ProductLanding
       slug="bryllupspakke"
       name="Bryllupspakke"
-      price={1695}
+      price={2695}
       headline="Bryllupspakken — talerne og dansegulvet i ét"
       sub="Højtalere på stativer, trådløs mikrofon, lys, lyskæde og low fog til første dans. Spar 180 kr."
       image="/images/product-lowfog.webp"

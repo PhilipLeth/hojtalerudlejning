@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Rent Mackie Thump GO Copenhagen | 345 DKK/weekend | Lejhøjtaler.dk",
+  title: "Rent Mackie Thump GO Copenhagen | 395 DKK/weekend | Lejhøjtaler.dk",
   description:
-    "Rent a battery-powered Mackie Thump GO speaker in Copenhagen from 345 DKK/weekend. Up to 12 hours of battery, Bluetooth, no power outlet needed. Pick up Friday, return Monday.",
+    "Rent a battery-powered Mackie Thump GO speaker in Copenhagen from 395 DKK/weekend. Up to 12 hours of battery, Bluetooth, no power outlet needed. Pick up Friday, return Monday.",
   keywords: [
     "rent battery speaker copenhagen",
     "mackie thump go rental",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/mackie-thump-go"),
   },
   openGraph: {
-    title: "Rent Mackie Thump GO Copenhagen | 345 DKK/weekend | Lejhøjtaler.dk",
+    title: "Rent Mackie Thump GO Copenhagen | 395 DKK/weekend | Lejhøjtaler.dk",
     description:
-      "Rent a battery-powered Mackie Thump GO speaker in Copenhagen from 345 DKK/weekend. Up to 12 hours of battery, Bluetooth, no power outlet needed. Pick up Friday, return Monday.",
+      "Rent a battery-powered Mackie Thump GO speaker in Copenhagen from 395 DKK/weekend. Up to 12 hours of battery, Bluetooth, no power outlet needed. Pick up Friday, return Monday.",
     url: "https://lejhojtaler.dk/en/mackie-thump-go",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -36,7 +36,7 @@ export default function MackieThumpGoEn() {
       locale="en"
       slug="en/mackie-thump-go"
       name="Mackie Thump GO"
-      price={345}
+      price={395}
       headline="Rent Mackie Thump GO in Copenhagen"
       sub='Battery-powered 8" speaker — park, beach, courtyard. No power needed.'
       image="/images/product-thumpgo.webp"

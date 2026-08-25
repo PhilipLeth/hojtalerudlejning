@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Large Party Package Copenhagen | 895 DKK | 100 Guests | Lejhøjtaler.dk",
+  title: "Large Party Package Copenhagen | 1.290 DKK | 100 Guests | Lejhøjtaler.dk",
   description:
-    'Rent sound and lights for up to 100 guests in Copenhagen from 895 DKK. Two 12" EV speakers plus coloured lights and a centre effect. Save 95 DKK on the bundle.',
+    'Rent sound and lights for up to 100 guests in Copenhagen from 1.290 DKK. Two 12" EV speakers plus coloured lights and a centre effect. Save 95 DKK on the bundle.',
   keywords: [
     "party sound rental copenhagen",
     "large party package hire",
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festpakke-stor"),
   },
   openGraph: {
-    title: "Large Party Package Copenhagen | 895 DKK | 100 Guests | Lejhøjtaler.dk",
+    title: "Large Party Package Copenhagen | 1.290 DKK | 100 Guests | Lejhøjtaler.dk",
     description:
-      'Rent sound and lights for up to 100 guests in Copenhagen from 895 DKK. Two 12" EV speakers plus coloured lights and a centre effect. Save 95 DKK on the bundle.',
+      'Rent sound and lights for up to 100 guests in Copenhagen from 1.290 DKK. Two 12" EV speakers plus coloured lights and a centre effect. Save 95 DKK on the bundle.',
     url: "https://lejhojtaler.dk/en/festpakke-stor",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -35,7 +35,7 @@ export default function LargePartyPackageEn() {
       locale="en"
       slug="en/festpakke-stor"
       name="Large Party Package"
-      price={895}
+      price={1290}
       headline="Large party package — sound and lights for 100 guests"
       sub='2× EV 12" speakers + the full light package. A proper party — save 95 DKK.'
       image="/images/product-pakke-fest-stor.webp"

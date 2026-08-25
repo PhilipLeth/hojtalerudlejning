@@ -23,7 +23,7 @@ export default function Konferencepakke150Page() {
     <ProductLanding
       slug="konferencepakke-150"
       name="Konferencepakke 150"
-      price={1795}
+      price={2395}
       headline="Konferencepakke 150 — så både taleren og salen er med"
       sub="2× EV 12&quot; på stativer, Shure trådløs mikrofon, trådløst headset og 55&quot; skærm. Til 100-150 deltagere — spar 235 kr."
       image="/images/product-skaerm.webp"
