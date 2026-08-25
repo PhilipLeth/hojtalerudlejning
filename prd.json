@@ -3414,5 +3414,15 @@
     "status": "open",
     "date": "2026-08-20",
     "description": "BESLUTNING MANGLER. Grejet er 2× (eller 4×) EV ZLX-12BT (12\", 1000 W peak, 126 dB peak, 65 Hz nedre grænse) og Behringer B1200D-PRO (12\", 500 W, 122 dB, 45-180 Hz). Toppene rækker til gæstetallene; subsene gør ikke. Én 12\" sub til 150 dansende og to 12\" subs til 250 er under det en udlejer normalt sætter op — dér er standarden 15\" eller 18\". Dertil to konkrete huller: (1) Festpakke 250 har ingen mixer eller signalsplitter med, og B1200D-PRO'ens gennemsløjfning rækker kun til ét par toppe, så fire toppe kan ikke fodres fra én telefon som pakken er skruet sammen nu. (2) festival står som '30-50 pers.' på /hojtalerpakke-normal og '40-100 personer' i prd.json, men de samme to højtalere plus én sub sælges som 100-150 på /festpakke-150. Enten skal tallene ned, eller også skal der købes større subs og en lille mixer."
+  },
+  "soegning": {
+    "date": "2026-08-25",
+    "hvorfor": "Sortimentet er 55 produkter på 38 produktsider. Menuen er bevidst en vej ind og ikke et katalog, så den viser kun et udvalg — og den, der ved præcis hvad han skal have (\"lærred\", \"røgmaskine\", \"Soundboks\"), skulle gætte hvilken kategori det lå under.",
+    "hvor": "Knap i SiteHeader på alle offentlige sider (ikke admin). Åbner en dialog; Cmd/Ctrl+K virker også.",
+    "indeks": "Bygges af kataloget via useProducts, så navne og priser følger det admin har rettet i KV. Kategorisider kommer fra NAV_CATEGORIES plus EKSTRA_SIDER i searchIndex.ts (de fem der bevidst ikke står i menuen). Ingen separat liste at vedligeholde, og intet ekstra fetch.",
+    "aa_oe_aa": "Vigtigste designvalg: æ/ø/å må ikke stå i vejen. Alt indekseres i to former (høj→hoj OG høj→hoej), og søgeordet prøves i begge. Desuden foldes c og k sammen, så \"diskokugle\" finder Discokugle. Stien tages med i søgeteksten, fordi slugs som roegmaskine er præcis den stavemåde folk taster.",
+    "sprog": "Tosproget fra start, jf. CLAUDE.md. Produkter vises med katalogets en-navne på /en og linkes via localizedHref, så engelske sider bruges hvor de findes. Danske kategorisider indekseres IKKE på engelsk — en dansk overskrift i en engelsk resultatliste er værre end ingen.",
+    "tilgaengelighed": "role=dialog, listbox/option, aria-activedescendant, piletaster, Enter, Escape, og fokus tilbage til knappen ved luk.",
+    "guard": "src/__tests__/soegning.test.ts dækker stavevarianter, rangering, dublet-stier og at EKSTRA_SIDER peger på sider der findes."
   }
 }
