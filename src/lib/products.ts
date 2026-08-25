@@ -227,6 +227,33 @@ export const speakers: Speaker[] = [
       extra: "Incl. all cables. Stands available as add-on for 100 kr.",
     },
   },
+  {
+    id: "hojtaler_100",
+    page: "/hojtalerpakke-bas",
+    price: 1495,
+    // Midlertidigt festival-fotoet — skal have sit eget, før hidden fjernes.
+    product: "/images/product-festival.webp",
+    mood: "/images/mood-party.webp",
+    power: "kabel",
+    sizeClass: "stor",
+    weight: "48 kg",
+    hidden: true,
+    contents: ['2× EV 12" højtalere', '12" subwoofer', "Højtalerstativer", "Alle kabler"],
+    da: {
+      name: "Højtalerpakke 100",
+      size: '2× 12" + subwoofer',
+      capacity: "50-100 pers.",
+      desc: 'To aktive 12" EV-højtalere på stativer med en 12" subwoofer under. Trinnet over den store højtalerpakke, når rummet er større end 50 gæster.',
+      extra: "Uden lys — vil du have lys med, er Festpakke 150 samme lyd plus lys og røg.",
+    },
+    en: {
+      name: "Speaker package 100",
+      size: '2× 12" + subwoofer',
+      capacity: "50-100 people",
+      desc: 'Two active 12" EV speakers on stands with a 12" subwoofer. The step above the large speaker package, for rooms with more than 50 guests.',
+      extra: "Without lights — for lights, Party package 150 is the same sound plus lights and fog.",
+    },
+  },
 ];
 
 export const addons: Addon[] = [
@@ -340,6 +367,27 @@ export const addons: Addon[] = [
       label: "Delivery + collection (both ways)",
       desc: "We deliver, set up and collect again — save 195 DKK",
     },
+  },
+  // Mixerne er nye i sortimentet og har endnu ingen produktfotos. De ligger
+  // skjult, så de kan prissættes og lagerføres nu og tændes med ét flag,
+  // så snart billederne findes. Billedstien peger indtil da på mikrofonen.
+  {
+    id: "mixer_lille",
+    price: 295,
+    image: "/images/product-mikrofon.webp",
+    hidden: true,
+    contents: ["Lille mixer", "Strømforsyning", "Kabler til højtaler"],
+    da: { label: "Mixer lille", desc: "Lille mixer til et par mikrofoner og en musikkilde" },
+    en: { label: "Small mixer", desc: "Small mixer for a couple of microphones and a music source" },
+  },
+  {
+    id: "mixer_stor",
+    price: 395,
+    image: "/images/product-mikrofon.webp",
+    hidden: true,
+    contents: ["Stor mixer", "Strømforsyning", "Kabler til højtaler"],
+    da: { label: "Mixer stor", desc: "Større mixer med flere kanaler til band og flere mikrofoner" },
+    en: { label: "Large mixer", desc: "Larger mixer with more channels for bands and multiple microphones" },
   },
 ];
 
@@ -612,7 +660,7 @@ export const rentalProducts: RentalProduct[] = [
     page: "/stemningslys",
     youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c",
     category: "lys",
-    price: 695,
+    price: 1045,
     image: "/images/product-uplight-4.webp",
     name_da: "Stemningslys-pakken",
     name_en: "Ambient light package",
@@ -627,11 +675,56 @@ export const rentalProducts: RentalProduct[] = [
       parts: [
         { productId: "uplight_4", label_da: "Uplight 4-pak", label_en: "Uplight 4-pack", price: 395 },
         { productId: "lyskaeder", label_da: "Lyskæde varm hvid", label_en: "Fairy lights warm white", price: 195 },
-        { productId: "discokugle", label_da: "Discokugle", label_en: "Disco ball", price: 245 },
+        { productId: "discokugle", label_da: "Discokugle 40 cm", label_en: "Disco ball 40 cm", price: 595 },
       ],
     },
   },
-  { id: "discokugle", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 245, image: "/images/product-discokugle.webp", name_da: "Discokugle", name_en: "Disco ball", desc_da: "Roterende discokugle med LED-lys og farver.", desc_en: "Rotating disco ball with LED lights.", contents: ["Discokugle m. motor", "LED-lys", "Stativ/ophæng", "Strømkabel"] },
+  {
+    id: "pakke_soundboks_lys",
+    category: "lyd",
+    price: 1190,
+    image: "/images/product-soundboks.webp",
+    name_da: "Soundboks-pakken med lys",
+    name_en: "Soundboks package with lights",
+    desc_da: "Soundboks 4 + lys-pakke. Batteridrevet lyd og lys til festen — spar 100 kr.",
+    desc_en: "Soundboks 4 + light package. Battery-powered sound and lights — save 100 DKK.",
+    contents: ["Soundboks 4 (batteri)", "2× LED-lyseffekt", "Centereffekt", "Stativ", "Alle kabler"],
+    allowedAddons: ["rog", "batteri", ...DELIVERY_ADDON_IDS],
+    bundle: {
+      discount: 100,
+      usecase_da: "Soundboks klarer lyden uden en stikkontakt, men står ofte i et rum med loftslys tændt. Lys-pakken er det, der gør det til en fest — og den kræver strøm, så den skal tænkes med, hvis I er udenfor.",
+      usecase_en: "The Soundboks handles sound without a socket, but often stands in a room with the ceiling lights on. The light package is what makes it a party — and it needs power, so plan for that if you are outdoors.",
+      parts: [
+        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 795 },
+        { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
+      ],
+    },
+  },
+  {
+    id: "pakke_speaker_mik",
+    category: "lyd",
+    price: 1045,
+    image: "/images/product-festival.webp",
+    name_da: "Speakerpakken",
+    name_en: "Speaker package",
+    desc_da: "Stor højtalerpakke + håndholdt mikrofon. Lyd og taler til 30-50 gæster.",
+    desc_en: "Large speaker package + handheld microphone. Sound and speeches for 30-50 guests.",
+    contents: ['2× EV 12" højtalere', "Håndholdt mikrofon med kabel", "Bluetooth", "Alle kabler"],
+    allowedAddons: ["lys", "rog", "stativer", ...DELIVERY_ADDON_IDS],
+    bundle: {
+      discount: 45,
+      usecase_da: "Til det arrangement hvor der både skal spilles musik og holdes tale. Mikrofonen går direkte i højtaleren, så der ikke skal en mixer imellem.",
+      usecase_en: "For the event with both music and speeches. The microphone plugs straight into the speaker, so no mixer is needed in between.",
+      parts: [
+        { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
+        { productId: "haandholdt_mikrofon", label_da: "Håndholdt mikrofon", label_en: "Handheld microphone", price: 95 },
+      ],
+    },
+  },
+  { id: "discokugle", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 595, image: "/images/product-discokugle.webp", name_da: "Discokugle 40 cm", name_en: "Disco ball 40 cm", desc_da: "Komplet pakke: 40 cm roterende discokugle med motor, spot og stativ.", desc_en: "Complete package: 40 cm rotating disco ball with motor, spotlight and stand.", contents: ["Discokugle 40 cm", "Motor", "LED-spot", "Stativ/ophæng", "Strømkabel"] },
+  // Samme pakke, mindre kugle. Egen side er ikke lavet — begge peger på
+  // /discokugle, hvor størrelserne står beskrevet.
+  { id: "discokugle_30", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 495, image: "/images/product-discokugle.webp", name_da: "Discokugle 30 cm", name_en: "Disco ball 30 cm", desc_da: "Komplet pakke: 30 cm roterende discokugle med motor, spot og stativ.", desc_en: "Complete package: 30 cm rotating disco ball with motor, spotlight and stand.", contents: ["Discokugle 30 cm", "Motor", "LED-spot", "Stativ/ophæng", "Strømkabel"] },
   { id: "lyskaeder", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder.webp", name_da: "Lyskæde varm hvid", name_en: "Fairy lights warm white", desc_da: "10m lyskæde med varmt hvidt lys — hyggelig festbelysning.", desc_en: "10m fairy lights with warm white light — cosy party lighting.", contents: ["10m lyskæde", "Varm hvide pærer", "Strømforsyning"] },
   { id: "lyskaeder_farvet", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-farvet.webp", name_da: "Lyskæde farvet", name_en: "Fairy lights coloured", desc_da: "10m lyskæde med farvede pærer — festlig stemning fra første sekund.", desc_en: "10m fairy lights with coloured bulbs — party mood instantly.", contents: ["10m lyskæde", "Farvede pærer", "Strømforsyning"] },
   { id: "uplight", page: "/uplights", category: "lys", price: 125, image: "/images/product-uplight.webp", name_da: "Uplight", name_en: "Uplight", desc_da: "Simpel LED uplight på gulv — plug and play. Vasker vægge og hjørner i farvet lys.", desc_en: "Simple floor LED uplight — plug and play. Washes walls and corners in coloured light.", contents: ["1× LED uplight", "Strømkabel", "Automatiske farver"] },

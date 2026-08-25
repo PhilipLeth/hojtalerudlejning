@@ -2,9 +2,11 @@ import { describe, it, expect } from "vitest";
 import { speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice } from "@/lib/products";
 
 describe("Products data", () => {
-  it("has four speaker packages", () => {
-    expect(speakers).toHaveLength(4);
-    expect(speakers.map((s) => s.id)).toEqual(["thumpgo", "party", "soundboks", "festival"]);
+  it("har fire synlige højtalerpakker — den femte venter på foto", () => {
+    // hojtaler_100 (50-100 pers.) ligger i kataloget, men er skjult indtil
+    // Frederik har bekræftet indholdet og sendt et produktbillede.
+    expect(speakers.filter((s) => !s.hidden)).toHaveLength(4);
+    expect(speakers).toHaveLength(5);
   });
 
   it("thump go is 395 kr", () => {

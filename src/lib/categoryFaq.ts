@@ -158,16 +158,16 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje festlys?",
       a:
-        "En enkelt lyseffekt koster 395 kr, en uplight 125 kr (fire stk. 395 kr), en discokugle 245 kr og en 10 m " +
+        "En enkelt lyseffekt koster 395 kr, en uplight 125 kr (fire stk. 395 kr), en discokugle 495 kr (30 cm) eller 595 kr (40 cm) og en 10 m " +
         "lyskæde 195 kr. Lys-pakken med to farvede LED-lamper, centereffekt og stativ koster 495 kr. Røgmaskine " +
-        "koster 245 kr og low fog-maskinen, der laver et røggulv, 795 kr.",
+        "koster 595 kr og low fog-maskinen, der laver et røggulv, 795 kr.",
     },
     {
       q: "Skal jeg bruge røg for at lyset virker?",
       a:
         "Ikke nødvendigvis, men det gør en stor forskel. Lysstrålerne bliver først synlige i luften, når der er " +
         "lidt røg eller dis i rummet — uden røg ser du kun de farvede pletter, lyset rammer. En røgmaskine koster " +
-        "245 kr og har røgvæske med.",
+        "595 kr og har røgvæske med.",
     },
     {
       q: "Er festlys svært at sætte op?",
@@ -178,7 +178,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er forskellen på en røgmaskine og low fog?",
       a:
-        "En almindelig røgmaskine (245 kr) fylder rummet med røg, der gør lyset synligt. Low fog-maskinen (295 kr) " +
+        "En almindelig røgmaskine (595 kr) fylder rummet med røg, der gør lyset synligt. Low fog-maskinen (795 kr) " +
         "køler røgen med is, så den bliver liggende som et tæppe langs gulvet — 'dansen på skyer'-effekten fra " +
         "bryllupper og musikvideoer.",
     },
@@ -218,7 +218,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er forskellen på en røgmaskine og en low fog-maskine?",
       a:
-        "En almindelig røgmaskine (245 kr) sender røgen op i luften, hvor den gør lysstrålerne synlige og får " +
+        "En almindelig røgmaskine (595 kr) sender røgen op i luften, hvor den gør lysstrålerne synlige og får " +
         "festen til at se ud som en klub. En low fog-maskine (795 kr) køler røgen med is, så den lægger sig som et " +
         "tæppe langs gulvet og bliver liggende — effekten man kender fra første dans til bryllupper.",
     },
