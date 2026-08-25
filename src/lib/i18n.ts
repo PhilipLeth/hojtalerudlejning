@@ -170,7 +170,7 @@ export const t = {
         },
         {
           title: "3. Fest!",
-          text: "Kraftig lyd til op til 100 personer. Tilkøb lys-pakke for den fulde oplevelse.",
+          text: "Pakkerne dækker fra 30 til 250 gæster — festpakkerne har lyset med. Er I flere, laver vi et tilbud.",
         },
         {
           title: "4. Aflever igen",
@@ -359,7 +359,7 @@ export const t = {
         },
         {
           title: "3. Party!",
-          text: "Powerful sound for up to 100 people. Add the light package for the full experience.",
+          text: "The packages cover 30 to 250 guests — the party packages include lights. More than that, and we quote you.",
         },
         {
           title: "4. Bring it back",

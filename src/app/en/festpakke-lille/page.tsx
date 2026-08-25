@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Small Party Package Copenhagen | 890 DKK | Sound & Lights | Lejhøjtaler.dk",
   description:
-    'Rent sound and lights for your party in Copenhagen from 890 DKK. Two 10" speakers with Bluetooth plus a LED light effect, for up to 40 guests. Save 95 DKK on the bundle.',
+    'Rent sound and lights for your party in Copenhagen from 890 DKK. Two 10" speakers with Bluetooth plus a LED light effect, for up to 40 guests. Save 100 DKK on the bundle.',
   keywords: [
     "party package rental copenhagen",
     "sound and light hire copenhagen",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Small Party Package Copenhagen | 890 DKK | Sound & Lights | Lejhøjtaler.dk",
     description:
-      'Rent sound and lights for your party in Copenhagen from 890 DKK. Two 10" speakers with Bluetooth plus a LED light effect, for up to 40 guests. Save 95 DKK on the bundle.',
+      'Rent sound and lights for your party in Copenhagen from 890 DKK. Two 10" speakers with Bluetooth plus a LED light effect, for up to 40 guests. Save 100 DKK on the bundle.',
     url: "https://lejhojtaler.dk/en/festpakke-lille",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -37,7 +37,7 @@ export default function SmallPartyPackageEn() {
       name="Small Party Package"
       price={890}
       headline="Small party package — sound and lights"
-      sub='2× Alto 10" speakers + a light effect. Everything for the small party — save 95 DKK.'
+      sub='2× Alto 10" speakers + a light effect. Everything for the small party — save 100 DKK.'
       image="/images/product-pakke-fest-lille.webp"
       imageAlt="Small party package with Alto speakers and a light effect"
       productId="pakke_fest_lille"
@@ -46,7 +46,7 @@ export default function SmallPartyPackageEn() {
         '2× Alto 10" speakers with Bluetooth (up to 40 guests)',
         "One LED light effect with colour patterns",
         "All cables included",
-        "Save 95 DKK compared to renting the parts separately",
+        "Save 100 DKK compared to renting the parts separately",
         "Delivery and setup available in the booking",
       ]}
     />
