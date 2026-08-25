@@ -63,7 +63,6 @@ Aktuelle priser fremgår af bookingformularen på forsiden.`,
 {{afhentningsadresse}}
 
 {{aabningstider}}
-{{gebyr}}
 
 Udstyret leveres med alle nødvendige kabler.`,
   },

@@ -63,7 +63,6 @@ Current prices are shown in the booking form on the front page.`,
 {{afhentningsadresse}}
 
 {{aabningstider}}
-{{gebyr}}
 
 Equipment is delivered with all necessary cables.`,
   },

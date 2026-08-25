@@ -95,8 +95,9 @@ describe("Åbningstider ved 'jeg henter selv'", () => {
     // Fredag hentes, mandag afleveres — standardtiderne, dag for dag
     expect(tekst).toMatch(/Afhentning:\s*Fredag 14–18/);
     expect(tekst).toMatch(/Aflevering:\s*Mandag 15–17/);
-    // Og gebyret for at møde uden for åbningstid, så det ikke kommer bagefter
-    expect(tekst).toMatch(/Uden for åbningstid/);
+    // Og ingen løfter om at møde uden for tiderne — det gør vi ikke,
+    // heller ikke mod betaling
+    expect(tekst).not.toMatch(/[Uu]den for åbningstid/);
   }, 20000);
 
   it("fjerner tiderne igen, når kunden vælger levering", async () => {

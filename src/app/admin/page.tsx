@@ -55,8 +55,6 @@ interface Booking extends OrderBooking {
   /** Hvornår kunden vil mødes — tekst fra checkout, fx "Før 14 (6.30–14)" */
   pickupTime?: string;
   returnTime?: string;
-  /** Gebyret for at mødes uden for åbningstid, i kr */
-  afterHoursFee?: number;
   days: number;
   addons: string[];
   deliveryAddress?: string;

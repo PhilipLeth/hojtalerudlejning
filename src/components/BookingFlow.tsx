@@ -13,12 +13,10 @@ import { thumbSrcSet, THUMB_IMAGE_SIZES } from "@/lib/imageSrcSet";
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import {
   defaultTimeSlot,
-  formatAfterHours,
   formatDateLine,
   formatOneLine,
   formatSentence,
   hoursForDate,
-  timeSlotFee,
   timeSlots,
   upcomingExceptions,
   type OpeningHours,
@@ -214,7 +212,6 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da", whenEm
    */
   whenEmpty?: "hide" | "sentence";
 }) {
-  const afterHours = formatAfterHours(hours, locale);
   const rows: Array<{ key: string; label: string; iso: string }> = [];
   if (pickupDate) rows.push({ key: "pickup", label: locale === "en" ? "Pickup" : "Afhentning", iso: dateKey(pickupDate) });
   if (returnDate) rows.push({ key: "return", label: locale === "en" ? "Return" : "Aflevering", iso: dateKey(returnDate) });
@@ -225,7 +222,6 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da", whenEm
     return (
       <div className="mt-3 space-y-1 rounded-lg bg-white/5 px-3 py-2 text-xs">
         <p className="text-brand-300">{sætning}</p>
-        {afterHours && <p className="pt-1 text-white/40">{afterHours}</p>}
       </div>
     );
   }
@@ -243,16 +239,13 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da", whenEm
             </span>
             {resolved.closed && (
               <span className="text-white/40">
-                {locale === "en" ? "— by appointment, pick a time when you book" : "— efter aftale, vælg tidspunkt ved booking"}
+                {locale === "en" ? "— we will call you to agree on a time" : "— vi ringer og aftaler tidspunktet"}
               </span>
             )}
             {note && <span className="text-brand-400">· {note}</span>}
           </div>
         );
       })}
-      {/* Gebyret for at møde uden for åbningstid — her, hvor datoerne vælges,
-          så det ikke kommer bag på nogen ved afhentningen */}
-      {afterHours && <p className="pt-1 text-white/40">{afterHours}</p>}
     </div>
   );
 }
@@ -260,16 +253,14 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da", whenEm
 /* ───── Hvornår henter du? ───── */
 
 /**
- * Tidsrummet for afhentning eller aflevering.
+ * Hvornår på dagen kunden vil mødes.
  *
- * Fire knapper, og den gratis er valgt på forhånd — vælger kunden ikke noget,
- * koster tidsvalget ham ingenting og intet klik. Ligger tidsrummet uden for
- * åbningstiden, står gebyret på selve knappen, så beløbet i oversigten aldrig
- * kommer bag på nogen.
+ * Tre knapper, alle inden for åbningstiden, og "ved jeg ikke endnu" er valgt på
+ * forhånd: intet af det koster noget, så vi lægger ikke kunden et svar i munden
+ * og bruger ikke et klik på det. Vælger han selv, ved vi hvornår han kommer.
  *
- * Er "uden for åbningstid" slået fra i /admin/indstillinger, er der ingen
- * knapper — så gælder den gamle aftale om at skrive tidspunktet i
- * kommentarfeltet.
+ * Er der intet at spørge om — en lukket dag, eller en åbningstid der er for
+ * kort til to halvdele — er der ingen knapper.
  */
 function TimeSlotPicker({
   hours,
@@ -310,7 +301,7 @@ function TimeSlotPicker({
             }`}
           >
             {sl.label}
-            {sl.fee > 0 && <span className="ml-1.5 text-amber-400">+{sl.fee} kr</span>}
+            {sl.window && <span className="mt-0.5 block text-[11px] text-white/35">{sl.window}</span>}
           </button>
         ))}
       </div>
@@ -673,12 +664,11 @@ export default function BookingFlow({
   const [pickupDate, setPickupDate] = useState<Date | null>(null);
   const [returnDate, setReturnDate] = useState<Date | null>(null);
   /*
-   * Hvornår kunden vil mødes. Ligger tidsrummet uden for åbningstiden, koster
-   * det gebyret fra /admin/indstillinger — én gang pr. tur, og kun for de ture
-   * kunden selv kører. Vælger han kørsel, aftaler vi tiden i telefonen.
+   * Hvornår på dagen kunden vil mødes. Altid inden for åbningstiden — vi møder
+   * ikke uden for den — så valget koster ingenting og er ikke påkrævet.
    */
-  const [pickupSlot, setPickupSlot] = useState<TimeSlotId>("open");
-  const [returnSlot, setReturnSlot] = useState<TimeSlotId>("open");
+  const [pickupSlot, setPickupSlot] = useState<TimeSlotId>("unknown");
+  const [returnSlot, setReturnSlot] = useState<TimeSlotId>("unknown");
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const [deliveryAddress, setDeliveryAddress] = useState("");
   /** Adresse-fejlen vises først når man forsøger at gå videre */
@@ -979,7 +969,7 @@ export default function BookingFlow({
     const iso = dateKey(pickupDate);
     const slots = timeSlots(hours, iso);
     if (slots.length === 0) return;
-    setPickupSlot((prev) => (slots.some((sl) => sl.id === prev) ? prev : defaultTimeSlot(hours, iso)));
+    setPickupSlot((prev) => (slots.some((sl) => sl.id === prev) ? prev : defaultTimeSlot()));
   }, [pickupDate, hours]);
 
   useEffect(() => {
@@ -987,22 +977,12 @@ export default function BookingFlow({
     const iso = dateKey(returnDate);
     const slots = timeSlots(hours, iso);
     if (slots.length === 0) return;
-    setReturnSlot((prev) => (slots.some((sl) => sl.id === prev) ? prev : defaultTimeSlot(hours, iso)));
+    setReturnSlot((prev) => (slots.some((sl) => sl.id === prev) ? prev : defaultTimeSlot()));
   }, [returnDate, hours]);
 
-  /*
-   * Gebyret for at mødes uden for åbningstid — én gang pr. tur.
-   *
-   * Kører vi selv ud med anlægget, er der ingen afhentning at tage gebyr for,
-   * og henter vi det igen, gælder det samme den vej. Derfor spørger vi
-   * kørselsvalget, før vi lægger noget på.
-   */
+  // Kører vi selv ud med anlægget, er der ikke noget møde at lægge tid på —
+  // så aftaler vi tidspunktet i telefonen i stedet
   const kørselsveje = deliveryDirections(deliveryChoice ?? "");
-  const pickupSlotAktiv = !!pickupDate && !kørselsveje.out && timeSlots(hours, dateKey(pickupDate)).length > 0;
-  const returnSlotAktiv = !!returnDate && !kørselsveje.back && timeSlots(hours, dateKey(returnDate)).length > 0;
-  const pickupFee = pickupSlotAktiv ? timeSlotFee(hours, dateKey(pickupDate!), pickupSlot) : 0;
-  const returnFee = returnSlotAktiv ? timeSlotFee(hours, dateKey(returnDate!), returnSlot) : 0;
-  const afterHoursFee = pickupFee + returnFee;
 
   const summer = isSummerSale();
   const summerLabel = t[locale].summer;
@@ -1019,11 +999,11 @@ export default function BookingFlow({
     .reduce((sum, a) => sum + a.price, 0);
   const addonsPrice = summer ? applyDiscount(addonsBasePrice) : addonsBasePrice;
   const cartTotal = cartItems.reduce((sum, item) => sum + item.price, 0);
-  const subtotal = speakerPrice + addonsPrice + cartTotal + afterHoursFee;
+  const subtotal = speakerPrice + addonsPrice + cartTotal;
   // Rabatkode: procenten kommer fra /api/discount og er kun til visning —
   // ved onlinebetaling genberegner serveren alt og lægger Stripe-kuponen på.
   const total = coupon ? Math.round(subtotal * (1 - coupon.pct / 100)) : subtotal;
-  const totalBeforeDiscount = summer ? speakerBasePrice + addonsBasePrice + cartTotal + afterHoursFee : subtotal;
+  const totalBeforeDiscount = summer ? speakerBasePrice + addonsBasePrice + cartTotal : subtotal;
 
   // Kurv-summary op til draweren (fane når draweren er pakket væk)
   const cartCount = cartItems.length + (speaker ? 1 : 0);
@@ -1200,8 +1180,6 @@ export default function BookingFlow({
             ...(isRentalOnly && rentalName ? [{ label: rentalName, value: `${speakerPrice} kr` }] : []),
             ...cartItems.map((c) => ({ label: c.name, value: `${c.price} kr` })),
             ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: a.label, value: `${a.price} kr` })),
-            ...(pickupFee > 0 ? [{ label: s.afterHoursPickup, value: `${pickupFee} kr` }] : []),
-            ...(returnFee > 0 ? [{ label: s.afterHoursReturn, value: `${returnFee} kr` }] : []),
           ],
           total,
           betaling: payMethod,
@@ -1327,27 +1305,6 @@ export default function BookingFlow({
     };
   }, [checkoutSecret, s.errorRetry]);
 
-  /* ── Gebyret for at mødes uden for åbningstid, som ordrelinjer ── */
-  function AfterHoursRows() {
-    if (afterHoursFee === 0) return null;
-    return (
-      <>
-        {pickupFee > 0 && (
-          <div className="flex justify-between text-sm text-amber-400/90">
-            <span>{s.afterHoursPickup}</span>
-            <span>{pickupFee} kr</span>
-          </div>
-        )}
-        {returnFee > 0 && (
-          <div className="flex justify-between text-sm text-amber-400/90">
-            <span>{s.afterHoursReturn}</span>
-            <span>{returnFee} kr</span>
-          </div>
-        )}
-      </>
-    );
-  }
-
   /* ── Price Summary (reused) ── */
   function PriceSummary() {
     return (
@@ -1387,7 +1344,6 @@ export default function BookingFlow({
               </span>
             </div>
           ))}
-        <AfterHoursRows />
         {coupon && (
           <div className="flex justify-between text-sm text-emerald-400">
             <span>{coupon.code}</span>
@@ -1420,8 +1376,6 @@ export default function BookingFlow({
       ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
       ...(isRentalOnly && rentalName ? [{ label: rentalName, value: `${speakerPrice} kr` }] : []),
       ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: a.label, value: `${a.price} kr` })),
-      ...(pickupFee > 0 ? [{ label: s.afterHoursPickup, value: `${pickupFee} kr` }] : []),
-      ...(returnFee > 0 ? [{ label: s.afterHoursReturn, value: `${returnFee} kr` }] : []),
     ];
 
     return (
@@ -1873,12 +1827,6 @@ export default function BookingFlow({
                     locale={locale}
                   />
                 ))}
-              {afterHoursFee > 0 && (
-                <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-amber-400/90">
-                  <span>{pickupFee > 0 && returnFee > 0 ? (locale === "en" ? "Outside opening hours (both ways)" : "Uden for åbningstid (begge veje)") : pickupFee > 0 ? s.afterHoursPickup : s.afterHoursReturn}</span>
-                  <span className="font-semibold">+{afterHoursFee} kr</span>
-                </div>
-              )}
               {pickupDate && returnDate && !isEffectsOnly && (
                 <div className="flex justify-between mt-3 pt-3 border-t border-white/10">
                   <span className="text-white/50">{s.price} — {locale === "en" ? "whole rental" : "hele lejeperioden"} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
@@ -2336,7 +2284,6 @@ export default function BookingFlow({
                   {s.successDelivery}: {deliveryAddress}
                 </div>
               )}
-              <AfterHoursRows />
               {/* Rabatkode */}
               <div className="mt-3 border-t border-white/10 pt-3">
                 {coupon ? (

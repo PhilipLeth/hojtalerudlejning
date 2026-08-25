@@ -14,7 +14,7 @@
 
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import { formatAddress } from "@/lib/siteInfo";
-import { formatAfterHours, formatSentence } from "@/lib/openingHours";
+import { formatSentence } from "@/lib/openingHours";
 import { type Locale } from "@/lib/i18n";
 
 export function useSiteText(locale: Locale = "da"): (text: string) => string {
@@ -29,8 +29,7 @@ export function useSiteText(locale: Locale = "da"): (text: string) => string {
       .replaceAll("{{mail}}", company.email)
       .replaceAll("{{telefon}}", display)
       .replaceAll("{{afhentningsadresse}}", pickupAddress)
-      .replaceAll("{{aabningstider}}", formatSentence(hours, locale))
-      .replaceAll("{{gebyr}}", formatAfterHours(hours, locale));
+      .replaceAll("{{aabningstider}}", formatSentence(hours, locale));
 }
 
 /** Én tekst med pladsholdere, udfyldt */

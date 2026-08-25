@@ -3,15 +3,8 @@
  * Beløb beregnes altid server-side ud fra kataloget — klienten sender kun produkt-id'er.
  */
 import Stripe from "stripe";
-import {
-  loadPriceTable,
-  buildLineItems,
-  afterHoursLegs,
-  afterHoursLineItems,
-  type LineItemInput,
-} from "../_lib/pricing";
+import { loadPriceTable, buildLineItems, type LineItemInput } from "../_lib/pricing";
 import { resolveDiscountFor, discountOre } from "../_lib/discounts";
-import { loadSiteSettings } from "../_lib/siteSettings";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -40,9 +33,6 @@ interface Body {
    */
   pickupDay?: string;
   returnDay?: string;
-  /** Hvornår kunden vil mødes: open | early | late | unknown */
-  pickupSlot?: string;
-  returnSlot?: string;
 }
 
 const ISO_DAG = /^\d{4}-\d{2}-\d{2}$/;
@@ -93,31 +83,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     ({ lineItems, totalOre } = buildLineItems(table, body.items));
   } catch (e) {
     return json({ error: e instanceof Error ? e.message : "Invalid items" }, 400);
-  }
-
-  // Vil kunden hente eller aflevere uden for åbningstid, koster turen et gebyr.
-  // Beløbet slås op i åbningstiderne fra /admin/indstillinger — klienten sender
-  // kun hvilket tidsrum der blev valgt, aldrig et beløb.
-  try {
-    const { hours } = await loadSiteSettings(context.env.BOOKINGS);
-    const legs = afterHoursLegs(
-      hours,
-      {
-        pickup: dagAf(body.pickupDay, body.pickup),
-        returnDate: dagAf(body.returnDay, body.returnDate),
-        pickupSlot: body.pickupSlot,
-        returnSlot: body.returnSlot,
-        productIds: body.items.map((i) => String(i?.id ?? "")).filter(Boolean),
-      },
-      body.locale === "en" ? "en" : "da",
-    );
-    const ekstra = afterHoursLineItems(legs);
-    lineItems = [...lineItems, ...ekstra.lineItems];
-    totalOre += ekstra.totalOre;
-  } catch (e) {
-    // Et gebyr må aldrig spærre for betalingen — så mangler linjen, og vi
-    // opkræver den ved afhentningen i stedet
-    console.error("[stripe] gebyr uden for åbningstid kunne ikke beregnes:", e);
   }
 
   const stripe = new Stripe(context.env.STRIPE_SECRET_KEY, {

@@ -2,7 +2,7 @@
 
 import { type Locale, t } from "@/lib/i18n";
 import { useSiteSettings } from "@/lib/useSiteSettings";
-import { formatAfterHours, formatDayLine, openDays } from "@/lib/openingHours";
+import { formatDayLine, openDays } from "@/lib/openingHours";
 
 const stepIcons = [
   <svg key="1" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -22,8 +22,7 @@ const stepIcons = [
 function OpeningHours({ locale, title }: { locale: Locale; title: string }) {
   const { hours } = useSiteSettings();
   const days = openDays(hours);
-  const gebyr = formatAfterHours(hours, locale);
-  if (days.length === 0 && !gebyr) return null;
+  if (days.length === 0) return null;
 
   return (
     <div className="mt-16 glass rounded-2xl p-8 text-center">
@@ -33,8 +32,6 @@ function OpeningHours({ locale, title }: { locale: Locale; title: string }) {
           <p key={d.day}>{formatDayLine(d, locale)}</p>
         ))}
         {hours.other && <p className="mt-2 text-sm text-white/40">{hours.other}</p>}
-        {/* Vi møder gerne uden for åbningstid — det koster bare et gebyr */}
-        {gebyr && <p className="mt-1 text-sm text-brand-300/80">{gebyr}</p>}
       </div>
     </div>
   );

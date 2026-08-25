@@ -1,7 +1,7 @@
 "use client";
 
 import { useSiteSettings } from "@/lib/useSiteSettings";
-import { formatAfterHours, formatSentence } from "@/lib/openingHours";
+import { formatSentence } from "@/lib/openingHours";
 import { type Locale } from "@/lib/i18n";
 
 /**
@@ -22,7 +22,6 @@ export default function PickupSummary({
   const dele = [
     `${locale === "en" ? "Pickup" : "Afhentning"}: ${pickupAddress}`,
     formatSentence(hours, locale).replace(/\.$/, ""),
-    formatAfterHours(hours, locale).replace(/\.$/, ""),
     withCvr ? `CVR ${company.cvr}` : "",
   ].filter(Boolean);
 

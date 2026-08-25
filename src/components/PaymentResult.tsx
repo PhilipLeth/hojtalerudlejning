@@ -5,7 +5,7 @@ import Link from "next/link";
 import { trackPurchase } from "@/lib/analytics";
 import PhoneLink from "@/components/PhoneLink";
 import { useSiteSettings } from "@/lib/useSiteSettings";
-import { formatAfterHours, formatSentence } from "@/lib/openingHours";
+import { formatSentence } from "@/lib/openingHours";
 
 /**
  * Hvor og hvornår kunden henter. Adressen og tiderne kommer fra
@@ -14,12 +14,10 @@ import { formatAfterHours, formatSentence } from "@/lib/openingHours";
  */
 function PickupLine() {
   const { hours, pickupAddress } = useSiteSettings();
-  const gebyr = formatAfterHours(hours);
   return (
     <>
       <p className="mt-1">{pickupAddress}</p>
       <p className="mt-1">{formatSentence(hours)}</p>
-      {gebyr && <p className="mt-1 text-white/40">{gebyr}</p>}
     </>
   );
 }

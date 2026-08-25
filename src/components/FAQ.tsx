@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSiteSettings } from "@/lib/useSiteSettings";
-import { formatAfterHours, formatSentence } from "@/lib/openingHours";
+import { formatSentence } from "@/lib/openingHours";
 
 const faqs = [
   {
@@ -13,7 +13,7 @@ const faqs = [
   {
     question: "Hvordan fungerer afhentning?",
     answer:
-      "Du henter udstyret hos os på ADRESSE. Alle kabler følger med, og en bæretaske kan tilkøbes. AABNINGSTIDER GEBYR",
+      "Du henter udstyret hos os på ADRESSE. Alle kabler følger med, og en bæretaske kan tilkøbes. AABNINGSTIDER",
   },
   {
     question: "Hvad er inkluderet i prisen?",
@@ -52,7 +52,6 @@ export default function FAQ() {
       .replaceAll("PHONE", display)
       .replaceAll("ADRESSE", pickupAddress)
       .replaceAll("AABNINGSTIDER", formatSentence(hours))
-      .replaceAll("GEBYR", formatAfterHours(hours))
       .replace(/\s+/g, " ")
       .trim();
 

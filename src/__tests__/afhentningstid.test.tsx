@@ -1,18 +1,17 @@
 /**
- * Hvornår vil kunden hente?
+ * Hvornår på dagen vil kunden hente?
  *
- * Før stod der "andre tidspunkter efter aftale — skriv i kommentarfeltet", og
- * så gik der telefoner frem og tilbage bagefter. Nu vælger kunden et tidsrum i
- * checkout, og ligger det uden for åbningstiden, lægges gebyret på ordren med
- * det samme.
+ * Første udgave lod kunden vælge tidspunkter UDEN for åbningstiden mod et
+ * gebyr på 50 kr. Frederik 25. august 2026: der er ikke mulighed for at komme
+ * uden for åbningstiden — heller ikke mod ekstra betaling. Så nu ligger alle
+ * valg inden for tiderne, og ingen af dem koster noget.
  *
  * Reglerne der skal holde:
- *   · en åben dag har et gratis valg, og det er forvalgt — tidsvalget må ikke
- *     koste kunden et eneste klik
- *   · en lukket dag koster gebyr uanset hvilket tidsrum man vælger, også
- *     "ved jeg ikke endnu" — vi kører derned uanset hvad
- *   · beløbet slås ALTID op i åbningstiderne, aldrig i det klienten sendte
- *   · kører vi selv ud med anlægget, er der ingen tur at tage gebyr for
+ *   · intet valg ligger uden for åbningstiden, og intet valg koster penge
+ *   · "ved jeg ikke endnu" er valgt på forhånd — tidsvalget må ikke koste
+ *     kunden et klik, og vi lægger ham ikke et svar i munden
+ *   · er der intet at spørge om (lukket dag, eller en åbningstid der er for
+ *     kort til to halvdele), er der ingen knapper
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
@@ -22,170 +21,107 @@ import {
   defaultTimeSlot,
   formatTimeSlot,
   resolveTimeSlot,
-  timeSlotFee,
   timeSlots,
   type OpeningHours,
 } from "@/lib/openingHours";
-import { afterHoursLegs, afterHoursLineItems } from "../../functions/api/_lib/pricing";
 
-/** Standardtiderne: mandag 15–17, fredag 14–18, gebyr 50 kr mellem 6.30 og 21 */
+/** Standardtiderne i koden: mandag 15–17, fredag 14–18 */
 const hours = DEFAULT_OPENING_HOURS;
 
-// 2026-08-28 er en fredag (åben), 2026-08-29 en lørdag (lukket)
+/** Som i produktion: man–fre 9.30–18, lørdag 10–14, søndag lukket */
+const rigtigeTider: OpeningHours = {
+  ...hours,
+  days: {
+    ...hours.days,
+    mon: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+    tue: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+    wed: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+    thu: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+    fri: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+    sat: { closed: false, open: "10:00", close: "14:00", purpose: "" },
+  },
+};
+
+// 2026-08-28 er en fredag, 2026-08-29 en lørdag, 2026-08-30 en søndag
 const FREDAG = "2026-08-28";
 const LØRDAG = "2026-08-29";
+const SØNDAG = "2026-08-30";
 
-describe("tidsrum på en åben dag", () => {
-  it("tilbyder åbningstiden gratis og de andre med gebyr", () => {
-    const slots = timeSlots(hours, FREDAG);
-    expect(slots.map((s) => s.id)).toEqual(["open", "early", "late", "unknown"]);
-    expect(slots.find((s) => s.id === "open")!.fee).toBe(0);
-    expect(slots.find((s) => s.id === "early")!.fee).toBe(50);
-    expect(slots.find((s) => s.id === "late")!.fee).toBe(50);
-    // "Ved jeg ikke endnu" er gratis: vi går ud fra åbningstiden
-    expect(slots.find((s) => s.id === "unknown")!.fee).toBe(0);
-  });
-
-  it("skriver tiderne på knapperne, så gebyret ikke er en gåde", () => {
-    const slots = timeSlots(hours, FREDAG);
-    expect(slots.find((s) => s.id === "open")!.label).toBe("I åbningstiden 14–18");
-    expect(slots.find((s) => s.id === "early")!.label).toBe("Før 14");
-    expect(slots.find((s) => s.id === "late")!.label).toBe("Efter 18");
-  });
-
-  it("forvælger det gratis tidsrum", () => {
-    expect(defaultTimeSlot(hours, FREDAG)).toBe("open");
-    expect(timeSlotFee(hours, FREDAG, defaultTimeSlot(hours, FREDAG))).toBe(0);
-  });
-});
-
-describe("tidsrum på en lukket dag", () => {
-  it("koster gebyr uanset hvad man vælger — også »ved jeg ikke endnu«", () => {
-    const slots = timeSlots(hours, LØRDAG);
+describe("En åbningstid der strækker sig hen over middag", () => {
+  it("deler dagen der hvor kunden selv ville dele den", () => {
+    const slots = timeSlots(rigtigeTider, FREDAG);
     expect(slots.map((s) => s.id)).toEqual(["early", "late", "unknown"]);
-    expect(slots.every((s) => s.fee === 50)).toBe(true);
+    expect(slots[0]).toMatchObject({ label: "Før 12", window: "9.30–12" });
+    expect(slots[1]).toMatchObject({ label: "Efter 12", window: "12–18" });
+    expect(slots[2]).toMatchObject({ label: "Ved jeg ikke endnu", window: "" });
   });
 
-  it("deler dagen ved middag, som Frederik bad om", () => {
-    const slots = timeSlots(hours, LØRDAG);
-    expect(slots.find((s) => s.id === "early")!.label).toBe("Før 12");
-    expect(slots.find((s) => s.id === "late")!.label).toBe("Efter 12");
+  it("gør det samme på en kort lørdag", () => {
+    const slots = timeSlots(rigtigeTider, LØRDAG);
+    expect(slots[0].window).toBe("10–12");
+    expect(slots[1].window).toBe("12–14");
   });
 
-  it("vælger ikke et betalt tidsrum for kunden", () => {
-    expect(defaultTimeSlot(hours, LØRDAG)).toBe("unknown");
-  });
-});
-
-describe("når afhentning uden for åbningstid er slået fra", () => {
-  const uden: OpeningHours = { ...hours, afterHours: { ...hours.afterHours, enabled: false } };
-
-  it("er der intet tidsrum at vælge, og intet gebyr", () => {
-    expect(timeSlots(uden, FREDAG)).toEqual([]);
-    expect(timeSlots(uden, LØRDAG)).toEqual([]);
-    expect(timeSlotFee(uden, LØRDAG, "early")).toBe(0);
-    expect(formatTimeSlot(uden, LØRDAG, "early")).toBe("");
+  it("taler engelsk til engelske kunder", () => {
+    const slots = timeSlots(rigtigeTider, FREDAG, "en");
+    expect(slots.map((s) => s.label)).toEqual(["Before 12 PM", "After 12 PM", "I don't know yet"]);
   });
 });
 
-describe("et ukendt tidsrum fra klienten", () => {
-  it("koster ingenting frem for at gætte et beløb", () => {
-    expect(timeSlotFee(hours, FREDAG, "kl-3-om-natten")).toBe(0);
-    expect(timeSlotFee(hours, FREDAG, undefined)).toBe(0);
-  });
-
-  it("falder tilbage på standardvalget for dagen", () => {
-    expect(resolveTimeSlot(hours, FREDAG, "kl-3-om-natten")).toBe("open");
-    expect(resolveTimeSlot(hours, LØRDAG, undefined)).toBe("unknown");
-    // "open" findes ikke på en lukket dag — så tæller den ikke som gratis smutvej
-    expect(resolveTimeSlot(hours, LØRDAG, "open")).toBe("unknown");
-    expect(timeSlotFee(hours, LØRDAG, resolveTimeSlot(hours, LØRDAG, "open"))).toBe(50);
+describe("En åbningstid der ligger på én side af middag", () => {
+  it("deler på midten og taler om først og sidst på dagen", () => {
+    // Fredag 14–18 i standardtiderne — middag ligger uden for
+    const slots = timeSlots(hours, FREDAG);
+    expect(slots[0]).toMatchObject({ label: "Først på dagen", window: "14–16" });
+    expect(slots[1]).toMatchObject({ label: "Sidst på dagen", window: "16–18" });
   });
 });
 
-describe("gebyret på ordren", () => {
-  const ordre = { productIds: ["thumpgo"] };
-
-  it("tager ét gebyr pr. tur uden for åbningstid", () => {
-    const legs = afterHoursLegs(hours, {
-      ...ordre,
-      pickup: LØRDAG,
-      returnDate: LØRDAG,
-      pickupSlot: "early",
-      returnSlot: "late",
-    });
-    expect(legs.map((l) => l.leg)).toEqual(["pickup", "return"]);
-    expect(legs.reduce((n, l) => n + l.fee, 0)).toBe(100);
+describe("Når der ikke er noget at spørge om", () => {
+  it("har en lukket dag ingen knapper", () => {
+    expect(timeSlots(rigtigeTider, SØNDAG)).toEqual([]);
   });
 
-  it("tager intet, når begge ture ligger i åbningstiden", () => {
-    expect(
-      afterHoursLegs(hours, { ...ordre, pickup: FREDAG, returnDate: FREDAG, pickupSlot: "open", returnSlot: "open" }),
-    ).toEqual([]);
-  });
-
-  it("dropper turen vi selv kører", () => {
-    // levering ud: der er ingen afhentning at tage gebyr for
-    const ud = afterHoursLegs(hours, {
-      productIds: ["thumpgo", "levering_ud"],
-      pickup: LØRDAG,
-      returnDate: LØRDAG,
-      pickupSlot: "early",
-      returnSlot: "late",
-    });
-    expect(ud.map((l) => l.leg)).toEqual(["return"]);
-
-    // levering begge veje: intet gebyr overhovedet
-    const begge = afterHoursLegs(hours, {
-      productIds: ["thumpgo", "levering_begge"],
-      pickup: LØRDAG,
-      returnDate: LØRDAG,
-      pickupSlot: "early",
-      returnSlot: "late",
-    });
-    expect(begge).toEqual([]);
-  });
-
-  it("bruger admins gebyr, ikke et tal fra klienten", () => {
-    const dyrere: OpeningHours = { ...hours, afterHours: { ...hours.afterHours, fee: 150 } };
-    const legs = afterHoursLegs(dyrere, { ...ordre, pickup: LØRDAG, pickupSlot: "early" });
-    expect(legs[0].fee).toBe(150);
-  });
-
-  it("bliver til Stripe-linjer i øre", () => {
-    const legs = afterHoursLegs(hours, { ...ordre, pickup: LØRDAG, pickupSlot: "early" });
-    const { lineItems, totalOre } = afterHoursLineItems(legs);
-    expect(totalOre).toBe(5000);
-    expect(lineItems[0].price_data).toMatchObject({
-      currency: "dkk",
-      unit_amount: 5000,
-      product_data: { name: "Afhentning uden for åbningstid" },
-    });
-  });
-
-  it("skriver linjen på engelsk til engelske kunder", () => {
-    const legs = afterHoursLegs(hours, { ...ordre, pickup: LØRDAG, pickupSlot: "early" }, "en");
-    expect(legs[0].name).toBe("Pickup outside opening hours");
+  it("har en kort åbningstid heller ingen — mandag 15–17 er ikke et valg", () => {
+    expect(timeSlots(hours, "2026-08-31")).toEqual([]);
   });
 });
 
-describe("tidsrummet som tekst til mails og lejeseddel", () => {
-  it("nævner gebyret, så Frederik ved hvad der er opkrævet", () => {
-    expect(formatTimeSlot(hours, LØRDAG, "early")).toBe("Før 12 (6.30–12) — uden for åbningstid 50 kr");
+describe("Standardvalget", () => {
+  it("er »ved jeg ikke endnu«, så tidsvalget ikke koster et klik", () => {
+    expect(defaultTimeSlot()).toBe("unknown");
   });
 
-  it("holder åbningstiden kort", () => {
-    expect(formatTimeSlot(hours, FREDAG, "open")).toBe("I åbningstiden 14–18");
+  it("falder tilbage dertil, når klienten sender noget vi ikke kender", () => {
+    expect(resolveTimeSlot(rigtigeTider, FREDAG, "kl-3-om-natten")).toBe("unknown");
+    expect(resolveTimeSlot(rigtigeTider, FREDAG, undefined)).toBe("unknown");
+    // Et tidsrum findes ikke på en lukket dag
+    expect(resolveTimeSlot(rigtigeTider, SØNDAG, "early")).toBe("unknown");
+    expect(resolveTimeSlot(rigtigeTider, FREDAG, "early")).toBe("early");
+  });
+});
+
+describe("Tidsrummet som tekst til mails og lejeseddel", () => {
+  it("tager tidsrummet med, så Frederik ved hvornår han skal være der", () => {
+    expect(formatTimeSlot(rigtigeTider, FREDAG, "early")).toBe("Før 12 (9.30–12)");
+    expect(formatTimeSlot(rigtigeTider, FREDAG, "late")).toBe("Efter 12 (12–18)");
+  });
+
+  it("nævner aldrig et gebyr — der er ikke noget at opkræve", () => {
+    for (const slot of ["early", "late", "unknown"]) {
+      expect(formatTimeSlot(rigtigeTider, FREDAG, slot)).not.toMatch(/kr/);
+    }
   });
 
   it("er tom når der intet er valgt — en gammel booking får ingen tom række", () => {
-    expect(formatTimeSlot(hours, FREDAG, undefined)).toBe("");
+    expect(formatTimeSlot(rigtigeTider, FREDAG, undefined)).toBe("");
+    expect(formatTimeSlot(rigtigeTider, SØNDAG, "early")).toBe("");
   });
 });
 
 /* ─────────────── i selve checkout ─────────────── */
 
-/** Vælg produkt, bladr til dagen og vælg den + dagen efter */
+/** Vælg produkt, bladr frem til dagen og vælg den + dagen efter */
 async function vælgDatoer(fra: Date, til: Date) {
   window.history.pushState({}, "", "/?product=festival#book");
   render(<BookingFlow />);
@@ -195,7 +131,7 @@ async function vælgDatoer(fra: Date, til: Date) {
   const klik = (day: number) => {
     const btn = screen
       .getAllByRole("button")
-      .find((x) => x.textContent === String(day) && !(x as HTMLButtonElement).disabled);
+      .find((x) => x.textContent?.trim().startsWith(String(day)) && x.textContent.trim().length <= 2 && !(x as HTMLButtonElement).disabled);
     if (btn) fireEvent.click(btn);
   };
   const næsteMåned = () => fireEvent.click(screen.getByLabelText("Næste måned"));
@@ -223,41 +159,27 @@ describe("tidsvalget i checkout", () => {
   });
   afterEach(() => window.history.pushState({}, "", "/"));
 
-  it("koster ingenting på åbne dage — tidsvalget må ikke koste et klik", async () => {
+  it("koster ingenting, uanset hvad kunden vælger", async () => {
     const fredag = næste(5);
     const mandag = new Date(fredag);
     mandag.setDate(mandag.getDate() + 3);
     await vælgDatoer(fredag, mandag);
 
     await waitFor(() => expect(screen.getByText("Hvornår henter du?")).toBeInTheDocument());
-    // Åbningstiden er valgt på forhånd, og der er ingen gebyrlinje
-    const åben = screen.getAllByText("I åbningstiden 14–18");
-    expect(åben.length).toBeGreaterThan(0);
-    expect(åben[0].closest("button")).toHaveAttribute("aria-pressed", "true");
-    expect(screen.queryByText("Afhentning uden for åbningstid")).not.toBeInTheDocument();
-    expect(screen.queryByText("Uden for åbningstid (begge veje)")).not.toBeInTheDocument();
+    fireEvent.click(screen.getAllByText("Først på dagen")[0]);
+
+    // Ingen gebyrlinje nogen steder — hverken ved datoerne eller i prisen
+    expect(screen.queryByText(/uden for åbningstid/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/\+\d+ kr/)).not.toBeInTheDocument();
   });
 
-  it("lægger gebyret på, når begge dage er lukkede", async () => {
-    const lørdag = næste(6);
-    const søndag = new Date(lørdag);
-    søndag.setDate(søndag.getDate() + 1);
-    await vælgDatoer(lørdag, søndag);
-
+  it("sender tidsrummet med til serveren", async () => {
+    const fredag = næste(5);
+    const mandag = new Date(fredag);
+    mandag.setDate(mandag.getDate() + 3);
+    await vælgDatoer(fredag, mandag);
     await waitFor(() => expect(screen.getByText("Hvornår henter du?")).toBeInTheDocument());
-    expect(screen.getAllByText("Før 12").length).toBeGreaterThan(0);
-    // To ture uden for åbningstid = 2 × 50 kr, og det står ved datoerne
-    expect(screen.getByText("Uden for åbningstid (begge veje)")).toBeInTheDocument();
-    expect(screen.getByText("+100 kr")).toBeInTheDocument();
-  });
-
-  it("sender tidsrummet med til serveren, ikke et beløb", async () => {
-    const lørdag = næste(6);
-    const søndag = new Date(lørdag);
-    søndag.setDate(søndag.getDate() + 1);
-    await vælgDatoer(lørdag, søndag);
-    await waitFor(() => expect(screen.getByText("Hvornår henter du?")).toBeInTheDocument());
-    fireEvent.click(screen.getAllByText("Efter 12")[0]);
+    fireEvent.click(screen.getAllByText("Sidst på dagen")[0]);
 
     fireEvent.click(screen.getByText("Videre"));
     await waitFor(() => expect(screen.getByText("Levering og afhentning")).toBeInTheDocument());
@@ -277,11 +199,12 @@ describe("tidsvalget i checkout", () => {
       expect(call).toBeTruthy();
       const body = JSON.parse((call![1] as { body: string }).body);
       expect(body.pickupSlot).toBe("late");
+      // Aflevering er ikke rørt — så står den på standardvalget
       expect(body.returnSlot).toBe("unknown");
       // Kalenderdagen sendes med, så serveren ikke skal gætte ud fra et UTC-tidspunkt
       expect(body.pickupDay).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      // Festpakke 495 + to ture uden for åbningstid
-      expect(body.total).toBe(595);
+      // Festpakke 495 — og ikke en krone mere for tidspunktet
+      expect(body.total).toBe(495);
     });
   });
 });

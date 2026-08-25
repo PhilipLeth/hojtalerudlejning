@@ -16,7 +16,6 @@ import {
   WEEKDAYS,
   dayName,
   formatDateLine,
-  formatAfterHours,
   formatOneLine,
   formatShortDate,
   isIsoDate,
@@ -525,59 +524,6 @@ export default function IndstillingerPage() {
             </button>
           </div>
 
-          {/* Uden for åbningstid: vi møder gerne op, det koster bare et gebyr */}
-          <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #eee" }}>
-            <h3 style={{ margin: "0 0 8px", fontSize: "14px" }}>Uden for åbningstid</h3>
-            <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", cursor: "pointer", marginBottom: "10px" }}>
-              <input
-                type="checkbox"
-                checked={hours.afterHours.enabled}
-                onChange={(e) =>
-                  setHours((prev) => ({ ...prev, afterHours: { ...prev.afterHours, enabled: e.target.checked } }))
-                }
-              />
-              <strong>Vi møder også uden for åbningstid mod gebyr</strong>
-            </label>
-
-            {hours.afterHours.enabled && (
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-                <span style={{ fontSize: "13px", color: "#666" }}>Fra</span>
-                <input
-                  type="time"
-                  value={hours.afterHours.from}
-                  onChange={(e) => setHours((prev) => ({ ...prev, afterHours: { ...prev.afterHours, from: e.target.value } }))}
-                  aria-label="Uden for åbningstid fra"
-                  style={timeInput}
-                />
-                <span style={{ fontSize: "13px", color: "#666" }}>til</span>
-                <input
-                  type="time"
-                  value={hours.afterHours.to}
-                  onChange={(e) => setHours((prev) => ({ ...prev, afterHours: { ...prev.afterHours, to: e.target.value } }))}
-                  aria-label="Uden for åbningstid til"
-                  style={timeInput}
-                />
-                <span style={{ fontSize: "13px", color: "#666", marginLeft: "8px" }}>Gebyr</span>
-                <input
-                  type="number"
-                  min={0}
-                  max={10000}
-                  value={hours.afterHours.fee}
-                  onChange={(e) =>
-                    setHours((prev) => ({ ...prev, afterHours: { ...prev.afterHours, fee: Math.max(0, Math.round(Number(e.target.value) || 0)) } }))
-                  }
-                  aria-label="Gebyr uden for åbningstid"
-                  style={{ ...timeInput, width: "80px", textAlign: "center" }}
-                />
-                <span style={{ fontSize: "13px", color: "#666" }}>kr</span>
-              </div>
-            )}
-            <p style={{ margin: "8px 0 0", fontSize: "12px", color: "#888", lineHeight: 1.5 }}>
-              Noten står i checkout, når kunden vælger datoer — og på kvitteringssiden.
-              Gebyret lægges <strong>ikke</strong> automatisk på ordren; det aftales og
-              tilføjes som en betaling, hvis kunden bruger det.
-            </p>
-          </div>
 
           {/* Den tekniske del: må kunden kun vælge de dage vi har åbent? */}
           <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #eee" }}>
@@ -610,9 +556,6 @@ export default function IndstillingerPage() {
               {openDays(hours).length ? formatOneLine(hours) : <span style={{ color: "#c0392b" }}>Ingen åbne dage — footeren viser ingen åbningstider</span>}
             </div>
             {hours.other && <div style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}>{hours.other}</div>}
-            {formatAfterHours(hours) && (
-              <div style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}>{formatAfterHours(hours)}</div>
-            )}
             {hours.exceptions.filter((e) => isIsoDate(e.date)).map((e) => (
               <div key={e.date} style={{ fontSize: "12px", color: "#4b2ea3", marginTop: "2px" }}>
                 {formatShortDate(e.date)}: {e.closed ? "lukket" : formatDateLine(hours, e.date)}
