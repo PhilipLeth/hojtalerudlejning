@@ -2,8 +2,12 @@
  * Lejesedlen er én side, man har med ud i døren.
  *
  * Den skal kunne det, papir skal kunne: vise hvad der pakkes, hvad der mangler
- * at blive betalt, og bære en underskrift. Alt det juridiske hører til bilaget
- * — står det på selve sedlen, fylder den to sider og bliver ikke printet.
+ * at blive betalt, og bære en underskrift.
+ *
+ * Vilkårene stod før i et bilag, som sedlen henviste til. Men bilaget blev
+ * sjældent printet med, så kunden skrev under på noget, hun ikke havde fået
+ * udleveret. Frederik bad om at få dem på selve sedlen — stadig på én A4,
+ * hvilket er derfor de står med lille skrift i to spalter.
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { screen, waitFor, fireEvent } from "@testing-library/react";
@@ -102,18 +106,39 @@ describe("Lejesedlen", () => {
     expect(screen.getAllByText("500 kr")).toHaveLength(2);
   });
 
-  it("bærer en underskriftslinje til kunden", async () => {
+  it("bærer en underskriftslinje til kunden — og kun til kunden", async () => {
     await openSeddel();
     expect(screen.getByText(/Lejers underskrift/)).toBeInTheDocument();
-    expect(screen.getByText(/Udleveret af/)).toBeInTheDocument();
+    // Udleverers felt er væk: Frederik står med sedlen i hånden, så hans
+    // underskrift beviser ingenting, og feltet tog pladsen fra datoen.
+    expect(screen.queryByText(/Udleveret af/)).not.toBeInTheDocument();
   });
 
-  it("holder de lange vilkår væk fra selve sedlen — de hører til bilaget", async () => {
+  it("har plads til datoen under underskriften", async () => {
     await openSeddel();
-    expect(screen.queryByText(/Ansvarsfraskrivelse/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Tvister afgøres/)).not.toBeInTheDocument();
-    // Men det man skriver under på skal stå der, kort
-    expect(screen.getByText(/fulde lejevilkår står i bilaget/i)).toBeInTheDocument();
+    expect(screen.getByText(/^Dato:/)).toBeInTheDocument();
+  });
+
+  it("har alle vilkårene på selve sedlen", async () => {
+    await openSeddel();
+    // Alle seks afsnit skal stå der — ellers skriver kunden under på noget,
+    // hun ikke kan læse
+    for (const tekst of [
+      /Ansvar og hæftelse/,
+      /Depositum/,
+      /Forsinket retur/,
+      /Annullering/,
+      /Ansvarsfraskrivelse/,
+      /Tvister afgøres/,
+    ]) {
+      expect(screen.getAllByText(tekst).length).toBeGreaterThan(0);
+    }
+  });
+
+  it("påstår ikke længere at vilkårene er vedhæftet", async () => {
+    await openSeddel();
+    expect(screen.queryByText(/står i bilaget/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/vedhæftet/i)).not.toBeInTheDocument();
   });
 
   it("kan skifte til bilaget med de fulde vilkår", async () => {
@@ -123,5 +148,53 @@ describe("Lejesedlen", () => {
     expect(screen.getByText(/Tvister afgøres/)).toBeInTheDocument();
     // Bilaget skal kunne kobles til ordren det hører til
     expect(screen.getByText(/1755500000000_abc123/)).toBeInTheDocument();
+  });
+});
+
+/**
+ * Kablerne skal passe til ordren.
+ *
+ * Før stod "AUX-kabel + iPhone-adapter" på hver eneste seddel. På en ordre med
+ * en lyskæde og en røgmaskine påstod sedlen dermed, at kunden fik kabler med,
+ * som der ikke var noget at sætte i — og listen er dét, der tælles op i døren.
+ */
+describe("Lejeseddel — kabler følger ordren", () => {
+  const lysOrdre = {
+    ...booking,
+    id: "booking_1755500000001_lys",
+    speaker: "",
+    speakerId: "",
+    cartItems: [{ name: "Lyskæde varm hvid", price: 195, productId: "lyskaeder" }],
+    addonIds: ["rog"],
+    addons: ["Røgmaskine"],
+  };
+
+  async function aabn(b: unknown) {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string) => {
+        if (String(url).includes("/api/bookings")) {
+          return new Response(JSON.stringify({ bookings: [b] }), { status: 200 });
+        }
+        if (String(url).includes("/api/handover")) return new Response("{}", { status: 200 });
+        return new Response(JSON.stringify({ users: [] }), { status: 200 });
+      }),
+    );
+    renderAdmin(<LejeseddelPage />);
+    await waitFor(() => expect(screen.getByText(/Agnes/)).toBeInTheDocument());
+    fireEvent.click(screen.getByText(/Agnes/));
+    await waitFor(() => expect(screen.getByText(/Strømkabel/)).toBeInTheDocument());
+  }
+
+  it("nævner ikke AUX på en ordre uden noget at spille i", async () => {
+    await aabn(lysOrdre);
+    expect(screen.queryByText(/AUX-kabel/)).not.toBeInTheDocument();
+    // Strøm skal der stadig til — lyskæder og røgmaskiner kører ikke på luft
+    expect(screen.getByText(/Strømkabel/)).toBeInTheDocument();
+  });
+
+  it("tager AUX med når der er en højtaler på ordren", async () => {
+    await aabn(booking);
+    expect(screen.getByText(/AUX-kabel \+ iPhone-adapter/)).toBeInTheDocument();
   });
 });

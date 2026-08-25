@@ -7,6 +7,7 @@ import { useAdminAuth } from "@/lib/useAdminAuth";
 import { useState, useEffect, useCallback } from "react";
 import { orderLines, deliveryInfo, type OrderBooking } from "@/lib/orderLines";
 import { useSiteSettings } from "@/lib/useSiteSettings";
+import { useProducts } from "@/lib/useProducts";
 import { formatCompanyLine } from "@/lib/siteInfo";
 
 interface Booking extends OrderBooking {
@@ -52,6 +53,7 @@ export default function LejeseddelPage() {
   // Afhentningsstedet kommer fra /admin/indstillinger, men kan rettes på den
   // enkelte seddel (fx hvis udstyret afleveres et andet sted)
   const { pickupAddress, company } = useSiteSettings();
+  const { speakers, rentalProducts } = useProducts();
   const [pickupPlace, setPickupPlace] = useState("");
   useEffect(() => {
     setPickupPlace((prev) => prev || pickupAddress);
@@ -119,6 +121,27 @@ export default function LejeseddelPage() {
   }, [selected, secret]);
 
   /**
+   * Har ordren noget, man kan sætte en telefon til?
+   *
+   * Slås op i kataloget frem for på navnet: et bundt hedder "Festpakke 150"
+   * og røber ikke i sig selv, at der er højtalere i. Bundter tælles med, hvis
+   * bare én af deres dele er lyd.
+   */
+  function harLydkilde(b: Booking) {
+    const ids = orderLines(b).map((l) => l.productId).filter(Boolean) as string[];
+    const erLyd = (id: string): boolean => {
+      if (speakers.some((sp) => sp.id === id)) return true;
+      const r = rentalProducts.find((x) => x.id === id);
+      if (r) {
+        if (r.category === "lyd") return true;
+        if (r.bundle?.parts?.some((del) => erLyd(del.productId))) return true;
+      }
+      return false;
+    };
+    return ids.some(erLyd);
+  }
+
+  /**
    * Udstyrslisten er ordrens egne linjer — hovedprodukt, kurv-varer og tilvalg.
    * Tidligere blev alt kaldt "Højttaler (...)", så en ordre på en lyskæde stod
    * som "Højttaler (Lyskæde varm hvid — —)" og kurv-varer manglede helt.
@@ -129,7 +152,10 @@ export default function LejeseddelPage() {
       qty: String(l.qty),
     }));
     rows.push({ item: "Strømkabel", qty: "1" });
-    rows.push({ item: "AUX-kabel + iPhone-adapter", qty: "1" });
+    // AUX og iPhone-adapter hører til noget, man spiller musik igennem. Før
+    // stod de på hver eneste seddel, også når ordren var en lyskæde eller en
+    // røgmaskine — så listen påstod, at kunden fik kabler, der ikke fulgte med.
+    if (harLydkilde(b)) rows.push({ item: "AUX-kabel + iPhone-adapter", qty: "1" });
     // Tre tomme linjer til det, der bliver aftalt i døren
     for (let i = 0; i < 3; i++) rows.push({ item: "", qty: "" });
     return rows;
@@ -323,39 +349,71 @@ export default function LejeseddelPage() {
               </div>
             </div>
 
-            {/* Det korte, der skrives under på. Resten står i bilaget. */}
-            <h2>Det du skriver under på</h2>
-            <ul style={{ margin: "0 0 8px", paddingLeft: "18px", fontSize: "11.5px", color: "#333", lineHeight: 1.4 }}>
-              <li>Udstyret er modtaget i god og funktionsdygtig stand, medmindre andet er noteret ovenfor.</li>
-              <li>Lejer hæfter for skade og bortkomst fra udlevering til aflevering, og udstyret må ikke lånes videre.</li>
-              <li>Afleveres udstyret for sent uden aftale, kan der opkræves leje pr. påbegyndt døgn.</li>
-              <li>De fulde lejevilkår står i bilaget og er en del af denne aftale.</li>
-            </ul>
+            {/*
+              Vilkårene stod før som fire punkter med en henvisning til "bilaget"
+              — men bilaget blev sjældent printet med, så sedlen henviste til
+              noget, kunden ikke havde fået. Nu står alle betingelser her.
+              Skriften er lille, fordi det skal blive på én A4 sammen med
+              udstyrsliste og underskrift; bilag-visningen findes stadig til
+              den, der vil have dem i læsbar størrelse.
+            */}
+            <h2 style={{ margin: "10px 0 4px" }}>Lejevilkår — det du skriver under på</h2>
+            <div style={{ fontSize: "8.5px", lineHeight: 1.35, color: "#333", columnCount: 2, columnGap: "14px" }}>
+              <p style={{ margin: "0 0 4px" }}>
+                <b>1. Ansvar og hæftelse.</b> Udstyret er modtaget i god og funktionsdygtig stand,
+                medmindre andet er noteret under Bemærkninger. Lejer hæfter fra modtagelse til
+                aflevering for enhver skade, bortkomst eller beskadigelse uanset årsag. Udstyret skal
+                beskyttes mod regn, fugt, stød og overbelastning, og må ikke videreudlejes eller
+                udlånes til tredjepart. Ved skade eller bortkomst erstattes udlejers fulde udgift til
+                reparation eller nyanskaffelse. Fejl og skader meddeles udlejer hurtigst muligt.
+              </p>
+              <p style={{ margin: "0 0 4px" }}>
+                <b>2. Depositum.</b> Depositum tilbagebetales ved retur af udstyret i samme stand som
+                ved udlevering, og når det er konstateret intakt og fuldt funktionsdueligt. Ved skade,
+                mangler eller forsinket retur kan depositummet helt eller delvist tilbageholdes.
+              </p>
+              <p style={{ margin: "0 0 4px" }}>
+                <b>3. Forsinket retur.</b> Returneres udstyret senere end aftalt uden forudgående
+                aftale, kan udlejer opkræve gebyr svarende til normal lejepris pr. påbegyndt ekstra
+                døgn, samt kompensation for tabt indtjening.
+              </p>
+              <p style={{ margin: "0 0 4px" }}>
+                <b>4. Annullering.</b> Annullering skal ske skriftligt på sms eller e-mail. Vilkår for
+                tilbagebetaling aftales individuelt.
+              </p>
+              <p style={{ margin: "0 0 4px" }}>
+                <b>5. Ansvarsfraskrivelse.</b> Udlejer er ikke ansvarlig for driftstab, følgeskader
+                eller andre indirekte skader, og heller ikke for personskade eller skade på
+                tredjemands ejendom forårsaget af lejers brug af udstyret.
+              </p>
+              <p style={{ margin: 0 }}>
+                <b>6. Øvrigt.</b> Udstyret forbliver til enhver tid {company.name}s ejendom. Lejer skal
+                være myndig (18 år eller derover). Tvister afgøres efter dansk ret ved de danske
+                domstole.
+              </p>
+            </div>
 
-            {/* Underskrift: kundens er det eneste der skal indhentes i døren */}
-            <div className="grid" style={{ marginTop: "14px" }}>
-              <div>
-                {signatureImg ? (
-                  <img src={signatureImg} alt="Lejers underskrift" style={{ display: "block", maxWidth: "100%", maxHeight: "56px", objectFit: "contain" }} />
-                ) : (
-                  <div style={{ height: "56px" }} />
-                )}
-                <div style={{ borderTop: "1px solid #111", paddingTop: "4px", fontSize: "11.5px" }}>
-                  Lejers underskrift — {selected.handover?.signerName || selected.name}
-                  <br />
-                  Dato:{" "}
-                  {selected.handover?.signedAt
-                    ? new Date(selected.handover.signedAt).toLocaleString("da-DK")
-                    : "________________"}
-                </div>
-              </div>
-              <div>
+            {/*
+              Kun kunden skriver under. Udleverers felt er fjernet — Frederik
+              står jo med sedlen i hånden, så hans underskrift beviser ingenting,
+              og den tog plads fra datoen, der reelt manglede luft.
+            */}
+            <div style={{ marginTop: "16px", maxWidth: "320px" }}>
+              {signatureImg ? (
+                <img src={signatureImg} alt="Lejers underskrift" style={{ display: "block", maxWidth: "100%", maxHeight: "56px", objectFit: "contain" }} />
+              ) : (
                 <div style={{ height: "56px" }} />
-                <div style={{ borderTop: "1px solid #111", paddingTop: "4px", fontSize: "11.5px" }}>
-                  Udleveret af ({company.name})
-                  <br />
-                  Dato: ________________
-                </div>
+              )}
+              <div style={{ borderTop: "1px solid #111", paddingTop: "5px", fontSize: "11.5px" }}>
+                Lejers underskrift — {selected.handover?.signerName || selected.name}
+              </div>
+              <div style={{ marginTop: "10px", fontSize: "11.5px" }}>
+                Dato:{" "}
+                {selected.handover?.signedAt ? (
+                  new Date(selected.handover.signedAt).toLocaleString("da-DK")
+                ) : (
+                  <span style={{ display: "inline-block", borderBottom: "1px solid #111", minWidth: "150px" }}>&nbsp;</span>
+                )}
               </div>
             </div>
 
