@@ -231,13 +231,12 @@ export const speakers: Speaker[] = [
     id: "hojtaler_100",
     page: "/hojtalerpakke-bas",
     price: 1495,
-    // Midlertidigt festival-fotoet — skal have sit eget, før hidden fjernes.
-    product: "/images/product-festival.webp",
+    // Fotoet viser præcis pakken: to 12" EV på stativer med subwoofer under.
+    product: "/images/product-festival-bas.webp",
     mood: "/images/mood-party.webp",
     power: "kabel",
     sizeClass: "stor",
     weight: "48 kg",
-    hidden: true,
     contents: ['2× EV 12" højtalere', '12" subwoofer', "Højtalerstativer", "Alle kabler"],
     da: {
       name: "Højtalerpakke 100",
@@ -368,14 +367,14 @@ export const addons: Addon[] = [
       desc: "We deliver, set up and collect again — save 195 DKK",
     },
   },
-  // Mixerne er nye i sortimentet og har endnu ingen produktfotos. De ligger
-  // skjult, så de kan prissættes og lagerføres nu og tændes med ét flag,
-  // så snart billederne findes. Billedstien peger indtil da på mikrofonen.
+  // Mixerne har endnu ingen produktfotos. De står med image: null frem for
+  // et lånt billede — et mixerbillede der viser en mikrofon er værre end
+  // ingenting. Samme greb som kørslen, der heller ikke har et foto.
+  // Sæt stien ind, når Frederik har taget billederne.
   {
     id: "mixer_lille",
     price: 295,
-    image: "/images/product-mikrofon.webp",
-    hidden: true,
+    image: null,
     contents: ["Lille mixer", "Strømforsyning", "Kabler til højtaler"],
     da: { label: "Mixer lille", desc: "Lille mixer til et par mikrofoner og en musikkilde" },
     en: { label: "Small mixer", desc: "Small mixer for a couple of microphones and a music source" },
@@ -383,8 +382,7 @@ export const addons: Addon[] = [
   {
     id: "mixer_stor",
     price: 395,
-    image: "/images/product-mikrofon.webp",
-    hidden: true,
+    image: null,
     contents: ["Stor mixer", "Strømforsyning", "Kabler til højtaler"],
     da: { label: "Mixer stor", desc: "Større mixer med flere kanaler til band og flere mikrofoner" },
     en: { label: "Large mixer", desc: "Larger mixer with more channels for bands and multiple microphones" },
@@ -1064,3 +1062,43 @@ export function cheapestSpeakerPrice(list: Speaker[] = speakers): number {
 }
 
 export const startPrice = cheapestSpeakerPrice();
+
+/* ───── Priser i sidetekst ─────
+ *
+ * Hver produktside, kategoriside og lejlighedsside skrev sine egne beløb ind i
+ * titel, brødtekst og "se også"-knapper. Da Frederiks prisstigning ramte
+ * kataloget, blev de tal ikke til løgn ét sted, men hundrede: /soundboks-4
+ * sendte kunden videre til Mackie Thump GO "– 345 kr", mens bookingen tog 395.
+ *
+ * Derfor slås beløb i tekst op her frem for at blive skrevet af. Et ukendt id
+ * er en fejl ved build, ikke en tavs nul-pris.
+ */
+
+/** Katalogpris for et produkt-id (default-kataloget — brug LivePrice for admin-redigerede tal). */
+export function catalogPrice(id: string): number {
+  const p =
+    speakers.find((s) => s.id === id) ??
+    addons.find((a) => a.id === id) ??
+    rentalProducts.find((r) => r.id === id);
+  if (!p) throw new Error(`catalogPrice: ukendt produkt-id "${id}"`);
+  return p.price;
+}
+
+/** Rabatten i kr på en pakke — "spar X kr". */
+export function catalogDiscount(id: string): number {
+  const p = rentalProducts.find((r) => r.id === id);
+  if (!p?.bundle) throw new Error(`catalogDiscount: "${id}" er ikke en pakke`);
+  return p.bundle.discount;
+}
+
+/** Hvad delene koster hver for sig — "1.300 kr i stedet for 1.685 kr". */
+export function catalogPartsPrice(id: string): number {
+  const p = rentalProducts.find((r) => r.id === id);
+  if (!p?.bundle) throw new Error(`catalogPartsPrice: "${id}" er ikke en pakke`);
+  return p.bundle.parts.reduce((sum, part) => sum + part.price, 0);
+}
+
+/** Beløb som det skrives i tekst: 2345 → "2.345". */
+export function prisTekst(n: number): string {
+  return n.toLocaleString("da-DK");
+}

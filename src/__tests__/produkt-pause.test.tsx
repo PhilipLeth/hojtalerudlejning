@@ -45,13 +45,19 @@ describe("/admin/produkter — pause", () => {
 });
 
 describe("hidden virker hele vejen ud", () => {
-  it("de tre nye produkter ligger skjult indtil foto og indhold er bekræftet", () => {
-    const skjulte = [
+  /**
+   * Intet står på pause lige nu. De tre nye produkter var skjulte, indtil
+   * Højtaler 100 fik sit rigtige foto og mixerne blev sat til at stå uden
+   * billede frem for med et lånt. Testen er her for at fange en utilsigtet
+   * pause — et produkt der pludselig er væk for kunderne uden en beslutning.
+   */
+  it("intet produkt står på pause", () => {
+    const pausede = [
       ...speakers.filter((s) => s.hidden).map((s) => s.id),
       ...addons.filter((a) => a.hidden).map((a) => a.id),
       ...rentalProducts.filter((r) => r.hidden).map((r) => r.id),
     ];
-    expect(skjulte.sort()).toEqual(["hojtaler_100", "mixer_lille", "mixer_stor"]);
+    expect(pausede).toEqual([]);
   });
 
   it("useProducts filtrerer skjulte væk, så de ikke kan bookes", () => {

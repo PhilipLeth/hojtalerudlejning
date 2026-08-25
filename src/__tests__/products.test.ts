@@ -2,11 +2,14 @@ import { describe, it, expect } from "vitest";
 import { speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice } from "@/lib/products";
 
 describe("Products data", () => {
-  it("har fire synlige højtalerpakker — den femte venter på foto", () => {
-    // hojtaler_100 (50-100 pers.) ligger i kataloget, men er skjult indtil
-    // Frederik har bekræftet indholdet og sendt et produktbillede.
-    expect(speakers.filter((s) => !s.hidden)).toHaveLength(4);
+  it("har fem højtalerpakker i stigen 0-30, 30-50, 50-100", () => {
     expect(speakers).toHaveLength(5);
+    expect(speakers.filter((s) => s.hidden)).toHaveLength(0);
+    // Trinnet til 50-100 kom til 25. august 2026 og har sin egen side
+    const stor = speakers.find((s) => s.id === "hojtaler_100")!;
+    expect(stor.price).toBe(1495);
+    expect(stor.da.capacity).toBe("50-100 pers.");
+    expect(stor.page).toBe("/hojtalerpakke-bas");
   });
 
   it("thump go is 395 kr", () => {
@@ -240,8 +243,12 @@ describe("Addons data", () => {
   });
 
   it("all addons except kørsel have an image", () => {
+    // Kørsel er en ydelse og har aldrig haft et billede. Mixerne er nye og
+    // venter på fotos — de står med null frem for et lånt billede, fordi et
+    // mixerbillede der viser en mikrofon er værre end ingenting.
+    const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge", "mixer_lille", "mixer_stor"];
     for (const a of addons) {
-      if (["levering_ud", "afhentning_retur", "levering_begge"].includes(a.id)) {
+      if (udenFoto.includes(a.id)) {
         expect(a.image).toBeNull();
       } else {
         expect(a.image).toMatch(/^\/images\/product-.+\.(webp|svg)$/);
