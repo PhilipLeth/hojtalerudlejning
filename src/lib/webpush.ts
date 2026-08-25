@@ -9,6 +9,8 @@
  * Workers.
  */
 
+import { TIMEOUT_PUSH_MS, timeoutSignal } from "./fetchTimeout";
+
 /**
  * ArrayBuffer-bagget bytes. WebCrypto tager ikke imod SharedArrayBuffer, og
  * uden den skelnen bliver hvert eneste kald til subtle en typefejl.
@@ -220,6 +222,9 @@ export async function sendPush(
         Urgency: "high",
       },
       body,
+      // Apples push-tjeneste holdt engang en booking i to minutter, fordi den
+      // hverken svarede eller lukkede forbindelsen
+      signal: timeoutSignal(TIMEOUT_PUSH_MS),
     });
     return {
       endpoint: sub.endpoint,

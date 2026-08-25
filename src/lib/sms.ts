@@ -12,6 +12,8 @@
  * Pages Functions, hvor "@/"-aliaset ikke resolves.
  */
 
+import { TIMEOUT_SMS_MS, timeoutSignal } from "./fetchTimeout";
+
 export interface SmsResult {
   ok: boolean;
   /** GatewayAPI's id på beskeden — kan slås op hos dem ved tvivl */
@@ -206,6 +208,7 @@ export class GatewayApiSms implements SmsGateway {
           class: "standard",
           recipients: [{ msisdn }],
         }),
+        signal: timeoutSignal(TIMEOUT_SMS_MS),
       });
     } catch (e) {
       console.error("[sms] gatewayapi uden svar:", e);
@@ -261,6 +264,7 @@ export class CpsmsGateway implements SmsGateway {
           // typografiske anførselstegn i renderSms
           encoding: "UTF-8",
         }),
+        signal: timeoutSignal(TIMEOUT_SMS_MS),
       });
     } catch (e) {
       console.error("[sms] cpsms uden svar:", e);
@@ -312,6 +316,7 @@ export class TwilioSms implements SmsGateway {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: form.toString(),
+          signal: timeoutSignal(TIMEOUT_SMS_MS),
         },
       );
     } catch (e) {
@@ -447,7 +452,10 @@ export async function smsBalance(
       if (!env.SMS_ACCOUNT_SID) return null;
       const res = await fetchImpl(
         `https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(env.SMS_ACCOUNT_SID)}/Balance.json`,
-        { headers: { Authorization: `Basic ${btoa(`${env.SMS_ACCOUNT_SID}:${token}`)}` } },
+        {
+          headers: { Authorization: `Basic ${btoa(`${env.SMS_ACCOUNT_SID}:${token}`)}` },
+          signal: timeoutSignal(TIMEOUT_SMS_MS),
+        },
       );
       if (!res.ok) return null;
       const body = (await res.json()) as { balance?: string | number; currency?: string };
@@ -460,6 +468,7 @@ export async function smsBalance(
 
     const res = await fetchImpl("https://gatewayapi.com/rest/me", {
       headers: { Authorization: `Token ${token}` },
+      signal: timeoutSignal(TIMEOUT_SMS_MS),
     });
     if (!res.ok) return null;
     // GatewayAPI svarer med saldoen som streng ("2.00000") — ikke som tal

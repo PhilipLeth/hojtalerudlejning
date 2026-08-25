@@ -9,6 +9,7 @@
  */
 
 import { notifyRecipients } from "./notify";
+import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../../src/lib/fetchTimeout";
 
 export interface OwnerMailEnv {
   RESEND_API_KEY?: string;
@@ -29,6 +30,7 @@ export async function sendOwnerMail(
         Authorization: `Bearer ${env.RESEND_API_KEY}`,
         "Content-Type": "application/json",
       },
+      signal: timeoutSignal(TIMEOUT_MAIL_MS),
       body: JSON.stringify({
         from: "Lejhøjtaler.dk <info@lejhojtaler.dk>",
         to,

@@ -9,6 +9,7 @@
 
 import { notifyRecipients } from "./_lib/notify";
 import { loadSiteSettings } from "./_lib/siteSettings";
+import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../src/lib/fetchTimeout";
 
 interface Env {
   RESEND_API_KEY: string;
@@ -108,6 +109,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       Authorization: `Bearer ${RESEND_API_KEY}`,
       "Content-Type": "application/json",
     },
+    signal: timeoutSignal(TIMEOUT_MAIL_MS),
     body: JSON.stringify({
       from: "Lejhøjtaler.dk <info@lejhojtaler.dk>",
       to: notifyRecipients(modtagere),

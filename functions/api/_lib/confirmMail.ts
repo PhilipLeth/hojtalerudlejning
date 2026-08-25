@@ -19,6 +19,7 @@ import {
 } from "../../../src/lib/commTemplates";
 import { loadSiteSettings, mailFooter, type ServerSiteSettings } from "./siteSettings";
 import { formatDkPhone } from "../../../src/lib/phone";
+import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../../src/lib/fetchTimeout";
 
 export interface ConfirmMailEnv {
   BOOKINGS: KVNamespace;
@@ -85,9 +86,9 @@ export function paymentLine(booking: Record<string, unknown>): string {
   const kr = (n: number) => `${Math.round(n).toLocaleString("da-DK")} kr`;
 
   if (outstanding <= 0 && paid > 0) return `Betalt: ${kr(paid)}. Der er ikke mere at betale.`;
-  if (paid > 0) return `Betalt: ${kr(paid)}. Rest ved afhentning: ${kr(outstanding)} — MobilePay eller kontant.`;
+  if (paid > 0) return `Betalt: ${kr(paid)}. Rest ved afhentning: ${kr(outstanding)} — betales med MobilePay.`;
   if (booking.invoice) return `I alt ${kr(total)} — faktura er sendt særskilt.`;
-  return `I alt ${kr(total)} — betales ved afhentning med MobilePay eller kontant.`;
+  return `I alt ${kr(total)} — betales ved afhentning med MobilePay.`;
 }
 
 export interface ConfirmResult {
@@ -138,6 +139,7 @@ export async function sendConfirmationMail(
         Authorization: `Bearer ${env.RESEND_API_KEY}`,
         "Content-Type": "application/json",
       },
+      signal: timeoutSignal(TIMEOUT_MAIL_MS),
       body: JSON.stringify({
         from: "Lejhøjtaler.dk <info@lejhojtaler.dk>",
         to: [to],

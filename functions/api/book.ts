@@ -7,8 +7,8 @@ import { recordSms, sendBookingSms, type SendSmsOutcome } from "./_lib/sms";
 import { nulstilBookingIndex } from "./_lib/bookingIndex";
 import type { SaleContext } from "./_lib/weekendSale";
 import { notifyRecipients } from "./_lib/notify";
-import { afterHoursLegs } from "./_lib/pricing";
 import { formatTimeSlot } from "../../src/lib/openingHours";
+import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../src/lib/fetchTimeout";
 
 interface Env {
   RESEND_API_KEY: string;
@@ -43,7 +43,7 @@ interface BookingData {
    */
   pickupDay?: string;
   returnDay?: string;
-  /** Hvornår kunden vil mødes: open | early | late | unknown */
+  /** Hvornår på dagen kunden vil mødes: early | late | unknown */
   pickupSlot?: string;
   returnSlot?: string;
   deliveryAddress?: string;
@@ -321,20 +321,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   // Adresse, CVR, åbningstider og mail i bekræftelsen kommer fra /admin/indstillinger
   const site = await loadSiteSettings(context.env.BOOKINGS);
 
-  // Vil kunden mødes uden for åbningstid, koster turen et gebyr. Beløbet slås
-  // op i åbningstiderne — aldrig i det klienten sendte.
-  const pickupDag = bookingDay(data.pickupDay, data.pickup);
-  const returnDag = bookingDay(data.returnDay, data.returnDate);
-  const gebyrer = afterHoursLegs(site.hours, {
-    pickup: pickupDag,
-    returnDate: returnDag,
-    pickupSlot: data.pickupSlot,
-    returnSlot: data.returnSlot,
-    productIds: orderProductIds(data),
-  });
-  const afterHoursFee = gebyrer.reduce((sum, l) => sum + l.fee, 0);
   // Tidsrummene som læsbar tekst — de skal stå i mailen og på lejesedlen, ikke
   // kun som "early" i KV
+  const pickupDag = bookingDay(data.pickupDay, data.pickup);
+  const returnDag = bookingDay(data.returnDay, data.returnDate);
   const pickupTime = formatTimeSlot(site.hours, pickupDag, data.pickupSlot);
   const returnTime = formatTimeSlot(site.hours, returnDag, data.returnSlot);
 
@@ -351,9 +341,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
   for (const a of data.addons || []) {
     orderLines.push({ label: a });
-  }
-  for (const g of gebyrer) {
-    orderLines.push({ label: g.name, price: g.fee });
   }
   const orderRowsHtml = orderLines.length
     ? orderLines
@@ -408,7 +395,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         ${delivery ? `<p style="margin:4px 0;"><strong>Kørsel:</strong> ${delivery}${data.deliveryAddress ? ` — ${data.deliveryAddress}` : ""}</p>` : `<p style="margin:4px 0;"><strong>Afhentning:</strong> ${site.pickupAddress}</p>`}
         ${discount ? `<p style="margin:4px 0;color:#1e7e34;"><strong>Rabat:</strong> ${discount.code} (−${discount.pct}%)</p>` : ""}
         <p style="margin:8px 0 0;font-size:20px;"><strong>Total: ${data.total} kr</strong></p>
-        <p style="margin:0;font-size:12px;color:#888;">Betales ved afhentning (MobilePay eller kontant)</p>
+        <p style="margin:0;font-size:12px;color:#888;">Betales ved afhentning med MobilePay</p>
       </div>
       <p><strong>Inkluderet:</strong> Alle kabler (iPhone m/ USB-C adapter, AUX, strøm).</p>
       ${upsell ? upsellCustomerHtml(upsell) : ""}
@@ -450,6 +437,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(email),
+      // Svarer Resend slet ikke, skal kunden få en fejl han kan handle på —
+      // ikke en browser der venter til Cloudflare giver op
+      signal: timeoutSignal(TIMEOUT_MAIL_MS),
     });
 
     if (!res.ok) {
@@ -487,7 +477,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       // regne åbningstiderne ud igen
       pickupTime,
       returnTime,
-      afterHoursFee,
       // Valideret server-side; null hvis koden var ukendt
       discount: discount ?? null,
       upsellOffered: upsell
@@ -518,26 +507,40 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     // Don't fail the booking if KV save fails — emails were already sent
   }
 
-  // Push til telefonen. Efter KV-skrivningen, så beskeden aldrig kommer før
-  // ordren kan slås op — og i sit eget try/catch, fordi en telefon der ikke
-  // kan nås aldrig må vælte en booking.
-  try {
-    await notifyPhones(context.env, data, key);
-  } catch (e) {
-    console.error("[push] kunne ikke sende:", e);
-  }
-
-  // Landede bookingen ud over det vi ejer? Vi tillader overbooking med vilje,
-  // produkt for produkt (se /admin/lager), men så skal nogen vide det med det
-  // samme — udstyret skal købes eller lejes ind inden udlevering.
-  try {
-    const hits = await notifyOverbooking(context.env, data as unknown as Record<string, unknown>, key);
-    if (hits.length) {
-      console.log("[overbooking]", key, hits.map((h) => `${h.id} ${h.booked}/${h.owned} ${h.day}`).join(", "));
+  /*
+   * Beskederne til OS SELV — push til telefonerne og overbookingtjekket.
+   *
+   * De lå før inde i kundens svar, og 24. august 2026 kostede det en booking:
+   * et push-kald til Apple, der aldrig svarede, holdt anmodningen åben i over
+   * to minutter, indtil Cloudflare sendte kunden en 524-side. Ordren lå i KV,
+   * mailen var sendt — men kunden så "Booking gik galt" og nåede aldrig
+   * betalingen.
+   *
+   * Kunden venter kun på det, der er hans: mails, ordren i KV og kvitteringen.
+   * Resten kører videre i waitUntil, efter svaret er sendt.
+   */
+  const efterbehandling = (async () => {
+    try {
+      await notifyPhones(context.env, data, key);
+    } catch (e) {
+      console.error("[push] kunne ikke sende:", e);
     }
-  } catch (e) {
-    console.error("[overbooking] kunne ikke tjekke:", e);
-  }
+
+    // Landede bookingen ud over det vi ejer? Vi tillader overbooking med vilje,
+    // produkt for produkt (se /admin/lager), men så skal nogen vide det med det
+    // samme — udstyret skal købes eller lejes ind inden udlevering.
+    try {
+      const hits = await notifyOverbooking(context.env, data as unknown as Record<string, unknown>, key);
+      if (hits.length) {
+        console.log("[overbooking]", key, hits.map((h) => `${h.id} ${h.booked}/${h.owned} ${h.day}`).join(", "));
+      }
+    } catch (e) {
+      console.error("[overbooking] kunne ikke tjekke:", e);
+    }
+  })();
+
+  if (typeof context.waitUntil === "function") context.waitUntil(efterbehandling);
+  else await efterbehandling;
 
   return new Response(JSON.stringify({ ok: true, bookingId: key, upsell: upsell?.id ?? null }), {
     status: 200,

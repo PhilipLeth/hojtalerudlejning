@@ -13,6 +13,7 @@ import { paymentMail, sendOwnerMail } from "./_lib/ownerMail";
 
 import { requireAdmin } from "./_lib/adminAuth";
 import { loadSiteSettings, mailFooter } from "./_lib/siteSettings";
+import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../src/lib/fetchTimeout";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -442,6 +443,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
             Authorization: `Bearer ${context.env.RESEND_API_KEY}`,
             "Content-Type": "application/json",
           },
+          signal: timeoutSignal(TIMEOUT_MAIL_MS),
           body: JSON.stringify({
             from: "Lejhøjtaler.dk <info@lejhojtaler.dk>",
             to: [booking.email],
