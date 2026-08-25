@@ -2049,16 +2049,18 @@ export default function BookingFlow({
                     const rank = (x: typeof a) => (x.category === currentCategory ? 0 : 1);
                     return rank(a) - rank(b);
                   });
-              // Tre er nok til at vise, at der findes mere — seks var en liste til
-              const shown = matches.slice(0, q ? 6 : 3);
+              // Uden en søgning foreslår vi ikke længere noget selv. Kunden har
+              // allerede været igennem tilvalgslisten lige ovenfor, og de tre
+              // forslag var den samme beslutning en gang til. Søger kunden
+              // derimod aktivt, er svaret stadig relevant.
+              if (!q) return null;
+              const shown = matches.slice(0, 6);
               if (!shown.length) return null;
 
               return (
                 <div className="space-y-2">
                   <p className="pt-1 text-sm text-white/40">
-                    {q
-                      ? locale === "en" ? "Search results" : "Søgeresultater"
-                      : locale === "en" ? "Add more to your order" : "Tilføj mere til din ordre"}
+                    {locale === "en" ? "Search results" : "Søgeresultater"}
                   </p>
                   {shown.map((prod) => (
                     <button

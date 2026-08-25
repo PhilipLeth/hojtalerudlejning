@@ -31,7 +31,7 @@ Professionel lyd behøver ikke betyde tung logistik. Det var faktisk en af grund
 
 Afhentning foregår på vores adresse: **Vermlandsgade 66, 2300 København**. Der er altid gratis parkering i én time lige ved døren, hvis du alligevel kommer i bil.
 
-De fleste henter fredag mellem kl. 14 og 18 og afleverer mandag kl. 15-17. Du møder op, betaler med MobilePay eller kontant, og får tasken med ud ad døren. Ingen kontrakter, ingen ventetid.
+De fleste henter fredag mellem kl. 14 og 18 og afleverer mandag kl. 15-17. Du møder op, betaler med MobilePay, og får tasken med ud ad døren. Ingen kontrakter, ingen ventetid.
 
 ## Ikke til at cykle? Vi leverer
 

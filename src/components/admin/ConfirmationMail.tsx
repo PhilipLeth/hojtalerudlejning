@@ -29,7 +29,7 @@ const PREVIEW = {
   produkter: "Stor højtalerpakke, Lys-pakke",
   periode: "fre 21. aug → man 24. aug",
   sted: "Du henter hos os: Halvtolv 9, 1. th, 1436 København K",
-  betaling: "I alt 1.995 kr — betales ved afhentning med MobilePay eller kontant.",
+  betaling: "I alt 1.995 kr — betales ved afhentning med MobilePay.",
   total: 1995,
   telefon: "31 13 28 52",
   besked: "Husk at I gerne må hente allerede torsdag aften.",

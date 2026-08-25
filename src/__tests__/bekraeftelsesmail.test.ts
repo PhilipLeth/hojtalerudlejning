@@ -21,7 +21,7 @@ describe("hvor udstyret skal hentes", () => {
 describe("hvad der skal betales", () => {
   it("en ubetalt ordre får beløb og metode", () => {
     expect(paymentLine({ total: 1995 })).toBe(
-      "I alt 1.995 kr — betales ved afhentning med MobilePay eller kontant.",
+      "I alt 1.995 kr — betales ved afhentning med MobilePay.",
     );
   });
 
@@ -33,7 +33,7 @@ describe("hvad der skal betales", () => {
 
   it("delvis betaling siger præcis hvad der mangler", () => {
     expect(paymentLine({ total: 2000, payments: [{ amount: 500 }] })).toBe(
-      "Betalt: 500 kr. Rest ved afhentning: 1.500 kr — MobilePay eller kontant.",
+      "Betalt: 500 kr. Rest ved afhentning: 1.500 kr — betales med MobilePay.",
     );
   });
 
@@ -49,7 +49,7 @@ describe("bekræftelsesmailen", () => {
     produkter: "Stor højtalerpakke, Lys-pakke",
     periode: "fre 21. aug → man 24. aug",
     sted: "Du henter hos os: Halvtolv 9, 1. th, 1436 København K",
-    betaling: "I alt 1.995 kr — betales ved afhentning med MobilePay eller kontant.",
+    betaling: "I alt 1.995 kr — betales ved afhentning med MobilePay.",
     total: 1995,
     telefon: "31 13 28 52",
     hilsen: "Frederik fra Lejhøjtaler.dk",

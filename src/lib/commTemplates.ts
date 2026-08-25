@@ -41,7 +41,7 @@ export const SHORTCODES: Shortcode[] = [
   { key: "sted", label: "Levering eller afhentning, med adresse", example: "Hentes hos os: Halvtolv 9, 1. th, 1436 København K" },
   { key: "telefon", label: "Vores telefonnummer", example: "31 13 28 52" },
   { key: "total", label: "Ordrens pris", example: "1.995 kr" },
-  { key: "betaling", label: "Hvad der mangler at blive betalt, og hvordan", example: "Betales ved afhentning — MobilePay eller kontant" },
+  { key: "betaling", label: "Hvad der mangler at blive betalt, og hvordan", example: "Betales ved afhentning — MobilePay" },
 ];
 
 const SHORTCODE_KEYS = new Set(SHORTCODES.map((s) => s.key));

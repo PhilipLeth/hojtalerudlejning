@@ -74,11 +74,27 @@ describe("Man kan tilføje flere produkter uanset produkttype", () => {
     expect(screen.getByText("+ Tilføj et produkt mere")).toBeInTheDocument();
   });
 
-  it("resten af sortimentet vises uden at man skal søge", async () => {
+  /**
+   * Vendt om 25. august 2026. Før foreslog checkout tre produkter af sig selv
+   * oven på tilvalgslisten, kunden lige havde været igennem. Frederik ville af
+   * med det — ét sæt tilvalg er nok. Søger kunden derimod selv, skal svaret
+   * stadig komme, ellers er søgefeltet pynt.
+   */
+  it("foreslår ikke produkter af sig selv", async () => {
     await toStep3("lyskaeder");
     if (!screen.queryByText("Tilvalg")) return;
-    expect(screen.getByText("Tilføj mere til din ordre")).toBeInTheDocument();
-    // Uplights skal være blandt forslagene for et lys-produkt
-    expect(screen.getByText("Uplight")).toBeInTheDocument();
+    expect(screen.queryByText("Tilføj mere til din ordre")).not.toBeInTheDocument();
+    expect(screen.queryByText("Søgeresultater")).not.toBeInTheDocument();
+  });
+
+  it("men svarer stadig når kunden selv søger", async () => {
+    await toStep3("lyskaeder");
+    if (!screen.queryByText("Tilvalg")) return;
+    const felt = document.querySelector<HTMLInputElement>('input[placeholder*="øg"]');
+    if (!felt) return;
+    fireEvent.change(felt, { target: { value: "uplight" } });
+    await waitFor(() => {
+      expect(screen.getByText("Søgeresultater")).toBeInTheDocument();
+    });
   });
 });
