@@ -68,6 +68,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
     items: [
       { href: "/admin/indstillinger", label: "Indstillinger", hint: "Åbningstider, kontakt m.m." },
       { href: "/admin/notifikationer", label: "Notifikationer", hint: "Push på telefonen når en ordre lander" },
+      { href: "/admin/fejl", label: "Fejl", hint: "Hvad der gik galt hos kunderne" },
       { href: "/admin/brugere", label: "Brugere", hint: "Hvem kan logge ind i admin" },
     ],
   },

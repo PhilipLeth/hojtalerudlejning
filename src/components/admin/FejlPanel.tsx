@@ -44,7 +44,21 @@ const ETIKET: Record<string, { tekst: string; farve: string }> = {
 const tid = (iso: string) =>
   new Date(iso).toLocaleString("da-DK", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
 
-export default function FejlPanel({ secret }: { secret: string }) {
+export default function FejlPanel({
+  secret,
+  onUnauthorized,
+}: {
+  /**
+   * Kaldes hvis serveren afviser sessionen.
+   *
+   * Panelet lå før på /admin/indstillinger, hvor sidens egen hentning af
+   * indstillinger opdagede en udløbet session og loggede ud. Alene på
+   * /admin/fejl er der ingen anden hentning, så uden det her ville en udløbet
+   * session bare vise "Uautoriseret" på en side, der stadig ser indlogget ud.
+   */
+  onUnauthorized?: () => void;
+  secret: string;
+}) {
   const [opsummering, setOpsummering] = useState<Opsummering[]>([]);
   const [seneste, setSeneste] = useState<Rapport[]>([]);
   const [antal, setAntal] = useState(0);
@@ -61,6 +75,10 @@ export default function FejlPanel({ secret }: { secret: string }) {
       setFejl(r.error);
       return;
     }
+    if (r.res.status === 401) {
+      onUnauthorized?.();
+      return;
+    }
     if (!r.res.ok) {
       setFejl(String(r.data.error || "Kunne ikke hente fejlene"));
       return;
@@ -69,7 +87,7 @@ export default function FejlPanel({ secret }: { secret: string }) {
     setSeneste((r.data.seneste as Rapport[]) ?? []);
     setAntal(Number(r.data.antal) || 0);
     setFejl("");
-  }, [secret]);
+  }, [secret, onUnauthorized]);
 
   useEffect(() => {
     hent();

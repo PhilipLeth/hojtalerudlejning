@@ -358,7 +358,9 @@ function feltFor(name: string): HTMLInputElement {
 describe("/admin/produkter", () => {
   // Siden render­er hele kataloget, og det er vokset med pakkestigen og
   // lejlighedspakkerne. Under fuld parallel kørsel tager første render over
-  // fem sekunder i jsdom — derfor mere luft her end standardgrænsen.
+  // fem sekunder i jsdom — derfor mere luft end standardgrænsen i ALLE tre
+  // tests herunder. Kun den første havde den, og de to andre faldt derfor
+  // sporadisk, når resten af suiten kørte samtidig.
   it("har lagertallet på produktet", async () => {
     mockApi({ party: 2 });
     renderAdmin(<ProdukterPage />);
@@ -373,7 +375,7 @@ describe("/admin/produkter", () => {
     await waitFor(() => expect(screen.getAllByText("Overbooking (kan skaffes)").length).toBeGreaterThan(0));
     expect(screen.getAllByText(/tager imod 3/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/\+1 JIT/).length).toBeGreaterThan(0);
-  });
+  }, 15000);
 
   it("gemmer lagertallet med det samme, uden at publicere hele kataloget", async () => {
     mockApi({ thumpgo: 1 });
@@ -394,7 +396,7 @@ describe("/admin/produkter", () => {
       (c: unknown[]) => String(c[0]).startsWith("/api/products") && (c[1] as { method?: string })?.method === "POST",
     );
     expect(katalogPosts).toHaveLength(0);
-  });
+  }, 15000);
 });
 
 describe("Ingen anden produktliste tilbage", () => {
