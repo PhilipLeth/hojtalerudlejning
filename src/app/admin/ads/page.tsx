@@ -45,6 +45,7 @@ interface AdsResponse {
   mapping: Record<string, string[]>;
   adsConfigured: boolean;
   adsError: string | null;
+  bookingsStale?: boolean;
   error?: string;
 }
 
@@ -218,6 +219,13 @@ export default function AdsPage() {
       {data?.adsConfigured && data.adsError && (
         <div style={{ background: "#fdecea", color: "#c0392b", padding: "10px 14px", borderRadius: "8px", marginBottom: "14px", fontSize: "13px" }}>
           Google Ads svarede ikke: {data.adsError}
+        </div>
+      )}
+
+      {data?.bookingsStale && (
+        <div style={{ background: "#fff8e1", color: "#8a6d3b", padding: "10px 14px", borderRadius: "8px", marginBottom: "14px", fontSize: "13px" }}>
+          <strong>Bookingtallene er fra nødkopien.</strong> KV svarede ikke — dagens list-kvote er formentlig brugt.
+          Belægning, bookinger og omsætning kan være op til et døgn gamle. Lager og priser er friske.
         </div>
       )}
 

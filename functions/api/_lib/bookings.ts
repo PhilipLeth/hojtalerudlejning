@@ -5,6 +5,8 @@
  * annoncer blive slukket på et andet grundlag end udsolgt-siden viser.
  */
 
+import { hentBookingIndex } from "./bookingIndex";
+
 /**
  * Udgangspunktet for lagerbeholdningen: hvad vi har af de produkter der fandtes
  * da lagerstyringen blev bygget. Læs den ALDRIG direkte — brug
@@ -127,19 +129,39 @@ export interface LoadedBooking {
   discount?: { code: string; pct: number } | null;
 }
 
-/** Alle bookinger fra KV, normaliseret. Ugyldige datoer springes over. */
-export async function loadBookings(kv: KVNamespace): Promise<LoadedBooking[]> {
+/** Bookinger plus besked om, hvor gode tallene er. */
+export interface LoadedBookings {
+  bookings: LoadedBooking[];
+  /**
+   * Sat når tallene kommer fra nødkopien, fordi KV ikke svarede — typisk en
+   * opbrugt list-kvote. Så er de op til et døgn gamle, og en side der viser
+   * belægning eller omsætning bør sige det højt.
+   */
+  stale: boolean;
+}
+
+/**
+ * Alle bookinger, normaliseret. Ugyldige datoer og annullerede springes over.
+ *
+ * Går gennem bookingIndex frem for at liste KV selv. Ét list-opslag pr. besøg
+ * lyder ikke af meget, men Cloudflares gratis KV tillader 1.000 i døgnet, og
+ * det væltede /api/availability i august 2026. Kundesiderne blev lagt om
+ * dengang; admin-siderne blev ikke, og /admin/ads stod derfor blank med
+ * "KV list() limit exceeded for the day", hver gang kvoten var brugt.
+ *
+ * Nu deler kunder og admin den samme kopi — og vigtigere: når KV svigter,
+ * serveres den sidst kendte i stedet for en fejl. En oversigt med lidt gamle
+ * tal kan bruges, en fejlbesked kan ikke.
+ */
+export async function loadBookingsWithMeta(
+  kv: KVNamespace,
+  ctx?: ExecutionContext,
+): Promise<LoadedBookings> {
+  const index = await hentBookingIndex(kv, ctx);
   const out: LoadedBooking[] = [];
-  const list = await kv.list({ prefix: "booking_" });
-  for (const key of list.keys) {
-    const value = await kv.get(key.name);
-    if (!value) continue;
-    let booking: Record<string, unknown>;
-    try {
-      booking = JSON.parse(value);
-    } catch {
-      continue;
-    }
+
+  for (const entry of index.bookinger) {
+    const booking = entry.data;
     const pickup = String(booking.pickup || "").slice(0, 10);
     const ret = String(booking.returnDate || "").slice(0, 10);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(pickup) || !/^\d{4}-\d{2}-\d{2}$/.test(ret)) continue;
@@ -147,7 +169,7 @@ export async function loadBookings(kv: KVNamespace): Promise<LoadedBooking[]> {
     // eller rabatkode-forbrug — de blev aldrig til noget
     if (String(booking.status || "").startsWith("annulleret")) continue;
     out.push({
-      id: key.name,
+      id: entry.id,
       pickup,
       returnDate: ret,
       productIds: bookedProductIds(booking),
@@ -156,7 +178,13 @@ export async function loadBookings(kv: KVNamespace): Promise<LoadedBooking[]> {
       discount: (booking.discount as LoadedBooking["discount"]) ?? null,
     });
   }
-  return out;
+
+  return { bookings: out, stale: index.forældet === true };
+}
+
+/** Som loadBookingsWithMeta, når kalderen ikke skal bruge stale-flaget. */
+export async function loadBookings(kv: KVNamespace, ctx?: ExecutionContext): Promise<LoadedBooking[]> {
+  return (await loadBookingsWithMeta(kv, ctx)).bookings;
 }
 
 /**

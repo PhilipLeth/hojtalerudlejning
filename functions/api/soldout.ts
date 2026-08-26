@@ -7,6 +7,7 @@
  */
 
 import { addDays, bookedProductIds } from "./_lib/bookings";
+import { hentBookingIndex } from "./_lib/bookingIndex";
 import { bundlePartsFromCatalog, loadInventoryPair } from "./_lib/inventory";
 import { expandProductIds } from "./_lib/occupancy";
 
@@ -57,17 +58,13 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     // Optaget pr. dag pr. produkt: dag D er optaget når pickup <= D < return
     const perDay: Record<string, Record<string, number>> = {};
 
-    const list = await context.env.BOOKINGS.list({ prefix: "booking_" });
-    for (const key of list.keys) {
-      const value = await context.env.BOOKINGS.get(key.name);
-      if (!value) continue;
+    // Gennem bookingIndex frem for et list-opslag pr. besøg — se
+    // _lib/bookingIndex.ts. Gratis KV giver 1.000 list-operationer i døgnet,
+    // og admin-siderne brugte dem sammen med kundernes ledighedstjek.
+    const index = await hentBookingIndex(context.env.BOOKINGS, context as unknown as ExecutionContext);
 
-      let booking: Record<string, unknown>;
-      try {
-        booking = JSON.parse(value);
-      } catch {
-        continue;
-      }
+    for (const entry of index.bookinger) {
+      const booking = entry.data;
 
       const pickup = String(booking.pickup || "").slice(0, 10);
       const ret = String(booking.returnDate || "").slice(0, 10);
@@ -93,20 +90,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
     // Blokerede datoer i vinduet tæller som udsolgt (produkter=[] blokerer alt)
     const blocked: Record<string, string[]> = {};
-    const blockedList = await context.env.BOOKINGS.list({ prefix: "blocked_" });
-    for (const key of blockedList.keys) {
-      const date = key.name.replace("blocked_", "");
-      if (date < from || date > to) continue;
-      const val = await context.env.BOOKINGS.get(key.name);
-      let products: string[] = [];
-      if (val) {
-        try {
-          products = JSON.parse(val).products || [];
-        } catch {
-          // alle produkter
-        }
-      }
-      blocked[date] = products;
+    for (const b of index.blokerede) {
+      if (b.date < from || b.date > to) continue;
+      blocked[b.date] = b.products;
     }
 
     // Saml kun dage hvor noget er udsolgt/blokeret

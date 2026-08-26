@@ -6,6 +6,7 @@ import {
   validateStockPatch,
 } from "./_lib/inventory";
 import { overbookingAhead } from "./_lib/overbooking";
+import { hentBookingIndex } from "./_lib/bookingIndex";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -43,22 +44,12 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     ]);
 
     // Spærrede datoer hører til samme side — de er også "hvad kan lejes hvornår"
-    const blocked: Array<{ date: string; reason: string; products: string[] }> = [];
-    const list = await context.env.BOOKINGS.list({ prefix: "blocked_" });
-    for (const key of list.keys) {
-      const date = key.name.replace("blocked_", "");
-      const val = await context.env.BOOKINGS.get(key.name);
-      let parsed: { reason?: string; products?: string[] } = {};
-      if (val) {
-        try {
-          parsed = JSON.parse(val);
-        } catch {
-          // en ulæselig blokering er stadig en blokering
-        }
-      }
-      blocked.push({ date, reason: parsed.reason || "", products: parsed.products || [] });
-    }
-    blocked.sort((a, b) => a.date.localeCompare(b.date));
+    // Blokeringerne ligger i bookingIndex sammen med bookingerne — samme
+    // kopi, intet ekstra list-opslag. Se _lib/bookingIndex.ts.
+    const index = await hentBookingIndex(context.env.BOOKINGS, context as unknown as ExecutionContext);
+    const blocked = index.blokerede
+      .map((b) => ({ date: b.date, reason: b.reason, products: b.products }))
+      .sort((a, b) => a.date.localeCompare(b.date));
 
     return new Response(JSON.stringify({ inventory: owned, overbook, blocked, overbooked }), {
       status: 200,

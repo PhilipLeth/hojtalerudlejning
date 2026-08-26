@@ -3,6 +3,7 @@
  * Admin-belægningsdata til /admin/kalender.
  */
 import { addDays, bookedProductIds } from "./_lib/bookings";
+import { hentBookingIndex } from "./_lib/bookingIndex";
 import { INVENTORY_KEY, bundlePartsFromCatalog, effectiveInventory } from "./_lib/inventory";
 import {
   buildOccupancy,
@@ -84,23 +85,21 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       }
     }
 
+    // Gennem bookingIndex frem for et list-opslag pr. besøg: kalenderen
+    // henter forfra hver gang man bladrer en måned frem, og to list-opslag
+    // pr. klik løber Cloudflares gratis kvote på 1.000 i døgnet tør. Det var
+    // dét, der gjorde /admin/ads blank med "KV list() limit exceeded".
+    const index = await hentBookingIndex(context.env.BOOKINGS, context as unknown as ExecutionContext);
+
     const rawBookings: RawOccupancyBooking[] = [];
-    const list = await context.env.BOOKINGS.list({ prefix: "booking_" });
-    for (const key of list.keys) {
-      const value = await context.env.BOOKINGS.get(key.name);
-      if (!value) continue;
-      let booking: Record<string, unknown>;
-      try {
-        booking = JSON.parse(value);
-      } catch {
-        continue;
-      }
+    for (const entry of index.bookinger) {
+      const booking = entry.data;
       const pickup = String(booking.pickup || "").slice(0, 10);
       const returnDate = String(booking.returnDate || "").slice(0, 10);
       if (!isIsoDate(pickup) || !isIsoDate(returnDate)) continue;
 
       rawBookings.push({
-        id: key.name,
+        id: entry.id,
         name: String(booking.name || ""),
         phone: booking.phone ? String(booking.phone) : undefined,
         status: booking.status ? String(booking.status) : undefined,
@@ -127,24 +126,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       rawBookings, inventory, from, to, labels, bundlePartsFromCatalog(catalogRaw),
     );
 
-    const blocked: BlockedDay[] = [];
-    const blockedList = await context.env.BOOKINGS.list({ prefix: "blocked_" });
-    for (const key of blockedList.keys) {
-      const date = key.name.replace("blocked_", "");
-      if (date < from || date > to) continue;
-      const val = await context.env.BOOKINGS.get(key.name);
-      if (!val) continue;
-      try {
-        const parsed = JSON.parse(val) as { reason?: string; products?: string[] };
-        blocked.push({
-          date,
-          reason: parsed.reason || "",
-          products: parsed.products || [],
-        });
-      } catch {
-        blocked.push({ date, reason: "", products: [] });
-      }
-    }
+    const blocked: BlockedDay[] = index.blokerede
+      .filter((b) => b.date >= from && b.date <= to)
+      .map((b) => ({ date: b.date, reason: b.reason, products: b.products }));
     blocked.sort((a, b) => a.date.localeCompare(b.date));
 
     // Dage i vinduet til UI

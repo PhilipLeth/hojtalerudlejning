@@ -12,7 +12,7 @@ import { requireAdmin } from "./_lib/adminAuth";
 import { bundlePartsFromCatalog, expandBookings, loadInventoryPair } from "./_lib/inventory";
 import {
   addDays,
-  loadBookings,
+  loadBookingsWithMeta,
   soldOutDaysByProduct,
   upcomingWeekend,
   type LoadedBooking,
@@ -99,13 +99,14 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const horizonEnd = addDays(today, 60);
 
   try {
-    const [catalogRaw, pair, mapping, economics, bookings] = await Promise.all([
+    const [catalogRaw, pair, mapping, economics, loaded] = await Promise.all([
       readJson<unknown>(kv, "products_catalog", null),
       loadInventoryPair(kv),
       readJson<Record<string, string[]>>(kv, KV_MAPPING, {}),
       readJson<Record<string, Economics>>(kv, KV_ECONOMICS, {}),
-      loadBookings(kv),
+      loadBookingsWithMeta(kv, context as unknown as ExecutionContext),
     ]);
+    const bookings = loaded.bookings;
 
     // Udsolgt = intet tilbage at tage imod, heller ikke JIT
     const inventory = pair.bookable;
@@ -186,6 +187,12 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       mapping,
       adsConfigured: missing.length === 0,
       adsError,
+      /**
+       * Sat når bookingerne kommer fra nødkopien, fordi KV ikke svarede.
+       * Så er belægning og omsætning op til et døgn gamle, og det skal stå
+       * på siden — ellers ligner en opbrugt kvote bare et stille salg.
+       */
+      bookingsStale: loaded.stale,
       /** Regler eksekveres ikke — se /api/ads-rules. */
       rulesEngineActive: false,
     });

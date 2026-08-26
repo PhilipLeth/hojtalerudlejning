@@ -1,4 +1,5 @@
 import { requireAdmin } from "./_lib/adminAuth";
+import { hentBookingIndex } from "./_lib/bookingIndex";
 
 /**
  * GET  /api/accounting?from=&to=&secret=  — regnskabstal for en periode
@@ -90,17 +91,13 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       return hit ? { name: hit.name, price: Math.round(hit.unitAmount / 100) } : undefined;
     };
 
-    const bookings: AccountingBooking[] = [];
-    const list = await context.env.BOOKINGS.list({ prefix: "booking_" });
-    for (const key of list.keys) {
-      const value = await context.env.BOOKINGS.get(key.name);
-      if (!value) continue;
-      try {
-        bookings.push({ ...JSON.parse(value), id: key.name });
-      } catch {
-        /* spring ulæselige poster over */
-      }
-    }
+    // Gennem bookingIndex — regnskabet er den sidste admin-side, der listede
+    // KV selv. Cachen ryddes ved hver booking og hver rettelse, så tallene er
+    // lige så friske som før; det er kun list-opslaget, der er væk.
+    const index = await hentBookingIndex(context.env.BOOKINGS, context as unknown as ExecutionContext);
+    const bookings: AccountingBooking[] = index.bookinger.map(
+      (entry) => ({ ...entry.data, id: entry.id }) as AccountingBooking,
+    );
 
     const summary = buildAccounting(bookings, priceOf, from, to, today, basis);
     console.log("[accounting]", basis, from, "→", to, "ordrer=", summary.orders, "omsætning=", summary.revenue);
