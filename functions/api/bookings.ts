@@ -1,4 +1,5 @@
 import { requireAdmin } from "./_lib/adminAuth";
+import { hentBookingIndex } from "./_lib/bookingIndex";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -22,28 +23,35 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
 
   try {
-    const list = await context.env.BOOKINGS.list({ prefix: "booking_" });
-    const values = await Promise.all(list.keys.map((key) => context.env.BOOKINGS.get(key.name)));
-    const bookings = [];
+    /*
+     * Bookingerne kommer fra det delte indeks, ikke fra et list-opslag pr. kald.
+     *
+     * Admin poller hvert 30. sekund, og hvert kald lavede før ét KV-list. En
+     * åben admin-fane brugte 120 list-opslag i timen — hele Cloudflares gratis
+     * kvote på 1.000 i døgnet på under otte timer, hvorefter /admin svarede
+     * "Failed to list bookings". Det skete 26. august 2026.
+     *
+     * Indekset blev bygget til /api/availability i august (se bookingIndex.ts)
+     * og cacher i fem minutter, men ryddes ved hver ny og rettet booking. Admin
+     * ser derfor stadig en ny ordre med det samme.
+     */
+    const index = await hentBookingIndex(context.env.BOOKINGS, context);
+    const bookings = index.bookinger.map((b) => b.data);
 
-    for (let i = 0; i < list.keys.length; i++) {
-      const value = values[i];
-      if (!value) continue;
-      try {
-        bookings.push(JSON.parse(value));
-      } catch (e) {
-        console.error("[bookings] skip korrupt:", list.keys[i].name, e);
-      }
-    }
-
-    // Sort newest first by createdAt
+    // Nyeste først
     bookings.sort((a, b) => {
-      const dateA = new Date(a.createdAt).getTime();
-      const dateB = new Date(b.createdAt).getTime();
+      const dateA = new Date(String((a as Record<string, unknown>).createdAt)).getTime();
+      const dateB = new Date(String((b as Record<string, unknown>).createdAt)).getTime();
       return dateB - dateA;
     });
 
-    return new Response(JSON.stringify({ bookings }), {
+    /*
+     * `foraeldet` sendes med, når tallene kommer fra nødkopien eller fra et
+     * tomt indeks. For kunden er en lidt gammel kalender bedre end en fejl,
+     * men for admin er en TOM liste farlig: den ligner "ingen bookinger" og
+     * ikke "vi kunne ikke hente dem". Derfor skal UI'et kunne se forskel.
+     */
+    return new Response(JSON.stringify({ bookings, foraeldet: !!index.forældet, hentet: index.hentet }), {
       status: 200,
       headers: corsHeaders,
     });

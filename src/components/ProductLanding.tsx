@@ -8,6 +8,7 @@ import { bookHref as toBook } from "@/lib/bookUrl";
 import { PhoneText } from "@/components/PhoneLink";
 import { buildProductFaq } from "@/lib/productFaq";
 import { erPaaPause } from "@/lib/products";
+import ProductGallery from "@/components/ProductGallery";
 import type { Locale } from "@/lib/i18n";
 
 /**
@@ -96,6 +97,26 @@ export interface ProductLandingProps {
   /** Optional extra section under product detail */
   children?: React.ReactNode;
 }
+
+/*
+ * VIDEOER_SLAAET_FRA — 26. august 2026
+ *
+ * Producentens YouTube-video og vores egen ProductVideo vises ikke længere på
+ * produktsiderne. YouTube-videoen lå på 42 produkter og kostede en iframe pr.
+ * side — netop den slags tredjepartsindlejring, hastighedsarbejdet i august
+ * handlede om at komme af med. Den sendte samtidig kunden videre til YouTube
+ * midt i et køb, med producentens branding og forslag til andre videoer.
+ *
+ * Intet er slettet: youtubeUrl bliver liggende på alle 42 produkter, og
+ * komponenterne ProductYouTube og ProductVideo står urørte med deres tests.
+ * At fortryde er at importere den ønskede komponent igen og sætte den ind i
+ * render-træet, hvor kommentaren står.
+ *
+ * Forklaringen ligger HER og ikke nede i JSX, fordi den første udgave var en
+ * lang {/* … *\/}-blok midt i render-træet — og en anden session indsatte
+ * ProductGallery inde i den. Deres kommentar lukkede min for tidligt, og
+ * build'et brød. En kommentar i render-træet skal være én linje.
+ */
 
 export default function ProductLanding({
   slug,
@@ -284,19 +305,11 @@ export default function ProductLanding({
           </div>
         </section>
 
-        {/*
-          Producentens YouTube-video er slået fra på produktsiderne.
+        {/* Produktet i brug. Viser ingenting, før der er genereret billeder for
+            netop dette produkt — se scripts/product-images/generate.mjs. */}
+        <ProductGallery productId={productId} name={name} locale={locale} />
 
-          Den lå på 42 produkter og kostede en iframe pr. side — netop den
-          slags tredjepartsindlejring, hastighedsarbejdet i august handlede om
-          at komme af med. Den sendte samtidig kunden videre til YouTube midt i
-          et køb, med producentens branding og forslag til andre videoer.
-
-          youtubeUrl bliver liggende i kataloget, og komponenterne
-          (ProductYouTube, ProductVideo) står urørte med deres tests. At
-          fortryde er at importere dem igen og sætte linjen ind:
-          <ProductYouTube productId={productId} name={name} />
-        */}
+        {/* Videoerne er slået fra — se VIDEOER_SLAAET_FRA øverst i filen. */}
 
         {children}
 

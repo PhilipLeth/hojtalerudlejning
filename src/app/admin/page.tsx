@@ -354,6 +354,12 @@ export default function AdminPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  /*
+   * Sat når /api/bookings måtte falde tilbage på nødkopien eller svarede uden
+   * bookinger, fordi KV ikke kunne nås. En tom liste ligner "ingen bookinger",
+   * og det er den forkerte konklusion at give Frederik.
+   */
+  const [foraeldet, setForaeldet] = useState<string | null>(null);
   const [updating, setUpdating] = useState<string | null>(null);
   const [filterPeriod, setFilterPeriod] = useState<FilterPeriod>("aktive");
   const [filterStatus, setFilterStatus] = useState<string>("alle");
@@ -380,6 +386,7 @@ export default function AdminPage() {
       return;
     }
     setBookings((data.bookings as Booking[]) || []);
+    setForaeldet(data.foraeldet ? String(data.hentet ?? "") : null);
   }, [secret, unauthorized]);
 
   useEffect(() => {
@@ -593,6 +600,15 @@ export default function AdminPage() {
 
       <main style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "12px 10px 40px" : "20px 16px" }}>
         {error && <div style={{ background: "#f8d7da", color: "#721c24", padding: "10px 14px", borderRadius: "8px", marginBottom: "12px" }}>{error}</div>}
+
+        {foraeldet !== null && (
+          <div style={{ background: "#fff3cd", color: "#664d03", padding: "10px 14px", borderRadius: "8px", marginBottom: "12px" }}>
+            <strong>Listen er måske ikke komplet.</strong> Cloudflare kunne ikke nås, så
+            bookingerne herunder er de sidst kendte
+            {foraeldet ? ` (hentet ${new Date(foraeldet).toLocaleString("da-DK")})` : ""}.
+            Er listen tom, betyder det ikke at der ingen bookinger er. Prøv igen om lidt.
+          </div>
+        )}
 
         {/* Filtre — chips på skærm, tre dropdowns på telefon.
             Elleve chips fyldte den halve mobilskærm før man nåede en booking. */}
