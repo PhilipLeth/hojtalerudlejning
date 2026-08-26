@@ -3511,5 +3511,24 @@
     "produktfotos_kan_genereres": "scripts/product-images/generate_product_photo.py laver fotos i husstilen med Runway (docs/_internal/produktbilleder-styleguide.md har prompten, nøglen ligger i .dev.vars). To fælder: (1) et stilreference-billede styrer OGSÅ formen — med røgmaskinen som reference kom mixeren ud som en røgmaskine med knapper og 'VF1300 EP' på siden, så reference er slået fra som standard. (2) 'professional mixing console' gav et 24-kanals studiebord i træ; prompten skal sige hvor stort det IKKE er. Vi beder altid om udstyr uden mærkelogoer — et opdigtet Yamaha-logo er en påstand om en maskine vi ikke kan indfri.",
     "redirect_kan_skygge_for_en_side": "FÆLDE: /hojtalerpakke-bas blev bygget og deployet, men var utilgængelig, fordi _redirects stadig sendte den til /subwoofer fra dengang festival_bas udgik. Cloudflare svarer på _redirects FØR den leder efter filen, og build'et siger ingenting. Ny test redirect-mod-side.test.ts fejler, hvis en omdirigeret sti har sin egen page.tsx. Tjek altid en ny side ved at FØLGE redirect'en, ikke kun statuskoden — 301 ligner et harmløst trailing-slash-hop.",
     "aabent": "Mixerfotoene er AI-genererede og viser en generisk mixer, ikke Frederiks konkrete Yamaha — et telefonfoto af den rigtige på gul baggrund er bedre. DBA-annoncerne står stadig i Højbjerg; det kræver login på boost.dba.dk. Annoncegruppe 6 kan flyttes tilbage til /lysshow, nu hvor siden findes. Og de tre lagertests i lager.test.tsx er flaky under parallel kørsel — de består 36/36 alene, men flere sessioner bygger i samme repo samtidig."
+  },
+  "produktgalleri_2026_08": {
+    "status": "pipeline klar — venter på GEMINI_API_KEY",
+    "date": "2026-08-26",
+    "hvad": "AI-genererede billeder af vores eget grej, vist som galleri på produktsiderne. Tre scener per produkt: 'Alt det du får' (pakkens dele stillet op sammen, eller enkeltproduktet med det der ligger i kassen), 'Sådan ser det ud til festen' (oplevelsen — udstyret sat op det sted, det bliver lejet til) og 'Tæt på'.",
+    "hvorfor_referencer": "Modellen får vores egne produktfotos med som referencebilleder, slået op i kataloget. En pakke er defineret af sine dele i products.ts, så prompten følger med af sig selv, når pakken ændrer indhold. Samme regel som videoannoncerne: en udlejningsforretning kan ikke reklamere med udstyr, den ikke har.",
+    "model": "Gemini 3 Pro Image (Nano Banana Pro) via /v1beta/interactions, 2K, 0,134 $ pr. billede. Valgt frem for Runway gen4_image, fordi den tager op til 6 objektreferencer i høj troværdighed — gen4_image tager tre, og Bryllupspakken har seks dele. Hele kataloget er 102 billeder ≈ 13,70 $.",
+    "filer": {
+      "gallery/scenes.json": "scene-opskrifter, steder, stil og per-produkt-overskrivninger",
+      "scripts/product-images/generate.mjs": "generatoren — læser kataloget via vites SSR-loader",
+      "src/lib/productGallery.ts": "GENERERET manifest, skrevet ud fra filerne på disken",
+      "src/components/ProductGallery.tsx": "galleriet med lightbox og Illustration-mærkat",
+      "public/images/gallery/<id>/<scene>.webp": "1600px + -400 thumb, committet",
+      "gallery/raw/": "rå API-svar, gitignoreret — så en ny komprimering er gratis"
+    },
+    "koer": "npm run gallery (plan + estimat, intet forbrug) · npm run gallery -- --apply · --only <produkt-id> · --scene <scene-id> · --force · npm run gallery:manifest",
+    "maerkning": "Hvert billede bærer en 'Illustration'-mærkat i hjørnet, alt-teksten ender på '(illustration)', og det store billede har en linje om at det er genereret ud fra fotos af vores eget udstyr. Markedsføringsloven skelner ikke mellem 'vi mente det godt' og 'billedet lovede noget andet'. produktgalleri.test.tsx fejler, hvis mærkaten forsvinder.",
+    "sikkerhedsnet": "Manifestet skrives ud fra de filer, der findes — ikke ud fra planen, så en halv kørsel giver et halvt galleri frem for 404'ere. Pausede produkter får intet galleri (en test låser det). Findes filen, springes kaldet over.",
+    "naeste": "1) GEMINI_API_KEY i .dev.vars, så billederne kan genereres. 2) Gennemse dem enkeltvis før commit — en model der har digtet en fremmed højtaler ind skal fanges her. 3) Overvej en knap i /admin/produkter, der kan gengenerere ét produkt uden deploy."
   }
 }

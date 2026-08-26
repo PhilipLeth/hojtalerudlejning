@@ -1,0 +1,196 @@
+{
+  "_readme": [
+    "Opskrifterne til produktgalleriet. scripts/product-images/generate.mjs læser",
+    "denne fil OG src/lib/products.ts, og bygger en prompt per (produkt, scene).",
+    "",
+    "Hvorfor kataloget og ikke en liste her: en pakke er defineret af sine dele i",
+    "products.ts, og delene har hver sit produktfoto. Scriptet slår dem op og",
+    "sender dem med som referencebilleder, så modellen komponerer VORES grej og",
+    "ikke en opdigtet højtaler med volapyk-logo. Samme regel som videoannoncerne",
+    "(ads/video-ads.json): en udlejningsforretning kan ikke reklamere med udstyr,",
+    "den ikke har. Ændrer en pakke indhold, ændrer prompten sig af sig selv.",
+    "",
+    "Scener med \"kun\": \"pakker\" springes over for enkeltprodukter og omvendt —",
+    "en \"alle dele\"-komposition af ét produkt er bare produktfotoet igen.",
+    "",
+    "Gemini 3 Pro Image tager op til 6 objektreferencer i høj troværdighed.",
+    "Bryllupspakken og firmafestpakken rammer præcis seks dele — flere end det,",
+    "og scriptet skærer de mindst betydende fra og siger det højt.",
+    "",
+    "Billederne er genererede, ikke fotograferede. De vises med en 'Illustration'-",
+    "mærkat i galleriet, og alt-teksten siger det samme. Et stemningsbillede af en",
+    "fest er ikke et foto af den vare, kunden lejer, og markedsføringsloven",
+    "skelner ikke mellem 'vi mente det godt' og 'billedet lovede noget andet'.",
+    "",
+    "  node scripts/product-images/generate.mjs                    # plan + estimat, intet forbrug",
+    "  node scripts/product-images/generate.mjs --apply            # generér det der mangler",
+    "  node scripts/product-images/generate.mjs --apply --only pakke_bryllup",
+    "  node scripts/product-images/generate.mjs --manifest         # genskriv manifestet fra filerne"
+  ],
+  "spec": {
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/interactions",
+    "api_revision": "2026-05-20",
+    "model": "gemini-3-pro-image",
+    "image_size": "2K",
+    "usd_per_image": 0.134,
+    "max_referencer": 6,
+    "bredde": 1600,
+    "thumb_bredde": 400,
+    "kvalitet": 82,
+    "thumb_kvalitet": 78
+  },
+  "stil": {
+    "faelles": "Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party.",
+    "forbudt": "Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour and proportions. No brand names, no logos, no text, no watermarks, no signage. No fake speaker models. Faces are turned away, out of focus or cropped — this is about the room, not the people. No confetti cannons, no laser beams, no smoke where no fog machine is referenced.",
+    "kamera_hoejde": "Camera at standing eye height unless the scene says otherwise."
+  },
+  "steder": {
+    "fest": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls",
+    "bryllup": "A Danish wedding reception in a bright rustic barn at dusk, long tables with white linen and lit candles, guests seated after the meal, warm string lights overhead, pale wood everywhere",
+    "firmafest": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light",
+    "havefest": "A Copenhagen backyard garden on a summer evening, wooden fence, apple tree, a long table with mismatched chairs, the last blue light in the sky",
+    "moede": "A bright Danish meeting room in the morning, pale oak table, white walls, matte black fittings, daylight from a large window, twelve people seated",
+    "studenter": "The flatbed of a Danish student graduation truck (studentervogn) decorated with birch branches and flags, parked on a Copenhagen street on a bright June morning",
+    "gade": "A Copenhagen street on a bright day, cobbles, a cargo bike leaning against a wall, red-brick apartment buildings behind"
+  },
+  "standard_sted": {
+    "lyd": "fest",
+    "lys": "fest",
+    "roeg": "fest",
+    "av": "moede"
+  },
+  "scener": [
+    {
+      "id": "komposition",
+      "titel_da": "Alt det du får",
+      "titel_en": "Everything included",
+      "ratio": "4:3",
+      "referencer": "alle",
+      "prompt": "A clean product group photo of exactly these items and nothing else: {dele}. Arranged together on a smooth light grey studio backdrop that curves up into the background, lit with one large soft key light from the left and a subtle rim light. The tallest item at the back, the smallest in front, all of them fully visible and not overlapping more than necessary. Slight shadows on the floor so the items sit in the space. Nothing else in the frame — no props, no people, no cables coiled decoratively unless they are part of the referenced products.",
+      "alt_da": "{navn} — alle dele stillet op sammen",
+      "alt_en": "{navn_en} — every part laid out together",
+      "caption_da": "Det her er hvad der står i bilen, når du henter {navn_lav}.",
+      "caption_en": "This is what you drive home with when you pick up the {navn_en_lav}.",
+      "kun": "pakker"
+    },
+    {
+      "id": "hvad_du_faar",
+      "kun": "enkelt",
+      "titel_da": "Alt det du får",
+      "titel_en": "Everything included",
+      "ratio": "4:3",
+      "referencer": "alle",
+      "prompt": "A clean product photo of the referenced {dele} on a smooth light grey studio backdrop that curves up into the background, lit with one large soft key light from the left and a subtle rim light. Laid out neatly beside it, exactly what comes with it and nothing more: {indhold}. Cables coiled loosely, accessories flat on the surface, everything fully visible. Slight shadows on the floor so the items sit in the space. No props, no people.",
+      "alt_da": "{navn} med alt hvad der følger med",
+      "alt_en": "{navn_en} with everything that comes with it",
+      "caption_da": "Det her er hvad der ligger i kassen, når du henter {navn_lav}.",
+      "caption_en": "This is what is in the box when you pick up the {navn_en_lav}."
+    },
+    {
+      "id": "i_brug",
+      "titel_da": "Sådan ser det ud til festen",
+      "titel_en": "How it looks at the party",
+      "ratio": "16:9",
+      "referencer": "hoved",
+      "prompt": "{sted}. The referenced equipment is set up and in use: {hoveddele}. {opstilling} A handful of guests are present but secondary — seen from behind, in motion, or out of focus. The place is the subject, and the equipment is a natural part of it, standing where it would actually stand.",
+      "alt_da": "{navn} sat op og i brug",
+      "alt_en": "{navn_en} set up and in use",
+      "caption_da": "{gaester_da}",
+      "caption_en": "{gaester_en}"
+    },
+    {
+      "id": "opstilling",
+      "titel_da": "Tæt på",
+      "titel_en": "Close up",
+      "ratio": "4:3",
+      "referencer": "hoved",
+      "prompt": "A close, low three-quarter view of the referenced {hoveddele}, set up and ready, framed so the build quality is visible — the housing, the fittings, the cable running away across the floor. Background falls away into soft bokeh of a room being made ready: a table edge, a wall, warm light. Nobody in the frame. Shot at f/1.8, focus on the front of the equipment.",
+      "alt_da": "{navn} tæt på",
+      "alt_en": "{navn_en} up close",
+      "caption_da": "Sådan ser det ud, når det står klar.",
+      "caption_en": "This is what it looks like standing ready."
+    }
+  ],
+  "produkter": {
+    "pakke_bryllup": {
+      "sted": "bryllup",
+      "opstilling": "The speakers stand on stands at the edge of the dance floor, the microphone on the table in front of the speaker's chair."
+    },
+    "pakke_firmafest": {
+      "sted": "firmafest"
+    },
+    "pakke_udendors": {
+      "sted": "havefest",
+      "opstilling": "The battery speaker stands on the grass at the end of the table, no cables running to it."
+    },
+    "pakke_student": {
+      "sted": "studenter",
+      "opstilling": "The battery speaker is strapped down at the front of the flatbed among the branches."
+    },
+    "pakke_tale_musik": {
+      "sted": "moede"
+    },
+    "pakke_speaker_mik": {
+      "sted": "moede"
+    },
+    "soundboks": {
+      "sted": "havefest",
+      "opstilling": "The speaker stands alone on the grass, no cable to it — the battery is the point."
+    },
+    "thumpgo": {
+      "sted": "havefest",
+      "opstilling": "The small battery speaker sits on the end of the table among glasses and plates."
+    },
+    "traadloes_mikrofon": {
+      "sted": "bryllup"
+    },
+    "traadloes_mikrofon_pro": {
+      "sted": "moede"
+    },
+    "headset": {
+      "sted": "moede"
+    },
+    "headset_pro": {
+      "sted": "moede"
+    },
+    "haandholdt_mikrofon": {
+      "sted": "moede"
+    },
+    "haandholdt_mikrofon_pro": {
+      "sted": "bryllup"
+    },
+    "lyskaeder": {
+      "sted": "havefest",
+      "opstilling": "The fairy lights are strung between the fence and the apple tree over the table."
+    },
+    "lyskaeder_farvet": {
+      "sted": "havefest"
+    },
+    "uplight": {
+      "opstilling": "The uplight stands on the floor against a white brick wall, washing it in colour from below."
+    },
+    "uplight_4": {
+      "opstilling": "Four uplights stand along the wall, each washing its own patch of brick in colour."
+    },
+    "low_fog": {
+      "sted": "bryllup",
+      "opstilling": "The fog lies as a low blanket across the dance floor, knee height and no higher, with the couple's feet visible in it."
+    },
+    "pakke_stemningslys": {
+      "sted": "havefest"
+    },
+    "pakke_lysshow": {
+      "opstilling": "The light bar stands on the floor pointing up at the ceiling, the mirror ball hanging above the dance floor, fog making the beams visible."
+    },
+    "pakke_lysshow_stor": {
+      "opstilling": "The light bar and uplights fill the room with colour, the mirror ball scatters points of light across the walls, low fog on the floor."
+    }
+  },
+  "_gaester": {
+    "_kommentar": "Billedteksten under 'i brug' fortæller hvad anlægget rækker til. Tallet kommer fra kapaciteten i kataloget, hvor den findes.",
+    "med_tal_da": "Rækker til {kapacitet} indendørs. Udendørs uden vægge: regn med det halve.",
+    "med_tal_en": "Covers {kapacitet_en} indoors. Outdoors without walls, expect half that.",
+    "uden_tal_da": "Sådan står det, når gæsterne kommer.",
+    "uden_tal_en": "This is how it stands when the guests arrive."
+  }
+}

@@ -17,3 +17,8 @@ setup-gtm-ga4.py
 
 # Genererede PMax-billedassets — bygges af ads-export/build_pmax_assets.py
 ads/assets/
+
+# Rå AI-svar fra billedgeneratoren. De færdige WebP'er i public/images/gallery/
+# ER committet — dem shipper sitet. Råfilerne ligger her, så en ny beskæring
+# eller komprimering ikke koster et nyt API-kald.
+gallery/raw/
