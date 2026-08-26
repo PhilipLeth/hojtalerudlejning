@@ -1820,6 +1820,41 @@
         "sitelinks_er_produkter": "De seks sitelinks er Lej Soundboks, Lej festlys, Om os, Rent speakers in CPH, Lej Røgmaskine, Lej AV udstyr. Ingen af dem sælger en pakke, levering eller erhverv. Sitelinks til 'Fest­pakke med lys', 'Levering + opsætning' og 'Til firmafest' er den billigste AOV-løftestang der findes: de koster ingenting og flytter klikket op i pris før kunden lander.",
         "ingen_efterspoergsel_paa_eventsprog": "Søgetermerne på 30 dage er stort set alle enkeltprodukt. De eneste løsningsagtige fraser er 'leje af mikrofon og højtaler', 'leje af festudstyr' og 'leje af musikanlæg til fest' — få visninger hver. Eventpositioneringen kan altså ikke bygges på søgevolumen alene."
       }
+    },
+    "annoncebygger_2026_08_26": {
+      "hvad": "Værktøj på /admin/ads/opret: vælg et produkt, få fem temagrupper med keywords, søgevolumen og færdig annoncetekst, valider hos Google og upload. Grupperne oprettes pauset i den eksisterende søgekampagne og skrives ind i ads_mapping med det samme.",
+      "hvorfor": "Kontoen har 60 annoncegrupper, men kun 8 aktive i den aktive kampagne, og de dækker 7 af katalogets 37 produkter. Problemet var aldrig for brede grupper — det var at 30 produkter slet ikke annonceres, og at det tog for lang tid at rette.",
+      "maalt_2026_08_26": "748 keywords i 60 grupper. 8 aktive grupper med 64 positive keywords (resten er gruppe-negativer: køb, sælg, brugt, reparation). 90 dage: 543 klik i alt, hvoraf 446 i AG 1, AG 2, AG 4 og AG 9.",
+      "intent_grammatik": {
+        "kilde": "Kontoens egen søgetermerapport, ikke opfundne mønstre. src/lib/adsIntent.ts",
+        "temaer": [
+          "lej {t} / lej en {t}",
+          "leje {t} / leje af {t}",
+          "{t} leje / {t} til leje / {t} lej",
+          "{t} udlejning / udlejning af {t}",
+          "geo: lej {t} københavn",
+          "anledning: lej {t} til fest",
+          "en: rent {t} (kun når siden findes på engelsk)"
+        ],
+        "belaeg": "lej soundboks 167 visninger, lej en soundboks 118, soundboks leje 100, leje soundboks 74, leje af soundboks 50, soundboks udlejning 40, lej soundboks københavn 18",
+        "lejeordet": "Af de 120 mest viste søgetermer har 58 intet lejeord. 'diskokugle' gav 238 visninger og 3 klik; 'lej soundboks' gav 167 og 24. Fraser uden lejeord genereres, men er fravalgt som udgangspunkt."
+      },
+      "beslutninger": {
+        "kampagne": "Eksisterende Højtaler Udlejning - Search (23973439325). Nye annoncer er ad groups heri, aldrig nye kampagner.",
+        "status": "PAUSED ved oprettelse. Tændes bevidst fra /admin/ads.",
+        "bud": "9 kr som standard, redigerbart. Kampagnen kører MANUAL_CPC — en gruppe uden eksplicit bud serverer intet, som Yderområder med 0,01 kr.",
+        "match_type": "Phrase. Lejeintentionen skal stå i frasen selv.",
+        "flertal": "Genereres ikke. Phrase match dækker ental/flertal, og en flertalsterm gav mønstre som 'lej en røgmaskiner'.",
+        "termer": "Redigerbare pr. produkt i KV ads_terms, seedet fra produktnavnet. Produktnavne er ikke søgefraser."
+      },
+      "sikkerhed": "Serveren validerer alt igen før upload: tegngrænser (30/90), at frasen står i mindst én overskrift og én beskrivelse, at landingssiden findes og ikke er pauset. Preflight med validateOnly på alle grupper før den første oprettes, så en policy-afvisning ikke efterlader kontoen halvt bygget.",
+      "kv_noegler": [
+        "ads_terms — søgetermer pr. produkt",
+        "ads_build_log — hvem oprettede hvad hvornår",
+        "ads_mapping — udvides med nye gruppe-id'er"
+      ],
+      "verificeret": "googleAds:mutate med midlertidige resource-navne og generateKeywordIdeas kørt mod 441-020-7627 med validateOnly — begge 200. Volumen for røgmaskine: lej røgmaskine 50/md, røgmaskine leje 40, leje af røgmaskine 40, lej en røgmaskine 20.",
+      "gaeld": "Step 1 er byggeriet. Kvalitetstjek af landingssider, automatisk pause på udsolgt, keyword-inventaret og forslag til sidetekst er ikke bygget. De nye grupper er bundet til produkt og side fra dag ét, så de kan tændes bagefter uden at røre datamodellen."
     }
   },
   "tasks": [

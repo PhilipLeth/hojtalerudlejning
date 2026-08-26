@@ -240,6 +240,10 @@ beforeEach(() => {
 });
 
 describe("/admin/lager", () => {
+  // Samme grund som i /admin/produkter nedenfor: siden render­er hele
+  // kataloget, og første render i jsdom skalerer med det. Denne blev overset,
+  // da de tre andre fik mere luft, og faldt derfor sporadisk under fuld
+  // parallel kørsel — den render­er lige så meget som dem.
   it("lister produkter fra kataloget — også dem der manglede før", async () => {
     mockApi({ party: 2 });
     renderAdmin(<LagerPage />);
@@ -249,7 +253,7 @@ describe("/admin/lager", () => {
     expect(liste.getByText("Lille højtalerpakke")).toBeInTheDocument();
     expect(liste.getByText("Karaokemaskine")).toBeInTheDocument();
     expect(liste.getByText('55" Storskærm')).toBeInTheDocument();
-  });
+  }, 30000);
 
   it("siger tydeligt hvilke produkter der kan overbookes", async () => {
     mockApi({ party: 2 });
