@@ -1,8 +1,6 @@
 import Link from "next/link";
 import CapacityBadge from "@/components/CapacityBadge";
 import LivePrice from "@/components/LivePrice";
-import ProductVideo from "@/components/ProductVideo";
-import ProductYouTube from "@/components/ProductYouTube";
 import FaqSection, { type FaqItem } from "@/components/FaqSection";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
@@ -248,8 +246,10 @@ export default function ProductLanding({
                 height={400}
                 className="w-full object-contain p-6"
               />
-              {/* Play-knap når produktet har video i kataloget (uploades i admin) */}
-              <ProductVideo productId={productId} name={name} />
+              {/* Videoerne er slået fra 26. august 2026 — se kommentaren ved
+                  ProductYouTube nedenfor. Play-knappen kommer igen ved at
+                  sætte linjen herunder ind:
+                  <ProductVideo productId={productId} name={name} /> */}
             </div>
             <div>
               <h2 className="mb-4 text-3xl font-bold">{name}</h2>
@@ -284,7 +284,19 @@ export default function ProductLanding({
           </div>
         </section>
 
-        <ProductYouTube productId={productId} name={name} />
+        {/*
+          Producentens YouTube-video er slået fra på produktsiderne.
+
+          Den lå på 42 produkter og kostede en iframe pr. side — netop den
+          slags tredjepartsindlejring, hastighedsarbejdet i august handlede om
+          at komme af med. Den sendte samtidig kunden videre til YouTube midt i
+          et køb, med producentens branding og forslag til andre videoer.
+
+          youtubeUrl bliver liggende i kataloget, og komponenterne
+          (ProductYouTube, ProductVideo) står urørte med deres tests. At
+          fortryde er at importere dem igen og sætte linjen ind:
+          <ProductYouTube productId={productId} name={name} />
+        */}
 
         {children}
 
