@@ -32,7 +32,7 @@
       "capacity": "Op til 30 personer",
       "weight": "10 kg",
       "power": "batteri",
-      "price_dkk": 345,
+      "price_dkk": 395,
       "image": "/images/product-thumpgo.png",
       "includes": [
         "Oplader",
@@ -51,7 +51,7 @@
       "size": "2x 10 tommer",
       "capacity": "Op til 40 personer",
       "weight": "12 kg",
-      "price_dkk": 395,
+      "price_dkk": 595,
       "image": "/images/product-party.png",
       "mood_image": "/images/mood-party.png",
       "includes": [
@@ -72,7 +72,7 @@
       "brand": "Electro-Voice (EV)",
       "size": "2x 12 tommer",
       "capacity": "40-100 personer",
-      "price_dkk": 695,
+      "price_dkk": 995,
       "image": "/images/product-festival.png",
       "mood_image": "/images/mood-festival.png",
       "includes": [
@@ -90,7 +90,7 @@
       "category": "lys",
       "name_da": "Discokugle",
       "description_da": "Roterende discokugle med LED-lys og farver. Plug-and-play — klar på 2 min.",
-      "price_dkk": 245,
+      "price_dkk": 595,
       "includes": [
         "Discokugle med motor",
         "Ophæng/stativ",
@@ -178,7 +178,7 @@
       "category": "roeg",
       "name_da": "Low fog-maskine (røggulv)",
       "description_da": "Laver et gulv af røg vha. is — 'dansen på skyer'. Indkøbspris 1.400 kr. Aktiveret 2026-08-03, vises på /roeg og kan bookes.",
-      "price_dkk": 295,
+      "price_dkk": 795,
       "image": "/images/product-lowfog.png",
       "status": "live"
     },
@@ -210,7 +210,7 @@
       "id": "headset_pro",
       "category": "av",
       "name_da": "Trådløst headset PRO",
-      "price_dkk": 495,
+      "price_dkk": 595,
       "image": "/images/product-headset.png",
       "status": "live"
     },
@@ -233,7 +233,7 @@
       "category": "av",
       "name_da": "Konferencepakken",
       "description_da": "55\" storskærm + trådløst headset + lille højtalerpakke — spar 140 kr.",
-      "price_dkk": 1195,
+      "price_dkk": 1395,
       "image": "/images/product-skaerm.png",
       "bundle_of": [
         "skaerm_55",
@@ -247,7 +247,7 @@
       "category": "av",
       "name_da": "Tale & musik-pakken",
       "description_da": "Stor højtalerpakke + trådløs mikrofon — spar 95 kr.",
-      "price_dkk": 895,
+      "price_dkk": 1195,
       "image": "/images/product-festival.png",
       "bundle_of": [
         "festival",
@@ -260,7 +260,7 @@
       "category": "lyd",
       "name_da": "Lille festpakke",
       "description_da": "Lille højtalerpakke + enkelt lyseffekt — 500 kr (spar 90). Rund mental pris.",
-      "price_dkk": 500,
+      "price_dkk": 890,
       "image": "/images/product-soundboks.png",
       "bundle_of": [
         "soundboks",
@@ -273,7 +273,7 @@
       "category": "lyd",
       "name_da": "Stor festpakke",
       "description_da": "Stor højtalerpakke + lys-pakke — 1.000 kr (spar 190). Rund mental pris.",
-      "price_dkk": 1000,
+      "price_dkk": 1290,
       "image": "/images/mood-party.png",
       "bundle_of": [
         "soundboks",
@@ -297,7 +297,7 @@
       "name_da": "Trådløs mikrofon PRO",
       "description_da": "Shure BLX trådløs mikrofon — scenekvalitet til events og konferencer.",
       "brand": "Shure",
-      "price_dkk": 495,
+      "price_dkk": 595,
       "image": "/images/product-mikrofon-pro.png",
       "status": "live"
     },
@@ -307,7 +307,7 @@
       "name_da": "Håndholdt mikrofon PRO (kabel)",
       "description_da": "Shure Beta 58A med kabel — klassikeren til sang og taler.",
       "brand": "Shure",
-      "price_dkk": 195,
+      "price_dkk": 395,
       "image": "/images/product-mikrofon-kabel-pro.png",
       "status": "live"
     },
@@ -325,7 +325,7 @@
       "category": "av",
       "name_da": "Karaokepakken",
       "description_da": "Karaokemaskine + 32\" skærm på 3-fod stativ + lille højtalerpakke (2× Alto 10\"). Spar 385 kr (list 1.485 kr).",
-      "price_dkk": 1100,
+      "price_dkk": 1300,
       "bundle_of": [
         "karaoke",
         "skaerm_55"
@@ -337,7 +337,7 @@
       "category": "av",
       "name_da": "Karaoke-festpakken",
       "description_da": "Karaokemaskine + 55\" storskærm + store højtalere. Spar 485 kr (list 1.985 kr).",
-      "price_dkk": 1500,
+      "price_dkk": 2000,
       "bundle_of": [
         "karaoke",
         "skaerm_55",
@@ -370,7 +370,7 @@
       "id": "rog",
       "name_da": "Røgmaskine",
       "description_da": "Kompakt røgmaskine med væske — gør lyset 10x federe",
-      "price_dkk": 245,
+      "price_dkk": 595,
       "image": "/images/product-rog.png",
       "status": "live"
     },
@@ -378,7 +378,7 @@
       "id": "mikrofon",
       "name_da": "Trådløs mikrofon",
       "description_da": "Professionel håndholdt mikrofon til taler og karaoke",
-      "price_dkk": 300,
+      "price_dkk": 295,
       "image": "/images/product-mikrofon.png",
       "status": "live"
     },
@@ -386,7 +386,7 @@
       "id": "batteri",
       "name_da": "Ekstra batteri",
       "description_da": "Ekstra batteri til batterihøjtaler",
-      "price_dkk": 150,
+      "price_dkk": 145,
       "image": "/images/product-thumpgo.png",
       "status": "live"
     },
@@ -394,7 +394,7 @@
       "id": "stativer",
       "name_da": "Højtalerstativer",
       "description_da": "2 professionelle stativer — løfter lyden op i øjenhøjde",
-      "price_dkk": 95,
+      "price_dkk": 100,
       "image": "/images/product-stativer.png",
       "status": "live"
     },
@@ -410,7 +410,7 @@
       "id": "lyseffekt",
       "name_da": "Enkelt lyseffekt",
       "description_da": "1 LED-festlys på fod — bruges i Lille festpakke (500 kr) og som tilvalg.",
-      "price_dkk": 195,
+      "price_dkk": 395,
       "image": "/images/product-lys.png",
       "status": "live"
     },
@@ -459,7 +459,7 @@
     }
   ],
   "pricing_rules": {
-    "base": "Samme pris uanset antal dage (1-5). Alle priser ender på 95.",
+    "base": "Samme pris uanset antal dage (1-5). 95-reglen gælder ikke længere: prisstigningen 25. august gav runde tal som 595, 995, 890, 1290 og 1495. Se katalog_og_priser_2026_08_25.",
     "day_multipliers": "Ingen — fast pris uanset lejeperiode",
     "max_rental_days": 5,
     "summer_sale": null,
@@ -1209,7 +1209,7 @@
         "id": "pakke_fest_lille",
         "name_da": "Lille festpakke",
         "product_id": "pakke_fest_lille",
-        "price_dkk": 790,
+        "price_dkk": 890,
         "includes": "Lille højtalerpakke (2× Alto 10\") + lys-pakke",
         "breakdown": "395 + 495 − 100 rabat",
         "note": "Live. Produktside /festpakke-lille · Book: /book?product=pakke_fest_lille. Levering/opsætning er tilvalg, ikke del af pakken."
@@ -1218,7 +1218,7 @@
         "id": "pakke_fest_stor",
         "name_da": "Stor festpakke",
         "product_id": "pakke_fest_stor",
-        "price_dkk": 1090,
+        "price_dkk": 1290,
         "includes": "Stor højtalerpakke (2× EV 12\" + stativer) + lys-pakke — op til 100 pers.",
         "breakdown": "695 + 495 − 100 rabat",
         "note": "Live. Produktside /festpakke-stor · Book: /book?product=pakke_fest_stor. Levering/opsætning er tilvalg, ikke del af pakken."
@@ -3459,5 +3459,22 @@
     "fjernet": "LADDER_TALE (konference-stigen på /lydanlaeg) og AVBookingWizard — begge byggede udelukkende på projektor og skærm. /lydanlaeg henviser i stedet til Tale & musik-pakken, mikrofonerne og /erhverv#tilbud.",
     "google_ads": "De dedikerede projektor-, skærm-, lærred- og karaokegrupper var allerede PAUSED. Tilbage stod to aktive: 'YDER - Karaoke' (id 194293649970, kampagnen Yderområder, 33,52 kr/30 dage) skal pauses, og 'Ag 11 - AV-udstyr/PA anlæg' (id 199318678713, 138,30 kr/30 dage) bør gennemgås — dens keywords er av-udstyr-fraser, og landingssiden handler nu om mikrofoner og lyd.",
     "aabent": "De pausede sider er stadig indekserbare. Det er med vilje — placeringen skal overleve pausen — men hvis de begynder at rangere på 'lej projektor københavn' med en pausebesked, kan det koste klikrate på hele domænet. Tages op igen, hvis pausen bliver permanent."
+  },
+  "katalog_og_priser_2026_08_25": {
+    "status": "live",
+    "date": "2026-08-25",
+    "prisstigning": "Hele kataloget sat op efter Frederiks liste. Højtaler 0-30 (lille højtalerpakke) 395→595, højtaler 30-50 (stor) 495→995, Soundboks 595→795, Thump GO 345→395, røgmaskine 245→595, low fog 295→795, lyseffekt 195→395, Shure håndholdt 195→395, Shure trådløs og headset PRO 495→595. Lys-pakke (lysbar), uplights og lyskæder er uændrede.",
+    "hvordan_mapningen_blev_udledt": "Frederiks liste nævnte 'højtaler 0-30/30-50' uden produkt-id'er. Hans egne pakkepriser afgjorde det: 890 = 595 + 395 − 100 går kun op hvis højtaler 0-30 er den lille højtalerpakke, og 1290 = 995 + 495 − 200 bekræfter den store og at lysbar = lys-pakken. To uafhængige regnestykker.",
+    "bundtreglen": "BESLUTNING: pakker Frederik ikke selv prissatte stiger med præcis samme beløb som deres dele, så rabatten i KRONER er uændret. Ellers ville fx Karaokepakken være blevet 200 kr bedre for kunden, uden at nogen havde besluttet det. Bundtdele bærer deres egen listepris i products.ts, så en stigning på en løsdel gør 'spar X kr' forkert, hvis delen ikke rettes med.",
+    "prisen_står_også_i_teksten": "FÆLDE: hver produktside bærer sin egen price={} OG gentager beløbet i sidetitel og meta-beskrivelse — altså dét Google viser. 27 sider stod med gamle tal efter katalogændringen, inklusive de engelske. Find dem ved at sammenligne sidens productId med katalogets pris frem for at læse dem igennem. Pas på levering (495/795), som IKKE er steget.",
+    "95_reglen_er_brudt": "pricing_rules siger 'alle priser ender på 95'. Det holder ikke længere: 890, 1290, 1495, 1045, 1190, 2345, 3645 er runde. Festpakkerne brød den allerede bevidst; nu gør resten det også.",
+    "kv_kataloget_blev_nulstillet": "VIGTIGST. products_catalog i KV erstatter kodens defaults HELT — der flettes ikke. Prisstigningen var deployet og testene grønne, men /api/products serverede stadig de gamle priser. Det gemte katalog var et forældet øjebliksbillede: 40 produkter mod kodens 57, så SYTTEN produkter fandtes slet ikke for kunderne (bryllups-, firmafest-, festpakke 150/250- og stemningslyspakkerne), og alle billedstier pegede på .png, så WebP-optimeringen og syv nye produktfotos aldrig nåede en browser. En fuld feltsammenligning viste at KV var en ægte delmængde af koden. Nøglen er slettet, så koden igen er kilden. Nulstil med /admin/produkter → 'Nulstil til standard', eller wrangler kv key delete products_catalog --namespace-id=c46378bfa06c46c19841331217f812c5 --remote med CLOUDFLARE_ACCOUNT_ID=3e5a00606c7d80a43b229f6d15994043. Kontoen SKAL med — wrangler kender tre, og kun én ejer namespacet. Tag altid backup med kv key get først.",
+    "nye_produkter": "Discokugle i to størrelser (40 cm 595, 30 cm 495, begge komplet pakke med motor, spot og stativ). Højtalerpakke 100 (hojtaler_100, 1495) — 2× 12\" EV på stativer + subwoofer, trinnet 50-100 gæster, side /hojtalerpakke-bas. Speakerpakken (1045) = stor højtalerpakke + håndholdt mikrofon. Soundboks-pakken med lys (1190, spar 100). Lysshow (1495) og Lysshow stort (1995). Mixer lille (295, simpel 4-kanals) og Mixer stor (395, Yamaha med indbyggede effekter).",
+    "nye_sider": "/lysshow (tre lyspakker), /lej-mikrofon, /lej-projektor, /mixer, /hojtalerpakke-bas. /av-udstyr omstruktureret til lyd, mikrofoner og projektor hver for sig. BEMÆRK: /lej-projektor og AV-delen af /av-udstyr blev bygget samme dag som projektor, skærm og lærred gik på pause — se pause_sortiment_2026_08. Siderne er sidenhen skrevet om til pausesider.",
+    "lejesedlen": "Alle lejevilkår står nu på selve sedlen i to spalter med lille skrift. Før stod der 'de fulde lejevilkår står i bilaget', men bilaget blev sjældent printet med, så kunden skrev under på noget hun ikke havde fået. Udleverers underskriftsfelt er fjernet — kun kunden skriver under. De faste kabellinjer (Strømkabel, AUX + iPhone-adapter) er væk: de er ikke ordrelinjer.",
+    "checkout_og_betaling": "'Tilføj mere til din ordre' med tre uopfordrede forslag er fjernet fra checkout — søgefeltet svarer stadig, hvis kunden selv søger. Kontant er ude af al kundevendt tekst; vi tilbyder MobilePay. Admin kan stadig registrere en kontant indbetaling.",
+    "produktfotos_kan_genereres": "scripts/product-images/generate_product_photo.py laver fotos i husstilen med Runway (docs/_internal/produktbilleder-styleguide.md har prompten, nøglen ligger i .dev.vars). To fælder: (1) et stilreference-billede styrer OGSÅ formen — med røgmaskinen som reference kom mixeren ud som en røgmaskine med knapper og 'VF1300 EP' på siden, så reference er slået fra som standard. (2) 'professional mixing console' gav et 24-kanals studiebord i træ; prompten skal sige hvor stort det IKKE er. Vi beder altid om udstyr uden mærkelogoer — et opdigtet Yamaha-logo er en påstand om en maskine vi ikke kan indfri.",
+    "redirect_kan_skygge_for_en_side": "FÆLDE: /hojtalerpakke-bas blev bygget og deployet, men var utilgængelig, fordi _redirects stadig sendte den til /subwoofer fra dengang festival_bas udgik. Cloudflare svarer på _redirects FØR den leder efter filen, og build'et siger ingenting. Ny test redirect-mod-side.test.ts fejler, hvis en omdirigeret sti har sin egen page.tsx. Tjek altid en ny side ved at FØLGE redirect'en, ikke kun statuskoden — 301 ligner et harmløst trailing-slash-hop.",
+    "aabent": "Mixerfotoene er AI-genererede og viser en generisk mixer, ikke Frederiks konkrete Yamaha — et telefonfoto af den rigtige på gul baggrund er bedre. DBA-annoncerne står stadig i Højbjerg; det kræver login på boost.dba.dk. Annoncegruppe 6 kan flyttes tilbage til /lysshow, nu hvor siden findes. Og de tre lagertests i lager.test.tsx er flaky under parallel kørsel — de består 36/36 alene, men flere sessioner bygger i samme repo samtidig."
   }
 }
