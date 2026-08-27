@@ -879,7 +879,7 @@
     "bookings_update": {
       "path": "/api/bookings-update",
       "method": "POST",
-      "description": "Opdater booking-status eller slet (action=delete). Ved status=afleveret sendes automatisk follow-up anmeldelsesmail (Google review, Resend) — kun én gang pr. booking (reviewMailSentAt). Review-link: env GOOGLE_REVIEW_URL, fallback Google Maps-søgning.",
+      "description": "Opdater booking-status eller slet (action=delete). Ved status=afleveret sendes automatisk follow-up anmeldelsesmail (Google review, Resend) — kun én gang pr. booking (reviewMailSentAt). Review-link: env GOOGLE_REVIEW_URL, fallback Google Maps-søgning. action=edit_order retter ordren: varelinjer (items=[{id,qty}], priser slås op i kataloget), kundeoplysninger (contact), aftalt pris (manualTotal) og valgfri gensendt bekræftelse (notify). Se admin_improvements.ret_ordre_2026_08_27.",
       "status": "live"
     },
     "fejl": {
@@ -2789,6 +2789,13 @@
       "description": "Trust-boksen på /erhverv påstår 500+ erhvervsudlejninger. Der er 14 bookinger i KV i alt. Påstanden skal væk eller erstattes af noget der kan dokumenteres — den står nu lige over en tilbudsformular til B2B-kunder.",
       "priority": "high",
       "status": "todo"
+    },
+    {
+      "id": "ret-ordre-datoer",
+      "title": "Ret lejeperioden fra 'Ret ordre'",
+      "description": "Varelinjer og kundeoplysninger kan rettes (2026-08-27), men ikke datoerne. Kræver ledighedstjek mod kalenderen og genberegning af SMS-påmindelser.",
+      "priority": "medium",
+      "status": "todo"
     }
   ],
   "status": {
@@ -3032,6 +3039,25 @@
       "status": "done",
       "date": "2026-08-17",
       "description": "Overbooking pr. produkt: to tal i stedet for ét. 'Lager' er hvad vi ejer; 'Overbooking (kan skaffes)' er hvor mange vi derudover tager imod, fordi de kan købes eller lejes ind til dagen (JIT). Begge tal står både på produktet i /admin/produkter og i oversigten på /admin/lager; gemmes i KV under inventory (ejet) og inventory_overbook (JIT) via samme /api/inventory, der fletter felt for felt. Overbooking uden lagertal ignoreres — uden loft er der intet at overskride. Pakker har hverken eget lager eller egen overbooking: de viser delenes mindste, og delenes JIT giver pakken flere pladser. BESLUTNING om hvem der må regne med JIT (se _lib/inventory.ts): bookable (ejet+JIT) bruges af /api/availability (kunden må booke), soldout, ads og ads-rules (vi slukker ikke annoncer for noget vi kan skaffe) samt produktfeeds ('in stock'). owned bruges af belægningskalenderen (baner ud over det ejede markeres), weekendudsalget og rabatkoderne (ingen rabat på udstyr vi mangler at købe) og af overbooking-varslingen. VARSLING: book.ts kalder notifyOverbooking() efter KV-skrivningen. Rammer bookingen ud over det ejede, sendes en push 'Overbooking registreret' med produkt, antal booket vs. ejet og dagen, med egen tag (overbooking_<id>) så den ikke erstatter 'Ny booking'-beskeden, og url /admin/lager. Best-effort: en booking må aldrig fejle på en push. Fordi en push kan swipes væk, viser /admin/lager også 'Skal skaffes' — beregnet live af bookinger vs. ejet lager 120 dage frem, så den forsvinder af sig selv når udstyret er købt eller bookingen er annulleret. Sidegevinst: pakkers dele tælles nu også i soldout, ads-rules, weekendudsalg og rabatvalidering (expandBookings), hvor en pakke-booking før kun optog sit eget pakke-id. ads.ts' statsByProduct beholder de rå id'er, så en annonce for karaokepakken stadig tælles som karaokepakken."
+    },
+    "ret_ordre_2026_08_27": {
+      "status": "done",
+      "date": "2026-08-27",
+      "description": "Admin kan rette en ordre efter den er lavet: varelinjer (tilføj/fjern produkt, antal pr. linje) og kundeoplysninger (navn, firma, email, telefon, leveringsadresse, kommentar). Før kunne man kun skifte status og slette — rettelser levede i hovedet på Frederik, mens bekræftelsen, lejesedlen og fakturaen blev ved med at vise den oprindelige ordre. Knappen '✏️ Ret ordre' står i ordrens detaljevisning under ordrelinjerne (både mobilkort og tabel).",
+      "hvordan": {
+        "modal": "src/components/admin/EditOrderModal.tsx — kundefelter, varelinjer med +/−, søgefelt over hele kataloget (højtalere, udstyr, tilvalg inkl. kørsel), løbende total.",
+        "delt_logik": "src/lib/orderEdit.ts bruges BÅDE af modalen (forhåndsvisning) og af serveren (gem). Samme funktion begge steder, så det beløb Frederik ser er det beløb der havner i KV.",
+        "api": "POST /api/bookings-update med action=edit_order: { contact?, items:[{id,qty}], legacy:[label], manualTotal?, notify? }.",
+        "priser": "Klienten sender KUN produkt-id og antal. Serveren slår priserne op i loadPriceTable (KV-katalog med kode-defaults) og bygger ordren om — speaker/speakerId/speakerSize, cartItems, addons/addonIds, total. Ukendte id'er afvises med 400.",
+        "rabat": "Rabatkoden på ordren regnes med igen, så en rettelse ikke koster kunden hans rabat.",
+        "aftalt_pris": "manualTotal er den ene bevidste undtagelse fra 'aldrig et beløb fra klienten': admin kan sætte en aftalt pris (fx forhandlet rabat). Den mærkes med totalManual på bookingen.",
+        "gamle_linjer": "Linjer uden produkt-id (bookinger fra før id'erne, eller produkter der er fjernet fra kataloget) kan ikke tælles op, men forsvinder heller ikke: klienten sender deres tekst med, og serveren henter prisen fra ordren selv.",
+        "følgefelter": "deliveryOptionId følger kørsels-tilvalget (ellers skriver bekræftelsen forkert hentested), invoice.amount følger den nye total, paidManual genberegnes når der er registrerede indbetalinger, og booking-indexet nulstilles, så kalenderen ser det ændrede udstyr straks.",
+        "sporbarhed": "Hver rettelse skrives i orderLog på bookingen (hvem, hvornår, hvad blev ændret — de sidste 30).",
+        "kunden": "Hak i 'Send den rettede aftale til kunden på mail' sender bekræftelsen igen (sendConfirmationMail med force:true, logges som 'Bekræftelse på rettet ordre'). Uden hakket får kunden intet — en stavefejl i navnet skal ikke udløse en mail."
+      },
+      "tests": "src/__tests__/ret-ordre.test.tsx — prisopbygning, validering, gamle linjer og modalen i admin.",
+      "ikke_med": "Lejeperioden (datoer) kan stadig ikke rettes fra modalen — det ændrer ledighed og påmindelser, og hører sammen med et ledighedstjek. Åben opgave."
     }
   },
   "booking_improvements": {

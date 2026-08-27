@@ -42,6 +42,7 @@ import {
 import AdminNav from "@/components/AdminNav";
 import AdminLogin from "@/components/AdminLogin";
 import SendSmsBox, { SmsModal } from "@/components/admin/SendSmsBox";
+import EditOrderModal from "@/components/admin/EditOrderModal";
 import { useAdminAuth, getAdminToken, adminFetch } from "@/lib/useAdminAuth";
 
 interface Booking extends OrderBooking {
@@ -99,6 +100,10 @@ interface Booking extends OrderBooking {
   invoice?: Invoice | null;
   /** Rabatkode valideret server-side ved booking */
   discount?: { code: string; pct: number } | null;
+  /** Totalen er sat i hånden ("aftalt pris") i stedet for regnet fra kataloget */
+  totalManual?: boolean;
+  /** Hvem har rettet ordren, hvornår og hvad — sat af action=edit_order */
+  orderLog?: Array<{ at: string; by?: string; changes: string[] }>;
   /** Kundens underskrift ved udlevering — se /admin/udlevering */
   handover?: { signedAt: string; signerName?: string; note?: string; items?: string[] };
   /** Hvem stod for udlejningen — se /admin/kommunikation */
@@ -367,6 +372,8 @@ export default function AdminPage() {
   const [expanded, setExpanded] = useState<string | null>(null);
   /** Ordren hvis SMS-felt er åbent oven på listen */
   const [smsFor, setSmsFor] = useState<Booking | null>(null);
+  /** Ordren der rettes — varelinjer og kundeoplysninger */
+  const [editFor, setEditFor] = useState<Booking | null>(null);
   const isMobile = useIsMobile();
 
   const fetchBookings = useCallback(async () => {
@@ -714,16 +721,28 @@ export default function AdminPage() {
                 <span style={{ color: "#aaa", fontSize: "12px" }}>{group.length} booking{group.length !== 1 ? "er" : ""}</span>
                 {hint && <span style={{ color: "#bbb", fontSize: "12px" }}>· {hint}</span>}
               </div>
-              <BookingList mobile={isMobile} openSms={setSmsFor} payments={paymentActions} bookings={group} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
+              <BookingList mobile={isMobile} openSms={setSmsFor} openEdit={setEditFor} payments={paymentActions} bookings={group} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
             </div>
           ))
         ) : (
-          <BookingList mobile={isMobile} openSms={setSmsFor} payments={paymentActions} bookings={filtered} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
+          <BookingList mobile={isMobile} openSms={setSmsFor} openEdit={setEditFor} payments={paymentActions} bookings={filtered} expanded={expanded} setExpanded={setExpanded} updateStatus={updateStatus} deleteBooking={deleteBooking} setFields={setFields} updating={updating} today={today} />
         )}
       </main>
 
       {/* SMS oven på listen. Sendte beskeder skrives ind på ordren med det
           samme, så kommunikationsloggen er opdateret uden at hente listen igen. */}
+      {/* Ret ordre: varelinjer, kundeoplysninger og beløb. Serveren svarer med
+          hele den rettede booking, så listen er opdateret uden en ny hentning. */}
+      <EditOrderModal
+        booking={editFor}
+        secret={getAdminToken()}
+        onClose={() => setEditFor(null)}
+        onUpdated={(updated: Record<string, unknown>) => {
+          const id = String((updated as { id?: unknown }).id ?? "");
+          setBookings((prev) => prev.map((b) => (b.id === id ? ({ ...b, ...(updated as Partial<Booking>) }) : b)));
+        }}
+      />
+
       <SmsModal
         booking={smsFor}
         secret={getAdminToken()}
@@ -915,6 +934,8 @@ export interface PaymentActions {
 interface ListProps {
   /** Åbn SMS-feltet for en ordre direkte fra listen */
   openSms: (b: Booking) => void;
+  /** Åbn "ret ordre" — varelinjer, kundeoplysninger og beløb */
+  openEdit: (b: Booking) => void;
   bookings: Booking[];
   payments: PaymentActions;
   expanded: string | null;
@@ -1093,11 +1114,25 @@ function CallField({ b, setFields }: { b: Booking; setFields: (id: string, f: Ed
   );
 }
 
-function BookingDetails({ b, today, setFields }: { b: Booking; today: Date; setFields: (id: string, f: EditableFields) => void }) {
+function BookingDetails({ b, today, setFields, openEdit }: {
+  b: Booking;
+  today: Date;
+  setFields: (id: string, f: EditableFields) => void;
+  openEdit: (b: Booking) => void;
+}) {
   const priceOf = usePriceLookup();
   return (
     <div style={{ paddingTop: "12px" }}>
       <OrderBreakdown b={b} priceOf={priceOf} />
+      {/* Aftalen ændrer sig efter bookingen — varer, mail og telefon rettes her */}
+      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "6px" }}>
+        <button
+          onClick={() => openEdit(b)}
+          style={{ padding: "6px 12px", fontSize: "12px", fontWeight: 700, borderRadius: "6px", border: "1px solid #ddd", background: "#fff", cursor: "pointer" }}
+        >
+          ✏️ Ret ordre
+        </button>
+      </div>
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "8px 24px", fontSize: "13px", paddingTop: "12px" }}>
       <div><strong>Email:</strong> <a href={`mailto:${b.email}`} style={{ color: "#0070f3" }}>{b.email}</a></div>
       <div><strong>Telefon:</strong> <a href={`tel:${b.phone}`} style={{ color: "#0070f3" }}>{b.phone}</a></div>
@@ -1149,6 +1184,21 @@ function BookingDetails({ b, today, setFields }: { b: Booking; today: Date; setF
           </ul>
         )}
       </div>
+      {/* Rettelser på ordren. Et beløb der har flyttet sig skal kunne spores
+          til en person — ellers er det et mysterium ved månedsafslutningen. */}
+      {(b.orderLog?.length ?? 0) > 0 && (
+        <div style={{ gridColumn: "1 / -1" }}>
+          <strong>Rettet:</strong>
+          <ul style={{ margin: "6px 0 0", paddingLeft: "18px" }}>
+            {b.orderLog!.slice(-5).reverse().map((post, i) => (
+              <li key={i} style={{ fontSize: "12px", color: "#555", marginBottom: "2px" }}>
+                {new Date(post.at).toLocaleString("da-DK")}
+                {post.by ? ` · ${post.by}` : ""} · {post.changes.join(" · ")}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div style={{ gridColumn: "1 / -1", fontSize: "11px", color: "#aaa" }}>ID: {b.id}</div>
     </div>
     </div>
@@ -1172,7 +1222,7 @@ function shortDate(d: Date): string {
  * folder den ud. Før fyldte ét kort en halv skærm, og man kunne se tre
  * bookinger ved at scrolle længe; nu er hele weekenden synlig på én gang.
  */
-function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments, openSms }: ListProps) {
+function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments, openSms, openEdit }: ListProps) {
   if (bookings.length === 0) return null;
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
@@ -1258,7 +1308,7 @@ function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                   <RowActions b={b} busy={busy} deleteBooking={deleteBooking} big />
                 </div>
 
-                <BookingDetails b={b} today={today} setFields={setFields} />
+                <BookingDetails b={b} today={today} setFields={setFields} openEdit={openEdit} />
               </div>
             )}
           </div>
@@ -1268,7 +1318,7 @@ function BookingCards({ bookings, expanded, setExpanded, updateStatus, deleteBoo
   );
 }
 
-function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments, openSms }: ListProps) {
+function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBooking, setFields, updating, today, payments, openSms, openEdit }: ListProps) {
   if (bookings.length === 0) return null;
 
   const thStyle: React.CSSProperties = { padding: "8px 12px", fontSize: "11px", fontWeight: 700, textAlign: "left", color: "#888", textTransform: "uppercase", letterSpacing: "0.05em", borderBottom: "1px solid #eee", whiteSpace: "nowrap" };
@@ -1357,7 +1407,7 @@ function BookingTable({ bookings, expanded, setExpanded, updateStatus, deleteBoo
                 {isExpanded && (
                   <tr>
                     <td colSpan={5} style={{ padding: "0 12px 16px", background: "#fafffe", borderBottom: "1px solid #eee" }}>
-                      <BookingDetails b={b} today={today} setFields={setFields} />
+                      <BookingDetails b={b} today={today} setFields={setFields} openEdit={openEdit} />
                     </td>
                   </tr>
                 )}

@@ -12,6 +12,15 @@ import { nulstilBookingIndex } from "./_lib/bookingIndex";
 import { paymentMail, sendOwnerMail } from "./_lib/ownerMail";
 
 import { requireAdmin } from "./_lib/adminAuth";
+import { loadPriceTable } from "./_lib/pricing";
+import { isDeliveryAddon } from "../../src/lib/products";
+import {
+  MAX_ORDER_TOTAL,
+  legacyLinesOf,
+  parseOrderItems,
+  rebuildOrder,
+  type CatalogEntry,
+} from "../../src/lib/orderEdit";
 import { loadSiteSettings, mailFooter } from "./_lib/siteSettings";
 import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../src/lib/fetchTimeout";
 
@@ -154,7 +163,24 @@ export const onRequestOptions: PagesFunction<Env> = async () => {
 interface UpdateBody {
   id: string;
   status?: string;
-  action?: "delete" | "set_flag" | "set_fields" | "add_payment" | "delete_payment" | "set_invoice";
+  action?:
+    | "delete"
+    | "set_flag"
+    | "set_fields"
+    | "add_payment"
+    | "delete_payment"
+    | "set_invoice"
+    | "edit_order";
+  /** edit_order: kundeoplysninger — navn, mail, telefon, firma, adresse, kommentar */
+  contact?: Record<string, unknown>;
+  /** edit_order: ordrens varelinjer som produkt-id + antal (priser slås op i kataloget) */
+  items?: unknown;
+  /** edit_order: tekster på linjer uden produkt-id, som skal blive stående */
+  legacy?: unknown;
+  /** edit_order: aftalt pris i kr — null nulstiller til katalogets sum */
+  manualTotal?: number | null;
+  /** edit_order: send den rettede aftale til kunden på mail */
+  notify?: boolean;
   /** add_payment: en indbetaling på ordren */
   payment?: { amount?: unknown; method?: unknown; paidAt?: unknown; note?: unknown };
   /** delete_payment: hvilken indbetaling der skal væk */
@@ -193,6 +219,31 @@ const FIELD_VALIDATORS: Record<string, (v: unknown) => boolean> = {
   // Kommunikation: hvem stod for udlejningen, og hvad de vil skrive til kunden
   handledBy: (v) => v === null || (typeof v === "string" && v.length <= 60),
   personalNote: (v) => v === null || (typeof v === "string" && v.length <= 600),
+};
+
+/**
+ * Kundeoplysninger admin kan rette. En booking bliver ofte lavet i hast på en
+ * telefon — en forkert mail eller et ciffer for lidt i nummeret skal kunne
+ * rettes, uden at ordren skal laves forfra.
+ */
+const CONTACT_VALIDATORS: Record<string, (v: unknown) => boolean> = {
+  name: (v) => typeof v === "string" && v.trim().length > 0 && v.trim().length <= 80,
+  company: (v) => typeof v === "string" && v.length <= 80,
+  email: (v) =>
+    typeof v === "string" && v.length <= 120 && (v.trim() === "" || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())),
+  phone: (v) => typeof v === "string" && v.length <= 30 && (v.trim() === "" || /^[+\d][\d\s()./-]{5,}$/.test(v.trim())),
+  comment: (v) => typeof v === "string" && v.length <= 2000,
+  deliveryAddress: (v) => typeof v === "string" && v.length <= 200,
+};
+
+/** Dansk label til ændringsloggen på ordren */
+const CONTACT_LABELS: Record<string, string> = {
+  name: "Navn",
+  company: "Firma",
+  email: "Email",
+  phone: "Telefon",
+  comment: "Kommentar",
+  deliveryAddress: "Adresse",
 };
 
 const PAYMENT_METHODS = ["mobilepay", "kontant", "bank", "kort", "andet"];
@@ -356,6 +407,165 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
       await context.env.BOOKINGS.put(body.id, JSON.stringify(booking));
       return new Response(JSON.stringify({ ok: true, booking }), { status: 200, headers: corsHeaders });
+    }
+
+    // ── Ret ordren: kundeoplysninger og varelinjer i én skrivning
+    if (body.action === "edit_order") {
+      const existingRaw = await context.env.BOOKINGS.get(body.id);
+      if (!existingRaw) {
+        return new Response(JSON.stringify({ error: "Booking not found" }), { status: 404, headers: corsHeaders });
+      }
+      const booking = JSON.parse(existingRaw);
+      const now = new Date().toISOString();
+      const aendringer: string[] = [];
+
+      // Kundeoplysninger
+      if (body.contact && typeof body.contact === "object" && !Array.isArray(body.contact)) {
+        for (const [key, value] of Object.entries(body.contact)) {
+          const validator = CONTACT_VALIDATORS[key];
+          if (!validator) {
+            return new Response(
+              JSON.stringify({ error: `Ukendt felt "${key}". Kan rette: ${Object.keys(CONTACT_VALIDATORS).join(", ")}` }),
+              { status: 400, headers: corsHeaders },
+            );
+          }
+          if (!validator(value)) {
+            return new Response(JSON.stringify({ error: `Ugyldig værdi i "${CONTACT_LABELS[key] ?? key}"` }), {
+              status: 400,
+              headers: corsHeaders,
+            });
+          }
+        }
+        for (const [key, value] of Object.entries(body.contact)) {
+          const ny = String(value).trim();
+          const gammel = String(booking[key] ?? "").trim();
+          if (ny === gammel) continue;
+          booking[key] = ny;
+          aendringer.push(`${CONTACT_LABELS[key] ?? key}: ${gammel || "(tom)"} → ${ny || "(tom)"}`);
+        }
+      }
+
+      // Varelinjer. Kommer der ingen items med, rører vi ikke ordren — så er
+      // det kun kundeoplysningerne der bliver rettet.
+      let varerRettet = false;
+      if (body.items !== undefined) {
+        const parsed = parseOrderItems(body.items);
+        if ("error" in parsed) {
+          return new Response(JSON.stringify({ error: parsed.error }), { status: 400, headers: corsHeaders });
+        }
+
+        // Katalogets priser — aldrig et beløb fra klienten
+        const table = await loadPriceTable(context.env.BOOKINGS);
+        const lookup = (id: string): CatalogEntry | undefined => {
+          const priced = table.get(id);
+          if (!priced) return undefined;
+          return { id: priced.id, name: priced.name, price: priced.unitAmount / 100, kind: priced.kind, size: priced.size };
+        };
+
+        // Linjer uden produkt-id findes kun på ordren selv. Klienten siger
+        // hvilke af dem der skal blive stående; prisen læses her fra KV.
+        const beholdte = Array.isArray(body.legacy) ? body.legacy.map((l) => String(l)) : [];
+        const legacy = legacyLinesOf(booking, lookup).filter((l) => beholdte.includes(l.label));
+
+        let manualTotal: number | null = null;
+        if (body.manualTotal !== undefined && body.manualTotal !== null) {
+          const beloeb = Math.round(Number(body.manualTotal));
+          if (!Number.isFinite(beloeb) || beloeb < 0 || beloeb > MAX_ORDER_TOTAL) {
+            return new Response(JSON.stringify({ error: `Aftalt pris skal være mellem 0 og ${MAX_ORDER_TOTAL} kr` }), {
+              status: 400,
+              headers: corsHeaders,
+            });
+          }
+          manualTotal = beloeb;
+        }
+
+        const { order, ukendte } = rebuildOrder(parsed.items, lookup, {
+          discountPct: booking.discount?.pct,
+          legacy,
+          manualTotal,
+        });
+        if (ukendte.length) {
+          return new Response(
+            JSON.stringify({ error: `Findes ikke i kataloget: ${ukendte.join(", ")}` }),
+            { status: 400, headers: corsHeaders },
+          );
+        }
+        if (parsed.items.length === 0 && legacy.length === 0) {
+          return new Response(JSON.stringify({ error: "En ordre skal have mindst én varelinje" }), {
+            status: 400,
+            headers: corsHeaders,
+          });
+        }
+
+        const foerTotal = Number(booking.total) || 0;
+        const foerLinjer = orderLineNames(booking);
+
+        booking.speaker = order.speaker;
+        booking.speakerId = order.speakerId;
+        booking.speakerSize = order.speakerSize;
+        booking.cartItems = order.cartItems;
+        booking.addons = order.addons;
+        booking.addonIds = order.addonIds;
+        booking.total = order.total;
+        booking.totalManual = manualTotal !== null;
+
+        // Kørslen står to steder: som tilvalg og som deliveryOptionId, der
+        // afgør hvad bekræftelsesmailen skriver om hentested. Fjernes eller
+        // skiftes tilvalget, skal feltet følge med.
+        const kørsel = order.addonIds.find((id) => id && isDeliveryAddon(id));
+        booking.deliveryOptionId = kørsel ?? null;
+
+        // Fakturaen lyder på ordrens beløb — ellers sender vi et rykkerbrev
+        // på et tal, der ikke findes på ordren mere.
+        if (booking.invoice) booking.invoice.amount = order.total;
+
+        // Er der registreret indbetalinger, skal "betalt"-mærket følge det nye
+        // beløb. Uden indbetalinger står admins eget hak urørt.
+        if (Array.isArray(booking.payments) && booking.payments.length) {
+          const paidSum = booking.payments.reduce((sum: number, pay: { amount?: number }) => sum + (Number(pay?.amount) || 0), 0);
+          booking.paidManual = paidSum > 0 && paidSum >= order.total - 1;
+        }
+
+        const efterLinjer = orderLineNames(booking);
+        if (efterLinjer !== foerLinjer) aendringer.push(`Varer: ${foerLinjer || "(ingen)"} → ${efterLinjer || "(ingen)"}`);
+        if (order.total !== foerTotal) {
+          aendringer.push(`Total: ${foerTotal} → ${order.total} kr${manualTotal !== null ? " (aftalt pris)" : ""}`);
+        }
+        varerRettet = true;
+      }
+
+      if (aendringer.length === 0 && !body.notify) {
+        return new Response(JSON.stringify({ ok: true, booking, uaendret: true }), { status: 200, headers: corsHeaders });
+      }
+
+      if (aendringer.length) {
+        booking.orderLog = [
+          ...(Array.isArray(booking.orderLog) ? booking.orderLog : []),
+          { at: now, by: updatedBy, changes: aendringer },
+        ].slice(-30);
+        booking.updatedAt = now;
+        booking.updatedBy = updatedBy;
+      }
+
+      // Den rettede aftale til kunden. Bevidst valgt i modalen — en rettelse
+      // af en stavefejl i navnet skal ikke udløse en mail.
+      let mail: { ok: boolean; skipped?: string; error?: string } | undefined;
+      if (body.notify) {
+        try {
+          const result = await sendConfirmationMail(context.env, booking, { force: true });
+          mail = { ok: result.ok, skipped: result.skipped, error: result.error };
+          if (!result.ok) console.error(`[ret ordre] bekræftelse ikke sendt på ${body.id}:`, result.skipped || result.error);
+        } catch (e) {
+          console.error("[ret ordre] mail fejlede:", e);
+          mail = { ok: false, error: "netvaerksfejl" };
+        }
+      }
+
+      await context.env.BOOKINGS.put(body.id, JSON.stringify(booking));
+      // Ændret udstyr ændrer hvad der er ledigt — kalenderen skal se det straks
+      if (varerRettet) await nulstilBookingIndex(context as unknown as ExecutionContext);
+
+      return new Response(JSON.stringify({ ok: true, booking, aendringer, mail }), { status: 200, headers: corsHeaders });
     }
 
     // Sæt flere felter på én gang (betalingsmetode, depositum, inspektion)

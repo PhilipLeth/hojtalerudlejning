@@ -11,10 +11,14 @@ export interface PricedItem {
   name: string;
   /** Pris i øre (DKK) */
   unitAmount: number;
+  /** Hvilken slags vare — afgør om den lander som produkt eller tilvalg på en ordre */
+  kind: "speaker" | "rental" | "addon";
+  /** Højtalerens størrelse, fx "12 tommer" */
+  size?: string;
 }
 
 interface CatalogShape {
-  speakers?: Array<{ id: string; price: number; hidden?: boolean; da?: { name?: string } }>;
+  speakers?: Array<{ id: string; price: number; hidden?: boolean; da?: { name?: string; size?: string } }>;
   addons?: Array<{ id: string; price: number; hidden?: boolean; da?: { label?: string } }>;
   rentalProducts?: Array<{ id: string; price: number; hidden?: boolean; name_da?: string }>;
 }
@@ -23,14 +27,21 @@ interface CatalogShape {
 export async function loadPriceTable(kv: KVNamespace): Promise<Map<string, PricedItem>> {
   const table = new Map<string, PricedItem>();
 
-  const add = (id: string, name: string, priceKr: number, hidden?: boolean) => {
+  const add = (
+    id: string,
+    name: string,
+    priceKr: number,
+    hidden: boolean | undefined,
+    kind: PricedItem["kind"],
+    size?: string,
+  ) => {
     if (!id || hidden || !Number.isFinite(priceKr) || priceKr <= 0) return;
-    table.set(id, { id, name, unitAmount: Math.round(priceKr * 100) });
+    table.set(id, { id, name, unitAmount: Math.round(priceKr * 100), kind, size });
   };
 
-  for (const s of defaultSpeakers) add(s.id, s.da.name, s.price, s.hidden);
-  for (const a of defaultAddons) add(a.id, a.da.label, a.price, a.hidden);
-  for (const r of defaultRentals) add(r.id, r.name_da, r.price, r.hidden);
+  for (const s of defaultSpeakers) add(s.id, s.da.name, s.price, s.hidden, "speaker", s.da.size);
+  for (const a of defaultAddons) add(a.id, a.da.label, a.price, a.hidden, "addon");
+  for (const r of defaultRentals) add(r.id, r.name_da, r.price, r.hidden, "rental");
 
   // KV-katalog overskriver defaults (samme kilde som frontend/useProducts)
   try {
@@ -39,10 +50,10 @@ export async function loadPriceTable(kv: KVNamespace): Promise<Map<string, Price
       const cat = JSON.parse(raw) as CatalogShape;
       for (const s of cat.speakers ?? []) {
         if (s.id === "festival_bas") continue; // opfundet combo-SKU
-        add(s.id, s.da?.name ?? s.id, s.price, s.hidden);
+        add(s.id, s.da?.name ?? s.id, s.price, s.hidden, "speaker", s.da?.size);
       }
-      for (const a of cat.addons ?? []) add(a.id, a.da?.label ?? a.id, a.price, a.hidden);
-      for (const r of cat.rentalProducts ?? []) add(r.id, r.name_da ?? r.id, r.price, r.hidden);
+      for (const a of cat.addons ?? []) add(a.id, a.da?.label ?? a.id, a.price, a.hidden, "addon");
+      for (const r of cat.rentalProducts ?? []) add(r.id, r.name_da ?? r.id, r.price, r.hidden, "rental");
     }
   } catch {
     // defaults gælder

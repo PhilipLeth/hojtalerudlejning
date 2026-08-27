@@ -106,14 +106,20 @@ export interface ConfirmResult {
 export async function sendConfirmationMail(
   env: ConfirmMailEnv,
   booking: Record<string, unknown>,
+  /**
+   * force: admin har bedt om mailen selv — fx efter at have rettet ordren.
+   * Så gælder hverken "sendt før" eller kontakten til automatikken: han har
+   * trykket på knappen, og kunden skal have den rettede aftale at se på.
+   */
+  opts: { force?: boolean } = {},
 ): Promise<ConfirmResult> {
-  if (booking.confirmMailSentAt) return { ok: false, skipped: "allerede_sendt" };
+  if (booking.confirmMailSentAt && !opts.force) return { ok: false, skipped: "allerede_sendt" };
   const to = String(booking.email ?? "").trim();
   if (!to) return { ok: false, skipped: "ingen_mail" };
   if (!env.RESEND_API_KEY) return { ok: false, skipped: "ikke_konfigureret" };
 
   const [settings, site] = await Promise.all([loadCommSettings(env.BOOKINGS), loadSiteSettings(env.BOOKINGS)]);
-  if (!settings.confirmationAutoSend) return { ok: false, skipped: "slaaet_fra" };
+  if (!settings.confirmationAutoSend && !opts.force) return { ok: false, skipped: "slaaet_fra" };
 
   const navn = String(booking.name || "");
   const ansvarlig = typeof booking.handledBy === "string" ? booking.handledBy : undefined;
@@ -161,7 +167,12 @@ export async function sendConfirmationMail(
   booking.confirmMailSentAt = sentAt;
   booking.communications = [
     ...(Array.isArray(booking.communications) ? booking.communications : []),
-    { type: "bekraeftelse", label: "Bekræftelse på godkendt ordre", to, sentAt },
+    {
+      type: "bekraeftelse",
+      label: opts.force ? "Bekræftelse på rettet ordre" : "Bekræftelse på godkendt ordre",
+      to,
+      sentAt,
+    },
   ];
   return { ok: true, subject: mail.subject, sentAt };
 }
