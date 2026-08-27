@@ -1,23 +1,26 @@
-/* ───── Byg annoncegrupper til ét produkt (admin) ─────
+/* ───── Find keywords til et produkt og byg annoncegrupper af dem (admin) ─────
  *
- * GET  /api/ads-build?productId=roeg
- *   Forslag til fem temagrupper: keywords med søgevolumen og dublet-mærke,
- *   færdig annoncetekst og landingsside. Skriver intet.
+ * GET  /api/ads-build?productId=thumpgo
+ *   Én rangeret liste af RIGTIGE søgefraser: Googles egne idéer for
+ *   produktsiden, plus de søgetermer kontoen selv har fået klik på. Med
+ *   volumen, intention og besked om frasen allerede ligger i kontoen.
  *
  * POST /api/ads-build
- *   { action: "validate" }  → sender alt til Google med validateOnly, så
- *                             policy- og formatfejl kommer frem før upload
- *   { action: "create" }    → opretter grupperne
- *   { action: "save_terms" }→ gemmer produktets søgetermer
+ *   { action: "validate" | "create" } — grupperne man har valgt at bygge
+ *   { action: "save_terms" }          — frø til Google, gemt pr. produkt
  *
- * Klienten må rette teksten undervejs, men serveren validerer alt igen før
- * noget skrives: tegngrænser, at frasen står i annoncen, og at landingssiden
- * findes og ikke er et produkt vi har taget af sortimentet. Samme grundregel
- * som i pricing.ts — det klienten sender er et ønske, ikke en sandhed.
+ * Rækkefølgen er hele pointen. Værktøjet byggede tidligere fraser ud af
+ * produktnavnet og slog bagefter volumen op på sine egne opfindelser: for
+ * Mackie Thump GO blev det nitten keywords med nul søgninger, serveret som
+ * syv annoncegrupper klar til upload. Google kunne hele tiden fortælle, at
+ * "lej højtaler" søges 210 gange om måneden — kunden søger på kategorien,
+ * ikke på modellen.
  *
- * Nye grupper oprettes PAUSED og skrives ind i `ads_mapping`, så de er bundet
- * til deres produkt fra første sekund. Det er dét, der gør at udsolgt-reglerne
- * i /api/ads-rules dækker dem uden videre.
+ * Nu kommer fraserne udefra, mennesket vælger dem der giver mening, og
+ * grupperne bygges af udvalget. Ingen efterspørgsel, ingen gruppe.
+ *
+ * Serveren validerer alt igen før noget skrives — samme grundregel som
+ * pricing.ts: det klienten sender er et ønske, ikke en sandhed.
  */
 
 import { requireAdmin } from "./_lib/adminAuth";
@@ -26,17 +29,18 @@ import {
   BOFU_LABEL,
   createAdGroup,
   findLabel,
-  keywordVolume,
+  keywordIdeas,
   labelCriteria,
   listKeywords,
+  listSearchTerms,
   missingConfig,
   SEARCH_CAMPAIGN_ID,
   type ExistingKeyword,
   type GoogleAdsEnv,
   type NewAdGroup,
 } from "./_lib/googleads";
-import { adGroupName, intentThemes, seedTerms, type IntentTheme } from "../../src/lib/adsIntent";
-import { buildAdCopy, validateAdCopy, type AdCopy } from "../../src/lib/adsCopy";
+import { classify, hasRentalWord, seedTerms, type ThemeKey } from "../../src/lib/adsIntent";
+import { validateAdCopy, type AdCopy } from "../../src/lib/adsCopy";
 import { productCatalog, type CatalogProduct } from "./_lib/catalog";
 import { PAUSEDE_SIDER } from "../../src/lib/products";
 import { hasEnglish } from "../../src/lib/enPages";
@@ -107,78 +111,96 @@ function pageSets(catalog: CatalogProduct[]): { known: string[]; paused: string[
   return { known: [...new Set(known)], paused: [...paused] };
 }
 
-/* ───── Forslaget ───── */
+/* ───── Keyword-opdagelse ───── */
 
-interface ProposedKeyword {
+/** Hvor mange dage tilbage vi kigger efter egne søgetermer. */
+const SEARCH_TERM_DAYS = 180;
+/** Under det her er frasen for smal til at bære sin egen annoncegruppe. */
+const MIN_VOLUME = 10;
+
+interface FoundKeyword {
   text: string;
-  matchType: "PHRASE";
-  bofu: boolean;
-  /** Gennemsnitlige månedlige søgninger. null = Google kender ikke frasen. */
-  volume: number | null;
-  /** Findes frasen allerede i kontoen? Så byder vi mod os selv. */
+  /** Gennemsnitlige månedlige søgninger i Danmark. */
+  volume: number;
+  competition: string | null;
+  /** Har vi selv fået klik på frasen? Det er bevis frem for estimat. */
+  clicks: number;
+  impressions: number;
+  /** "google" = Googles idé, "egen" = vores egen søgetermerapport. */
+  sources: string[];
+  intent: ThemeKey;
+  rental: boolean;
+  /** Ligger frasen allerede i kontoen? Så byder vi mod os selv. */
   duplicateIn: string | null;
-  /** Foreslået afkrydset i UI'et. */
+  /** Foreslået afkrydset: lejeintention, volumen nok, ikke i kontoen. */
   recommended: boolean;
 }
 
-interface ProposedGroup {
-  themeKey: string;
-  label: string;
-  name: string;
-  primary: string;
-  keywords: ProposedKeyword[];
-  cpcBidMicros: number;
-  finalUrl: string;
-  path1?: string;
-  headlines: string[];
-  descriptions: string[];
-  errors: string[];
+function isoDaysAgo(days: number): string {
+  return new Date(Date.now() - days * 86_400_000).toISOString().slice(0, 10);
 }
 
-function proposeGroups(
-  product: CatalogProduct,
-  themes: IntentTheme[],
-  volumes: Record<string, number | null>,
+/**
+ * Saml Googles idéer og vores egne søgetermer til én liste.
+ *
+ * De to kilder svarer på hver sit spørgsmål. Google siger hvad der SØGES
+ * på — bredt, estimeret, også fraser vi aldrig har vist en annonce på.
+ * Søgetermerapporten siger hvad der er blevet KLIKKET på hos os. Det andet
+ * er få rækker, men det er kvitteringer frem for skøn, og en frase med klik
+ * fortjener sit eget keyword uanset hvad estimatet siger.
+ */
+function mergeKeywords(
+  ideas: Array<{ text: string; volume: number; competition: string | null }>,
+  terms: Array<{ text: string; clicks: number; impressions: number }>,
   existing: Map<string, ExistingKeyword>,
-  pages: { known: string[]; paused: string[] },
-  deliveryPrice: number,
-): ProposedGroup[] {
-  return themes.map((theme) => {
-    const copy: AdCopy = buildAdCopy(
-      { name: product.name, price: product.price, page: product.page!, contents: product.contents },
-      theme,
-      { deliveryPrice },
-    );
-    const keywords: ProposedKeyword[] = theme.keywords.map((k) => {
-      const dupe = existing.get(k.text);
-      const volume = volumes[k.text] ?? null;
-      return {
-        text: k.text,
-        matchType: k.matchType,
-        bofu: k.bofu,
-        volume,
-        duplicateIn: dupe ? `${dupe.campaignName} / ${dupe.adGroupName}` : null,
-        // Uden lejeord, uden volumen eller allerede i kontoen: vis den, men
-        // lad være med at krydse den af. Det er sådan man undgår at bygge
-        // endnu en gruppe der aldrig viser noget.
-        recommended: k.bofu && !dupe && volume !== 0,
-      };
-    });
+): FoundKeyword[] {
+  const merged = new Map<string, FoundKeyword>();
 
-    return {
-      themeKey: theme.key,
-      label: theme.label,
-      name: adGroupName(product.name, theme),
-      primary: theme.primary,
-      keywords,
-      cpcBidMicros: DEFAULT_BID_MICROS,
-      finalUrl: copy.finalUrl,
-      path1: copy.path1,
-      headlines: copy.headlines,
-      descriptions: copy.descriptions,
-      errors: validateAdCopy(copy, theme.primary, pages.known, pages.paused),
-    };
-  });
+  const touch = (text: string): FoundKeyword => {
+    const key = text.trim().toLowerCase();
+    let row = merged.get(key);
+    if (!row) {
+      const dupe = existing.get(key);
+      row = {
+        text: key,
+        volume: 0,
+        competition: null,
+        clicks: 0,
+        impressions: 0,
+        sources: [],
+        intent: classify(key),
+        rental: hasRentalWord(key),
+        duplicateIn: dupe ? `${dupe.campaignName} / ${dupe.adGroupName}` : null,
+        recommended: false,
+      };
+      merged.set(key, row);
+    }
+    return row;
+  };
+
+  for (const idea of ideas) {
+    const row = touch(idea.text);
+    row.volume = Math.max(row.volume, idea.volume);
+    row.competition = idea.competition;
+    if (!row.sources.includes("google")) row.sources.push("google");
+  }
+
+  for (const term of terms) {
+    const row = touch(term.text);
+    row.clicks += term.clicks;
+    row.impressions += term.impressions;
+    if (!row.sources.includes("egen")) row.sources.push("egen");
+  }
+
+  for (const row of merged.values()) {
+    // Et klik er bevis nok i sig selv; ellers kræves der målt efterspørgsel.
+    // Og en frase der allerede ligger i kontoen skal ikke bydes op imod sig selv.
+    row.recommended = row.rental && !row.duplicateIn && (row.clicks > 0 || row.volume >= MIN_VOLUME);
+  }
+
+  return [...merged.values()].sort(
+    (a, b) => b.clicks - a.clicks || b.volume - a.volume || a.text.localeCompare(b.text, "da"),
+  );
 }
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
@@ -217,27 +239,30 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       return json({ error: `${product.name} har ingen produktside at sende trafik til.`, products }, 400);
     }
 
-    const terms = termsMap[productId]?.length ? termsMap[productId] : seedTerms(product.name);
-    const themes = intentThemes(terms, { english: hasEnglish(product.page) });
     const pages = pageSets(catalog);
-    const alleFraser = themes.flatMap((t) => t.keywords.map((k) => k.text));
+    const terms = termsMap[productId]?.length ? termsMap[productId] : seedTerms(product.name);
 
-    // Google Ads er valgfrit — forslaget skal kunne ses uden credentials,
-    // bare uden volumen og dublet-tjek.
-    let volumes: Record<string, number | null> = {};
-    let existing = new Map<string, ExistingKeyword>();
+    let keywords: FoundKeyword[] = [];
     let adsError: string | null = null;
     const missing = missingConfig(context.env);
     if (missing.length) {
       adsError = `Google Ads er ikke konfigureret. Mangler: ${missing.join(", ")}`;
     } else {
       try {
-        const [vol, kws] = await Promise.all([
-          keywordVolume(context.env, alleFraser),
+        const [ideas, searchTerms, kws] = await Promise.all([
+          // Produktsiden er det stærkeste frø: Google læser den og svarer med
+          // det, folk faktisk søger efter, som siden kan besvare
+          keywordIdeas(context.env, { url: `https://lejhojtaler.dk${product.page}`, seeds: terms }),
+          listSearchTerms(context.env, { from: isoDaysAgo(SEARCH_TERM_DAYS), to: isoDaysAgo(0) }),
           listKeywords(context.env),
         ]);
-        volumes = vol;
-        existing = new Map(kws.map((k) => [k.text, k]));
+        keywords = mergeKeywords(
+          ideas,
+          // Kun egne søgetermer om det samme produkt — ellers arver hver
+          // produktside alle andres søgninger
+          searchTerms.filter((t) => relevant(t.text, terms)),
+          new Map(kws.map((k) => [k.text, k])),
+        );
       } catch (e) {
         adsError = e instanceof Error ? e.message : "Ukendt fejl mod Google Ads";
       }
@@ -254,7 +279,14 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       },
       terms,
       seededTerms: !termsMap[productId]?.length,
-      groups: proposeGroups(product, themes, volumes, existing, pages, deliveryPrice(catalog)),
+      keywords,
+      /**
+       * Nul her betyder: der er ingen efterspørgsel at bygge en annoncegruppe
+       * på. Det er et gyldigt svar, og langt bedre end syv tomme grupper.
+       */
+      recommendedCount: keywords.filter((k) => k.recommended).length,
+      minVolume: MIN_VOLUME,
+      defaultBidMicros: DEFAULT_BID_MICROS,
       campaignId: SEARCH_CAMPAIGN_ID,
       existingAdGroupIds: mapping[productId] ?? [],
       // Siderne sendes med, så admin kan validere med præcis samme facit som
@@ -262,6 +294,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       knownPages: pages.known,
       pausedPages: pages.paused,
       deliveryPrice: deliveryPrice(catalog),
+      englishPage: hasEnglish(product.page),
       adsConfigured: missing.length === 0,
       adsError,
     });
@@ -269,6 +302,31 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     return json({ error: e instanceof Error ? e.message : "Ukendt fejl" }, 500);
   }
 };
+
+/**
+ * Handler søgetermen om det samme produkt?
+ *
+ * Søgetermerapporten dækker hele kontoen, så uden et filter ville hver
+ * produktside arve alle andres søgninger. Målestokken er produktets EGNE frø
+ * — ikke Googles idéliste.
+ *
+ * Forskellen er ikke akademisk. Discokuglens side nævner også højtalere, så
+ * Googles idéer for siden indeholdt højtalerfraser; med idélisten som
+ * målestok blev "lej højtaler" (ti egne klik) anbefalet som keyword for en
+ * annonce, der lander på /discokugle. Det er præcis det misforhold mellem
+ * keyword og landingsside, værktøjet skal forhindre.
+ *
+ * Googles egne idéer slipper altid igennem — de er lavet ud fra siden.
+ */
+export function relevant(text: string, seeds: string[]): boolean {
+  const ord = new Set(text.split(/\s+/));
+  for (const seed of seeds) {
+    for (const w of seed.split(/\s+/)) {
+      if (w.length > 3 && ord.has(w)) return true;
+    }
+  }
+  return false;
+}
 
 /* ───── Skrivning ───── */
 

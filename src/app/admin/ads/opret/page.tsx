@@ -1,19 +1,22 @@
 "use client";
 
-/* ───── Byg annoncegrupper til et produkt ─────
+/* ───── Find keywords og byg annoncegrupper af dem ─────
  *
- * Vælg et produkt, se fem temagrupper med keywords, søgevolumen og færdig
- * annoncetekst, ret det der skal rettes, og upload.
+ * Rækkefølgen er hele pointen. Siden viste tidligere syv færdige
+ * annoncegrupper, bygget af permutationer over produktnavnet — for Mackie
+ * Thump GO nitten keywords med nul søgninger hver. Nu vises først, hvad der
+ * FAKTISK søges på: Googles idéer for produktsiden og de søgetermer, vi selv
+ * har fået klik på. Man vælger dem der giver mening, og grupperne bygges af
+ * udvalget.
  *
- * Siden validerer med præcis samme kode som serveren (adsCopy.validateAdCopy)
- * og med kataloglisterne serveren selv har sendt. Det er med vilje: fejlen
- * skal stå ved feltet mens man skriver, ikke komme retur fra Google bagefter.
+ * Grupperingen sker her i browseren med samme kode som serveren validerer
+ * med, så man ser resultatet af et klik med det samme.
  */
 
 import AdminLogin from "@/components/AdminLogin";
 import AdminNav from "@/components/AdminNav";
 import { buildAdCopy, validateAdCopy } from "@/lib/adsCopy";
-import type { ThemeKey } from "@/lib/adsIntent";
+import { adGroupName, clusterKeywords, THEME_LABELS, type ThemeKey } from "@/lib/adsIntent";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -26,27 +29,17 @@ interface ProductRow {
   adGroupCount: number;
 }
 
-interface Keyword {
+interface FoundKeyword {
   text: string;
-  matchType: "PHRASE";
-  bofu: boolean;
-  volume: number | null;
+  volume: number;
+  competition: string | null;
+  clicks: number;
+  impressions: number;
+  sources: string[];
+  intent: ThemeKey;
+  rental: boolean;
   duplicateIn: string | null;
   recommended: boolean;
-}
-
-interface Group {
-  themeKey: string;
-  label: string;
-  name: string;
-  primary: string;
-  keywords: Keyword[];
-  cpcBidMicros: number;
-  finalUrl: string;
-  path1?: string;
-  headlines: string[];
-  descriptions: string[];
-  errors: string[];
 }
 
 interface BuildResponse {
@@ -54,21 +47,27 @@ interface BuildResponse {
   product?: { id: string; name: string; price: number; page: string; contents: string[] };
   terms?: string[];
   seededTerms?: boolean;
-  groups?: Group[];
+  keywords?: FoundKeyword[];
+  recommendedCount?: number;
+  minVolume?: number;
+  defaultBidMicros?: number;
   campaignId: string;
   existingAdGroupIds?: string[];
   knownPages?: string[];
   pausedPages?: string[];
   deliveryPrice?: number;
+  englishPage?: boolean;
   adsConfigured?: boolean;
   adsError?: string | null;
   error?: string;
 }
 
-/** Redigerbar udgave af et forslag. */
-interface Draft extends Group {
-  include: boolean;
-  selected: Set<string>;
+/** Redigeret annoncetekst pr. gruppe, når man har rettet i den. */
+interface CopyEdit {
+  name?: string;
+  headlines?: string[];
+  descriptions?: string[];
+  bidMicros?: number;
 }
 
 const card: React.CSSProperties = {
@@ -116,36 +115,44 @@ const primaryButton: React.CSSProperties = {
   color: "#fff",
 };
 
+const th: React.CSSProperties = {
+  textAlign: "left",
+  padding: "6px 8px",
+  fontSize: "11px",
+  textTransform: "uppercase",
+  letterSpacing: "0.04em",
+  color: "#888",
+  borderBottom: "1px solid #eee",
+  whiteSpace: "nowrap",
+};
+
+const td: React.CSSProperties = {
+  padding: "6px 8px",
+  fontSize: "13px",
+  borderBottom: "1px solid #f4f4f4",
+};
+
 const banner = (bg: string, fg: string): React.CSSProperties => ({
   background: bg,
   color: fg,
-  padding: "10px 14px",
+  padding: "12px 14px",
   borderRadius: "8px",
   marginBottom: "14px",
   fontSize: "13px",
+  lineHeight: 1.5,
 });
 
 const kr = (micros: number) => Math.round(micros / 10_000) / 100;
-
-function toDraft(g: Group): Draft {
-  return {
-    ...g,
-    include: g.keywords.some((k) => k.recommended),
-    selected: new Set(g.keywords.filter((k) => k.recommended).map((k) => k.text)),
-  };
-}
-
-/** Linjer i en textarea, tomme linjer luget væk. */
-function lines(text: string): string[] {
-  return text.split("\n").map((l) => l.trim()).filter(Boolean);
-}
+const lines = (t: string) => t.split("\n").map((l) => l.trim()).filter(Boolean);
 
 export default function AdsOpretPage() {
   const { secret, ready, isLoggedIn, unauthorized } = useAdminAuth();
 
   const [data, setData] = useState<BuildResponse | null>(null);
   const [productId, setProductId] = useState("");
-  const [drafts, setDrafts] = useState<Draft[]>([]);
+  const [valgte, setValgte] = useState<Set<string>>(new Set());
+  const [edits, setEdits] = useState<Record<string, CopyEdit>>({});
+  const [kunLeje, setKunLeje] = useState(true);
   const [terms, setTerms] = useState("");
   const [loading, setLoading] = useState(false);
   const [busy, setBusy] = useState("");
@@ -164,17 +171,16 @@ export default function AdsOpretPage() {
         const res = await fetch(`/api/ads-build?${q}`);
         const json: BuildResponse = await res.json();
         if (!res.ok) {
-          if (res.status === 401) {
-            unauthorized();
-            return;
-          }
-          setError(json.error || "Kunne ikke hente forslag");
+          if (res.status === 401) return unauthorized();
+          setError(json.error || "Kunne ikke hente keywords");
           if (json.products) setData((d) => ({ ...(d ?? json), products: json.products }));
           return;
         }
         setData(json);
-        setDrafts((json.groups ?? []).map(toDraft));
         setTerms((json.terms ?? []).join(", "));
+        // Start med dem der har efterspørgsel og lejeintention
+        setValgte(new Set((json.keywords ?? []).filter((k) => k.recommended).map((k) => k.text)));
+        setEdits({});
       } catch {
         setError("Netværksfejl");
       } finally {
@@ -186,138 +192,142 @@ export default function AdsOpretPage() {
 
   useEffect(() => {
     load(productId);
-    // Produktskift henter et nyt forslag
   }, [load, productId]);
 
   const product = data?.product;
+  const keywords = useMemo(() => data?.keywords ?? [], [data]);
   const knownPages = useMemo(() => data?.knownPages ?? [], [data]);
   const pausedPages = useMemo(() => data?.pausedPages ?? [], [data]);
 
-  /** Frasen annoncen skal bære: den første der stadig er valgt. */
-  function primaryOf(d: Draft): string {
-    return d.keywords.find((k) => d.selected.has(k.text))?.text ?? "";
+  const synlige = useMemo(
+    () => (kunLeje ? keywords.filter((k) => k.rental || valgte.has(k.text)) : keywords),
+    [keywords, kunLeje, valgte],
+  );
+
+  /** Grupperne, som de ser ud lige nu. Regnes om ved hvert klik. */
+  const grupper = useMemo(() => {
+    if (!product) return [];
+    const valgt = keywords.filter((k) => valgte.has(k.text));
+    return clusterKeywords(valgt.map((k) => ({ text: k.text, volume: k.volume }))).map((c) => {
+      const nøgle = `${c.key}|${c.head}`;
+      const redigeret = edits[nøgle] ?? {};
+      const genereret = buildAdCopy(
+        { name: product.name, price: product.price, page: product.page, contents: product.contents },
+        c,
+        { deliveryPrice: data?.deliveryPrice },
+      );
+      const headlines = redigeret.headlines ?? genereret.headlines;
+      const descriptions = redigeret.descriptions ?? genereret.descriptions;
+      return {
+        cluster: c,
+        nøgle,
+        name: redigeret.name ?? adGroupName(product.name, c),
+        bidMicros: redigeret.bidMicros ?? data?.defaultBidMicros ?? 9_000_000,
+        headlines,
+        descriptions,
+        finalUrl: genereret.finalUrl,
+        path1: genereret.path1,
+        problems: validateAdCopy(
+          { headlines, descriptions, finalUrl: genereret.finalUrl, path1: genereret.path1 },
+          c.primary,
+          knownPages,
+          pausedPages,
+        ),
+      };
+    });
+  }, [product, keywords, valgte, edits, data?.deliveryPrice, data?.defaultBidMicros, knownPages, pausedPages]);
+
+  const blokerende = grupper.flatMap((g) => g.problems.map((p) => `${g.name}: ${p}`));
+
+  function toggle(text: string) {
+    setValgte((s) => {
+      const next = new Set(s);
+      if (next.has(text)) next.delete(text);
+      else next.add(text);
+      return next;
+    });
   }
 
-  /** Live-validering med samme regler som serveren. */
-  function problemsOf(d: Draft): string[] {
-    const primary = primaryOf(d);
-    if (!d.selected.size) return ["Ingen keywords valgt — gruppen ville vise intet."];
-    if (!d.name.trim()) return ["Gruppen mangler navn."];
-    return validateAdCopy(
-      { headlines: d.headlines, descriptions: d.descriptions, finalUrl: d.finalUrl, path1: d.path1 },
-      primary,
-      knownPages,
-      pausedPages,
-    );
+  function patch(nøgle: string, p: CopyEdit) {
+    setEdits((e) => ({ ...e, [nøgle]: { ...e[nøgle], ...p } }));
   }
 
-  function update(themeKey: string, patch: Partial<Draft>) {
-    setDrafts((list) => list.map((d) => (d.themeKey === themeKey ? { ...d, ...patch } : d)));
-  }
-
-  function toggleKeyword(d: Draft, text: string) {
-    const next = new Set(d.selected);
-    if (next.has(text)) next.delete(text);
-    else next.add(text);
-    update(d.themeKey, { selected: next });
-  }
-
-  /**
-   * Skriv annonceteksten om, så den bærer den frase der nu er valgt først.
-   * buildAdCopy læser kun temaets `primary`, så resten af temaet er formalia.
-   */
-  function regenerate(d: Draft) {
-    const primary = primaryOf(d);
-    if (!product || !primary) return;
-    const copy = buildAdCopy(
-      { name: product.name, price: product.price, page: product.page, contents: product.contents },
-      { key: d.themeKey as ThemeKey, label: d.label, primary, keywords: [] },
-      { deliveryPrice: data?.deliveryPrice },
-    );
-    update(d.themeKey, { headlines: copy.headlines, descriptions: copy.descriptions });
-  }
-
-  const chosen = drafts.filter((d) => d.include);
-  const blocking = chosen.flatMap((d) => problemsOf(d).map((p) => `${d.name}: ${p}`));
-
-  async function send(action: "validate" | "create") {
-    if (!product || !chosen.length) return;
-    setBusy(action);
+  async function post(body: unknown, key: string) {
+    setBusy(key);
     setError("");
     setResult([]);
     try {
       const res = await fetch(`/api/ads-build?secret=${encodeURIComponent(secret)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action,
-          productId: product.id,
-          groups: chosen.map((d) => ({
-            name: d.name.trim(),
-            themeKey: d.themeKey,
-            primary: primaryOf(d),
-            cpcBidMicros: d.cpcBidMicros,
-            keywords: d.keywords.filter((k) => d.selected.has(k.text)).map((k) => ({ text: k.text })),
-            headlines: d.headlines,
-            descriptions: d.descriptions,
-            finalUrl: d.finalUrl,
-            path1: d.path1,
-          })),
-        }),
+        body: JSON.stringify(body),
       });
-      const json = (await res.json()) as {
-        error?: string;
-        errors?: string[];
-        warnings?: string[];
-        created?: Array<{ name: string; adGroupId: string; keywords: number }>;
-        groups?: number;
-      };
-      if (!res.ok) {
-        setError(json.error ?? "");
-        setResult(json.errors ?? []);
-        return;
-      }
-      if (action === "validate") {
-        setResult([`Google godkendte alle ${json.groups} grupper. Intet er oprettet endnu.`]);
-        return;
-      }
-      setResult([
-        ...(json.created ?? []).map((c) => `Oprettet (pauset): ${c.name} — ${c.keywords} keywords, id ${c.adGroupId}`),
-        ...(json.warnings ?? []),
-      ]);
-      await load(product.id);
+      return { res, json: (await res.json()) as Record<string, unknown> };
     } catch {
       setError("Netværksfejl");
+      return null;
     } finally {
       setBusy("");
     }
+  }
+
+  async function send(action: "validate" | "create") {
+    if (!product || !grupper.length) return;
+    const svar = await post(
+      {
+        action,
+        productId: product.id,
+        groups: grupper.map((g) => ({
+          name: g.name.trim(),
+          themeKey: g.cluster.key,
+          primary: g.cluster.primary,
+          cpcBidMicros: g.bidMicros,
+          keywords: g.cluster.keywords.map((text) => ({ text })),
+          headlines: g.headlines,
+          descriptions: g.descriptions,
+          finalUrl: g.finalUrl,
+          path1: g.path1,
+        })),
+      },
+      action,
+    );
+    if (!svar) return;
+    const { res, json } = svar;
+    if (!res.ok) {
+      setError((json.error as string) ?? "");
+      setResult((json.errors as string[]) ?? []);
+      return;
+    }
+    if (action === "validate") {
+      setResult([`Google godkendte alle ${json.groups} grupper. Intet er oprettet endnu.`]);
+      return;
+    }
+    const oprettet = (json.created as Array<{ name: string; adGroupId: string; keywords: number }>) ?? [];
+    setResult([
+      ...oprettet.map((c) => `Oprettet (pauset): ${c.name} — ${c.keywords} keywords, id ${c.adGroupId}`),
+      ...((json.warnings as string[]) ?? []),
+    ]);
+    await load(product.id);
   }
 
   async function saveTerms() {
     if (!product) return;
-    setBusy("terms");
-    try {
-      const res = await fetch(`/api/ads-build?secret=${encodeURIComponent(secret)}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "save_terms",
-          productId: product.id,
-          terms: terms.split(",").map((t) => t.trim()).filter(Boolean),
-        }),
-      });
-      if (!res.ok) {
-        setError("Kunne ikke gemme søgetermer");
-        return;
-      }
-      await load(product.id);
-    } finally {
-      setBusy("");
-    }
+    const svar = await post(
+      {
+        action: "save_terms",
+        productId: product.id,
+        terms: terms.split(",").map((t) => t.trim()).filter(Boolean),
+      },
+      "terms",
+    );
+    if (svar?.res.ok) await load(product.id);
   }
 
   if (!ready) return null;
   if (!isLoggedIn) return <AdminLogin title="Byg annoncer" />;
+
+  const ingenEfterspørgsel =
+    !!product && data?.adsConfigured && !data.adsError && (data.recommendedCount ?? 0) === 0;
 
   return (
     <>
@@ -331,26 +341,25 @@ export default function AdsOpretPage() {
       />
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px" }}>
         <p style={{ color: "#888", fontSize: "12px", margin: "0 0 16px" }}>
-          Grupperne oprettes <strong>pauset</strong> i kampagnen og bindes til produktet med det samme.
-          Tænd dem på <a href="/admin/ads" style={{ color: "#1e7e34" }}>Ads-oversigten</a>, når du har set dem efter.
+          Fraserne kommer fra Google og fra vores egne søgetermer — ingen er opfundet her.
+          Vælg dem der giver mening; grupperne bygges af udvalget og oprettes <strong>pauset</strong>.
+          Tænd dem på <a href="/admin/ads" style={{ color: "#1e7e34" }}>Ads-oversigten</a>.
         </p>
 
         {error && <div style={banner("#fdecea", "#c0392b")}>{error}</div>}
 
         {data && data.adsConfigured === false && (
           <div style={banner("#fff8e1", "#8a6d3b")}>
-            <strong>Google Ads er ikke forbundet.</strong> {data.adsError} — forslaget vises uden søgevolumen
-            og uden tjek for dubletter, og der kan ikke uploades.
+            <strong>Google Ads er ikke forbundet.</strong> {data.adsError} — uden forbindelsen findes
+            der ingen keywords at vise, for det er Google der leverer dem.
           </div>
         )}
         {data?.adsConfigured && data.adsError && (
-          <div style={banner("#fff8e1", "#8a6d3b")}>Google Ads svarede ikke: {data.adsError}</div>
+          <div style={banner("#fdecea", "#c0392b")}>Google svarede ikke: {data.adsError}</div>
         )}
 
         <div style={card}>
-          <label style={label} htmlFor="produkt">
-            Produkt
-          </label>
+          <label style={label} htmlFor="produkt">Produkt</label>
           <select
             id="produkt"
             value={productId}
@@ -372,176 +381,178 @@ export default function AdsOpretPage() {
         {product && (
           <div style={card}>
             <label style={label} htmlFor="termer">
-              Søgetermer {data?.seededTerms && <em style={{ textTransform: "none" }}>— foreslået ud fra navnet</em>}
+              Frø til Google {data?.seededTerms && <em style={{ textTransform: "none" }}>— gættet ud fra navnet</em>}
             </label>
             <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-              <input
-                id="termer"
-                value={terms}
-                onChange={(e) => setTerms(e.target.value)}
-                style={{ ...input, flex: "1 1 380px" }}
-              />
+              <input id="termer" value={terms} onChange={(e) => setTerms(e.target.value)} style={{ ...input, flex: "1 1 380px" }} />
               <button onClick={saveTerms} disabled={busy === "terms"} style={button}>
-                {busy === "terms" ? "Gemmer…" : "Gem og byg om"}
+                {busy === "terms" ? "Gemmer…" : "Gem og søg igen"}
               </button>
             </div>
             <p style={{ color: "#888", fontSize: "12px", margin: "8px 0 0" }}>
-              Det folk skriver i søgefeltet — ikke produktnavnet. Adskil med komma. Tag stavemåderne med
-              (soundboks og soundbox er to forskellige søgninger).
+              Frø er ikke keywords — det er de ord, Google skal lede ud fra. Produktsiden{" "}
+              <code>{product.page}</code> bruges altid som frø; de her lægges oveni. Adskil med komma.
             </p>
           </div>
         )}
 
-        {product &&
-          drafts.map((d) => {
-            const problems = problemsOf(d);
-            return (
-              <div key={d.themeKey} style={{ ...card, opacity: d.include ? 1 : 0.55 }}>
-                <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
-                  <input
-                    type="checkbox"
-                    checked={d.include}
-                    onChange={(e) => update(d.themeKey, { include: e.target.checked })}
-                    aria-label={`Tag ${d.label} med`}
-                  />
-                  <input
-                    value={d.name}
-                    onChange={(e) => update(d.themeKey, { name: e.target.value })}
-                    aria-label="Gruppenavn"
-                    style={{ ...input, flex: "1 1 320px", fontWeight: 600 }}
-                  />
-                  <span style={{ fontSize: "12px", color: "#888" }}>
-                    Bud{" "}
-                    <input
-                      type="number"
-                      min={1}
-                      max={50}
-                      step={0.5}
-                      value={kr(d.cpcBidMicros)}
-                      onChange={(e) =>
-                        update(d.themeKey, { cpcBidMicros: Math.round(Number(e.target.value) * 1_000_000) })
-                      }
-                      aria-label={`Bud for ${d.label}`}
-                      style={{ ...input, width: "80px", display: "inline-block" }}
-                    />{" "}
-                    kr
-                  </span>
-                </div>
+        {ingenEfterspørgsel && (
+          <div style={banner("#fff8e1", "#8a6d3b")}>
+            <strong>Ingen af fraserne har efterspørgsel nok til en egen annoncegruppe.</strong>{" "}
+            Google finder ingen lejesøgninger med mindst {data?.minVolume} om måneden for{" "}
+            {product?.name}, og vi har ingen egne klik på nogen.
+            <br />
+            Det er et rigtigt svar, ikke en fejl: folk søger sjældent på modelnavne. Slå
+            <em> Vis også fraser uden lejeord</em> fra og se listen — er den også tom, hører produktet
+            til i en bredere gruppe (fx højtalere) frem for sin egen.
+          </div>
+        )}
 
-                {d.include && problems.length > 0 && (
-                  <div style={{ ...banner("#fdecea", "#c0392b"), marginTop: "12px", marginBottom: 0 }}>
-                    {problems.map((p) => (
-                      <div key={p}>{p}</div>
-                    ))}
-                  </div>
-                )}
+        {product && keywords.length > 0 && (
+          <div style={card}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "10px", marginBottom: "10px" }}>
+              <strong style={{ fontSize: "14px" }}>
+                {keywords.length} fraser fundet · {valgte.size} valgt
+              </strong>
+              <label style={{ fontSize: "12px", color: "#555", display: "flex", gap: "6px", alignItems: "center" }}>
+                <input type="checkbox" checked={!kunLeje} onChange={(e) => setKunLeje(!e.target.checked)} />
+                Vis også fraser uden lejeord
+              </label>
+            </div>
 
-                <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "12px" }}>
-                  <thead>
-                    <tr>
-                      <th style={{ ...label, width: "28px" }} />
-                      <th style={{ ...label, textAlign: "left" }}>Keyword (phrase)</th>
-                      <th style={{ ...label, textAlign: "right", width: "110px" }}>Søgninger/md</th>
-                      <th style={{ ...label, textAlign: "left" }}>Findes allerede i</th>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr>
+                    <th style={{ ...th, width: "28px" }} />
+                    <th style={th}>Søgefrase</th>
+                    <th style={{ ...th, textAlign: "right" }}>Søgninger/md</th>
+                    <th style={{ ...th, textAlign: "right" }}>Egne klik</th>
+                    <th style={th}>Mønster</th>
+                    <th style={th}>Kilde</th>
+                    <th style={th}>Findes allerede i</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {synlige.map((k) => (
+                    <tr key={k.text} style={{ background: valgte.has(k.text) ? "#f4fbf6" : undefined }}>
+                      <td style={td}>
+                        <input type="checkbox" checked={valgte.has(k.text)} onChange={() => toggle(k.text)} aria-label={k.text} />
+                      </td>
+                      <td style={{ ...td, color: k.rental ? "#222" : "#999" }}>
+                        {k.text}
+                        {!k.rental && <span style={{ fontSize: "11px", color: "#b58900" }}> · uden lejeord</span>}
+                      </td>
+                      <td style={{ ...td, textAlign: "right", fontWeight: k.volume >= (data?.minVolume ?? 10) ? 600 : 400, color: k.volume ? "#222" : "#bbb" }}>
+                        {k.volume || "—"}
+                      </td>
+                      <td style={{ ...td, textAlign: "right", color: k.clicks ? "#1e7e34" : "#bbb", fontWeight: k.clicks ? 600 : 400 }}>
+                        {k.clicks || "—"}
+                      </td>
+                      <td style={{ ...td, color: "#666", fontSize: "12px" }}>{THEME_LABELS[k.intent]}</td>
+                      <td style={{ ...td, color: "#666", fontSize: "12px" }}>{k.sources.join(" + ")}</td>
+                      <td style={{ ...td, color: "#c0392b", fontSize: "12px" }}>{k.duplicateIn ?? ""}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {d.keywords.map((k) => (
-                      <tr key={k.text}>
-                        <td style={{ padding: "4px 0" }}>
-                          <input
-                            type="checkbox"
-                            checked={d.selected.has(k.text)}
-                            onChange={() => toggleKeyword(d, k.text)}
-                            aria-label={k.text}
-                          />
-                        </td>
-                        <td style={{ padding: "4px 0", fontSize: "13px", color: k.bofu ? "#222" : "#999" }}>
-                          {k.text}
-                          {!k.bofu && <span style={{ fontSize: "11px", color: "#b58900" }}> · uden lejeord</span>}
-                        </td>
-                        <td style={{ padding: "4px 0", fontSize: "13px", textAlign: "right", color: k.volume ? "#222" : "#999" }}>
-                          {k.volume === null ? "—" : k.volume}
-                        </td>
-                        <td style={{ padding: "4px 0", fontSize: "12px", color: "#c0392b" }}>
-                          {k.duplicateIn ?? ""}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
 
-                <div style={{ display: "grid", gap: "12px", gridTemplateColumns: "1fr 1fr", marginTop: "14px" }}>
-                  <div>
-                    <label style={label} htmlFor={`h-${d.themeKey}`}>
-                      Overskrifter — én pr. linje, højst 30 tegn
-                    </label>
-                    <textarea
-                      id={`h-${d.themeKey}`}
-                      value={d.headlines.join("\n")}
-                      onChange={(e) => update(d.themeKey, { headlines: lines(e.target.value) })}
-                      rows={8}
-                      style={{ ...input, fontFamily: "inherit", resize: "vertical" }}
-                    />
-                  </div>
-                  <div>
-                    <label style={label} htmlFor={`d-${d.themeKey}`}>
-                      Beskrivelser — én pr. linje, højst 90 tegn
-                    </label>
-                    <textarea
-                      id={`d-${d.themeKey}`}
-                      value={d.descriptions.join("\n")}
-                      onChange={(e) => update(d.themeKey, { descriptions: lines(e.target.value) })}
-                      rows={8}
-                      style={{ ...input, fontFamily: "inherit", resize: "vertical" }}
-                    />
-                  </div>
-                </div>
+        {grupper.length > 0 && (
+          <h2 style={{ fontSize: "15px", margin: "22px 0 10px" }}>
+            {grupper.length} annoncegruppe{grupper.length === 1 ? "" : "r"} af de valgte fraser
+          </h2>
+        )}
 
-                <div style={{ display: "flex", gap: "10px", alignItems: "center", marginTop: "10px", flexWrap: "wrap" }}>
-                  <span style={{ fontSize: "12px", color: "#888" }}>
-                    Landingsside: <strong style={{ color: "#222" }}>{d.finalUrl}</strong>
-                  </span>
-                  <button onClick={() => regenerate(d)} style={{ ...button, padding: "5px 10px" }}>
-                    Skriv teksten om efter valgte keywords
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+        {grupper.map((g) => (
+          <div key={g.nøgle} style={card}>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
+              <input
+                value={g.name}
+                onChange={(e) => patch(g.nøgle, { name: e.target.value })}
+                aria-label="Gruppenavn"
+                style={{ ...input, flex: "1 1 340px", fontWeight: 600 }}
+              />
+              <span style={{ fontSize: "12px", color: "#888" }}>
+                Bud{" "}
+                <input
+                  type="number"
+                  min={1}
+                  max={50}
+                  step={0.5}
+                  value={kr(g.bidMicros)}
+                  onChange={(e) => patch(g.nøgle, { bidMicros: Math.round(Number(e.target.value) * 1_000_000) })}
+                  aria-label={`Bud for ${g.name}`}
+                  style={{ ...input, width: "80px", display: "inline-block" }}
+                />{" "}
+                kr
+              </span>
+              <span style={{ fontSize: "12px", color: g.cluster.volume ? "#1e7e34" : "#b58900", fontWeight: 600 }}>
+                {g.cluster.volume || 0} søgninger/md
+              </span>
+            </div>
 
-        {product && (
-          <div style={{ ...card, position: "sticky", bottom: 0 }}>
-            {result.length > 0 && (
-              <div style={banner(blocking.length || error ? "#fdecea" : "#e6f4ea", blocking.length || error ? "#c0392b" : "#1e7e34")}>
-                {result.map((r) => (
-                  <div key={r}>{r}</div>
-                ))}
+            <p style={{ fontSize: "13px", color: "#555", margin: "10px 0 0" }}>
+              {g.cluster.keywords.join(" · ")}
+            </p>
+
+            {g.problems.length > 0 && (
+              <div style={{ ...banner("#fdecea", "#c0392b"), marginTop: "12px", marginBottom: 0 }}>
+                {g.problems.map((p) => <div key={p}>{p}</div>)}
               </div>
             )}
-            {blocking.length > 0 && (
+
+            <div style={{ display: "grid", gap: "12px", gridTemplateColumns: "1fr 1fr", marginTop: "14px" }}>
+              <div>
+                <label style={label} htmlFor={`h-${g.nøgle}`}>Overskrifter — én pr. linje, højst 30 tegn</label>
+                <textarea
+                  id={`h-${g.nøgle}`}
+                  value={g.headlines.join("\n")}
+                  onChange={(e) => patch(g.nøgle, { headlines: lines(e.target.value) })}
+                  rows={8}
+                  style={{ ...input, fontFamily: "inherit", resize: "vertical" }}
+                />
+              </div>
+              <div>
+                <label style={label} htmlFor={`d-${g.nøgle}`}>Beskrivelser — én pr. linje, højst 90 tegn</label>
+                <textarea
+                  id={`d-${g.nøgle}`}
+                  value={g.descriptions.join("\n")}
+                  onChange={(e) => patch(g.nøgle, { descriptions: lines(e.target.value) })}
+                  rows={8}
+                  style={{ ...input, fontFamily: "inherit", resize: "vertical" }}
+                />
+              </div>
+            </div>
+
+            <p style={{ fontSize: "12px", color: "#888", margin: "10px 0 0" }}>
+              Landingsside: <strong style={{ color: "#222" }}>{g.finalUrl}</strong>
+            </p>
+          </div>
+        ))}
+
+        {grupper.length > 0 && (
+          <div style={{ ...card, position: "sticky", bottom: 0 }}>
+            {result.length > 0 && (
+              <div style={banner(error ? "#fdecea" : "#e6f4ea", error ? "#c0392b" : "#1e7e34")}>
+                {result.map((r) => <div key={r}>{r}</div>)}
+              </div>
+            )}
+            {blokerende.length > 0 && (
               <div style={banner("#fff8e1", "#8a6d3b")}>
-                {blocking.length} ting skal rettes, før der kan uploades.
+                {blokerende.length} ting skal rettes, før der kan uploades.
               </div>
             )}
             <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
-              <button
-                onClick={() => send("validate")}
-                disabled={!chosen.length || !!blocking.length || !!busy || !data?.adsConfigured}
-                style={button}
-              >
+              <button onClick={() => send("validate")} disabled={!!blokerende.length || !!busy || !data?.adsConfigured} style={button}>
                 {busy === "validate" ? "Spørger Google…" : "Valider hos Google"}
               </button>
-              <button
-                onClick={() => send("create")}
-                disabled={!chosen.length || !!blocking.length || !!busy || !data?.adsConfigured}
-                style={primaryButton}
-              >
-                {busy === "create" ? "Opretter…" : `Opret ${chosen.length} grupper (pauset)`}
+              <button onClick={() => send("create")} disabled={!!blokerende.length || !!busy || !data?.adsConfigured} style={primaryButton}>
+                {busy === "create" ? "Opretter…" : `Opret ${grupper.length} grupper (pauset)`}
               </button>
-              <span style={{ fontSize: "12px", color: "#888" }}>
-                {chosen.reduce((n, d) => n + d.selected.size, 0)} keywords i alt
-              </span>
+              <span style={{ fontSize: "12px", color: "#888" }}>{valgte.size} keywords i alt</span>
             </div>
           </div>
         )}

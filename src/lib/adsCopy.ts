@@ -13,7 +13,7 @@
 
 // Relative importer: filen læses også af Pages Functions, som ikke kender @/-aliaset
 import { addons, PAUSEDE_SIDER } from "./products";
-import type { IntentTheme } from "./adsIntent";
+import type { Cluster } from "./adsIntent";
 
 export const HEADLINE_MAX = 30;
 export const DESCRIPTION_MAX = 90;
@@ -105,7 +105,7 @@ function pathSegment(page: string): string | undefined {
 }
 
 /**
- * Annoncetekst for ét tema.
+ * Annoncetekst for én annoncegruppe.
  *
  * Kandidatlisterne er længere end der er plads til — `pick` tager de første,
  * der holder sig under tegngrænsen. Det er med vilje: et langt produktnavn
@@ -113,10 +113,10 @@ function pathSegment(page: string): string | undefined {
  */
 export function buildAdCopy(
   product: AdCopyProduct,
-  theme: IntentTheme,
+  cluster: Cluster,
   { deliveryPrice = DEFAULT_DELIVERY_PRICE }: { deliveryPrice?: number } = {},
 ): AdCopy {
-  const kw = theme.primary;
+  const kw = cluster.primary;
   const navn = product.name;
   const pris = `${product.price} kr.`;
   // Kender vi ikke leveringsprisen, siger annoncen ingenting om levering

@@ -15,7 +15,7 @@ import {
   validateFinalUrl,
   type AdCopyProduct,
 } from "@/lib/adsCopy";
-import { intentThemes } from "@/lib/adsIntent";
+import { clusterKeywords } from "@/lib/adsIntent";
 import { PAUSEDE_SIDER, addons, rentalProducts, speakers } from "@/lib/products";
 
 const SIDER = [
@@ -31,7 +31,14 @@ const ROEG: AdCopyProduct = {
   contents: ["Røgmaskine", "1 liter røgvæske", "Fjernbetjening"],
 };
 
-const temaer = intentThemes(["røgmaskine"]);
+// Rigtige søgefraser, som Google har volumen på — ikke opfundne af os
+const temaer = clusterKeywords([
+  { text: "lej røgmaskine", volume: 50 },
+  { text: "leje af røgmaskine", volume: 40 },
+  { text: "røgmaskine leje", volume: 40 },
+  { text: "røgmaskine udlejning", volume: 10 },
+  { text: "lej røgmaskine københavn", volume: 10 },
+]);
 
 describe("buildAdCopy", () => {
   it("holder sig under Googles tegngrænser i alle temaer", () => {
@@ -77,7 +84,7 @@ describe("buildAdCopy", () => {
   it("bevarer produktnavnets egen skrivemåde i overskriften", () => {
     // Keywordet er skrevet med småt; produktet hedder Mackie Thump GO
     const mackie = { name: "Mackie Thump GO", price: 395, page: "/mackie-thump-go" };
-    const copy = buildAdCopy(mackie, intentThemes(["mackie thump go"])[0]);
+    const copy = buildAdCopy(mackie, clusterKeywords(["lej mackie thump go"])[0]);
     expect(copy.headlines[0]).toBe("Lej Mackie Thump GO");
   });
 

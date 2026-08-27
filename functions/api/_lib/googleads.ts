@@ -443,60 +443,133 @@ export async function listKeywords(env: GoogleAdsEnv): Promise<ExistingKeyword[]
     }));
 }
 
-/* ───── Søgevolumen ───── */
+/* ───── Keyword-opdagelse ───── */
 
 /** Dansk og Danmark — kontoens sprog og land. */
 const LANGUAGE_DA = "languageConstants/1009";
 const GEO_DENMARK = "geoTargetConstants/2208";
 /** Googles loft for frø-keywords i ét kald. */
-const IDEA_BATCH = 20;
+const SEED_MAX = 20;
+
+export interface KeywordIdea {
+  text: string;
+  /** Gennemsnitlige månedlige søgninger i Danmark. */
+  volume: number;
+  competition: string | null;
+}
 
 /**
- * Gennemsnitlige månedlige søgninger pr. frase.
+ * Hvad folk faktisk søger på — spurgt hos Google, ikke gættet.
  *
- * Uden det her tal genererer værktøjet præcis de tomme annoncegrupper,
- * kontoen har for mange af i forvejen: produktnavne er ikke søgefraser, og en
- * gruppe på en frase ingen søger på koster tid at vedligeholde og giver
- * ingenting. Fraser Google ikke kender igen, får `null` — det er ikke det
- * samme som nul søgninger.
+ * Det her er hele forskellen på et brugbart værktøj og en tekstgenerator.
+ * Bygger man fraser ud af produktnavnet, får man "lej mackie thump go",
+ * "mackie thump go udlejning", "lej mackie thump go til fest" — nitten
+ * varianter, alle med nul søgninger. Spørger man i stedet Google med
+ * produktSIDEN som frø, kommer det rigtige svar tilbage: `lej højtaler` 210
+ * om måneden, `leje af højtaler` 210, `højtaler til leje` 210. Efterspørgslen
+ * findes, den ligger bare aldrig i produktnavnet.
+ *
+ * `url` er produktsidens adresse. Google læser siden og foreslår ud fra den,
+ * og det er den enkeltkilde, der giver mest.
  */
-export async function keywordVolume(
+export async function keywordIdeas(
   env: GoogleAdsEnv,
-  texts: string[],
-  { language = LANGUAGE_DA }: { language?: string } = {},
-): Promise<Record<string, number | null>> {
+  { url, seeds = [], language = LANGUAGE_DA }: { url?: string; seeds?: string[]; language?: string },
+): Promise<KeywordIdea[]> {
   requireConfig(env);
-  if (!texts.length) return {};
   const token = await accessToken(env);
   const cid = digitsOnly(env.GOOGLE_ADS_CUSTOMER_ID!);
 
-  const out: Record<string, number | null> = {};
-  for (const text of texts) out[text.toLowerCase()] = null;
+  const keywords = seeds.map((s) => s.trim()).filter(Boolean).slice(0, SEED_MAX);
+  if (!url && !keywords.length) return [];
 
-  for (let i = 0; i < texts.length; i += IDEA_BATCH) {
-    const batch = texts.slice(i, i + IDEA_BATCH);
-    const res = await fetch(`${API_HOST}/${API_VERSION}/customers/${cid}:generateKeywordIdeas`, {
-      method: "POST",
-      headers: headers(env, token),
-      body: JSON.stringify({
-        language,
-        geoTargetConstants: [GEO_DENMARK],
-        keywordPlanNetwork: "GOOGLE_SEARCH",
-        includeAdultKeywords: false,
-        keywordSeed: { keywords: batch },
-      }),
+  // Googles tre frø-former udelukker hinanden — vælg den rigeste vi har
+  const seed = url && keywords.length
+    ? { keywordAndUrlSeed: { url, keywords } }
+    : url
+      ? { urlSeed: { url } }
+      : { keywordSeed: { keywords } };
+
+  const res = await fetch(`${API_HOST}/${API_VERSION}/customers/${cid}:generateKeywordIdeas`, {
+    method: "POST",
+    headers: headers(env, token),
+    body: JSON.stringify({
+      language,
+      geoTargetConstants: [GEO_DENMARK],
+      keywordPlanNetwork: "GOOGLE_SEARCH",
+      includeAdultKeywords: false,
+      ...seed,
+    }),
+  });
+  if (!res.ok) throw await explain(res);
+
+  const json = (await res.json()) as {
+    results?: Array<{
+      text?: string;
+      keywordIdeaMetrics?: { avgMonthlySearches?: string; competition?: string };
+    }>;
+  };
+
+  const out = new Map<string, KeywordIdea>();
+  for (const r of json.results ?? []) {
+    const text = (r.text ?? "").trim().toLowerCase();
+    if (!text) continue;
+    out.set(text, {
+      text,
+      volume: Number(r.keywordIdeaMetrics?.avgMonthlySearches ?? 0) || 0,
+      competition: r.keywordIdeaMetrics?.competition ?? null,
     });
-    if (!res.ok) throw await explain(res);
-    const json = (await res.json()) as {
-      results?: Array<{ text?: string; keywordIdeaMetrics?: { avgMonthlySearches?: string } }>;
-    };
-    for (const r of json.results ?? []) {
-      const key = (r.text ?? "").toLowerCase();
-      if (!(key in out)) continue;
-      out[key] = Number(r.keywordIdeaMetrics?.avgMonthlySearches ?? 0) || 0;
-    }
   }
-  return out;
+  return [...out.values()].sort((a, b) => b.volume - a.volume);
+}
+
+export interface SearchTerm {
+  text: string;
+  impressions: number;
+  clicks: number;
+  adGroupName: string;
+}
+
+/**
+ * Det kunderne rent faktisk har skrevet, før de klikkede.
+ *
+ * Googles idéer er estimater; det her er kvitteringer. En søgeterm med klik
+ * er bevis på både efterspørgsel og at vores annonce var relevant nok til at
+ * blive valgt — og den slags er værd at have som sit eget keyword.
+ */
+export async function listSearchTerms(
+  env: GoogleAdsEnv,
+  { from, to }: { from: string; to: string },
+): Promise<SearchTerm[]> {
+  requireConfig(env);
+  const token = await accessToken(env);
+  const cid = digitsOnly(env.GOOGLE_ADS_CUSTOMER_ID!);
+
+  const rows = await search<{
+    searchTermView: { searchTerm: string };
+    adGroup?: { name?: string };
+    metrics?: { impressions?: string; clicks?: string };
+  }>(
+    env,
+    token,
+    cid,
+    `SELECT search_term_view.search_term, ad_group.name,
+            metrics.impressions, metrics.clicks
+     FROM search_term_view
+     WHERE segments.date BETWEEN '${from}' AND '${to}'`,
+  );
+
+  // Samme søgeterm kan optræde i flere grupper og flere dage — læg sammen
+  const merged = new Map<string, SearchTerm>();
+  for (const r of rows) {
+    const text = (r.searchTermView?.searchTerm ?? "").trim().toLowerCase();
+    if (!text) continue;
+    const row = merged.get(text) ?? { text, impressions: 0, clicks: 0, adGroupName: r.adGroup?.name ?? "" };
+    row.impressions += Number(r.metrics?.impressions) || 0;
+    row.clicks += Number(r.metrics?.clicks) || 0;
+    merged.set(text, row);
+  }
+  return [...merged.values()].sort((a, b) => b.clicks - a.clicks || b.impressions - a.impressions);
 }
 
 /* ───── Oprettelse ───── */

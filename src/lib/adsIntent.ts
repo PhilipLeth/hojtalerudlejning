@@ -1,197 +1,218 @@
-/* ───── Intent-grammatik til Google Ads ─────
+/* ───── Intent-grammatik: klassificering, ikke generering ─────
  *
- * Én søgning efter "soundboks" og én efter "lej soundboks" er ikke den samme
- * kunde. Kontoens egne tal siger det tydeligt: "diskokugle" gav 238 visninger
- * og 3 klik, mens "lej soundboks" gav 167 visninger og 24 klik. Det er
- * lejeordet der adskiller en der vil leje fra en der vil købe en lampe.
+ * Filen genererede tidligere keywords ud af produktnavnet: "lej {navn}",
+ * "{navn} udlejning", "lej {navn} til fest" og så videre. Det gav nitten
+ * fraser for Mackie Thump GO — og nul søgninger på dem alle. Google siger
+ * 40 om måneden på produktnavnet selv og 210 på "lej højtaler". Kunden
+ * søger på kategorien, ikke på modellen, og det kan ingen permutation vide.
  *
- * Modulet her laver ét produkts søgetermer om til de temaer, en dansker
- * faktisk skriver i søgefeltet. Mønstrene er ikke fundet på — de er aflæst af
- * søgetermerapporten for kontoen (441-020-7627, seneste 180 dage):
+ * Keywords kommer nu fra Google (`keywordIdeas`) og fra kontoens egne
+ * søgetermer. Grammatikken herunder bruges til det, den er god til: at
+ * genkende HVILKEN slags lejesøgning en frase er, så de valgte keywords kan
+ * samles i stramme annoncegrupper.
  *
- *   lej soundboks           167 visninger    soundboks leje          100
- *   lej en soundboks        118              soundboks udlejning      40
- *   leje soundboks           74              lej soundboks københavn  18
- *   leje af soundboks        50              soundboks til leje       12
- *
- * Fraserne er phrase match. Det er grunden til at lejeordet skal stå i selve
- * frasen: "lyseffekter til fest" fanger ikke "leje af lyseffekter", så en
- * kombinatorisk generering ud fra produktnavnet ville lave grupper der aldrig
- * viser noget. Fraser uden lejeord får `bofu: false` og er fravalgt som
- * udgangspunkt.
+ * Mønstrene er aflæst af kontoens søgetermerapport:
+ *   lej soundboks 167 visn.   soundboks leje 100    soundboks udlejning 40
+ *   lej en soundboks 118      leje af soundboks 50  lej soundboks kbh 18
  */
 
-/** Tema = én annoncegruppe. Fem er standardsættet; de sidste to er tilvalg. */
-export type ThemeKey = "lej" | "leje" | "suffix" | "udlejning" | "geo" | "anledning" | "en";
+export type ThemeKey = "lej" | "leje" | "suffix" | "udlejning" | "geo" | "anledning" | "en" | "generisk";
 
-export interface IntentKeyword {
-  text: string;
-  matchType: "PHRASE";
-  /**
-   * Står der et lejeord i frasen? Uden det er søgningen lige så meget et køb
-   * som en leje, og phrase match kan ikke skelne.
-   */
-  bofu: boolean;
-}
-
-export interface IntentTheme {
-  key: ThemeKey;
-  /** Menneskelæsbart tema, bruges i annoncegruppens navn. */
-  label: string;
-  /** Den frase annoncens overskrift og beskrivelse skal bære. */
-  primary: string;
-  keywords: IntentKeyword[];
-}
-
-export interface IntentOptions {
-  /** Byer der sættes bag geo-fraserne. Kontoen kører på København. */
-  geo?: string[];
-  /** Anledninger til anledningstemaet. */
-  occasions?: string[];
-  /** Tag det engelske tema med. Kun når produktet har en engelsk side. */
-  english?: boolean;
-}
-
-const DEFAULT_GEO = ["københavn"];
-const DEFAULT_OCCASIONS = ["fest"];
+export const THEME_LABELS: Record<ThemeKey, string> = {
+  lej: "Lej",
+  leje: "Leje af",
+  suffix: "Til leje",
+  udlejning: "Udlejning",
+  geo: "Geo",
+  anledning: "Anledning",
+  en: "Rental (EN)",
+  generisk: "Uden lejeord",
+};
 
 /**
  * Ord der gør en frase til en lejesøgning.
- *
- * Matches på hele ord, ikke på tekststumper — ellers ville "lejlighed" tælle
- * som et lejeord, og "leje" ville skjule sig i "lejemål".
+ * Matches på hele ord — ellers ville "lejlighed" tælle med.
  */
 const RENTAL_WORDS = new Set([
   "lej", "leje", "lejer", "lejes",
-  "udlejning", "udlej", "udlejes",
+  "udlejning", "udlej", "udlejes", "udlejer",
   "lån", "låne",
   "rent", "rents", "rental", "hire",
 ]);
 
-/** Små ord der ikke skal gøre en frase unik når vi luger dubletter ud. */
-function normalize(text: string): string {
+/** Byer vi kender i kontoens søgetermer. */
+const GEO_WORDS = new Set([
+  "københavn", "kbh", "frederiksberg", "amager", "roskilde", "valby",
+  "nørrebro", "østerbro", "vesterbro", "hellerup", "gentofte", "sjælland",
+]);
+
+/** Anledninger fra kontoens egne søgetermer og landingssider. */
+const OCCASION_WORDS = new Set([
+  "fest", "bryllup", "konfirmation", "fødselsdag", "julefrokost",
+  "nytår", "polterabend", "havefest", "firmafest", "student", "studenterfest",
+]);
+
+const ENGLISH_WORDS = new Set(["rent", "rents", "rental", "hire", "a"]);
+
+export function words(text: string): string[] {
   return text
     .toLowerCase()
     .replace(/[^\p{Letter}\p{Number}\s-]/gu, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+    .split(/[\s-]+/)
+    .filter(Boolean);
 }
 
 /** Indeholder frasen et lejeord som selvstændigt ord? */
 export function hasRentalWord(text: string): boolean {
-  return normalize(text).split(/[\s-]+/).some((w) => RENTAL_WORDS.has(w));
+  return words(text).some((w) => RENTAL_WORDS.has(w));
 }
 
 /**
- * Søgetermer som udgangspunkt for et produktnavn.
+ * Hvilken slags lejesøgning er det her?
  *
- * Kun et udgangspunkt: produktnavne er ikke søgefraser. "Soundboks 4" hedder
- * "soundboks" i søgefeltet, og halvdelen staver det "soundbox". Listen er
- * ment til at blive rettet i hånden (gemmes pr. produkt i KV `ads_terms`).
+ * Rækkefølgen betyder noget: en frase med både lejeord og by er en
+ * geo-søgning, for det er byen der gør annoncen anderledes.
+ */
+export function classify(text: string): ThemeKey {
+  const w = words(text);
+  if (!w.length) return "generisk";
+
+  if (w.some((x) => ENGLISH_WORDS.has(x) && x !== "a")) return "en";
+  if (!hasRentalWord(text)) return "generisk";
+  if (w.some((x) => GEO_WORDS.has(x))) return "geo";
+  if (w.some((x) => OCCASION_WORDS.has(x))) return "anledning";
+  if (w.includes("udlejning") || w.includes("udlej") || w.includes("udlejes")) return "udlejning";
+
+  // Står lejeordet først, er det "lej X"; står det sidst, er det "X leje"
+  if (w[0] === "lej") return "lej";
+  if (w[0] === "leje") return "leje";
+  if (RENTAL_WORDS.has(w[w.length - 1])) return "suffix";
+  return "leje";
+}
+
+/** Ord der beskriver intentionen frem for produktet. */
+const INTENT_NOISE = new Set([
+  ...RENTAL_WORDS, ...GEO_WORDS, ...OCCASION_WORDS, ...ENGLISH_WORDS,
+  "af", "til", "en", "et", "og", "i", "på", "med", "the", "for",
+]);
+
+/**
+ * Produktordene i frasen — det frasen egentlig handler om.
+ * "leje af højtaler københavn" → "højtaler".
+ */
+export function headTerm(text: string): string {
+  return words(text).filter((w) => !INTENT_NOISE.has(w)).join(" ");
+}
+
+/**
+ * Grov stamme, kun til at lægge ental og flertal i samme bunke.
+ *
+ * Hvordan stammen ser ud er ligegyldigt — det eneste krav er, at "højtaler"
+ * og "højtalere" lander samme sted. Derfor skrælles der gentagne gange:
+ * ét gennemløb gav "højtal" og "højtaler", altså to grupper for det samme
+ * produkt. Bunden på fire tegn holder korte ord som "lys" og "bar" hele.
+ */
+function stem(word: string): string {
+  const ENDINGS = ["erne", "ene", "er", "e", "r"];
+  let out = word;
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const end of ENDINGS) {
+      if (out.length - end.length >= 4 && out.endsWith(end)) {
+        out = out.slice(0, -end.length);
+        changed = true;
+        break;
+      }
+    }
+  }
+  return out;
+}
+
+function bucketKey(text: string): string {
+  const head = headTerm(text).split(" ").map(stem).sort().join(" ");
+  return `${classify(text)}|${head}`;
+}
+
+export interface KeywordInput {
+  text: string;
+  volume?: number;
+}
+
+export interface Cluster {
+  key: ThemeKey;
+  /** Produktordene gruppen deler, fx "højtaler". */
+  head: string;
+  label: string;
+  /** Frasen annoncen skal bære — den mest søgte i gruppen. */
+  primary: string;
+  keywords: string[];
+  /** Summeret søgevolumen. Nul betyder: lad være med at bygge gruppen. */
+  volume: number;
+}
+
+/**
+ * Saml valgte keywords i stramme annoncegrupper.
+ *
+ * Én gruppe = samme produktord og samme slags lejesøgning. "lej højtaler" og
+ * "leje af højtaler" hører sammen; "højtaler udlejning" og "lej højtaler
+ * københavn" gør ikke — de fortjener hver deres annoncetekst, og det er hele
+ * pointen med at dele op.
+ */
+export function clusterKeywords(input: Array<KeywordInput | string>): Cluster[] {
+  const rows = input
+    .map((k) => (typeof k === "string" ? { text: k, volume: 0 } : { text: k.text, volume: k.volume ?? 0 }))
+    .map((k) => ({ ...k, text: k.text.trim().toLowerCase() }))
+    .filter((k) => k.text);
+
+  const buckets = new Map<string, typeof rows>();
+  for (const row of rows) {
+    const key = bucketKey(row.text);
+    const list = buckets.get(key) ?? [];
+    if (!list.some((r) => r.text === row.text)) list.push(row);
+    buckets.set(key, list);
+  }
+
+  const out: Cluster[] = [];
+  for (const list of buckets.values()) {
+    const sorted = [...list].sort((a, b) => b.volume - a.volume || a.text.localeCompare(b.text, "da"));
+    const key = classify(sorted[0].text);
+    out.push({
+      key,
+      head: headTerm(sorted[0].text),
+      label: THEME_LABELS[key],
+      primary: sorted[0].text,
+      keywords: sorted.map((r) => r.text),
+      volume: sorted.reduce((sum, r) => sum + r.volume, 0),
+    });
+  }
+  return out.sort((a, b) => b.volume - a.volume);
+}
+
+/**
+ * Frø til Google — ikke keywords.
+ *
+ * Forskellen er hele forskellen: et frø er noget vi giver Google for at få
+ * rigtige søgefraser tilbage. Produktnavnet er et fint frø og et elendigt
+ * keyword.
  */
 export function seedTerms(name: string): string[] {
-  const base = normalize(name)
-    // Modelnumre søger ingen på: "Soundboks 4" → "soundboks"
-    .replace(/\s+\d+(\s|$)/g, " ")
-    .trim();
+  const base = words(name).join(" ").replace(/\s+\d+(\s|$)/g, " ").trim();
   const out = [base];
   for (const [from, to] of Object.entries(SPELLING_VARIANTS)) {
     if (base.includes(from)) out.push(base.replace(from, to));
   }
-  return dedupe(out).filter(Boolean);
+  return [...new Set(out.filter(Boolean))];
 }
 
-/**
- * Stavemåder danskerne rent faktisk bruger, målt på søgetermerne.
- * "højtaler" slår den korrekte stavemåde "højttaler" 13:1 i kontoens data,
- * så begge skal med — vi retter ikke kunden.
- *
- * Kun ægte stavevarianter står her, ikke flertalsformer. Phrase match dækker
- * selv ental/flertal, og "røgmaskiner" som selvstændig term gav mønstret
- * "lej en røgmaskiner", som ingen skriver.
- */
+/** Stavemåder danskerne bruger — "højtaler" slår "højttaler" 13:1 i kontoen. */
 const SPELLING_VARIANTS: Record<string, string> = {
   soundboks: "soundbox",
   diskokugle: "discokugle",
   højtaler: "højttaler",
 };
 
-function dedupe(list: string[]): string[] {
-  const seen = new Set<string>();
-  const out: string[] = [];
-  for (const item of list) {
-    const key = normalize(item);
-    if (!key || seen.has(key)) continue;
-    seen.add(key);
-    out.push(key);
-  }
-  return out;
-}
-
-/** Mønstrene pr. tema. `{t}` er søgetermen. */
-const PATTERNS: Record<Exclude<ThemeKey, "geo" | "anledning">, { label: string; forms: string[] }> = {
-  lej: { label: "Lej", forms: ["lej {t}", "lej en {t}"] },
-  leje: { label: "Leje af", forms: ["leje {t}", "leje af {t}"] },
-  suffix: { label: "Til leje", forms: ["{t} leje", "{t} til leje", "{t} lej"] },
-  udlejning: { label: "Udlejning", forms: ["{t} udlejning", "udlejning af {t}"] },
-  en: { label: "Rental (EN)", forms: ["rent {t}", "rent a {t}", "{t} rental", "{t} hire"] },
-};
-
-function build(forms: string[], terms: string[]): IntentKeyword[] {
-  const texts = dedupe(terms.flatMap((t) => forms.map((f) => f.replace("{t}", t))));
-  return texts.map((text) => ({ text, matchType: "PHRASE" as const, bofu: hasRentalWord(text) }));
-}
-
-/**
- * Temaerne for ét produkt.
- *
- * Rækkefølgen er bevidst: de fem første er standardsættet man tænder, og de
- * er sorteret efter hvor meget trafik mønstret har vist i kontoen.
- */
-export function intentThemes(terms: string[], opts: IntentOptions = {}): IntentTheme[] {
-  const t = dedupe(terms);
-  if (!t.length) return [];
-
-  const geo = opts.geo ?? DEFAULT_GEO;
-  const occasions = opts.occasions ?? DEFAULT_OCCASIONS;
-
-  const themes: IntentTheme[] = [
-    theme("lej", PATTERNS.lej.label, build(PATTERNS.lej.forms, t)),
-    theme("leje", PATTERNS.leje.label, build(PATTERNS.leje.forms, t)),
-    theme("suffix", PATTERNS.suffix.label, build(PATTERNS.suffix.forms, t)),
-    theme("udlejning", PATTERNS.udlejning.label, build(PATTERNS.udlejning.forms, t)),
-    theme(
-      "geo",
-      "Geo",
-      build(geo.flatMap((by) => [`lej {t} ${by}`, `{t} leje ${by}`]), t),
-    ),
-    theme(
-      "anledning",
-      "Anledning",
-      build(occasions.flatMap((a) => [`lej {t} til ${a}`, `leje af {t} til ${a}`]), t),
-    ),
-  ];
-
-  if (opts.english) {
-    themes.push(theme("en", PATTERNS.en.label, build(PATTERNS.en.forms, t)));
-  }
-
-  // Samme frase må kun optræde i ét tema — ellers byder vi mod os selv i
-  // auktionen, præcis som AG 1 gør mod AG 4 på "leje af soundbox" i dag.
-  const seen = new Set<string>();
-  return themes
-    .map((th) => ({
-      ...th,
-      keywords: th.keywords.filter((k) => !seen.has(k.text) && (seen.add(k.text), true)),
-    }))
-    .filter((th) => th.keywords.length > 0);
-}
-
-function theme(key: ThemeKey, label: string, keywords: IntentKeyword[]): IntentTheme {
-  return { key, label, primary: keywords[0]?.text ?? "", keywords };
-}
-
-/** Annoncegruppens navn. Fast konvention, så den kan læses i Google Ads-UI'et. */
-export function adGroupName(productName: string, theme: IntentTheme): string {
-  return `${productName} — ${theme.label}`;
+/** Annoncegruppens navn. Fast konvention, så den kan læses i Google Ads. */
+export function adGroupName(productName: string, cluster: Cluster): string {
+  return `${productName} — ${cluster.label}: ${cluster.head}`;
 }

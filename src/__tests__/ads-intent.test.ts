@@ -1,85 +1,119 @@
 /**
- * Grammatikken skal ramme virkeligheden, ikke være smuk.
+ * Grammatikken skal genkende lejesøgninger, ikke opfinde dem.
  *
- * Prøven er kontoens egen søgetermerapport: de fraser folk faktisk har søgt på
- * og klikket i, skal generatoren kunne producere. Kan den ikke det, laver den
- * grupper der aldrig viser noget — og dem har kontoen 35 af i forvejen.
+ * Den genererede tidligere keywords ud af produktnavnet. For Mackie Thump GO
+ * gav det nitten fraser med nul søgninger hver, mens Google samtidig kunne
+ * fortælle at "lej højtaler" søges 210 gange om måneden. Kunden søger på
+ * kategorien, ikke på modellen — og det kan ingen permutation vide.
+ *
+ * Nu kommer fraserne udefra, og grammatikkens opgave er at samle de valgte i
+ * stramme annoncegrupper.
  */
 import { describe, it, expect } from "vitest";
 import {
   adGroupName,
+  classify,
+  clusterKeywords,
   hasRentalWord,
-  intentThemes,
+  headTerm,
   seedTerms,
 } from "@/lib/adsIntent";
 
-/**
- * Målt på 441-020-7627, søgetermer med mindst 8 visninger de seneste 180 dage.
- * Tallet i kommentaren er visninger.
- */
-const FAKTISKE_SOUNDBOKS_SOEGNINGER = [
-  "lej soundboks",            // 167
-  "lej en soundboks",         // 118
-  "soundboks leje",           // 100
-  "leje soundboks",           //  74
-  "leje af soundboks",        //  50
-  "soundboks udlejning",      //  40
-  "lej soundboks københavn",  //  18
-  "soundboks lej",            //  17
-  "udlejning af soundboks",   //  17
-  "soundbox leje",            //  16
-  "leje soundbox",            //  15
-  "lej soundbox",             //  13
-  "leje af soundbox",         //  12
-  "soundboks til leje",       //  12
-  "soundboks leje københavn", //  10
-  "lej en soundbox",          //   9
-];
-
-function alleKeywords(terms: string[]) {
-  return intentThemes(terms).flatMap((t) => t.keywords.map((k) => k.text));
-}
-
-describe("intentThemes", () => {
-  it("genskaber alle de soundboks-søgninger kontoen rent faktisk har fået", () => {
-    const genereret = new Set(alleKeywords(["soundboks", "soundbox"]));
-    const mangler = FAKTISKE_SOUNDBOKS_SOEGNINGER.filter((s) => !genereret.has(s));
-    expect(mangler).toEqual([]);
+describe("classify", () => {
+  it("kender de fem mønstre fra kontoens egne søgetermer", () => {
+    expect(classify("lej soundboks")).toBe("lej");
+    expect(classify("leje af soundboks")).toBe("leje");
+    expect(classify("soundboks leje")).toBe("suffix");
+    expect(classify("soundboks udlejning")).toBe("udlejning");
+    expect(classify("lej soundboks københavn")).toBe("geo");
   });
 
-  it("giver fem temaer som standardsæt", () => {
-    const keys = intentThemes(["røgmaskine"]).map((t) => t.key);
-    expect(keys.slice(0, 5)).toEqual(["lej", "leje", "suffix", "udlejning", "geo"]);
+  it("lader byen vinde over lejeordet — det er byen der ændrer annoncen", () => {
+    expect(classify("lej højtaler københavn")).toBe("geo");
+    expect(classify("højtaler leje kbh")).toBe("geo");
   });
 
-  it("tager kun det engelske tema med når man beder om det", () => {
-    expect(intentThemes(["speaker"]).map((t) => t.key)).not.toContain("en");
-    expect(intentThemes(["speaker"], { english: true }).map((t) => t.key)).toContain("en");
+  it("kender anledninger", () => {
+    expect(classify("lej højtaler til fest")).toBe("anledning");
+    expect(classify("leje af lys til bryllup")).toBe("anledning");
   });
 
-  it("lader ikke samme frase optræde i to temaer", () => {
-    // Ellers byder vi mod os selv i auktionen — det er dét AG 1 gør mod AG 4 i dag
-    const alle = alleKeywords(["højtaler", "højttaler"]);
-    expect(new Set(alle).size).toBe(alle.length);
+  it("kender engelsk", () => {
+    expect(classify("speaker rental")).toBe("en");
+    expect(classify("rent a soundboks")).toBe("en");
   });
 
-  it("sætter bofu på alle fraser i de fire lejetemaer", () => {
-    const temaer = intentThemes(["røgmaskine"]);
-    for (const t of temaer.filter((x) => ["lej", "leje", "suffix", "udlejning"].includes(x.key))) {
-      for (const k of t.keywords) {
-        expect(k.bofu, `${t.key}: ${k.text}`).toBe(true);
-      }
-    }
+  it("mærker fraser uden lejeord som generiske", () => {
+    // 58 af kontoens 120 mest viste søgetermer er sådanne her.
+    // "diskokugle" gav 238 visninger og 3 klik — de skal kunne vælges fra.
+    expect(classify("diskokugle")).toBe("generisk");
+    expect(classify("transportabel højtaler")).toBe("generisk");
+  });
+});
+
+describe("headTerm", () => {
+  it("skræller intentionen af og efterlader produktet", () => {
+    expect(headTerm("leje af højtaler københavn")).toBe("højtaler");
+    expect(headTerm("lej en soundboks til fest")).toBe("soundboks");
+    expect(headTerm("højtaler udlejning")).toBe("højtaler");
+  });
+});
+
+describe("clusterKeywords", () => {
+  it("samler Googles egne forslag for højtalersiden i stramme grupper", () => {
+    // Præcis de idéer generateKeywordIdeas gav for /mackie-thump-go
+    const grupper = clusterKeywords([
+      { text: "lej højtaler", volume: 210 },
+      { text: "leje højtaler", volume: 210 },
+      { text: "leje af højtaler", volume: 210 },
+      { text: "lej en højtaler", volume: 210 },
+      { text: "leje højtalere", volume: 210 },
+      { text: "højtaler leje", volume: 210 },
+      { text: "højtaler til leje", volume: 210 },
+      { text: "højtaler udlejning", volume: 50 },
+      { text: "udlejning af højtaler", volume: 50 },
+      { text: "udlejning højtalere", volume: 50 },
+    ]);
+
+    const nøgler = grupper.map((g) => g.key);
+    expect(new Set(nøgler)).toEqual(new Set(["lej", "leje", "suffix", "udlejning"]));
+
+    const udlejning = grupper.find((g) => g.key === "udlejning")!;
+    // Ental og flertal hører i samme gruppe
+    expect(udlejning.keywords).toContain("udlejning højtalere");
+    expect(udlejning.keywords).toContain("højtaler udlejning");
+    expect(udlejning.volume).toBe(150);
   });
 
-  it("er tom uden søgetermer", () => {
-    expect(intentThemes([])).toEqual([]);
-    expect(intentThemes(["   "])).toEqual([]);
+  it("lader den mest søgte frase bære annoncen", () => {
+    const [gruppe] = clusterKeywords([
+      { text: "leje af røgmaskine", volume: 40 },
+      { text: "leje røgmaskine", volume: 90 },
+    ]);
+    expect(gruppe.primary).toBe("leje røgmaskine");
   });
 
-  it("bruger phrase match hele vejen igennem", () => {
-    const typer = intentThemes(["subwoofer"]).flatMap((t) => t.keywords.map((k) => k.matchType));
-    expect(new Set(typer)).toEqual(new Set(["PHRASE"]));
+  it("blander ikke to produkter sammen", () => {
+    const grupper = clusterKeywords(["lej højtaler", "lej røgmaskine"]);
+    expect(grupper).toHaveLength(2);
+  });
+
+  it("sorterer de mest søgte grupper øverst", () => {
+    const grupper = clusterKeywords([
+      { text: "lej røgmaskine", volume: 50 },
+      { text: "lej højtaler", volume: 210 },
+    ]);
+    expect(grupper[0].head).toBe("højtaler");
+  });
+
+  it("tåler dubletter og tom indtastning", () => {
+    expect(clusterKeywords(["lej højtaler", "Lej Højtaler", " "])).toHaveLength(1);
+    expect(clusterKeywords([])).toEqual([]);
+  });
+
+  it("regner volumen sammen, så en gruppe uden efterspørgsel kan ses", () => {
+    const [gruppe] = clusterKeywords([{ text: "lej mackie thump go", volume: 0 }]);
+    expect(gruppe.volume).toBe(0);
   });
 });
 
@@ -91,7 +125,6 @@ describe("hasRentalWord", () => {
   });
 
   it("lader sig ikke narre af ord der bare starter ens", () => {
-    // "lejlighed" og "lejemål" er ikke lejeord i vores forstand
     for (const s of ["diskokugle", "lejlighed til fest", "lejemål københavn", "fest udstyr"]) {
       expect(hasRentalWord(s), s).toBe(false);
     }
@@ -99,32 +132,15 @@ describe("hasRentalWord", () => {
 });
 
 describe("seedTerms", () => {
-  it("klipper modelnummeret af — ingen søger på 'soundboks 4'", () => {
-    expect(seedTerms("Soundboks 4")).toContain("soundboks");
-  });
-
-  it("tager stavemåden folk faktisk bruger med", () => {
-    expect(seedTerms("Soundboks 4")).toContain("soundbox");
-    // "højtaler" er forkert dansk og slår "højttaler" 13:1 i kontoens søgetermer
-    expect(seedTerms("Højtaler")).toEqual(["højtaler", "højttaler"]);
-  });
-
-  it("lader flerordsnavne stå", () => {
+  it("giver frø til Google, ikke færdige keywords", () => {
+    expect(seedTerms("Soundboks 4")).toEqual(["soundboks", "soundbox"]);
     expect(seedTerms("Mackie Thump GO")).toEqual(["mackie thump go"]);
-  });
-
-  it("laver ikke flertalsformer — de gav 'lej en røgmaskiner'", () => {
-    // Phrase match dækker selv ental/flertal; en flertalsterm gav bare
-    // mønstre ingen skriver
-    expect(seedTerms("Røgmaskine")).toEqual(["røgmaskine"]);
-    const alle = intentThemes(seedTerms("Røgmaskine")).flatMap((t) => t.keywords.map((k) => k.text));
-    expect(alle).not.toContain("lej en røgmaskiner");
   });
 });
 
 describe("adGroupName", () => {
-  it("følger en fast konvention der kan læses i Google Ads", () => {
-    const tema = intentThemes(["røgmaskine"])[0];
-    expect(adGroupName("Røgmaskine", tema)).toBe("Røgmaskine — Lej");
+  it("siger både produkt, mønster og produktord", () => {
+    const [gruppe] = clusterKeywords([{ text: "lej højtaler", volume: 210 }]);
+    expect(adGroupName("Mackie Thump GO", gruppe)).toBe("Mackie Thump GO — Lej: højtaler");
   });
 });
