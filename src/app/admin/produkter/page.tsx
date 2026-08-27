@@ -20,6 +20,7 @@ import { DEFAULT_ADMIN_CATALOG, loadAdminCatalog } from "@/lib/useAdminCatalog";
 import { useLager } from "@/lib/useLager";
 import { StockField } from "@/components/admin/StockField";
 import ImageField from "@/components/admin/ImageField";
+import GalleryField from "@/components/admin/GalleryField";
 import VideoField from "@/components/admin/VideoField";
 import CreateProductModal, { type ProductType } from "@/components/admin/CreateProductModal";
 
@@ -446,6 +447,7 @@ export default function AdminProdukterPage() {
                     })
                   }
                 />
+                {sp.page && <GalleryField productId={sp.id} productName={sp.da.name} erPakke={false} />}
               </div>
               {(["da", "en"] as const).map((loc) => (
                 <div key={loc} style={{ marginTop: "16px", borderTop: "1px solid #eee", paddingTop: "12px" }}>
@@ -517,6 +519,9 @@ export default function AdminProdukterPage() {
                   Skjul på siden
                 </label>
                 <AllowedAddonsField allAddons={addons} value={r.allowedAddons} onChange={(v) => updateRental(i, { allowedAddons: v })} />
+                {r.page && (
+                  <GalleryField productId={r.id} productName={r.name_da} erPakke={!!r.bundle?.parts?.length} />
+                )}
               </div>
               <div style={{ marginTop: "12px" }}>
                 <Field
@@ -577,6 +582,7 @@ export default function AdminProdukterPage() {
                   <input type="checkbox" checked={!!a.hidden} onChange={(e) => updateAddon(i, { hidden: e.target.checked })} />
                   Skjul på siden
                 </label>
+                {a.page && <GalleryField productId={a.id} productName={a.da.label} erPakke={false} />}
               </div>
               <div style={{ marginTop: "12px" }}>
                 <Field

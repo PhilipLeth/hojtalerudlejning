@@ -3550,7 +3550,7 @@
     "aabent": "Mixerfotoene er AI-genererede og viser en generisk mixer, ikke Frederiks konkrete Yamaha — et telefonfoto af den rigtige på gul baggrund er bedre. DBA-annoncerne står stadig i Højbjerg; det kræver login på boost.dba.dk. Annoncegruppe 6 kan flyttes tilbage til /lysshow, nu hvor siden findes. Og de tre lagertests i lager.test.tsx er flaky under parallel kørsel — de består 36/36 alene, men flere sessioner bygger i samme repo samtidig."
   },
   "produktgalleri_2026_08": {
-    "status": "pipeline klar — venter på GEMINI_API_KEY",
+    "status": "live",
     "date": "2026-08-26",
     "hvad": "AI-genererede billeder af vores eget grej, vist som galleri på produktsiderne. Tre scener per produkt: 'Alt det du får' (pakkens dele stillet op sammen, eller enkeltproduktet med det der ligger i kassen), 'Sådan ser det ud til festen' (oplevelsen — udstyret sat op det sted, det bliver lejet til) og 'Tæt på'.",
     "hvorfor_referencer": "Modellen får vores egne produktfotos med som referencebilleder, slået op i kataloget. En pakke er defineret af sine dele i products.ts, så prompten følger med af sig selv, når pakken ændrer indhold. Samme regel som videoannoncerne: en udlejningsforretning kan ikke reklamere med udstyr, den ikke har.",
@@ -3566,6 +3566,14 @@
     "koer": "npm run gallery (plan + estimat, intet forbrug) · npm run gallery -- --apply · --only <produkt-id> · --scene <scene-id> · --force · npm run gallery:manifest",
     "maerkning": "Hvert billede bærer en 'Illustration'-mærkat i hjørnet, alt-teksten ender på '(illustration)', og det store billede har en linje om at det er genereret ud fra fotos af vores eget udstyr. Markedsføringsloven skelner ikke mellem 'vi mente det godt' og 'billedet lovede noget andet'. produktgalleri.test.tsx fejler, hvis mærkaten forsvinder.",
     "sikkerhedsnet": "Manifestet skrives ud fra de filer, der findes — ikke ud fra planen, så en halv kørsel giver et halvt galleri frem for 404'ere. Pausede produkter får intet galleri (en test låser det). Findes filen, springes kaldet over.",
-    "naeste": "1) GEMINI_API_KEY i .dev.vars, så billederne kan genereres. 2) Gennemse dem enkeltvis før commit — en model der har digtet en fremmed højtaler ind skal fanges her. 3) Overvej en knap i /admin/produkter, der kan gengenerere ét produkt uden deploy."
+    "naeste": "Se billederne efter i sømmene på produktsiderne. Et billede, hvor modellen har digtet fremmed grej ind, laves om med \"Lav om\" i admin — det koster 0,13 $ og kræver ikke et deploy.",
+    "to_veje_ind": {
+      "script": "npm run gallery — hele kataloget på én gang. Billederne bliver til WebP i public/images/gallery/ og committes; de serveres som statiske filer fra CDN'en.",
+      "knap": "/admin/produkter → fold et produkt ud → \"Galleri\" nederst i kortet. Én knap pr. scene med prisen på. Forslaget vises i browseren og gemmes INGEN steder, før der trykkes \"Brug det\" — så komprimeres det i browseren, uploades gennem /api/upload til R2 og skrives i KV-manifestet. \"Lav om\" og \"Fjern\" gør det samme igen.",
+      "hvem_vinder": "useGallery slår de to sammen: admins billede vinder over det committede for samme scene. Samme princip som produktkataloget — koden er udgangspunktet, admin kan overskrive uden et deploy."
+    },
+    "api": "functions/api/gallery.ts. GET er offentligt (manifestet), POST kræver admin og kender generate/publish/remove. Prompten bygges af src/lib/galleryPrompt.ts — samme modul som scriptet, så knappen og terminalen ikke kan lave hver sin slags billede.",
+    "loft": "MAANEDSLOFT = 250 billeder pr. måned (~33 $), talt i KV som gallery_forbrug_<år-måned>. Tælleren stiger først når kaldet er lykkedes, så en fejl ikke koster af loftet. Rammes loftet, svarer API'et 429 med en besked om hvor tallet står.",
+    "noegle": "GEMINI_API_KEY ligger både i .dev.vars (scriptet) og som Cloudflare Pages secret på speaker-rental/production (knappen). Skiftes den, skal begge steder opdateres: wrangler pages secret put GEMINI_API_KEY --project-name=speaker-rental"
   }
 }

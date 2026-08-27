@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { galleryFor, ratioTal, type GalleryImage } from "@/lib/productGallery";
+import { ratioTal, type GalleryImage } from "@/lib/productGallery";
+import { useGallery } from "@/lib/useGallery";
 import type { Locale } from "@/lib/i18n";
 
 /**
@@ -59,7 +60,8 @@ export default function ProductGallery({
   name: string;
   locale?: Locale;
 }) {
-  const billeder = galleryFor(productId);
+  // Både de committede billeder og dem, admin har lavet med knappen
+  const billeder = useGallery(productId);
   const c = COPY[locale];
   const [aaben, setAaben] = useState<number | null>(null);
 

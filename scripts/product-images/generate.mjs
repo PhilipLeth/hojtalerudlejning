@@ -23,6 +23,7 @@
  * aistudio.google.com → Get API key.
  *
  *   node scripts/product-images/generate.mjs                  # plan + estimat
+ *   node scripts/product-images/generate.mjs --prompts        # alle prompts på skrift
  *   node scripts/product-images/generate.mjs --apply
  *   node scripts/product-images/generate.mjs --apply --only pakke_bryllup
  *   node scripts/product-images/generate.mjs --apply --scene i_brug
@@ -47,148 +48,36 @@ const MANIFEST = join(ROD, "src", "lib", "productGallery.ts");
  * den direkte. Alternativet — at parse filen med regex eller at vedligeholde en
  * kopi af kataloget her — ville drive fra hinanden ved første prisændring.
  */
-async function laesKatalog() {
+async function laesModuler() {
   const { createServer } = await import("vite");
   const server = await createServer({
     configFile: false,
     server: { middlewareMode: true },
     appType: "custom",
     logLevel: "error",
+    // Samme alias som tsconfig, ellers kan galleryPrompt ikke finde "@/lib/products"
+    resolve: { alias: { "@": join(ROD, "src") } },
   });
   try {
-    return await server.ssrLoadModule("/src/lib/products.ts");
+    return {
+      katalog: await server.ssrLoadModule("/src/lib/products.ts"),
+      prompt: await server.ssrLoadModule("/src/lib/galleryPrompt.ts"),
+    };
   } finally {
     await server.close();
   }
 }
 
-/** Ét opslag for alle tre produkttyper — de har hver sit feltnavn til det samme. */
-function fladtKatalog(kat) {
-  const ud = new Map();
-  for (const s of kat.speakers) {
-    ud.set(s.id, {
-      id: s.id, type: "speaker", page: s.page, hidden: !!s.hidden,
-      navn: s.da.name, navn_en: s.en.name,
-      billede: s.product, kapacitet: s.da.capacity, kapacitet_en: s.en.capacity,
-      indhold: s.contents ?? [], dele: null, kategori: "lyd",
-    });
-  }
-  for (const a of kat.addons) {
-    ud.set(a.id, {
-      id: a.id, type: "addon", page: a.page, hidden: !!a.hidden,
-      navn: a.da.label, navn_en: a.en.label,
-      billede: a.image, kapacitet: null, kapacitet_en: null,
-      indhold: a.contents ?? [], dele: null, kategori: "lyd",
-    });
-  }
-  for (const r of kat.rentalProducts) {
-    ud.set(r.id, {
-      id: r.id, type: "rental", page: r.page, hidden: !!r.hidden,
-      navn: r.name_da, navn_en: r.name_en,
-      billede: r.image, kapacitet: null, kapacitet_en: null,
-      indhold: r.contents ?? [],
-      dele: r.bundle?.parts?.length ? r.bundle.parts.map((d) => d.productId) : null,
-      kategori: r.category,
-    });
-  }
-  return ud;
-}
-
-/** Gæstetallet står i pakkestigen, ikke på produktet. */
-function kapacitetFor(p, kat) {
-  if (p.kapacitet) return [p.kapacitet, p.kapacitet_en ?? p.kapacitet];
-  const trin = kat.LADDER_FEST.find((t) => t.productId === p.id);
-  if (trin) return [`${trin.gaester} gæster`, `${trin.gaester.replace("op til", "up to")} guests`];
-  return [null, null];
-}
-
-/* ───── referencebilleder ───── */
+/* Kataloget, referencerne og prompten bygges i src/lib/galleryPrompt.ts, så
+ * scriptet og knappen i /admin/produkter ikke kan komme til at lave hver sin
+ * slags billede af det samme produkt. Her er kun det, terminalen kan og
+ * browseren ikke: filer på disken, WebP-komprimering og et manifest.
+ */
 
 function stiTilBillede(rel) {
   if (!rel || !rel.startsWith("/images/")) return null;
   const fil = join(ROD, "public", rel.replace(/^\//, ""));
   return existsSync(fil) ? fil : null;
-}
-
-/**
- * Hvilke produktfotos der sendes med.
- *
- * "alle" er pakkens dele — dubletter slået sammen, for Festpakke 250 lister
- * den samme højtaler to gange, og to identiske referencer lærer modellen
- * ingenting nyt. "hoved" er de tre første; en scene med seks ting i skarphed
- * bliver et katalogbillede, ikke en oplevelse.
- */
-function referencer(p, flad, hvilke, maks) {
-  const ider = p.dele ? [...new Set(p.dele)] : [p.id];
-  const valgte = hvilke === "hoved" ? ider.slice(0, 3) : ider;
-  const fundet = [];
-  const mangler = [];
-  for (const id of valgte) {
-    const del = flad.get(id);
-    const sti = del ? stiTilBillede(del.billede) : null;
-    if (sti) fundet.push({ id, navn: del.navn, navn_en: del.navn_en, sti });
-    else mangler.push(id);
-  }
-  return { billeder: fundet.slice(0, maks), skaaret: fundet.slice(maks).map((r) => r.id), mangler };
-}
-
-/* ───── prompt ───── */
-
-function udfyld(skabelon, felter) {
-  return skabelon.replace(/\{(\w+)\}/g, (hel, navn) => (felter[navn] ?? hel));
-}
-
-/** Delene som en engelsk opremsning — prompten er engelsk, produktnavnene har en en-udgave. */
-function engelskListe(dele) {
-  const navne = dele.map((d) => d.navn_en || d.navn);
-  if (navne.length <= 1) return navne[0] ?? "";
-  return `${navne.slice(0, -1).join(", ")} and ${navne[navne.length - 1]}`;
-}
-
-function byg(p, scene, cfg, flad, kat) {
-  const maks = cfg.spec.max_referencer;
-  const ref = referencer(p, flad, scene.referencer, maks);
-  const hoved = referencer(p, flad, "hoved", 3);
-  const [kap, kapEn] = kapacitetFor(p, kat);
-  const over = cfg.produkter?.[p.id] ?? {};
-  const stedNoegle = over.sted ?? cfg.standard_sted[p.kategori] ?? "fest";
-  const g = cfg._gaester;
-
-  const felter = {
-    navn: p.navn,
-    navn_en: p.navn_en,
-    navn_lav: p.navn.charAt(0).toLowerCase() + p.navn.slice(1),
-    navn_en_lav: p.navn_en.charAt(0).toLowerCase() + p.navn_en.slice(1),
-    dele: engelskListe(ref.billeder),
-    hoveddele: engelskListe(hoved.billeder),
-    // Uden en indholdsliste ville prompten stå med "og intet andet: ." —
-    // så beskriver vi i stedet kablet, der altid følger med.
-    indhold: p.indhold.length ? p.indhold.join(", ") : "its own cable and nothing else",
-    sted: cfg.steder[stedNoegle],
-    opstilling: over.opstilling ?? "",
-    kapacitet: kap ?? "",
-    kapacitet_en: kapEn ?? "",
-    gaester_da: kap ? udfyld(g.med_tal_da, { kapacitet: kap }) : g.uden_tal_da,
-    gaester_en: kapEn ? udfyld(g.med_tal_en, { kapacitet_en: kapEn }) : g.uden_tal_en,
-  };
-
-  const prompt = [
-    udfyld(scene.prompt, felter),
-    cfg.stil.faelles,
-    cfg.stil.kamera_hoejde,
-    cfg.stil.forbudt,
-  ].join(" ");
-
-  return {
-    prompt,
-    referencer: ref.billeder,
-    skaaret: ref.skaaret,
-    mangler: ref.mangler,
-    alt_da: udfyld(scene.alt_da, felter),
-    alt_en: udfyld(scene.alt_en, felter),
-    caption_da: udfyld(scene.caption_da, felter),
-    caption_en: udfyld(scene.caption_en, felter),
-  };
 }
 
 /* ───── API ───── */
@@ -215,7 +104,9 @@ function mimeFor(sti) {
 async function generer(opgave, cfg, noegle) {
   const input = [{ type: "text", text: opgave.prompt }];
   for (const r of opgave.referencer) {
-    input.push({ type: "image", mime_type: mimeFor(r.sti), data: readFileSync(r.sti).toString("base64") });
+    const sti = stiTilBillede(r.billede);
+    if (!sti) continue;
+    input.push({ type: "image", mime_type: mimeFor(sti), data: readFileSync(sti).toString("base64") });
   }
 
   const svar = await fetch(cfg.spec.endpoint, {
@@ -360,7 +251,7 @@ export function ratioTal(ratio: string): number {
 
 /* ───── plan ───── */
 
-function byggeplan(cfg, kat, flad, filter) {
+function byggeplan(cfg, pm, flad, filter) {
   const opgaver = [];
   for (const p of flad.values()) {
     if (p.hidden) continue;
@@ -368,21 +259,20 @@ function byggeplan(cfg, kat, flad, filter) {
     // billede uden en side at stå på er en udgift uden en plads at bruges.
     if (!p.page) continue;
     if (filter.only && !filter.only.includes(p.id)) continue;
-    if (!stiTilBillede(p.billede) && !p.dele) continue;
 
-    for (const scene of cfg.scener) {
+    for (const scene of pm.scenerFor(p)) {
       if (filter.scene && scene.id !== filter.scene) continue;
-      // "Alt det du får" har to udgaver: pakkens dele stillet op sammen, og
-      // enkeltproduktet med det, der ligger i kassen. Kun den ene giver mening.
-      if (scene.kun === "pakker" && !p.dele) continue;
-      if (scene.kun === "enkelt" && p.dele) continue;
-      const bygget = byg(p, scene, cfg, flad, kat);
-      if (bygget.referencer.length === 0) continue; // intet at vise modellen
+      const bygget = pm.byggPrompt(p, scene, flad);
+      if (!bygget) continue; // intet produktfoto at vise modellen
+      // Referencer der peger på R2 (/api/image/…) kan kun hentes af knappen i
+      // admin, ikke af et script på en bærbar uden netværk til produktionen.
+      const lokale = bygget.referencer.filter((r) => stiTilBillede(r.billede));
+      if (lokale.length === 0) continue;
       opgaver.push({
         produkt: p,
         scene,
-        ratio: scene.ratio,
         ...bygget,
+        referencer: lokale,
         raaSti: join(RAA_DIR, p.id, `${scene.id}.png`),
         udSti: join(UD_DIR, p.id, `${scene.id}.webp`),
       });
@@ -401,6 +291,7 @@ function argv() {
     apply: har("--apply"),
     force: har("--force"),
     kunManifest: har("--manifest"),
+    prompts: har("--prompts"),
     only: vaerdi("--only")?.split(",").map((s) => s.trim()),
     scene: vaerdi("--scene"),
   };
@@ -409,9 +300,9 @@ function argv() {
 async function main() {
   const flag = argv();
   const cfg = JSON.parse(readFileSync(CONFIG, "utf8"));
-  const kat = await laesKatalog();
-  const flad = fladtKatalog(kat);
-  const opgaver = byggeplan(cfg, kat, flad, flag);
+  const { katalog, prompt: pm } = await laesModuler();
+  const flad = pm.fladtKatalog(katalog);
+  const opgaver = byggeplan(cfg, pm, flad, flag);
 
   if (flag.kunManifest) {
     const n = skrivManifest(opgaver, cfg);
@@ -440,8 +331,9 @@ async function main() {
   }
 
   if (!flag.apply) {
-    console.log("Tør kørsel. Første tre prompts:\n");
-    for (const o of mangler.slice(0, 3)) {
+    const vis = flag.prompts ? mangler : mangler.slice(0, 3);
+    console.log(flag.prompts ? "Tør kørsel. Alle prompts:\n" : "Tør kørsel. Første tre prompts (--prompts for alle):\n");
+    for (const o of vis) {
       const antal = o.referencer.length === 1 ? "1 reference" : `${o.referencer.length} referencer`;
       console.log(`── ${o.produkt.id} / ${o.scene.id} (${o.ratio}, ${antal}: ${o.referencer.map((r) => r.id).join(", ")})`);
       console.log(o.prompt + "\n");

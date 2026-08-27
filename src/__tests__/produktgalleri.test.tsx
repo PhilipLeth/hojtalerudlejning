@@ -95,7 +95,13 @@ describe("gallery/scenes.json", () => {
   it("prompten forbyder opdigtet udstyr", () => {
     // Hele grunden til at vi sender produktfotos med som reference
     expect(scener.stil.forbudt).toMatch(/must be one of the referenced products/i);
-    expect(scener.stil.forbudt).toMatch(/no logos|no brand names/i);
+    expect(scener.stil.forbudt).toMatch(/no made-up brand names|no added logos/i);
+  });
+
+  it("men tillader produktets eget mærke", () => {
+    // Første kørsel viste hvorfor: et blankt logoforbud fjernede Mackie-mærket
+    // fra en Mackie-højtaler. Det er den højtaler, vi udlejer — mærket skal med.
+    expect(scener.stil.forbudt).toMatch(/its own markings/i);
   });
 });
 
@@ -128,13 +134,12 @@ const FAKE: GalleryImage[] = [
   },
 ];
 
-vi.mock("@/lib/productGallery", async (importOriginal) => {
-  const ægte = await importOriginal<typeof import("@/lib/productGallery")>();
-  return {
-    ...ægte,
-    galleryFor: (id: string) => (id === "test_produkt" ? FAKE : ægte.galleryFor(id)),
-  };
-});
+// Komponenten henter galleriet gennem useGallery, som slår de committede
+// billeder sammen med dem, admin har lavet. Her interesserer vi os for hvad
+// komponenten GØR med billederne — sammenlægningen har sin egen test.
+vi.mock("@/lib/useGallery", () => ({
+  useGallery: (id: string) => (id === "test_produkt" ? FAKE : []),
+}));
 
 const { default: ProductGallery } = await import("@/components/ProductGallery");
 
