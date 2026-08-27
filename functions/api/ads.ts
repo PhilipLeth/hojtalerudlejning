@@ -110,6 +110,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
     // Udsolgt = intet tilbage at tage imod, heller ikke JIT
     const inventory = pair.bookable;
+    // Falder tilbage på kodens katalog, hvis KV er tomt. CatalogMissingError
+    // kastes kun hvis koden også er tom — altså et fejlbyggeri, ikke en
+    // driftstilstand — men svaret skal stadig være til at forstå.
     let catalog;
     try {
       catalog = productCatalog(catalogRaw);

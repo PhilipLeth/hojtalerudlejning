@@ -1856,7 +1856,8 @@
       ],
       "verificeret": "googleAds:mutate med midlertidige resource-navne og generateKeywordIdeas kørt mod 441-020-7627 med validateOnly — begge 200. Volumen for røgmaskine: lej røgmaskine 50/md, røgmaskine leje 40, leje af røgmaskine 40, lej en røgmaskine 20.",
       "gaeld": "Step 1 er byggeriet. Kvalitetstjek af landingssider, automatisk pause på udsolgt, keyword-inventaret og forslag til sidetekst er ikke bygget. De nye grupper er bundet til produkt og side fra dag ét, så de kan tændes bagefter uden at røre datamodellen."
-    }
+    },
+    "katalog_kilde_2026_08_27": "functions/api/_lib/catalog.ts krævede et katalog i KV og kastede uden. Men at nulstille KV-kataloget er den TILSIGTEDE måde at lade src/lib/products.ts slå igennem på — og gjorde man det, kørte forsiden, bookingen og priserne videre på kodens katalog, mens /api/ads, /api/ads-build, /api/udsalg og kampagnerabatten svarede 'Intet produktkatalog i KV'. Serveren var uenig med det, kunden faktisk så. productCatalog() falder nu tilbage på koden, præcis som pricing.ts, bundlePartsFromCatalog() og useProducts() altid har gjort. Ikke en fletning: er der gemt et katalog i KV, gælder det alene, så et produkt admin har slettet ikke kommer igen nedefra. Kataloget bærer nu også page, contents og hidden, så ads-build kunne droppe sin egen kopi af kataloglæsningen."
   },
   "tasks": [
     {

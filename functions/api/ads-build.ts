@@ -37,6 +37,7 @@ import {
 } from "./_lib/googleads";
 import { adGroupName, intentThemes, seedTerms, type IntentTheme } from "../../src/lib/adsIntent";
 import { buildAdCopy, validateAdCopy, type AdCopy } from "../../src/lib/adsCopy";
+import { productCatalog, type CatalogProduct } from "./_lib/catalog";
 import { PAUSEDE_SIDER } from "../../src/lib/products";
 import { hasEnglish } from "../../src/lib/enPages";
 
@@ -84,74 +85,17 @@ async function readJson<T>(kv: KVNamespace, key: string, fallback: T): Promise<T
   }
 }
 
-/* ───── Kataloget, med de felter annoncerne har brug for ───── */
-
-export interface AdsProduct {
-  id: string;
-  name: string;
-  price: number;
-  page: string | null;
-  contents?: string[];
-  hidden: boolean;
-}
-
-type RawProduct = {
-  id?: string;
-  name?: string;
-  name_da?: string;
-  price?: number;
-  page?: string;
-  hidden?: boolean;
-  contents?: string[];
-  da?: { name?: string; label?: string };
-};
-
-function productName(p: RawProduct): string {
-  return p.name || p.name_da || p.da?.name || p.da?.label || p.id || "";
-}
-
-/**
- * Katalogets produkter med side og indhold.
- *
- * _lib/catalog.ts giver kun id, navn og pris — annoncerne skal også bruge
- * landingssiden og hvad der er med i pakken, så her læses den rå struktur.
- */
-export function adsCatalog(saved: unknown): AdsProduct[] {
-  if (!saved || typeof saved !== "object") return [];
-  const groups = saved as Record<string, RawProduct[] | null>;
-  const out: AdsProduct[] = [];
-  const seen = new Set<string>();
-
-  for (const list of Object.values(groups)) {
-    for (const p of list ?? []) {
-      if (!p?.id || seen.has(p.id)) continue;
-      const price = Number(p.price);
-      if (!Number.isFinite(price) || price < 0) continue;
-      seen.add(p.id);
-      out.push({
-        id: p.id,
-        name: productName(p) || p.id,
-        price,
-        page: typeof p.page === "string" && p.page.startsWith("/") ? p.page : null,
-        contents: Array.isArray(p.contents) ? p.contents.filter((c) => typeof c === "string") : undefined,
-        hidden: p.hidden === true,
-      });
-    }
-  }
-  return out.sort((a, b) => a.name.localeCompare(b.name, "da"));
-}
-
 /**
  * Prisen for levering én vej, som annonceteksten skriver.
  * Hentes af det levende katalog — står den anderledes i KV end i koden, er
  * det KV der gælder for kunden, og så skal annoncen sige det samme.
  */
-function deliveryPrice(catalog: AdsProduct[]): number {
+function deliveryPrice(catalog: CatalogProduct[]): number {
   return catalog.find((p) => p.id === "levering_ud")?.price ?? 0;
 }
 
 /** Sider vi må sende trafik til, og sider vi ikke må. */
-function pageSets(catalog: AdsProduct[]): { known: string[]; paused: string[] } {
+function pageSets(catalog: CatalogProduct[]): { known: string[]; paused: string[] } {
   const known: string[] = [];
   const paused = new Set(PAUSEDE_SIDER);
   for (const p of catalog) {
@@ -192,7 +136,7 @@ interface ProposedGroup {
 }
 
 function proposeGroups(
-  product: AdsProduct,
+  product: CatalogProduct,
   themes: IntentTheme[],
   volumes: Record<string, number | null>,
   existing: Map<string, ExistingKeyword>,
@@ -251,10 +195,9 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       readJson<Record<string, string[]>>(kv, KV_MAPPING, {}),
     ]);
 
-    const catalog = adsCatalog(catalogRaw);
-    if (!catalog.length) {
-      return json({ error: "Intet produktkatalog i KV. Gem kataloget under /admin/produkter." }, 503);
-    }
+    // productCatalog falder tilbage på kodens katalog, hvis KV er tomt — så
+    // annoncerne bygges på præcis det, kunden ser på sitet
+    const catalog = productCatalog(catalogRaw);
 
     const products = catalog.map((p) => ({
       id: p.id,
@@ -450,10 +393,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       return json({ error: `Højst ${MAX_GROUPS_PER_REQUEST} grupper ad gangen` }, 400);
     }
 
-    const catalog = adsCatalog(await readJson<unknown>(kv, KV_CATALOG, null));
-    if (!catalog.length) {
-      return json({ error: "Intet produktkatalog i KV." }, 503);
-    }
+    const catalog = productCatalog(await readJson<unknown>(kv, KV_CATALOG, null));
     const product = catalog.find((p) => p.id === body.productId);
     if (!product) return json({ error: `Ukendt produkt: ${body.productId}` }, 404);
 
