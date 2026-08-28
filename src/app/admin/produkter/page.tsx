@@ -532,7 +532,7 @@ export default function AdminProdukterPage() {
                     <option value="stor">Stor</option>
                   </select>
                 </div>
-                <ImageField label="Produktbillede" value={sp.product} onChange={(v) => updateSpeaker(i, { product: v })} />
+                <ImageField label="Produktbillede" value={sp.product} onChange={(v) => updateSpeaker(i, { product: v })} aiProductId={sp.id} />
                 <ImageField label="Stemningsbillede" value={sp.mood} onChange={(v) => updateSpeaker(i, { mood: v })} />
                 <VideoField label="Produktvideo (instruktion/demo)" value={sp.video ?? ""} onChange={(v) => updateSpeaker(i, { video: v || undefined })} />
                 <Field
@@ -621,7 +621,7 @@ export default function AdminProdukterPage() {
                     <option value="lyd">Lyd</option>
                   </select>
                 </div>
-                <ImageField label="Produktbillede" value={r.image} onChange={(v) => updateRental(i, { image: v })} />
+                <ImageField label="Produktbillede" value={r.image} onChange={(v) => updateRental(i, { image: v })} aiProductId={r.id} />
                 <VideoField label="Produktvideo (instruktion/demo)" value={r.video ?? ""} onChange={(v) => updateRental(i, { video: v || undefined })} />
                 <Field
                   label="YouTube-URL (producentvideo)"
@@ -700,7 +700,7 @@ export default function AdminProdukterPage() {
                     labelStyle={labelStyle}
                   />
                 )}
-                <ImageField label="Billede (tom = intet)" value={a.image ?? ""} onChange={(v) => updateAddon(i, { image: v || null })} />
+                <ImageField label="Billede (tom = intet)" value={a.image ?? ""} onChange={(v) => updateAddon(i, { image: v || null })} aiProductId={a.id} />
                 <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", alignSelf: "end", paddingBottom: "8px" }}>
                   <input type="checkbox" checked={!!a.hidden} onChange={(e) => updateAddon(i, { hidden: e.target.checked })} />
                   Skjul på siden

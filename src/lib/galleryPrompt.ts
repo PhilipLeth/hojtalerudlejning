@@ -19,6 +19,13 @@ export interface GalleryScene {
   id: string;
   /** "pakker" eller "enkelt" — scenen springes over for den anden slags produkt */
   kun?: string;
+  /**
+   * Scenen laver produktets katalogbillede, ikke et galleribillede.
+   *
+   * Den hører ikke til i galleriet og skal ikke med i scriptets plan: resultatet
+   * skrives i produktets image-felt fra /admin/produkter, ikke i manifestet.
+   */
+  katalogfoto?: boolean;
   titel_da: string;
   titel_en: string;
   /** Fx "16:9" */
@@ -30,6 +37,14 @@ export interface GalleryScene {
   alt_en: string;
   caption_da: string;
   caption_en: string;
+  /**
+   * Regler der skal stå EFTER fritekstem.
+   *
+   * Katalogfotoets ramme — hvid baggrund, kun produktet — blev overskrevet af
+   * en kommentar som "vis kun én højtaler forfra": modellen satte den på et
+   * stativ i et studie med softbokse. Det der står sidst, vejer tungest.
+   */
+  efter_note?: string;
 }
 
 export interface GallerySpec {
@@ -47,6 +62,14 @@ export interface GallerySpec {
 
 export const GALLERY_SPEC = scener.spec as GallerySpec;
 export const GALLERY_SCENER = scener.scener as GalleryScene[];
+
+/** Scenen der laver selve produktfotoet — den ene der ikke hører til i galleriet. */
+export const KATALOG_SCENE = GALLERY_SCENER.find((s) => s.katalogfoto)!;
+
+/** Alle scener, også katalogfotoet — til opslag på id fra API'et. */
+export function sceneMedId(id: string): GalleryScene | undefined {
+  return GALLERY_SCENER.find((s) => s.id === id);
+}
 
 /** Ét fladt produkt — de tre produkttyper har hver sit feltnavn til det samme. */
 export interface FladtProdukt {
@@ -108,6 +131,7 @@ export function fladtKatalog(kat: Katalog): Map<string, FladtProdukt> {
  */
 export function scenerFor(p: FladtProdukt): GalleryScene[] {
   return GALLERY_SCENER.filter((s) => {
+    if (s.katalogfoto) return false; // hører til billedfeltet, ikke galleriet
     if (s.kun === "pakker" && !p.dele) return false;
     if (s.kun === "enkelt" && p.dele) return false;
     return true;
@@ -169,6 +193,8 @@ function kapacitetFor(p: FladtProdukt): [string | null, string | null] {
 
 export interface ByggetPrompt {
   prompt: string;
+  /** Fritekstem der kom med, renset og afkortet — vises tilbage i admin */
+  note?: string;
   ratio: string;
   referencer: Reference[];
   /** Dele der ikke kunne komme med, fordi modellen kun holder så mange i skarphed */
@@ -192,6 +218,12 @@ export function byggPrompt(
   p: FladtProdukt,
   scene: GalleryScene,
   flad: Map<string, FladtProdukt>,
+  /**
+   * Fritekst fra den, der trykker: "det samme uden stativer", "tættere på",
+   * "om vinteren". Sættes ind mellem scenens beskrivelse og de faste regler,
+   * så den kan vinde over scenen — men aldrig over forbuddet mod at digte grej.
+   */
+  note?: string,
 ): ByggetPrompt | null {
   const ref = referencerFor(p, flad, scene.referencer);
   if (ref.billeder.length === 0) return null;
@@ -219,13 +251,20 @@ export function byggPrompt(
     gaester_en: kapEn ? udfyld(g.med_tal_en, { kapacitet_en: kapEn }) : g.uden_tal_en,
   };
 
+  const ren = (note ?? "").replace(/\s+/g, " ").trim().slice(0, scener.fritekst.maks_tegn);
+
   return {
     prompt: [
       udfyld(scene.prompt, felter),
+      ren ? udfyld(scener.fritekst.skabelon, { note: ren }) : "",
+      scene.efter_note ?? "",
       scener.stil.faelles,
       scener.stil.kamera_hoejde,
       scener.stil.forbudt,
-    ].join(" "),
+    ]
+      .filter(Boolean)
+      .join(" "),
+    note: ren || undefined,
     ratio: scene.ratio,
     referencer: ref.billeder,
     skaaret: ref.skaaret,

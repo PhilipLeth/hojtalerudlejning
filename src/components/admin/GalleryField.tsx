@@ -42,6 +42,8 @@ const STATUS: Record<SceneStatus, { tekst: string; farve: string }> = {
 /** Scenerne for et produkt — pakker og enkeltprodukter har hver sin "alt det du får". */
 export function scenerTil(erPakke: boolean): GalleryScene[] {
   return GALLERY_SCENER.filter((s) => {
+    // Produktfotoet hører til billedfeltet ovenfor, ikke i galleriet
+    if (s.katalogfoto) return false;
     if (s.kun === "pakker" && !erPakke) return false;
     if (s.kun === "enkelt" && erPakke) return false;
     return true;
@@ -123,6 +125,12 @@ export default function GalleryField({
   const [fejl, setFejl] = useState("");
   const [note, setNote] = useState("");
   const [forbrug, setForbrug] = useState<{ brugt: number; loft: number } | null>(null);
+  /**
+   * Fritekst pr. scene: "det samme uden stativer", "tættere på", "om vinteren".
+   * Den følger med til modellen og vinder over scenens egen beskrivelse — men
+   * ikke over reglen om, at grejet skal være vores eget.
+   */
+  const [noter, setNoter] = useState<Record<string, string>>({});
 
   const scener = scenerTil(erPakke);
 
@@ -141,7 +149,7 @@ export default function GalleryField({
 
   const generer = (scene: GalleryScene) =>
     kør(scene.id, async () => {
-      const f = await genererKald(productId, scene.id);
+      const f = await genererKald(productId, scene.id, noter[scene.id]);
       setForslag((s) => ({ ...s, [scene.id]: f }));
       if (typeof f.forbrugt === "number" && typeof f.loft === "number") {
         setForbrug({ brugt: f.forbrugt, loft: f.loft });
@@ -255,6 +263,22 @@ export default function GalleryField({
                   For mange dele — skåret fra: {f.skaaret.join(", ")}
                 </p>
               ) : null}
+
+              {f?.note && (
+                <p style={{ fontSize: "11px", color: "#0070f3", margin: "0 0 6px" }}>
+                  Bad om: &quot;{f.note}&quot;
+                </p>
+              )}
+
+              <input
+                type="text"
+                value={noter[scene.id] ?? ""}
+                onChange={(e) => setNoter((n) => ({ ...n, [scene.id]: e.target.value }))}
+                maxLength={300}
+                placeholder="Skriv til AI'en, fx: uden stativer"
+                aria-label={`Kommentar til ${scene.titel_da}`}
+                style={{ width: "100%", boxSizing: "border-box", fontSize: "12px", padding: "6px 8px", borderRadius: "6px", border: "1px solid #e0e0e0", marginBottom: "8px" }}
+              />
 
               <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
                 {f ? (

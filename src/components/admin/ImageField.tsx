@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { getAdminToken } from "@/lib/useAdminAuth";
 import { compressImage, formatBytes, MAX_UPLOAD_BYTES } from "@/lib/compressImage";
+import AiProductImage from "@/components/admin/AiProductImage";
 
 const labelStyle: React.CSSProperties = {
   display: "block",
@@ -16,10 +17,17 @@ export default function ImageField({
   label,
   value,
   onChange,
+  aiProductId,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
+  /**
+   * Sæt produktets id for at få "Lav produktfotoet om med AI" under feltet.
+   * Kun på selve produktbilledet — stemningsbilleder og andre felter har ikke
+   * et produkt at holde modellen fast på.
+   */
+  aiProductId?: string;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -152,6 +160,10 @@ export default function ImageField({
           />
           <span style={{ fontSize: "12px", color: "#888", wordBreak: "break-all", flex: 1 }}>{value}</span>
         </div>
+      )}
+
+      {aiProductId && (
+        <AiProductImage productId={aiProductId} harBillede={!!value} onChange={onChange} />
       )}
     </div>
   );

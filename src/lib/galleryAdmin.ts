@@ -32,6 +32,8 @@ export interface GalleryEntry {
 export interface Forslag {
   billede: string;
   mime: string;
+  /** Den kommentar der blev sendt med — vises tilbage, så man kan se hvad man bad om */
+  note?: string;
   titel_da: string;
   alt_da: string;
   caption_da: string;
@@ -78,12 +80,19 @@ export function hentManifest(paanyt = false): Promise<Record<string, GalleryEntr
   return manifestCache;
 }
 
-/** Laver et forslag. Det gemmes ingen steder — det lever i browseren. */
-export async function generer(productId: string, scene: string): Promise<Forslag> {
-  const data = await kald({ action: "generate", productId, scene });
+/**
+ * Laver et forslag. Det gemmes ingen steder — det lever i browseren.
+ *
+ * `note` er fritekst fra den, der trykker: "det samme uden stativer",
+ * "tættere på". Den vinder over scenens beskrivelse, men ikke over reglen om,
+ * at grejet skal være vores eget.
+ */
+export async function generer(productId: string, scene: string, note?: string): Promise<Forslag> {
+  const data = await kald({ action: "generate", productId, scene, note: note?.trim() || undefined });
   return {
     billede: data.image,
     mime: data.mime ?? "image/jpeg",
+    note: data.note ?? undefined,
     titel_da: data.titel_da,
     alt_da: data.alt_da,
     caption_da: data.caption_da,
@@ -142,6 +151,36 @@ export async function godkendEksisterende(
   const data = await kald({ action: "publish", productId, scene, url });
   manifestCache = null;
   return data.billeder ?? [];
+}
+
+/**
+ * Uploader et forslag til R2 og giver URL'en tilbage — uden at røre galleriet.
+ *
+ * Bruges af produktfotoet, som hører til i produktets image-felt og gemmes
+ * sammen med resten af kataloget, når der trykkes "Gem ændringer".
+ */
+export async function uploadForslag(productId: string, scene: string, forslag: Forslag): Promise<string> {
+  const binaer = atob(forslag.billede);
+  const bytes = new Uint8Array(binaer.length);
+  for (let i = 0; i < binaer.length; i++) bytes[i] = binaer.charCodeAt(i);
+  const raa = new File([bytes], `${productId}-${scene}.jpg`, { type: forslag.mime });
+
+  const { file, bytes: stoerrelse } = await compressImage(raa);
+  if (stoerrelse > MAX_UPLOAD_BYTES) {
+    throw new Error(
+      `Billedet fylder ${formatBytes(stoerrelse)} efter komprimering — max ${formatBytes(MAX_UPLOAD_BYTES)}.`,
+    );
+  }
+
+  const secret = getAdminToken();
+  const up = await fetch(`/api/upload?secret=${encodeURIComponent(secret)}`, {
+    method: "POST",
+    headers: { "Content-Type": file.type || "image/webp" },
+    body: file,
+  });
+  const data = await up.json();
+  if (!up.ok) throw new Error(data.error ?? "Upload fejlede");
+  return data.url as string;
 }
 
 /** Fjerner et godkendt billede fra manifestet igen. */

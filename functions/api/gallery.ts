@@ -24,6 +24,7 @@ import {
   GALLERY_SPEC,
   byggPrompt,
   fladtKatalog,
+  sceneMedId,
   scenerFor,
   type Katalog,
 } from "../../src/lib/galleryPrompt";
@@ -182,7 +183,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const auth = await requireAdmin(context, cors);
   if (auth instanceof Response) return auth;
 
-  let body: { action?: string; productId?: string; scene?: string; url?: string };
+  let body: { action?: string; productId?: string; scene?: string; url?: string; note?: string };
   try {
     body = await context.request.json();
   } catch {
@@ -220,16 +221,26 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const produkt = flad.get(productId);
   if (!produkt) return svar({ error: `Ukendt produkt: ${productId}` }, 404);
 
-  const scene = scenerFor(produkt).find((s) => s.id === sceneId);
-  if (!scene) return svar({ error: `Ukendt scene: ${sceneId}` }, 400);
+  /**
+   * Katalogfotoet gælder alle produkter; galleriscenerne afhænger af, om
+   * produktet er en pakke. Derfor to opslag frem for ét.
+   */
+  const scene = sceneMedId(sceneId);
+  const gyldig = scene && (scene.katalogfoto || scenerFor(produkt).some((s) => s.id === scene.id));
+  if (!scene || !gyldig) return svar({ error: `Ukendt scene: ${sceneId}` }, 400);
 
-  const bygget = byggPrompt(produkt, scene, flad);
+  const bygget = byggPrompt(produkt, scene, flad, typeof body.note === "string" ? body.note : undefined);
   if (!bygget) {
     return svar({ error: "Produktet har intet foto at vise modellen — upload et produktbillede først." }, 400);
   }
 
   /* ── udgiv et godkendt billede ── */
   if (body.action === "publish") {
+    if (scene.katalogfoto) {
+      // Katalogfotoet skrives i produktets image-felt af /admin/produkter,
+      // ikke i galleriet. Ville det stå begge steder, kunne de nå at være uenige.
+      return svar({ error: "Produktfotoet gemmes på produktet, ikke i galleriet" }, 400);
+    }
     const url = String(body.url ?? "");
     if (!url.startsWith("/api/image/") && !url.startsWith("/images/")) {
       return svar({ error: "Billedet skal være uploadet først" }, 400);
@@ -320,6 +331,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     mime: "image/jpeg",
     ratio: bygget.ratio,
     prompt: bygget.prompt,
+    note: bygget.note ?? null,
     titel_da: bygget.titel_da,
     alt_da: bygget.alt_da,
     caption_da: bygget.caption_da,

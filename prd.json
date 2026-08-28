@@ -3606,6 +3606,10 @@
       "godkend": "\"Godkend\" på et ikke-gennemgået billede koster ingenting: billedet ligger der i forvejen, og posten flytter det bare til manifestet, så du kan se hvad du har været igennem.",
       "fjern": "De 77 fra bulk-kørslen er statiske filer, så en sletning i KV skjuler dem ikke. \"Fjern\" skriver derfor en gravsten (fjernet: true), som useGallery kaster scenen væk på. \"Fortryd\" godkender billedet igen.",
       "ydelse": "Galleri-feltet rendrer først noget, når kortet er foldet ud (aktiv-prop). 45 kort × 3 scener er 135 knapper, der ikke skal bygges, fordi nogen ville rette en pris. Manifestet hentes én gang for hele siden og ejes af siden, så korthovedet og feltet er enige."
-    }
+    },
+    "kommentar_til_ai": "Et fritekstfelt ved hver knap — i galleriet og under produktbilledet. \"Det samme uden stativer\", \"tættere på\". Teksten sættes ind MELLEM scenens beskrivelse og de faste regler, så den kan vinde over scenen, men aldrig over forbuddet mod at digte grej. Højst 300 tegn. Se fritekst i gallery/scenes.json.",
+    "produktfoto": "Scenen \"produktfoto\" (katalogfoto: true) laver selve katalogbilledet: samme produkt, hvid baggrund, ny optagelse. Den bor under billedfeltet i /admin/produkter, ikke i galleriet, og resultatet skrives i produktets image-felt — gemt sammen med resten af kataloget ved \"Gem ændringer\". Kræver at produktet HAR et foto: uden en reference finder modellen selv på et produkt, og knappen er slået fra. Scenen holdes ude af galleriet, af scriptets plan og af publish.",
+    "rammen_staar_sidst": "Katalogfotoets ramme ligger i scene.efter_note og sættes ind EFTER fritekstem. Stod den før, overskrev en kommentar den: \"vis kun én højtaler forfra\" gav et studiebillede med softbokse og et stativ, produktet ikke ejer. Med rammen sidst kom der ét produkt på hvid baggrund. Det der står sidst, vejer tungest.",
+    "svarformen": "Gemini svarer UDEN output_image-genvejen — billedet ligger nede i steps. Både scriptet og functions/api/gallery.ts leder begge steder, og det er walkeren, der finder det i praksis. Rør den ikke uden at prøve et rigtigt kald."
   }
 }

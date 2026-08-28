@@ -323,3 +323,118 @@ describe("Scriptet", () => {
     expect(foerApply).not.toMatch(/await generer\(/);
   });
 });
+
+describe("Kommentar til AI'en", () => {
+  it("kommer med i prompten", async () => {
+    const { byggPrompt, GALLERY_SCENER } = await import("@/lib/galleryPrompt");
+    const scene = GALLERY_SCENER.find((s) => s.id === "i_brug")!;
+    const b = byggPrompt(flad.get("pakke_bryllup")!, scene, flad, "uden stativer")!;
+    expect(b.prompt).toContain("uden stativer");
+    expect(b.note).toBe("uden stativer");
+  });
+
+  it("står efter scenen, så den kan vinde over den", async () => {
+    const { byggPrompt, GALLERY_SCENER } = await import("@/lib/galleryPrompt");
+    const scene = GALLERY_SCENER.find((s) => s.id === "i_brug")!;
+    const b = byggPrompt(flad.get("pakke_bryllup")!, scene, flad, "uden stativer")!;
+    const iScenen = b.prompt.indexOf("The referenced equipment is set up");
+    const iNoten = b.prompt.indexOf("uden stativer");
+    expect(iNoten).toBeGreaterThan(iScenen);
+  });
+
+  it("men aldrig efter reglen om, at grejet skal være vores eget", async () => {
+    const { byggPrompt, GALLERY_SCENER } = await import("@/lib/galleryPrompt");
+    const scene = GALLERY_SCENER.find((s) => s.id === "i_brug")!;
+    const b = byggPrompt(flad.get("pakke_bryllup")!, scene, flad, "en helt anden højtaler")!;
+    expect(b.prompt.indexOf("Do not invent")).toBeGreaterThan(b.prompt.indexOf("en helt anden højtaler"));
+  });
+
+  it("katalogfotoets ramme står EFTER kommentaren", async () => {
+    /**
+     * Uden det blev "vis kun én højtaler forfra" til et studiebillede med
+     * softbokse og et stativ, produktet ikke ejer. Det der står sidst, vejer
+     * tungest — så rammen skal stå sidst.
+     */
+    const { byggPrompt, KATALOG_SCENE } = await import("@/lib/galleryPrompt");
+    const b = byggPrompt(flad.get("festival")!, KATALOG_SCENE, flad, "kun én højtaler")!;
+    expect(KATALOG_SCENE.efter_note).toBeTruthy();
+    expect(b.prompt.indexOf("Regardless of the instruction above")).toBeGreaterThan(
+      b.prompt.indexOf("kun én højtaler"),
+    );
+    expect(KATALOG_SCENE.efter_note).toMatch(/no speaker stands|no tripods/i);
+  });
+
+  it("klipper en meget lang kommentar af og folder mellemrum sammen", async () => {
+    const { byggPrompt, GALLERY_SCENER } = await import("@/lib/galleryPrompt");
+    const scene = GALLERY_SCENER.find((s) => s.id === "i_brug")!;
+    const b = byggPrompt(flad.get("soundboks")!, scene, flad, "  meget   langt  " + "a".repeat(400))!;
+    expect(b.note!.length).toBeLessThanOrEqual(300);
+    expect(b.note).not.toMatch(/ {2}/);
+  });
+
+  it("uden kommentar ser prompten ud som før", async () => {
+    const { byggPrompt, GALLERY_SCENER } = await import("@/lib/galleryPrompt");
+    const scene = GALLERY_SCENER.find((s) => s.id === "i_brug")!;
+    const b = byggPrompt(flad.get("soundboks")!, scene, flad)!;
+    expect(b.note).toBeUndefined();
+    expect(b.prompt).not.toMatch(/takes priority/);
+  });
+});
+
+describe("Produktfotoet", () => {
+  it("er en scene for sig — ikke en del af galleriet", async () => {
+    const { KATALOG_SCENE, scenerFor } = await import("@/lib/galleryPrompt");
+    expect(KATALOG_SCENE.katalogfoto).toBe(true);
+    for (const p of flad.values()) {
+      expect(scenerFor(p).map((s) => s.id)).not.toContain(KATALOG_SCENE.id);
+    }
+  });
+
+  it("kommer ikke med i scriptets plan", () => {
+    const kilde = readFileSync(join(process.cwd(), "scripts/product-images/generate.mjs"), "utf8");
+    // Planen bygges af pm.scenerFor, som netop sorterer katalogfotoet fra
+    expect(kilde).toMatch(/pm\.scenerFor\(p\)/);
+    expect(kilde).not.toMatch(/KATALOG_SCENE/);
+  });
+
+  it("kan ikke skrives i galleri-manifestet", () => {
+    const api = readFileSync(join(process.cwd(), "functions/api/gallery.ts"), "utf8");
+    expect(api).toMatch(/if \(scene\.katalogfoto\)/);
+    expect(api).toMatch(/Produktfotoet gemmes på produktet, ikke i galleriet/);
+  });
+
+  it("bruger produktets eget foto som reference", async () => {
+    const { byggPrompt, KATALOG_SCENE } = await import("@/lib/galleryPrompt");
+    const b = byggPrompt(flad.get("soundboks")!, KATALOG_SCENE, flad)!;
+    expect(b.referencer.map((r) => r.id)).toEqual(["soundboks"]);
+    expect(b.ratio).toBe("1:1");
+  });
+
+  it("sidder på produktbilledet i admin, ikke på stemningsbilledet", () => {
+    const side = readFileSync(join(process.cwd(), "src/app/admin/produkter/page.tsx"), "utf8");
+    expect(side.match(/aiProductId=/g) ?? []).toHaveLength(3);
+    expect(side).not.toMatch(/label="Stemningsbillede"[^>]*aiProductId/);
+  });
+
+  it("siger fra, hvis produktet ikke har et foto at holde modellen fast på", () => {
+    const felt = readFileSync(join(process.cwd(), "src/components/admin/AiProductImage.tsx"), "utf8");
+    expect(felt).toMatch(/harBillede/);
+    expect(felt).toMatch(/disabled=\{travl \|\| !harBillede\}/);
+  });
+});
+
+describe("Galleriet på kortet viser ikke produktfotoet", () => {
+  it("scenerTil sorterer katalogfotoet fra", async () => {
+    const { scenerTil } = await import("@/components/admin/GalleryField");
+    for (const erPakke of [true, false]) {
+      expect(scenerTil(erPakke).map((s) => s.id)).not.toContain("produktfoto");
+      expect(scenerTil(erPakke)).toHaveLength(3);
+    }
+  });
+
+  it("har et kommentarfelt pr. scene", () => {
+    const felt = readFileSync(join(process.cwd(), "src/components/admin/GalleryField.tsx"), "utf8");
+    expect(felt).toMatch(/Skriv til AI'en/);
+    expect(felt).toMatch(/genererKald\(productId, scene\.id, noter\[scene\.id\]\)/);
+  });
+});

@@ -15,6 +15,10 @@
     "",
     "Gemini 3 Pro Image tager op til 6 objektreferencer i høj troværdighed.",
     "Bryllupspakken og firmafestpakken rammer præcis seks dele — flere end det,",
+    "",
+    "Scenen \"produktfoto\" (katalogfoto: true) er ikke en del af galleriet. Den laver",
+    "selve produktbilledet i kataloget og bruges fra billedfeltet i /admin/produkter,",
+    "hvor resultatet skrives i produktets image-felt frem for i galleri-manifestet.",
     "og scriptet skærer de mindst betydende fra og siger det højt.",
     "",
     "Billederne er genererede, ikke fotograferede. De vises med en 'Illustration'-",
@@ -60,6 +64,20 @@
     "av": "moede"
   },
   "scener": [
+    {
+      "id": "produktfoto",
+      "katalogfoto": true,
+      "titel_da": "Produktfoto",
+      "titel_en": "Product photo",
+      "ratio": "1:1",
+      "referencer": "alle",
+      "prompt": "A clean catalogue product photo of exactly the referenced {dele} and nothing else, on a seamless white studio background. One large softbox from the left, a soft fill from the right, and a subtle contact shadow under the product so it sits on the surface rather than floating. Three-quarter front view at product height, the whole product in frame with a little air around it, sharp from front to back. No props, no hands, no people, no background objects, no reflections of the studio.",
+      "alt_da": "{navn}",
+      "alt_en": "{navn_en}",
+      "caption_da": "Produktfoto",
+      "caption_en": "Product photo",
+      "efter_note": "Regardless of the instruction above, this remains a plain catalogue photo: a seamless white background with nothing in the frame except the referenced product itself. No speaker stands, no tripods, no studio lights or softboxes, no cases, no cables, no furniture, no room. The instruction may change which parts are shown, how many, and the angle — never the background, and it never adds an object that is not part of the product. The product fills the frame with a little air around it and sits centred."
+    },
     {
       "id": "komposition",
       "titel_da": "Alt det du får",
@@ -192,5 +210,10 @@
     "med_tal_en": "Covers {kapacitet_en} indoors. Outdoors without walls, expect half that.",
     "uden_tal_da": "Sådan står det, når gæsterne kommer.",
     "uden_tal_en": "This is how it stands when the guests arrive."
+  },
+  "fritekst": {
+    "_kommentar": "Det Philip skriver i feltet ved knappen, sat ind mellem scenens beskrivelse og de faste regler. Den skal kunne vinde over scenen (\"det samme uden stativer\"), men aldrig over forbuddet mod at digte grej.",
+    "skabelon": "Adjust the scene as follows — this takes priority over the description above: {note}",
+    "maks_tegn": 300
   }
 }
