@@ -17,6 +17,7 @@ import {
   hasRentalWord,
   headTerm,
   phraseCovers,
+  samhandler,
   seedTerms,
 } from "@/lib/adsIntent";
 
@@ -94,6 +95,14 @@ describe("clusterKeywords", () => {
     expect(gruppe.primary).toBe("leje røgmaskine");
   });
 
+  it("samler stavemåderne i én gruppe frem for to", () => {
+    // Ellers blev "lej discokugle" og "lej en diskokugle" til to
+    // annoncegrupper om det samme, med hver sin annonce
+    const grupper = clusterKeywords(["lej discokugle", "lej en diskokugle"]);
+    expect(grupper).toHaveLength(1);
+    expect(grupper[0].keywords).toHaveLength(2);
+  });
+
   it("blander ikke to produkter sammen", () => {
     const grupper = clusterKeywords(["lej højtaler", "lej røgmaskine"]);
     expect(grupper).toHaveLength(2);
@@ -115,6 +124,46 @@ describe("clusterKeywords", () => {
   it("regner volumen sammen, så en gruppe uden efterspørgsel kan ses", () => {
     const [gruppe] = clusterKeywords([{ text: "lej mackie thump go", volume: 0 }]);
     expect(gruppe.volume).toBe(0);
+  });
+});
+
+describe("samhandler", () => {
+  /**
+   * Fejlen fra 28. august 2026, i sin helhed. Frøet for discokuglen var
+   * "discokugle udlejning". Det gamle filter delte det i ord og lod alt med
+   * "udlejning" slippe igennem — så kontoens egne søgninger efter
+   * "udlejning af soundbox", "musik udlejning" og "fest lys udlejning"
+   * landede på discokuglen og blev til tre annoncegrupper mod /discokugle.
+   */
+  const FRØ = ["discokugle udlejning"];
+
+  it("lader ikke lejeordet være målestokken", () => {
+    expect(samhandler("udlejning af soundbox", FRØ)).toBe(false);
+    expect(samhandler("musik udlejning", FRØ)).toBe(false);
+    expect(samhandler("fest lys udlejning", FRØ)).toBe(false);
+  });
+
+  it("genkender produktet på tværs af mønster og stavemåde", () => {
+    // Frøet staver med c, kunden med k — det er samme produkt
+    expect(samhandler("diskokugle udlejning", FRØ)).toBe(true);
+    expect(samhandler("lej en diskokugle", FRØ)).toBe(true);
+    expect(samhandler("diskokugler leje", FRØ)).toBe(true);
+    expect(samhandler("diskokugle udlejning", ["discokugle", "diskokugle"])).toBe(true);
+    expect(samhandler("lej discokugle københavn", ["discokugle"])).toBe(true);
+    expect(samhandler("discokugle til leje", ["discokugle"])).toBe(true);
+  });
+
+  it("lader ental og flertal være det samme produkt", () => {
+    expect(samhandler("udlejning højtalere", ["højtaler"])).toBe(true);
+  });
+
+  it("er falsk når frasen ikke har noget produktord tilbage", () => {
+    expect(samhandler("lej", ["discokugle"])).toBe(false);
+    expect(samhandler("udlejning af", ["discokugle"])).toBe(false);
+  });
+
+  it("uden termer hører intet til", () => {
+    expect(samhandler("lej discokugle", [])).toBe(false);
   });
 });
 
@@ -157,6 +206,18 @@ describe("seedTerms", () => {
   it("giver frø til Google, ikke færdige keywords", () => {
     expect(seedTerms("Soundboks 4")).toEqual(["soundboks", "soundbox"]);
     expect(seedTerms("Mackie Thump GO")).toEqual(["mackie thump go"]);
+  });
+
+  it("klipper både tal og måleenhed væk", () => {
+    // "Discokugle 40 cm" gav før frøet "discokugle cm", og Google svarede
+    // med én eneste idé på det
+    expect(seedTerms("Discokugle 40 cm")).toEqual(["discokugle", "diskokugle"]);
+    expect(seedTerms('Skærm 55"')).toEqual(["skærm"]);
+  });
+
+  it("tager stavemåden med begge veje", () => {
+    expect(seedTerms("Discokugle")).toContain("diskokugle");
+    expect(seedTerms("Diskokugle")).toContain("discokugle");
   });
 });
 

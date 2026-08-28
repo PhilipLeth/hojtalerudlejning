@@ -31,6 +31,7 @@ import {
   findLabel,
   keywordIdeas,
   labelCriteria,
+  listAdGroups,
   listKeywords,
   listSearchTerms,
   missingConfig,
@@ -39,7 +40,7 @@ import {
   type GoogleAdsEnv,
   type NewAdGroup,
 } from "./_lib/googleads";
-import { classify, hasRentalWord, seedTerms, type ThemeKey } from "../../src/lib/adsIntent";
+import { classify, hasRentalWord, samhandler, seedTerms, type ThemeKey } from "../../src/lib/adsIntent";
 import { validateAdCopy, type AdCopy } from "../../src/lib/adsCopy";
 import { productCatalog, type CatalogProduct } from "./_lib/catalog";
 import { PAUSEDE_SIDER } from "../../src/lib/products";
@@ -158,6 +159,8 @@ function mergeKeywords(
   existing: Map<string, ExistingKeyword>,
   /** Fraser brugeren selv har skrevet ind. De står altid på listen. */
   manual: string[] = [],
+  /** Produktets søgetermer — målestok for om en frase hører til her. */
+  productTerms: string[] = [],
 ): FoundKeyword[] {
   const merged = new Map<string, FoundKeyword>();
 
@@ -213,8 +216,14 @@ function mergeKeywords(
       continue;
     }
     // Et klik er bevis nok i sig selv; ellers kræves der målt efterspørgsel.
-    // Og en frase der allerede ligger i kontoen skal ikke bydes op imod sig selv.
-    row.recommended = row.rental && !row.duplicateIn && (row.clicks > 0 || row.volume >= MIN_VOLUME);
+    // En frase der allerede ligger i kontoen skal ikke bydes op imod sig selv.
+    // Og den skal handle om PRODUKTET — ellers ender "udlejning af soundbox"
+    // afkrydset på discokuglen, fordi begge indeholder ordet "udlejning".
+    row.recommended =
+      row.rental &&
+      !row.duplicateIn &&
+      samhandler(row.text, productTerms) &&
+      (row.clicks > 0 || row.volume >= MIN_VOLUME);
   }
 
   const rang = (r: FoundKeyword) => (r.sources.includes("manuel") ? 0 : 1);
@@ -290,11 +299,12 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
           // Kun volumen for de fraser der rent faktisk blev spurgt om —
           // et frø-opslag returnerer også Googles egne forslag ovenpå
           [...ideas, ...egneIdeer.filter((i) => egneSæt.has(i.text))],
-          // Kun egne søgetermer om det samme produkt — ellers arver hver
-          // produktside alle andres søgninger
-          searchTerms.filter((t) => relevant(t.text, terms)),
+          // Kun egne søgetermer om det samme PRODUKT. Målestokken er
+          // produktordet, ikke lejeordet — se samhandler() i adsIntent.
+          searchTerms.filter((t) => samhandler(t.text, terms)),
           new Map(kws.map((k) => [k.text, k])),
           manual,
+          [...terms, ...manual, product.name],
         );
       } catch (e) {
         adsError = e instanceof Error ? e.message : "Ukendt fejl mod Google Ads";
@@ -337,31 +347,6 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   }
 };
 
-/**
- * Handler søgetermen om det samme produkt?
- *
- * Søgetermerapporten dækker hele kontoen, så uden et filter ville hver
- * produktside arve alle andres søgninger. Målestokken er produktets EGNE frø
- * — ikke Googles idéliste.
- *
- * Forskellen er ikke akademisk. Discokuglens side nævner også højtalere, så
- * Googles idéer for siden indeholdt højtalerfraser; med idélisten som
- * målestok blev "lej højtaler" (ti egne klik) anbefalet som keyword for en
- * annonce, der lander på /discokugle. Det er præcis det misforhold mellem
- * keyword og landingsside, værktøjet skal forhindre.
- *
- * Googles egne idéer slipper altid igennem — de er lavet ud fra siden.
- */
-export function relevant(text: string, seeds: string[]): boolean {
-  const ord = new Set(text.split(/\s+/));
-  for (const seed of seeds) {
-    for (const w of seed.split(/\s+/)) {
-      if (w.length > 3 && ord.has(w)) return true;
-    }
-  }
-  return false;
-}
-
 /* ───── Skrivning ───── */
 
 interface GroupInput {
@@ -399,12 +384,21 @@ function strings(list: unknown, max: number): string[] {
 function prepareGroup(
   input: GroupInput,
   pages: { known: string[]; paused: string[] },
+  /** Produktets søgetermer — målestok for om gruppen handler om produktet. */
+  productTerms: string[],
+  /** Gruppenavne der allerede findes i kontoen, med småt. */
+  existingNames: Set<string>,
 ): { group: NewAdGroup; primary: string } | { errors: string[] } {
   const errors: string[] = [];
 
   const name = (input.name ?? "").replace(/\s+/g, " ").trim();
   if (!name) errors.push("Annoncegruppen mangler navn.");
   if (name.length > 255) errors.push(`Gruppenavnet er for langt: ${name.length} tegn.`);
+  // To grupper med samme navn byder mod hinanden og er umulige at skelne i
+  // rapporterne. Et gentaget tryk på Opret må ikke lave dem forfra.
+  if (name && existingNames.has(name.toLowerCase())) {
+    errors.push(`Der findes allerede en annoncegruppe der hedder "${name}".`);
+  }
 
   const keywords = strings(input.keywords?.map((k) => k?.text), 50).map((text) => ({
     text: text.toLowerCase(),
@@ -415,6 +409,18 @@ function prepareGroup(
   const primary = (input.primary ?? keywords[0]?.text ?? "").toLowerCase();
   if (primary && !keywords.some((k) => k.text === primary)) {
     errors.push(`Frasen "${primary}" står ikke blandt gruppens keywords.`);
+  }
+
+  // Sidste værn mod det, der skete 28. august 2026: en annoncegruppe ved navn
+  // "Discokugle 40 cm — Udlejning: soundbox", der pegede på /discokugle.
+  // Et keyword om et andet produkt end landingssiden er en fejl, uanset
+  // hvordan det kom med — også hvis nogen har skrevet det ind i hånden.
+  const fremmede = keywords.filter((k) => !samhandler(k.text, productTerms));
+  if (fremmede.length) {
+    errors.push(
+      `Handler ikke om produktet: ${fremmede.map((k) => `"${k.text}"`).join(", ")}. ` +
+        `Landingssiden er produktets egen, så keywordet skal være det også.`,
+    );
   }
 
   const bid = Number(input.cpcBidMicros ?? DEFAULT_BID_MICROS);
@@ -505,10 +511,32 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (!product) return json({ error: `Ukendt produkt: ${body.productId}` }, 404);
 
     const pages = pageSets(catalog);
+
+    const [termsMap, manualMap] = await Promise.all([
+      readJson<Record<string, string[]>>(kv, KV_TERMS, {}),
+      readJson<Record<string, string[]>>(kv, KV_MANUAL, {}),
+    ]);
+    // Egne fraser tæller med som målestok: har man bevidst skrevet
+    // "lej lyskæder" ind på lyskæderne, er det produktet man mener
+    const productTerms = [
+      ...(termsMap[product.id]?.length ? termsMap[product.id] : seedTerms(product.name)),
+      ...(manualMap[product.id] ?? []),
+      product.name,
+    ];
+
+    // Navne der allerede findes i kontoen — mod dubletter ved gentaget tryk
+    let existingNames = new Set<string>();
+    try {
+      existingNames = new Set((await listAdGroups(context.env)).map((g) => g.name.toLowerCase()));
+    } catch {
+      // Kan vi ikke læse kontoen, oprettes der ikke noget alligevel — det
+      // fejler i næste kald med en besked fra Google
+    }
+
     const prepared: Array<{ group: NewAdGroup; primary: string }> = [];
     const errors: string[] = [];
     for (const input of groups) {
-      const result = prepareGroup(input, pages);
+      const result = prepareGroup(input, pages, productTerms, existingNames);
       if ("errors" in result) errors.push(...result.errors);
       else prepared.push(result);
     }

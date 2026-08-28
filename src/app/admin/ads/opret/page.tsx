@@ -16,7 +16,7 @@
 import AdminLogin from "@/components/AdminLogin";
 import AdminNav from "@/components/AdminNav";
 import { buildAdCopy, validateAdCopy } from "@/lib/adsCopy";
-import { adGroupName, clusterKeywords, phraseCovers, THEME_LABELS, type ThemeKey } from "@/lib/adsIntent";
+import { adGroupName, clusterKeywords, phraseCovers, samhandler, THEME_LABELS, type ThemeKey } from "@/lib/adsIntent";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -222,6 +222,12 @@ export default function AdsOpretPage() {
     return ud;
   }, [keywords, valgte]);
 
+  /** Produktets egne ord — målestok for om en frase hører til her. */
+  const productTerms = useMemo(
+    () => (product ? [...(data?.terms ?? []), ...(data?.manual ?? []), product.name] : []),
+    [product, data?.terms, data?.manual],
+  );
+
   /** Grupperne, som de ser ud lige nu. Regnes om ved hvert klik. */
   const grupper = useMemo(() => {
     if (!product) return [];
@@ -245,15 +251,25 @@ export default function AdsOpretPage() {
         descriptions,
         finalUrl: genereret.finalUrl,
         path1: genereret.path1,
-        problems: validateAdCopy(
-          { headlines, descriptions, finalUrl: genereret.finalUrl, path1: genereret.path1 },
-          c.primary,
-          knownPages,
-          pausedPages,
-        ),
+        problems: [
+          // Handler gruppen overhovedet om produktet? En gruppe med
+          // hovedordet "soundbox" må ikke pege på discokuglens side.
+          ...(() => {
+            const fremmede = c.keywords.filter((k) => !samhandler(k, productTerms));
+            return fremmede.length
+              ? [`Handler ikke om ${product.name}: ${fremmede.map((k) => `„${k}”`).join(", ")}`]
+              : [];
+          })(),
+          ...validateAdCopy(
+            { headlines, descriptions, finalUrl: genereret.finalUrl, path1: genereret.path1 },
+            c.primary,
+            knownPages,
+            pausedPages,
+          ),
+        ],
       };
     });
-  }, [product, keywords, valgte, edits, data?.deliveryPrice, data?.defaultBidMicros, knownPages, pausedPages]);
+  }, [product, keywords, valgte, edits, data?.deliveryPrice, data?.defaultBidMicros, knownPages, pausedPages, productTerms]);
 
   const blokerende = grupper.flatMap((g) => g.problems.map((p) => `${g.name}: ${p}`));
 

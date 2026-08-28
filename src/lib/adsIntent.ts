@@ -129,9 +129,59 @@ function stem(word: string): string {
   return out;
 }
 
+/**
+ * Produktordene i en frase, som stammer — grundlaget for at afgøre, om to
+ * fraser handler om det samme.
+ */
+export function productWords(text: string): Set<string> {
+  return new Set(headTerm(text).split(" ").filter(Boolean).map(canonical).map(stem));
+}
+
+/**
+ * Samme produkt, samme ord — uanset stavemåde.
+ *
+ * Uden det her matcher "diskokugle udlejning" ikke frøet "discokugle
+ * udlejning", og et lovligt keyword bliver sorteret fra, fordi kunden staver
+ * med k og produktnavnet med c. Skrives før stammen skrælles, så også
+ * bøjninger som "diskokugler" rammer.
+ */
+function canonical(word: string): string {
+  for (const [a, b] of SPELLING_PAIRS) {
+    if (word.includes(b)) return word.replace(b, a);
+  }
+  return word;
+}
+
+/**
+ * Handler frasen om det samme produkt som `terms`?
+ *
+ * Sammenligningen sker på PRODUKTORD, ikke på hele frasen. Det er hele
+ * pointen: et frø som "discokugle udlejning" indeholder både produktordet og
+ * lejeordet, og måler man på begge, matcher "musik udlejning", "fest lys
+ * udlejning" og "udlejning af soundbox" — de deler jo "udlejning". Sådan
+ * blev der 28. august 2026 oprettet en annoncegruppe ved navn
+ * "Discokugle 40 cm — Udlejning: soundbox", der pegede på /discokugle.
+ *
+ * headTerm() skræller lejeord, byer, anledninger og småord af, så kun
+ * produktet står tilbage. Så matcher "discokugle udlejning" og "diskokugle
+ * leje", men ikke "musik udlejning".
+ */
+export function samhandler(text: string, terms: string[]): boolean {
+  const mine = productWords(text);
+  if (!mine.size) return false;
+  for (const t of terms) {
+    for (const w of productWords(t)) {
+      if (mine.has(w)) return true;
+    }
+  }
+  return false;
+}
+
 function bucketKey(text: string): string {
-  const head = headTerm(text).split(" ").map(stem).sort().join(" ");
-  return `${classify(text)}|${head}`;
+  // Samme normalisering som samhandler(): stavemåde først, så stamme. Uden
+  // det blev "lej discokugle" og "lej en diskokugle" til to annoncegrupper
+  // om det samme, med hver sin annonce.
+  return `${classify(text)}|${[...productWords(text)].sort().join(" ")}`;
 }
 
 export interface KeywordInput {
@@ -219,20 +269,33 @@ export function phraseCovers(bred: string, smal: string): boolean {
  * keyword.
  */
 export function seedTerms(name: string): string[] {
-  const base = words(name).join(" ").replace(/\s+\d+(\s|$)/g, " ").trim();
+  // Tal og måleenheder er ikke søgeord. "Discokugle 40 cm" gav før frøet
+  // "discokugle cm", fordi kun tallet blev klippet — og et skævt frø får
+  // Google til at svare med næsten ingenting.
+  const base = words(name)
+    .filter((w) => !/^\d+$/.test(w) && !UNIT_WORDS.has(w))
+    .join(" ")
+    .trim();
   const out = [base];
-  for (const [from, to] of Object.entries(SPELLING_VARIANTS)) {
-    if (base.includes(from)) out.push(base.replace(from, to));
+  for (const [a, b] of SPELLING_PAIRS) {
+    if (base.includes(a)) out.push(base.replace(a, b));
+    else if (base.includes(b)) out.push(base.replace(b, a));
   }
   return [...new Set(out.filter(Boolean))];
 }
 
-/** Stavemåder danskerne bruger — "højtaler" slår "højttaler" 13:1 i kontoen. */
-const SPELLING_VARIANTS: Record<string, string> = {
-  soundboks: "soundbox",
-  diskokugle: "discokugle",
-  højtaler: "højttaler",
-};
+const UNIT_WORDS = new Set(["cm", "mm", "m", "tommer", "tomme", "stk", "pak", "w", "watt", "kg", "l", "liter"]);
+
+/**
+ * Stavemåder danskerne bruger — "højtaler" slår "højttaler" 13:1 i kontoen.
+ * Parrene virker begge veje: produktet hedder "Discokugle", men halvdelen
+ * søger "diskokugle".
+ */
+const SPELLING_PAIRS: Array<[string, string]> = [
+  ["soundboks", "soundbox"],
+  ["diskokugle", "discokugle"],
+  ["højtaler", "højttaler"],
+];
 
 /** Annoncegruppens navn. Fast konvention, så den kan læses i Google Ads. */
 export function adGroupName(productName: string, cluster: Cluster): string {
