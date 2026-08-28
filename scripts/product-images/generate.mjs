@@ -303,9 +303,19 @@ async function main() {
   const { katalog, prompt: pm } = await laesModuler();
   const flad = pm.fladtKatalog(katalog);
   const opgaver = byggeplan(cfg, pm, flad, flag);
+  /**
+   * Manifestet skrives ALTID ud fra hele planen, aldrig ud fra --only/--scene.
+   *
+   * Det gjorde det ikke før: en kørsel med --only traadloes_mikrofon skrev et
+   * manifest med ét billede i og slettede de 77 andre posters. Filerne lå der
+   * stadig, men galleriet var væk fra alle produktsider indtil næste fulde
+   * kørsel. Filtrene hører til på det, der skal GENERERES — ikke på det, der
+   * skal skrives ned bagefter.
+   */
+  const helePlanen = flag.only || flag.scene ? byggeplan(cfg, pm, flad, {}) : opgaver;
 
   if (flag.kunManifest) {
-    const n = skrivManifest(opgaver, cfg);
+    const n = skrivManifest(helePlanen, cfg);
     console.log(`Manifest skrevet: ${n} billeder i ${relative(ROD, MANIFEST)}`);
     return;
   }
@@ -366,7 +376,7 @@ async function main() {
     }
   }
 
-  const n = skrivManifest(opgaver, cfg);
+  const n = skrivManifest(helePlanen, cfg);
   console.log(`\n${lavet} nye billeder, ${fejl} fejl. Manifest: ${n} billeder.`);
   console.log(`Brugt: ca. ${(lavet * cfg.spec.usd_per_image).toFixed(2)} $`);
   if (fejl) process.exitCode = 1;

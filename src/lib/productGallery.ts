@@ -941,6 +941,20 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "caption_en": "This is what it looks like standing ready."
     }
   ],
+  "traadloes_mikrofon": [
+    {
+      "src": "/images/gallery/traadloes_mikrofon/hvad_du_faar.webp",
+      "thumb": "/images/gallery/traadloes_mikrofon/hvad_du_faar-400.webp",
+      "scene": "hvad_du_faar",
+      "ratio": "4:3",
+      "titel_da": "Alt det du får",
+      "titel_en": "Everything included",
+      "alt_da": "Trådløs mikrofon med alt hvad der følger med",
+      "alt_en": "Wireless mic with everything that comes with it",
+      "caption_da": "Det her er hvad der ligger i kassen, når du henter trådløs mikrofon.",
+      "caption_en": "This is what is in the box when you pick up the wireless mic."
+    }
+  ],
   "uplight": [
     {
       "src": "/images/gallery/uplight/hvad_du_faar.webp",

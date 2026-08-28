@@ -296,3 +296,30 @@ describe("Fjernelse af et billede fra bulk-kørslen", () => {
     });
   });
 });
+
+describe("Scriptet", () => {
+  const kilde = readFileSync(join(process.cwd(), "scripts/product-images/generate.mjs"), "utf8");
+
+  it("skriver manifestet ud fra hele planen, ikke ud fra --only/--scene", () => {
+    /**
+     * Det gjorde det ikke. En kørsel med --only traadloes_mikrofon skrev et
+     * manifest med ét billede i og slettede de 77 andre poster — filerne lå
+     * der stadig, men galleriet var væk fra alle produktsider indtil næste
+     * fulde kørsel. Filtrene hører til på det, der skal genereres.
+     */
+    expect(kilde).toMatch(/helePlanen = flag\.only \|\| flag\.scene \? byggeplan\(cfg, pm, flad, \{\}\) : opgaver/);
+    expect(kilde.match(/skrivManifest\(helePlanen, cfg\)/g) ?? []).toHaveLength(2);
+    // Definitionen hedder stadig (opgaver, cfg) — det er KALDET der ikke må gøre det
+    expect(kilde).not.toMatch(/= skrivManifest\(opgaver/);
+  });
+
+  it("springer over det, der allerede findes — en genkørsel koster ikke noget", () => {
+    expect(kilde).toMatch(/flag\.force \|\| !existsSync\(o\.udSti\)/);
+  });
+
+  it("gør ingenting uden --apply", () => {
+    expect(kilde).toMatch(/if \(!flag\.apply\) \{/);
+    const foerApply = kilde.slice(0, kilde.indexOf("if (!flag.apply)"));
+    expect(foerApply).not.toMatch(/await generer\(/);
+  });
+});
