@@ -53,6 +53,7 @@ interface Env extends GoogleAdsEnv {
 const KV_CATALOG = "products_catalog";
 const KV_MAPPING = "ads_mapping";
 const KV_TERMS = "ads_terms";
+const KV_MANUAL = "ads_manual_keywords";
 const KV_LOG = "ads_build_log";
 
 /** Standardbud i mikroenheder. Samme niveau som BOFU-grupperne står på. */
@@ -60,6 +61,8 @@ const DEFAULT_BID_MICROS = 9_000_000;
 /** Et bud under en krone serverer reelt ikke — det var Yderområders fejl. */
 const MIN_BID_MICROS = 1_000_000;
 const MAX_BID_MICROS = 50_000_000;
+/** Googles loft for frø i ét opslag — og dermed for egne fraser pr. produkt. */
+const MAX_MANUAL = 20;
 /** Loft pr. upload, så en fejlagtig POST ikke fylder kontoen. */
 const MAX_GROUPS_PER_REQUEST = 12;
 /** Kun de seneste kørsler gemmes — loggen er til at kigge tilbage, ikke et arkiv. */
@@ -153,6 +156,8 @@ function mergeKeywords(
   ideas: Array<{ text: string; volume: number; competition: string | null }>,
   terms: Array<{ text: string; clicks: number; impressions: number }>,
   existing: Map<string, ExistingKeyword>,
+  /** Fraser brugeren selv har skrevet ind. De står altid på listen. */
+  manual: string[] = [],
 ): FoundKeyword[] {
   const merged = new Map<string, FoundKeyword>();
 
@@ -192,14 +197,33 @@ function mergeKeywords(
     if (!row.sources.includes("egen")) row.sources.push("egen");
   }
 
+  // Egne fraser står på listen uanset hvad Google mener om dem
+  const egne = new Set(manual.map((m) => m.trim().toLowerCase()).filter(Boolean));
+  for (const text of egne) {
+    const row = touch(text);
+    if (!row.sources.includes("manuel")) row.sources.unshift("manuel");
+  }
+
   for (const row of merged.values()) {
+    // Har man selv skrevet frasen ind, er valget truffet — også når Google
+    // melder nul. Lange fraser har sjældent målbar volumen i Danmark, og
+    // phrase match fanger dem alligevel.
+    if (row.sources.includes("manuel")) {
+      row.recommended = !row.duplicateIn;
+      continue;
+    }
     // Et klik er bevis nok i sig selv; ellers kræves der målt efterspørgsel.
     // Og en frase der allerede ligger i kontoen skal ikke bydes op imod sig selv.
     row.recommended = row.rental && !row.duplicateIn && (row.clicks > 0 || row.volume >= MIN_VOLUME);
   }
 
+  const rang = (r: FoundKeyword) => (r.sources.includes("manuel") ? 0 : 1);
   return [...merged.values()].sort(
-    (a, b) => b.clicks - a.clicks || b.volume - a.volume || a.text.localeCompare(b.text, "da"),
+    (a, b) =>
+      rang(a) - rang(b) ||
+      b.clicks - a.clicks ||
+      b.volume - a.volume ||
+      a.text.localeCompare(b.text, "da"),
   );
 }
 
@@ -211,9 +235,10 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const productId = new URL(context.request.url).searchParams.get("productId") ?? "";
 
   try {
-    const [catalogRaw, termsMap, mapping] = await Promise.all([
+    const [catalogRaw, termsMap, manualMap, mapping] = await Promise.all([
       readJson<unknown>(kv, KV_CATALOG, null),
       readJson<Record<string, string[]>>(kv, KV_TERMS, {}),
+      readJson<Record<string, string[]>>(kv, KV_MANUAL, {}),
       readJson<Record<string, string[]>>(kv, KV_MAPPING, {}),
     ]);
 
@@ -241,6 +266,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
     const pages = pageSets(catalog);
     const terms = termsMap[productId]?.length ? termsMap[productId] : seedTerms(product.name);
+    const manual = manualMap[productId] ?? [];
 
     let keywords: FoundKeyword[] = [];
     let adsError: string | null = null;
@@ -249,19 +275,26 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       adsError = `Google Ads er ikke konfigureret. Mangler: ${missing.join(", ")}`;
     } else {
       try {
-        const [ideas, searchTerms, kws] = await Promise.all([
+        const [ideas, egneIdeer, searchTerms, kws] = await Promise.all([
           // Produktsiden er det stærkeste frø: Google læser den og svarer med
           // det, folk faktisk søger efter, som siden kan besvare
           keywordIdeas(context.env, { url: `https://lejhojtaler.dk${product.page}`, seeds: terms }),
+          // Volumen på de fraser brugeren selv har skrevet ind. Google svarer
+          // altid på et frø, også når tallet er nul.
+          manual.length ? keywordIdeas(context.env, { seeds: manual }) : Promise.resolve([]),
           listSearchTerms(context.env, { from: isoDaysAgo(SEARCH_TERM_DAYS), to: isoDaysAgo(0) }),
           listKeywords(context.env),
         ]);
+        const egneSæt = new Set(manual.map((m) => m.toLowerCase()));
         keywords = mergeKeywords(
-          ideas,
+          // Kun volumen for de fraser der rent faktisk blev spurgt om —
+          // et frø-opslag returnerer også Googles egne forslag ovenpå
+          [...ideas, ...egneIdeer.filter((i) => egneSæt.has(i.text))],
           // Kun egne søgetermer om det samme produkt — ellers arver hver
           // produktside alle andres søgninger
           searchTerms.filter((t) => relevant(t.text, terms)),
           new Map(kws.map((k) => [k.text, k])),
+          manual,
         );
       } catch (e) {
         adsError = e instanceof Error ? e.message : "Ukendt fejl mod Google Ads";
@@ -279,6 +312,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       },
       terms,
       seededTerms: !termsMap[productId]?.length,
+      manual,
       keywords,
       /**
        * Nul her betyder: der er ingen efterspørgsel at bygge en annoncegruppe
@@ -344,6 +378,7 @@ interface GroupInput {
 
 type PostBody =
   | { action: "save_terms"; productId: string; terms: string[] }
+  | { action: "save_manual"; productId: string; keywords: string[] }
   | { action: "validate" | "create"; productId: string; groups: GroupInput[] };
 
 function strings(list: unknown, max: number): string[] {
@@ -430,6 +465,20 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const kv = context.env.BOOKINGS;
 
   try {
+    if (body.action === "save_manual") {
+      if (!body.productId) return json({ error: "productId mangler" }, 400);
+      // Egne fraser er keywords, ikke frø: de gemmes som skrevet, og de
+      // ryger med på listen uanset hvad Google mener om volumen
+      const keywords = [
+        ...new Set(strings(body.keywords, MAX_MANUAL).map((k) => k.toLowerCase())),
+      ];
+      const map = await readJson<Record<string, string[]>>(kv, KV_MANUAL, {});
+      if (keywords.length) map[body.productId] = keywords;
+      else delete map[body.productId];
+      await kv.put(KV_MANUAL, JSON.stringify(map));
+      return json({ ok: true, keywords });
+    }
+
     if (body.action === "save_terms") {
       if (!body.productId) return json({ error: "productId mangler" }, 400);
       const terms = strings(body.terms, 20).map((t) => t.toLowerCase());

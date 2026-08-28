@@ -1866,7 +1866,8 @@
       "ingen_efterspoergsel_er_et_svar": "Finder værktøjet ingen fraser med efterspørgsel, siger det dét og tilbyder ingen grupper. Målt 27. august: Mackie Thump GO 1 frase / 0 anbefalet, Røgmaskine 18 / 5, Discokugle 48 / 5.",
       "relevansfilter": "Egne søgetermer måles mod produktets FRØ, ikke mod Googles idéliste. Discokuglens side nævner også højtalere, så idélisten indeholdt højtalerfraser, og 'lej højtaler' (ti egne klik) blev anbefalet til en annonce mod /discokugle. Præcis det misforhold mellem keyword og landingsside, værktøjet skal forhindre.",
       "uaendret": "Skrivevejen: server-validering af tegngrænser, frase i overskrift og beskrivelse, landingsside der findes og ikke er pauset, preflight med validateOnly på alle grupper før den første oprettes, oprettelse PAUSED, binding i ads_mapping."
-    }
+    },
+    "egne_soegefraser_2026_08_28": "Man kan nu skrive sine egne søgefraser ind på /admin/ads/opret. De gemmes pr. produkt i KV (ads_manual_keywords), kommer øverst på keywordlisten mærket 'din egen', og er valgt som udgangspunkt — uanset hvad Google mener om volumen. Volumen slås stadig op og vises: Google svarer altid på et frø, også på 'blæsefisk til firmafest', bare med nul. Lange fraser har sjældent målbar volumen i Danmark, og phrase match fanger dem alligevel, så et nul stopper intet. Feltet er adskilt fra 'Frø til Google': frø er det Google skal LEDE ud fra, egne fraser ER keywords. Vælger man to fraser hvor den ene dækker den anden med phrase match — 'lej højtaler' dækker 'lej højtaler til bryllup' — siger listen det ('Dækket af …'). phraseCovers() i adsIntent.ts kender reglen: ordene skal stå i rækkefølge uden fremmede ord imellem, så 'lej en højtaler' dækkes ikke."
   },
   "tasks": [
     {

@@ -190,6 +190,28 @@ export function clusterKeywords(input: Array<KeywordInput | string>): Cluster[] 
 }
 
 /**
+ * Dækker phrase match på `bred` også søgninger på `smal`?
+ *
+ * Phrase match kræver, at keywordets ord står i søgningen i samme rækkefølge
+ * og uden fremmede ord imellem; til gengæld må der stå hvad som helst før og
+ * efter. "lej højtaler" fanger derfor "lej højtaler til bryllup" af sig selv,
+ * mens "lej en højtaler" IKKE dækkes — der er skudt et ord ind i midten.
+ *
+ * Bruges til at sige det højt, når en frase man skriver ind allerede er
+ * dækket af en bredere, man har valgt. Så er den ekstra frase ikke forkert,
+ * bare overflødig.
+ */
+export function phraseCovers(bred: string, smal: string): boolean {
+  const b = words(bred);
+  const sm = words(smal);
+  if (!b.length || b.length >= sm.length) return false;
+  for (let i = 0; i + b.length <= sm.length; i++) {
+    if (b.every((w, j) => w === sm[i + j])) return true;
+  }
+  return false;
+}
+
+/**
  * Frø til Google — ikke keywords.
  *
  * Forskellen er hele forskellen: et frø er noget vi giver Google for at få

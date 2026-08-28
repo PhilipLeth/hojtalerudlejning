@@ -16,6 +16,7 @@ import {
   clusterKeywords,
   hasRentalWord,
   headTerm,
+  phraseCovers,
   seedTerms,
 } from "@/lib/adsIntent";
 
@@ -114,6 +115,27 @@ describe("clusterKeywords", () => {
   it("regner volumen sammen, så en gruppe uden efterspørgsel kan ses", () => {
     const [gruppe] = clusterKeywords([{ text: "lej mackie thump go", volume: 0 }]);
     expect(gruppe.volume).toBe(0);
+  });
+});
+
+describe("phraseCovers", () => {
+  it("ved at en bred frase æder den lange af sig selv", () => {
+    expect(phraseCovers("lej højtaler", "lej højtaler til bryllup")).toBe(true);
+    expect(phraseCovers("lej soundboks", "lej soundboks københavn")).toBe(true);
+  });
+
+  it("dækker ikke, når der er skudt et ord ind i midten", () => {
+    // Phrase match kræver ordene i rækkefølge UDEN fremmede ord imellem
+    expect(phraseCovers("lej højtaler", "lej en højtaler")).toBe(false);
+  });
+
+  it("dækker ikke sig selv eller noget bredere", () => {
+    expect(phraseCovers("lej højtaler", "lej højtaler")).toBe(false);
+    expect(phraseCovers("lej højtaler til bryllup", "lej højtaler")).toBe(false);
+  });
+
+  it("kræver samme rækkefølge", () => {
+    expect(phraseCovers("højtaler leje", "lej højtaler til fest")).toBe(false);
   });
 });
 

@@ -16,7 +16,7 @@
 import AdminLogin from "@/components/AdminLogin";
 import AdminNav from "@/components/AdminNav";
 import { buildAdCopy, validateAdCopy } from "@/lib/adsCopy";
-import { adGroupName, clusterKeywords, THEME_LABELS, type ThemeKey } from "@/lib/adsIntent";
+import { adGroupName, clusterKeywords, phraseCovers, THEME_LABELS, type ThemeKey } from "@/lib/adsIntent";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -47,6 +47,7 @@ interface BuildResponse {
   product?: { id: string; name: string; price: number; page: string; contents: string[] };
   terms?: string[];
   seededTerms?: boolean;
+  manual?: string[];
   keywords?: FoundKeyword[];
   recommendedCount?: number;
   minVolume?: number;
@@ -154,6 +155,7 @@ export default function AdsOpretPage() {
   const [edits, setEdits] = useState<Record<string, CopyEdit>>({});
   const [kunLeje, setKunLeje] = useState(true);
   const [terms, setTerms] = useState("");
+  const [egne, setEgne] = useState("");
   const [loading, setLoading] = useState(false);
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
@@ -178,6 +180,7 @@ export default function AdsOpretPage() {
         }
         setData(json);
         setTerms((json.terms ?? []).join(", "));
+        setEgne("");
         // Start med dem der har efterspørgsel og lejeintention
         setValgte(new Set((json.keywords ?? []).filter((k) => k.recommended).map((k) => k.text)));
         setEdits({});
@@ -203,6 +206,21 @@ export default function AdsOpretPage() {
     () => (kunLeje ? keywords.filter((k) => k.rental || valgte.has(k.text)) : keywords),
     [keywords, kunLeje, valgte],
   );
+
+  /**
+   * Hvilke valgte fraser er allerede dækket af en bredere, man også har valgt?
+   * De er ikke forkerte — bare overflødige, og det er bedre at vide end at
+   * betale for.
+   */
+  const dækketAf = useMemo(() => {
+    const valgtListe = keywords.filter((k) => valgte.has(k.text)).map((k) => k.text);
+    const ud: Record<string, string> = {};
+    for (const smal of valgtListe) {
+      const bred = valgtListe.find((b) => phraseCovers(b, smal));
+      if (bred) ud[smal] = bred;
+    }
+    return ud;
+  }, [keywords, valgte]);
 
   /** Grupperne, som de ser ud lige nu. Regnes om ved hvert klik. */
   const grupper = useMemo(() => {
@@ -310,6 +328,26 @@ export default function AdsOpretPage() {
     await load(product.id);
   }
 
+  async function saveEgne(tekst: string) {
+    if (!product) return;
+    const nye = tekst
+      .split(/[,\n]/)
+      .map((t) => t.trim().toLowerCase())
+      .filter(Boolean);
+    const samlet = [...new Set([...(data?.manual ?? []), ...nye])];
+    const svar = await post({ action: "save_manual", productId: product.id, keywords: samlet }, "egne");
+    if (svar?.res.ok) await load(product.id);
+  }
+
+  async function fjernEgen(text: string) {
+    if (!product) return;
+    const svar = await post(
+      { action: "save_manual", productId: product.id, keywords: (data?.manual ?? []).filter((m) => m !== text) },
+      "egne",
+    );
+    if (svar?.res.ok) await load(product.id);
+  }
+
   async function saveTerms() {
     if (!product) return;
     const svar = await post(
@@ -327,7 +365,11 @@ export default function AdsOpretPage() {
   if (!isLoggedIn) return <AdminLogin title="Byg annoncer" />;
 
   const ingenEfterspørgsel =
-    !!product && data?.adsConfigured && !data.adsError && (data.recommendedCount ?? 0) === 0;
+    !!product &&
+    data?.adsConfigured &&
+    !data.adsError &&
+    (data.recommendedCount ?? 0) === 0 &&
+    !(data.manual ?? []).length;
 
   return (
     <>
@@ -341,9 +383,10 @@ export default function AdsOpretPage() {
       />
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px" }}>
         <p style={{ color: "#888", fontSize: "12px", margin: "0 0 16px" }}>
-          Fraserne kommer fra Google og fra vores egne søgetermer — ingen er opfundet her.
-          Vælg dem der giver mening; grupperne bygges af udvalget og oprettes <strong>pauset</strong>.
-          Tænd dem på <a href="/admin/ads" style={{ color: "#1e7e34" }}>Ads-oversigten</a>.
+          Fraserne kommer fra Google, fra vores egne søgetermer og fra det du selv skriver ind —
+          ingen er opfundet af værktøjet. Vælg dem der giver mening; grupperne bygges af udvalget og
+          oprettes <strong>pauset</strong>. Tænd dem på{" "}
+          <a href="/admin/ads" style={{ color: "#1e7e34" }}>Ads-oversigten</a>.
         </p>
 
         {error && <div style={banner("#fdecea", "#c0392b")}>{error}</div>}
@@ -390,9 +433,60 @@ export default function AdsOpretPage() {
               </button>
             </div>
             <p style={{ color: "#888", fontSize: "12px", margin: "8px 0 0" }}>
-              Frø er ikke keywords — det er de ord, Google skal lede ud fra. Produktsiden{" "}
-              <code>{product.page}</code> bruges altid som frø; de her lægges oveni. Adskil med komma.
+              Frø er ikke keywords — det er de ord, Google skal <em>lede ud fra</em>, og svaret er
+              fraser du kan vælge. Produktsiden <code>{product.page}</code> bruges altid som frø; de
+              her lægges oveni. Vil du bestemme et keyword selv, så brug feltet nedenunder.
+              Adskil med komma.
             </p>
+          </div>
+        )}
+
+        {product && (
+          <div style={card}>
+            <label style={label} htmlFor="egne">Dine egne søgefraser</label>
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+              <input
+                id="egne"
+                value={egne}
+                onChange={(e) => setEgne(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && egne.trim()) {
+                    e.preventDefault();
+                    saveEgne(egne);
+                  }
+                }}
+                placeholder="lej højtaler til bryllup, højtaler leje nørrebro"
+                style={{ ...input, flex: "1 1 380px" }}
+              />
+              <button onClick={() => saveEgne(egne)} disabled={!egne.trim() || busy === "egne"} style={button}>
+                {busy === "egne" ? "Tilføjer…" : "Tilføj til listen"}
+              </button>
+            </div>
+            <p style={{ color: "#888", fontSize: "12px", margin: "8px 0 0" }}>
+              Skriv de fraser du selv mener er relevante — de kommer på listen som keywords, uanset hvad
+              Google mener om dem. Adskil med komma eller linjeskift. Volumen slås op, men et nul stopper
+              intet: lange fraser har sjældent målbar volumen i Danmark.
+            </p>
+            {!!(data?.manual ?? []).length && (
+              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginTop: "10px" }}>
+                {(data?.manual ?? []).map((m) => (
+                  <span
+                    key={m}
+                    style={{ display: "inline-flex", gap: "6px", alignItems: "center", background: "#eef6ff",
+                             color: "#1c4f82", borderRadius: "12px", padding: "3px 6px 3px 10px", fontSize: "12px" }}
+                  >
+                    {m}
+                    <button
+                      onClick={() => fjernEgen(m)}
+                      aria-label={`Fjern ${m}`}
+                      style={{ border: "none", background: "none", cursor: "pointer", color: "#1c4f82", fontSize: "14px", lineHeight: 1, padding: "0 4px" }}
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -430,7 +524,7 @@ export default function AdsOpretPage() {
                     <th style={{ ...th, textAlign: "right" }}>Egne klik</th>
                     <th style={th}>Mønster</th>
                     <th style={th}>Kilde</th>
-                    <th style={th}>Findes allerede i</th>
+                    <th style={th}>Bemærk</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -439,8 +533,11 @@ export default function AdsOpretPage() {
                       <td style={td}>
                         <input type="checkbox" checked={valgte.has(k.text)} onChange={() => toggle(k.text)} aria-label={k.text} />
                       </td>
-                      <td style={{ ...td, color: k.rental ? "#222" : "#999" }}>
+                      <td style={{ ...td, color: k.rental || k.sources.includes("manuel") ? "#222" : "#999" }}>
                         {k.text}
+                        {k.sources.includes("manuel") && (
+                          <span style={{ fontSize: "11px", color: "#1c4f82", fontWeight: 600 }}> · din egen</span>
+                        )}
                         {!k.rental && <span style={{ fontSize: "11px", color: "#b58900" }}> · uden lejeord</span>}
                       </td>
                       <td style={{ ...td, textAlign: "right", fontWeight: k.volume >= (data?.minVolume ?? 10) ? 600 : 400, color: k.volume ? "#222" : "#bbb" }}>
@@ -451,7 +548,12 @@ export default function AdsOpretPage() {
                       </td>
                       <td style={{ ...td, color: "#666", fontSize: "12px" }}>{THEME_LABELS[k.intent]}</td>
                       <td style={{ ...td, color: "#666", fontSize: "12px" }}>{k.sources.join(" + ")}</td>
-                      <td style={{ ...td, color: "#c0392b", fontSize: "12px" }}>{k.duplicateIn ?? ""}</td>
+                      <td style={{ ...td, fontSize: "12px" }}>
+                        {k.duplicateIn && <span style={{ color: "#c0392b" }}>Findes i {k.duplicateIn}</span>}
+                        {!k.duplicateIn && dækketAf[k.text] && (
+                          <span style={{ color: "#8a6d3b" }}>Dækket af “{dækketAf[k.text]}”</span>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
