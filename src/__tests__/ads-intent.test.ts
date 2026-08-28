@@ -19,6 +19,7 @@ import {
   phraseCovers,
   samhandler,
   seedTerms,
+  udenforOmraadet,
 } from "@/lib/adsIntent";
 
 describe("classify", () => {
@@ -164,6 +165,26 @@ describe("samhandler", () => {
 
   it("uden termer hører intet til", () => {
     expect(samhandler("lej discokugle", [])).toBe(false);
+  });
+});
+
+describe("udenforOmraadet", () => {
+  it("kender de steder kontoen har betalt klik for uden at kunne levere", () => {
+    expect(udenforOmraadet("soundboks leje odense")).toBe("odense");
+    expect(udenforOmraadet("soundboks udlejning fyn")).toBe("fyn");
+    expect(udenforOmraadet("lej soundboks aalborg")).toBe("aalborg");
+    expect(udenforOmraadet("leje soundboks smukfest")).toBe("smukfest");
+  });
+
+  it("lader vores eget område være", () => {
+    // Roskilde, Frederiksberg og Taastrup dækkes af Yderområder-kampagnen
+    for (const s of ["lej soundboks københavn", "lej soundboks roskilde", "højtaler leje frederiksberg"]) {
+      expect(udenforOmraadet(s), s).toBeNull();
+    }
+  });
+
+  it("er null når der ikke står et sted", () => {
+    expect(udenforOmraadet("lej soundboks")).toBeNull();
   });
 });
 

@@ -240,6 +240,34 @@ export function clusterKeywords(input: Array<KeywordInput | string>): Cluster[] 
 }
 
 /**
+ * Steder vi ikke kører til.
+ *
+ * Kontoen har betalt for klik på "soundboks leje odense", "soundboks
+ * udlejning fyn", "lej soundboks aalborg" og "leje soundboks smukfest".
+ * Efterspørgslen er ægte nok, men vi kan ikke levere, så det er penge ud af
+ * vinduet — og en idéliste, der foreslår at bygge en annoncegruppe på dem,
+ * gør skaden større. Listen er kun de steder, der faktisk er dukket op;
+ * den skal vokse af erfaring, ikke af Danmarkskortet.
+ *
+ * Bemærk at Roskilde, Frederiksberg og Taastrup IKKE står her: de er dækket
+ * af Yderområder-kampagnen.
+ */
+const UDENFOR_OMRAADET = new Set([
+  "odense", "fyn", "aarhus", "århus", "aalborg", "ålborg", "jylland",
+  "esbjerg", "randers", "kolding", "vejle", "horsens", "silkeborg",
+  "herning", "sønderborg", "bornholm", "smukfest",
+]);
+
+/**
+ * Peger frasen et sted hen, vi ikke kører til? Returnerer stedet, ellers null.
+ * Sådan en frase er ikke en idé til en annoncegruppe — den er en kandidat
+ * til et negativt keyword.
+ */
+export function udenforOmraadet(text: string): string | null {
+  return words(text).find((w) => UDENFOR_OMRAADET.has(w)) ?? null;
+}
+
+/**
  * Dækker phrase match på `bred` også søgninger på `smal`?
  *
  * Phrase match kræver, at keywordets ord står i søgningen i samme rækkefølge

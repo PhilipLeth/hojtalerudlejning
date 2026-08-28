@@ -202,7 +202,9 @@ export default function AdsPage() {
       <p style={{ color: "#888", fontSize: "12px", margin: "0 0 16px" }}>
         Intet slukkes automatisk. Knapperne herunder ændrer status i Google Ads med det samme, når du trykker.
         Mangler et produkt annoncer, kan du bygge dem på{" "}
-        <a href="/admin/ads/opret" style={{ color: "#1e7e34", fontWeight: 600 }}>Byg annoncer</a>.
+        <a href="/admin/ads/opret" style={{ color: "#1e7e34", fontWeight: 600 }}>Byg annoncer</a>
+        {" "}— eller lede efter udækket efterspørgsel under{" "}
+        <a href="/admin/ads/ideer" style={{ color: "#1e7e34", fontWeight: 600 }}>Find idéer</a>.
       </p>
 
       {error && (

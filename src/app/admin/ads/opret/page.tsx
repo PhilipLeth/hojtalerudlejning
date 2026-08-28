@@ -181,8 +181,10 @@ export default function AdsOpretPage() {
         setData(json);
         setTerms((json.terms ?? []).join(", "));
         setEgne("");
-        // Start med dem der har efterspørgsel og lejeintention
-        setValgte(new Set((json.keywords ?? []).filter((k) => k.recommended).map((k) => k.text)));
+        // Intet vælges på forhånd. Værktøjet kan pege, men valget er ikke
+        // dets — en afkrydsning man ikke selv har sat, er en beslutning
+        // taget bag ryggen på den der skal stå på mål for kontoen.
+        setValgte(new Set());
         setEdits({});
       } catch {
         setError("Netværksfejl");
@@ -192,6 +194,12 @@ export default function AdsOpretPage() {
     },
     [secret, unauthorized],
   );
+
+  // "Byg →" fra idésiden peger hertil med produktet i adressen
+  useEffect(() => {
+    const ønsket = new URLSearchParams(window.location.search).get("produkt");
+    if (ønsket) setProductId(ønsket);
+  }, []);
 
   useEffect(() => {
     load(productId);
@@ -400,9 +408,9 @@ export default function AdsOpretPage() {
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "20px" }}>
         <p style={{ color: "#888", fontSize: "12px", margin: "0 0 16px" }}>
           Fraserne kommer fra Google, fra vores egne søgetermer og fra det du selv skriver ind —
-          ingen er opfundet af værktøjet. Vælg dem der giver mening; grupperne bygges af udvalget og
-          oprettes <strong>pauset</strong>. Tænd dem på{" "}
-          <a href="/admin/ads" style={{ color: "#1e7e34" }}>Ads-oversigten</a>.
+          ingen er opfundet af værktøjet, og intet er valgt på forhånd. Vælg dem der giver mening;
+          grupperne bygges af udvalget og oprettes <strong>pauset</strong>. Leder du efter noget at
+          gå i gang med, så prøv <a href="/admin/ads/ideer" style={{ color: "#1e7e34" }}>Find idéer</a>.
         </p>
 
         {error && <div style={banner("#fdecea", "#c0392b")}>{error}</div>}
@@ -524,10 +532,23 @@ export default function AdsOpretPage() {
               <strong style={{ fontSize: "14px" }}>
                 {keywords.length} fraser fundet · {valgte.size} valgt
               </strong>
-              <label style={{ fontSize: "12px", color: "#555", display: "flex", gap: "6px", alignItems: "center" }}>
-                <input type="checkbox" checked={!kunLeje} onChange={(e) => setKunLeje(!e.target.checked)} />
-                Vis også fraser uden lejeord
-              </label>
+              <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
+                <button
+                  onClick={() => setValgte(new Set(keywords.filter((k) => k.recommended).map((k) => k.text)))}
+                  style={{ ...button, padding: "5px 10px" }}
+                >
+                  Vælg de {keywords.filter((k) => k.recommended).length} foreslåede
+                </button>
+                {!!valgte.size && (
+                  <button onClick={() => setValgte(new Set())} style={{ ...button, padding: "5px 10px" }}>
+                    Ryd valg
+                  </button>
+                )}
+                <label style={{ fontSize: "12px", color: "#555", display: "flex", gap: "6px", alignItems: "center" }}>
+                  <input type="checkbox" checked={!kunLeje} onChange={(e) => setKunLeje(!e.target.checked)} />
+                  Vis også fraser uden lejeord
+                </label>
+              </div>
             </div>
 
             <div style={{ overflowX: "auto" }}>
@@ -553,6 +574,9 @@ export default function AdsOpretPage() {
                         {k.text}
                         {k.sources.includes("manuel") && (
                           <span style={{ fontSize: "11px", color: "#1c4f82", fontWeight: 600 }}> · din egen</span>
+                        )}
+                        {k.recommended && !k.sources.includes("manuel") && (
+                          <span style={{ fontSize: "11px", color: "#1e7e34", fontWeight: 600 }} title="Lejeintention, målt efterspørgsel, og ligger ikke i kontoen i forvejen"> · værd at se på</span>
                         )}
                         {!k.rental && <span style={{ fontSize: "11px", color: "#b58900" }}> · uden lejeord</span>}
                       </td>

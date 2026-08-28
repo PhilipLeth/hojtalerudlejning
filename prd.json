@@ -1881,6 +1881,14 @@
         "seedTerms klipper måleenheder væk: 'Discokugle 40 cm' gav frøet 'discokugle cm', og Google svarede med én eneste idé på det. Nu 'discokugle' + 'diskokugle'."
       ],
       "laering": "Googles urlSeed alene er meget løs: for /discokugle returnerer den 259 idéer, hvoraf 249 intet har med en discokugle at gøre ('led lys' 12.100/md, '1 2v batteri'). Det er frøene der holder den i snor — URL + ordentlige frø gav 28 idéer, alle om discokugler. Et skævt frø er derfor ikke en detalje."
+    },
+    "ideer_og_intet_autovalg_2026_08_28": {
+      "intet_autovalg": "Byggeren krydser ikke længere keywords af på forhånd. Anbefalingen står som et mærke ('værd at se på') og der er en knap 'Vælg de N foreslåede', men valget træffes af mennesket. En afkrydsning man ikke selv har sat, er en beslutning taget bag ryggen på den, der skal stå på mål for kontoen.",
+      "ideer": "/admin/ads/ideer + /api/ads-ideas: roterer gennem katalogets annonceerbare sider, fem ad gangen, og viser efterspørgsel kontoen IKKE dækker. Alt der allerede ligger som keyword trækkes fra — en idé er noget der ikke er gjort endnu. Rotationen huskes i localStorage.",
+      "to_kilder": "Googles idéer for siden (estimater, peger på markedet) og egne søgetermer med klik som vi ikke ejer (kvitteringer — vi har betalt for de klik gennem en bredere frase; ejer vi dem selv, kan annoncen skrives så den passer).",
+      "rotationsfejl": "Første udgave lod egne søgetermer gælde hele kataloget. Klik sorterer øverst, så de samme tolv fraser fyldte både runde 1 og runde 2 — rotationen var meningsløs, og fund for Lys-pakken dukkede op i en runde om højtalere. Nu er også søgetermerne afgrænset til rundens sider.",
+      "udenfor_omraadet": "Kontoen har betalt for klik på 'soundboks leje odense', 'soundboks udlejning fyn', 'lej soundboks aalborg' og 'leje soundboks smukfest'. Efterspørgslen er ægte, men vi kan ikke levere. udenforOmraadet() i adsIntent markerer dem, de skjules som udgangspunkt, og handlingen er 'negativt keyword' frem for 'Byg'. Roskilde, Frederiksberg og Taastrup er IKKE på listen — de dækkes af Yderområder.",
+      "maalt_2026_08_28": "Runde 1 (højtalerne): 10 idéer, alle egne klik vi ikke ejer — soundboks leje københavn (2 klik), hvad koster det at leje en soundboks, lej en soundboks københavn, hifi klubben soundboks leje. Runde 2 (lys, røg, subwoofer, mixer): 4 idéer, heraf 'lej en røgmaskine' 20/md fra Google."
     }
   },
   "tasks": [
