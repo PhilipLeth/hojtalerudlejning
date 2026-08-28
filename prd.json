@@ -3591,12 +3591,13 @@
     "loft": "MAANEDSLOFT = 250 billeder pr. måned (~33 $), talt i KV som gallery_forbrug_<år-måned>. Tælleren stiger først når kaldet er lykkedes, så en fejl ikke koster af loftet. Rammes loftet, svarer API'et 429 med en besked om hvor tallet står.",
     "noegle": "GEMINI_API_KEY ligger både i .dev.vars (scriptet) og som Cloudflare Pages secret på speaker-rental/production (knappen). Skiftes den, skal begge steder opdateres: wrangler pages secret put GEMINI_API_KEY --project-name=speaker-rental",
     "arbejdsgang": {
-      "regel": "Intet genereres af sig selv. Hver knap er ét tryk og ét billede. Bulk er noget Philip sætter i gang — 27. august blev hele kataloget kørt i én omgang uden at det var aftalt, og 77 billeder gik live uden at nogen havde set dem. En test læser kilden og fejler, hvis en useEffect eller en løkke kommer til at generere.",
-      "side": "/admin/galleri. Vælg scene i fanerne øverst — hver fane har en tæller (fx \"Alt det du får 26/34\") — og gå listen igennem oppefra. Først alle produktbilleder, så alle stemningsbilleder.",
-      "tilstande": "Mangler · Ikke gennemgået (fra bulk-kørslen, ligger som fil i repoet) · Godkendt (set efter og skrevet i KV-manifestet) · Fjernet. Filtrene øverst skærer listen ned til dem, der mangler, eller dem der ikke er set efter.",
+      "hvor": "Alt sker på produktets eget kort i /admin/produkter. Der var kortvarigt en /admin/galleri med de samme knapper; den er slettet igen, fordi arbejdet hører til dér, hvor produktet er — ikke på en side ved siden af.",
+      "regel": "Intet genereres af sig selv. Ét tryk er ét billede. Bulk er noget Philip sætter i gang — 27. august blev hele kataloget kørt i én omgang uden at det var aftalt, og 77 billeder gik live uden at nogen havde set dem. En test læser kilden og fejler, hvis en useEffect eller en løkke kommer til at generere.",
+      "overblik": "Øverst på /admin/produkter står hvor langt galleriet er i alt, og et filter kan skære listen ned til \"mangler billeder\" eller \"ikke gennemgået\". Filtret SKJULER kort (display: none) frem for at filtrere arrayet — listerne redigeres via deres index, og et filtreret array ville flytte dem. Hvert korthoved viser \"Galleri 2/3\" med en prik, hvis noget ikke er set efter.",
+      "tilstande": "Mangler · Ikke gennemgået (fra bulk-kørslen, ligger som fil i repoet) · Godkendt (set efter og skrevet i KV-manifestet) · Fjernet.",
       "godkend": "\"Godkend\" på et ikke-gennemgået billede koster ingenting: billedet ligger der i forvejen, og posten flytter det bare til manifestet, så du kan se hvad du har været igennem.",
       "fjern": "De 77 fra bulk-kørslen er statiske filer, så en sletning i KV skjuler dem ikke. \"Fjern\" skriver derfor en gravsten (fjernet: true), som useGallery kaster scenen væk på. \"Fortryd\" godkender billedet igen.",
-      "produktkortet": "Galleri-feltet i /admin/produkter er foldet sammen og henter først noget, når det åbnes. 45 kort × 3 scener var 135 knapper og et manifest-opslag pr. kort på hver sideindlæsning."
+      "ydelse": "Galleri-feltet rendrer først noget, når kortet er foldet ud (aktiv-prop). 45 kort × 3 scener er 135 knapper, der ikke skal bygges, fordi nogen ville rette en pris. Manifestet hentes én gang for hele siden og ejes af siden, så korthovedet og feltet er enige."
     }
   }
 }

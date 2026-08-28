@@ -4,7 +4,7 @@ import AdminNav from "@/components/AdminNav";
 import AdminLogin from "@/components/AdminLogin";
 import { useAdminAuth, getAdminToken } from "@/lib/useAdminAuth";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import {
   speakers as defaultSpeakers,
   addons as defaultAddons,
@@ -20,7 +20,8 @@ import { DEFAULT_ADMIN_CATALOG, loadAdminCatalog } from "@/lib/useAdminCatalog";
 import { useLager } from "@/lib/useLager";
 import { StockField } from "@/components/admin/StockField";
 import ImageField from "@/components/admin/ImageField";
-import GalleryField from "@/components/admin/GalleryField";
+import GalleryField, { galleriOpsummering } from "@/components/admin/GalleryField";
+import { hentManifest, type GalleryEntry } from "@/lib/galleryAdmin";
 import VideoField from "@/components/admin/VideoField";
 import CreateProductModal, { type ProductType } from "@/components/admin/CreateProductModal";
 
@@ -197,6 +198,73 @@ export default function AdminProdukterPage() {
   const lager = useLager(secret);
   const setStock = (id: string, v: number | null) => lager.saveStock({ [id]: v });
   const setOverbook = (id: string, v: number | null) => lager.saveOverbook({ [id]: v });
+
+  /**
+   * Galleriet styres herfra, så korthovedet og feltet inde i kortet er enige
+   * om hvad der findes. Manifestet hentes én gang for hele siden — ikke én
+   * gang pr. produktkort.
+   */
+  const [galleri, setGalleri] = useState<Record<string, GalleryEntry[]>>({});
+  const [aabne, setAabne] = useState<Set<string>>(new Set());
+  const [galleriFilter, setGalleriFilter] = useState<"alle" | "mangler" | "ikke_gennemgaaet">("alle");
+
+  useEffect(() => {
+    hentManifest().then(setGalleri);
+  }, []);
+
+  /** Hvor langt galleriet er i alt — tallet i overblikket øverst på siden. */
+  const galleriTal = useMemo(() => {
+    let ialt = 0;
+    let klar = 0;
+    let ikkeSet = 0;
+    const tæl = (id: string, page: string | undefined, erPakke: boolean) => {
+      if (!page) return;
+      const o = galleriOpsummering(id, erPakke, galleri);
+      ialt += o.ialt;
+      klar += o.klar;
+      ikkeSet += o.ikkeSet;
+    };
+    for (const sp of speakers) tæl(sp.id, sp.page, false);
+    for (const r of rentals) tæl(r.id, r.page, !!r.bundle?.parts?.length);
+    for (const a of addons) tæl(a.id, a.page, false);
+    return { ialt, klar, ikkeSet };
+  }, [speakers, rentals, addons, galleri]);
+
+  const sætGalleri = (id: string, billeder: GalleryEntry[]) =>
+    setGalleri((m) => ({ ...m, [id]: billeder }));
+
+  const foldet = (id: string) => (e: React.SyntheticEvent<HTMLDetailsElement>) => {
+    const åben = e.currentTarget.open;
+    setAabne((s) => {
+      const n = new Set(s);
+      if (åben) n.add(id);
+      else n.delete(id);
+      return n;
+    });
+  };
+
+  /** Statusmærket i korthovedet — så man kan se hvad der mangler uden at folde ud. */
+  const galleriMærke = (id: string, page: string | undefined, erPakke: boolean) => {
+    if (!page) return null;
+    const { ialt, klar, ikkeSet } = galleriOpsummering(id, erPakke, galleri);
+    const farve = klar === 0 ? "#999" : ikkeSet > 0 ? "#b8860b" : "#1a7f37";
+    return (
+      <span style={{ fontSize: "12px", color: farve, fontWeight: 600 }} title={ikkeSet ? `${ikkeSet} ikke gennemgået` : "Galleri"}>
+        Galleri {klar}/{ialt}
+        {ikkeSet > 0 ? " •" : ""}
+      </span>
+    );
+  };
+
+  /** Skal kortet skjules af galleri-filtret? Skjules, ikke fjernes — listerne
+   *  redigeres via deres index, og et filtreret array ville flytte dem. */
+  const skjulAfFilter = (id: string, page: string | undefined, erPakke: boolean) => {
+    if (galleriFilter === "alle") return false;
+    if (!page) return true;
+    const { ialt, klar, ikkeSet } = galleriOpsummering(id, erPakke, galleri);
+    if (galleriFilter === "mangler") return klar >= ialt;
+    return ikkeSet === 0;
+  };
 
   const loadCatalog = useCallback(async () => {
     setLoading(true);
@@ -379,16 +447,60 @@ export default function AdminProdukterPage() {
           resten venter på "Gem ændringer". Hele lageret på én side: <a href="/admin/lager" style={{ color: "#0070f3" }}>Lager</a>.
         </p>
 
+        {/* Galleriet i tal. Overblikket hører til her, hvor produkterne er —
+            ikke på en side ved siden af. Filtret skjuler kort, det fjerner dem
+            ikke: listerne redigeres via deres index. */}
+        <div style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "14px 18px", marginBottom: "20px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px" }}>
+            <strong style={{ fontSize: "14px" }}>Galleri</strong>
+            <span style={{ fontSize: "13px", color: "#555" }}>
+              {galleriTal.klar} af {galleriTal.ialt} billeder på plads
+              {galleriTal.ikkeSet > 0 && (
+                <span style={{ color: "#b8860b", fontWeight: 600 }}> · {galleriTal.ikkeSet} ikke gennemgået</span>
+              )}
+            </span>
+            <span style={{ flex: 1 }} />
+            {([
+              ["alle", "Alle produkter"],
+              ["mangler", "Mangler billeder"],
+              ["ikke_gennemgaaet", "Ikke gennemgået"],
+            ] as const).map(([v, l]) => (
+              <button
+                key={v}
+                type="button"
+                onClick={() => setGalleriFilter(v)}
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  padding: "6px 12px",
+                  borderRadius: "6px",
+                  border: "1px solid #d0d0d0",
+                  background: galleriFilter === v ? "#111" : "#fff",
+                  color: galleriFilter === v ? "#fff" : "#111",
+                  cursor: "pointer",
+                }}
+              >
+                {l}
+              </button>
+            ))}
+          </div>
+          <p style={{ fontSize: "12px", color: "#888", margin: "8px 0 0" }}>
+            Fold et produkt ud for at lave, godkende eller fjerne billeder. Ét tryk er ét billede —
+            der genereres aldrig noget af sig selv.
+          </p>
+        </div>
+
         <h2 style={{ fontSize: "17px", margin: "8px 0 12px" }}>Højtalere ({speakers.length})</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "32px" }}>
           {speakers.map((sp, i) => (
-            <details key={sp.id} data-product-id={sp.id} defaultOpen={i === 0} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: sp.hidden ? 0.55 : 1 }}>
+            <details key={sp.id} data-product-id={sp.id} onToggle={foldet(sp.id)} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: sp.hidden ? 0.55 : 1, display: skjulAfFilter(sp.id, sp.page, false) ? "none" : undefined }}>
               <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: "15px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
                 <span>
                   {sp.da.name} <span style={{ color: "#888", fontWeight: 400 }}>({sp.id})</span>
                   {sp.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
                 </span>
                 <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  {galleriMærke(sp.id, sp.page, false)}
                   <StockBadge value={lager.stock[sp.id]} overbook={lager.overbook[sp.id]} />
                   <span style={{ color: "#0070f3" }}>{sp.price} kr</span>
                   <PauseKnap pauset={!!sp.hidden} onToggle={() => updateSpeaker(i, { hidden: !sp.hidden })} />
@@ -447,7 +559,9 @@ export default function AdminProdukterPage() {
                     })
                   }
                 />
-                {sp.page && <GalleryField productId={sp.id} productName={sp.da.name} erPakke={false} />}
+                {sp.page && (
+                  <GalleryField productId={sp.id} productName={sp.da.name} erPakke={false} aktiv={aabne.has(sp.id)} manifest={galleri} onManifest={sætGalleri} />
+                )}
               </div>
               {(["da", "en"] as const).map((loc) => (
                 <div key={loc} style={{ marginTop: "16px", borderTop: "1px solid #eee", paddingTop: "12px" }}>
@@ -470,13 +584,14 @@ export default function AdminProdukterPage() {
         <h2 style={{ fontSize: "17px", margin: "8px 0 12px" }}>Lys, AV og øvrige produkter ({rentals.length})</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "32px" }}>
           {rentals.map((r, i) => (
-            <details key={r.id} data-product-id={r.id} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: r.hidden ? 0.55 : 1 }}>
+            <details key={r.id} data-product-id={r.id} onToggle={foldet(r.id)} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: r.hidden ? 0.55 : 1, display: skjulAfFilter(r.id, r.page, !!r.bundle?.parts?.length) ? "none" : undefined }}>
               <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: "15px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
                 <span>
                   {r.name_da} <span style={{ color: "#888", fontWeight: 400 }}>({r.id})</span>
                   {r.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
                 </span>
                 <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  {galleriMærke(r.id, r.page, !!r.bundle?.parts?.length)}
                   {isBundleProduct(r) ? (
                     <span style={{ fontSize: "11px", color: "#aaa" }}>lager: fra delene</span>
                   ) : (
@@ -520,7 +635,14 @@ export default function AdminProdukterPage() {
                 </label>
                 <AllowedAddonsField allAddons={addons} value={r.allowedAddons} onChange={(v) => updateRental(i, { allowedAddons: v })} />
                 {r.page && (
-                  <GalleryField productId={r.id} productName={r.name_da} erPakke={!!r.bundle?.parts?.length} />
+                  <GalleryField
+                    productId={r.id}
+                    productName={r.name_da}
+                    erPakke={!!r.bundle?.parts?.length}
+                    aktiv={aabne.has(r.id)}
+                    manifest={galleri}
+                    onManifest={sætGalleri}
+                  />
                 )}
               </div>
               <div style={{ marginTop: "12px" }}>
@@ -551,13 +673,14 @@ export default function AdminProdukterPage() {
         <h2 style={{ fontSize: "17px", margin: "8px 0 12px" }}>Tilvalg / mersalg ({addons.length})</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {addons.map((a, i) => (
-            <details key={a.id} data-product-id={a.id} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: a.hidden ? 0.55 : 1 }}>
+            <details key={a.id} data-product-id={a.id} onToggle={foldet(a.id)} style={{ background: "#fff", borderRadius: "12px", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", padding: "16px 20px", opacity: a.hidden ? 0.55 : 1, display: skjulAfFilter(a.id, a.page, false) ? "none" : undefined }}>
               <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: "15px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
                 <span>
                   {a.da.label} <span style={{ color: "#888", fontWeight: 400 }}>({a.id})</span>
                   {a.hidden && <span style={{ marginLeft: "8px", fontSize: "12px", color: "#dc3545" }}>SKJULT</span>}
                 </span>
                 <span style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  {galleriMærke(a.id, a.page, false)}
                   {!isDeliveryAddon(a.id) && <StockBadge value={lager.stock[a.id]} overbook={lager.overbook[a.id]} />}
                   <span style={{ color: "#0070f3" }}>{a.price} kr</span>
                   <PauseKnap pauset={!!a.hidden} onToggle={() => updateAddon(i, { hidden: !a.hidden })} />
@@ -582,7 +705,9 @@ export default function AdminProdukterPage() {
                   <input type="checkbox" checked={!!a.hidden} onChange={(e) => updateAddon(i, { hidden: e.target.checked })} />
                   Skjul på siden
                 </label>
-                {a.page && <GalleryField productId={a.id} productName={a.da.label} erPakke={false} />}
+                {a.page && (
+                  <GalleryField productId={a.id} productName={a.da.label} erPakke={false} aktiv={aabne.has(a.id)} manifest={galleri} onManifest={sætGalleri} />
+                )}
               </div>
               <div style={{ marginTop: "12px" }}>
                 <Field

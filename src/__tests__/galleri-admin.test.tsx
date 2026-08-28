@@ -7,7 +7,7 @@
  * en løbsk klikker ikke bruger en måneds budget på en eftermiddag.
  */
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import {
@@ -166,40 +166,18 @@ describe("useGallery", () => {
   });
 });
 
-describe("Admin-siden", () => {
-  const side = readFileSync(join(process.cwd(), "src/app/admin/produkter/page.tsx"), "utf8");
-
-  it("har knappen på alle tre produkttyper", () => {
-    expect(side.match(/<GalleryField/g) ?? []).toHaveLength(3);
-  });
-
-  it("viser den kun for produkter med en side at stå på", () => {
-    // Et galleri uden en produktside er penge brugt på noget, ingen kan se
-    for (const m of side.matchAll(/\{(\w+)\.page && \(?\s*<GalleryField/g)) {
-      expect(["sp", "r", "a"]).toContain(m[1]);
-    }
-    expect(side.match(/\.page && \(?\s*<GalleryField/g) ?? []).toHaveLength(3);
-  });
-
-  it("fortæller hvad et tryk koster", () => {
-    const felt = readFileSync(join(process.cwd(), "src/components/admin/GalleryField.tsx"), "utf8");
-    expect(felt).toMatch(/usd_per_image/);
-    expect(felt).toMatch(/Generér \(\$\{|Generér \(\$|Generér \(/);
-  });
-});
-
 describe("Ingenting sker af sig selv", () => {
   /**
    * Den første udgave blev kørt i bulk fra en terminal, og 77 billeder gik
    * live uden at nogen havde set dem. Det er ikke meningen: hvert billede er
-   * ét tryk. Testen her læser kilden, fordi spørgsmålet er hvad der KAN ske
-   * uden en hånd på musen.
+   * ét tryk. Testen læser kilden, fordi spørgsmålet er hvad der KAN ske uden
+   * en hånd på musen.
    */
-  const side = readFileSync(join(process.cwd(), "src/app/admin/galleri/page.tsx"), "utf8");
   const felt = readFileSync(join(process.cwd(), "src/components/admin/GalleryField.tsx"), "utf8");
+  const side = readFileSync(join(process.cwd(), "src/app/admin/produkter/page.tsx"), "utf8");
 
-  it("henter kun manifestet, når siden åbnes — den genererer ikke", () => {
-    for (const [navn, kilde] of [["galleri-siden", side], ["produktkortet", felt]] as const) {
+  it("genererer ikke i en useEffect", () => {
+    for (const [navn, kilde] of [["produktsiden", side], ["galleri-feltet", felt]] as const) {
       for (const m of kilde.matchAll(/useEffect\(\(\) => \{([\s\S]*?)\}, \[/g)) {
         expect(m[1], `${navn} genererer i en useEffect`).not.toMatch(/generer|genererKald/);
       }
@@ -207,37 +185,84 @@ describe("Ingenting sker af sig selv", () => {
   });
 
   it("har ingen knap der laver mere end ét billede", () => {
-    for (const kilde of [side, felt]) {
-      expect(kilde).not.toMatch(/for \(const .* of (raekker|synlige|scener)\)[\s\S]{0,200}generer/);
-      expect(kilde).not.toMatch(/\.map\([^)]*\)\s*\.\s*forEach[\s\S]{0,80}generer/);
-    }
+    expect(felt).not.toMatch(/for \(const .* of scener\)[\s\S]{0,200}generer/);
+    expect(felt).not.toMatch(/scener\.map[\s\S]{0,120}generer\(/);
   });
 
-  it("skriver prisen på hver genereringsknap", () => {
-    for (const kilde of [side, felt]) {
-      expect(kilde).toMatch(/Generér \(\$\{GALLERY_SPEC\.usd_per_image\.toFixed\(2\)\} \$\)/);
-    }
+  it("skriver prisen på genereringsknappen", () => {
+    expect(felt).toMatch(/Generér \(\$\{GALLERY_SPEC\.usd_per_image\.toFixed\(2\)\} \$\)/);
   });
 });
 
-describe("Galleri-siden", () => {
-  const side = readFileSync(join(process.cwd(), "src/app/admin/galleri/page.tsx"), "utf8");
+describe("Flowet ligger på produktkortet", () => {
+  const side = readFileSync(join(process.cwd(), "src/app/admin/produkter/page.tsx"), "utf8");
+  const felt = readFileSync(join(process.cwd(), "src/components/admin/GalleryField.tsx"), "utf8");
 
-  it("tager én scene ad gangen med en tæller", () => {
-    expect(side).toMatch(/faner/);
-    expect(side).toMatch(/\{har\}\/\{ialt\}/);
-  });
-
-  it("skelner mellem godkendt og ikke gennemgået", () => {
-    expect(side).toMatch(/ikke_gennemgaaet/);
-    expect(side).toMatch(/Ikke gennemgået/);
-    // Godkendelsen af et billede, der allerede ligger, må ikke koste noget
-    expect(side).toMatch(/godkendEksisterende/);
-  });
-
-  it("står i admin-menuen", () => {
+  it("har ikke en side ved siden af", () => {
+    // /admin/galleri kunne det samme. Arbejdet hører til dér, hvor produktet er.
+    expect(existsSync(join(process.cwd(), "src/app/admin/galleri/page.tsx"))).toBe(false);
     const nav = readFileSync(join(process.cwd(), "src/components/AdminNav.tsx"), "utf8");
-    expect(nav).toMatch(/href: "\/admin\/galleri"/);
+    expect(nav).not.toMatch(/\/admin\/galleri/);
+  });
+
+  it("viser i korthovedet hvor langt hvert produkt er", () => {
+    expect(side.match(/\{galleriMærke\(/g) ?? []).toHaveLength(3);
+    expect(side).toMatch(/Galleri \{klar\}\/\{ialt\}/);
+  });
+
+  it("har et overblik og et filter øverst på listen", () => {
+    expect(side).toMatch(/galleriTal\.klar/);
+    expect(side).toMatch(/Mangler billeder/);
+    expect(side).toMatch(/Ikke gennemgået/);
+  });
+
+  it("skjuler kort i stedet for at filtrere listen — indeks bruges til at rette", () => {
+    expect(side).toMatch(/skjulAfFilter\([\s\S]{0,60}\? "none" : undefined/);
+    expect(side).not.toMatch(/speakers\.filter\([\s\S]{0,40}\)\.map\(\(sp, i\)/);
+  });
+
+  it("bygger først knapperne, når kortet er foldet ud", () => {
+    expect(felt).toMatch(/if \(!aktiv\) return null/);
+    expect(side).toMatch(/aktiv=\{aabne\.has\(/);
+  });
+
+  it("henter manifestet én gang for hele siden", () => {
+    expect(side.match(/hentManifest\(\)/g) ?? []).toHaveLength(1);
+    expect(felt).not.toMatch(/hentManifest/);
+  });
+});
+
+describe("Status pr. scene", () => {
+  it("skelner mellem manglende, ikke gennemgået, godkendt og fjernet", async () => {
+    const { sceneStatus, galleriOpsummering, scenerTil } = await import(
+      "@/components/admin/GalleryField"
+    );
+    const { PRODUCT_GALLERY } = await import("@/lib/productGallery");
+
+    // thumpgo har billeder fra bulk-kørslen og intet i manifestet
+    expect(PRODUCT_GALLERY["thumpgo"]?.length).toBeGreaterThan(0);
+    expect(sceneStatus("thumpgo", "i_brug", {})).toBe("ikke_gennemgaaet");
+    expect(sceneStatus("findes_ikke", "i_brug", {})).toBe("mangler");
+
+    const godkendt = { thumpgo: [{ src: "/api/image/x", thumb: "/api/image/x", scene: "i_brug", ratio: "16:9", titel_da: "", alt_da: "", caption_da: "" }] };
+    expect(sceneStatus("thumpgo", "i_brug", godkendt)).toBe("godkendt");
+
+    const gravsten = { thumpgo: [{ src: "", thumb: "", scene: "i_brug", ratio: "1:1", titel_da: "", alt_da: "", caption_da: "", fjernet: true }] };
+    expect(sceneStatus("thumpgo", "i_brug", gravsten)).toBe("fjernet");
+  });
+
+  it("tæller ikke-gennemgåede med som på plads, men markerer dem", async () => {
+    const { galleriOpsummering } = await import("@/components/admin/GalleryField");
+    const o = galleriOpsummering("thumpgo", false, {});
+    expect(o.ialt).toBe(3);
+    expect(o.klar).toBe(o.ikkeSet); // alt fra bulk-kørslen, intet godkendt endnu
+    expect(o.ikkeSet).toBeGreaterThan(0);
+  });
+
+  it("giver pakker og enkeltprodukter hver sin 'alt det du får'", async () => {
+    const { scenerTil } = await import("@/components/admin/GalleryField");
+    expect(scenerTil(true).map((s) => s.id)).toContain("komposition");
+    expect(scenerTil(false).map((s) => s.id)).toContain("hvad_du_faar");
   });
 });
 
