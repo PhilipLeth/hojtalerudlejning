@@ -9,6 +9,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import BookingFlow from "@/components/BookingFlow";
+import { vælgDatoer } from "./vaelgDatoer";
 
 vi.mock("next/image", () => ({ default: (props: any) => <img {...props} /> }));
 
@@ -37,20 +38,6 @@ beforeEach(() => {
     return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
   });
 });
-
-function vælgDatoer() {
-  const idag = new Date();
-  const fredag = new Date(idag);
-  fredag.setDate(idag.getDate() + ((5 - idag.getDay() + 7) % 7 || 7));
-  const mandag = new Date(fredag);
-  mandag.setDate(fredag.getDate() + 3);
-  const klik = (d: number) => {
-    const k = screen.getAllByRole("button").filter((b) => b.textContent === String(d) && !(b as HTMLButtonElement).disabled);
-    if (k.length) fireEvent.click(k[0]);
-  };
-  klik(fredag.getDate());
-  klik(mandag.getDate());
-}
 
 async function frem() {
   const videre = screen.getAllByText(/^(Videre|Videre til betaling)$/).filter((b) => !(b.closest("button") as HTMLButtonElement)?.disabled);

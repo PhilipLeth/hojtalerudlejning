@@ -5,6 +5,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import BookingFlow from "@/components/BookingFlow";
+import { vælgDatoer } from "./vaelgDatoer";
 
 vi.mock("next/image", () => ({ default: (props: any) => <img {...props} /> }));
 
@@ -34,15 +35,7 @@ async function tilKontakttrin() {
   fireEvent.click(screen.getAllByText("Soundboks 4")[0].closest("button")!);
   await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
 
-  const idag = new Date();
-  const fredag = new Date(idag);
-  fredag.setDate(idag.getDate() + ((5 - idag.getDay() + 7) % 7 || 7));
-  const mandag = new Date(fredag);
-  mandag.setDate(fredag.getDate() + 3);
-  for (const d of [fredag.getDate(), mandag.getDate()]) {
-    const k = screen.getAllByRole("button").filter((b) => b.textContent === String(d) && !(b as HTMLButtonElement).disabled);
-    if (k.length) fireEvent.click(k[0]);
-  }
+  vælgDatoer();
   await waitFor(() => expect(screen.getByText("Videre").closest("button")).not.toBeDisabled());
   fireEvent.click(screen.getByText("Videre").closest("button")!);
   await waitFor(() => expect(screen.queryByText("Vælg datoer")).not.toBeInTheDocument());

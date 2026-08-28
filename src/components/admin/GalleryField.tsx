@@ -1,9 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { getAdminToken } from "@/lib/useAdminAuth";
-import { compressImage, formatBytes, MAX_UPLOAD_BYTES } from "@/lib/compressImage";
+import { formatBytes } from "@/lib/compressImage";
 import { GALLERY_SCENER, GALLERY_SPEC, type GalleryScene } from "@/lib/galleryPrompt";
+import {
+  fjern as fjernKald,
+  generer as genererKald,
+  hentManifest,
+  udgivForslag,
+  type Forslag,
+  type GalleryEntry,
+} from "@/lib/galleryAdmin";
 
 /**
  * "Generér galleri" på produktkortet i /admin/produkter.
@@ -38,36 +45,6 @@ const knap: React.CSSProperties = {
 
 const primaer: React.CSSProperties = { ...knap, background: "#0070f3", borderColor: "#0070f3", color: "#fff" };
 
-export interface GalleryEntry {
-  src: string;
-  thumb: string;
-  scene: string;
-  ratio: string;
-  titel_da: string;
-  alt_da: string;
-  caption_da: string;
-  updatedBy?: string;
-  updatedAt?: string;
-}
-
-interface Forslag {
-  billede: string;
-  mime: string;
-  titel_da: string;
-  alt_da: string;
-  caption_da: string;
-  skaaret: string[];
-  mangler: string[];
-}
-
-/** base64 fra API'et → en File, browseren kan komprimere og uploade. */
-function tilFil(base64: string, mime: string, navn: string): File {
-  const binaer = atob(base64);
-  const bytes = new Uint8Array(binaer.length);
-  for (let i = 0; i < binaer.length; i++) bytes[i] = binaer.charCodeAt(i);
-  return new File([bytes], navn, { type: mime });
-}
-
 export default function GalleryField({
   productId,
   productName,
@@ -84,6 +61,15 @@ export default function GalleryField({
   const [fejl, setFejl] = useState("");
   const [note, setNote] = useState("");
   const [forbrug, setForbrug] = useState<{ brugt: number; loft: number } | null>(null);
+  /**
+   * Foldet sammen indtil nogen har brug for det.
+   *
+   * /admin/produkter viser 45 kort, og et galleri-felt pr. kort er 135
+   * sceneknapper og et manifest-opslag på hver sideindlæsning. Skal du bare
+   * rette en pris, er det arbejde for ingenting — og det kunne mærkes på,
+   * hvor længe siden var om at blive klar.
+   */
+  const [aaben, setAaben] = useState(false);
 
   const scener: GalleryScene[] = GALLERY_SCENER.filter((s) => {
     if (s.kun === "pakker" && !erPakke) return false;
@@ -92,50 +78,24 @@ export default function GalleryField({
   });
 
   const hent = useCallback(async () => {
-    try {
-      const res = await fetch("/api/gallery");
-      const data = (await res.json()) as Record<string, GalleryEntry[]>;
-      setBilleder(data[productId] ?? []);
-    } catch {
-      // Galleriet er pynt i admin — en netværksfejl her må ikke spærre resten
-    }
+    const data = await hentManifest();
+    setBilleder(data[productId] ?? []);
   }, [productId]);
 
   useEffect(() => {
-    hent();
-  }, [hent]);
-
-  const kald = async (body: Record<string, unknown>) => {
-    const secret = getAdminToken();
-    const res = await fetch(`/api/gallery?secret=${encodeURIComponent(secret)}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error ?? `Fejl ${res.status}`);
-    return data;
-  };
+    if (aaben) hent();
+  }, [aaben, hent]);
 
   const generer = async (scene: GalleryScene) => {
     setFejl("");
     setNote("");
     setArbejder(scene.id);
     try {
-      const data = await kald({ action: "generate", productId, scene: scene.id });
-      setForslag((f) => ({
-        ...f,
-        [scene.id]: {
-          billede: data.image,
-          mime: data.mime ?? "image/jpeg",
-          titel_da: data.titel_da,
-          alt_da: data.alt_da,
-          caption_da: data.caption_da,
-          skaaret: data.skaaret ?? [],
-          mangler: data.mangler ?? [],
-        },
-      }));
-      if (typeof data.forbrugt === "number") setForbrug({ brugt: data.forbrugt, loft: data.loft });
+      const f = await genererKald(productId, scene.id);
+      setForslag((s) => ({ ...s, [scene.id]: f }));
+      if (typeof f.forbrugt === "number" && typeof f.loft === "number") {
+        setForbrug({ brugt: f.forbrugt, loft: f.loft });
+      }
     } catch (e) {
       setFejl(e instanceof Error ? e.message : "Kunne ikke generere");
     } finally {
@@ -149,23 +109,8 @@ export default function GalleryField({
     setFejl("");
     setArbejder(scene.id);
     try {
-      const raa = tilFil(f.billede, f.mime, `${productId}-${scene.id}.jpg`);
-      const { file, bytes } = await compressImage(raa);
-      if (bytes > MAX_UPLOAD_BYTES) {
-        setFejl(`Billedet fylder ${formatBytes(bytes)} efter komprimering — max ${formatBytes(MAX_UPLOAD_BYTES)}.`);
-        return;
-      }
-      const secret = getAdminToken();
-      const up = await fetch(`/api/upload?secret=${encodeURIComponent(secret)}`, {
-        method: "POST",
-        headers: { "Content-Type": file.type || "image/webp" },
-        body: file,
-      });
-      const updata = await up.json();
-      if (!up.ok) throw new Error(updata.error ?? "Upload fejlede");
-
-      const data = await kald({ action: "publish", productId, scene: scene.id, url: updata.url });
-      setBilleder(data.billeder ?? []);
+      const { billeder: nye, bytes } = await udgivForslag(productId, scene.id, f);
+      setBilleder(nye);
       setForslag((s) => {
         const n = { ...s };
         delete n[scene.id];
@@ -183,8 +128,7 @@ export default function GalleryField({
     setFejl("");
     setArbejder(scene);
     try {
-      const data = await kald({ action: "remove", productId, scene });
-      setBilleder(data.billeder ?? []);
+      setBilleder(await fjernKald(productId, scene));
     } catch (e) {
       setFejl(e instanceof Error ? e.message : "Kunne ikke fjerne billedet");
     } finally {
@@ -200,16 +144,22 @@ export default function GalleryField({
     });
 
   return (
-    <div style={{ gridColumn: "1 / -1", borderTop: "1px solid #eee", paddingTop: "14px", marginTop: "4px" }}>
-      <label style={labelStyle}>
+    <details
+      open={aaben}
+      onToggle={(e) => setAaben((e.currentTarget as HTMLDetailsElement).open)}
+      style={{ gridColumn: "1 / -1", borderTop: "1px solid #eee", paddingTop: "14px", marginTop: "4px" }}
+    >
+      <summary style={{ ...labelStyle, cursor: "pointer", marginBottom: 0 }}>
         Galleri — {productName} i brug
         <span style={{ fontWeight: 400, color: "#888" }}>
           {" "}· {GALLERY_SPEC.usd_per_image.toFixed(2)} $ pr. billede
           {forbrug ? ` · ${forbrug.brugt} af ${forbrug.loft} brugt denne måned` : ""}
         </span>
-      </label>
+      </summary>
 
-      <p style={{ fontSize: "12px", color: "#888", margin: "0 0 12px" }}>
+      <p style={{ fontSize: "12px", color: "#888", margin: "10px 0 12px" }}>
+        Hele listen produkt for produkt ligger på{" "}
+        <a href="/admin/galleri" style={{ color: "#0070f3" }}>Galleri</a>.{" "}
         Billederne laves ud fra produktfotoene af de dele, produktet består af — så det er vores eget grej,
         der står i billedet. Forslaget gemmes ingen steder, før du trykker "Brug det".
       </p>
@@ -219,7 +169,8 @@ export default function GalleryField({
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px" }}>
         {scener.map((scene) => {
-          const live = billeder.find((b) => b.scene === scene.id);
+          // En gravsten er ikke et billede — den betyder at scenen er fjernet
+          const live = billeder.find((b) => b.scene === scene.id && !b.fjernet);
           const f = forslag[scene.id];
           const travl = arbejder === scene.id;
 
@@ -282,6 +233,6 @@ export default function GalleryField({
           );
         })}
       </div>
-    </div>
+    </details>
   );
 }

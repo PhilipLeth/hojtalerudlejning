@@ -32,6 +32,7 @@ import {
   rentalProducts as defaultRentals,
   speakers as defaultSpeakers,
 } from "../../src/lib/products";
+import { PRODUCT_GALLERY } from "../../src/lib/productGallery";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -73,6 +74,15 @@ export interface GalleryEntry {
   /** Hvem der godkendte det, og hvornår — så et billede kan spores tilbage */
   updatedBy?: string;
   updatedAt?: string;
+  /**
+   * Gravsten over et af de billeder, der ligger som fil i repoet.
+   *
+   * De 77 fra bulk-kørslen serveres statisk fra public/images/gallery, så en
+   * fjernelse i KV skjuler dem ikke af sig selv — der skal stå et sted, at de
+   * ER fjernet. useGallery kaster scener med dette flag væk, også den
+   * statiske udgave. At fortryde er at godkende billedet igen.
+   */
+  fjernet?: boolean;
 }
 
 type Manifest = Record<string, GalleryEntry[]>;
@@ -188,6 +198,17 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   if (body.action === "remove") {
     const manifest: Manifest = JSON.parse((await kv.get(MANIFEST_KEY)) ?? "{}");
     const liste = (manifest[productId] ?? []).filter((b) => b.scene !== sceneId);
+
+    // Ligger billedet også som fil i repoet, er det ikke nok at slette posten
+    const statisk = (PRODUCT_GALLERY[productId] ?? []).some((b) => b.scene === sceneId);
+    if (statisk) {
+      liste.push({
+        src: "", thumb: "", scene: sceneId, ratio: "1:1",
+        titel_da: "", titel_en: "", alt_da: "", alt_en: "", caption_da: "", caption_en: "",
+        fjernet: true, updatedBy: auth.name, updatedAt: new Date().toISOString(),
+      });
+    }
+
     if (liste.length) manifest[productId] = liste;
     else delete manifest[productId];
     await kv.put(MANIFEST_KEY, JSON.stringify(manifest));

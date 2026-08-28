@@ -5,6 +5,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import BookingFlow from "@/components/BookingFlow";
+import { vælgDatoer } from "./vaelgDatoer";
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -27,25 +28,7 @@ async function toAddonStep() {
   render(<BookingFlow />);
   await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
 
-  const today = new Date();
-  const fredag = new Date(today);
-  fredag.setDate(fredag.getDate() + ((5 - fredag.getDay() + 7) % 7 || 7));
-  const mandag = new Date(fredag);
-  mandag.setDate(mandag.getDate() + 3);
-
-  const click = (day: number) => {
-    const btn = screen
-      .getAllByRole("button")
-      .find((x) => x.textContent === String(day) && !(x as HTMLButtonElement).disabled);
-    if (btn) fireEvent.click(btn);
-  };
-  const næsteMåned = () => fireEvent.click(screen.getByLabelText("Næste måned"));
-
-  // Fredagen kan ligge i næste måned — så skal kalenderen bladres derhen først
-  if (fredag.getMonth() !== today.getMonth()) næsteMåned();
-  click(fredag.getDate());
-  if (mandag.getMonth() !== fredag.getMonth()) næsteMåned();
-  click(mandag.getDate());
+  vælgDatoer();
   await waitFor(() => {
     const next = screen.getByText("Videre") as HTMLButtonElement;
     expect(next.disabled).toBe(false);

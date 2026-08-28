@@ -39,6 +39,10 @@ export function useGallery(productId: string): GalleryImage[] {
 
   const perScene = new Map<string, GalleryImage>();
   for (const b of statiske) perScene.set(b.scene, b);
-  for (const b of admin) perScene.set(b.scene, b);
+  for (const b of admin) {
+    // En gravsten fjerner scenen helt — også den statiske fil bag den
+    if ((b as GalleryImage & { fjernet?: boolean }).fjernet) perScene.delete(b.scene);
+    else perScene.set(b.scene, b);
+  }
   return [...perScene.values()];
 }

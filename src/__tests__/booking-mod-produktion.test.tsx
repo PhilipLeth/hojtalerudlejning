@@ -9,6 +9,7 @@ import { describe, it, expect, vi, beforeAll, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import BookingFlow from "@/components/BookingFlow";
 import { speakers as kodeSpeakers, rentalProducts as kodeRentals } from "@/lib/products";
+import { vælgDatoer } from "./vaelgDatoer";
 
 vi.mock("next/image", () => ({ default: (props: any) => <img {...props} /> }));
 
@@ -43,20 +44,6 @@ beforeEach(() => {
     return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
   });
 });
-
-function vælgDatoer() {
-  const i_dag = new Date();
-  const fredag = new Date(i_dag);
-  fredag.setDate(i_dag.getDate() + ((5 - i_dag.getDay() + 7) % 7 || 7));
-  const mandag = new Date(fredag);
-  mandag.setDate(fredag.getDate() + 3);
-  const klik = (d: number) => {
-    const k = screen.getAllByRole("button").filter((b) => b.textContent === String(d) && !(b as HTMLButtonElement).disabled);
-    if (k.length) fireEvent.click(k[0]);
-    return k.length > 0;
-  };
-  return klik(fredag.getDate()) && klik(mandag.getDate());
-}
 
 describe("Produktionens katalog og ledighed", () => {
   /**

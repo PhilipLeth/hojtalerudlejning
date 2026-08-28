@@ -187,3 +187,87 @@ describe("Admin-siden", () => {
     expect(felt).toMatch(/Generér \(\$\{|Generér \(\$|Generér \(/);
   });
 });
+
+describe("Ingenting sker af sig selv", () => {
+  /**
+   * Den første udgave blev kørt i bulk fra en terminal, og 77 billeder gik
+   * live uden at nogen havde set dem. Det er ikke meningen: hvert billede er
+   * ét tryk. Testen her læser kilden, fordi spørgsmålet er hvad der KAN ske
+   * uden en hånd på musen.
+   */
+  const side = readFileSync(join(process.cwd(), "src/app/admin/galleri/page.tsx"), "utf8");
+  const felt = readFileSync(join(process.cwd(), "src/components/admin/GalleryField.tsx"), "utf8");
+
+  it("henter kun manifestet, når siden åbnes — den genererer ikke", () => {
+    for (const [navn, kilde] of [["galleri-siden", side], ["produktkortet", felt]] as const) {
+      for (const m of kilde.matchAll(/useEffect\(\(\) => \{([\s\S]*?)\}, \[/g)) {
+        expect(m[1], `${navn} genererer i en useEffect`).not.toMatch(/generer|genererKald/);
+      }
+    }
+  });
+
+  it("har ingen knap der laver mere end ét billede", () => {
+    for (const kilde of [side, felt]) {
+      expect(kilde).not.toMatch(/for \(const .* of (raekker|synlige|scener)\)[\s\S]{0,200}generer/);
+      expect(kilde).not.toMatch(/\.map\([^)]*\)\s*\.\s*forEach[\s\S]{0,80}generer/);
+    }
+  });
+
+  it("skriver prisen på hver genereringsknap", () => {
+    for (const kilde of [side, felt]) {
+      expect(kilde).toMatch(/Generér \(\$\{GALLERY_SPEC\.usd_per_image\.toFixed\(2\)\} \$\)/);
+    }
+  });
+});
+
+describe("Galleri-siden", () => {
+  const side = readFileSync(join(process.cwd(), "src/app/admin/galleri/page.tsx"), "utf8");
+
+  it("tager én scene ad gangen med en tæller", () => {
+    expect(side).toMatch(/faner/);
+    expect(side).toMatch(/\{har\}\/\{ialt\}/);
+  });
+
+  it("skelner mellem godkendt og ikke gennemgået", () => {
+    expect(side).toMatch(/ikke_gennemgaaet/);
+    expect(side).toMatch(/Ikke gennemgået/);
+    // Godkendelsen af et billede, der allerede ligger, må ikke koste noget
+    expect(side).toMatch(/godkendEksisterende/);
+  });
+
+  it("står i admin-menuen", () => {
+    const nav = readFileSync(join(process.cwd(), "src/components/AdminNav.tsx"), "utf8");
+    expect(nav).toMatch(/href: "\/admin\/galleri"/);
+  });
+});
+
+describe("Fjernelse af et billede fra bulk-kørslen", () => {
+  const kilde = readFileSync(join(process.cwd(), "functions/api/gallery.ts"), "utf8");
+
+  it("efterlader en gravsten, når billedet også ligger som fil", () => {
+    // Uden den ville useGallery falde tilbage på den statiske fil, og
+    // "Fjern" ville ikke gøre noget som helst for kunden
+    expect(kilde).toMatch(/PRODUCT_GALLERY\[productId\]/);
+    expect(kilde).toMatch(/fjernet: true/);
+  });
+
+  it("useGallery kaster scenen væk, når der er en gravsten", async () => {
+    const gravsten = {
+      src: "", thumb: "", scene: "i_brug", ratio: "1:1",
+      titel_da: "", titel_en: "", alt_da: "", alt_en: "", caption_da: "", caption_en: "",
+      fjernet: true,
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(new Response(JSON.stringify({ thumpgo: [gravsten] }), { status: 200 })),
+    );
+    const { useGallery } = await import("@/lib/useGallery");
+    function Prøve() {
+      return <span data-testid="scener">{useGallery("thumpgo").map((b) => b.scene).join(",")}</span>;
+    }
+    render(<Prøve />);
+    await waitFor(() => {
+      expect(screen.getByTestId("scener").textContent).not.toMatch(/i_brug/);
+    });
+  });
+});
