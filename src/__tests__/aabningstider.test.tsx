@@ -618,6 +618,10 @@ describe("Checkout", () => {
     fireEvent.click(screen.getByText("Lille højtalerpakke").closest("button")!);
     await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
 
+    // Næste måned: den indeværende kan være næsten forbi (kører man testen den
+    // 31., er alle lukkede dage i visningen fortid og dermed spærrede uanset)
+    fireEvent.click(screen.getByLabelText("Næste måned"));
+
     const lukkede = screen.getAllByRole("button").filter((b) => b.getAttribute("title")?.includes("lukket"));
     expect(lukkede.length).toBeGreaterThan(0);
     // Som hidtil: man kan vælge dagen — tidspunktet vælges bagefter i checkout

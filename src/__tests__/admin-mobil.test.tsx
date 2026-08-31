@@ -87,7 +87,10 @@ describe("Ordreoverblikket på mobil", () => {
     const linje = within(screen.getByText("Julie Blegvad").closest('[role="button"]')!);
     expect(linje.getByText("Kommende")).toBeInTheDocument();
     expect(linje.getByText("22245880")).toBeInTheDocument();
-    expect(linje.getByText(/aug/)).toBeInTheDocument();
+    // Datoen i fixturen er "i morgen" — måneden skal regnes ud, ikke skrives
+    // som "aug": den sidste dag i måneden fejlede testen hvert eneste år
+    const måned = new Date(booking.pickup).toLocaleDateString("da-DK", { month: "short" }).replace(/\.$/, "");
+    expect(linje.getByText(new RegExp(måned))).toBeInTheDocument();
     expect(screen.queryByText(/Uplight/)).not.toBeInTheDocument();
     expect(screen.queryByText(/Det her skal med/)).not.toBeInTheDocument();
   });

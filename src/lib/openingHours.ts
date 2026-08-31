@@ -68,6 +68,19 @@ export interface OpeningHours {
    * datoer — så er åbningstiderne ikke længere kun information.
    */
   onlyOpenDays: boolean;
+  /**
+   * Tidligste startdato ("YYYY-MM-DD"). Tom = ingen spærre.
+   *
+   * Til de uger hvor vi ikke kan levere: er udstyret på et andet job, er
+   * lageret ikke klar, eller er Frederik væk, skal kunden ikke kunne vælge
+   * en startdato i den periode overhovedet. En spærret dato pr. produkt
+   * (/admin/lager) svarer ikke på det — det her er hele butikken lukket for
+   * nye lejeperioder frem til datoen.
+   *
+   * Kun STARTdatoen. En igangværende leje afleveres som aftalt, og
+   * returdatoen ligger altid efter afhentningen.
+   */
+  earliestPickup: string;
 }
 
 const LUKKET: DayHours = { closed: true, open: "10:00", close: "16:00", purpose: "" };
@@ -90,6 +103,7 @@ export const DEFAULT_OPENING_HOURS: OpeningHours = {
   other: "Andre tidspunkter vælges direkte i bookingen.",
   exceptions: [],
   onlyOpenDays: false,
+  earliestPickup: "",
 };
 
 const DAY_NAMES: Record<Weekday, { da: string; en: string }> = {
@@ -251,6 +265,17 @@ export function hoursForDate(hours: OpeningHours, isoDate: string): ResolvedDay 
 
 export function isOpenOn(hours: OpeningHours, isoDate: string): boolean {
   return !hoursForDate(hours, isoDate).closed;
+}
+
+/**
+ * Ligger datoen før den tidligste startdato? Så kan lejen ikke begynde der.
+ *
+ * Både kalenderen i checkout og /api/book spørger her, så en kunde ikke kan
+ * sende en spærret dato uden om knapperne.
+ */
+export function isBeforeEarliestPickup(hours: OpeningHours, isoDate: string): boolean {
+  if (!hours.earliestPickup) return false;
+  return isoDate.slice(0, 10) < hours.earliestPickup;
 }
 
 /** "Fredag 14–18 (afhentning)" — eller "30. dec 14–18 (afhentning)" for en særlig dato */
@@ -474,7 +499,14 @@ export function normalizeOpeningHours(input: unknown): OpeningHours {
     other,
     exceptions,
     onlyOpenDays: (raw as { onlyOpenDays?: unknown }).onlyOpenDays === true,
+    earliestPickup: normalizeEarliestPickup((raw as { earliestPickup?: unknown }).earliestPickup),
   };
+}
+
+/** En ugyldig dato er ingen spærre — vi lukker ikke butikken på en tastefejl */
+function normalizeEarliestPickup(input: unknown): string {
+  const date = String(input ?? "").slice(0, 10);
+  return isIsoDate(date) ? date : "";
 }
 
 function normalizeException(input: unknown): HoursException | null {
@@ -564,6 +596,15 @@ export function validateOpeningHours(
     exceptions.sort((a, b) => a.date.localeCompare(b.date));
   }
 
+  // Tidligste startdato: tom er fint (ingen spærre), men står der noget, skal
+  // det være en rigtig dato — ellers har Frederik troet han lukkede for
+  // bookinger uden at have gjort det
+  const rawEarliest = (raw as { earliestPickup?: unknown }).earliestPickup;
+  const earliestPickup = String(rawEarliest ?? "").slice(0, 10);
+  if (earliestPickup && !isIsoDate(earliestPickup)) {
+    return { ok: false, error: `Ugyldig tidligste startdato: "${earliestPickup}"` };
+  }
+
   return {
     ok: true,
     hours: {
@@ -571,6 +612,7 @@ export function validateOpeningHours(
       other,
       exceptions,
       onlyOpenDays: (raw as { onlyOpenDays?: unknown }).onlyOpenDays === true,
+      earliestPickup,
     },
   };
 }

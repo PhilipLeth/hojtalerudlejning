@@ -74,6 +74,7 @@ export const t = {
       bookingFailed: "Booking fejlede",
       errorRetry: "Noget gik galt. Prøv igen eller ring til os.",
       calendarNudge: "Få anlæg tilbage de næste weekender — book hurtigt",
+      earliestStart: "Vi tager først imod bookinger med start fra {date}",
       dayNames: ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"],
       dayNamesShort: ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"],
       monthNames: [
@@ -264,6 +265,7 @@ export const t = {
       bookingFailed: "Booking failed",
       errorRetry: "Something went wrong. Please try again or call us.",
       calendarNudge: "Few units left for the next weekends — book quickly",
+      earliestStart: "The earliest start date we can take is {date}",
       dayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       dayNamesShort: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       monthNames: [

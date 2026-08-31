@@ -546,6 +546,42 @@ export default function IndstillingerPage() {
                 </span>
               </span>
             </label>
+
+            {/* Luk for nye lejeperioder frem til en dato */}
+            <div style={{ marginTop: "16px" }}>
+              <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "4px" }}>
+                Tidligste startdato
+              </label>
+              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                <input
+                  type="date"
+                  value={hours.earliestPickup}
+                  onChange={(e) => setHours((prev) => ({ ...prev, earliestPickup: e.target.value }))}
+                  style={{ padding: "8px 10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px" }}
+                />
+                {hours.earliestPickup && (
+                  <button
+                    type="button"
+                    onClick={() => setHours((prev) => ({ ...prev, earliestPickup: "" }))}
+                    style={{ padding: "6px 12px", fontSize: "13px", background: "#fff", color: "#111", border: "1px solid #ddd", borderRadius: "6px", cursor: "pointer" }}
+                  >
+                    Ryd
+                  </button>
+                )}
+              </div>
+              <p style={{ margin: "6px 0 0", fontSize: "12px", color: "#888", lineHeight: 1.5 }}>
+                {hours.earliestPickup ? (
+                  <>
+                    Kunden kan ikke vælge en startdato før <strong>{formatShortDate(hours.earliestPickup)}</strong>.
+                    Datoen selv kan vælges. Bookinger der allerede er taget imod rører den ikke, og en
+                    lejeperiode må gerne slutte efter datoen.
+                  </>
+                ) : (
+                  <>Tom: ingen spærre. Sæt en dato for at lukke helt for nye lejeperioder frem til den —
+                  fx en weekend hvor udstyret er væk, eller mens du er på ferie.</>
+                )}
+              </p>
+            </div>
           </div>
 
           <div style={{ marginTop: "14px", padding: "10px 12px", background: "#fafafa", border: "1px solid #eee", borderRadius: "8px" }}>

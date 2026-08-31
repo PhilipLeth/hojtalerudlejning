@@ -16,7 +16,9 @@ import {
   formatDateLine,
   formatOneLine,
   formatSentence,
+  formatShortDate,
   hoursForDate,
+  isBeforeEarliestPickup,
   timeSlots,
   upcomingExceptions,
   type OpeningHours,
@@ -90,7 +92,15 @@ function MiniCalendar({
   const s = t[locale].booking;
   const [viewMonth, setViewMonth] = useState(() => {
     const now = new Date();
-    return new Date(now.getFullYear(), now.getMonth(), 1);
+    const denneMåned = new Date(now.getFullYear(), now.getMonth(), 1);
+    // Spærrer vi frem til en dato i næste måned, er det den måned kunden skal
+    // se — ellers åbner kalenderen på en måned hvor alt er gråt
+    if (hours.earliestPickup) {
+      const første = new Date(`${hours.earliestPickup}T12:00:00Z`);
+      const førsteMåned = new Date(første.getUTCFullYear(), første.getUTCMonth(), 1);
+      if (førsteMåned > denneMåned) return førsteMåned;
+    }
+    return denneMåned;
   });
 
   const today = useMemo(() => {
@@ -135,6 +145,11 @@ function MiniCalendar({
           if (!date) return <div key={`e${i}`} />;
           const iso = dateKey(date);
           const isPast = date < today;
+          // Startdatoen kan ikke ligge før den dato admin har åbnet fra. Er
+          // afhentningen valgt, er næste klik en returdato — den ligger altid
+          // efter afhentningen og rammes derfor ikke.
+          const vælgerAfhentning = !pickupDate || !!returnDate;
+          const isTooEarly = vælgerAfhentning && isBeforeEarliestPickup(hours, iso);
           const isPickup = pickupDate && isSameDay(date, pickupDate);
           const isReturn = returnDate && isSameDay(date, returnDate);
           const isInRange = pickupDate && returnDate && date > pickupDate && date < returnDate;
@@ -152,25 +167,25 @@ function MiniCalendar({
             <button
               type="button"
               key={iso}
-              disabled={isPast || !!isTooFar || isClosed}
+              disabled={isPast || isTooEarly || !!isTooFar || isClosed}
               onClick={() => onSelectDate(date)}
               title={title}
               aria-label={`${date.getDate()}. ${s.monthNames[date.getMonth()]} — ${title}`}
               className={`
                 relative h-10 rounded-lg text-sm font-medium transition
-                ${isPast || isTooFar || isClosed ? "text-white/15 cursor-not-allowed" : "hover:bg-white/10 cursor-pointer"}
+                ${isPast || isTooEarly || isTooFar || isClosed ? "text-white/15 cursor-not-allowed" : "hover:bg-white/10 cursor-pointer"}
                 ${isPickup ? "bg-brand-500 text-black font-bold" : ""}
                 ${isReturn ? "bg-brand-600 text-black font-bold" : ""}
                 ${isInRange ? "bg-brand-500/20 text-brand-300" : ""}
-                ${isHotFriday && !isPast && !isPickup ? "ring-1 ring-orange-400/50" : ""}
-                ${isSpecial && !isPast && !isPickup && !isReturn ? "ring-1 ring-brand-400 text-brand-300" : ""}
+                ${isHotFriday && !isPast && !isTooEarly && !isPickup ? "ring-1 ring-orange-400/50" : ""}
+                ${isSpecial && !isPast && !isTooEarly && !isPickup && !isReturn ? "ring-1 ring-brand-400 text-brand-300" : ""}
               `}
             >
               {date.getDate()}
-              {isSpecial && !isPast && (
+              {isSpecial && !isPast && !isTooEarly && (
                 <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-brand-400" />
               )}
-              {isHotFriday && !isPast && (
+              {isHotFriday && !isPast && !isTooEarly && (
                 <span className="absolute -top-1 -right-1 flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 animate-ping" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-orange-400" />
@@ -183,6 +198,14 @@ function MiniCalendar({
 
       {/* Hvad gælder på de valgte datoer — inkl. særlige åbninger som 30. dec */}
       <SelectedDayHours hours={hours} pickupDate={pickupDate} returnDate={returnDate} locale={locale} />
+
+      {/* Hvorfor de første dage er grå — ellers ligner det en fejl i kalenderen */}
+      {hours.earliestPickup && (
+        <div className="mt-3 flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-xs text-white/60">
+          <svg className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 8v5l3 2" /></svg>
+          {s.earliestStart.replace("{date}", formatShortDate(hours.earliestPickup, locale))}
+        </div>
+      )}
 
       {/* Nudge */}
       <div className="mt-3 flex items-center gap-2 rounded-lg bg-orange-400/10 px-3 py-2 text-xs text-orange-300">
@@ -1028,6 +1051,12 @@ export default function BookingFlow({
 
   function handleDateSelect(d: Date) {
     setSoldOutMsg("");
+    // Knappen er allerede spærret; det her holder også når datoen kommer et
+    // andet sted fra (tastatur, en gammel fane med en anden indstilling)
+    if (isBeforeEarliestPickup(hours, dateKey(d))) {
+      setSoldOutMsg(s.earliestStart.replace("{date}", formatShortDate(hours.earliestPickup, locale)));
+      return;
+    }
     if (!pickupDate || (pickupDate && returnDate)) {
       setPickupDate(d);
       setReturnDate(null);
@@ -1160,6 +1189,17 @@ export default function BookingFlow({
           status: res.status,
           svar: svar.slice(0, 300),
         });
+        // Afviser serveren datoen (fx fordi vi har lukket for nye lejeperioder
+        // frem til en dato), skal kunden læse HVORFOR — ikke "booking fejlede"
+        if (res.status === 400) {
+          let besked = "";
+          try {
+            besked = String((JSON.parse(svar) as { error?: unknown })?.error ?? "").trim();
+          } catch {
+            // ikke JSON — så falder vi tilbage på den generelle besked
+          }
+          if (besked) throw new Error(besked);
+        }
         throw new Error(s.bookingFailed);
       }
       const bookResult = await res.json().catch(() => ({}));

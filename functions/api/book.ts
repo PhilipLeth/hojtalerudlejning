@@ -7,7 +7,7 @@ import { recordSms, sendBookingSms, type SendSmsOutcome } from "./_lib/sms";
 import { nulstilBookingIndex } from "./_lib/bookingIndex";
 import type { SaleContext } from "./_lib/weekendSale";
 import { notifyRecipients } from "./_lib/notify";
-import { formatTimeSlot } from "../../src/lib/openingHours";
+import { formatShortDate, formatTimeSlot, isBeforeEarliestPickup } from "../../src/lib/openingHours";
 import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../src/lib/fetchTimeout";
 
 interface Env {
@@ -53,6 +53,8 @@ interface BookingData {
   discountCode?: string;
   /** "online" eller "pickup" — vises i push-beskeden */
   paymentChoice?: string;
+  /** "da" eller "en" — hvilket sprog kunden bookede på */
+  locale?: string;
   name: string;
   company?: string;
   email: string;
@@ -325,6 +327,23 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   // kun som "early" i KV
   const pickupDag = bookingDay(data.pickupDay, data.pickup);
   const returnDag = bookingDay(data.returnDay, data.returnDate);
+
+  // Har vi lukket for nye lejeperioder frem til en dato, gælder det også her.
+  // Kalenderen spærrer dagene, men en fane der stod åben inden indstillingen
+  // blev sat — eller et kald uden om siden — skal ikke kunne slippe igennem.
+  if (pickupDag && isBeforeEarliestPickup(site.hours, pickupDag)) {
+    const første = formatShortDate(site.hours.earliestPickup, data.locale === "en" ? "en" : "da");
+    console.log("[book] afvist: startdato", pickupDag, "er før", site.hours.earliestPickup);
+    return new Response(
+      JSON.stringify({
+        error:
+          data.locale === "en"
+            ? `The earliest start date we can take is ${første}. Please choose another date.`
+            : `Vi tager først imod bookinger med start fra ${første}. Vælg en anden dato.`,
+      }),
+      { status: 400, headers: { "Content-Type": "application/json" } },
+    );
+  }
   const pickupTime = formatTimeSlot(site.hours, pickupDag, data.pickupSlot);
   const returnTime = formatTimeSlot(site.hours, returnDag, data.returnSlot);
 
