@@ -27,6 +27,8 @@ export interface GalleryEntry {
   updatedAt?: string;
   /** Gravsten: scenen er fjernet, også selvom billedet ligger som fil i repoet */
   fjernet?: boolean;
+  /** Billedteksten er rettet i hånden — skabelonen skriver den ikke over ved "Lav om" */
+  egenTekst?: boolean;
 }
 
 export interface Forslag {
@@ -136,6 +138,25 @@ export async function udgivForslag(
   const data = await kald({ action: "publish", productId, scene, url: updata.url });
   manifestCache = null;
   return { billeder: data.billeder ?? [], bytes: stoerrelse };
+}
+
+/**
+ * Retter billedteksten under et billede — dansk og engelsk.
+ *
+ * Skabelonen i gallery/scenes.json rammer ikke altid: "det der ligger i
+ * kassen" passer dårligt på en enkelt højtaler. Tomme felter sætter
+ * skabelonens tekst tilbage. Ligger billedet kun som fil fra bulk-kørslen,
+ * får det sin post i manifestet her og tæller som gennemgået.
+ */
+export async function gemTekst(
+  productId: string,
+  scene: string,
+  caption_da: string,
+  caption_en: string,
+): Promise<GalleryEntry[]> {
+  const data = await kald({ action: "tekst", productId, scene, caption_da, caption_en });
+  manifestCache = null;
+  return data.billeder ?? [];
 }
 
 /**

@@ -87,8 +87,8 @@
       "prompt": "A clean product group photo of exactly these items and nothing else: {dele}. Arranged together on a smooth light grey studio backdrop that curves up into the background, lit with one large soft key light from the left and a subtle rim light. The tallest item at the back, the smallest in front, all of them fully visible and not overlapping more than necessary. Slight shadows on the floor so the items sit in the space. Nothing else in the frame — no props, no people, no cables coiled decoratively unless they are part of the referenced products.",
       "alt_da": "{navn} — alle dele stillet op sammen",
       "alt_en": "{navn_en} — every part laid out together",
-      "caption_da": "Det her er hvad der står i bilen, når du henter {navn_lav}.",
-      "caption_en": "This is what you drive home with when you pick up the {navn_en_lav}.",
+      "caption_da": "Det her er hvad der står i bilen, når du henter {navn}.",
+      "caption_en": "This is what goes in the car when you pick up {navn_en}.",
       "kun": "pakker"
     },
     {
@@ -101,8 +101,8 @@
       "prompt": "A clean product photo of the referenced {dele} on a smooth light grey studio backdrop that curves up into the background, lit with one large soft key light from the left and a subtle rim light. Laid out neatly beside it, exactly what comes with it and nothing more: {indhold}. Cables coiled loosely, accessories flat on the surface, everything fully visible. Slight shadows on the floor so the items sit in the space. No props, no people.",
       "alt_da": "{navn} med alt hvad der følger med",
       "alt_en": "{navn_en} with everything that comes with it",
-      "caption_da": "Det her er hvad der ligger i kassen, når du henter {navn_lav}.",
-      "caption_en": "This is what is in the box when you pick up the {navn_en_lav}."
+      "caption_da": "Det her får du med, når du lejer {navn}.",
+      "caption_en": "This is what comes along when you rent {navn_en}."
     },
     {
       "id": "i_brug",
@@ -205,9 +205,9 @@
     }
   },
   "_gaester": {
-    "_kommentar": "Billedteksten under 'i brug' fortæller hvad anlægget rækker til. Tallet kommer fra kapaciteten i kataloget, hvor den findes.",
-    "med_tal_da": "Rækker til {kapacitet} indendørs. Udendørs uden vægge: regn med det halve.",
-    "med_tal_en": "Covers {kapacitet_en} indoors. Outdoors without walls, expect half that.",
+    "_kommentar": "Billedteksten under 'i brug' fortæller hvad anlægget rækker til. Tallet kommer fra kapaciteten i kataloget, hvor den findes — normaliseret i kapacitetFor(), så 'Op til 50 pers.' bliver 'Op til 50 personer' og kan stå først i sætningen. Skabelonen må IKKE selv sætte 'Rækker til' foran: det gav 'Rækker til Op til 50 pers.'",
+    "med_tal_da": "{kapacitet} indendørs — udendørs uden vægge, regn med det halve.",
+    "med_tal_en": "{kapacitet_en} indoors — outdoors without walls, expect half that.",
     "uden_tal_da": "Sådan står det, når gæsterne kommer.",
     "uden_tal_en": "This is how it stands when the guests arrive."
   },

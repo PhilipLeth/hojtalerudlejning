@@ -6,6 +6,7 @@ import { GALLERY_SCENER, GALLERY_SPEC, type GalleryScene } from "@/lib/galleryPr
 import { PRODUCT_GALLERY } from "@/lib/productGallery";
 import {
   fjern as fjernKald,
+  gemTekst as gemTekstKald,
   generer as genererKald,
   godkendEksisterende,
   udgivForslag,
@@ -100,6 +101,15 @@ const knap: React.CSSProperties = {
   cursor: "pointer",
 };
 const primaer: React.CSSProperties = { ...knap, background: "#0070f3", borderColor: "#0070f3", color: "#fff" };
+const tekstFelt: React.CSSProperties = {
+  width: "100%",
+  boxSizing: "border-box",
+  fontSize: "12px",
+  padding: "6px 8px",
+  borderRadius: "6px",
+  border: "1px solid #e0e0e0",
+  marginBottom: "6px",
+};
 const gron: React.CSSProperties = { ...knap, background: "#1a7f37", borderColor: "#1a7f37", color: "#fff" };
 
 export default function GalleryField({
@@ -131,6 +141,13 @@ export default function GalleryField({
    * ikke over reglen om, at grejet skal være vores eget.
    */
   const [noter, setNoter] = useState<Record<string, string>>({});
+  /**
+   * Billedtekster under redigering, pr. scene. Skabelonen i scenes.json
+   * rammer ikke altid ("det der ligger i kassen" om en Soundboks), så teksten
+   * kan rettes her og gemmes i manifestet — admin vinder over skabelonen,
+   * ligesom admins billede vinder over det committede.
+   */
+  const [tekster, setTekster] = useState<Record<string, { da: string; en: string }>>({});
 
   const scener = scenerTil(erPakke);
 
@@ -184,6 +201,17 @@ export default function GalleryField({
       setNote("Billedet vises ikke længere på produktsiden.");
     });
 
+  const gemTekst = (scene: GalleryScene, da: string, en: string) =>
+    kør(scene.id, async () => {
+      onManifest(productId, await gemTekstKald(productId, scene.id, da, en));
+      setTekster((s) => {
+        const n = { ...s };
+        delete n[scene.id];
+        return n;
+      });
+      setNote(da || en ? "Billedteksten er gemt og står på produktsiden." : "Billedteksten er sat tilbage til skabelonen.");
+    });
+
   const kassér = (sceneId: string) =>
     setForslag((s) => {
       const n = { ...s };
@@ -220,6 +248,14 @@ export default function GalleryField({
           const travl = arbejder === scene.id;
           const fraAdmin = manifest[productId]?.find((b) => b.scene === scene.id && !b.fjernet);
           const statisk = (PRODUCT_GALLERY[productId] ?? []).find((b) => b.scene === scene.id);
+          // Teksten under billedet — admins udgave, ellers den fra bulk-kørslen
+          const nuv = fraAdmin ?? statisk;
+          const kanRetteTekst = !f && !!nuv && (st === "godkendt" || st === "ikke_gennemgaaet");
+          const redigeret = tekster[scene.id];
+          const tekstDa = redigeret?.da ?? nuv?.caption_da ?? "";
+          const tekstEn = redigeret?.en ?? nuv?.caption_en ?? "";
+          const tekstAendret =
+            !!redigeret && (tekstDa !== (nuv?.caption_da ?? "") || tekstEn !== (nuv?.caption_en ?? ""));
           const vist = f
             ? `data:${f.mime};base64,${f.billede}`
             : st === "godkendt" && fraAdmin
@@ -325,6 +361,46 @@ export default function GalleryField({
                   </>
                 )}
               </div>
+
+              {kanRetteTekst && (
+                <div style={{ marginTop: "10px", paddingTop: "8px", borderTop: "1px dashed #eee" }}>
+                  <div style={{ fontSize: "11px", fontWeight: 600, color: "#666", marginBottom: "4px" }}>
+                    Billedtekst{fraAdmin?.egenTekst ? " · rettet i hånden" : ""}
+                  </div>
+                  <input
+                    type="text"
+                    value={tekstDa}
+                    onChange={(e) => setTekster((s) => ({ ...s, [scene.id]: { da: e.target.value, en: tekstEn } }))}
+                    maxLength={200}
+                    placeholder="Dansk"
+                    aria-label={`Billedtekst (dansk) til ${scene.titel_da}`}
+                    style={tekstFelt}
+                  />
+                  <input
+                    type="text"
+                    value={tekstEn}
+                    onChange={(e) => setTekster((s) => ({ ...s, [scene.id]: { da: tekstDa, en: e.target.value } }))}
+                    maxLength={200}
+                    placeholder="English"
+                    aria-label={`Billedtekst (engelsk) til ${scene.titel_da}`}
+                    style={tekstFelt}
+                  />
+                  {(tekstAendret || fraAdmin?.egenTekst) && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                      {tekstAendret && (
+                        <button type="button" style={primaer} disabled={travl} onClick={() => gemTekst(scene, tekstDa, tekstEn)}>
+                          {travl ? "Gemmer…" : "Gem tekst"}
+                        </button>
+                      )}
+                      {fraAdmin?.egenTekst && (
+                        <button type="button" style={knap} disabled={travl} onClick={() => gemTekst(scene, "", "")}>
+                          Tilbage til skabelonen
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           );
         })}

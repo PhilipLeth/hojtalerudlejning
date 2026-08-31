@@ -84,7 +84,17 @@ export interface GalleryEntry {
    * statiske udgave. At fortryde er at godkende billedet igen.
    */
   fjernet?: boolean;
+  /**
+   * Billedteksten er skrevet i hånden i admin — ikke fyldt ud fra skabelonen.
+   *
+   * Uden flaget ville "Lav om" skrive skabelonens tekst hen over den, Frederik
+   * lige havde rettet: et nyt billede skal ikke koste en rettet tekst.
+   */
+  egenTekst?: boolean;
 }
+
+/** Længste billedtekst — den står under billedet i lightboxen, ikke i en artikel. */
+const MAKS_TEKST = 200;
 
 type Manifest = Record<string, GalleryEntry[]>;
 
@@ -183,7 +193,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const auth = await requireAdmin(context, cors);
   if (auth instanceof Response) return auth;
 
-  let body: { action?: string; productId?: string; scene?: string; url?: string; note?: string };
+  let body: {
+    action?: string;
+    productId?: string;
+    scene?: string;
+    url?: string;
+    note?: string;
+    caption_da?: string;
+    caption_en?: string;
+  };
   try {
     body = await context.request.json();
   } catch {
@@ -234,6 +252,39 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return svar({ error: "Produktet har intet foto at vise modellen — upload et produktbillede først." }, 400);
   }
 
+  /* ── ret billedteksten ── */
+  if (body.action === "tekst") {
+    if (scene.katalogfoto) return svar({ error: "Produktfotoet har ingen billedtekst" }, 400);
+    const rens = (v: unknown) =>
+      typeof v === "string" ? v.replace(/\s+/g, " ").trim().slice(0, MAKS_TEKST) : "";
+    const da = rens(body.caption_da);
+    const en = rens(body.caption_en);
+
+    const manifest: Manifest = JSON.parse((await kv.get(MANIFEST_KEY)) ?? "{}");
+    const liste = manifest[productId] ?? [];
+    const eksisterende = liste.find((b) => b.scene === scene.id && !b.fjernet);
+    const statisk = (PRODUCT_GALLERY[productId] ?? []).find((b) => b.scene === scene.id);
+    if (!eksisterende && !statisk) return svar({ error: "Der er intet billede at sætte tekst på" }, 400);
+
+    // Et billede fra bulk-kørslen får sin post i manifestet her — at rette
+    // teksten er også at have set billedet, så det tæller som gennemgået.
+    const grund: GalleryEntry = eksisterende ?? { ...statisk! };
+    const entry: GalleryEntry = {
+      ...grund,
+      // Tomt felt = tilbage til skabelonen
+      caption_da: da || bygget.caption_da,
+      caption_en: en || bygget.caption_en,
+      egenTekst: !!(da || en) || undefined,
+      updatedBy: auth.name,
+      updatedAt: new Date().toISOString(),
+    };
+    const uden = liste.filter((b) => b.scene !== scene.id);
+    const orden = scenerFor(produkt).map((s) => s.id);
+    manifest[productId] = [...uden, entry].sort((a, b) => orden.indexOf(a.scene) - orden.indexOf(b.scene));
+    await kv.put(MANIFEST_KEY, JSON.stringify(manifest));
+    return svar({ ok: true, billeder: manifest[productId] });
+  }
+
   /* ── udgiv et godkendt billede ── */
   if (body.action === "publish") {
     if (scene.katalogfoto) {
@@ -246,6 +297,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       return svar({ error: "Billedet skal være uploadet først" }, 400);
     }
     const manifest: Manifest = JSON.parse((await kv.get(MANIFEST_KEY)) ?? "{}");
+    // En tekst skrevet i hånden følger med over på det nye billede
+    const forrige = (manifest[productId] ?? []).find((b) => b.scene === scene.id && !b.fjernet);
     const entry: GalleryEntry = {
       src: url,
       // R2-billeder har ingen lille udgave; browseren har allerede skaleret ned
@@ -256,8 +309,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       titel_en: bygget.titel_en,
       alt_da: bygget.alt_da,
       alt_en: bygget.alt_en,
-      caption_da: bygget.caption_da,
-      caption_en: bygget.caption_en,
+      caption_da: forrige?.egenTekst ? forrige.caption_da : bygget.caption_da,
+      caption_en: forrige?.egenTekst ? forrige.caption_en : bygget.caption_en,
+      egenTekst: forrige?.egenTekst || undefined,
       updatedBy: auth.name,
       updatedAt: new Date().toISOString(),
     };

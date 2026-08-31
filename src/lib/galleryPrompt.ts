@@ -184,10 +184,23 @@ function engelskListe(dele: Reference[]): string {
 }
 
 /** Gæstetallet står i pakkestigen, ikke på produktet. */
+/**
+ * Kapaciteten som en sætningsstart: "Op til 50 personer", "50-100 gæster".
+ *
+ * Kataloget skriver "Op til 50 pers." og trappen "op til 50". Billedteksten
+ * under "i brug" begynder med tallet, så det skal kunne stå først med stort
+ * og uden forkortelsen — "Rækker til Op til 50 pers. indendørs" var det,
+ * Soundboks 4 stod med.
+ */
 function kapacitetFor(p: FladtProdukt): [string | null, string | null] {
-  if (p.kapacitet) return [p.kapacitet, p.kapacitet_en ?? p.kapacitet];
+  const stort = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  if (p.kapacitet) {
+    const da = stort(p.kapacitet.replace(/\bpers\.?$/i, "personer").trim());
+    const en = stort((p.kapacitet_en ?? p.kapacitet).replace(/\bpers\.?$/i, "people").trim());
+    return [da, en];
+  }
   const trin = LADDER_FEST.find((t) => t.productId === p.id);
-  if (trin) return [`${trin.gaester} gæster`, `${trin.gaester.replace("op til", "up to")} guests`];
+  if (trin) return [stort(`${trin.gaester} gæster`), stort(`${trin.gaester.replace("op til", "up to")} guests`)];
   return [null, null];
 }
 
@@ -236,8 +249,6 @@ export function byggPrompt(
   const felter: Record<string, string> = {
     navn: p.navn,
     navn_en: p.navn_en,
-    navn_lav: p.navn.charAt(0).toLowerCase() + p.navn.slice(1),
-    navn_en_lav: p.navn_en.charAt(0).toLowerCase() + p.navn_en.slice(1),
     dele: engelskListe(ref.billeder),
     hoveddele: engelskListe(hoved.billeder),
     // Uden en indholdsliste ville prompten stå med "og intet andet: ." —

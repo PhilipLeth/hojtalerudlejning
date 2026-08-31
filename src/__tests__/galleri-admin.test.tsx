@@ -9,7 +9,7 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, cleanup, waitFor } from "@testing-library/react";
 import {
   GALLERY_SCENER,
   byggPrompt,
@@ -18,6 +18,11 @@ import {
   scenerFor,
 } from "@/lib/galleryPrompt";
 import { addons, rentalProducts, speakers } from "@/lib/products";
+
+vi.mock("@/lib/galleryAdmin", async (orig) => ({
+  ...(await orig<typeof import("@/lib/galleryAdmin")>()),
+  gemTekst: vi.fn().mockResolvedValue([]),
+}));
 
 const KATALOG = { speakers, addons, rentalProducts };
 const flad = fladtKatalog(KATALOG);
@@ -436,5 +441,61 @@ describe("Galleriet på kortet viser ikke produktfotoet", () => {
     const felt = readFileSync(join(process.cwd(), "src/components/admin/GalleryField.tsx"), "utf8");
     expect(felt).toMatch(/Skriv til AI'en/);
     expect(felt).toMatch(/genererKald\(productId, scene\.id, noter\[scene\.id\]\)/);
+  });
+});
+
+describe("Billedteksterne", () => {
+  /**
+   * Soundboks 4 stod med "Rækker til Op til 50 pers. indendørs" og "når du
+   * henter soundboks 4" — skabelonen satte ord foran kataloget, der allerede
+   * var en sætning, og skrev et mærkenavn i småt. Teksterne er ikke AI'ens;
+   * de er skabeloner, og de skal læses som en kunde læser dem.
+   */
+  it("begynder med kapaciteten som en hel sætning", () => {
+    const scene = GALLERY_SCENER.find((s) => s.id === "i_brug")!;
+    const b = byggPrompt(flad.get("soundboks")!, scene, flad)!;
+    expect(b.caption_da).toMatch(/^Op til 50 personer indendørs/);
+    expect(b.caption_da).not.toMatch(/Rækker til Op|pers\./);
+    expect(b.caption_en).toMatch(/^Up to 50 people indoors/);
+  });
+
+  it("skriver produktnavnet, som det hedder", () => {
+    const scene = GALLERY_SCENER.find((s) => s.id === "hvad_du_faar")!;
+    const b = byggPrompt(flad.get("soundboks")!, scene, flad)!;
+    expect(b.caption_da).toContain("Soundboks 4");
+    expect(b.caption_da).not.toContain("soundboks 4");
+    expect(b.caption_da).not.toMatch(/kassen/);
+    expect(b.caption_en).toContain("Soundboks 4");
+  });
+
+  it("kan rettes på produktkortet og gemmes i manifestet", async () => {
+    const { gemTekst } = await import("@/lib/galleryAdmin");
+    const { default: GalleryField } = await import("@/components/admin/GalleryField");
+    const onManifest = vi.fn();
+    render(
+      <GalleryField productId="soundboks" productName="Soundboks 4" erPakke={false} aktiv manifest={{}} onManifest={onManifest} />,
+    );
+    const felt = screen.getByLabelText("Billedtekst (dansk) til Alt det du får") as HTMLInputElement;
+    expect(felt.value).toBeTruthy(); // skabelonens tekst står der som udgangspunkt
+    fireEvent.change(felt, { target: { value: "Soundboks 4 med oplader og rem." } });
+    fireEvent.click(screen.getByText("Gem tekst"));
+    await waitFor(() => {
+      expect(gemTekst).toHaveBeenCalledWith("soundboks", "hvad_du_faar", "Soundboks 4 med oplader og rem.", expect.any(String));
+      expect(onManifest).toHaveBeenCalled();
+    });
+  });
+
+  it("API'et lader en håndskrevet tekst overleve 'Lav om'", () => {
+    const api = readFileSync(join(process.cwd(), "functions/api/gallery.ts"), "utf8");
+    expect(api).toMatch(/body\.action === "tekst"/);
+    expect(api).toMatch(/caption_da: forrige\?\.egenTekst \? forrige\.caption_da : bygget\.caption_da/);
+    // Tomt felt sætter skabelonen tilbage — ellers kunne en fejl ikke fortrydes
+    expect(api).toMatch(/caption_da: da \|\| bygget\.caption_da/);
+  });
+
+  it("skabelonen sætter ikke selv 'Rækker til' foran kapaciteten", () => {
+    const s = readFileSync(join(process.cwd(), "gallery/scenes.json"), "utf8");
+    expect(s).not.toMatch(/Rækker til \{kapacitet\}/);
+    expect(s).not.toMatch(/navn_lav/);
   });
 });
