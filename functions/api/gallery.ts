@@ -21,6 +21,7 @@
 import { requireAdmin } from "./_lib/adminAuth";
 import { CATALOG_KEY } from "./_lib/channels";
 import {
+  GALLERY_SCENER,
   GALLERY_SPEC,
   byggPrompt,
   fladtKatalog,
@@ -34,6 +35,7 @@ import {
   speakers as defaultSpeakers,
 } from "../../src/lib/products";
 import { PRODUCT_GALLERY } from "../../src/lib/productGallery";
+import { erAktiv } from "../../src/lib/galleryStatus";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -76,13 +78,15 @@ export interface GalleryEntry {
   updatedBy?: string;
   updatedAt?: string;
   /**
-   * Gravsten over et af de billeder, der ligger som fil i repoet.
+   * Vises billedet for kunderne? Intet vises, før nogen har slået det til.
    *
-   * De 77 fra bulk-kørslen serveres statisk fra public/images/gallery, så en
-   * fjernelse i KV skjuler dem ikke af sig selv — der skal stå et sted, at de
-   * ER fjernet. useGallery kaster scener med dette flag væk, også den
-   * statiske udgave. At fortryde er at godkende billedet igen.
+   * De 77 fra bulk-kørslen ligger som filer i repoet, men de er kandidater,
+   * ikke galleri: kundesiden viser kun manifestets aktive poster. Slår man et
+   * billede fra, bliver posten stående med aktiv: false, så det kan slås til
+   * igen uden at lave det om.
    */
+  aktiv?: boolean;
+  /** Gravsten fra før toggle'n — læses som aktiv: false. Skrives ikke længere. */
   fjernet?: boolean;
   /**
    * Billedteksten er skrevet i hånden i admin — ikke fyldt ud fra skabelonen.
@@ -97,6 +101,12 @@ export interface GalleryEntry {
 const MAKS_TEKST = 200;
 
 type Manifest = Record<string, GalleryEntry[]>;
+
+/** Manifestet holdes i scenernes rækkefølge, ikke i den rækkefølge de blev lavet */
+function sceneOrden(_scene: string, _liste: GalleryEntry[]) {
+  const orden = GALLERY_SCENER.map((s) => s.id);
+  return (a: GalleryEntry, b: GalleryEntry) => orden.indexOf(a.scene) - orden.indexOf(b.scene);
+}
 
 function svar(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), { status, headers: cors });
@@ -201,6 +211,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     note?: string;
     caption_da?: string;
     caption_en?: string;
+    aktiv?: boolean;
+    /**
+     * Det billede der rettes — enten en sti på sitet (godkendt eller fra
+     * bulk-kørslen) eller et forslag, der endnu kun lever i browseren.
+     */
+    forrige?: { url?: string; billede?: string; mime?: string };
   };
   try {
     body = await context.request.json();
@@ -213,25 +229,26 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const sceneId = String(body.scene ?? "");
   if (!productId) return svar({ error: "Mangler produkt" }, 400);
 
-  /* ── fjern ── */
-  if (body.action === "remove") {
+  /* ── slå til eller fra ── */
+  if (body.action === "aktiv") {
+    if (typeof body.aktiv !== "boolean") return svar({ error: "Mangler aktiv: true/false" }, 400);
     const manifest: Manifest = JSON.parse((await kv.get(MANIFEST_KEY)) ?? "{}");
-    const liste = (manifest[productId] ?? []).filter((b) => b.scene !== sceneId);
-
-    // Ligger billedet også som fil i repoet, er det ikke nok at slette posten
-    const statisk = (PRODUCT_GALLERY[productId] ?? []).some((b) => b.scene === sceneId);
-    if (statisk) {
-      liste.push({
-        src: "", thumb: "", scene: sceneId, ratio: "1:1",
-        titel_da: "", titel_en: "", alt_da: "", alt_en: "", caption_da: "", caption_en: "",
-        fjernet: true, updatedBy: auth.name, updatedAt: new Date().toISOString(),
-      });
-    }
-
-    if (liste.length) manifest[productId] = liste;
-    else delete manifest[productId];
+    const liste = manifest[productId] ?? [];
+    const eksisterende = liste.find((b) => b.scene === sceneId);
+    // Et billede fra bulk-kørslen får sin post her, første gang det slås til
+    const statisk = (PRODUCT_GALLERY[productId] ?? []).find((b) => b.scene === sceneId);
+    if (!eksisterende && !statisk) return svar({ error: "Der er intet billede at slå til" }, 400);
+    const grund: GalleryEntry = eksisterende ?? { ...statisk! };
+    const entry: GalleryEntry = {
+      ...grund,
+      aktiv: body.aktiv,
+      fjernet: undefined,
+      updatedBy: auth.name,
+      updatedAt: new Date().toISOString(),
+    };
+    manifest[productId] = [...liste.filter((b) => b.scene !== sceneId), entry].sort(sceneOrden(sceneId, liste));
     await kv.put(MANIFEST_KEY, JSON.stringify(manifest));
-    return svar({ ok: true, billeder: manifest[productId] ?? [] });
+    return svar({ ok: true, billeder: manifest[productId] });
   }
 
   const katalog = await hentKatalog(kv);
@@ -247,7 +264,18 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const gyldig = scene && (scene.katalogfoto || scenerFor(produkt).some((s) => s.id === scene.id));
   if (!scene || !gyldig) return svar({ error: `Ukendt scene: ${sceneId}` }, 400);
 
-  const bygget = byggPrompt(produkt, scene, flad, typeof body.note === "string" ? body.note : undefined);
+  const forrigeUrl = typeof body.forrige?.url === "string" ? body.forrige.url : "";
+  const forrigeData = typeof body.forrige?.billede === "string" ? body.forrige.billede : "";
+  const harForrige =
+    (forrigeUrl.startsWith("/api/image/") || forrigeUrl.startsWith("/images/")) ||
+    (forrigeData.length > 0 && forrigeData.length < 12_000_000 && /^[A-Za-z0-9+/=]+$/.test(forrigeData));
+  const bygget = byggPrompt(
+    produkt,
+    scene,
+    flad,
+    typeof body.note === "string" ? body.note : undefined,
+    body.action === "generate" && harForrige,
+  );
   if (!bygget) {
     return svar({ error: "Produktet har intet foto at vise modellen — upload et produktbillede først." }, 400);
   }
@@ -262,13 +290,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     const manifest: Manifest = JSON.parse((await kv.get(MANIFEST_KEY)) ?? "{}");
     const liste = manifest[productId] ?? [];
-    const eksisterende = liste.find((b) => b.scene === scene.id && !b.fjernet);
+    const eksisterende = liste.find((b) => b.scene === scene.id);
     const statisk = (PRODUCT_GALLERY[productId] ?? []).find((b) => b.scene === scene.id);
     if (!eksisterende && !statisk) return svar({ error: "Der er intet billede at sætte tekst på" }, 400);
 
-    // Et billede fra bulk-kørslen får sin post i manifestet her — at rette
-    // teksten er også at have set billedet, så det tæller som gennemgået.
-    const grund: GalleryEntry = eksisterende ?? { ...statisk! };
+    // Et billede fra bulk-kørslen får sin post her — men slås ikke til af
+    // det: at rette en tekst er ikke at udgive billedet.
+    const grund: GalleryEntry = eksisterende ?? { ...statisk!, aktiv: false };
     const entry: GalleryEntry = {
       ...grund,
       // Tomt felt = tilbage til skabelonen
@@ -298,9 +326,11 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
     const manifest: Manifest = JSON.parse((await kv.get(MANIFEST_KEY)) ?? "{}");
     // En tekst skrevet i hånden følger med over på det nye billede
-    const forrige = (manifest[productId] ?? []).find((b) => b.scene === scene.id && !b.fjernet);
+    const forrige = (manifest[productId] ?? []).find((b) => b.scene === scene.id);
     const entry: GalleryEntry = {
       src: url,
+      // "Brug det" er beslutningen — billedet går live med det samme
+      aktiv: true,
       // R2-billeder har ingen lille udgave; browseren har allerede skaleret ned
       thumb: url,
       scene: scene.id,
@@ -345,6 +375,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   if (input.length === 1) {
     return svar({ error: "Kunne ikke hente produktfotoene — så ville modellen digte grejet frit." }, 502);
   }
+  // Det forrige billede står SIDST — det der står sidst, vejer tungest, og
+  // prompten omtaler det som "the last reference image".
+  if (bygget.forrige) {
+    const forrige = forrigeData
+      ? { mime: body.forrige?.mime?.startsWith("image/") ? body.forrige.mime : "image/jpeg", data: forrigeData }
+      : await hentReference(forrigeUrl, base);
+    if (!forrige) return svar({ error: "Kunne ikke hente det billede, der skulle rettes" }, 502);
+    input.push({ type: "image", mime_type: forrige.mime, data: forrige.data });
+  }
 
   let json: unknown;
   try {
@@ -386,6 +425,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     ratio: bygget.ratio,
     prompt: bygget.prompt,
     note: bygget.note ?? null,
+    forrige: bygget.forrige,
     titel_da: bygget.titel_da,
     alt_da: bygget.alt_da,
     caption_da: bygget.caption_da,

@@ -215,5 +215,10 @@
     "_kommentar": "Det Philip skriver i feltet ved knappen, sat ind mellem scenens beskrivelse og de faste regler. Den skal kunne vinde over scenen (\"det samme uden stativer\"), men aldrig over forbuddet mod at digte grej.",
     "skabelon": "Adjust the scene as follows — this takes priority over the description above: {note}",
     "maks_tegn": 300
+  },
+  "forrige": {
+    "_kommentar": "Sættes ind EFTER friteksten, når der trykkes 'Ret dette billede' eller 'Ret forslaget'. Det billede man kigger på sendes så med som SIDSTE reference, og linjen her siger hvad det er. Uden den var 'det samme uden stativer' et helt nyt billede fra bunden — modellen havde aldrig set det, man ville rette. 'Ny optagelse' sender det ikke med. Det forrige billede tager en af de seks referencepladser, så en pakke med seks dele mister den mindst vigtige. Er feltet tomt, bruges uden_note: en ny tagning af det samme billede.",
+    "skabelon": "The last reference image is the previous version of this exact picture. Keep its composition, framing, light, setting and the equipment in it; change only what the instruction above asks for, and leave everything else as it is.",
+    "uden_note": "The last reference image is the previous version of this exact picture. Make a fresh take of it: keep its composition, framing, light, setting and the equipment in it, with only small natural variation."
   }
 }

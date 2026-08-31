@@ -25,7 +25,9 @@ export interface GalleryEntry {
   caption_en?: string;
   updatedBy?: string;
   updatedAt?: string;
-  /** Gravsten: scenen er fjernet, også selvom billedet ligger som fil i repoet */
+  /** Vises for kunderne — intet vises, før det er slået til */
+  aktiv?: boolean;
+  /** Gravsten fra før toggle'n; læses som inaktiv */
   fjernet?: boolean;
   /** Billedteksten er rettet i hånden — skabelonen skriver den ikke over ved "Lav om" */
   egenTekst?: boolean;
@@ -36,6 +38,8 @@ export interface Forslag {
   mime: string;
   /** Den kommentar der blev sendt med — vises tilbage, så man kan se hvad man bad om */
   note?: string;
+  /** Lavet ud fra det forrige billede — ikke fra bunden */
+  forrige?: boolean;
   titel_da: string;
   alt_da: string;
   caption_da: string;
@@ -89,12 +93,23 @@ export function hentManifest(paanyt = false): Promise<Record<string, GalleryEntr
  * "tættere på". Den vinder over scenens beskrivelse, men ikke over reglen om,
  * at grejet skal være vores eget.
  */
-export async function generer(productId: string, scene: string, note?: string): Promise<Forslag> {
-  const data = await kald({ action: "generate", productId, scene, note: note?.trim() || undefined });
+/** Det billede der rettes: en sti på sitet, eller et forslag der kun findes i browseren */
+export type Forrige = { url: string } | { billede: string; mime: string };
+
+export async function generer(
+  productId: string,
+  scene: string,
+  note?: string,
+  forrige?: Forrige,
+): Promise<Forslag> {
+  const ren = note?.trim() || undefined;
+  // Med `forrige` rettes det billede, man kigger på; uden er det en ny optagelse
+  const data = await kald({ action: "generate", productId, scene, note: ren, forrige });
   return {
     billede: data.image,
     mime: data.mime ?? "image/jpeg",
     note: data.note ?? undefined,
+    forrige: data.forrige === true,
     titel_da: data.titel_da,
     alt_da: data.alt_da,
     caption_da: data.caption_da,
@@ -160,16 +175,14 @@ export async function gemTekst(
 }
 
 /**
- * Godkender et billede, der allerede ligger som fil — de 77 fra
- * bulk-kørslen. Der genereres ikke noget nyt, og det koster ingenting:
- * billedet flytter bare fra "ikke gennemgået" til "godkendt".
+ * Slår et billede til eller fra for kunderne.
+ *
+ * Det koster ingenting og laver intet nyt. Et billede fra bulk-kørslen får
+ * sin post i manifestet, første gang det slås til; et der slås fra bliver
+ * stående inaktivt, så det kan slås til igen.
  */
-export async function godkendEksisterende(
-  productId: string,
-  scene: string,
-  url: string,
-): Promise<GalleryEntry[]> {
-  const data = await kald({ action: "publish", productId, scene, url });
+export async function saetAktiv(productId: string, scene: string, aktiv: boolean): Promise<GalleryEntry[]> {
+  const data = await kald({ action: "aktiv", productId, scene, aktiv });
   manifestCache = null;
   return data.billeder ?? [];
 }
@@ -204,9 +217,3 @@ export async function uploadForslag(productId: string, scene: string, forslag: F
   return data.url as string;
 }
 
-/** Fjerner et godkendt billede fra manifestet igen. */
-export async function fjern(productId: string, scene: string): Promise<GalleryEntry[]> {
-  const data = await kald({ action: "remove", productId, scene });
-  manifestCache = null;
-  return data.billeder ?? [];
-}

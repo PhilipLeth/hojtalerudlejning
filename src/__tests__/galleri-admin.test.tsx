@@ -22,6 +22,9 @@ import { addons, rentalProducts, speakers } from "@/lib/products";
 vi.mock("@/lib/galleryAdmin", async (orig) => ({
   ...(await orig<typeof import("@/lib/galleryAdmin")>()),
   gemTekst: vi.fn().mockResolvedValue([]),
+  saetAktiv: vi.fn().mockResolvedValue([]),
+  generer: vi.fn(),
+  udgivForslag: vi.fn(),
 }));
 
 const KATALOG = { speakers, addons, rentalProducts };
@@ -128,46 +131,46 @@ describe("/api/gallery", () => {
 });
 
 describe("useGallery", () => {
-  it("lader admins billede vinde over det committede for samme scene", async () => {
-    const admin = {
-      src: "/api/image/nyt",
-      thumb: "/api/image/nyt",
-      scene: "i_brug",
-      ratio: "16:9",
-      titel_da: "Fra admin",
-      titel_en: "From admin",
-      alt_da: "Fra admin",
-      alt_en: "From admin",
-      caption_da: "-",
-      caption_en: "-",
-    };
+  const post = (scene: string, ekstra: Record<string, unknown> = {}) => ({
+    src: `/api/image/${scene}`, thumb: `/api/image/${scene}`, scene, ratio: "16:9",
+    titel_da: scene, titel_en: scene, alt_da: scene, alt_en: scene, caption_da: "-", caption_en: "-",
+    ...ekstra,
+  });
+
+  it("viser kun manifestets aktive poster — bulk-billederne er kandidater, ikke galleri", async () => {
     vi.stubGlobal(
       "fetch",
-      vi.fn().mockResolvedValue(new Response(JSON.stringify({ thumpgo: [admin] }), { status: 200 })),
+      vi.fn().mockResolvedValue(
+        new Response(JSON.stringify({ thumpgo: [post("i_brug", { aktiv: true }), post("opstilling", { aktiv: false })] }), { status: 200 }),
+      ),
     );
-
     const { useGallery } = await import("@/lib/useGallery");
     function Prøve() {
-      const b = useGallery("thumpgo");
-      return <ul>{b.map((x) => <li key={x.scene}>{`${x.scene}:${x.src}`}</li>)}</ul>;
+      return <span data-testid="scener">{useGallery("thumpgo").map((b) => b.scene).join(",")}</span>;
     }
     render(<Prøve />);
-
     await waitFor(() => {
-      expect(screen.getByText("i_brug:/api/image/nyt")).toBeInTheDocument();
+      expect(screen.getByTestId("scener").textContent).toBe("i_brug");
     });
   });
 
-  it("står ved de committede billeder, hvis API'et ikke svarer", async () => {
+  it("viser ingenting, hvis API'et ikke svarer — heller ikke de committede filer", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("offline")));
     const { useGallery } = await import("@/lib/useGallery");
     const { galleryFor } = await import("@/lib/productGallery");
-
+    expect(galleryFor("thumpgo").length).toBeGreaterThan(0); // filerne findes, men er ikke set efter
     function Prøve() {
       return <span data-testid="n">{useGallery("thumpgo").length}</span>;
     }
     render(<Prøve />);
-    expect(screen.getByTestId("n").textContent).toBe(String(galleryFor("thumpgo").length));
+    expect(screen.getByTestId("n").textContent).toBe("0");
+  });
+
+  it("læser den gamle gravsten som inaktiv, og en post uden felt som aktiv", async () => {
+    const { erAktiv } = await import("@/lib/galleryStatus");
+    expect(erAktiv({ fjernet: true })).toBe(false);
+    expect(erAktiv({})).toBe(true);
+    expect(erAktiv({ aktiv: false, fjernet: false })).toBe(false);
   });
 });
 
@@ -238,30 +241,33 @@ describe("Flowet ligger på produktkortet", () => {
 });
 
 describe("Status pr. scene", () => {
-  it("skelner mellem manglende, ikke gennemgået, godkendt og fjernet", async () => {
-    const { sceneStatus, galleriOpsummering, scenerTil } = await import(
-      "@/components/admin/GalleryField"
-    );
+  const post = (ekstra: Record<string, unknown>) => ({
+    src: "/api/image/x", thumb: "/api/image/x", scene: "i_brug", ratio: "16:9", titel_da: "", alt_da: "", caption_da: "", ...ekstra,
+  });
+
+  it("skelner mellem manglende, ikke gennemgået, aktiv og inaktiv", async () => {
+    const { sceneStatus } = await import("@/components/admin/GalleryField");
     const { PRODUCT_GALLERY } = await import("@/lib/productGallery");
 
     // thumpgo har billeder fra bulk-kørslen og intet i manifestet
     expect(PRODUCT_GALLERY["thumpgo"]?.length).toBeGreaterThan(0);
     expect(sceneStatus("thumpgo", "i_brug", {})).toBe("ikke_gennemgaaet");
     expect(sceneStatus("findes_ikke", "i_brug", {})).toBe("mangler");
-
-    const godkendt = { thumpgo: [{ src: "/api/image/x", thumb: "/api/image/x", scene: "i_brug", ratio: "16:9", titel_da: "", alt_da: "", caption_da: "" }] };
-    expect(sceneStatus("thumpgo", "i_brug", godkendt)).toBe("godkendt");
-
-    const gravsten = { thumpgo: [{ src: "", thumb: "", scene: "i_brug", ratio: "1:1", titel_da: "", alt_da: "", caption_da: "", fjernet: true }] };
-    expect(sceneStatus("thumpgo", "i_brug", gravsten)).toBe("fjernet");
+    expect(sceneStatus("thumpgo", "i_brug", { thumpgo: [post({ aktiv: true })] })).toBe("aktiv");
+    expect(sceneStatus("thumpgo", "i_brug", { thumpgo: [post({ aktiv: false })] })).toBe("inaktiv");
+    // Gravstenen fra før toggle'n
+    expect(sceneStatus("thumpgo", "i_brug", { thumpgo: [post({ src: "", fjernet: true })] })).toBe("inaktiv");
   });
 
-  it("tæller ikke-gennemgåede med som på plads, men markerer dem", async () => {
+  it("tæller kun det, kunden ser — bulk-billederne er ikke på plads, før de er slået til", async () => {
     const { galleriOpsummering } = await import("@/components/admin/GalleryField");
     const o = galleriOpsummering("thumpgo", false, {});
     expect(o.ialt).toBe(3);
-    expect(o.klar).toBe(o.ikkeSet); // alt fra bulk-kørslen, intet godkendt endnu
-    expect(o.ikkeSet).toBeGreaterThan(0);
+    expect(o.klar).toBe(0);
+    expect(o.ikkeSet).toBe(3);
+    const et = galleriOpsummering("thumpgo", false, { thumpgo: [post({ aktiv: true })] });
+    expect(et.klar).toBe(1);
+    expect(et.ikkeSet).toBe(2);
   });
 
   it("giver pakker og enkeltprodukter hver sin 'alt det du får'", async () => {
@@ -271,33 +277,43 @@ describe("Status pr. scene", () => {
   });
 });
 
-describe("Fjernelse af et billede fra bulk-kørslen", () => {
+describe("Aktiv og inaktiv", () => {
   const kilde = readFileSync(join(process.cwd(), "functions/api/gallery.ts"), "utf8");
 
-  it("efterlader en gravsten, når billedet også ligger som fil", () => {
-    // Uden den ville useGallery falde tilbage på den statiske fil, og
-    // "Fjern" ville ikke gøre noget som helst for kunden
-    expect(kilde).toMatch(/PRODUCT_GALLERY\[productId\]/);
-    expect(kilde).toMatch(/fjernet: true/);
+  it("er én handling i API'et, og publish slår til med det samme", () => {
+    expect(kilde).toMatch(/body\.action === "aktiv"/);
+    expect(kilde).not.toMatch(/body\.action === "remove"/);
+    // "Brug det" er beslutningen
+    expect(kilde).toMatch(/src: url,\s*\/\/[^\n]*\n\s*aktiv: true/);
+    // Gravstenen skrives ikke længere
+    expect(kilde).not.toMatch(/fjernet: true/);
   });
 
-  it("useGallery kaster scenen væk, når der er en gravsten", async () => {
-    const gravsten = {
-      src: "", thumb: "", scene: "i_brug", ratio: "1:1",
-      titel_da: "", titel_en: "", alt_da: "", alt_en: "", caption_da: "", caption_en: "",
-      fjernet: true,
-    };
-    vi.stubGlobal(
-      "fetch",
-      vi.fn().mockResolvedValue(new Response(JSON.stringify({ thumpgo: [gravsten] }), { status: 200 })),
+  it("at rette en billedtekst slår ikke billedet til", () => {
+    expect(kilde).toMatch(/\{ \.\.\.statisk!, aktiv: false \}/);
+  });
+
+  it("feltet har en toggle pr. billede og ingen 'Fjern'-knap", () => {
+    const felt = readFileSync(join(process.cwd(), "src/components/admin/GalleryField.tsx"), "utf8");
+    expect(felt).toMatch(/role="switch"/);
+    expect(felt).toMatch(/saetAktivKald\(productId, scene\.id, til\)/);
+    expect(felt).not.toMatch(/>\s*Fjern\s*</);
+    expect(felt).not.toMatch(/godkendEksisterende|fjernKald/);
+  });
+
+  it("toggle'n på et bulk-billede slår det til", async () => {
+    const { saetAktiv } = await import("@/lib/galleryAdmin");
+    const { default: GalleryField } = await import("@/components/admin/GalleryField");
+    const onManifest = vi.fn();
+    render(
+      <GalleryField productId="thumpgo" productName="Thump Go" erPakke={false} aktiv manifest={{}} onManifest={onManifest} />,
     );
-    const { useGallery } = await import("@/lib/useGallery");
-    function Prøve() {
-      return <span data-testid="scener">{useGallery("thumpgo").map((b) => b.scene).join(",")}</span>;
-    }
-    render(<Prøve />);
+    const toggle = screen.getByRole("switch", { name: "Vis Sådan ser det ud til festen på produktsiden" });
+    expect(toggle).toHaveAttribute("aria-checked", "false");
+    fireEvent.click(toggle);
     await waitFor(() => {
-      expect(screen.getByTestId("scener").textContent).not.toMatch(/i_brug/);
+      expect(saetAktiv).toHaveBeenCalledWith("thumpgo", "i_brug", true);
+      expect(onManifest).toHaveBeenCalled();
     });
   });
 });
@@ -440,7 +456,7 @@ describe("Galleriet på kortet viser ikke produktfotoet", () => {
   it("har et kommentarfelt pr. scene", () => {
     const felt = readFileSync(join(process.cwd(), "src/components/admin/GalleryField.tsx"), "utf8");
     expect(felt).toMatch(/Skriv til AI'en/);
-    expect(felt).toMatch(/genererKald\(productId, scene\.id, noter\[scene\.id\]\)/);
+    expect(felt).toMatch(/genererKald\(productId, scene\.id, noter\[scene\.id\], forrige\)/);
   });
 });
 
@@ -497,5 +513,171 @@ describe("Billedteksterne", () => {
     const s = readFileSync(join(process.cwd(), "gallery/scenes.json"), "utf8");
     expect(s).not.toMatch(/Rækker til \{kapacitet\}/);
     expect(s).not.toMatch(/navn_lav/);
+  });
+});
+
+describe("Lav om ser det billede, der rettes", () => {
+  /**
+   * "Det samme uden stativer" var et helt nyt billede fra bunden: modellen
+   * fik kun produktfotoene og havde aldrig set det, man kiggede på. Nu sendes
+   * det forrige billede med som SIDSTE reference, og prompten beder om at
+   * holde kompositionen.
+   */
+  const scene = GALLERY_SCENER.find((s) => s.id === "i_brug")!;
+
+  it("beder om at holde kompositionen — efter noten, før reglerne", () => {
+    const b = byggPrompt(flad.get("soundboks")!, scene, flad, "uden stativer", true)!;
+    expect(b.forrige).toBe(true);
+    const iNoten = b.prompt.indexOf("uden stativer");
+    const iForrige = b.prompt.indexOf("previous version of this exact picture");
+    expect(iForrige).toBeGreaterThan(iNoten);
+    expect(b.prompt.indexOf("Do not invent")).toBeGreaterThan(iForrige);
+  });
+
+  it("uden tekst er det en ny tagning af det samme billede", () => {
+    const b = byggPrompt(flad.get("soundboks")!, scene, flad, "", true)!;
+    expect(b.forrige).toBe(true);
+    expect(b.prompt).toMatch(/fresh take/);
+    expect(b.prompt).not.toMatch(/instruction above/);
+    // Og uden forrige er prompten som før
+    const uden = byggPrompt(flad.get("soundboks")!, scene, flad, "")!;
+    expect(uden.forrige).toBe(false);
+    expect(uden.prompt).not.toMatch(/previous version/);
+  });
+
+  it("lader det forrige billede tage en referenceplads, så loftet holder", () => {
+    const p = flad.get("pakke_bryllup")!;
+    const komposition = GALLERY_SCENER.find((s) => s.id === "komposition")!;
+    const uden = byggPrompt(p, komposition, flad)!;
+    const med = byggPrompt(p, komposition, flad, "tættere på", true)!;
+    expect(uden.referencer.length).toBe(6);
+    expect(med.referencer.length).toBe(5);
+    expect(med.skaaret).toHaveLength(1);
+  });
+
+  it("API'et sætter det forrige billede sidst i input", () => {
+    const api = readFileSync(join(process.cwd(), "functions/api/gallery.ts"), "utf8");
+    const loekke = api.indexOf("for (const r of bygget.referencer)");
+    const forrige = api.indexOf("if (bygget.forrige)");
+    const kald = api.indexOf("fetch(GALLERY_SPEC.endpoint");
+    expect(loekke).toBeGreaterThan(-1);
+    expect(forrige).toBeGreaterThan(loekke);
+    expect(kald).toBeGreaterThan(forrige);
+    // Kun stier på sitet eller base64 — ikke en vilkårlig URL
+    expect(api).toMatch(/forrigeUrl\.startsWith\("\/api\/image\/"\) \|\| forrigeUrl\.startsWith\("\/images\/"\)/);
+  });
+
+  it("feltet sender det, man kigger på: forslaget først, ellers det der er live", () => {
+    const felt = readFileSync(join(process.cwd(), "src/components/admin/GalleryField.tsx"), "utf8");
+    expect(felt).toMatch(/usendt \? \{ billede: usendt\.billede, mime: usendt\.mime \} : live \? \{ url: live \}/);
+    expect(felt).toMatch(/genererKald\(productId, scene\.id, noter\[scene\.id\], forrige\)/);
+    // To knapper: den ene sender billedet med, den anden gør ikke
+    expect(felt).toMatch(/Ret dette billede/);
+    expect(felt).toMatch(/Ny optagelse/);
+    expect(felt).toMatch(/generer\(scene, true\)/);
+    expect(felt).toMatch(/generer\(scene, false\)/);
+    const produktfoto = readFileSync(join(process.cwd(), "src/components/admin/AiProductImage.tsx"), "utf8");
+    expect(produktfoto).toMatch(/retForslaget && forslag \? \{ billede: forslag\.billede, mime: forslag\.mime \} : undefined/);
+  });
+
+  it("klienten sender det forrige med, når knappen siger det — også uden tekst", () => {
+    const klient = readFileSync(join(process.cwd(), "src/lib/galleryAdmin.ts"), "utf8");
+    expect(klient).toMatch(/note: ren, forrige \}/);
+  });
+});
+
+describe("To billeder på samme tid", () => {
+  /**
+   * "Lav om" på to scener lige efter hinanden: da den travle scene var én
+   * streng, overtog det andet tryk den. Første knap låste op midt i arbejdet
+   * (og kunne trykkes igen — endnu et billede for pengene), og da det første
+   * blev færdigt, låste det andet op, selvom det stadig kørte.
+   */
+  function udsat<T>() {
+    let løs!: (v: T) => void;
+    const p = new Promise<T>((r) => (løs = r));
+    return { p, løs };
+  }
+  const forslag = (id: string) => ({
+    billede: "AAAA", mime: "image/jpeg", titel_da: id, alt_da: id, caption_da: id, skaaret: [], mangler: [],
+  });
+
+  it("holder hver scene låst, til dens eget billede er færdigt", async () => {
+    const { generer } = await import("@/lib/galleryAdmin");
+    const { default: GalleryField } = await import("@/components/admin/GalleryField");
+    const første = udsat<ReturnType<typeof forslag>>();
+    const andet = udsat<ReturnType<typeof forslag>>();
+    vi.mocked(generer).mockReturnValueOnce(første.p).mockReturnValueOnce(andet.p);
+
+    render(
+      <GalleryField productId="soundboks" productName="Soundboks 4" erPakke={false} aktiv manifest={{}} onManifest={vi.fn()} />,
+    );
+    // soundboks har billeder fra bulk-kørslen — hver scene har "Ret dette billede" og "Ny optagelse"
+    const nyOptagelse = () => screen.getAllByRole("button", { name: /^Ny optagelse/ });
+    expect(nyOptagelse()).toHaveLength(3);
+
+    fireEvent.click(nyOptagelse()[0]);
+    fireEvent.click(nyOptagelse()[1]);
+    expect(generer).toHaveBeenCalledTimes(2);
+
+    // Begge arbejder, og den tredje kan stadig trykkes
+    const travle = screen.getAllByRole("button", { name: "Genererer…" });
+    expect(travle).toHaveLength(2);
+    for (const k of travle) expect(k).toBeDisabled();
+    expect(nyOptagelse()[0]).toBeDisabled();
+    expect(nyOptagelse()[1]).toBeDisabled();
+    expect(nyOptagelse()[2]).not.toBeDisabled();
+
+    // Det første bliver færdigt — det andet må ikke låse op af den grund
+    første.løs(forslag("a"));
+    await waitFor(() => expect(screen.getByText("Brug det")).toBeInTheDocument());
+    expect(screen.getAllByRole("button", { name: "Genererer…" })).toHaveLength(1);
+    expect(screen.getByRole("button", { name: "Genererer…" })).toBeDisabled();
+
+    andet.løs(forslag("b"));
+    await waitFor(() => expect(screen.getAllByText("Brug det")).toHaveLength(2));
+    expect(screen.queryByRole("button", { name: "Genererer…" })).toBeNull();
+  });
+
+  it("gemmer to forslag efter hinanden, ikke oven i hinanden", async () => {
+    /**
+     * API'et læser manifestet, retter én post og skriver det hele tilbage.
+     * To "Brug det" på samme tid ville læse det samme udgangspunkt, og den
+     * sidste ville skrive den førstes billede væk igen.
+     */
+    const { generer, udgivForslag } = await import("@/lib/galleryAdmin");
+    const { default: GalleryField } = await import("@/components/admin/GalleryField");
+    vi.mocked(generer).mockImplementation(async (_p, scene) => forslag(scene));
+    const første = udsat<{ billeder: never[]; bytes: number }>();
+    let igang = 0;
+    let flestSamtidig = 0;
+    vi.mocked(udgivForslag).mockImplementation(async () => {
+      igang++;
+      flestSamtidig = Math.max(flestSamtidig, igang);
+      try {
+        return igang === 1 && flestSamtidig === 1 ? await første.p : { billeder: [], bytes: 1 };
+      } finally {
+        igang--;
+      }
+    });
+
+    render(
+      <GalleryField productId="soundboks" productName="Soundboks 4" erPakke={false} aktiv manifest={{}} onManifest={vi.fn()} />,
+    );
+    const nyOptagelse = screen.getAllByRole("button", { name: /^Ny optagelse/ });
+    fireEvent.click(nyOptagelse[0]);
+    fireEvent.click(nyOptagelse[1]);
+    await waitFor(() => expect(screen.getAllByText("Brug det")).toHaveLength(2));
+
+    const brug = screen.getAllByRole("button", { name: "Brug det" });
+    fireEvent.click(brug[0]);
+    fireEvent.click(brug[1]);
+    await waitFor(() => expect(udgivForslag).toHaveBeenCalledTimes(1));
+    expect(screen.getAllByRole("button", { name: "Gemmer…" })).toHaveLength(2);
+
+    første.løs({ billeder: [], bytes: 1 });
+    await waitFor(() => expect(udgivForslag).toHaveBeenCalledTimes(2));
+    await waitFor(() => expect(screen.queryByRole("button", { name: "Gemmer…" })).toBeNull());
+    expect(flestSamtidig).toBe(1);
   });
 });

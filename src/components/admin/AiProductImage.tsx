@@ -61,9 +61,19 @@ export default function AiProductImage({
     }
   };
 
-  const generer = () =>
+  /**
+   * Produktets eget foto er altid reference. "Ret forslaget" sender også det
+   * forslag, der står, så man kan bygge videre i to trin; "Ny optagelse"
+   * starter forfra ud fra det nuværende produktfoto.
+   */
+  const generer = (retForslaget: boolean) =>
     kør(async () => {
-      const f = await genererKald(productId, KATALOG_SCENE.id, note);
+      const f = await genererKald(
+        productId,
+        KATALOG_SCENE.id,
+        note,
+        retForslaget && forslag ? { billede: forslag.billede, mime: forslag.mime } : undefined,
+      );
       setForslag(f);
       if (typeof f.forbrugt === "number" && typeof f.loft === "number") {
         setForbrug({ brugt: f.forbrugt, loft: f.loft });
@@ -102,11 +112,10 @@ export default function AiProductImage({
             alt="Forslag til nyt produktfoto"
             style={{ width: "100%", aspectRatio: "1 / 1", objectFit: "contain", background: "#f7f7f7", borderRadius: "6px", border: "2px solid #0070f3", marginBottom: "6px" }}
           />
-          {forslag.note && (
-            <p style={{ fontSize: "11px", color: "#0070f3", margin: "0 0 6px" }}>
-              Bad om: &quot;{forslag.note}&quot;
-            </p>
-          )}
+          <p style={{ fontSize: "11px", color: "#0070f3", margin: "0 0 6px" }}>
+            {forslag.forrige ? "Rettet ud fra det forrige forslag" : "Ny optagelse"}
+            {forslag.note ? ` — bad om: "${forslag.note}"` : ""}
+          </p>
         </>
       )}
 
@@ -126,15 +135,18 @@ export default function AiProductImage({
             <button type="button" style={primaer} disabled={travl} onClick={brug}>
               {travl ? "Gemmer…" : "Brug det"}
             </button>
-            <button type="button" style={knap} disabled={travl} onClick={generer}>
-              Prøv igen
+            <button type="button" style={knap} disabled={travl} onClick={() => generer(true)} title="Sender forslaget med, og retter kun det du skriver">
+              {travl ? "Genererer…" : "Ret forslaget"}
+            </button>
+            <button type="button" style={knap} disabled={travl} onClick={() => generer(false)} title="Forfra, ud fra det nuværende produktfoto">
+              Ny optagelse
             </button>
             <button type="button" style={{ ...knap, color: "#dc3545" }} disabled={travl} onClick={() => setForslag(null)}>
               Kassér
             </button>
           </>
         ) : (
-          <button type="button" style={harBillede ? primaer : knap} disabled={travl || !harBillede} onClick={generer}>
+          <button type="button" style={harBillede ? primaer : knap} disabled={travl || !harBillede} onClick={() => generer(false)}>
             {travl ? "Genererer…" : `Lav produktfoto om (${GALLERY_SPEC.usd_per_image.toFixed(2)} $)`}
           </button>
         )}

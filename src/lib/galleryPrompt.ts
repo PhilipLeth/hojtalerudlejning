@@ -208,6 +208,8 @@ export interface ByggetPrompt {
   prompt: string;
   /** Fritekstem der kom med, renset og afkortet — vises tilbage i admin */
   note?: string;
+  /** Det forrige billede sendes med som sidste reference — prompten beder om at holde kompositionen */
+  forrige: boolean;
   ratio: string;
   referencer: Reference[];
   /** Dele der ikke kunne komme med, fordi modellen kun holder så mange i skarphed */
@@ -237,8 +239,19 @@ export function byggPrompt(
    * så den kan vinde over scenen — men aldrig over forbuddet mod at digte grej.
    */
   note?: string,
+  /**
+   * Det billede der rettes sendes med som sidste reference.
+   *
+   * Så er "det samme uden stativer" faktisk det samme: modellen ser det,
+   * man kigger på, og bedes holde kompositionen. Referencen tager én af
+   * modellens pladser, så pakkens mindst vigtige del viger. Uden en note
+   * bliver det en ny tagning af det samme billede.
+   */
+  medForrige = false,
 ): ByggetPrompt | null {
-  const ref = referencerFor(p, flad, scene.referencer);
+  const ren = (note ?? "").replace(/\s+/g, " ").trim().slice(0, scener.fritekst.maks_tegn);
+  const forrige = medForrige;
+  const ref = referencerFor(p, flad, scene.referencer, forrige ? GALLERY_SPEC.max_referencer - 1 : undefined);
   if (ref.billeder.length === 0) return null;
   const hoved = referencerFor(p, flad, "hoved", 3);
   const [kap, kapEn] = kapacitetFor(p);
@@ -262,12 +275,11 @@ export function byggPrompt(
     gaester_en: kapEn ? udfyld(g.med_tal_en, { kapacitet_en: kapEn }) : g.uden_tal_en,
   };
 
-  const ren = (note ?? "").replace(/\s+/g, " ").trim().slice(0, scener.fritekst.maks_tegn);
-
   return {
     prompt: [
       udfyld(scene.prompt, felter),
       ren ? udfyld(scener.fritekst.skabelon, { note: ren }) : "",
+      forrige ? (ren ? scener.forrige.skabelon : scener.forrige.uden_note) : "",
       scene.efter_note ?? "",
       scener.stil.faelles,
       scener.stil.kamera_hoejde,
@@ -276,6 +288,7 @@ export function byggPrompt(
       .filter(Boolean)
       .join(" "),
     note: ren || undefined,
+    forrige,
     ratio: scene.ratio,
     referencer: ref.billeder,
     skaaret: ref.skaaret,
