@@ -205,11 +205,11 @@
     }
   },
   "_gaester": {
-    "_kommentar": "Billedteksten under 'i brug' fortæller hvad anlægget rækker til. Tallet kommer fra kapaciteten i kataloget, hvor den findes — normaliseret i kapacitetFor(), så 'Op til 50 pers.' bliver 'Op til 50 personer' og kan stå først i sætningen. Skabelonen må IKKE selv sætte 'Rækker til' foran: det gav 'Rækker til Op til 50 pers.'",
+    "_kommentar": "Billedteksten under 'i brug'. Med kapacitet i kataloget fortæller den hvad anlægget rækker til (normaliseret i kapacitetFor(), så den kan stå først i sætningen). Uden tal må den IKKE lyde som en facitliste — 'Sådan står det, når gæsterne kommer' lød som om opstillingen var den rigtige. Billedet er et eksempel; folk sætter det op, som de vil.",
     "med_tal_da": "{kapacitet} indendørs — udendørs uden vægge, regn med det halve.",
     "med_tal_en": "{kapacitet_en} indoors — outdoors without walls, expect half that.",
-    "uden_tal_da": "Sådan står det, når gæsterne kommer.",
-    "uden_tal_en": "This is how it stands when the guests arrive."
+    "uden_tal_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+    "uden_tal_en": "One example of a setup — arrange it however suits your party."
   },
   "fritekst": {
     "_kommentar": "Det Philip skriver i feltet ved knappen, sat ind mellem scenens beskrivelse og de faste regler. Den skal kunne vinde over scenen (\"det samme uden stativer\"), men aldrig over forbuddet mod at digte grej.",

@@ -51,8 +51,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Discokugle 40 cm sat op og i brug",
       "alt_en": "Disco ball 40 cm set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/discokugle/opstilling.webp",
@@ -89,8 +89,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Discokugle 30 cm sat op og i brug",
       "alt_en": "Disco ball 30 cm set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/discokugle_30/opstilling.webp",
@@ -203,8 +203,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Lys-pakke sat op og i brug",
       "alt_en": "Light package set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/lys/opstilling.webp",
@@ -241,8 +241,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Enkelt lyseffekt sat op og i brug",
       "alt_en": "Single light effect set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/lyseffekt/opstilling.webp",
@@ -279,8 +279,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Lyskæde varm hvid sat op og i brug",
       "alt_en": "Fairy lights warm white set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/lyskaeder/opstilling.webp",
@@ -317,8 +317,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Lyskæde farvet sat op og i brug",
       "alt_en": "Fairy lights coloured set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/lyskaeder_farvet/opstilling.webp",
@@ -355,8 +355,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Mixer lille sat op og i brug",
       "alt_en": "Small mixer set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/mixer_lille/opstilling.webp",
@@ -393,8 +393,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Mixer stor sat op og i brug",
       "alt_en": "Large mixer set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/mixer_stor/opstilling.webp",
@@ -431,8 +431,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Bryllupspakke sat op og i brug",
       "alt_en": "Wedding package set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/pakke_bryllup/opstilling.webp",
@@ -621,8 +621,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Firmafestpakke sat op og i brug",
       "alt_en": "Company party package set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/pakke_firmafest/opstilling.webp",
@@ -659,8 +659,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Stemningslys-pakken sat op og i brug",
       "alt_en": "Ambient light package set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/pakke_stemningslys/opstilling.webp",
@@ -697,8 +697,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Studenterpakken sat op og i brug",
       "alt_en": "Graduation package set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/pakke_student/opstilling.webp",
@@ -735,8 +735,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Udendørspakke sat op og i brug",
       "alt_en": "Outdoor package set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/pakke_udendors/opstilling.webp",
@@ -811,8 +811,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Røgmaskine sat op og i brug",
       "alt_en": "Fog machine set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/rog/opstilling.webp",
@@ -887,8 +887,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Subwoofer 12\" sat op og i brug",
       "alt_en": "Subwoofer 12\" set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/subwoofer/opstilling.webp",
@@ -977,8 +977,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Uplight sat op og i brug",
       "alt_en": "Uplight set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     },
     {
       "src": "/images/gallery/uplight/opstilling.webp",
@@ -1015,8 +1015,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "How it looks at the party",
       "alt_da": "Uplight 4-pak sat op og i brug",
       "alt_en": "Uplight 4-pack set up and in use",
-      "caption_da": "Sådan står det, når gæsterne kommer.",
-      "caption_en": "This is how it stands when the guests arrive."
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
     }
   ],
 };
