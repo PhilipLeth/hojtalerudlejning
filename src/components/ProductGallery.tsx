@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { ratioTal, type GalleryImage } from "@/lib/productGallery";
+import { erBredt, ordnTilGitter } from "@/lib/galleryLayout";
 import { useGallery } from "@/lib/useGallery";
 import type { Locale } from "@/lib/i18n";
 
@@ -60,8 +61,9 @@ export default function ProductGallery({
   name: string;
   locale?: Locale;
 }) {
-  // Både de committede billeder og dem, admin har lavet med knappen
-  const billeder = useGallery(productId);
+  // Både de committede billeder og dem, admin har lavet med knappen —
+  // det brede først, de små sammen nedenunder (se galleryLayout.ts)
+  const billeder = ordnTilGitter(useGallery(productId));
   const c = COPY[locale];
   const [aaben, setAaben] = useState<number | null>(null);
 
@@ -102,7 +104,7 @@ export default function ProductGallery({
         {billeder.map((b, i) => {
           const t = tekst(b, locale);
           // Det brede billede får hele rækken; de firkantede deler den.
-          const bredt = ratioTal(b.ratio) > 1.5;
+          const bredt = erBredt(b);
           return (
             <button
               key={b.src}

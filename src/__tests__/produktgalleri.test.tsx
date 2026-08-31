@@ -107,7 +107,20 @@ describe("gallery/scenes.json", () => {
 
 /* ───── komponenten ───── */
 
+// I scenernes rækkefølge, som manifestet også har dem: lille, bred, lille
 const FAKE: GalleryImage[] = [
+  {
+    src: "/images/gallery/test/hvad_du_faar.webp",
+    thumb: "/images/gallery/test/hvad_du_faar-400.webp",
+    scene: "hvad_du_faar",
+    ratio: "4:3",
+    titel_da: "Alt det du får",
+    titel_en: "Everything included",
+    alt_da: "Testpakken med alt hvad der følger med",
+    alt_en: "The test package with everything that comes with it",
+    caption_da: "Det her får du med.",
+    caption_en: "This is what comes along.",
+  },
   {
     src: "/images/gallery/test/i_brug.webp",
     thumb: "/images/gallery/test/i_brug-400.webp",
@@ -137,6 +150,8 @@ const FAKE: GalleryImage[] = [
 // Komponenten henter galleriet gennem useGallery, som slår de committede
 // billeder sammen med dem, admin har lavet. Her interesserer vi os for hvad
 // komponenten GØR med billederne — sammenlægningen har sin egen test.
+const I_BRUG = FAKE[1];
+
 vi.mock("@/lib/useGallery", () => ({
   useGallery: (id: string) => (id === "test_produkt" ? FAKE : []),
 }));
@@ -166,32 +181,75 @@ describe("ProductGallery", () => {
   it("skifter sprog med locale", () => {
     render(<ProductGallery productId="test_produkt" name="The test package" locale="en" />);
     expect(screen.getByText(/The test package in use/)).toBeInTheDocument();
-    expect(screen.getByAltText(`${FAKE[0].alt_en} (illustration)`)).toBeInTheDocument();
+    expect(screen.getByAltText(`${I_BRUG.alt_en} (illustration)`)).toBeInTheDocument();
   });
 
   it("åbner billedet i stor størrelse og kan bladre", () => {
     render(<ProductGallery productId="test_produkt" name="Testpakken" />);
-    fireEvent.click(screen.getByLabelText(`Vis ${FAKE[0].alt_da} i stor størrelse`));
+    fireEvent.click(screen.getByLabelText(`Vis ${I_BRUG.alt_da} i stor størrelse`));
 
     const dialog = screen.getByRole("dialog");
     expect(dialog).toBeInTheDocument();
-    expect(screen.getByText("1 / 2")).toBeInTheDocument();
+    expect(screen.getByText("1 / 3")).toBeInTheDocument();
     // Den lange forklaring hører til i det store billede, ikke på hvert kort
     expect(screen.getByText(/genereret ud fra fotos af vores eget udstyr/)).toBeInTheDocument();
 
     fireEvent.click(screen.getByLabelText("Næste billede"));
-    expect(screen.getByText("2 / 2")).toBeInTheDocument();
+    expect(screen.getByText("2 / 3")).toBeInTheDocument();
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.queryByRole("dialog")).toBeNull();
   });
 
+  it("sætter det brede billede først og de to små sammen nedenunder", () => {
+    /**
+     * Manifestet har scenerne i rækkefølgen lille, bred, lille. Med det brede
+     * over hele rækken stod de små så på hver sin side af det — én alene
+     * øverst og én alene nederst. Det primære billede skal først, og de små
+     * skal dele rækken under det.
+     */
+    render(<ProductGallery productId="test_produkt" name="Testpakken" />);
+    const kort = screen.getAllByRole("button", { name: /i stor størrelse/ });
+    expect(kort.map((k) => k.getAttribute("aria-label"))).toEqual([
+      `Vis ${I_BRUG.alt_da} i stor størrelse`,
+      `Vis ${FAKE[0].alt_da} i stor størrelse`,
+      `Vis ${FAKE[2].alt_da} i stor størrelse`,
+    ]);
+    expect(kort[0].className).toMatch(/sm:col-span-2/);
+    expect(kort[1].className).not.toMatch(/sm:col-span-2/);
+    expect(kort[2].className).not.toMatch(/sm:col-span-2/);
+    // Og det store billede åbner det, der blev trykket på — ikke nabo-billedet
+    fireEvent.click(kort[1]);
+    expect(screen.getByRole("dialog")).toHaveAttribute("aria-label", FAKE[0].alt_da);
+    expect(screen.getByText("2 / 3")).toBeInTheDocument();
+  });
+
   it("låser baggrunden mens det store billede er åbent", () => {
     render(<ProductGallery productId="test_produkt" name="Testpakken" />);
-    fireEvent.click(screen.getByLabelText(`Vis ${FAKE[0].alt_da} i stor størrelse`));
+    fireEvent.click(screen.getByLabelText(`Vis ${I_BRUG.alt_da} i stor størrelse`));
     expect(document.body.style.overflow).toBe("hidden");
     fireEvent.keyDown(document, { key: "Escape" });
     expect(document.body.style.overflow).toBe("");
+  });
+});
+
+describe("ordnTilGitter", () => {
+  it("sætter det brede først og resten i scenernes rækkefølge", async () => {
+    const { ordnTilGitter } = await import("@/lib/galleryLayout");
+    // Bagvendt og med et admin-billede, der er kommet til sidst i listen
+    const bagvendt = [FAKE[2], FAKE[0], { ...FAKE[1], src: "/api/image/nyt" }];
+    expect(ordnTilGitter(bagvendt).map((b) => b.scene)).toEqual(["i_brug", "hvad_du_faar", "opstilling"]);
+    // Manifestets egen rækkefølge for et rigtigt produkt ender det samme sted
+    const rigtigt = galleryFor("discokugle");
+    expect(rigtigt.length).toBe(3);
+    expect(ordnTilGitter(rigtigt).map((b) => b.scene)).toEqual(["i_brug", "hvad_du_faar", "opstilling"]);
+  });
+
+  it("rører ikke listen, den fik", async () => {
+    const { ordnTilGitter } = await import("@/lib/galleryLayout");
+    const kopi = [...FAKE];
+    ordnTilGitter(FAKE);
+    expect(FAKE).toEqual(kopi);
   });
 });
 
