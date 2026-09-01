@@ -90,9 +90,21 @@ export function classify(text: string): ThemeKey {
   return "leje";
 }
 
+/**
+ * Spørge-, pris- og fyldord. "hvad koster det at leje en soundboks" handler
+ * om en soundboks — ikke om "hvad koster det at". Uden dem beholdt frasen
+ * spørgeordene som produktord og fik sin egen annoncegruppe med ét keyword:
+ * SKAG-sygdommen i ny forklædning, målt 31. august 2026.
+ */
+const QUESTION_WORDS = new Set([
+  "hvad", "hvor", "hvordan", "hvorfor", "hvilken", "hvilket", "hvilke",
+  "koster", "pris", "priser", "at", "det", "den", "der", "de", "man",
+  "kan", "skal", "vil", "må",
+]);
+
 /** Ord der beskriver intentionen frem for produktet. */
 const INTENT_NOISE = new Set([
-  ...RENTAL_WORDS, ...GEO_WORDS, ...OCCASION_WORDS, ...ENGLISH_WORDS,
+  ...RENTAL_WORDS, ...GEO_WORDS, ...OCCASION_WORDS, ...ENGLISH_WORDS, ...QUESTION_WORDS,
   "af", "til", "en", "et", "og", "i", "på", "med", "the", "for",
 ]);
 

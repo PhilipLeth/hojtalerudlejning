@@ -40,7 +40,7 @@ import {
   type GoogleAdsEnv,
   type NewAdGroup,
 } from "./_lib/googleads";
-import { classify, hasRentalWord, samhandler, seedTerms, type ThemeKey } from "../../src/lib/adsIntent";
+import { classify, hasRentalWord, samhandler, seedTerms, udenforOmraadet, type ThemeKey } from "../../src/lib/adsIntent";
 import { validateAdCopy, type AdCopy } from "../../src/lib/adsCopy";
 import { productCatalog, type CatalogProduct } from "./_lib/catalog";
 import { PAUSEDE_SIDER } from "../../src/lib/products";
@@ -122,7 +122,7 @@ const SEARCH_TERM_DAYS = 180;
 /** Under det her er frasen for smal til at bære sin egen annoncegruppe. */
 const MIN_VOLUME = 10;
 
-interface FoundKeyword {
+export interface FoundKeyword {
   text: string;
   /** Gennemsnitlige månedlige søgninger i Danmark. */
   volume: number;
@@ -136,6 +136,8 @@ interface FoundKeyword {
   rental: boolean;
   /** Ligger frasen allerede i kontoen? Så byder vi mod os selv. */
   duplicateIn: string | null;
+  /** Peger frasen et sted hen vi ikke kører til? Så er den et negativt keyword, ikke en gruppe. */
+  outsideArea: string | null;
   /** Foreslået afkrydset: lejeintention, volumen nok, ikke i kontoen. */
   recommended: boolean;
 }
@@ -153,7 +155,7 @@ function isoDaysAgo(days: number): string {
  * er få rækker, men det er kvitteringer frem for skøn, og en frase med klik
  * fortjener sit eget keyword uanset hvad estimatet siger.
  */
-function mergeKeywords(
+export function mergeKeywords(
   ideas: Array<{ text: string; volume: number; competition: string | null }>,
   terms: Array<{ text: string; clicks: number; impressions: number }>,
   existing: Map<string, ExistingKeyword>,
@@ -179,6 +181,7 @@ function mergeKeywords(
         intent: classify(key),
         rental: hasRentalWord(key),
         duplicateIn: dupe ? `${dupe.campaignName} / ${dupe.adGroupName}` : null,
+        outsideArea: udenforOmraadet(key),
         recommended: false,
       };
       merged.set(key, row);
@@ -219,9 +222,14 @@ function mergeKeywords(
     // En frase der allerede ligger i kontoen skal ikke bydes op imod sig selv.
     // Og den skal handle om PRODUKTET — ellers ender "udlejning af soundbox"
     // afkrydset på discokuglen, fordi begge indeholder ordet "udlejning".
+    // Et klik fra Odense er også et klik — men vi kører ikke til Odense.
+    // Kontoen har betalt for "soundboks leje odense", "soundboks udlejning
+    // fyn" og "lej soundboks aalborg"; det er kandidater til negativlisten,
+    // ikke til annoncegrupper.
     row.recommended =
       row.rental &&
       !row.duplicateIn &&
+      !row.outsideArea &&
       samhandler(row.text, productTerms) &&
       (row.clicks > 0 || row.volume >= MIN_VOLUME);
   }
@@ -294,14 +302,23 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
           listSearchTerms(context.env, { from: isoDaysAgo(SEARCH_TERM_DAYS), to: isoDaysAgo(0) }),
           listKeywords(context.env),
         ]);
+        // Egne søgetermer kommer fra rapporten uden volumen — og "lej
+        // soundboks" med 27 klik stod derfor med et misvisende nul, mens
+        // Googles egne påfund havde tal. Slå volumen op på de fraser der har
+        // bevis, præcis som for de manuelle.
+        const egneTermer = searchTerms.filter((t) => samhandler(t.text, terms));
+        const kendt = new Set(ideas.map((i) => i.text));
+        const uden = egneTermer.filter((t) => !kendt.has(t.text)).map((t) => t.text).slice(0, 20);
+        const egenVolumen = uden.length ? await keywordIdeas(context.env, { seeds: uden }) : [];
+        const udenSæt = new Set(uden);
         const egneSæt = new Set(manual.map((m) => m.toLowerCase()));
         keywords = mergeKeywords(
           // Kun volumen for de fraser der rent faktisk blev spurgt om —
           // et frø-opslag returnerer også Googles egne forslag ovenpå
-          [...ideas, ...egneIdeer.filter((i) => egneSæt.has(i.text))],
+          [...ideas, ...egneIdeer.filter((i) => egneSæt.has(i.text)), ...egenVolumen.filter((i) => udenSæt.has(i.text))],
           // Kun egne søgetermer om det samme PRODUKT. Målestokken er
           // produktordet, ikke lejeordet — se samhandler() i adsIntent.
-          searchTerms.filter((t) => samhandler(t.text, terms)),
+          egneTermer,
           new Map(kws.map((k) => [k.text, k])),
           manual,
           [...terms, ...manual, product.name],
@@ -381,7 +398,7 @@ function strings(list: unknown, max: number): string[] {
  * Returnerer enten gruppen eller en liste af fejl — aldrig en halvt godkendt
  * gruppe.
  */
-function prepareGroup(
+export function prepareGroup(
   input: GroupInput,
   pages: { known: string[]; paused: string[] },
   /** Produktets søgetermer — målestok for om gruppen handler om produktet. */
@@ -420,6 +437,19 @@ function prepareGroup(
     errors.push(
       `Handler ikke om produktet: ${fremmede.map((k) => `"${k.text}"`).join(", ")}. ` +
         `Landingssiden er produktets egen, så keywordet skal være det også.`,
+    );
+  }
+
+  // Uden for leveringsområdet er ikke en skærpelse men en spærring: en
+  // annonce mod /discokugle kan være nok så pæn — kan vi ikke levere i
+  // Aalborg, er hvert klik spildt. Frasen hører til på negativlisten.
+  const udenfor = keywords
+    .map((k) => ({ text: k.text, sted: udenforOmraadet(k.text) }))
+    .filter((x): x is { text: string; sted: string } => Boolean(x.sted));
+  if (udenfor.length) {
+    errors.push(
+      `Uden for leveringsområdet: ${udenfor.map((x) => `"${x.text}" (${x.sted})`).join(", ")}. ` +
+        `Vi kører ikke dertil — brug frasen som negativt keyword i stedet.`,
     );
   }
 

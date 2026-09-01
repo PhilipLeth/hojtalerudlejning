@@ -1883,6 +1883,16 @@
       ],
       "laering": "Googles urlSeed alene er meget løs: for /discokugle returnerer den 259 idéer, hvoraf 249 intet har med en discokugle at gøre ('led lys' 12.100/md, '1 2v batteri'). Det er frøene der holder den i snor — URL + ordentlige frø gav 28 idéer, alle om discokugler. Et skævt frø er derfor ikke en detalje."
     },
+    "filtre_efter_live_sonde_2026_09_01": {
+      "sonde": "Byggerens pipeline kørt read-only mod kontoen for ni produkter (31. aug). Det der virkede: relevansfilteret (27/28 discokugle-idéer om produktet), lejeord-kravet (subwoofer 2.400/md og projektor 9.900/md korrekt afvist som købssøgninger), dublet-tjekket (discokugle og projektor gav nul — alt ligger allerede i AG 2/AG 4/AG 12), og 'ingen efterspørgsel' som ærligt svar.",
+      "tre_fejl_fundet_og_rettet": [
+        "Uden-for-området-filteret sad kun i /ideer. Byggeren anbefalede 'leje af lyskæder fyn', 'soundboks leje odense' og 'lej soundboks aalborg' — et klik talte som bevis uanset hvor kunden søgte fra. Nu: udenforOmraadet() indgår i recommended, UI'et mærker frasen, og prepareGroup AFVISER en gruppe med sådan et keyword — også håndskrevet. På Soundboks alene frasorteres 16 fraser (odense, fyn, aarhus, aalborg, smukfest).",
+        "SKAG via spørgefraser: 'hvad koster det at leje en soundboks' beholdt spørgeordene som produktord og fik sin egen gruppe med ét keyword ('Leje af: hvad koster det at soundboks'). QUESTION_WORDS (hvad/hvor/koster/pris/at/det …) er nu INTENT_NOISE, så frasen klynger med 'leje soundboks'.",
+        "Egne søgetermer stod med volumen 0 — 'lej soundboks' med 27 klik så tommere ud end Googles påfund. GET slår nu volumen op på op til 20 egne fraser der ikke allerede var i idélisten (ét ekstra keywordIdeas-kald): 'leje røgmaskine' viste sig at have 50/md, 'lej røgmaskine københavn' 10/md, 'hvad koster det at leje en soundboks' 20/md."
+      ],
+      "eksempler_sonden_fandt": "Røgmaskine: 3 grupper (leje røgmaskine 50/md; lej en røgmaskine 20/md; geo københavn 10/md). Soundboks: geo-gruppen 'lej en soundboks københavn' + 'soundboks leje københavn' (30/md, 4 klik) er den bedste enkeltkandidat. Trådløs mikrofon: 'leje af mikrofoner' + 'leje mikrofon' (20/md). Lyskæder: 'lej lyskæder til fest' (10/md). 'hifi klubben soundboks leje' anbefales stadig (1 klik, inden for området) — konkurrentbud er en menneskebeslutning, og frasen lander i overskriften, så den skal aktivt fravælges.",
+      "test": "ads-build.test.ts: mergeKeywords og prepareGroup er eksporteret og testet — uden-for-området blokerer anbefaling og afvises af serveren; spørgefrasen klynger med produktet."
+    },
     "ideer_og_intet_autovalg_2026_08_28": {
       "intet_autovalg": "Byggeren krydser ikke længere keywords af på forhånd. Anbefalingen står som et mærke ('værd at se på') og der er en knap 'Vælg de N foreslåede', men valget træffes af mennesket. En afkrydsning man ikke selv har sat, er en beslutning taget bag ryggen på den, der skal stå på mål for kontoen.",
       "ideer": "/admin/ads/ideer + /api/ads-ideas: roterer gennem katalogets annonceerbare sider, fem ad gangen, og viser efterspørgsel kontoen IKKE dækker. Alt der allerede ligger som keyword trækkes fra — en idé er noget der ikke er gjort endnu. Rotationen huskes i localStorage.",

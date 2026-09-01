@@ -39,6 +39,7 @@ interface FoundKeyword {
   intent: ThemeKey;
   rental: boolean;
   duplicateIn: string | null;
+  outsideArea: string | null;
   recommended: boolean;
 }
 
@@ -579,6 +580,9 @@ export default function AdsOpretPage() {
                           <span style={{ fontSize: "11px", color: "#1e7e34", fontWeight: 600 }} title="Lejeintention, målt efterspørgsel, og ligger ikke i kontoen i forvejen"> · værd at se på</span>
                         )}
                         {!k.rental && <span style={{ fontSize: "11px", color: "#b58900" }}> · uden lejeord</span>}
+                        {k.outsideArea && (
+                          <span style={{ fontSize: "11px", color: "#c0392b", fontWeight: 600 }} title="Vi kører ikke dertil — brug frasen som negativt keyword i stedet"> · uden for området ({k.outsideArea})</span>
+                        )}
                       </td>
                       <td style={{ ...td, textAlign: "right", fontWeight: k.volume >= (data?.minVolume ?? 10) ? 600 : 400, color: k.volume ? "#222" : "#bbb" }}>
                         {k.volume || "—"}
