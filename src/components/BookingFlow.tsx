@@ -61,6 +61,43 @@ function isBlockedForProduct(avail: AvailabilityData | null, product: string): b
   );
 }
 
+/* ───── Antal i kurven ───── */
+
+/**
+ * − antal + : lej flere enheder af samme produkt på én ordre.
+ * Uden onPlus er + slået fra — der er ikke flere ledige i perioden.
+ */
+function AntalVælger({ antal, onMinus, onPlus, locale }: {
+  antal: number;
+  onMinus: () => void;
+  onPlus?: () => void;
+  locale: Locale;
+}) {
+  return (
+    <span className="flex shrink-0 items-center gap-1">
+      <button
+        type="button"
+        onClick={onMinus}
+        aria-label={locale === "en" ? "One less" : "Én færre"}
+        className="flex h-6 w-6 items-center justify-center rounded-md border border-white/15 text-white/60 transition hover:border-white/40 hover:text-white"
+      >
+        −
+      </button>
+      <span className="w-5 text-center text-sm text-white/70 tabular-nums">{antal}</span>
+      <button
+        type="button"
+        onClick={onPlus}
+        disabled={!onPlus}
+        aria-label={locale === "en" ? "One more" : "Én mere"}
+        title={onPlus ? undefined : locale === "en" ? "No more available in the selected period" : "Ikke flere ledige i den valgte periode"}
+        className="flex h-6 w-6 items-center justify-center rounded-md border border-white/15 text-white/60 transition hover:border-white/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+      >
+        +
+      </button>
+    </span>
+  );
+}
+
 /* ───── Mini Calendar ───── */
 
 function getNextFridays(today: Date, count: number): Set<string> {
@@ -1028,6 +1065,59 @@ export default function BookingFlow({
   const total = coupon ? Math.round(subtotal * (1 - coupon.pct / 100)) : subtotal;
   const totalBeforeDiscount = summer ? speakerBasePrice + addonsBasePrice + cartTotal : subtotal;
 
+  /*
+   * Flere enheder af samme produkt: hver enhed er sin egen kurvlinje — payload,
+   * serverens lagertælling og Stripe regner pr. linje — men kurven VISES som én
+   * linje pr. produkt med − antal +. Hovedproduktets ekstra enheder ligger også
+   * som kurvlinjer.
+   */
+  const antalAf = (id: string) =>
+    (speaker === id ? 1 : 0) +
+    (selectedAddons.includes(id) && !DELIVERY_IDS.includes(id) ? 1 : 0) +
+    cartItems.filter((c) => c.productId === id).length;
+
+  /** Ledige enheder i den valgte periode — uden lagertal er der intet loft */
+  const ledigeAf = (id: string) =>
+    availSelected && availSelected.inventory[id] !== undefined
+      ? getRemaining(availSelected, id)
+      : Infinity;
+
+  /** Kan der lægges én enhed mere i kurven uden at booke forbi det ledige? */
+  const kanLæggeTil = (id: string) => antalAf(id) < ledigeAf(id);
+
+  /** Første produkt hvor ordren kræver flere enheder end der er ledige i perioden */
+  const qtyShortage = (() => {
+    if (!availSelected) return null;
+    const behov = new Map<string, { navn: string; antal: number }>();
+    const læg = (id: string, navn: string) => {
+      const e = behov.get(id);
+      if (e) e.antal += 1;
+      else behov.set(id, { navn, antal: 1 });
+    };
+    if (speaker && speaker !== "effects-only") {
+      læg(speaker, selectedSpeaker?.name ?? rentalName ?? speaker);
+    }
+    for (const a of addons) {
+      if (selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id)) læg(a.id, a.label);
+    }
+    for (const c of cartItems) læg(c.productId, c.name);
+    for (const [id, e] of behov) {
+      if (availSelected.inventory[id] === undefined) continue;
+      const rest = getRemaining(availSelected, id);
+      if (rest < e.antal) return { navn: e.navn, rest };
+    }
+    return null;
+  })();
+  const qtyShortageMsg = qtyShortage
+    ? locale === "en"
+      ? qtyShortage.rest > 0
+        ? `Only ${qtyShortage.rest} × ${qtyShortage.navn} available in the selected period — adjust the quantity`
+        : `${qtyShortage.navn} is booked out in the selected period`
+      : qtyShortage.rest > 0
+        ? `Der er kun ${qtyShortage.rest} stk. ${qtyShortage.navn} ledig${qtyShortage.rest === 1 ? "" : "e"} i den valgte periode — sæt antallet ned`
+        : `${qtyShortage.navn} er optaget i den valgte periode`
+    : "";
+
   // Kurv-summary op til draweren (fane når draweren er pakket væk)
   const cartCount = cartItems.length + (speaker ? 1 : 0);
   useEffect(() => {
@@ -1105,8 +1195,24 @@ export default function BookingFlow({
     setStep(1);
   }
 
-  function removeCartItem(idx: number) {
-    setCartItems((prev) => prev.filter((_, i) => i !== idx));
+  /** Læg endnu en enhed af et produkt i kurven — "4 stk. af samme højtaler" */
+  function lægEnhedTil(productId: string) {
+    const priceOf = (base: number) => (isSummerSale() ? applyDiscount(base) : base);
+    const sp = speakers.find((x) => x.id === productId);
+    const rp = rentalProducts.find((x) => x.id === productId);
+    const ad = addons.find((x) => x.id === productId);
+    const navn = sp?.name ?? (rp ? (locale === "en" ? rp.name_en : rp.name_da) : ad?.label);
+    const pris = sp?.price ?? rp?.price ?? ad?.price;
+    if (!navn || typeof pris !== "number") return;
+    setCartItems((prev) => [...prev, { productId, name: navn, price: priceOf(pris) }]);
+  }
+
+  /** Fjern én enhed igen — den senest tilføjede kurvlinje med det id */
+  function fjernEnhed(productId: string) {
+    setCartItems((prev) => {
+      const idx = prev.map((c) => c.productId).lastIndexOf(productId);
+      return idx === -1 ? prev : prev.filter((_, i) => i !== idx);
+    });
   }
 
   /**
@@ -1130,6 +1236,12 @@ export default function BookingFlow({
     // aldrig sat på ordren
     if (deliveryAddressMissing) {
       setShowDeliveryError(true);
+      setStep(3);
+      return;
+    }
+    // Kræver ordren flere enheder end der er ledige, skal antallet rettes i
+    // kurven — ikke sendes som en ordre vi ikke kan levere
+    if (qtyShortageMsg) {
       setStep(3);
       return;
     }
@@ -1875,9 +1987,9 @@ export default function BookingFlow({
               )}
             </div>
 
-            {soldOutMsg && (
+            {(soldOutMsg || qtyShortageMsg) && (
               <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-center text-sm text-red-400">
-                {soldOutMsg}
+                {soldOutMsg || qtyShortageMsg}
               </div>
             )}
 
@@ -1887,7 +1999,7 @@ export default function BookingFlow({
               </button>
               <button
                 onClick={nextStep}
-                disabled={!pickupDate || !returnDate || !!soldOutMsg}
+                disabled={!pickupDate || !returnDate || !!soldOutMsg || !!qtyShortageMsg}
                 className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 {s.next}
@@ -2028,7 +2140,7 @@ export default function BookingFlow({
                     image: rp.image,
                     category: rp.category,
                   })),
-              ].filter((prod) => !cartItems.some((c) => c.productId === prod.id));
+              ];
 
               const matches = q
                 ? pool.filter((p) => p.name.toLowerCase().includes(q))
@@ -2075,37 +2187,90 @@ export default function BookingFlow({
             {(cartItems.length > 0 || !!speaker) && (
               <div className="glass rounded-xl p-4">
                 <p className="text-xs text-white/40 mb-2">{locale === "en" ? "In your cart:" : "I din kurv:"}</p>
-                {!!speaker && (
-                  <div className="flex items-center justify-between text-sm py-1">
-                    <span className="text-white/70">
-                      {isEffectsOnly ? effectsLabel : isRentalOnly ? rentalName : selectedSpeaker?.name}
-                    </span>
-                    <span className="flex items-center gap-3">
-                      <span className="text-brand-400">{speakerPrice} kr</span>
-                      <button
-                        type="button"
-                        onClick={fjernHovedprodukt}
-                        aria-label={locale === "en" ? "Remove" : "Fjern"}
-                        className="text-white/30 hover:text-red-400 text-xs"
-                      >
-                        ✕
-                      </button>
-                    </span>
-                  </div>
-                )}
-                {cartItems.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between text-sm py-1">
-                    <span className="text-white/70">{item.name}</span>
-                    <span className="flex items-center gap-3">
-                      <span className="text-brand-400">{item.price} kr</span>
-                      <button type="button" onClick={() => removeCartItem(idx)} className="text-white/30 hover:text-red-400 text-xs">✕</button>
-                    </span>
-                  </div>
-                ))}
+                {/* Hovedproduktet — ekstra enheder af samme produkt er kurvlinjer og vises her som ét antal */}
+                {!!speaker && (() => {
+                  const ekstra = cartItems.filter((c) => c.productId === speaker);
+                  const antal = 1 + ekstra.length;
+                  const pris = speakerPrice + ekstra.reduce((sum, c) => sum + c.price, 0);
+                  return (
+                    <div className="flex items-center justify-between gap-2 text-sm py-1">
+                      <span className="min-w-0 flex-1 truncate text-white/70">
+                        {isEffectsOnly ? effectsLabel : isRentalOnly ? rentalName : selectedSpeaker?.name}
+                      </span>
+                      {!isEffectsOnly && (
+                        <AntalVælger
+                          antal={antal}
+                          onMinus={() => (ekstra.length ? fjernEnhed(speaker) : fjernHovedprodukt())}
+                          onPlus={kanLæggeTil(speaker) ? () => lægEnhedTil(speaker) : undefined}
+                          locale={locale}
+                        />
+                      )}
+                      <span className="flex shrink-0 items-center gap-3">
+                        <span className="text-brand-400">{pris} kr</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCartItems((prev) => prev.filter((c) => c.productId !== speaker));
+                            fjernHovedprodukt();
+                          }}
+                          aria-label={locale === "en" ? "Remove" : "Fjern"}
+                          className="text-white/30 hover:text-red-400 text-xs"
+                        >
+                          ✕
+                        </button>
+                      </span>
+                    </div>
+                  );
+                })()}
+                {/* Resten af kurven — én linje pr. produkt med antal */}
+                {(() => {
+                  const grupper = new Map<string, { navn: string; antal: number; pris: number }>();
+                  for (const c of cartItems) {
+                    if (c.productId === speaker) continue;
+                    const g = grupper.get(c.productId);
+                    if (g) {
+                      g.antal += 1;
+                      g.pris += c.price;
+                    } else {
+                      grupper.set(c.productId, { navn: c.name, antal: 1, pris: c.price });
+                    }
+                  }
+                  return [...grupper.entries()].map(([id, g]) => (
+                    <div key={id} className="flex items-center justify-between gap-2 text-sm py-1">
+                      <span className="min-w-0 flex-1 truncate text-white/70">{g.navn}</span>
+                      <AntalVælger
+                        antal={g.antal}
+                        onMinus={() => fjernEnhed(id)}
+                        onPlus={kanLæggeTil(id) ? () => lægEnhedTil(id) : undefined}
+                        locale={locale}
+                      />
+                      <span className="flex shrink-0 items-center gap-3">
+                        <span className="text-brand-400">{g.pris} kr</span>
+                        <button
+                          type="button"
+                          onClick={() => setCartItems((prev) => prev.filter((x) => x.productId !== id))}
+                          aria-label={locale === "en" ? "Remove" : "Fjern"}
+                          className="text-white/30 hover:text-red-400 text-xs"
+                        >
+                          ✕
+                        </button>
+                      </span>
+                    </div>
+                  ));
+                })()}
+                <p className="mt-1 text-[11px] text-white/30">
+                  {locale === "en" ? "Use + to rent more than one of the same product" : "Brug + til at leje flere af samme produkt"}
+                </p>
               </div>
             )}
 
             <PriceSummary />
+
+            {qtyShortageMsg && (
+              <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-center text-sm text-red-400">
+                {qtyShortageMsg}
+              </div>
+            )}
 
             {/* Add another product to cart */}
             {!!speaker && (
@@ -2125,6 +2290,7 @@ export default function BookingFlow({
               <button
                 onClick={() => {
                   if (deliveryAddressMissing) { setShowDeliveryError(true); return; }
+                  if (qtyShortageMsg) return;
                   nextStep();
                 }}
                 className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95"
@@ -2135,6 +2301,7 @@ export default function BookingFlow({
             <button
               onClick={() => {
                 if (deliveryAddressMissing) { setShowDeliveryError(true); return; }
+                if (qtyShortageMsg) return;
                 setSelectedAddons((prev) => prev.filter((id) => DELIVERY_IDS.includes(id)));
                 setStep(4);
               }}
@@ -2281,12 +2448,24 @@ export default function BookingFlow({
                   {summerLabel.banner}
                 </div>
               )}
-              {cartItems.map((item, idx) => (
-                <div key={idx} className="flex justify-between text-sm text-white/50">
-                  <span>{item.name}</span>
-                  <span>{item.price} kr</span>
-                </div>
-              ))}
+              {(() => {
+                const grupper = new Map<string, { navn: string; antal: number; pris: number }>();
+                for (const c of cartItems) {
+                  const g = grupper.get(c.productId);
+                  if (g) {
+                    g.antal += 1;
+                    g.pris += c.price;
+                  } else {
+                    grupper.set(c.productId, { navn: c.name, antal: 1, pris: c.price });
+                  }
+                }
+                return [...grupper.entries()].map(([id, g]) => (
+                  <div key={id} className="flex justify-between text-sm text-white/50">
+                    <span>{g.antal > 1 ? `${g.antal} × ${g.navn}` : g.navn}</span>
+                    <span>{g.pris} kr</span>
+                  </div>
+                ));
+              })()}
               {selectedSpeaker && (
                 <div className="flex justify-between text-sm text-white/50">
                   <span>{selectedSpeaker.name}{s.speakerSuffix}</span>
@@ -2409,6 +2588,12 @@ export default function BookingFlow({
               ))}
             </div>
 
+            {qtyShortageMsg && (
+              <p className="rounded-xl bg-red-500/10 p-3 text-center text-sm text-red-400">
+                {qtyShortageMsg}
+              </p>
+            )}
+
             {error && (
               <p className="rounded-xl bg-red-500/10 p-3 text-center text-sm text-red-400">
                 {error}
@@ -2425,7 +2610,7 @@ export default function BookingFlow({
               </button>
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || !!qtyShortageMsg}
                 className="flex-1 rounded-xl bg-brand-500 py-3.5 font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-50"
               >
                 {submitting ? s.sending : payMethod === "online" ? (locale === "en" ? "Continue to payment" : "Videre til betaling") : s.sendBooking}

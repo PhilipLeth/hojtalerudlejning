@@ -377,3 +377,100 @@ describe("BookingFlow - Booking submission", () => {
     );
   });
 });
+
+describe("BookingFlow - Flere enheder af samme produkt", () => {
+  /** Vælg produkt + datoer og gå til trin 3. Returnerer false hvis datoerne
+   *  falder uden for den viste måned (så springes assertions over, som i
+   *  udsolgt-testen ovenfor). */
+  async function tilTrin3(): Promise<boolean> {
+    fireEvent.click(screen.getByText("Lille højtalerpakke").closest("button")!);
+    await waitFor(() => {
+      expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
+    });
+
+    const today = new Date();
+    const pickupDay = new Date(today);
+    pickupDay.setDate(pickupDay.getDate() + 1);
+    const returnDay = new Date(today);
+    returnDay.setDate(returnDay.getDate() + 3);
+    if (pickupDay.getMonth() !== today.getMonth() || returnDay.getMonth() !== today.getMonth()) {
+      return false;
+    }
+
+    const clickDay = (d: Date) => {
+      const buttons = screen
+        .getAllByRole("button")
+        .filter((b) => b.textContent === d.getDate().toString() && !(b as HTMLButtonElement).disabled);
+      if (buttons.length > 0) fireEvent.click(buttons[0]);
+    };
+    clickDay(pickupDay);
+    clickDay(returnDay);
+
+    await waitFor(() => {
+      expect(screen.getByText("Videre")).not.toBeDisabled();
+    });
+    fireEvent.click(screen.getByText("Videre"));
+    await waitFor(() => {
+      expect(screen.getByText("Tilvalg")).toBeInTheDocument();
+    });
+    return true;
+  }
+
+  it("kunden kan lægge 4 stk. af samme produkt i kurven med +", async () => {
+    // Frisk mock: testen ovenfor efterlader en mockResolvedValueOnce-kø på den
+    // delte fetch-mock, som ellers ville svare med party: 1
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: () =>
+        Promise.resolve({
+          inventory: { party: 4, festival: 2, lys: 2 },
+          booked: {},
+          blocked_dates: [],
+        }),
+    }) as any;
+
+    const onSummary = vi.fn();
+    render(<BookingFlow onSummaryChange={onSummary} />);
+    if (!(await tilTrin3())) return;
+
+    // Kurven viser hovedproduktet med antal 1 og en +-knap
+    const plus = screen.getByLabelText("Én mere");
+    fireEvent.click(plus);
+    fireEvent.click(plus);
+    fireEvent.click(plus);
+
+    await waitFor(() => {
+      const last = onSummary.mock.calls.at(-1)?.[0];
+      expect(last?.count).toBe(4);
+      expect(last?.total).toBe(4 * 595);
+    });
+
+    // Alle 4 på lager er i kurven → + er slået fra, så der ikke bookes en 5.
+    expect(screen.getByLabelText("Én mere")).toBeDisabled();
+
+    // − tager én enhed ud igen
+    fireEvent.click(screen.getByLabelText("Én færre"));
+    await waitFor(() => {
+      const last = onSummary.mock.calls.at(-1)?.[0];
+      expect(last?.count).toBe(3);
+      expect(last?.total).toBe(3 * 595);
+    });
+  });
+
+  it("+ er slået fra når der kun er 1 på lager i perioden", async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: () =>
+        Promise.resolve({
+          inventory: { party: 1, festival: 1, lys: 2 },
+          booked: {},
+          blocked_dates: [],
+        }),
+    }) as any;
+
+    render(<BookingFlow />);
+    if (!(await tilTrin3())) return;
+
+    expect(screen.getByLabelText("Én mere")).toBeDisabled();
+  });
+});
