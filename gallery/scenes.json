@@ -202,6 +202,26 @@
     },
     "pakke_lysshow_stor": {
       "opstilling": "The light bar and uplights fill the room with colour, the mirror ball scatters points of light across the walls, low fog on the floor."
+    },
+    "pakke_diskolys": {
+      "sted": "fest",
+      "opstilling": "The LED par light sits at the edge of the dancefloor pointing across it, and the mirror ball hangs above the middle of the floor, scattering dots of light."
+    },
+    "pakke_teenagefest": {
+      "sted": "fest",
+      "opstilling": "The small mirror ball hangs over the dancefloor, the LED par light stands on the floor pointing up, and the coloured string light runs along the wall."
+    },
+    "pakke_festtelt": {
+      "sted": "havefest",
+      "opstilling": "The two string lights criss-cross above the long table, and the uplights stand along the fence washing it in colour."
+    },
+    "pakke_bryllupslys": {
+      "sted": "bryllup",
+      "opstilling": "The warm white string light runs above the tables, the uplights wash the barn walls in one colour, and low fog lies as a thin blanket across the dance floor."
+    },
+    "pakke_diskotek": {
+      "sted": "fest",
+      "opstilling": "The light bar stands on its stand behind the dancefloor, the extra par light crosses it from the side, and the mirror ball hangs above the middle."
     }
   },
   "_gaester": {

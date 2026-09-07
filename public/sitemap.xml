@@ -76,6 +76,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/bryllupslys</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/bryllupspakke</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -86,12 +91,37 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/diskolys</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/diskotek-pakke</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en/blog</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/bryllupslys</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/diskolys</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/diskotek-pakke</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -112,6 +142,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en/festpakke-stor</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/festtelt-lys</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -142,6 +177,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en/soundboks-4</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/teenagefest-lys</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -182,6 +222,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/festpakke-stor</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/festtelt-lys</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -432,6 +477,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/subwoofer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/teenagefest-lys</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -14,16 +14,21 @@ import type { Locale } from "@/lib/i18n";
 export const EN_PAGES = [
   "/",
   "/blog",
+  "/bryllupslys",
+  "/diskolys",
+  "/diskotek-pakke",
   "/festpakke-150",
   "/festpakke-250",
   "/festpakke-lille",
   "/festpakke-stor",
+  "/festtelt-lys",
   "/hojtalerpakke-lille",
   "/hojtalerpakke-normal",
   "/lejevilkaar",
   "/mackie-thump-go",
   "/om",
   "/soundboks-4",
+  "/teenagefest-lys",
 ] as const;
 
 const SET: ReadonlySet<string> = new Set(EN_PAGES);
