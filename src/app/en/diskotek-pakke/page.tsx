@@ -50,7 +50,7 @@ export default function Page() {
             Then take the Light show instead — same ball, but with a fog machine that makes the beams visible.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link href="/festlys" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
+            <Link href="/en/festlys" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
               All party lights
             </Link>
           </div>

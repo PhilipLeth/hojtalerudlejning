@@ -50,7 +50,7 @@ export default function Page() {
             A disco ball in the tent does more than you expect — it gathers the dancefloor once the fairy lights have done the rest.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link href="/festlys" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
+            <Link href="/en/festlys" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
               All party lights
             </Link>
           </div>

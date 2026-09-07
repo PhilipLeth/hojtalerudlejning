@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Lys-pakke København | Fra 495 kr | Lejhøjtaler.dk",
@@ -14,7 +15,10 @@ export const metadata: Metadata = {
     "lej lys til fest",
     "festbelysning leje",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/lys-pakke" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/lys-pakke",
+    languages: localeAlternates("/lys-pakke"),
+  },
   openGraph: {
     title: "Lej Lys-pakke København | Fra 495 kr",
     description:

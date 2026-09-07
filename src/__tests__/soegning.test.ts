@@ -98,8 +98,10 @@ describe("Søgning", () => {
     expect(titler("speaker", en).join(" ")).toMatch(/Speaker Package/i);
     expect(stier("soundboks", en)).toContain("/en/soundboks-4");
     // Produkter uden engelsk side beholder den danske sti — et link til
-    // det forkerte sprog er stadig bedre end et link til ingenting
-    expect(stier("disco", en).concat(stier("discokugle", en))).toContain("/discokugle");
+    // det forkerte sprog er stadig bedre end et link til ingenting.
+    // /discokugle stod her, indtil den fik en engelsk udgave.
+    expect(stier("disco", en).concat(stier("discokugle", en))).toContain("/en/discokugle");
+    expect(stier("subwoofer", en)).toContain("/subwoofer");
   });
 
   it("viser ikke danske kategorisider i den engelske søgning", () => {

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Discokugle København | Fra 595 kr | Lejhøjtaler.dk",
@@ -13,7 +14,10 @@ export const metadata: Metadata = {
     "disco kugle leje",
     "discokugle københavn",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/discokugle" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/discokugle",
+    languages: localeAlternates("/discokugle"),
+  },
   openGraph: {
     title: "Lej Discokugle København | Fra 595 kr",
     description:

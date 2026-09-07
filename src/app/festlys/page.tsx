@@ -8,6 +8,7 @@ import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
+import { localeAlternates } from "@/lib/hreflang";
 
 /** Højtaler + lysbar + røgmaskine hver for sig — tallet i "komplet festpakke fra …". */
 const KOMPLET_FEST = prisTekst(catalogPrice("party") + catalogPrice("lys") + catalogPrice("rog"));
@@ -26,7 +27,10 @@ export const metadata: Metadata = {
     "LED lysbar leje",
     "festbelysning leje",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/festlys" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/festlys",
+    languages: localeAlternates("/festlys"),
+  },
   openGraph: {
     title: "Lej Festlys, Diskokugle og Røgmaskine København | Lejhøjtaler.dk",
     description:

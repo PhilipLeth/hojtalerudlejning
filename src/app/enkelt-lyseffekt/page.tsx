@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Enkelt Lyseffekt København | 395 kr | Lejhøjtaler.dk",
@@ -12,7 +13,10 @@ export const metadata: Metadata = {
     "lej discolys til fest",
     "festlys leje billigt",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/enkelt-lyseffekt" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/enkelt-lyseffekt",
+    languages: localeAlternates("/enkelt-lyseffekt"),
+  },
   openGraph: {
     title: "Lej Enkelt Lyseffekt København | 395 kr",
     description:

@@ -1,11 +1,15 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Trådløs mikrofon PRO København | 595 kr | Lejhøjtaler.dk",
   description: "Shure BLX trådløs mikrofon — scenekvalitet til events og konferencer. 595 kr/weekend. Betal ved afhentning. Book online.",
   keywords: ["lej shure mikrofon", "trådløs mikrofon pro leje", "scene mikrofon udlejning"],
-  alternates: { canonical: "https://lejhojtaler.dk/traadloes-mikrofon-pro" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/traadloes-mikrofon-pro",
+    languages: localeAlternates("/traadloes-mikrofon-pro"),
+  },
   openGraph: {
     title: "Lej Trådløs mikrofon PRO København | 595 kr",
     description: "Shure BLX trådløs mikrofon — scenekvalitet til events og konferencer. 595 kr/weekend. Betal ved afhentning. Book online.",

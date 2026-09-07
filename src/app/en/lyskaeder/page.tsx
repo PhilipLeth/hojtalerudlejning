@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import LivePrice from "@/components/LivePrice";
+import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
 import GoogleReviews from "@/components/GoogleReviews";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
@@ -10,39 +10,38 @@ import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Uplights København | Fra 125 kr | Lejhøjtaler.dk",
+  title: "Fairy Light Rental Copenhagen | From 195 DKK | Lejhøjtaler.dk",
   description:
-    "Lej uplights i København fra 125 kr/stk eller 395 kr for 4-pak. Simple LED uplights på gulv — plug and play til bryllup, konfirmation og fest. Betal ved afhentning.",
+    "Rent fairy lights in Copenhagen from 195 DKK per weekend. 10 m string lights in warm white or colour — for garden parties, weddings and birthdays. Pay on pickup.",
   keywords: [
-    "lej uplights københavn",
-    "uplight udlejning",
-    "uplights til fest",
-    "uplight bryllup",
-    "LED uplight leje",
-    "uplights leje billigt",
+    "fairy lights rental copenhagen",
+    "string lights hire copenhagen",
+    "wedding lighting rental copenhagen",
+    "garden party lighting rental",
+    "festoon lights rental denmark",
   ],
   alternates: {
-    canonical: "https://lejhojtaler.dk/uplights",
-    languages: localeAlternates("/uplights"),
+    canonical: "https://lejhojtaler.dk/en/lyskaeder",
+    languages: localeAlternates("/lyskaeder"),
   },
   openGraph: {
-    title: "Lej Uplights København | Fra 125 kr",
+    title: "Fairy Light Rental Copenhagen | From 195 DKK",
     description:
-      "Simple LED uplights på gulv — 125 kr/stk eller 395 kr for 4-pak. Book online.",
-    url: "https://lejhojtaler.dk/uplights",
+      "10 m of fairy lights — warm white or coloured. From 195 DKK per weekend. Book online.",
+    url: "https://lejhojtaler.dk/en/lyskaeder",
     siteName: "Lejhøjtaler.dk",
-    locale: "da_DK",
+    locale: "en_GB",
     type: "website",
   },
 };
 
-export default function UplightsPage() {
+export default function Page() {
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Forside", item: "https://lejhojtaler.dk" },
-      { "@type": "ListItem", position: 2, name: "Uplights", item: "https://lejhojtaler.dk/uplights" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://lejhojtaler.dk/en" },
+      { "@type": "ListItem", position: 2, name: "Fairy lights", item: "https://lejhojtaler.dk/en/lyskaeder" },
     ],
   };
 
@@ -62,86 +61,88 @@ export default function UplightsPage() {
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            <LocationKicker extra="Betal ved afhentning" />
+            <LocationKicker locale="en" extra="Pay on pickup" />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Lej uplights i København
+            Fairy light rental in Copenhagen
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 125 kr.
+              from 195 DKK
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Simple LED uplights på gulv — sæt dem i hjørnerne og få farvet lys op ad væggene. Plug and play.
+            10 m string lights — choose warm white or coloured bulbs. Right for any party.
           </p>
           <a
-            href="/?product=uplight_4#book"
+            href="/en?product=lyskaeder#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book uplights nu
+            Book fairy lights now
           </a>
         </div>
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        <section id="produkter" className="mx-auto max-w-4xl px-4 py-24">
-          <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Vælg antal uplights</h2>
+        <section id="products" className="mx-auto max-w-4xl px-4 py-24">
+          <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Choose your string</h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Enkelt uplight til små rum — eller 4-pak til festlokale, bryllup og konfirmation.
-            Sluk loftlyset og lad uplights klare stemningen.
+            Two versions — both 10 m, with a power supply and cable ties for hanging.
+            Made for garden parties, weddings and birthdays.
           </p>
-          <CategoryProductGrid
-            items={[
-              { id: "uplight" },
-              { id: "uplight_4", tag: "Spar 105,-" },
-            ]}
-          />
+          <CategoryProductGrid locale="en" items={[{ id: "lyskaeder" }, { id: "lyskaeder_farvet" }]} />
         </section>
 
         <section className="mx-auto max-w-3xl px-4 pb-24">
           <div className="glass rounded-2xl p-8 text-center">
-            <h2 className="mb-4 text-2xl font-bold text-white">Kombiner med lyd og røg</h2>
+            <h2 className="mb-4 text-2xl font-bold text-white">Add sound and light</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
-              Uplights giver stemning — højtalere og røgmaskine giver festen. Book det hele samlet.
+              Fairy lights work beautifully next to speakers and a disco ball. Book
+              the whole party in one go.
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Link
-                href="/lej-hojtaler"
+                href="/en"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se højtalerpakker
+                See speakers – <LiveStartPrice prefix="from " suffix=" DKK" />
               </Link>
               <Link
-                href="/roegmaskine"
+                href="/en/discokugle"
                 className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
               >
-                Se røgmaskine – <LivePrice productId="rog" prefix="" suffix=" kr" />
+                See the disco ball – <LivePrice productId="discokugle" prefix="" suffix=" DKK" />
               </Link>
             </div>
           </div>
         </section>
 
         <FaqSection
-          items={buildProductFaq({ name: "Uplights", price: 125, productId: "uplight", phrase: "en uplight" })}
-          title="Ofte stillede spørgsmål om uplights"
+          items={buildProductFaq({
+            locale: "en",
+            name: "Fairy lights",
+            price: 195,
+            productId: "lyskaeder",
+            phrase: "fairy lights",
+          })}
+          title="Frequently asked questions about fairy lights"
         />
 
-        <GoogleReviews />
+        <GoogleReviews locale="en" />
 
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">Klar til at lyse lokalet op?</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">Ready to set the mood?</h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København S, aflever mandag.
+            Book online in 2 minutes. Collect on Friday in Copenhagen S, return Monday.
           </p>
           <a
-            href="/?product=uplight#book"
+            href="/en?product=lyskaeder#book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book uplights nu
+            Book fairy lights now
           </a>
         </section>
 
-        <Footer />
+        <Footer locale="en" />
       </main>
     </>
   );

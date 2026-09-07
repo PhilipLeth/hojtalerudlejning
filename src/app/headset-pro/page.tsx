@@ -1,11 +1,15 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Trådløst headset PRO København | 595 kr | Lejhøjtaler.dk",
   description: "Professionelt headset i broadcast-kvalitet — til konferencer og scener. 595 kr/weekend. Betal ved afhentning. Book online.",
   keywords: ["lej headset mikrofon pro", "trådløst headset udlejning", "headset konference leje"],
-  alternates: { canonical: "https://lejhojtaler.dk/headset-pro" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/headset-pro",
+    languages: localeAlternates("/headset-pro"),
+  },
   openGraph: {
     title: "Lej Trådløst headset PRO København | 595 kr",
     description: "Professionelt headset i broadcast-kvalitet — til konferencer og scener. 595 kr/weekend. Betal ved afhentning. Book online.",

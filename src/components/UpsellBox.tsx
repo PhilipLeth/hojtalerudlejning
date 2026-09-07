@@ -1,5 +1,6 @@
 import Link from "next/link";
 import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
+import type { Locale } from "@/lib/i18n";
 
 /**
  * "Kombiner med…"-boksen nederst på en produktside.
@@ -19,9 +20,12 @@ export default function UpsellBox({
   title,
   text,
   links,
+  locale = "da",
 }: {
   title: string;
   text: string;
+  /** Sprog — kun "fra"/"from" foran prisen; resten skriver siden selv. */
+  locale?: Locale;
   links: Array<{
     href: string;
     label: string;
@@ -49,13 +53,20 @@ export default function UpsellBox({
               {l.priceId && (
                 <>
                   {" – "}
-                  <LivePrice productId={l.priceId} prefix={l.fra ? "fra " : ""} suffix=" kr" />
+                  <LivePrice
+                    productId={l.priceId}
+                    prefix={l.fra ? (locale === "en" ? "from " : "fra ") : ""}
+                    suffix={locale === "en" ? " DKK" : " kr"}
+                  />
                 </>
               )}
               {l.startpris && (
                 <>
                   {" – "}
-                  <LiveStartPrice />
+                  <LiveStartPrice
+                    prefix={locale === "en" ? "from " : "fra "}
+                    suffix={locale === "en" ? " DKK" : " kr"}
+                  />
                 </>
               )}
             </Link>

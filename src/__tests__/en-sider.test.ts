@@ -64,8 +64,12 @@ describe("Engelsk udgave", () => {
     expect(localizedHref("/soundboks-4", "da")).toBe("/soundboks-4");
     expect(localizedHref("/", "en")).toBe("/en");
     // Uden engelsk udgave beholdes den danske sti — et link til et andet sprog
-    // er stadig bedre end et link til en 404.
-    expect(hasEnglish("/discokugle")).toBe(false);
-    expect(localizedHref("/discokugle", "en")).toBe("/discokugle");
+    // er stadig bedre end et link til en 404. /discokugle stod her, indtil den
+    // fik en engelsk udgave; /privatlivspolitik er den slags side, der bliver
+    // ved med kun at findes på dansk.
+    expect(hasEnglish("/discokugle")).toBe(true);
+    expect(localizedHref("/discokugle", "en")).toBe("/en/discokugle");
+    expect(hasEnglish("/privatlivspolitik")).toBe(false);
+    expect(localizedHref("/privatlivspolitik", "en")).toBe("/privatlivspolitik");
   });
 });

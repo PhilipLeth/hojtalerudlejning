@@ -10,48 +10,47 @@ import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
 /**
- * /lysshow — kategorisiden for lys som helhed.
+ * /en/lysshow — de færdige lyspakker på engelsk.
  *
- * Adressen fandtes i en tændt annoncegruppe, længe før siden gjorde: AG 6
- * pegede på /lysshow, som gav 404, og blev derfor flyttet til /festlys i
- * ads-export/rebuild_lys_lyd_ads.py. Nu hvor siden findes, kan den flyttes
- * tilbage — /festlys handler om enkeltdelene, det her om pakkerne.
+ * /en/festlys sælger enkeltdelene; den her sælger pakkerne. Det er samme
+ * arbejdsdeling som på dansk, og den er værd at holde: den, der søger
+ * "party light rental copenhagen", vil se priser på dele, mens den, der søger
+ * "lighting package for wedding", vil se en færdig løsning.
  */
 export const metadata: Metadata = {
-  title: "Lej Lysshow København | Lys, discokugle og røg fra 1.045 kr | Lejhøjtaler.dk",
+  title: "Light Show Rental Copenhagen | Lights, Disco Ball & Fog from 1.045 DKK | Lejhøjtaler.dk",
   description:
-    "Lej et færdigt lysshow i København. Lyseffekter, discokugle, uplights og røgmaskine samlet i pakker fra 1.045 kr. Vi leverer og sætter op.",
+    "Rent a complete light show in Copenhagen. Light effects, disco ball, uplights and a fog machine in ready-made packages from 1.045 DKK. We deliver and set it up.",
   keywords: [
-    "lej lysshow",
-    "lysshow til fest",
-    "lys til fest leje",
-    "discolys udlejning",
-    "lyseffekter leje københavn",
-    "uplights leje",
-    "røgmaskine og lys",
+    "light show rental copenhagen",
+    "lighting package rental copenhagen",
+    "event lighting hire copenhagen",
+    "wedding lighting rental copenhagen",
+    "uplighting rental copenhagen",
+    "disco lighting rental denmark",
   ],
   alternates: {
-    canonical: "https://lejhojtaler.dk/lysshow",
+    canonical: "https://lejhojtaler.dk/en/lysshow",
     languages: localeAlternates("/lysshow"),
   },
   openGraph: {
-    title: "Lej Lysshow København | Fra 1.045 kr | Lejhøjtaler.dk",
+    title: "Light Show Rental Copenhagen | From 1.045 DKK | Lejhøjtaler.dk",
     description:
-      "Færdige lyspakker med effekter, discokugle, uplights og røg. Book online.",
-    url: "https://lejhojtaler.dk/lysshow",
+      "Ready-made lighting packages with effects, disco ball, uplights and fog. Book online.",
+    url: "https://lejhojtaler.dk/en/lysshow",
     siteName: "Lejhøjtaler.dk",
-    locale: "da_DK",
+    locale: "en_GB",
     type: "website",
   },
 };
 
-export default function LysshowPage() {
+export default function Page() {
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Forside", item: "https://lejhojtaler.dk" },
-      { "@type": "ListItem", position: 2, name: "Lysshow", item: "https://lejhojtaler.dk/lysshow" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://lejhojtaler.dk/en" },
+      { "@type": "ListItem", position: 2, name: "Light show", item: "https://lejhojtaler.dk/en/lysshow" },
     ],
   };
 
@@ -64,24 +63,24 @@ export default function LysshowPage() {
         <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            <LocationKicker extra="Betal ved afhentning" />
+            <LocationKicker locale="en" extra="Pay on pickup" />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Lej et lysshow
+            Rent a light show
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              til festen
+              for the party
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Lyseffekter, discokugle og røg der gør strålerne synlige. Færdige
-            pakker, så du ikke skal gætte hvad der mangler.
+            Light effects, a disco ball and the fog that makes the beams visible.
+            Ready-made packages, so you do not have to guess what is missing.
           </p>
           <a
             href="#pakker"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Se lyspakkerne
+            See the lighting packages
           </a>
         </div>
       </section>
@@ -89,33 +88,36 @@ export default function LysshowPage() {
       <main className="relative z-20 bg-[#07060b]">
         <div id="pakker">
           <BundleGrid
+            locale="en"
             ids={LYSSHOW_PAKKER}
-            eyebrow="Lyspakker"
-            title="Tre færdige lysshows"
-            subtitle="Sat sammen så delene passer til hinanden — og billigere end at leje dem hver for sig."
+            eyebrow="Lighting packages"
+            title="Three ready-made light shows"
+            subtitle="Put together so the parts match — and cheaper than renting them one by one."
           />
         </div>
 
         {/* Hvorfor røg — det spørgsmål der afgør om lysshowet virker */}
         <section className="mx-auto max-w-3xl px-4 pb-16">
           <div className="glass rounded-2xl p-8">
-            <h2 className="mb-3 text-2xl font-bold text-white">Røgen er ikke pynt</h2>
+            <h2 className="mb-3 text-2xl font-bold text-white">The fog is not decoration</h2>
             <p className="text-white/60">
-              En lysstråle kan kun ses, hvis der er noget i luften at ramme. Uden røg
-              får du farvede pletter på væggen. Med røg bliver selve strålen synlig, og
-              det er dét, der ligner et show. Er du i tvivl om ét tilvalg, er det den
-              her — og skal røgalarmen have fred, er low fog svaret, for den lægger
-              røgen som et tæppe på gulvet i stedet for op i luften.
+              A beam of light can only be seen if there is something in the air for it
+              to hit. Without fog you get coloured dots on the wall. With it the beam
+              itself becomes visible, and that is what looks like a show. If you are
+              unsure about one single add-on, this is the one — and if the smoke alarm
+              has to stay quiet, low fog is the answer, because it lays the fog along
+              the floor instead of sending it up into the air.
             </p>
           </div>
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-16">
-          <h2 className="mb-2 text-center text-3xl font-bold">Enkeltdele</h2>
+          <h2 className="mb-2 text-center text-3xl font-bold">Individual parts</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Mangler du kun én ting, kan alt lejes hver for sig.
+            If you are only missing one thing, everything can be rented separately.
           </p>
           <CategoryProductGrid
+            locale="en"
             items={[
               { id: "lys", href: "/lys-pakke" },
               { id: "lyseffekt", href: "/enkelt-lyseffekt" },
@@ -133,23 +135,24 @@ export default function LysshowPage() {
 
         <section className="mx-auto max-w-3xl px-4 pb-24">
           <div className="glass rounded-2xl p-8 text-center">
-            <h2 className="mb-4 text-2xl font-bold text-white">Skal der også være lyd?</h2>
+            <h2 className="mb-4 text-2xl font-bold text-white">Do you need sound as well?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
-              Lys uden musik er en oplyst stue. Vi har højtalerpakker til alt fra
-              gårdhaven til festlokalet — og festpakkerne har lyset med.
+              Light without music is a well-lit living room. We have speaker packages
+              for everything from a courtyard to a rented venue — and the party
+              packages come with the lights included.
             </p>
             <a
-              href="/lej-hojtaler"
+              href="/en"
               className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
             >
-              Se højtalerpakker
+              See speaker packages
             </a>
           </div>
         </section>
 
-        <FaqSection items={CATEGORY_FAQ["lysshow"]} />
-        <GoogleReviews />
-        <Footer />
+        <FaqSection items={CATEGORY_FAQ["en-lysshow"]} title="Frequently asked questions" />
+        <GoogleReviews locale="en" />
+        <Footer locale="en" />
       </main>
     </>
   );

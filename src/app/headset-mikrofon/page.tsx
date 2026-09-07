@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Headset-Mikrofon København | Fra 345 kr | Lejhøjtaler.dk",
@@ -13,7 +14,10 @@ export const metadata: Metadata = {
     "headset mikrofon leje",
     "trådløst headset event",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/headset-mikrofon" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/headset-mikrofon",
+    languages: localeAlternates("/headset-mikrofon"),
+  },
   openGraph: {
     title: "Lej Headset-Mikrofon København | Fra 345 kr",
     description:

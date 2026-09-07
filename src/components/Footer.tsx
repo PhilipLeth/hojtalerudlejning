@@ -171,9 +171,14 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
         linkede til dem — de blev crawlet som blindgyder uden intern linkværdi.
         De hører ikke hjemme i menuen, som bevidst er en vej ind og ikke et
         katalog; footeren er stedet, hvor de kan stå uden at støje.
-        Kun på dansk: siderne findes ikke på engelsk.
+        De engelske kategorisider har samme problem: /en/festlys, /en/lysshow og
+        /en/lej-mikrofon står uden ét eneste indgående link, fordi menuen og
+        forsiden kun kender pakkerne. Listen er ikke en oversættelse af den
+        danske — de tre danske annoncelandingssider findes ikke på engelsk, og
+        de tre engelske kategorisider er dem, der skal findes på "party light
+        rental copenhagen" og "microphone rental copenhagen".
       */}
-      {locale === "da" && (
+      {locale === "da" ? (
         <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs">
           <Link href="/festlyd" className="text-white/30 hover:text-brand-400 transition">
             Lyd til fest
@@ -183,6 +188,18 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
           </Link>
           <Link href="/kobenhavn" className="text-white/30 hover:text-brand-400 transition">
             Højtalerudlejning i København
+          </Link>
+        </p>
+      ) : (
+        <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs">
+          <Link href="/en/festlys" className="text-white/30 hover:text-brand-400 transition">
+            Party light rental
+          </Link>
+          <Link href="/en/lysshow" className="text-white/30 hover:text-brand-400 transition">
+            Light show packages
+          </Link>
+          <Link href="/en/lej-mikrofon" className="text-white/30 hover:text-brand-400 transition">
+            Microphone rental
           </Link>
         </p>
       )}

@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { buildProductFaq } from "@/lib/productFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Lyskæder København | Fra 195 kr | Lejhøjtaler.dk",
@@ -20,7 +21,10 @@ export const metadata: Metadata = {
     "lyskæder havefest",
     "lyskæder leje københavn",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/lyskaeder" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/lyskaeder",
+    languages: localeAlternates("/lyskaeder"),
+  },
   openGraph: {
     title: "Lej Lyskæder København | Fra 195 kr",
     description:

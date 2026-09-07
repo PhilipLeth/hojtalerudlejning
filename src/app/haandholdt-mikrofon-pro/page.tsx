@@ -1,11 +1,15 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Håndholdt mikrofon PRO (kabel) København | 395 kr | Lejhøjtaler.dk",
   description: "Shure Beta 58A med kabel — klassikeren til sang og taler. 395 kr/weekend. Betal ved afhentning. Book online.",
   keywords: ["lej shure beta 58", "sangmikrofon leje", "mikrofon til sang københavn"],
-  alternates: { canonical: "https://lejhojtaler.dk/haandholdt-mikrofon-pro" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/haandholdt-mikrofon-pro",
+    languages: localeAlternates("/haandholdt-mikrofon-pro"),
+  },
   openGraph: {
     title: "Lej Håndholdt mikrofon PRO (kabel) København | 395 kr",
     description: "Shure Beta 58A med kabel — klassikeren til sang og taler. 395 kr/weekend. Betal ved afhentning. Book online.",

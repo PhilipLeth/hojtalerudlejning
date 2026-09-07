@@ -1,13 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.045 kr | Lejhøjtaler.dk",
   description:
     "Stemningslys-pakken: 4 LED uplights, 10 m lyskæde og discokugle for 1.045 kr — spar 140 kr. Lys der laver et lejet lokale om. Lejes i København.",
   keywords: ["lej festlys", "uplights leje", "diskolys til fest", "lys til lokale leje", "lyskæder og discokugle"],
-  alternates: { canonical: "https://lejhojtaler.dk/stemningslys" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/stemningslys",
+    languages: localeAlternates("/stemningslys"),
+  },
   openGraph: {
     title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.045 kr | Lejhøjtaler.dk",
     description: "4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet — spar 140 kr.",

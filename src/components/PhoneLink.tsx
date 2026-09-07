@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useSiteSettings } from "@/lib/useSiteSettings";
+import type { Locale } from "@/lib/i18n";
 import { DEFAULT_PICKUP_ADDRESS } from "@/lib/pickup";
 
 /** Klikbart telefonnummer — følger admin /indstillinger. */
@@ -36,11 +37,18 @@ export function PhoneText() {
   return <>{display}</>;
 }
 
-/** Hero-kicker med live nummer. */
-export function LocationKicker({ extra }: { extra: string }) {
+/**
+ * Hero-kicker med live nummer.
+ *
+ * Linjen stod hårdkodet på dansk og var derfor det eneste, der skilte en
+ * engelsk kategoriside fra en dansk. `extra` skrives af siden selv, så den
+ * er allerede på sidens sprog.
+ */
+export function LocationKicker({ extra, locale = "da" }: { extra: string; locale?: Locale }) {
   return (
     <>
-      København · {extra} · Ring <PhoneText />
+      {locale === "en" ? "Copenhagen" : "København"} · {extra} ·{" "}
+      {locale === "en" ? "Call" : "Ring"} <PhoneText />
     </>
   );
 }

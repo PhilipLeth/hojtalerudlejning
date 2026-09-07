@@ -3,6 +3,23 @@
 import Link from "next/link";
 import { useProducts } from "@/lib/useProducts";
 import { thumbSrcSet, GRID_IMAGE_SIZES } from "@/lib/imageSrcSet";
+import { localizedHref } from "@/lib/enPages";
+import { bookHref } from "@/lib/bookUrl";
+import type { Locale } from "@/lib/i18n";
+
+/**
+ * Kortets faste tekster. Navne og beskrivelser findes allerede på begge sprog
+ * i kataloget; kun kortets egne ord stod hårdkodet på dansk, og det var det,
+ * der spærrede for en engelsk kategoriside.
+ *
+ * `contents` findes kun på dansk — pakkelisten er tekniske ord ("2× farvede
+ * LED-lamper"), som er læsbare på begge sprog. Samme afvejning som i
+ * productFaq.ts, hvor de engelske svar også citerer den danske pakkeliste.
+ */
+const COPY = {
+  da: { included: "Inkluderet", currency: "kr", perWeekend: "/weekend", book: "Book", info: "Info" },
+  en: { included: "Included", currency: "DKK", perWeekend: "/weekend", book: "Book", info: "Details" },
+} as const;
 
 export interface CategoryItem {
   /** Produkt-id i kataloget (speaker, addon eller rentalProduct) */
@@ -12,16 +29,33 @@ export interface CategoryItem {
   tag?: string;
 }
 
+/**
+ * Produktsiden på det rigtige sprog — eller ingen "Info"-knap.
+ *
+ * Katalogets `page` er altid den danske sti. Uden localizedHref sendte et
+ * engelsk kort kunden ind i dansk tekst; findes siden ikke på engelsk, beholdes
+ * den danske, jf. enPages.ts.
+ */
+function enSti(sti: string | undefined, locale: Locale): string | undefined {
+  if (!sti) return undefined;
+  if (sti.includes("#book") || sti.startsWith("/book")) return undefined;
+  return localizedHref(sti, locale);
+}
+
 /** Kort-grid til kategorisider — navn/pris/billede/beskrivelse læses live fra kataloget. */
 export default function CategoryProductGrid({
   items,
   category,
+  locale = "da",
 }: {
   items?: CategoryItem[];
   /** Alternativ: vis alle rentalProducts i en kategori */
   category?: string;
+  /** Sprog — styrer kortets tekster og hvor "Info" fører hen. */
+  locale?: Locale;
 }) {
   const { speakers, addons, rentalProducts } = useProducts();
+  const c = COPY[locale];
 
   const resolved = (
     items ??
@@ -33,39 +67,39 @@ export default function CategoryProductGrid({
     if (sp) {
       return {
         ...item,
-        name: sp.da.name,
-        desc: sp.da.desc,
+        name: sp[locale].name,
+        desc: sp[locale].desc,
         price: sp.price,
         image: sp.product,
         contents: sp.contents ?? [],
-        href: `/?product=${sp.id}#book`,
-        page: sp.page ?? (item.href && !item.href.includes("#book") && !item.href.startsWith("/book") ? item.href : undefined),
+        href: bookHref(sp.id, locale),
+        page: enSti(sp.page ?? item.href, locale),
       };
     }
     const ad = addons.find((p) => p.id === item.id);
     if (ad) {
       return {
         ...item,
-        name: ad.da.label,
-        desc: ad.da.desc,
+        name: ad[locale].label,
+        desc: ad[locale].desc,
         price: ad.price,
         image: ad.image,
         contents: ad.contents ?? [],
-        href: `/?product=${ad.id}#book`,
-        page: ad.page ?? (item.href && !item.href.includes("#book") && !item.href.startsWith("/book") ? item.href : undefined),
+        href: bookHref(ad.id, locale),
+        page: enSti(ad.page ?? item.href, locale),
       };
     }
     const r = rentalProducts.find((p) => p.id === item.id);
     if (r) {
       return {
         ...item,
-        name: r.name_da,
-        desc: r.desc_da ?? "",
+        name: locale === "en" ? r.name_en : r.name_da,
+        desc: (locale === "en" ? r.desc_en : r.desc_da) ?? "",
         price: r.price,
         image: r.image,
         contents: r.contents ?? [],
-        href: `/?product=${r.id}#book`,
-        page: r.page ?? (item.href && !item.href.includes("#book") && !item.href.startsWith("/book") ? item.href : undefined),
+        href: bookHref(r.id, locale),
+        page: enSti(r.page ?? item.href, locale),
       };
     }
     return null;
@@ -105,7 +139,7 @@ export default function CategoryProductGrid({
               {p.contents.length > 0 && (
                 <div className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-center bg-[#0d0c12]/75 px-5 opacity-0 transition duration-300 group-hover:opacity-100">
                   <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-brand-400">
-                    Inkluderet
+                    {c.included}
                   </p>
                   <ul className="space-y-1">
                     {p.contents.map((item) => (
@@ -123,21 +157,21 @@ export default function CategoryProductGrid({
               <p className="mt-1 flex-1 text-sm text-white/40">{p.desc}</p>
               <div className="mt-4 flex items-center justify-between gap-3">
                 <p className="text-2xl font-bold text-brand-400">
-                  {p.price} kr<span className="ml-1 text-xs font-normal text-white/40">/weekend</span>
+                  {p.price} {c.currency}<span className="ml-1 text-xs font-normal text-white/40">{c.perWeekend}</span>
                 </p>
                 <div className="flex gap-2">
                   <Link
                     href={p.href!}
                     className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-brand-400 active:scale-95"
                   >
-                    Book
+                    {c.book}
                   </Link>
                   {p.page && (
                     <Link
                       href={p.page}
                       className="rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white/70 transition hover:border-brand-500/40 hover:text-brand-400"
                     >
-                      Info
+                      {c.info}
                     </Link>
                   )}
                 </div>

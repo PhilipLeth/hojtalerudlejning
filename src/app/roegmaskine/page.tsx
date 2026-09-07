@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Røgmaskine København | Fra 595 kr | Lejhøjtaler.dk",
@@ -15,7 +16,10 @@ export const metadata: Metadata = {
     "røgmaskine til event",
     "røg til fest",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/roegmaskine" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/roegmaskine",
+    languages: localeAlternates("/roegmaskine"),
+  },
   openGraph: {
     title: "Lej Røgmaskine København | Fra 595 kr",
     description:
