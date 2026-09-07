@@ -3,7 +3,7 @@ import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
 import { catalogPrice, prisTekst, startPrisKr } from "@/lib/products";
 import Image from "next/image";
 import Link from "next/link";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
@@ -201,10 +201,10 @@ export default function FestlydPage() {
           </div>
         </section>
 
-        {/* Testimonials */}
+        {/* Anmeldelser fra Google */}
         <FaqSection items={CATEGORY_FAQ["festlyd"]} />
 
-        <Testimonials />
+        <GoogleReviews />
 
         {/* Final CTA */}
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">

@@ -4,9 +4,10 @@
  * Anmeldelserne fra vores Google-profil, som de ser ud på sitet.
  *
  * Data kommer fra /api/anmeldelser (Places API + KV-cache). Er der ingen
- * anmeldelser endnu — eller er nøglen ikke sat — returnerer komponenten null,
- * og <Testimonials> viser sin egen tekst i stedet. Vi opfinder aldrig en
- * rating: alt herunder står i Googles egne felter.
+ * anmeldelser endnu — eller er nøglen ikke sat — vises sektionen slet ikke.
+ * Det er med vilje: sitet havde tidligere fire opdigtede citater i stedet, og
+ * hellere ingen sektion end en, vi har fundet på. Alt herunder står i Googles
+ * egne felter.
  */
 
 import { useState } from "react";
@@ -169,56 +170,23 @@ function Kort({ review, locale }: { review: GoogleReview; locale: Locale }) {
   );
 }
 
-function Skelet() {
-  return (
-    <div className="grid gap-6 sm:grid-cols-2" aria-hidden="true">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="glass animate-pulse rounded-2xl p-6">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-white/10" />
-            <div className="space-y-2">
-              <div className="h-3 w-28 rounded bg-white/10" />
-              <div className="h-2 w-16 rounded bg-white/5" />
-            </div>
-          </div>
-          <div className="mt-5 h-3 w-24 rounded bg-white/10" />
-          <div className="mt-4 space-y-2">
-            <div className="h-2.5 w-full rounded bg-white/5" />
-            <div className="h-2.5 w-11/12 rounded bg-white/5" />
-            <div className="h-2.5 w-4/5 rounded bg-white/5" />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export interface GoogleReviewsProps {
   locale?: Locale;
-  /** Vist mens vi henter — så sektionen ikke hopper ind fra ingenting */
-  showSkeleton?: boolean;
 }
 
-/**
- * Returnerer null når der ikke er nogen anmeldelser at vise. Kalderen
- * bestemmer, hvad der så skal stå i stedet.
- */
-export default function GoogleReviews({ locale = "da", showSkeleton = false }: GoogleReviewsProps) {
-  const { data, loading } = useGoogleReviews(locale);
+/** Returnerer null når der ikke er nogen anmeldelser at vise. */
+export default function GoogleReviews({ locale = "da" }: GoogleReviewsProps) {
+  const { data } = useGoogleReviews(locale);
   const s = t[locale].googleReviews;
 
-  if (loading && showSkeleton) {
-    return (
-      <section className="relative z-20 mx-auto max-w-4xl px-4 py-24">
-        <Skelet />
-      </section>
-    );
-  }
   if (!data.reviews.length) return null;
 
   const snit = data.rating ?? 0;
   const antal = data.total || data.reviews.length;
   const profil = data.url || GOOGLE_PROFIL_URL;
+  // Google leverer højst fem, og anmeldelser uden tekst ryger fra. Kolonnerne
+  // følger antallet, så tre ikke står som to plus en forældreløs.
+  const kolonner = data.reviews.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2";
 
   return (
     <section className="relative z-20 mx-auto max-w-5xl px-4 py-24">
@@ -247,7 +215,9 @@ export default function GoogleReviews({ locale = "da", showSkeleton = false }: G
       </div>
 
       {/* Mobil: swipe gennem kortene. Desktop: to og to. */}
-      <div className="mt-12 -mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0">
+      <div
+        className={`mt-12 -mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-4 sm:mx-0 sm:grid ${kolonner} sm:overflow-visible sm:px-0 sm:pb-0`}
+      >
         {data.reviews.map((review, i) => (
           <Kort key={`${review.author}-${review.publishTime || i}`} review={review} locale={locale} />
         ))}

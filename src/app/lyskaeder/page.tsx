@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 import { buildProductFaq } from "@/lib/productFaq";
@@ -132,8 +132,8 @@ export default function LyskaederPage() {
           title="Ofte stillede spørgsmål om lyskæder"
         />
 
-        {/* Testimonials */}
-        <Testimonials />
+        {/* Anmeldelser fra Google */}
+        <GoogleReviews />
 
         {/* Final CTA */}
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">

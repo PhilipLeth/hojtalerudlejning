@@ -131,31 +131,6 @@ export const t = {
       book: "Book",
       perWeekend: "pr. weekend",
     },
-    testimonials: {
-      title: "Hvad vores kunder siger",
-      reviews: [
-        {
-          name: "Caroline V.",
-          date: "2. juni 2025",
-          text: "Bestilte den lille højtalerpakke til min venninders polterabend – nemmeste oplevelse nogensinde. Bookede online, hentede på cyklen og afleverede næste dag. Lyden var helt fantastisk til prisen. Kommer helt sikkert igen!",
-        },
-        {
-          name: "Rune K.",
-          date: "17. maj 2025",
-          text: "Brugte lejhøjtaler.dk til min 30-års fest i baggården. Fik den store højtalerpakke + lysbar, og det løftede stemningen enormt. Super god betjening og ingen unødvendige bureaukratiske ting – bare lej, betal og kør. Kan kun anbefales.",
-        },
-        {
-          name: "Mikkel L.",
-          date: "24. maj 2025",
-          text: "Meget imponeret over kvaliteten til den pris. Lejede røgmaskine og lys til min kærestes overraskelsesfødselsdag. Alt virkede perfekt, ingen tekniske problemer, og folkene bag var hurtige til at svare på spørgsmål. 5 stjerner herfra.",
-        },
-        {
-          name: "Matthew H.",
-          date: "8. juni 2025",
-          text: "Rented the speaker package for a birthday party in Copenhagen – absolutely worth it. The sound quality was impressive and the whole process was super smooth. Picked it up by bike (yes, it fits in a bag!) and returned it the next morning. Great service, will definitely use again.",
-        },
-      ],
-    },
     googleReviews: {
       title: "Det siger vores kunder på Google",
       subtitle: "Rigtige anmeldelser, hentet direkte fra vores Google-profil.",
@@ -332,31 +307,6 @@ export const t = {
       needsPower: "Requires an outlet",
       book: "Book",
       perWeekend: "per weekend",
-    },
-    testimonials: {
-      title: "What our customers say",
-      reviews: [
-        {
-          name: "Caroline V.",
-          date: "2 June 2025",
-          text: "Ordered the small speaker package for my friend's hen party – easiest experience ever. Booked online, picked it up by bike and returned it the next day. The sound was absolutely fantastic for the price. Will definitely be back!",
-        },
-        {
-          name: "Rune K.",
-          date: "17 May 2025",
-          text: "Used lejhøjtaler.dk for my 30th birthday party in the courtyard. Got the large speaker package + light bar, and it lifted the atmosphere massively. Great service and no unnecessary bureaucracy – just rent, pay and go. Highly recommended.",
-        },
-        {
-          name: "Mikkel L.",
-          date: "24 May 2025",
-          text: "Very impressed with the quality at that price. Rented the fog machine and lights for my girlfriend's surprise birthday. Everything worked perfectly, no technical issues, and the people behind it were quick to answer questions. 5 stars from me.",
-        },
-        {
-          name: "Matthew H.",
-          date: "8 June 2025",
-          text: "Rented the speaker package for a birthday party in Copenhagen – absolutely worth it. The sound quality was impressive and the whole process was super smooth. Picked it up by bike (yes, it fits in a bag!) and returned it the next morning. Great service, will definitely use again.",
-        },
-      ],
     },
     googleReviews: {
       title: "What our customers say on Google",

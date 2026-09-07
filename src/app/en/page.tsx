@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import BundleGrid from "@/components/BundleGrid";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import HowItWorks from "@/components/HowItWorks";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
@@ -55,7 +55,7 @@ export default function EnHome() {
       <SpeakerCompare locale="en" />
       <FaqSection items={CATEGORY_FAQ["en"]} title="Frequently asked questions" />
 
-      <Testimonials locale="en" />
+      <GoogleReviews locale="en" />
       <HowItWorks locale="en" />
       <Footer locale="en" />
 

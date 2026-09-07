@@ -24,15 +24,16 @@ describe("i18n - Danish", () => {
     expect(da.compare.needsPower).toBeTruthy();
   });
 
-  it("has 4 testimonials", () => {
-    expect(da.testimonials.reviews).toHaveLength(4);
+  // De fire opdigtede testimonials er fjernet 7. september 2026 — sitet viser
+  // kun ægte Google-anmeldelser nu. Kommer der en "hvad siger kunderne"-tekst
+  // tilbage i i18n, skal den have et belæg med sig.
+  it("har ingen testimonials i teksterne", () => {
+    expect("testimonials" in da).toBe(false);
   });
 
-  it("testimonials have name, date, text", () => {
-    for (const r of da.testimonials.reviews) {
-      expect(r.name).toBeTruthy();
-      expect(r.date).toBeTruthy();
-      expect(r.text.length).toBeGreaterThan(20);
+  it("har tekst til Google-anmeldelserne", () => {
+    for (const felt of ["title", "badge", "seeAll", "write", "more", "less"] as const) {
+      expect(da.googleReviews[felt]).toBeTruthy();
     }
   });
 
@@ -66,8 +67,13 @@ describe("i18n - English", () => {
     expect(en.compare.groupCable).toBeTruthy();
   });
 
-  it("has 4 testimonials", () => {
-    expect(en.testimonials.reviews).toHaveLength(4);
+  it("har ingen testimonials i teksterne", () => {
+    expect("testimonials" in en).toBe(false);
+  });
+
+  it("har engelsk tekst til Google-anmeldelserne", () => {
+    expect(en.googleReviews.title).toBe("What our customers say on Google");
+    expect(en.googleReviews.seeAll).toBe("See all on Google");
   });
 
   it("does not contain 'Ilektra'", () => {
@@ -89,8 +95,8 @@ describe("i18n - English", () => {
 });
 
 describe("i18n - DA/EN parity", () => {
-  it("same number of testimonials in both locales", () => {
-    expect(t.da.testimonials.reviews.length).toBe(t.en.testimonials.reviews.length);
+  it("same keys for Google reviews in both locales", () => {
+    expect(Object.keys(t.da.googleReviews).sort()).toEqual(Object.keys(t.en.googleReviews).sort());
   });
 
   it("same number of how-it-works steps", () => {

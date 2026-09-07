@@ -3,11 +3,11 @@
  *
  * Kortene skal vise det Google leverer — navn, stjerner, "for 2 uger siden"
  * og et link tilbage til Google. Og lige så vigtigt: er der ingen ægte
- * anmeldelser, må sektionen ikke stå tom, og den må ikke finde på en rating.
+ * anmeldelser, forsvinder sektionen helt. Sitet havde tidligere fire
+ * opdigtede citater det sted, og de kommer ikke igen.
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, cleanup, waitFor, fireEvent } from "@testing-library/react";
-import Testimonials from "@/components/Testimonials";
 import GoogleReviews from "@/components/GoogleReviews";
 import { __nulstilAnmeldelsesCache } from "@/lib/useGoogleReviews";
 
@@ -64,7 +64,7 @@ afterEach(() => cleanup());
 describe("Google-anmeldelser på sitet", () => {
   it("viser de fire anmeldelser med navn, stjerner og tidspunkt", async () => {
     mockSvar(SVAR);
-    render(<Testimonials />);
+    render(<GoogleReviews />);
 
     expect(await screen.findByText("Bo Hansen")).toBeInTheDocument();
     for (const navn of ["Carla Nielsen", "Dan Frank", "Anne Kold"]) {
@@ -80,7 +80,7 @@ describe("Google-anmeldelser på sitet", () => {
 
   it("linker til profilen og til at skrive en anmeldelse", async () => {
     mockSvar(SVAR);
-    render(<Testimonials />);
+    render(<GoogleReviews />);
 
     const alle = await screen.findByText("Se alle på Google");
     expect(alle.closest("a")).toHaveAttribute("href", "https://maps.google.com/?cid=1");
@@ -92,7 +92,7 @@ describe("Google-anmeldelser på sitet", () => {
 
   it("folder lange anmeldelser ud uden at ændre teksten", async () => {
     mockSvar(SVAR);
-    render(<Testimonials />);
+    render(<GoogleReviews />);
 
     const knap = await screen.findByText("Læs mere");
     // Hele teksten står i DOM'en hele tiden — vi klipper kun visuelt
@@ -105,23 +105,30 @@ describe("Google-anmeldelser på sitet", () => {
     expect(screen.getByText("Vis mindre")).toBeInTheDocument();
   });
 
-  it("falder tilbage til sitets egen tekst når der ingen Google-anmeldelser er", async () => {
+  it("viser intet — og opfinder ingen rating — når der ingen anmeldelser er", async () => {
     mockSvar({ rating: null, total: 0, url: null, reviews: [], fetchedAt: "" });
-    render(<Testimonials />);
+    const { container } = render(<GoogleReviews />);
 
-    await waitFor(() => expect(screen.getByText(/Caroline V\./)).toBeInTheDocument());
-    expect(screen.queryByText("Se alle på Google")).not.toBeInTheDocument();
-    // Ingen opfundet rating når der ikke er data
+    await waitFor(() => expect(container).toBeEmptyDOMElement());
     expect(screen.queryByText(/anmeldelser på Google/)).not.toBeInTheDocument();
   });
 
-  it("står ikke tom hvis /api/anmeldelser fejler", async () => {
+  it("viser intet hvis /api/anmeldelser fejler", async () => {
     global.fetch = vi.fn(async () => {
       throw new Error("nede");
     }) as any;
-    render(<Testimonials />);
+    const { container } = render(<GoogleReviews />);
 
-    await waitFor(() => expect(screen.getByText(/Caroline V\./)).toBeInTheDocument());
+    await waitFor(() => expect(container).toBeEmptyDOMElement());
+  });
+
+  it("giver tre anmeldelser deres egen kolonne i stedet for to plus en", async () => {
+    mockSvar({ ...SVAR, reviews: SVAR.reviews.slice(0, 3) });
+    render(<GoogleReviews />);
+
+    const kort = await screen.findByText("Bo Hansen");
+    const gitter = kort.closest("article")!.parentElement!;
+    expect(gitter.className).toContain("sm:grid-cols-3");
   });
 
   it("viser engelsk tekst på /en", async () => {
@@ -138,8 +145,8 @@ describe("Google-anmeldelser på sitet", () => {
     mockSvar(SVAR);
     render(
       <>
-        <Testimonials />
-        <Testimonials />
+        <GoogleReviews />
+        <GoogleReviews />
       </>,
     );
 

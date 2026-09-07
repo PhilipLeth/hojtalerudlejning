@@ -1,7 +1,7 @@
 import Link from "next/link";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import FaqSection, { type FaqItem } from "@/components/FaqSection";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import LivePrice from "@/components/LivePrice";
 import { bookHref } from "@/lib/bookUrl";
@@ -146,7 +146,7 @@ export default function OccasionLanding({
 
         <FaqSection items={faq} />
 
-        <Testimonials />
+        <GoogleReviews />
 
         {/* CTA + interne links */}
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">

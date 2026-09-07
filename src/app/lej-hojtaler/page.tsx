@@ -4,7 +4,7 @@ import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import BundleGrid from "@/components/BundleGrid";
 import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER, startPrisKr } from "@/lib/products";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
@@ -179,8 +179,8 @@ export default function LejHojtalerPage() {
 
         <FaqSection items={CATEGORY_FAQ["lej-hojtaler"]} />
 
-        {/* Testimonials */}
-        <Testimonials />
+        {/* Anmeldelser fra Google */}
+        <GoogleReviews />
 
         {/* Final CTA */}
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">

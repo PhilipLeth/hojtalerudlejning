@@ -2,7 +2,7 @@ import Link from "next/link";
 import CapacityBadge from "@/components/CapacityBadge";
 import LivePrice from "@/components/LivePrice";
 import FaqSection, { type FaqItem } from "@/components/FaqSection";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
 import { PhoneText } from "@/components/PhoneLink";
@@ -67,14 +67,13 @@ export interface ProductLandingProps {
   bookLabel?: string;
   /**
    * Stjerner i Product-schema. **Ingen side sætter den i dag, og det er med
-   * vilje** — de synlige testimonials er opdigtede, og markup bygget på dem er
-   * spammy structured markup hos Google og en falsk anmeldelse efter
-   * markedsføringsloven. structured-data.test.tsx fejler hvis proppen tages i
-   * brug igen.
+   * vilje.** De opdigtede testimonials er væk, og sitets anmeldelser kommer nu
+   * fra vores Google-profil — men netop derfor må de ikke markeres op: Google
+   * tillader ikke structured data bygget på anmeldelser, man selv har hentet
+   * fra Google. structured-data.test.tsx fejler, hvis proppen tages i brug.
    *
-   * Mekanikken bliver stående, fordi den skal bruges den dag der ligger ægte
-   * Google-anmeldelser — men kun på de produkter anmeldelserne handler om.
-   * Se prd.json → seo.reviews_policy.
+   * Mekanikken bliver stående til den dag, vi har anmeldelser på produktniveau
+   * fra en kilde vi selv må markere op. Se prd.json → seo.reviews_policy.
    */
   reviewed?: { ratingValue: string; reviewCount: string };
   /** Kapacitets-ikon: personfigurer + interval (fx 30-50 pers.) */
@@ -317,7 +316,7 @@ export default function ProductLanding({
             spørgsmål om noget, der ikke kan lejes. Den udgår på pausede sider. */}
         {!paused && <FaqSection items={faq} title={c.faqTitle(name)} />}
 
-        <Testimonials />
+        <GoogleReviews />
 
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">{paused ? c.pausedTitle : c.ctaTitle}</h2>

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 import { buildProductFaq } from "@/lib/productFaq";
@@ -122,7 +122,7 @@ export default function UplightsPage() {
           title="Ofte stillede spørgsmål om uplights"
         />
 
-        <Testimonials />
+        <GoogleReviews />
 
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Klar til at lyse lokalet op?</h2>

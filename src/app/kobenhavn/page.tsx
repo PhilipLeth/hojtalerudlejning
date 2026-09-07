@@ -3,7 +3,7 @@ import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
 import { prisKr, startPrisKr } from "@/lib/products";
 import Link from "next/link";
 import Image from "next/image";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
@@ -307,10 +307,10 @@ export default function KobenhavnPage() {
           </div>
         </section>
 
-        {/* Testimonials */}
+        {/* Anmeldelser fra Google */}
         <FaqSection items={CATEGORY_FAQ["kobenhavn"]} />
 
-        <Testimonials />
+        <GoogleReviews />
 
         {/* Final CTA */}
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
@@ -178,7 +178,7 @@ export default function AVUdstyrPage() {
 
         <FaqSection items={CATEGORY_FAQ["av-udstyr"]} />
 
-        <Testimonials />
+        <GoogleReviews />
         <Footer />
       </main>
     </>

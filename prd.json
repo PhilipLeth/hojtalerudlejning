@@ -1655,13 +1655,14 @@
       "BreadcrumbList": "Alle sider på nær forsiden, /en, /book, /kontakt og /erhverv."
     },
     "reviews_policy": {
-      "status": "Rating fjernet — modstridende oplysninger om testimonials",
+      "status": "Testimonials fjernet — sitet viser kun ægte Google-anmeldelser",
       "date": "2026-08-21",
       "description": "aggregateRating (5,0) lå live på /hojtalerpakke-lille og /hojtalerpakke-normal og er nu fjernet. Grunden er, at projektets to kilder siger hver sit om de 4 testimonials i src/lib/i18n.ts, begge dateret 2026-08-05: denne fil har hidtil sagt, at ejeren bekræftede dem som ÆGTE (fra en tidligere udlejningsvirksomhed), mens src/__tests__/structured-data.test.tsx og sessionshukommelsen siger, at ejeren bekræftede dem som OPDIGTEDE. Testen var i øvrigt selvmodsigende: dens egen overskrift sagde, at markup'en var 'bevidst fjernet', mens dens assertion krævede, at mindst én produktside HAVDE rating.",
       "beslutning": "Fjernet indtil Frederik siger klart, hvad der gælder. Er de opdigtede, er markup'en både spammy structured markup hos Google og en ulovlig falsk anmeldelse efter markedsføringsloven/Omnibus-direktivet. Er de ægte, koster fjernelsen kun en valgfri rich-result-udvidelse. Risikoen er asymmetrisk.",
       "guard": "src/__tests__/structured-data.test.tsx kræver nu, at INGEN produktside sætter reviewed-proppen. Mekanikken i ProductLanding er bevaret til den dag, der er ægte anmeldelser.",
       "aabent_spoergsmaal": "Er de 4 testimonials (Caroline V., Rune K., Mikkel L., Matthew H.) ægte? Svaret afgør både markup og om teksterne må blive stående synligt på sitet.",
-      "next": "Ægte Google-anmeldelser samles ind via review-mailen og vises nu på sitet via /api/anmeldelser (se google_anmeldelser_paa_sitet). aggregateRating-markup må dog stadig ikke bygges på Google-hentede anmeldelser."
+      "next": "Ægte Google-anmeldelser vises via /api/anmeldelser (se google_anmeldelser_paa_sitet). aggregateRating-markup må stadig ikke bygges på Google-hentede anmeldelser — structured-data.test.tsx står ved magt.",
+      "opdateret_2026_09_07": "De fire uafklarede testimonials (Caroline V., Rune K., Mikkel L., Matthew H.) er slettet af src/lib/i18n.ts, og komponenten Testimonials.tsx er væk. Anmeldelsessektionen på de 16 sider er nu GoogleReviews, som viser profilens egne anmeldelser og INTET når der ingen er. Dermed er det åbne spørgsmål uden praktisk konsekvens: der står ikke længere et citat på sitet, som ingen kan stå inde for. i18n.test.ts vogter, at teksterne ikke kommer tilbage."
     },
     "onpage_audit_2026_08": {
       "date": "2026-08-05",
@@ -3642,17 +3643,17 @@
     "naeste": "Annoncegrupper i den eksisterende søgekampagne for de tre clusters (diskolys/festtelt/bryllupslys) — separat beslutning, koster penge."
   },
   "google_anmeldelser_paa_sitet": {
-    "status": "bygget 2026-09-07 — venter på GOOGLE_PLACES_API_KEY i produktion",
+    "status": "live 7. september 2026 — Places-nøgle oprettet, mangler kun secret på Pages",
     "hvorfor": "Sitet viste fire testimonials, som ingen kan bekræfte er ægte (se seo.reviews_policy). Kunderne får review-mail og -SMS med link til Google-profilen, men anmeldelserne blev aldrig vist noget sted. Nu vises de fire nyeste anmeldelser fra profilen direkte på sitet.",
     "endpoint": "GET /api/anmeldelser?sprog=da|en — offentligt. Henter Places API (New) med FieldMask rating,userRatingCount,googleMapsUri,reviews og cacher svaret i KV (google_reviews_da / google_reviews_en). Frisk i 6 timer, gemt højst 30 dage (Googles grænse for stedsdata). ?refresh=1 tvinger en hentning, men kun for en logget admin.",
     "visning": "src/components/GoogleReviews.tsx: Google-logo, gennemsnit og stjernerække (halve stjerner), fire kort med profilbillede, navn, Googles egen 'for 2 uger siden', stjerner og tekst (lange tekster foldes med Læs mere — teksten ændres aldrig). Mobil: swipe. Links til profilen og til 'skriv en anmeldelse'. Findes på begge sprog.",
-    "fallback": "Testimonials.tsx viser GoogleReviews når der er anmeldelser, ellers sitets egen tekst. Ingen nøgle, tom profil eller Google nede = sektionen ser ud som før. Der opfindes aldrig en rating.",
+    "fallback": "Ingen. Er der ingen anmeldelser (nøgle mangler, Google nede, tom profil), vises sektionen slet ikke. De opdigtede testimonials, der før stod der, er slettet.",
     "ingen_markup": "Anmeldelserne lægges IKKE i structured data. Google tillader ikke aggregateRating/Review-markup på anmeldelser man selv har hentet fra Google — seo.reviews_policy og structured-data.test.tsx står ved magt.",
     "mangler": {
-      "noegle": "GOOGLE_PLACES_API_KEY skal oprettes i Google Cloud (Places API (New) slået til, nøglen begrænset til Places API) og sættes som secret på Pages-projektet speaker-rental. AI Studio-nøglerne duer ikke — Places svarer 401 CREDENTIALS_MISSING på dem.",
-      "antal_anmeldelser": "Uafklaret hvor mange anmeldelser profilen faktisk har. Er der under fire, viser sektionen dem der er.",
-      "gaeld": "De fire opdigtede/uafklarede testimonials står stadig som fallback. Bekræfter Frederik, at de er opdigtede, skal de slettes helt — så er sektionen tom, indtil Google-anmeldelserne er der."
+      "gaeld": "Ingen — testimonials er slettet. Tilbage står kun at sætte secret'en."
     },
-    "test": "src/__tests__/google-anmeldelser.test.ts (cache, fejl fra Google, sprog, admin-tvang) og google-anmeldelser-visning.test.tsx (kort, fallback, engelsk)."
+    "test": "src/__tests__/google-anmeldelser.test.ts (cache, fejl fra Google, sprog, admin-tvang) og google-anmeldelser-visning.test.tsx (kort, fallback, engelsk).",
+    "profilen_2026_09_07": "Profilen har 5,0 i snit og 4 anmeldelser, alle fra uge 36 2026: Emilie Kirkegaard (kun stjerner, ingen tekst — filtreres fra), Dora Brink Clausen, Anne Bjørn og Antoine Falzon. Sitet viser derfor tre kort, og kolonnerne skifter til tre, når der er tre.",
+    "noegle": "API-nøgle 'Lejhojtaler Places (server)' oprettet 7. sept 2026 i Google Cloud-projektet 'lejecenter' (samme projekt som Search Console-servicekontoen; Places API (New) var allerede slået til, billing: My Billing Account 2). Begrænset til Places API (New), ingen application restriction (kaldet kommer fra Cloudflares IP'er). Mangler: `wrangler pages secret put GOOGLE_PLACES_API_KEY --project-name=speaker-rental`."
   }
 }

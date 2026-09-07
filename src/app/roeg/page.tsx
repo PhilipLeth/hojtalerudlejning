@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import LivePrice from "@/components/LivePrice";
 import { prisKr } from "@/lib/products";
 import Link from "next/link";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
@@ -125,7 +125,7 @@ export default function RoegPage() {
 
         <FaqSection items={CATEGORY_FAQ["roeg"]} />
 
-        <Testimonials />
+        <GoogleReviews />
         <Footer />
       </main>
     </>

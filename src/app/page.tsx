@@ -2,7 +2,7 @@ import HomeHero from "@/components/HomeHero";
 import BundleGrid from "@/components/BundleGrid";
 import { FEST_LADDER_IDS, prisSpaend, startPrisKr } from "@/lib/products";
 import ProductGrid from "@/components/ProductGrid";
-import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import HowItWorks from "@/components/HowItWorks";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
@@ -20,7 +20,7 @@ export default function Home() {
         subtitle="Du skal ikke gætte på tommer og watt — sig hvor mange der kommer, så er pakken sat sammen på forhånd. Levering og opsætning kan tilvælges."
       />
       <ProductGrid />
-      <Testimonials />
+      <GoogleReviews />
       <HowItWorks />
       <FAQ />
       <Footer />
