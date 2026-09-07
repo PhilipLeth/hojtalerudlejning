@@ -34,6 +34,22 @@ const LEJEPERIODE: FaqItem = {
     "Skal du bruge det længere, så ring på 31 13 28 52, så finder vi ud af det.",
 };
 
+/** Samme to svar på engelsk — de engelske kategorisider har dem også. */
+const AFHENTNING_EN: FaqItem = {
+  q: "Do I collect the equipment myself, or can you deliver?",
+  a:
+    "You can collect it for free at Vermlandsgade 66, 2300 Copenhagen. If you would rather have it " +
+    "delivered, we drive anywhere in Copenhagen: 495 DKK for delivery and setup, where you return it " +
+    "yourself, or 795 DKK if we both deliver and collect it again after the party. You choose in the booking.",
+};
+
+const LEJEPERIODE_EN: FaqItem = {
+  q: "How long can I keep the equipment?",
+  a:
+    "From 1 to 5 days at the same price — there is no daily surcharge. Most customers collect on Friday and " +
+    "return on Monday. If you need it for longer, call us on 31 13 28 52 and we will work it out.",
+};
+
 export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
   "mixer": [
     {
@@ -250,6 +266,34 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     AFHENTNING,
   ],
 
+  lyspakker: [
+    {
+      q: "Hvad koster det at leje en lyspakke?",
+      a:
+        "Fra 695 kr for en weekend. Festtelt-lys med to lyskæder og fire uplights koster 695 kr, Diskolys-pakken med " +
+        "lyseffekt og discokugle 845 kr, Teenagefest-lys 945 kr og Stemningslys-pakken 1.045 kr. Bryllupslys med low fog " +
+        "til brudevalsen koster 1.245 kr, og Diskotek-pakken — det fulde dansegulv uden røg — 1.295 kr.",
+    },
+    {
+      q: "Hvilken lyspakke skal jeg vælge?",
+      a:
+        "Vælg efter anledningen: telt eller have → Festtelt-lys. Et dansegulv i stuen → Diskolys-pakken. Teenagefødselsdag " +
+        "i kælderen → Teenagefest-lys. Et helt lokale, der skal skifte karakter → Stemningslys-pakken. Bryllup → " +
+        "Bryllupslys-pakken. Og må der ikke bruges røg i lokalet, er Diskotek-pakken bygget til netop det.",
+    },
+    {
+      q: "Er lyspakkerne svære at sætte op?",
+      a:
+        "Nej — alt er plug and play på almindelige stikkontakter. Uplights og lyseffekter kører automatiske farver, " +
+        "discokuglen har motor og spot med, og lyskæderne skal bare hænges op. Der skal ikke programmeres eller styres noget.",
+    },
+    {
+      q: "Kan jeg leje lys uden lyd?",
+      a:
+        "Ja, alle lyspakkerne er ren lys — de spiller sammen med den musik, I allerede har. Skal der også lyd med, " +
+        "kan du kombinere med en højtaler i bookingen eller kigge på festpakkerne, hvor lyd og lys er samlet.",
+    },
+  ],
   festlys: [
     {
       q: "Hvad koster det at leje festlys?",
@@ -401,6 +445,112 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     },
     LEJEPERIODE,
     AFHENTNING,
+  ],
+
+  /**
+   * De engelske kategorisider.
+   *
+   * Nøglerne har "en-"-præfiks, så de ikke kan forveksles med de danske, og
+   * svarene er SKREVET på engelsk — ikke oversat sætning for sætning. En
+   * englænder i København søger "microphone rental copenhagen" og "party light
+   * rental", ikke "rent light bar", så spørgsmålene er formuleret derefter.
+   * Tallene er de samme som på dansk, fordi priserne er de samme.
+   */
+  "en-lej-mikrofon": [
+    {
+      q: "How much does it cost to rent a microphone in Copenhagen?",
+      a:
+        "A wired handheld microphone is 95 DKK for the whole rental period, and the Shure version 395 DKK. " +
+        "If you need to move around, a wireless handheld is 295 DKK and the stage-quality Shure BLX 595 DKK. " +
+        "A wireless headset is 345 DKK, and the PRO version 595 DKK.",
+    },
+    {
+      q: "Which microphone should I choose for speeches at a dinner?",
+      a:
+        "A wireless handheld. It gets passed between the speakers, and you can lower it when you are not " +
+        "talking. A headset is for the person who talks for a long time and needs their hands — a teacher or " +
+        "a toastmaster. If the microphone stays in one place all evening, a wired one saves you money.",
+    },
+    {
+      q: "Can the microphone be connected to your speakers?",
+      a:
+        "Yes. All our microphones have an XLR or jack output, and the speaker packages have inputs for both. " +
+        "The receiver for the wireless ones plugs straight into the speaker — you do not need a mixer in " +
+        "between. All cables are included.",
+    },
+    {
+      q: "How many microphones can I use at the same time?",
+      a:
+        "Two wireless microphones run side by side without trouble. If you need more — a band, a panel " +
+        "discussion — call us on 31 13 28 52 and we will find the right setup. For many sources at once, a " +
+        "mixer is what holds it together.",
+    },
+    AFHENTNING_EN,
+    LEJEPERIODE_EN,
+  ],
+  "en-festlys": [
+    {
+      q: "How much does it cost to rent party lights in Copenhagen?",
+      a:
+        "A single light effect is 395 DKK, one uplight 125 DKK (four of them 395 DKK), a disco ball 495 DKK " +
+        "(30 cm) or 595 DKK (40 cm) and 10 m of fairy lights 195 DKK. The light package with two coloured LED " +
+        "lamps, a centre effect and a stand is 495 DKK. A fog machine is 595 DKK, and the low fog machine that " +
+        "lays fog along the floor 795 DKK.",
+    },
+    {
+      q: "Do I need fog for the lights to work?",
+      a:
+        "Not strictly, but it makes a big difference. A light beam only becomes visible when there is " +
+        "something in the air to catch it — without fog you just see the coloured dots the light lands on. " +
+        "A fog machine is 595 DKK and comes with fluid.",
+    },
+    {
+      q: "Are party lights hard to set up?",
+      a:
+        "No. Uplights and light effects are plug and play: put them in a socket and they run automatic " +
+        "colours in time with the music. The light package comes on a stand with every cable, so there is " +
+        "nothing to rig.",
+    },
+    {
+      q: "What is the difference between a fog machine and low fog?",
+      a:
+        "An ordinary fog machine (595 DKK) fills the room with fog that drifts upwards and makes the light " +
+        "visible. The low fog machine (795 DKK) cools the fog with ice so it stays as a carpet along the " +
+        "floor — the 'dancing on clouds' effect from weddings and music videos.",
+    },
+    AFHENTNING_EN,
+  ],
+  "en-lysshow": [
+    {
+      q: "How much does a light show cost to rent?",
+      a:
+        "The light show with the light package, a disco ball and a fog machine is 1.495 DKK. The large light " +
+        "show, with four uplights and low fog instead, is 1.995 DKK. If you want light without fog, the " +
+        "ambient light package is 1.045 DKK. All prices are for the whole rental period, not per day.",
+    },
+    {
+      q: "Why is fog part of a light show?",
+      a:
+        "Because a beam of light can only be seen if there is something in the air for it to hit. Without fog " +
+        "you get coloured dots on the wall; with it the beam itself becomes visible, and that is what looks " +
+        "like a show. If you are unsure about one add-on, this is the one.",
+    },
+    {
+      q: "What is the difference between a fog machine and low fog?",
+      a:
+        "An ordinary fog machine (595 DKK) fills the room with fog that makes the light visible. The low fog " +
+        "machine (795 DKK) uses ice to cool the fog so it lies like a carpet on the floor — for the first " +
+        "dance, and for venues where the smoke alarm must stay quiet.",
+    },
+    {
+      q: "Can you set the light show up for me?",
+      a:
+        "Yes. Delivery and setup in Copenhagen is 495 DKK, and 795 DKK if we collect it again afterwards. " +
+        "For the large light show with uplights it is worth the money — uplights have to be placed in corners " +
+        "and along walls to work, and finding the right spots takes time.",
+    },
+    AFHENTNING_EN,
+    LEJEPERIODE_EN,
   ],
 
   /**

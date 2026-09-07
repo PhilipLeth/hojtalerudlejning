@@ -126,6 +126,14 @@ export default function FestlysPage() {
               { id: "lyskaeder", href: "/lyskaeder" },
             ]}
           />
+          <div className="mt-8 text-center">
+            <Link
+              href="/lyspakker"
+              className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
+            >
+              Se alle lyspakker — vælg efter festen
+            </Link>
+          </div>
         </section>
 
         {/* Upsell */}

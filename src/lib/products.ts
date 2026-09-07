@@ -1061,6 +1061,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
     title: "Lys & Effekter",
     href: "/festlys",
     links: [
+      { href: "/lyspakker", label: "Lyspakker — vælg efter festen" },
       { href: "/stemningslys", label: "Stemningslys-pakken" },
       { href: "/lys-pakke", label: "Lys-pakke" },
       { href: "/discokugle", label: "Discokugle" },
@@ -1108,7 +1109,9 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
     "pakke_udendors",
     "pakke_student",
   ],
-  "/festlys": [
+  // Lyspakkerne bor på /lyspakker — landingssiden der rendrer fra denne liste.
+  // /festlys viser dem OGSÅ i sit produktgitter, men kategorisiden er én.
+  "/lyspakker": [
     "pakke_stemningslys",
     "pakke_diskolys",
     "pakke_teenagefest",

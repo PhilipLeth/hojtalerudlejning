@@ -25,6 +25,7 @@ export const EN_PAGES = [
   "/hojtalerpakke-lille",
   "/hojtalerpakke-normal",
   "/lejevilkaar",
+  "/lyspakker",
   "/mackie-thump-go",
   "/om",
   "/soundboks-4",
