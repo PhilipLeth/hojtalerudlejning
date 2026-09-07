@@ -1,4 +1,17 @@
+"use client";
+
+/**
+ * Anmeldelsessektionen — den står på 16 sider.
+ *
+ * Er der rigtige anmeldelser på vores Google-profil, er det dem der vises
+ * (<GoogleReviews>). Vores egen tekst herunder er kun et fallback, indtil
+ * profilen har anmeldelser nok — og indtil Frederik har svaret på, om de fire
+ * citater overhovedet er ægte (se prd.json → seo.reviews_policy).
+ */
+
 import { type Locale, t } from "@/lib/i18n";
+import GoogleReviews from "@/components/GoogleReviews";
+import { useGoogleReviews } from "@/lib/useGoogleReviews";
 
 function Stars() {
   return (
@@ -18,6 +31,11 @@ function Stars() {
 
 export default function Testimonials({ locale = "da" }: { locale?: Locale }) {
   const s = t[locale].testimonials;
+  const { data } = useGoogleReviews(locale);
+
+  // Ægte anmeldelser slår altid vores egen tekst
+  if (data.reviews.length) return <GoogleReviews locale={locale} />;
+
   return (
     <section className="relative z-20 mx-auto max-w-4xl px-4 py-24">
       <h2 className="mb-16 text-center text-3xl font-bold sm:text-4xl">

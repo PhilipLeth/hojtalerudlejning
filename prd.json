@@ -1661,7 +1661,7 @@
       "beslutning": "Fjernet indtil Frederik siger klart, hvad der gælder. Er de opdigtede, er markup'en både spammy structured markup hos Google og en ulovlig falsk anmeldelse efter markedsføringsloven/Omnibus-direktivet. Er de ægte, koster fjernelsen kun en valgfri rich-result-udvidelse. Risikoen er asymmetrisk.",
       "guard": "src/__tests__/structured-data.test.tsx kræver nu, at INGEN produktside sætter reviewed-proppen. Mekanikken i ProductLanding er bevaret til den dag, der er ægte anmeldelser.",
       "aabent_spoergsmaal": "Er de 4 testimonials (Caroline V., Rune K., Mikkel L., Matthew H.) ægte? Svaret afgør både markup og om teksterne må blive stående synligt på sitet.",
-      "next": "Ægte Google-anmeldelser samles ind via review-mailen. Når de findes, må aggregateRating tilføjes igen — kun for de produkter anmeldelserne handler om."
+      "next": "Ægte Google-anmeldelser samles ind via review-mailen og vises nu på sitet via /api/anmeldelser (se google_anmeldelser_paa_sitet). aggregateRating-markup må dog stadig ikke bygges på Google-hentede anmeldelser."
     },
     "onpage_audit_2026_08": {
       "date": "2026-08-05",
@@ -3640,5 +3640,19 @@
     "sider": "Hver pakke har dansk + engelsk side (localeAlternates begge veje, skrevet i EN_PAGES): /diskolys /teenagefest-lys /festtelt-lys /bryllupslys /diskotek-pakke. De ligger også i CategoryProductGrid på /festlys. OBS: de GAMLE lys-sider (/stemningslys, /lysshow, /festlys, /discokugle, /lyskaeder, /uplights…) har stadig ingen engelsk udgave — kendt gæld.",
     "galleri": "scenes.json har sted/opstilling for alle fem; billeder genereres fra knappen i /admin/produkter (Philips kald, 0,13 $/stk) eller npm run gallery -- --apply --only <id>.",
     "naeste": "Annoncegrupper i den eksisterende søgekampagne for de tre clusters (diskolys/festtelt/bryllupslys) — separat beslutning, koster penge."
+  },
+  "google_anmeldelser_paa_sitet": {
+    "status": "bygget 2026-09-07 — venter på GOOGLE_PLACES_API_KEY i produktion",
+    "hvorfor": "Sitet viste fire testimonials, som ingen kan bekræfte er ægte (se seo.reviews_policy). Kunderne får review-mail og -SMS med link til Google-profilen, men anmeldelserne blev aldrig vist noget sted. Nu vises de fire nyeste anmeldelser fra profilen direkte på sitet.",
+    "endpoint": "GET /api/anmeldelser?sprog=da|en — offentligt. Henter Places API (New) med FieldMask rating,userRatingCount,googleMapsUri,reviews og cacher svaret i KV (google_reviews_da / google_reviews_en). Frisk i 6 timer, gemt højst 30 dage (Googles grænse for stedsdata). ?refresh=1 tvinger en hentning, men kun for en logget admin.",
+    "visning": "src/components/GoogleReviews.tsx: Google-logo, gennemsnit og stjernerække (halve stjerner), fire kort med profilbillede, navn, Googles egen 'for 2 uger siden', stjerner og tekst (lange tekster foldes med Læs mere — teksten ændres aldrig). Mobil: swipe. Links til profilen og til 'skriv en anmeldelse'. Findes på begge sprog.",
+    "fallback": "Testimonials.tsx viser GoogleReviews når der er anmeldelser, ellers sitets egen tekst. Ingen nøgle, tom profil eller Google nede = sektionen ser ud som før. Der opfindes aldrig en rating.",
+    "ingen_markup": "Anmeldelserne lægges IKKE i structured data. Google tillader ikke aggregateRating/Review-markup på anmeldelser man selv har hentet fra Google — seo.reviews_policy og structured-data.test.tsx står ved magt.",
+    "mangler": {
+      "noegle": "GOOGLE_PLACES_API_KEY skal oprettes i Google Cloud (Places API (New) slået til, nøglen begrænset til Places API) og sættes som secret på Pages-projektet speaker-rental. AI Studio-nøglerne duer ikke — Places svarer 401 CREDENTIALS_MISSING på dem.",
+      "antal_anmeldelser": "Uafklaret hvor mange anmeldelser profilen faktisk har. Er der under fire, viser sektionen dem der er.",
+      "gaeld": "De fire opdigtede/uafklarede testimonials står stadig som fallback. Bekræfter Frederik, at de er opdigtede, skal de slettes helt — så er sektionen tom, indtil Google-anmeldelserne er der."
+    },
+    "test": "src/__tests__/google-anmeldelser.test.ts (cache, fejl fra Google, sprog, admin-tvang) og google-anmeldelser-visning.test.tsx (kort, fallback, engelsk)."
   }
 }
