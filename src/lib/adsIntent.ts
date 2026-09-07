@@ -49,7 +49,8 @@ const GEO_WORDS = new Set([
 /** Anledninger fra kontoens egne søgetermer og landingssider. */
 const OCCASION_WORDS = new Set([
   "fest", "bryllup", "konfirmation", "fødselsdag", "julefrokost",
-  "nytår", "polterabend", "havefest", "firmafest", "student", "studenterfest",
+  "nytår", "nytårsfest", "nytårsaften", "polterabend", "havefest", "firmafest",
+  "student", "studenterfest", "studenterkørsel",
 ]);
 
 const ENGLISH_WORDS = new Set(["rent", "rents", "rental", "hire", "a"]);
@@ -277,6 +278,15 @@ const UDENFOR_OMRAADET = new Set([
  */
 export function udenforOmraadet(text: string): string | null {
   return words(text).find((w) => UDENFOR_OMRAADET.has(w)) ?? null;
+}
+
+/**
+ * Anledningen frasen nævner, hvis nogen — "lyd til konfirmation" → "konfirmation".
+ * Anledningen er det stærkeste svar på "hvor kommer kunden fra": den søger
+ * ikke på et produkt, men på en begivenhed, og landingssiden skal møde den dér.
+ */
+export function occasionWord(text: string): string | null {
+  return words(text).find((w) => OCCASION_WORDS.has(w)) ?? null;
 }
 
 /**

@@ -205,6 +205,9 @@ export default function AdsPage() {
         <a href="/admin/ads/opret" style={{ color: "#1e7e34", fontWeight: 600 }}>Byg annoncer</a>
         {" "}— eller lede efter udækket efterspørgsel under{" "}
         <a href="/admin/ads/ideer" style={{ color: "#1e7e34", fontWeight: 600 }}>Find idéer</a>.
+        Vil du starte i kunden i stedet for produktet, viser{" "}
+        <a href="/admin/ads/efterspoergsel" style={{ color: "#1e7e34", fontWeight: 600 }}>Efterspørgsel</a>
+        {" "}hvor der søges — klynget efter anledning, med besked når landingssiden mangler.
       </p>
 
       {error && (
