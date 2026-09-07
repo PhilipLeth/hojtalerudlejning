@@ -175,8 +175,9 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
         /en/lej-mikrofon står uden ét eneste indgående link, fordi menuen og
         forsiden kun kender pakkerne. Listen er ikke en oversættelse af den
         danske — de tre danske annoncelandingssider findes ikke på engelsk, og
-        de tre engelske kategorisider er dem, der skal findes på "party light
-        rental copenhagen" og "microphone rental copenhagen".
+        de engelske kategorisider er dem, der skal findes på "party light
+        rental copenhagen" og "microphone rental copenhagen". /en/lyspakker kom
+        til i samme omgang som /lyspakker og har samme problem.
       */}
       {locale === "da" ? (
         <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs">
@@ -200,6 +201,9 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
           </Link>
           <Link href="/en/lej-mikrofon" className="text-white/30 hover:text-brand-400 transition">
             Microphone rental
+          </Link>
+          <Link href="/en/lyspakker" className="text-white/30 hover:text-brand-400 transition">
+            Light packages
           </Link>
         </p>
       )}
