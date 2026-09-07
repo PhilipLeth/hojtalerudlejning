@@ -7,6 +7,7 @@ import PhoneLink from "@/components/PhoneLink";
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import { CompanyBlock, CompanyEmail, CompanyEmailLink } from "@/components/CompanyInfo";
 import { formatDateLine, formatOneLine, openDays, upcomingExceptions } from "@/lib/openingHours";
+import { socialEntries } from "@/lib/socials";
 
 /**
  * Åbningstiderne i footeren. Tiderne kommer fra /admin/indstillinger, så de kan
@@ -37,6 +38,32 @@ function OpeningHoursLine({ locale }: { locale: Locale }) {
       ))}
       {hours.other && <p className="mt-1 text-xs text-white/30">{hours.other}</p>}
     </>
+  );
+}
+
+/**
+ * Sociale profiler — sat i /admin/indstillinger, vises kun når de findes.
+ * Samme links står som sameAs i LocalBusiness-markup'en, så Google kan koble
+ * profilerne og sitet sammen.
+ */
+function SocialLine() {
+  const { socials } = useSiteSettings();
+  const links = socialEntries(socials);
+  if (links.length === 0) return null;
+  return (
+    <p className="mt-3 space-x-3">
+      {links.map((l) => (
+        <a
+          key={l.id}
+          href={l.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium text-white/50 underline-offset-4 transition hover:text-brand-400 hover:underline"
+        >
+          {l.label}
+        </a>
+      ))}
+    </p>
   );
 }
 
@@ -103,6 +130,7 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
     <footer className="relative z-20 border-t border-white/5 bg-[#07060b] px-4 py-12 text-center text-sm text-white/30">
       <CompanyBlock />
       <OpeningHoursLine locale={locale} />
+      <SocialLine />
       <p className="mt-3">
         <PhoneLink
           className="inline-flex items-center gap-1.5 font-semibold text-brand-400 hover:text-brand-300 transition"

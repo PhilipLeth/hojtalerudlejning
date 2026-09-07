@@ -21,6 +21,7 @@
 
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import { openingHoursSpecification } from "@/lib/openingHours";
+import { socialEntries } from "@/lib/socials";
 
 /**
  * Google Business Profile-profilen for Lejhøjtaler.dk.
@@ -34,7 +35,7 @@ const PROFILE_URL = "https://g.page/r/CbIkmN4b8vjGEBM";
 const MAP_URL = `https://www.google.com/maps/place/?q=place_id:${PLACE_ID}`;
 
 export default function LocalBusinessJsonLd({ extra = {} }: { extra?: Record<string, unknown> }) {
-  const { company, hours, e164 } = useSiteSettings();
+  const { company, hours, e164, socials } = useSiteSettings();
 
   const data = {
     "@context": "https://schema.org",
@@ -57,7 +58,8 @@ export default function LocalBusinessJsonLd({ extra = {} }: { extra?: Record<str
       addressCountry: "DK",
     },
     areaServed: { "@type": "City", name: "København" },
-    sameAs: [PROFILE_URL],
+    // Profilen først, så de sociale profiler fra /admin/indstillinger
+    sameAs: [PROFILE_URL, ...socialEntries(socials).map((l) => l.url)],
     hasMap: MAP_URL,
     logo: "https://lejhojtaler.dk/icon-512.png",
     openingHoursSpecification: openingHoursSpecification(hours),

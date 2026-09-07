@@ -16,6 +16,7 @@ import {
 } from "../../src/lib/openingHours";
 import { DEFAULT_PICKUP_ADDRESS, normalizePickupAddress } from "../../src/lib/pickup";
 import { DEFAULT_COMPANY, normalizeCompany, validateCompany, type CompanyInfo } from "../../src/lib/siteInfo";
+import { TOMME_SOCIALS, normalizeSocials, validateSocials, type SocialLinks } from "../../src/lib/socials";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -56,6 +57,7 @@ function toResponse(
   hours: OpeningHours,
   pickupAddress: string,
   company: CompanyInfo,
+  socials: SocialLinks,
   updatedAt: string | null,
 ) {
   const d = digits.length === 8 ? digits : DEFAULT_DIGITS;
@@ -69,6 +71,7 @@ function toResponse(
     hours,
     pickupAddress,
     company,
+    socials,
     updatedAt,
   };
 }
@@ -80,13 +83,14 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
     const raw = await context.env.BOOKINGS.get(KV_KEY);
     if (!raw) {
-      return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, DEFAULT_COMPANY, null));
+      return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, DEFAULT_COMPANY, TOMME_SOCIALS, null));
     }
     const doc = JSON.parse(raw) as {
       phone?: string;
       hours?: unknown;
       pickupAddress?: unknown;
       company?: unknown;
+      socials?: unknown;
       updatedAt?: string;
     };
     return json(
@@ -95,12 +99,13 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
         normalizeOpeningHours(doc.hours),
         normalizePickupAddress(doc.pickupAddress),
         normalizeCompany(doc.company),
+        normalizeSocials(doc.socials),
         doc.updatedAt ?? null,
       ),
     );
   } catch (e) {
     console.error("[site-settings] GET failed:", e);
-    return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, DEFAULT_COMPANY, null));
+    return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, DEFAULT_COMPANY, TOMME_SOCIALS, null));
   }
 };
 
@@ -108,7 +113,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const auth = await requireAdmin(context, cors);
   if (auth instanceof Response) return auth;
 
-  let body: { phone?: unknown; hours?: unknown; pickupAddress?: unknown; company?: unknown };
+  let body: { phone?: unknown; hours?: unknown; pickupAddress?: unknown; company?: unknown; socials?: unknown };
   try {
     body = await context.request.json();
   } catch {
@@ -116,7 +121,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   // Det gemte er udgangspunktet: admin kan sende kun telefon eller kun tider
-  let stored: { phone?: string; hours?: unknown; pickupAddress?: unknown; company?: unknown } = {};
+  let stored: { phone?: string; hours?: unknown; pickupAddress?: unknown; company?: unknown; socials?: unknown } = {};
   try {
     const raw = await context.env.BOOKINGS.get(KV_KEY);
     if (raw) stored = JSON.parse(raw);
@@ -162,11 +167,21 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     company = valid.company;
   }
 
+  let socials = normalizeSocials(stored.socials);
+  if (body.socials !== undefined) {
+    const valid = validateSocials(body.socials);
+    if (!valid.ok) {
+      console.warn("[site-settings] ugyldige sociale links:", valid.error);
+      return json({ error: valid.error }, 400);
+    }
+    socials = valid.socials;
+  }
+
   const updatedAt = new Date().toISOString();
   await context.env.BOOKINGS.put(
     KV_KEY,
-    JSON.stringify({ phone: digits, hours, pickupAddress, company, updatedAt }),
+    JSON.stringify({ phone: digits, hours, pickupAddress, company, socials, updatedAt }),
   );
   console.log("[site-settings] gemt telefon", digits, "og", Object.values(hours.days).filter((d) => !d.closed).length, "åbne dage");
-  return json({ ok: true, ...toResponse(digits, hours, pickupAddress, company, updatedAt) });
+  return json({ ok: true, ...toResponse(digits, hours, pickupAddress, company, socials, updatedAt) });
 };

@@ -9,6 +9,7 @@ import {
 } from "@/lib/openingHours";
 import { DEFAULT_PICKUP_ADDRESS, normalizePickupAddress } from "@/lib/pickup";
 import { DEFAULT_COMPANY, normalizeCompany, type CompanyInfo } from "@/lib/siteInfo";
+import { TOMME_SOCIALS, normalizeSocials, type SocialLinks } from "@/lib/socials";
 
 /** Det offentlige sitet henter i én omgang: nummer, åbningstider og adresse */
 export interface SiteSettings extends SitePhone {
@@ -17,6 +18,8 @@ export interface SiteSettings extends SitePhone {
   pickupAddress: string;
   /** Navn, adresse, CVR og mail — det der står i footeren og på fakturaen */
   company: CompanyInfo;
+  /** Sociale profiler — footeren og Googles sameAs; tomme felter udelades */
+  socials: SocialLinks;
 }
 
 const DEFAULTS: SiteSettings = {
@@ -24,6 +27,7 @@ const DEFAULTS: SiteSettings = {
   hours: DEFAULT_OPENING_HOURS,
   pickupAddress: DEFAULT_PICKUP_ADDRESS,
   company: DEFAULT_COMPANY,
+  socials: TOMME_SOCIALS,
 };
 
 let cached: SiteSettings | null = null;
@@ -39,6 +43,7 @@ async function loadSiteSettings(): Promise<SiteSettings> {
           hours?: unknown;
           pickupAddress?: unknown;
           company?: unknown;
+          socials?: unknown;
         };
         const next: SiteSettings = {
           digits: json.digits || DEFAULT_PHONE.digits,
@@ -50,6 +55,7 @@ async function loadSiteSettings(): Promise<SiteSettings> {
           hours: normalizeOpeningHours(json.hours),
           pickupAddress: normalizePickupAddress(json.pickupAddress),
           company: normalizeCompany(json.company),
+          socials: normalizeSocials(json.socials),
         };
         cached = next;
         return next;

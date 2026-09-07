@@ -10,6 +10,7 @@ import { phoneFromInput } from "@/lib/phone";
 import { clearSiteSettingsCache } from "@/lib/useSiteSettings";
 import { DEFAULT_PICKUP_ADDRESS } from "@/lib/pickup";
 import { DEFAULT_COMPANY, formatCompanyLine, normalizeCompany, type CompanyInfo } from "@/lib/siteInfo";
+import { SOCIAL_PLATFORMS, TOMME_SOCIALS, normalizeSocials, type SocialLinks } from "@/lib/socials";
 import {
   DAY_PURPOSES,
   DEFAULT_OPENING_HOURS,
@@ -217,11 +218,12 @@ export default function IndstillingerPage() {
   const [phone, setPhone] = useState("");
   const [pickupAddress, setPickupAddress] = useState(DEFAULT_PICKUP_ADDRESS);
   const [company, setCompany] = useState<CompanyInfo>(DEFAULT_COMPANY);
+  const [socials, setSocials] = useState<SocialLinks>(TOMME_SOCIALS);
   const [savedDisplay, setSavedDisplay] = useState("");
   const [hours, setHours] = useState<OpeningHours>(DEFAULT_OPENING_HOURS);
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState<"kontakt" | "hours" | "company" | null>(null);
+  const [saving, setSaving] = useState<"kontakt" | "hours" | "company" | "socials" | null>(null);
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
 
@@ -237,11 +239,13 @@ export default function IndstillingerPage() {
         hours?: unknown;
         pickupAddress?: string;
         company?: unknown;
+        socials?: unknown;
         updatedAt?: string | null;
       };
       setPhone(json.display || json.phone || "");
       setPickupAddress(json.pickupAddress || DEFAULT_PICKUP_ADDRESS);
       setCompany(normalizeCompany(json.company));
+      setSocials(normalizeSocials(json.socials));
       setSavedDisplay(json.display || "");
       setHours(normalizeOpeningHours(json.hours));
       setUpdatedAt(json.updatedAt ?? null);
@@ -257,7 +261,7 @@ export default function IndstillingerPage() {
   }, [load]);
 
   /** Gem enten telefon eller åbningstider — serveren tager imod ét felt ad gangen */
-  async function save(what: "kontakt" | "hours" | "company") {
+  async function save(what: "kontakt" | "hours" | "company" | "socials") {
     setSaving(what);
     setError("");
     setOk("");
@@ -266,7 +270,13 @@ export default function IndstillingerPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(
-          what === "kontakt" ? { phone, pickupAddress } : what === "company" ? { company } : { hours },
+          what === "kontakt"
+            ? { phone, pickupAddress }
+            : what === "company"
+              ? { company }
+              : what === "socials"
+                ? { socials }
+                : { hours },
         ),
       });
       const json = (await res.json()) as { error?: string; display?: string; hours?: unknown; updatedAt?: string };
@@ -282,6 +292,9 @@ export default function IndstillingerPage() {
       } else if (what === "company") {
         setCompany(normalizeCompany((json as { company?: unknown }).company));
         setOk("Firmaoplysningerne er gemt — de står i footeren, på fakturaen og i mails.");
+      } else if (what === "socials") {
+        setSocials(normalizeSocials((json as { socials?: unknown }).socials));
+        setOk("Sociale links er gemt — de står i footeren og i den markup Google læser.");
       } else {
         setHours(normalizeOpeningHours(json.hours));
         setOk("Åbningstiderne er gemt — de står på sitet med det samme.");
@@ -467,6 +480,34 @@ export default function IndstillingerPage() {
 
           <button type="submit" disabled={saving !== null} style={knap}>
             {saving === "company" ? "Gemmer…" : "Gem firmaoplysninger"}
+          </button>
+        </form>
+
+        <form onSubmit={(e) => { e.preventDefault(); save("socials"); }} style={card}>
+          <h2 style={{ margin: "0 0 4px", fontSize: "16px" }}>Sociale profiler</h2>
+          <p style={{ margin: "0 0 12px", fontSize: "12px", color: "#888", lineHeight: 1.5 }}>
+            Indsæt hele linket til profilen (fx https://www.facebook.com/lejhojtaler). Udfyldte
+            profiler vises i footeren og i den markup Google læser — tomme felter udelades.
+            Husk at sætte de samme links på Google Business Profile (Rediger profil →
+            Kontakt → Sociale profiler), så profilen og sitet siger det samme.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px" }}>
+            {SOCIAL_PLATFORMS.map((p) => (
+              <div key={p.id}>
+                <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px" }}>{p.label}</label>
+                <input
+                  type="url"
+                  inputMode="url"
+                  placeholder={`https://www.${p.host}/…`}
+                  value={socials[p.id]}
+                  onChange={(e) => setSocials((sv) => ({ ...sv, [p.id]: e.target.value }))}
+                  style={{ width: "100%", padding: "10px", fontSize: "14px", border: "1px solid #ddd", borderRadius: "8px", boxSizing: "border-box" }}
+                />
+              </div>
+            ))}
+          </div>
+          <button type="submit" disabled={saving !== null} style={knap}>
+            {saving === "socials" ? "Gemmer…" : "Gem sociale links"}
           </button>
         </form>
 

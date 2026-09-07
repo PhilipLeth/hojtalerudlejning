@@ -8,6 +8,7 @@ import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, DELIVER
 import { useProducts } from "@/lib/useProducts";
 import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
 import CapacityBadge, { capacityLevel } from "@/components/CapacityBadge";
+import AdresseInput from "@/components/AdresseInput";
 import { loadStripe } from "@stripe/stripe-js";
 import { thumbSrcSet, THUMB_IMAGE_SIZES } from "@/lib/imageSrcSet";
 import { useSiteSettings } from "@/lib/useSiteSettings";
@@ -514,16 +515,12 @@ function DeliveryPicker({
       {value && (
         <div className="pt-3">
           <label className="mb-1 block text-xs text-white/50">{s.deliveryAddressLabel}</label>
-          <input
-            type="text"
-            placeholder={s.deliveryPlaceholder}
+          <AdresseInput
             value={address}
-            onChange={(e) => onAddressChange(e.target.value)}
-            className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-1 ${
-              addressMissing
-                ? "border-red-400/60 focus:border-red-400 focus:ring-red-400"
-                : "border-brand-500/30 focus:border-brand-500 focus:ring-brand-500"
-            }`}
+            onChange={onAddressChange}
+            placeholder={s.deliveryPlaceholder}
+            invalid={addressMissing}
+            locale={locale}
           />
           {addressMissing && <p className="mt-1 text-xs text-red-400">{s.deliveryAddressRequired}</p>}
         </div>
