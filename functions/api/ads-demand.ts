@@ -210,11 +210,29 @@ export function demandClusters(rows: DemandKeyword[]): DemandCluster[] {
 }
 
 export interface SideKandidat {
-  id: string;
+  /** Produkt-id — eller null for en kategoriside, som byggeren ikke kan bygge mod. */
+  id: string | null;
   name: string;
   page: string;
   terms: string[];
 }
+
+/**
+ * Kategorisiderne — landingssider uden produkt i kataloget. Uden dem meldte
+ * kortet "mangler side" for lydanlæg (100/md), mens /lydanlaeg — stigesiden
+ * annoncerne netop SKAL lande på ved brede søgninger, se prd'ens
+ * pakkearkitektur — stod færdigbygget. Produkterne prøves først, så en
+ * produktside vinder når begge matcher lige godt.
+ */
+export const KATEGORI_SIDER: Array<Omit<SideKandidat, "id"> & { id: null }> = [
+  { id: null, name: "Lydanlæg-stigen", page: "/lydanlaeg", terms: ["lydanlæg", "musikanlæg", "anlæg", "højtaleranlæg", "pa anlæg"] },
+  { id: null, name: "Lydudstyr", page: "/lydudstyr", terms: ["lydudstyr"] },
+  { id: null, name: "Lej højtaler", page: "/lej-hojtaler", terms: ["højtaler", "højttaler"] },
+  { id: null, name: "Festlys", page: "/festlys", terms: ["festlys", "festbelysning", "lys"] },
+  { id: null, name: "Festlyd", page: "/festlyd", terms: ["festlyd"] },
+  { id: null, name: "Lysshow", page: "/lysshow", terms: ["lysshow"] },
+  { id: null, name: "AV-udstyr", page: "/av-udstyr", terms: ["av udstyr"] },
+];
 
 /**
  * Den bedste eksisterende landingsside til en klynge — målt på hvor mange af
@@ -323,9 +341,13 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       if (!row.sources.includes("egen")) row.sources.push("egen");
     }
 
+    // Produkterne først: matcher både en produktside og en kategoriside
+    // lige godt, hører klyngen til på produktet — det er det, man kan bygge.
+    const alleSider = [...kandidater, ...KATEGORI_SIDER.filter((k) => !pauset.has(k.page))];
+
     const clusters = demandClusters([...rows.values()]).slice(0, MAX_CLUSTERS);
     for (const c of clusters) {
-      const side = findSide(c.keywords.filter((k) => !k.outsideArea).map((k) => k.text), kandidater);
+      const side = findSide(c.keywords.filter((k) => !k.outsideArea).map((k) => k.text), alleSider);
       if (side) {
         c.productId = side.id;
         c.productName = side.name;

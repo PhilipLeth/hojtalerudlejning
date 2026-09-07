@@ -1,6 +1,7 @@
 /* ───── Efterspørgselskortet: klynger efter kunden, ikke kataloget ───── */
 import { describe, it, expect } from "vitest";
 import {
+  KATEGORI_SIDER,
   demandClusters,
   demandKey,
   erEfterspoergsel,
@@ -75,6 +76,23 @@ describe("findSide", () => {
 
   it("svarer null når ingen side kan besvare søgningen — det ER svaret", () => {
     expect(findSide(["lyd til konfirmation"], kandidater)).toBeNull();
+  });
+});
+
+describe("kategorisiderne", () => {
+  const kandidater = [
+    { id: "lys_pakke", name: "Lys-pakke", page: "/lys-pakke", terms: ["lys pakke", "lys"] },
+    ...KATEGORI_SIDER,
+  ];
+
+  it("sender lydanlæg til stigesiden i stedet for 'mangler side'", () => {
+    const side = findSide(["leje lydanlæg", "lydanlæg leje", "udlejning lydanlæg"], kandidater);
+    expect(side?.page).toBe("/lydanlaeg");
+    expect(side?.id).toBeNull(); // kategoriside — byggeren kan ikke bygge mod den
+  });
+
+  it("lader produktsiden vinde når begge matcher lige godt", () => {
+    expect(findSide(["lej lys"], kandidater)?.page).toBe("/lys-pakke");
   });
 });
 

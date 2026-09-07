@@ -245,12 +245,18 @@ export default function AdsEfterspoergselPage() {
               {c.page ? (
                 <span style={{ fontSize: "12px" }}>
                   → {c.productName} <span style={{ color: "#999" }}>{c.page}</span>{" "}
-                  <a
-                    href={`/admin/ads/opret?produkt=${encodeURIComponent(c.productId!)}`}
-                    style={{ color: "#1e7e34", fontWeight: 600, whiteSpace: "nowrap" }}
-                  >
-                    Byg →
-                  </a>
+                  {c.productId ? (
+                    <a
+                      href={`/admin/ads/opret?produkt=${encodeURIComponent(c.productId)}`}
+                      style={{ color: "#1e7e34", fontWeight: 600, whiteSpace: "nowrap" }}
+                    >
+                      Byg →
+                    </a>
+                  ) : (
+                    <span style={{ color: "#8a6d3b" }} title="Byggeren er bundet til produkter — en gruppe mod en kategoriside laves i Google Ads-UI'et med fraserne her">
+                      kategoriside — byg gruppen i Google Ads
+                    </span>
+                  )}
                 </span>
               ) : (
                 <span style={{ fontSize: "12px", color: "#8a6d3b", fontWeight: 600 }} title="Ingen side i kataloget kan besvare de her søgninger — byg siden før annoncen">
