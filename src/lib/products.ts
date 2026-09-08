@@ -1200,6 +1200,12 @@ export const FEST_LADDER_IDS: string[] = LADDER_FEST.map((t) => t.productId).fil
   (id): id is string => id !== null,
 );
 
+/** Forsidens to første trin. De store pakker (150 og 250) er taget af toppen
+ *  8. september 2026: fire tunge kort skubbede alt andet under skærmkanten, og
+ *  de store bliver alligevel valgt via /lej-hojtaler og deres egne sider.
+ *  Forsiden linker videre til dem i teksten under kortene. */
+export const FEST_LADDER_FORSIDE_IDS: string[] = FEST_LADDER_IDS.slice(0, 2);
+
 /* LADDER_TALE er fjernet sammen med pausen: alle tre trin — Præsentation,
  * Møde 100 og Konference 150 — havde projektor eller skærm med, og en stige
  * hvor hvert trin er udsolgt er ikke en stige. /lydanlaeg henviser i stedet

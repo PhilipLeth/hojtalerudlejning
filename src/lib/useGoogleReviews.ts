@@ -38,11 +38,16 @@ export interface GoogleReviewsState {
   loading: boolean;
 }
 
-export function useGoogleReviews(locale: Locale = "da"): GoogleReviewsState {
+/**
+ * `enabled: false` springer kaldet over — admin har ingen brug for anmeldelser,
+ * og topbaren står også der.
+ */
+export function useGoogleReviews(locale: Locale = "da", enabled = true): GoogleReviewsState {
   const [data, setData] = useState<GoogleReviewsData>(() => cache[locale] ?? TOMME_ANMELDELSER);
   const [loading, setLoading] = useState(() => !cache[locale]);
 
   useEffect(() => {
+    if (!enabled) return;
     let levende = true;
     const kendt = cache[locale];
     if (kendt) {
@@ -59,7 +64,7 @@ export function useGoogleReviews(locale: Locale = "da"): GoogleReviewsState {
     return () => {
       levende = false;
     };
-  }, [locale]);
+  }, [locale, enabled]);
 
   return { data, loading };
 }

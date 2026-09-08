@@ -3690,3 +3690,9 @@
     "noegle": "API-nøgle 'Lejhojtaler Places (server)' oprettet 7. sept 2026 i Google Cloud-projektet 'lejecenter' (samme projekt som Search Console-servicekontoen; Places API (New) var allerede slået til, billing: My Billing Account 2). Begrænset til Places API (New), ingen application restriction (kaldet kommer fra Cloudflares IP'er). Mangler: `wrangler pages secret put GOOGLE_PLACES_API_KEY --project-name=speaker-rental`."
   }
 }
+  },
+  "forsiden_2026_09_08": {
+    "beslutning": "Forsiden viser kun de to små festpakker (50 og 100 gæster), og Google-anmeldelserne er trukket op lige under dem — før produktgitteret. Festpakke 150 og 250 fyldte toppen med tunge kort uden at blive valgt der.",
+    "hvor": "src/app/page.tsx og src/app/en/page.tsx bruger FEST_LADDER_FORSIDE_IDS (= FEST_LADDER_IDS.slice(0,2)) i stedet for hele stigen. BundleGrid har fået en `note`-prop til linjen under kortene.",
+    "de_store_pakker": "Linkes fra noten under kortene på begge sprog. Dansk har også /lej-hojtaler med hele stigen; engelsk har INGEN tilsvarende kategoriside, så noten er det eneste indgående link til /en/festpakke-150 og /en/festpakke-250. forside-rakkefolge.test.ts vogter både rækkefølgen og de fire links.",
+    "topbanner": "TopBar viser Google-ratingen som femte plads: fem små stjerner + '5,0 på Google' med link til profilen, hentet fra /api/anmeldelser (samme kald som sektionen, delt cache). Står der kun når Google har givet et tal, og hentes ikke i admin (useGoogleReviews(locale, enabled)). topbar-rating.test.ts vogter det."

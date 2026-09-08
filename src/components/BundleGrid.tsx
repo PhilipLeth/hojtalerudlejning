@@ -26,6 +26,7 @@ const COPY = {
  */
 export default function BundleGrid({
   ids,
+  note,
   locale = "da",
   eyebrow = locale === "en" ? "Packages" : "Pakker",
   title = locale === "en" ? "Ready for the party" : "Klar til festen",
@@ -34,6 +35,8 @@ export default function BundleGrid({
     : "Lyd og lys der passer perfekt sammen — booket som én pakke med rabat vs. at leje delene enkeltvis. Levering og opsætning kan tilvælges.",
 }: {
   ids?: string[];
+  /** Linje under kortene — fx videre til de pakker gitteret ikke viser */
+  note?: React.ReactNode;
   locale?: Locale;
   eyebrow?: string;
   title?: string;
@@ -61,6 +64,8 @@ export default function BundleGrid({
           <BundleCard key={p.id} product={p} locale={locale} />
         ))}
       </div>
+
+      {note && <p className="mt-8 text-center text-sm text-white/50">{note}</p>}
     </section>
   );
 }

@@ -8,7 +8,8 @@ import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { localeAlternates } from "@/lib/hreflang";
-import { FEST_LADDER_IDS } from "@/lib/products";
+import Link from "next/link";
+import { FEST_LADDER_FORSIDE_IDS } from "@/lib/products";
 import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 import { catalogPrice, prisDkk, startPrisDkk } from "@/lib/products";
 
@@ -50,12 +51,31 @@ export default function EnHome() {
       {/* Pakkestigen manglede på engelsk — den engelske forside viste kun
           enkelthøjtalere, mens den danske havde hele stigen efter antal gæster.
           Det var også grunden til, at de engelske pakkesider stod uden ét
-          eneste indgående link. */}
-      <BundleGrid locale="en" ids={FEST_LADDER_IDS} title="Choose a package by number of guests" />
+          eneste indgående link. Gitteret viser nu kun de to små, så noten er
+          det eneste, der linker til de store engelske pakkesider: den skal med. */}
+      <BundleGrid
+        locale="en"
+        ids={FEST_LADDER_FORSIDE_IDS}
+        title="Choose a package by number of guests"
+        note={
+          <>
+            More than 100 guests?{" "}
+            <Link href="/en/festpakke-150" className="text-brand-400 underline-offset-2 hover:underline">
+              Party package 150
+            </Link>{" "}
+            and{" "}
+            <Link href="/en/festpakke-250" className="text-brand-400 underline-offset-2 hover:underline">
+              Party package 250
+            </Link>{" "}
+            cover the bigger parties.
+          </>
+        }
+      />
+      {/* Anmeldelserne står lige under pakkerne — det er dér, valget træffes */}
+      <GoogleReviews locale="en" />
       <SpeakerCompare locale="en" />
       <FaqSection items={CATEGORY_FAQ["en"]} title="Frequently asked questions" />
 
-      <GoogleReviews locale="en" />
       <HowItWorks locale="en" />
       <Footer locale="en" />
 
