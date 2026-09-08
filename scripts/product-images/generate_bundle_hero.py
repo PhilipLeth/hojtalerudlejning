@@ -77,6 +77,20 @@ PAKKER: dict[str, dict] = {
             "catches the light."
         ),
     },
+    # Bryllupspakken med LYD (2.695 kr) — den viste den samme sorte røgmaskine
+    # som lys-pakkerne gjorde, og det er en dyrere side. Højtalerne lyser ikke,
+    # så billedet skal bære på stemningen: varmt lys, røggulv, anlægget klar.
+    "product-pakke-bryllup": {
+        "dele": ["product-festival.png", "product-stativer.png", "product-mikrofon.png",
+                 "product-lyskaeder.png", "product-lowfog.png"],
+        "opstilling": (
+            "Two large black PA speakers stand on their tripod stands, one at each side of the frame, angled "
+            "inward as they would flank a dance floor. Between and behind them the string of warm white festoon "
+            "bulbs swags across the top of the frame, glowing. The wireless handheld microphone rests on a small "
+            "stool in front of one speaker. The low fog machine sits low at the right, and a thin blanket of "
+            "low-lying fog rolls forward across the floor between the speakers."
+        ),
+    },
     "product-pakke-diskotek": {
         "dele": ["product-lys.png", "product-lyseffekt.png", "product-discokugle.png"],
         "opstilling": (

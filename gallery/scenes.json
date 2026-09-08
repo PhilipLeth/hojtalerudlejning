@@ -240,5 +240,11 @@
     "_kommentar": "Sættes ind EFTER friteksten, når der trykkes 'Ret dette billede' eller 'Ret forslaget'. Det billede man kigger på sendes så med som SIDSTE reference, og linjen her siger hvad det er. Uden den var 'det samme uden stativer' et helt nyt billede fra bunden — modellen havde aldrig set det, man ville rette. 'Ny optagelse' sender det ikke med. Det forrige billede tager en af de seks referencepladser, så en pakke med seks dele mister den mindst vigtige. Er feltet tomt, bruges uden_note: en ny tagning af det samme billede.",
     "skabelon": "The last reference image is the previous version of this exact picture. Keep its composition, framing, light, setting and the equipment in it; change only what the instruction above asks for, and leave everything else as it is.",
     "uden_note": "The last reference image is the previous version of this exact picture. Make a fresh take of it: keep its composition, framing, light, setting and the equipment in it, with only small natural variation."
+  },
+  "grej_detaljer": {
+    "_kommentar": "Facts om VORES eksemplarer, som modellen ikke kan læse ud af et referencefoto alene, og som den ellers finder på. 8. sep 2026 gav den uplightene TOLV linser i fire ud af femten galleribilleder — vores har syv. En kunde kan tælle. Teksten sættes ind for hver del, der er med i scenen, lige før forbuddet mod at digte grej, så den vejer tungt. Nøglen er PRODUKTETS id, ikke pakkens: en detalje om en uplight gælder hver eneste pakke, den indgår i.",
+    "uplight": "Each uplight has exactly seven lenses on its face: six in a ring around one centre lens. Not more, not fewer.",
+    "uplight_4": "Each uplight has exactly seven lenses on its face: six in a ring around one centre lens. Not more, not fewer.",
+    "lyseffekt": "The LED par light has exactly six lenses on its face, arranged in a ring with no centre lens, and two small handles on top."
   }
 }

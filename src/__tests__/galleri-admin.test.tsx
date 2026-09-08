@@ -681,3 +681,35 @@ describe("To billeder på samme tid", () => {
     expect(flestSamtidig).toBe(1);
   });
 });
+
+describe("Detaljer om vores eget grej", () => {
+  /**
+   * Modellen gav uplightene tolv linser i fire ud af femten galleribilleder.
+   * Vores har syv, og en kunde kan tælle. Detaljen står på produktet, ikke på
+   * pakken, så den følger med overalt hvor delen er med.
+   */
+  it("følger med i prompten for hver pakke, delen er en del af", async () => {
+    const { byggPrompt, GALLERY_SCENER } = await import("@/lib/galleryPrompt");
+    const scene = GALLERY_SCENER.find((s) => s.id === "komposition")!;
+    for (const id of ["pakke_festtelt", "pakke_bryllupslys"]) {
+      const b = byggPrompt(flad.get(id)!, scene, flad)!;
+      expect(b.prompt, id).toMatch(/exactly seven lenses/);
+    }
+  });
+
+  it("står allersidst i prompten, så den vejer tungest", async () => {
+    const { byggPrompt, GALLERY_SCENER } = await import("@/lib/galleryPrompt");
+    const scene = GALLERY_SCENER.find((s) => s.id === "komposition")!;
+    const b = byggPrompt(flad.get("pakke_festtelt")!, scene, flad)!;
+    // Allersidst: placeret før forbuddet blev detaljen adlydt i ét ud af fire
+    expect(b.prompt.indexOf("exactly seven lenses")).toBeGreaterThan(b.prompt.indexOf("Do not invent"));
+    expect(b.prompt.trim().endsWith("Not more, not fewer.")).toBe(true);
+  });
+
+  it("nævner ikke en del, der ikke er i pakken", async () => {
+    const { byggPrompt, GALLERY_SCENER } = await import("@/lib/galleryPrompt");
+    const scene = GALLERY_SCENER.find((s) => s.id === "komposition")!;
+    const b = byggPrompt(flad.get("pakke_fest_150")!, scene, flad)!;
+    expect(b.prompt).not.toMatch(/exactly seven lenses/);
+  });
+});

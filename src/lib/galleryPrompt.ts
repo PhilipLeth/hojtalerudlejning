@@ -275,6 +275,18 @@ export function byggPrompt(
     gaester_en: kapEn ? udfyld(g.med_tal_en, { kapacitet_en: kapEn }) : g.uden_tal_en,
   };
 
+  /**
+   * Detaljer om de dele, der faktisk er med i scenen.
+   *
+   * Modellen finder på, hvad et referencefoto ikke siger tydeligt: den gav
+   * uplightene tolv linser, hvor vores har syv. Detaljerne står på PRODUKTET,
+   * så de følger med i hver pakke, delen indgår i, og sættes ind lige før
+   * forbuddet mod at digte grej — det, der står sidst, vejer tungest.
+   */
+  const detaljer = (scener.grej_detaljer ?? {}) as Record<string, string>;
+  const setDele = new Set(ref.billeder.map((r) => r.id));
+  const grejDetaljer = [...setDele].map((id) => detaljer[id]).filter(Boolean).join(" ");
+
   return {
     prompt: [
       udfyld(scene.prompt, felter),
@@ -284,6 +296,10 @@ export function byggPrompt(
       scener.stil.faelles,
       scener.stil.kamera_hoejde,
       scener.stil.forbudt,
+      // Allersidst. Placeret før forbuddet blev den adlydt i ét ud af fire
+      // billeder — modellen gav stadig uplightene tolv linser. Det der står
+      // sidst, vejer tungest; samme lære som katalogfotoets ramme.
+      grejDetaljer,
     ]
       .filter(Boolean)
       .join(" "),

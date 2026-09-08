@@ -447,6 +447,108 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "caption_en": "This is what it looks like standing ready."
     }
   ],
+  "pakke_bryllupslys": [
+    {
+      "src": "/images/gallery/pakke_bryllupslys/i_brug.webp",
+      "thumb": "/images/gallery/pakke_bryllupslys/i_brug-400.webp",
+      "scene": "i_brug",
+      "ratio": "16:9",
+      "titel_da": "Sådan ser det ud til festen",
+      "titel_en": "How it looks at the party",
+      "alt_da": "Bryllupslys-pakken sat op og i brug",
+      "alt_en": "Wedding light package set up and in use",
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
+    },
+    {
+      "src": "/images/gallery/pakke_bryllupslys/opstilling.webp",
+      "thumb": "/images/gallery/pakke_bryllupslys/opstilling-400.webp",
+      "scene": "opstilling",
+      "ratio": "4:3",
+      "titel_da": "Tæt på",
+      "titel_en": "Close up",
+      "alt_da": "Bryllupslys-pakken tæt på",
+      "alt_en": "Wedding light package up close",
+      "caption_da": "Sådan ser det ud, når det står klar.",
+      "caption_en": "This is what it looks like standing ready."
+    }
+  ],
+  "pakke_diskolys": [
+    {
+      "src": "/images/gallery/pakke_diskolys/komposition.webp",
+      "thumb": "/images/gallery/pakke_diskolys/komposition-400.webp",
+      "scene": "komposition",
+      "ratio": "4:3",
+      "titel_da": "Alt det du får",
+      "titel_en": "Everything included",
+      "alt_da": "Diskolys-pakken — alle dele stillet op sammen",
+      "alt_en": "Disco light package — every part laid out together",
+      "caption_da": "Det her er hvad der står i bilen, når du henter Diskolys-pakken.",
+      "caption_en": "This is what goes in the car when you pick up Disco light package."
+    },
+    {
+      "src": "/images/gallery/pakke_diskolys/i_brug.webp",
+      "thumb": "/images/gallery/pakke_diskolys/i_brug-400.webp",
+      "scene": "i_brug",
+      "ratio": "16:9",
+      "titel_da": "Sådan ser det ud til festen",
+      "titel_en": "How it looks at the party",
+      "alt_da": "Diskolys-pakken sat op og i brug",
+      "alt_en": "Disco light package set up and in use",
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
+    },
+    {
+      "src": "/images/gallery/pakke_diskolys/opstilling.webp",
+      "thumb": "/images/gallery/pakke_diskolys/opstilling-400.webp",
+      "scene": "opstilling",
+      "ratio": "4:3",
+      "titel_da": "Tæt på",
+      "titel_en": "Close up",
+      "alt_da": "Diskolys-pakken tæt på",
+      "alt_en": "Disco light package up close",
+      "caption_da": "Sådan ser det ud, når det står klar.",
+      "caption_en": "This is what it looks like standing ready."
+    }
+  ],
+  "pakke_diskotek": [
+    {
+      "src": "/images/gallery/pakke_diskotek/komposition.webp",
+      "thumb": "/images/gallery/pakke_diskotek/komposition-400.webp",
+      "scene": "komposition",
+      "ratio": "4:3",
+      "titel_da": "Alt det du får",
+      "titel_en": "Everything included",
+      "alt_da": "Diskotek-pakken — alle dele stillet op sammen",
+      "alt_en": "Club light package — every part laid out together",
+      "caption_da": "Det her er hvad der står i bilen, når du henter Diskotek-pakken.",
+      "caption_en": "This is what goes in the car when you pick up Club light package."
+    },
+    {
+      "src": "/images/gallery/pakke_diskotek/i_brug.webp",
+      "thumb": "/images/gallery/pakke_diskotek/i_brug-400.webp",
+      "scene": "i_brug",
+      "ratio": "16:9",
+      "titel_da": "Sådan ser det ud til festen",
+      "titel_en": "How it looks at the party",
+      "alt_da": "Diskotek-pakken sat op og i brug",
+      "alt_en": "Club light package set up and in use",
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
+    },
+    {
+      "src": "/images/gallery/pakke_diskotek/opstilling.webp",
+      "thumb": "/images/gallery/pakke_diskotek/opstilling-400.webp",
+      "scene": "opstilling",
+      "ratio": "4:3",
+      "titel_da": "Tæt på",
+      "titel_en": "Close up",
+      "alt_da": "Diskotek-pakken tæt på",
+      "alt_en": "Club light package up close",
+      "caption_da": "Sådan ser det ud, når det står klar.",
+      "caption_en": "This is what it looks like standing ready."
+    }
+  ],
   "pakke_fest_150": [
     {
       "src": "/images/gallery/pakke_fest_150/komposition.webp",
@@ -599,6 +701,20 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "caption_en": "This is what it looks like standing ready."
     }
   ],
+  "pakke_festtelt": [
+    {
+      "src": "/images/gallery/pakke_festtelt/i_brug.webp",
+      "thumb": "/images/gallery/pakke_festtelt/i_brug-400.webp",
+      "scene": "i_brug",
+      "ratio": "16:9",
+      "titel_da": "Sådan ser det ud til festen",
+      "titel_en": "How it looks at the party",
+      "alt_da": "Festtelt-lys sat op og i brug",
+      "alt_en": "Party tent lights set up and in use",
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
+    }
+  ],
   "pakke_firmafest": [
     {
       "src": "/images/gallery/pakke_firmafest/komposition.webp",
@@ -709,6 +825,44 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "titel_en": "Close up",
       "alt_da": "Studenterpakken tæt på",
       "alt_en": "Graduation package up close",
+      "caption_da": "Sådan ser det ud, når det står klar.",
+      "caption_en": "This is what it looks like standing ready."
+    }
+  ],
+  "pakke_teenagefest": [
+    {
+      "src": "/images/gallery/pakke_teenagefest/komposition.webp",
+      "thumb": "/images/gallery/pakke_teenagefest/komposition-400.webp",
+      "scene": "komposition",
+      "ratio": "4:3",
+      "titel_da": "Alt det du får",
+      "titel_en": "Everything included",
+      "alt_da": "Teenagefest-lys — alle dele stillet op sammen",
+      "alt_en": "Teen party lights — every part laid out together",
+      "caption_da": "Det her er hvad der står i bilen, når du henter Teenagefest-lys.",
+      "caption_en": "This is what goes in the car when you pick up Teen party lights."
+    },
+    {
+      "src": "/images/gallery/pakke_teenagefest/i_brug.webp",
+      "thumb": "/images/gallery/pakke_teenagefest/i_brug-400.webp",
+      "scene": "i_brug",
+      "ratio": "16:9",
+      "titel_da": "Sådan ser det ud til festen",
+      "titel_en": "How it looks at the party",
+      "alt_da": "Teenagefest-lys sat op og i brug",
+      "alt_en": "Teen party lights set up and in use",
+      "caption_da": "Et eksempel på en opstilling — du sætter det op, som det passer til din fest.",
+      "caption_en": "One example of a setup — arrange it however suits your party."
+    },
+    {
+      "src": "/images/gallery/pakke_teenagefest/opstilling.webp",
+      "thumb": "/images/gallery/pakke_teenagefest/opstilling-400.webp",
+      "scene": "opstilling",
+      "ratio": "4:3",
+      "titel_da": "Tæt på",
+      "titel_en": "Close up",
+      "alt_da": "Teenagefest-lys tæt på",
+      "alt_en": "Teen party lights up close",
       "caption_da": "Sådan ser det ud, når det står klar.",
       "caption_en": "This is what it looks like standing ready."
     }
