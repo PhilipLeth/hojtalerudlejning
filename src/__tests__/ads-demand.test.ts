@@ -9,7 +9,7 @@ import {
   DEFAULT_DEMAND_SEEDS,
   type DemandKeyword,
 } from "../../functions/api/ads-demand";
-import { occasionWord } from "@/lib/adsIntent";
+import { occasionWord, seedTerms } from "@/lib/adsIntent";
 
 function kw(text: string, over: Partial<DemandKeyword> = {}): DemandKeyword {
   return {
@@ -19,9 +19,22 @@ function kw(text: string, over: Partial<DemandKeyword> = {}): DemandKeyword {
 }
 
 describe("demandKey og occasionWord", () => {
-  it("lader anledningen vinde over produktordet — samme kunde, samme behov", () => {
-    expect(demandKey("lyd til konfirmation")).toBe("anledning:konfirmation");
-    expect(demandKey("musikanlæg til konfirmation")).toBe("anledning:konfirmation");
+  it("samler stavevarianter af samme søgning i ÉN stram gruppe", () => {
+    // Præcis den gruppe vi vil kunne vinde: samme søgning, samme svar,
+    // én annoncetekst der kan bære frasen i overskriften.
+    const nøgle = demandKey("fest højtalere");
+    expect(demandKey("fest højttaler")).toBe(nøgle);
+    expect(demandKey("højtalere til fest")).toBe(nøgle);
+    expect(demandKey("højtaler fest")).toBe(nøgle);
+  });
+
+  it("holder forskellige produkter fra hinanden, selv med samme anledning", () => {
+    // "Fest" er et suffiks på næsten enhver udlejningssøgning, ikke en
+    // anledning på linje med bryllup. Lod man den samle alene, endte
+    // højtalere, lys og røgkanon i samme klynge — og så kan ingen ÉN
+    // landingsside være den rigtige.
+    expect(demandKey("røgkanon til fest")).not.toBe(demandKey("fest højtalere"));
+    expect(demandKey("leje lys til fest")).not.toBe(demandKey("fest højtalere"));
     expect(occasionWord("lej højtaler")).toBeNull();
   });
 
@@ -43,10 +56,10 @@ describe("erEfterspoergsel", () => {
 });
 
 describe("demandClusters", () => {
-  it("klynger to anledningsfraser sammen og tæller kun inden for området med", () => {
+  it("klynger samme produkt+anledning og tæller kun inden for området med", () => {
     const clusters = demandClusters([
       kw("lyd til bryllup", { volume: 30 }),
-      kw("musikanlæg til bryllup", { volume: 20 }),
+      kw("bryllup lyd", { volume: 20 }),
       kw("lyd til bryllup fyn", { volume: 50, outsideArea: "fyn" }),
     ]);
     expect(clusters).toHaveLength(1);
@@ -93,6 +106,20 @@ describe("kategorisiderne", () => {
 
   it("lader produktsiden vinde når begge matcher lige godt", () => {
     expect(findSide(["lej lys"], kandidater)?.page).toBe("/lys-pakke");
+  });
+
+  it("sender en generisk højtalersøgning til kategorisiden, ikke til én model", () => {
+    // Mackie Thump GO vandt klyngen "fest højtalere" (110/md), fordi dens
+    // redigerbare Google-frø var udvidet til "højtaler". findSide matcher nu
+    // på produktets NAVN, så en model kun vinder når kunden søger på modellen.
+    const medModel = [
+      { id: "thumpgo", name: "Mackie Thump GO", page: "/mackie-thump-go", terms: seedTerms("Mackie Thump GO") },
+      ...KATEGORI_SIDER,
+    ];
+    const fest = ["fest højtalere", "fest højttaler", "højtalere til fest", "højtaler fest"];
+    expect(findSide(fest, medModel)?.page).toBe("/lej-hojtaler");
+    // …men søger man på modellen, vinder modellen
+    expect(findSide(["lej mackie thump go"], medModel)?.page).toBe("/mackie-thump-go");
   });
 });
 

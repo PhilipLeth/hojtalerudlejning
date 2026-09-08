@@ -51,8 +51,6 @@ interface Env extends GoogleAdsEnv {
 }
 
 const KV_CATALOG = "products_catalog";
-const KV_TERMS = "ads_terms";
-const KV_MANUAL = "ads_manual_keywords";
 const KV_SEEDS = "ads_demand_seeds";
 
 /** Googles loft pr. opslag er 20 frø; to opslag er nok til kortet. */
@@ -156,15 +154,24 @@ export interface DemandCluster {
 }
 
 /**
- * Hvor kommer kunden fra? Anledningen vinder over produktordet: "lyd til
- * konfirmation" og "musikanlæg til konfirmation" er samme kunde med samme
- * behov, selvom produktordene er forskellige. Uden anledning samles der på
- * produktord som i byggeren.
+ * Hvor kommer kunden fra? Anledning OG produktord tilsammen.
+ *
+ * Første udgave lod anledningen vinde alene, og så kollapsede alt med "fest"
+ * i sig til én klynge: "fest højtalere", "røgkanon til fest", "leje lys til
+ * fest" og "fest og leg frederiksværk" i samme bunke. "Fest" er ikke en
+ * anledning på linje med bryllup — det er et suffiks på næsten enhver
+ * udlejningssøgning. En klynge med fem forskellige produkter kan pr.
+ * definition ikke have ÉN rigtig landingsside, og findSide måtte gætte.
+ *
+ * Nu er nøglen anledning + produktord, så "fest højtalere", "fest
+ * højttaler", "højtalere til fest" og "højtaler fest" bliver én stram gruppe
+ * — samme søgning, samme svar, én annoncetekst der kan bære frasen i
+ * overskriften. Det er den enhed en annoncegruppe skal være.
  */
 export function demandKey(text: string): string {
+  const produkt = [...productWords(text)].sort().join(" ");
   const anledning = occasionWord(text);
-  if (anledning) return `anledning:${anledning}`;
-  return `produkt:${[...productWords(text)].sort().join(" ")}`;
+  return anledning ? `anledning:${anledning}|${produkt}` : `produkt:${produkt}`;
 }
 
 /**
@@ -197,7 +204,9 @@ export function demandClusters(rows: DemandKeyword[]): DemandCluster[] {
     const anledning = occasionWord(sorted[0].text);
     out.push({
       occasion: anledning,
-      label: anledning ?? (headTerm(sorted[0].text) || sorted[0].text),
+      label: anledning
+        ? [anledning, headTerm(sorted[0].text)].filter(Boolean).join(" · ")
+        : headTerm(sorted[0].text) || sorted[0].text,
       keywords: sorted.slice(0, MAX_KEYWORDS_PER_CLUSTER),
       volume: inde.reduce((sum, k) => sum + k.volume, 0),
       clicks: inde.reduce((sum, k) => sum + k.clicks, 0),
@@ -261,10 +270,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
   const kv = context.env.BOOKINGS;
   try {
-    const [catalogRaw, termsMap, manualMap, gemteFrø] = await Promise.all([
+    const [catalogRaw, gemteFrø] = await Promise.all([
       readJson<unknown>(kv, KV_CATALOG, null),
-      readJson<Record<string, string[]>>(kv, KV_TERMS, {}),
-      readJson<Record<string, string[]>>(kv, KV_MANUAL, {}),
       readJson<string[]>(kv, KV_SEEDS, []),
     ]);
 
@@ -277,17 +284,20 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
     const catalog = productCatalog(catalogRaw);
     const pauset = new Set(PAUSEDE_SIDER);
+    // Landingssiden findes på produktets EGET navn — ikke på dets redigerbare
+    // Google-frø. De to ting har hver sit job, præcis som prd'en siger om frø
+    // kontra keywords: frø er hvad Google skal lede ud fra, navnet er hvad
+    // siden handler om. Blandes de sammen, arver findSide enhver udvidelse:
+    // Mackie Thump GO havde fået frøet "højtaler" og vandt derfor klyngen
+    // "fest højtalere" (110/md) fra kategorisiden /lej-hojtaler — en generisk
+    // kategorisøgning sendt til én bestemt model.
     const kandidater: SideKandidat[] = catalog
       .filter((p): p is CatalogProduct & { page: string } => !!p.page && !p.hidden && !pauset.has(p.page!))
       .map((p) => ({
         id: p.id,
         name: p.name,
         page: p.page,
-        terms: [
-          ...(termsMap[p.id]?.length ? termsMap[p.id] : seedTerms(p.name)),
-          ...(manualMap[p.id] ?? []),
-          p.name,
-        ],
+        terms: [...seedTerms(p.name), p.name],
       }));
 
     // Frøene i bidder af 20 — Googles loft pr. opslag

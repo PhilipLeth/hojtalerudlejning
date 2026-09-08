@@ -1884,6 +1884,11 @@
       ],
       "laering": "Googles urlSeed alene er meget løs: for /discokugle returnerer den 259 idéer, hvoraf 249 intet har med en discokugle at gøre ('led lys' 12.100/md, '1 2v batteri'). Det er frøene der holder den i snor — URL + ordentlige frø gav 28 idéer, alle om discokugler. Et skævt frø er derfor ikke en detalje."
     },
+    "klynger_og_sidevalg_2026_09_08": {
+      "to_fejl": "Klyngen 'Anledning: fest' (400/md) samlede højtalere, lys, røgkanon, musikanlæg OG 'fest og leg frederiksværk' i én bunke og pegede på Mackie Thump GO. Årsag 1: demandKey lod anledningen samle alene, men 'fest' er ikke en anledning på linje med bryllup — det er et suffiks på næsten enhver udlejningssøgning, så alt med 'fest' kollapsede, og én landingsside kunne per definition ikke være rigtig. Årsag 2: findSide matchede på produktets REDIGERBARE Google-frø; Mackie Thump GO havde fået frøet udvidet til 'højtaler' og scorede dermed 6/12 — samme score som kategorisiden /lej-hojtaler, og produkter kom først, så modellen vandt en generisk kategorisøgning.",
+      "rettet": "demandKey = anledning + produktord, så 'fest højtalere', 'fest højttaler', 'højtalere til fest' og 'højtaler fest' bliver ÉN stram klynge og røgkanonen sin egen. findSide matcher på produktets NAVN (seedTerms(name)), ikke på dets frø — frø er hvad Google skal lede ud fra, navnet er hvad siden handler om; de to har hver sit job. Stednavne uden for leveringsområdet regnes nu som intentionsstøj i adsIntent, så 'lyd til bryllup fyn' står mærket i bryllup-klyngen frem for at få sin egen.",
+      "konsekvens": "Klyngen er nu den enhed en annoncegruppe skal være — se opgaven ads-ultrasmalle-grupper. En model vinder kun en klynge når kunden søger på modellen."
+    },
     "efterspoergselskort_2026_09_07": {
       "hvad": "/admin/ads/efterspoergsel + /api/ads-demand: intent-first-indgangen. Byggeren starter i produktet og /ideer i katalogets sider — begge kan kun se efterspørgsel for noget vi har en side til. Kortet starter i efterspørgslen selv: behovs- og anledningsfrø hos Google (redigerbare, KV ads_demand_seeds, standard i koden) plus ALLE egne søgetermer 180 dage, klynget efter hvor kunden kommer fra (anledning vinder over produktord — demandKey i ads-demand.ts). Hver klynge peger på bedste eksisterende landingsside via findSide(), ellers 'mangler side' — og det er svaret, ikke en fejl: klyngen er en side-opgave før den kan blive en annonce. Byg-link går til /opret?produkt=. Alt der ligger som keyword er trukket fra; uden-for-området vises mærket men tæller ikke i klyngens volumen.",
       "foerste_koersel_2026_09_07": "115 fraser, 40 klynger. Største fund: karaokeanlæg/karaoke anlæg ~370/md samlet, MANGLER SIDE — kan evt. fanges af karaokemaskine-siden ved at føje 'karaoke anlæg' til produktets frø i ads_terms, så findSide matcher. Egne betalte klik uden hjem: silent disco, dj udstyr, dj pult, jukebox, scenelys, leje af overheadprojektor — sortimentssignaler. Anledningsklyngerne (bryllup, konfirmation, julefrokost …) kom IKKE op: Googles estimater for 'lyd til <anledning>' ligger under 10/md — lejlighedssiderne er altså primært SEO/årshjul, ikke søgeannoncer. OCCASION_WORDS fik nytårsfest, nytårsaften og studenterkørsel i købet.",
@@ -2814,6 +2819,34 @@
       "status": "done",
       "epic": "epic-aov",
       "story": "aov-4"
+    },
+    {
+      "id": "ads-ultrasmalle-grupper",
+      "title": "Ads: byg ultrasmalle grupper fra én efterspørgselsklynge",
+      "description": "Strategien, sagt højt 8. september 2026: tag en semi-smal søgefrase vi BØR vinde, og lav én annoncegruppe for præcis den frase plus de få der ligner den til forveksling — fx 'fest højtalere' + 'fest højttaler' + 'højtalere til fest' + 'højtaler fest' (110/md). Det er hverken SKAG (ét keyword pr. gruppe, som gav 'Leje af: hvad koster det at soundboks') eller de nuværende 16-17 keywords pr. gruppe: enheden er ÉN søgning i alle sine stavemåder, så annoncens overskrift kan bære frasen ORDRET og QS-komponenten annoncerelevans kan komme over gennemsnittet. demandKey i ads-demand.ts klynger nu efter anledning + produktord, så klyngen på /admin/ads/efterspoergsel ER gruppen. MANGLER: en 'Byg denne gruppe'-knap der sender klyngens fraser med (i dag sender /opret?produkt= kun et produkt-id, og byggeren finder selv keywords forfra), og evnen til at bygge mod en kategoriside — byggeren er produktbunden, så 'fest højtalere' mod /lej-hojtaler skal i dag laves i hånden i Google Ads.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "ads-dubletcheck-paa-keywords",
+      "title": "Ads: dublettjek på keywords, ikke kun på gruppenavn",
+      "description": "Findes allerede: /admin/ads/opret markerer 'Findes i <kampagne / gruppe>' pr. keyword (listKeywords over hele kontoen), 'Dækket af \"…\"' via phraseCovers når en bredere frase vi ejer fanger den smalle, og serveren afviser en gruppe hvis NAVN allerede findes. MANGLER: serveren afviser IKKE en gruppe hvis dens keywords allerede ligger i en anden gruppe. To grupper kan derfor byde mod hinanden på samme frase — præcis den fejl AG 1 begår mod AG 4 i dag (se ads-ag1-kannibalisering). Krav til en ultrasmal gruppe: afvis ved overlap, og tilbyd i stedet at frigøre frasen ved at lægge den som negativt keyword i den gamle brede gruppe, så den nye smalle gruppe faktisk får trafikken.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "ads-qs-maal-og-maaling",
+      "title": "Ads: mål quality score pr. keyword — 8+ på de fraser vi vælger at vinde",
+      "description": "Målt 7. september 2026 (30 dage, 139 aktive keywords, alle PHRASE — der er ingen broad match i kontoen): visningsvægtet QS 5,92. Komponenterne siger hvor arbejdet ligger: annoncerelevans 83 % OVER gennemsnit, forventet CTR 49 % over — men LANDINGSSIDE 70 % UNDER gennemsnit. At splitte i smallere grupper forbedrer annoncerelevansen, altså den komponent der allerede virker. Værste enkeltposter: 'fest lys' QS 5 med 1.631 visninger og 1.306 kr/30 dage (kontoens største enkeltudgift), 'udstyr til fest' QS 1, 'dj lys' QS 1, 'fest højtaler' QS 3. AG 9 - Lyd og lys (QS 4,4, 1.610 kr) lander på FORSIDEN. Gruppestørrelse forudsiger intet: AG 4 Soundboks har 17 keywords og QS 7,9, AG 9 har 17 og QS 4,4 — forskellen er landingssiden. MANGLER: QS-kolonne på /admin/ads (ad_group_criterion.quality_info: quality_score + creative/post_click/search_predicted_ctr), så hver gruppe kan følges over tid, og et eksplicit mål på 8+ for de fraser vi bygger ultrasmalle grupper til.",
+      "priority": "high",
+      "status": "todo"
+    },
+    {
+      "id": "ads-landingsside-pr-vinderfrase",
+      "title": "Ads: én landingsside pr. frase vi vil vinde",
+      "description": "En ultrasmal annoncegruppe kan kun score i toppen hvis siden svarer på præcis den søgning — og landingsside er kontoens svageste QS-komponent (70 % under gennemsnit). Siden skal bære frasen i title, H1 og første afsnit, med pris og book-knap over folden. Rækkefølge efter målt efterspørgsel: 'fest højtalere'/'fest højttaler' 110/md (i dag kun kategorisiden /lej-hojtaler); karaokeanlæg ~370/md samlet (INGEN side — se efterspoergselskort_2026_09_07); festlys-familien 'fest lys' 1.631 visn./md på /festlys med QS 5 og landingsside under gennemsnit; 'lydanlæg' 100/md hvor /lydanlaeg findes men ingen gruppe peger på den. Hænger sammen med ads-landingssider-pakker og AOV-epicets lejlighedssider.",
+      "priority": "high",
+      "status": "todo"
     },
     {
       "id": "ads-landingssider-pakker",

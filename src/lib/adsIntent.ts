@@ -91,6 +91,12 @@ export function classify(text: string): ThemeKey {
   return "leje";
 }
 
+const UDENFOR_OMRAADET = new Set([
+  "odense", "fyn", "aarhus", "århus", "aalborg", "ålborg", "jylland",
+  "esbjerg", "randers", "kolding", "vejle", "horsens", "silkeborg",
+  "herning", "sønderborg", "bornholm", "smukfest",
+]);
+
 /**
  * Spørge-, pris- og fyldord. "hvad koster det at leje en soundboks" handler
  * om en soundboks — ikke om "hvad koster det at". Uden dem beholdt frasen
@@ -106,6 +112,10 @@ const QUESTION_WORDS = new Set([
 /** Ord der beskriver intentionen frem for produktet. */
 const INTENT_NOISE = new Set([
   ...RENTAL_WORDS, ...GEO_WORDS, ...OCCASION_WORDS, ...ENGLISH_WORDS, ...QUESTION_WORDS,
+  // Steder vi ikke kører til er også steder: uden dem blev "fyn" talt som et
+  // produktord, så "lyd til bryllup fyn" fik sin egen klynge i stedet for at
+  // stå mærket i bryllup-klyngen.
+  ...UDENFOR_OMRAADET,
   "af", "til", "en", "et", "og", "i", "på", "med", "the", "for",
 ]);
 
@@ -265,11 +275,6 @@ export function clusterKeywords(input: Array<KeywordInput | string>): Cluster[] 
  * Bemærk at Roskilde, Frederiksberg og Taastrup IKKE står her: de er dækket
  * af Yderområder-kampagnen.
  */
-const UDENFOR_OMRAADET = new Set([
-  "odense", "fyn", "aarhus", "århus", "aalborg", "ålborg", "jylland",
-  "esbjerg", "randers", "kolding", "vejle", "horsens", "silkeborg",
-  "herning", "sønderborg", "bornholm", "smukfest",
-]);
 
 /**
  * Peger frasen et sted hen, vi ikke kører til? Returnerer stedet, ellers null.
