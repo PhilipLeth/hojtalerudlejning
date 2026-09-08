@@ -379,23 +379,27 @@ describe("/admin/produkter", () => {
   it("har lagertallet på produktet", async () => {
     mockApi({ party: 2 });
     renderAdmin(<ProdukterPage />);
-    await waitFor(() => expect(screen.getAllByText("Lager (antal)").length).toBeGreaterThan(0), { timeout: 20000 });
+    // Vent på TALLET, ikke på etiketten. "Lager (antal)" står i StockField fra
+    // første render, uanset om lageret er hentet — så den beviser ingenting, og
+    // den synkrone assertion nedenfor kunne løbe, før tallene var landet.
+    await waitFor(() => expect(screen.getAllByText(/2 stk\./).length).toBeGreaterThan(0), { timeout: 20000 });
     expect(screen.getAllByText(/lager ikke sat/).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/2 stk\./).length).toBeGreaterThan(0);
   }, 60000);
 
   it("har overbooking ved siden af lageret", async () => {
     mockApi({ party: 2 }, { overbook: { party: 1 } });
     renderAdmin(<ProdukterPage />);
-    await waitFor(() => expect(screen.getAllByText("Overbooking (kan skaffes)").length).toBeGreaterThan(0), { timeout: 20000 });
-    expect(screen.getAllByText(/tager imod 3/).length).toBeGreaterThan(0);
+    // Samme sag: etiketten er statisk, tallet kommer med hentningen
+    await waitFor(() => expect(screen.getAllByText(/tager imod 3/).length).toBeGreaterThan(0), { timeout: 20000 });
     expect(screen.getAllByText(/\+1 JIT/).length).toBeGreaterThan(0);
   }, 60000);
 
   it("gemmer lagertallet med det samme, uden at publicere hele kataloget", async () => {
     mockApi({ thumpgo: 1 });
     renderAdmin(<ProdukterPage />);
-    await waitFor(() => expect(screen.getAllByText("Lager (antal)").length).toBeGreaterThan(0), { timeout: 20000 });
+    // Vent på det hentede tal, ikke på den statiske etiket — ellers skriver vi i
+    // et felt, hvis værdi stadig er ved at blive hentet
+    await waitFor(() => expect(screen.getAllByText(/1 stk\./).length).toBeGreaterThan(0), { timeout: 20000 });
 
     const felt = screen.getAllByLabelText("Antal på lager")[0] as HTMLInputElement;
     fireEvent.change(felt, { target: { value: "3" } });
