@@ -24,7 +24,7 @@ export default function FilmaftenPage() {
     <ProductLanding
       slug="filmaften"
       name="Filmaften-pakken"
-      price={1.195}
+      price={1195}
       headline="Filmaften-pakken — biograf i gården"
       sub="Full HD projektor, 160 cm lærred på stativ og to højtalere. Alt til filmaftenen — spar 90 kr."
       image="/images/product-projektor.webp"
