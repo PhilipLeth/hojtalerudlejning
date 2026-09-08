@@ -90,6 +90,29 @@ const LUKKET: DayHours = { closed: true, open: "10:00", close: "16:00", purpose:
  * Begge dage kan bruges til både afhentning og aflevering — derfor står der
  * ikke noget formål på dem. Alt andet aftales i kommentarfeltet.
  */
+/**
+ * Linjen under åbningstiderne, som den står som standard.
+ *
+ * `other` er et frit felt, Frederik selv skriver i /admin/indstillinger, så
+ * det findes kun på ét sprog. Standardsætningen er den, der står på sitet i
+ * praksis, og den kan derfor oversættes — se otherLine(). Har han skrevet sin
+ * egen tekst, vises den som skrevet, for den kan vi ikke oversætte.
+ */
+export const DEFAULT_OTHER = "Andre tidspunkter vælges direkte i bookingen.";
+export const DEFAULT_OTHER_EN = "Other times can be chosen directly in the booking.";
+
+/**
+ * Linjen på sidens sprog.
+ *
+ * Footeren viste den rå danske sætning på hver eneste /en-side, fordi
+ * `hours.other` ikke har noget engelsk modstykke i indstillingerne.
+ */
+export function otherLine(hours: OpeningHours, locale: "da" | "en" = "da"): string {
+  if (!hours.other) return "";
+  if (locale === "en" && hours.other.trim() === DEFAULT_OTHER) return DEFAULT_OTHER_EN;
+  return hours.other;
+}
+
 export const DEFAULT_OPENING_HOURS: OpeningHours = {
   days: {
     mon: { closed: false, open: "15:00", close: "17:00", purpose: "" },
@@ -100,7 +123,7 @@ export const DEFAULT_OPENING_HOURS: OpeningHours = {
     sat: { ...LUKKET },
     sun: { ...LUKKET },
   },
-  other: "Andre tidspunkter vælges direkte i bookingen.",
+  other: DEFAULT_OTHER,
   exceptions: [],
   onlyOpenDays: false,
   earliestPickup: "",

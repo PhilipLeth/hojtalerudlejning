@@ -5,6 +5,7 @@ import { useProducts } from "@/lib/useProducts";
 import { thumbSrcSet, GRID_IMAGE_SIZES } from "@/lib/imageSrcSet";
 import { localizedHref } from "@/lib/enPages";
 import { bookHref } from "@/lib/bookUrl";
+import { contentsFor } from "@/lib/contentsEn";
 import type { Locale } from "@/lib/i18n";
 
 /**
@@ -71,7 +72,7 @@ export default function CategoryProductGrid({
         desc: sp[locale].desc,
         price: sp.price,
         image: sp.product,
-        contents: sp.contents ?? [],
+        contents: contentsFor(sp.contents, locale),
         href: bookHref(sp.id, locale),
         page: enSti(sp.page ?? item.href, locale),
       };
@@ -84,7 +85,7 @@ export default function CategoryProductGrid({
         desc: ad[locale].desc,
         price: ad.price,
         image: ad.image,
-        contents: ad.contents ?? [],
+        contents: contentsFor(ad.contents, locale),
         href: bookHref(ad.id, locale),
         page: enSti(ad.page ?? item.href, locale),
       };
@@ -97,7 +98,7 @@ export default function CategoryProductGrid({
         desc: (locale === "en" ? r.desc_en : r.desc_da) ?? "",
         price: r.price,
         image: r.image,
-        contents: r.contents ?? [],
+        contents: contentsFor(r.contents, locale),
         href: bookHref(r.id, locale),
         page: enSti(r.page ?? item.href, locale),
       };

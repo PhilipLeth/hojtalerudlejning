@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import EventInquiryForm from "@/components/EventInquiryForm";
 import PhoneLink from "@/components/PhoneLink";
+import type { Locale } from "@/lib/i18n";
 
 /**
  * Forespørgsel i en drawer — modstykket til BookingDrawer.
@@ -20,6 +21,36 @@ import PhoneLink from "@/components/PhoneLink";
  */
 
 const HASHES = ["#foresp", "#tilbud"];
+
+/**
+ * Fanens og drawerens tekster.
+ *
+ * Draweren kommer fra root-layoutet og fulgte derfor med på hver /en-side med
+ * "Spørg om et event" ned ad højre kant — den sidste danske flig af sidens
+ * faste inventar, efter menuen og båndet blev tosprogede.
+ */
+const COPY = {
+  da: {
+    tab: "Spørg om et event",
+    title: "Spørg om et arrangement",
+    dialog: "Forespørgsel på arrangement",
+    call: "Ring",
+    close: "Luk",
+    intro:
+      "Skal du bare bruge en højttaler, er det hurtigere at booke direkte. Skal der sørges for lyd, mikrofoner og " +
+      "lys til et helt arrangement, så fortæl hvad der skal ske — du får en pris med levering og opsætning.",
+  },
+  en: {
+    tab: "Ask about an event",
+    title: "Ask about an event",
+    dialog: "Event enquiry",
+    call: "Call",
+    close: "Close",
+    intro:
+      "If you just need a speaker, booking directly is quicker. If sound, microphones and lighting have to be " +
+      "sorted for a whole event, tell us what is happening — you get one price including delivery and setup.",
+  },
+} as const satisfies Record<Locale, unknown>;
 
 /** Sider hvor fanen ville være i vejen frem for til hjælp */
 function skjultPaa(pathname: string | null): boolean {
@@ -42,6 +73,7 @@ export default function InquiryDrawer() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const skjult = skjultPaa(pathname);
+  const c = COPY[pathname?.startsWith("/en") ? "en" : "da"];
 
   const close = useCallback(() => {
     setOpen(false);
@@ -114,7 +146,7 @@ export default function InquiryDrawer() {
       <button
         onClick={() => setOpen(true)}
         data-testid="foresp-fane"
-        aria-label="Spørg om et arrangement"
+        aria-label={c.title}
         className={`fixed right-0 top-1/2 z-30 translate-y-16 rounded-l-2xl border border-r-0 border-white/15 bg-[#141220]/95 px-2.5 py-4 text-white/80 shadow-[0_2px_16px_rgba(0,0,0,0.4)] backdrop-blur transition hover:text-white ${
           open ? "translate-x-full" : "translate-x-0"
         }`}
@@ -123,7 +155,7 @@ export default function InquiryDrawer() {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
           </svg>
-          <span className="text-[11px] font-semibold [writing-mode:vertical-rl]">Spørg om et event</span>
+          <span className="text-[11px] font-semibold [writing-mode:vertical-rl]">{c.tab}</span>
         </span>
       </button>
 
@@ -141,7 +173,7 @@ export default function InquiryDrawer() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Forespørgsel på arrangement"
+          aria-label={c.dialog}
           className={`absolute right-0 top-0 flex h-full w-full flex-col bg-[#0b0a10] shadow-2xl transition-transform duration-300 ease-out sm:max-w-lg sm:border-l sm:border-white/10 ${
             open ? "translate-x-0" : "translate-x-full"
           }`}
@@ -149,14 +181,14 @@ export default function InquiryDrawer() {
           <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-3">
             <p className="text-lg font-bold">
               <span className="bg-gradient-to-r from-brand-400 to-brand-500 bg-clip-text text-transparent">
-                Spørg om et arrangement
+                {c.title}
               </span>
             </p>
             <div className="flex items-center gap-3">
-              <PhoneLink className="hidden text-sm font-semibold text-brand-400 transition hover:text-brand-300 sm:block" prefix="Ring" />
+              <PhoneLink className="hidden text-sm font-semibold text-brand-400 transition hover:text-brand-300 sm:block" prefix={c.call} />
               <button
                 onClick={close}
-                aria-label="Luk"
+                aria-label={c.close}
                 className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/60 transition hover:bg-white/10 hover:text-white"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -167,10 +199,7 @@ export default function InquiryDrawer() {
           </div>
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-5">
-            <p className="mb-5 text-sm text-white/50">
-              Skal du bare bruge en højttaler, er det hurtigere at booke direkte. Skal der sørges for lyd, mikrofoner og
-              lys til et helt arrangement, så fortæl hvad der skal ske — du får en pris med levering og opsætning.
-            </p>
+            <p className="mb-5 text-sm text-white/50">{c.intro}</p>
             {open && <EventInquiryForm />}
           </div>
         </div>

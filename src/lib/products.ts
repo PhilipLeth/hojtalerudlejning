@@ -1025,8 +1025,8 @@ export const PAUSEDE_SIDER: string[] = [
 ];
 
 /** Navigation categories — single source of truth used by BurgerMenu and admin */
-export interface NavLink { href: string; label: string }
-export interface NavCategory { id: string; title: string; href: string; links: NavLink[] }
+export interface NavLink { href: string; label: string; label_en: string }
+export interface NavCategory { id: string; title: string; title_en: string; href: string; links: NavLink[] }
 
 /**
  * Menuen er en vej ind i en kategori — ikke et katalog.
@@ -1044,51 +1044,55 @@ export const NAV_CATEGORIES: NavCategory[] = [
   {
     id: "lyd",
     title: "Lyd & Højtalere",
+    title_en: "Sound & Speakers",
     href: "/lej-hojtaler",
     links: [
-      { href: "/lydanlaeg", label: "Anlæg efter antal gæster" },
-      { href: "/soundboks-4", label: "Soundboks 4" },
-      { href: "/festpakke-stor", label: "Festpakke 100" },
+      { href: "/lydanlaeg", label: "Anlæg efter antal gæster", label_en: "PA systems by guest count" },
+      { href: "/soundboks-4", label: "Soundboks 4", label_en: "Soundboks 4" },
+      { href: "/festpakke-stor", label: "Festpakke 100", label_en: "Party package 100" },
       // Mikrofonen hører til lyden, ikke til AV-udstyret: den lejes til talen
       // ved brylluppet, hvor højtaleren alligevel er med.
-      { href: "/lej-mikrofon", label: "Mikrofoner" },
-      { href: "/mixer", label: "Mixer" },
-      { href: "/lej-hojtaler", label: "Se alle højtalere og pakker" },
+      { href: "/lej-mikrofon", label: "Mikrofoner", label_en: "Microphones" },
+      { href: "/mixer", label: "Mixer", label_en: "Mixers" },
+      { href: "/lej-hojtaler", label: "Se alle højtalere og pakker", label_en: "All speakers and packages" },
     ],
   },
   {
     id: "lys",
     title: "Lys & Effekter",
+    title_en: "Lighting & Effects",
     href: "/festlys",
     links: [
-      { href: "/lyspakker", label: "Lyspakker — vælg efter festen" },
-      { href: "/stemningslys", label: "Stemningslys-pakken" },
-      { href: "/lys-pakke", label: "Lys-pakke" },
-      { href: "/discokugle", label: "Discokugle" },
-      { href: "/lysshow", label: "Lysshow — færdige pakker" },
-      { href: "/festlys", label: "Se alt lys" },
+      { href: "/lyspakker", label: "Lyspakker — vælg efter festen", label_en: "Light packages — by occasion" },
+      { href: "/stemningslys", label: "Stemningslys-pakken", label_en: "Ambient light package" },
+      { href: "/lys-pakke", label: "Lys-pakke", label_en: "Light package" },
+      { href: "/discokugle", label: "Discokugle", label_en: "Disco ball" },
+      { href: "/lysshow", label: "Lysshow — færdige pakker", label_en: "Light shows — ready-made" },
+      { href: "/festlys", label: "Se alt lys", label_en: "All party lights" },
     ],
   },
   {
     id: "roeg",
     title: "Røg",
+    title_en: "Fog",
     href: "/roeg",
     links: [
-      { href: "/roegmaskine", label: "Røgmaskine" },
-      { href: "/roeg", label: "Low fog — røggulv" },
+      { href: "/roegmaskine", label: "Røgmaskine", label_en: "Fog machine" },
+      { href: "/roeg", label: "Low fog — røggulv", label_en: "Low fog — fog floor" },
     ],
   },
   {
     id: "anledning",
     title: "Til din anledning",
+    title_en: "For your occasion",
     href: "/bryllup",
     links: [
-      { href: "/bryllup", label: "Bryllup" },
-      { href: "/konfirmation", label: "Konfirmation" },
-      { href: "/foedselsdag", label: "Fødselsdag" },
-      { href: "/julefrokost", label: "Julefrokost & firmafest" },
-      { href: "/havefest", label: "Havefest" },
-      { href: "/studenterkoersel", label: "Studenterkørsel" },
+      { href: "/bryllup", label: "Bryllup", label_en: "Weddings" },
+      { href: "/konfirmation", label: "Konfirmation", label_en: "Confirmations" },
+      { href: "/foedselsdag", label: "Fødselsdag", label_en: "Birthdays" },
+      { href: "/julefrokost", label: "Julefrokost & firmafest", label_en: "Christmas & company parties" },
+      { href: "/havefest", label: "Havefest", label_en: "Garden parties" },
+      { href: "/studenterkoersel", label: "Studenterkørsel", label_en: "Graduation trucks" },
     ],
   },
 ];

@@ -2,11 +2,71 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { NAV_CATEGORIES } from "@/lib/products";
 import PhoneLink from "@/components/PhoneLink";
+import { danskSti, hasEnglish, localizedHref } from "@/lib/enPages";
+
+/**
+ * Menuens faste tekster.
+ *
+ * Menuen var hårdkodet på dansk og lå i root-layoutet, så den fulgte med på
+ * hver eneste /en-side: 26 danske links på en engelsk side. Sproget udledes af
+ * stien som i SiteHeader — menuen er ét træ, der renderes begge steder, og et
+ * prop kunne ikke nå den gennem layoutet.
+ */
+const COPY = {
+  da: {
+    open: "Åben menu",
+    close: "Luk menu",
+    proTitle: "Større arrangement?",
+    proText: "Firmafest, bryllup eller event — skriv til os, så får I et samlet tilbud.",
+    proCta: "Send forespørgsel →",
+    contact: "Kontakt",
+    about: "Om os",
+    blog: "Blog",
+    terms: "Lejevilkår",
+    otherLang: "English",
+    book: "Book nu",
+    call: "Ring",
+  },
+  en: {
+    open: "Open menu",
+    close: "Close menu",
+    proTitle: "A larger event?",
+    proText: "Company party, wedding or event — write to us and we will put together one quote.",
+    proCta: "Send an enquiry →",
+    contact: "Contact",
+    about: "About us",
+    blog: "Blog",
+    terms: "Rental terms",
+    otherLang: "Dansk",
+    book: "Book now",
+    call: "Call",
+  },
+} as const;
 
 export default function BurgerMenu() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const locale = pathname?.startsWith("/en") ? "en" : "da";
+  const c = COPY[locale];
+  /**
+   * Sprogskifteren bliver på den side, man står på.
+   *
+   * Før pegede den altid på /en, så en engelsk kunde på /en/festlys blev sendt
+   * til forsiden i stedet for til /festlys — og vejen tilbage til dansk fandtes
+   * slet ikke.
+   *
+   * Findes siden ikke på engelsk, går knappen til den engelske FORSIDE og ikke
+   * gennem localizedHref: den falder tilbage til den danske sti, og så ville
+   * "English" på /mixer pege på /mixer — et link til den side, man allerede
+   * står på. Den anden vej findes modstykket altid, fordi hver engelsk side
+   * skal have en dansk (en-sider.test.ts).
+   */
+  const daSti = danskSti(pathname ?? "/");
+  const andetSprog = locale === "en" ? daSti : hasEnglish(daSti) ? localizedHref(daSti, "en") : "/en";
+  const nav = (sti: string) => localizedHref(sti, locale);
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -24,7 +84,7 @@ export default function BurgerMenu() {
       <button
         onClick={() => setOpen(!open)}
         className="fixed top-12 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 backdrop-blur-md border border-white/10 transition hover:bg-black/80"
-        aria-label={open ? "Luk menu" : "Åben menu"}
+        aria-label={open ? c.close : c.open}
       >
         {open ? (
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -54,7 +114,7 @@ export default function BurgerMenu() {
         <div className="px-6 pt-20 pb-8">
           {/* Home link */}
           <Link
-            href="/"
+            href={locale === "en" ? "/en" : "/"}
             onClick={() => setOpen(false)}
             className="mb-6 block text-lg font-bold text-brand-400 transition hover:text-brand-300"
           >
@@ -64,7 +124,7 @@ export default function BurgerMenu() {
           {/* Pro-request øverst: firmafest, bryllup og større events skal kunne
               komme direkte til os uden at gå gennem det almindelige bookingflow */}
           <Link
-            href="/kontakt?emne=erhverv"
+            href={`${nav("/kontakt")}?emne=erhverv`}
             onClick={() => setOpen(false)}
             className="mb-7 block rounded-2xl border border-brand-500/30 bg-brand-500/[0.07] p-4 transition hover:border-brand-500/60 hover:bg-brand-500/[0.12]"
           >
@@ -72,34 +132,30 @@ export default function BurgerMenu() {
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">
                 <path d="M4 4h16v12H5.17L4 17.17V4z" />
               </svg>
-              Større arrangement?
+              {c.proTitle}
             </span>
-            <span className="mt-1 block text-sm text-white/55">
-              Firmafest, bryllup eller event — skriv til os, så får I et samlet tilbud.
-            </span>
-            <span className="mt-2 inline-block text-xs font-semibold text-white/70">
-              Send forespørgsel →
-            </span>
+            <span className="mt-1 block text-sm text-white/55">{c.proText}</span>
+            <span className="mt-2 inline-block text-xs font-semibold text-white/70">{c.proCta}</span>
           </Link>
 
           {NAV_CATEGORIES.map((section) => (
             <div key={section.id} className="mb-6">
               <Link
-                href={section.href}
+                href={nav(section.href)}
                 onClick={() => setOpen(false)}
                 className="mb-2 block text-xs font-semibold uppercase tracking-widest text-white/30 transition hover:text-brand-400"
               >
-                {section.title}
+                {locale === "en" ? section.title_en : section.title}
               </Link>
               <ul className="space-y-1">
                 {section.links.map((link) => (
                   <li key={link.href}>
                     <Link
-                      href={link.href}
+                      href={nav(link.href)}
                       onClick={() => setOpen(false)}
                       className="block rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
                     >
-                      {link.label}
+                      {locale === "en" ? link.label_en : link.label}
                     </Link>
                   </li>
                 ))}
@@ -109,36 +165,36 @@ export default function BurgerMenu() {
 
           {/* Bottom links */}
           <div className="mt-8 border-t border-white/5 pt-6 space-y-1">
-            <Link href="/kontakt" onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
-              Kontakt
+            <Link href={nav("/kontakt")} onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
+              {c.contact}
             </Link>
-            <Link href="/om" onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
-              Om os
+            <Link href={nav("/om")} onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
+              {c.about}
             </Link>
-            <Link href="/blog" onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
-              Blog
+            <Link href={nav("/blog")} onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
+              {c.blog}
             </Link>
-            <Link href="/lejevilkaar" onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
-              Lejevilkår
+            <Link href={nav("/lejevilkaar")} onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
+              {c.terms}
             </Link>
-            <Link href="/en" onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
-              English
+            <Link href={andetSprog} onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2 text-sm text-white/50 transition hover:bg-white/5 hover:text-white">
+              {c.otherLang}
             </Link>
           </div>
 
           {/* CTA */}
           <a
-            href="/#book"
+            href={locale === "en" ? "/en#book" : "/#book"}
             onClick={() => setOpen(false)}
             className="mt-8 block rounded-full bg-brand-500 px-6 py-3 text-center font-semibold text-black transition hover:bg-brand-400"
           >
-            Book nu
+            {c.book}
           </a>
 
           {/* Phone */}
           <PhoneLink
             className="mt-4 block text-center text-sm text-white/40 transition hover:text-brand-400"
-            prefix="Ring"
+            prefix={c.call}
           />
         </div>
       </nav>

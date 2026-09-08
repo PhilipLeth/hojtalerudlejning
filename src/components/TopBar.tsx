@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { DELIVERY_ONE_WAY, MAX_RENTAL_DAYS } from "@/lib/productFaq";
+import type { Locale } from "@/lib/i18n";
 
 /* Fire skarpe USP'er — hver med sit eget ikon */
 const ICONS = {
@@ -22,33 +24,48 @@ const ICONS = {
   ),
 } as const;
 
-const USPS: Array<{ icon: keyof typeof ICONS; text: string; href?: string }> = [
-  { icon: "truck", text: "Levering i hele København fra 495 kr" },
-  { icon: "calendar", text: "Op til 5 dage, samme pris" },
-  { icon: "wallet", text: "Sikker onlinebetaling" },
-];
+/**
+ * Båndet øverst — tre løfter, der roterer på mobil og står side om side på desktop.
+ *
+ * Teksterne lå kun på dansk, og båndet kommer fra root-layoutet, så en engelsk
+ * kunde mødte "Levering i hele København fra 495 kr" som det første på siden.
+ * Beløbet er leveringsprisen fra productFaq.ts, ikke et tal skrevet i hånden.
+ */
+const USPS: Record<Locale, Array<{ icon: keyof typeof ICONS; text: string; href?: string }>> = {
+  da: [
+    { icon: "truck", text: `Levering i hele København fra ${DELIVERY_ONE_WAY} kr` },
+    { icon: "calendar", text: `Op til ${MAX_RENTAL_DAYS} dage, samme pris` },
+    { icon: "wallet", text: "Sikker onlinebetaling" },
+  ],
+  en: [
+    { icon: "truck", text: `Delivery across Copenhagen from ${DELIVERY_ONE_WAY} DKK` },
+    { icon: "calendar", text: `Up to ${MAX_RENTAL_DAYS} days, same price` },
+    { icon: "wallet", text: "Secure online payment" },
+  ],
+};
 
 export default function TopBar() {
   const pathname = usePathname();
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
   const isAdmin = pathname?.startsWith("/admin");
+  const usps = USPS[pathname?.startsWith("/en") ? "en" : "da"];
 
   useEffect(() => {
     if (isAdmin) return;
     const interval = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
-        setIndex((i) => (i + 1) % USPS.length);
+        setIndex((i) => (i + 1) % usps.length);
         setVisible(true);
       }, 300);
     }, 4000);
     return () => clearInterval(interval);
-  }, [isAdmin]);
+  }, [isAdmin, usps.length]);
 
   if (isAdmin) return null;
 
-  const current = USPS[index];
+  const current = usps[index % usps.length];
 
   return (
     <div className="fixed top-0 left-0 right-0 z-40 bg-brand-500 px-4 py-2 text-sm font-semibold text-black">
@@ -72,7 +89,7 @@ export default function TopBar() {
 
       {/* Desktop: fire USP'er med hver sit ikon */}
       <div className="hidden md:flex items-center justify-center gap-10">
-        {USPS.map((u) =>
+        {usps.map((u) =>
           u.href ? (
             <a key={u.text} href={u.href} className="flex items-center gap-2 underline-offset-2 transition hover:underline">
               {ICONS[u.icon]}

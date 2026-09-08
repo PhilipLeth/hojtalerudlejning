@@ -6,7 +6,7 @@ import { type Locale, t } from "@/lib/i18n";
 import PhoneLink from "@/components/PhoneLink";
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import { CompanyBlock, CompanyEmail, CompanyEmailLink } from "@/components/CompanyInfo";
-import { formatDateLine, formatOneLine, openDays, upcomingExceptions } from "@/lib/openingHours";
+import { formatDateLine, formatOneLine, openDays, otherLine, upcomingExceptions } from "@/lib/openingHours";
 import { socialEntries } from "@/lib/socials";
 
 /**
@@ -36,7 +36,9 @@ function OpeningHoursLine({ locale }: { locale: Locale }) {
           {e.note ? ` · ${e.note}` : ""}
         </p>
       ))}
-      {hours.other && <p className="mt-1 text-xs text-white/30">{hours.other}</p>}
+      {otherLine(hours, locale) && (
+        <p className="mt-1 text-xs text-white/30">{otherLine(hours, locale)}</p>
+      )}
     </>
   );
 }

@@ -2,7 +2,7 @@
 
 import { type Locale, t } from "@/lib/i18n";
 import { useSiteSettings } from "@/lib/useSiteSettings";
-import { formatDayLine, openDays } from "@/lib/openingHours";
+import { formatDayLine, openDays, otherLine } from "@/lib/openingHours";
 
 const stepIcons = [
   <svg key="1" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -31,7 +31,9 @@ function OpeningHours({ locale, title }: { locale: Locale; title: string }) {
         {days.map((d) => (
           <p key={d.day}>{formatDayLine(d, locale)}</p>
         ))}
-        {hours.other && <p className="mt-2 text-sm text-white/40">{hours.other}</p>}
+        {otherLine(hours, locale) && (
+          <p className="mt-2 text-sm text-white/40">{otherLine(hours, locale)}</p>
+        )}
       </div>
     </div>
   );

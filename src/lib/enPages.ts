@@ -56,6 +56,24 @@ export function hasEnglish(daPath: string): boolean {
 }
 
 /**
+ * Den danske sti bag en hvilken som helst sti på sitet.
+ *
+ * EN_PAGES og localizedHref regner begge i danske stier, fordi det er dem,
+ * kataloget og sidernes hreflang bruger som nøgle. Skal man den anden vej —
+ * fra den side, brugeren står på, tilbage til parret — er det her vejen:
+ * "/en/festlys" → "/festlys", "/en" → "/", og en dansk sti bliver stående.
+ *
+ * Bruges af sprogskifteren i menuen, så den bliver på samme side i stedet for
+ * altid at sende folk til forsiden.
+ */
+export function danskSti(sti: string): string {
+  const clean = sti.replace(/\/$/, "") || "/";
+  if (clean === "/en") return "/";
+  if (clean.startsWith("/en/")) return clean.slice(3);
+  return clean;
+}
+
+/**
  * Samme side på det ønskede sprog.
  *
  * Findes den ikke på engelsk, returneres den danske sti uændret — et link til

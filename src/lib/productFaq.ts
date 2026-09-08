@@ -19,6 +19,7 @@ import { DEFAULT_PICKUP_ADDRESS } from "@/lib/pickup";
 import { addons, rentalProducts, speakers } from "@/lib/products";
 import type { FaqItem } from "@/components/FaqSection";
 import type { Locale } from "@/lib/i18n";
+import { contentsFor } from "@/lib/contentsEn";
 
 /** Levering: én vej og begge veje er to selvstændige priser, jf. products.ts */
 export const DELIVERY_ONE_WAY = 495;
@@ -63,26 +64,33 @@ export interface ProductFaqInput {
  */
 function catalogFacts(productId: string, locale: Locale): { contents?: string[]; capacity?: string } {
   const speaker = speakers.find((s) => s.id === productId);
-  // `contents` findes kun på dansk i kataloget — pakkelisten er tekniske ord
-  // ("2× Alto 10\" højtalere"), som er læsbare på begge sprog. Kapaciteten
-  // findes derimod på begge, og der bruges den rigtige.
-  if (speaker) return { contents: speaker.contents, capacity: speaker[locale].capacity };
+  // `contents` findes kun på dansk i kataloget, men contentsEn.ts oversætter
+  // de enkelte linjer — ellers svarede den engelske FAQ "comes with Trådløs
+  // håndholdt mic, Modtager og Kabelforbindelse til højtaler". Kapaciteten
+  // findes på begge sprog i kataloget, og der bruges den rigtige.
+  if (speaker) return { contents: contentsFor(speaker.contents, locale), capacity: speaker[locale].capacity };
 
   const rental = rentalProducts.find((r) => r.id === productId);
-  if (rental) return { contents: rental.contents };
+  if (rental) return { contents: contentsFor(rental.contents, locale) };
 
   const addon = addons.find((a) => a.id === productId);
-  if (addon) return { contents: addon.contents };
+  if (addon) return { contents: contentsFor(addon.contents, locale) };
 
   return {};
 }
 
-/** Sætter pakkelisten sammen til én læsbar sætning. */
-function joinBullets(parts: string[]): string {
+/**
+ * Sætter pakkelisten sammen til én læsbar sætning.
+ *
+ * Bindeordet følger sproget: det engelske svar sagde "A, B og C", fordi
+ * funktionen var skrevet til dansk og delt af begge udgaver.
+ */
+function joinBullets(parts: string[], locale: Locale): string {
   const clean = parts.map((b) => b.trim().replace(/[.;]+$/, "")).filter(Boolean);
   if (clean.length === 0) return "";
   if (clean.length === 1) return clean[0];
-  return `${clean.slice(0, -1).join(", ")} og ${clean[clean.length - 1]}`;
+  const og = locale === "en" ? "and" : "og";
+  return `${clean.slice(0, -1).join(", ")} ${og} ${clean[clean.length - 1]}`;
 }
 
 /** Stort begyndelsesbogstav — "en discokugle" må ikke starte en sætning som småt. */
@@ -101,7 +109,7 @@ export function buildProductFaq({
 }: ProductFaqInput): FaqItem[] {
   const facts = catalogFacts(productId, locale);
   const it = phrase ?? name;
-  const included = joinBullets(facts.contents ?? []);
+  const included = joinBullets(facts.contents ?? [], locale);
   const guests = capacity ?? facts.capacity;
 
   return locale === "en"
