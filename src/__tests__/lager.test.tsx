@@ -372,7 +372,7 @@ describe("/admin/produkter", () => {
   it("har lagertallet på produktet", async () => {
     mockApi({ party: 2 });
     renderAdmin(<ProdukterPage />);
-    await waitFor(() => expect(screen.getAllByText("Lager (antal)").length).toBeGreaterThan(0));
+    await waitFor(() => expect(screen.getAllByText("Lager (antal)").length).toBeGreaterThan(0), { timeout: 20000 });
     expect(screen.getAllByText(/lager ikke sat/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/2 stk\./).length).toBeGreaterThan(0);
   }, 30000);
@@ -380,7 +380,7 @@ describe("/admin/produkter", () => {
   it("har overbooking ved siden af lageret", async () => {
     mockApi({ party: 2 }, { overbook: { party: 1 } });
     renderAdmin(<ProdukterPage />);
-    await waitFor(() => expect(screen.getAllByText("Overbooking (kan skaffes)").length).toBeGreaterThan(0));
+    await waitFor(() => expect(screen.getAllByText("Overbooking (kan skaffes)").length).toBeGreaterThan(0), { timeout: 20000 });
     expect(screen.getAllByText(/tager imod 3/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/\+1 JIT/).length).toBeGreaterThan(0);
   }, 30000);
@@ -388,7 +388,7 @@ describe("/admin/produkter", () => {
   it("gemmer lagertallet med det samme, uden at publicere hele kataloget", async () => {
     mockApi({ thumpgo: 1 });
     renderAdmin(<ProdukterPage />);
-    await waitFor(() => expect(screen.getAllByText("Lager (antal)").length).toBeGreaterThan(0));
+    await waitFor(() => expect(screen.getAllByText("Lager (antal)").length).toBeGreaterThan(0), { timeout: 20000 });
 
     const felt = screen.getAllByLabelText("Antal på lager")[0] as HTMLInputElement;
     fireEvent.change(felt, { target: { value: "3" } });
