@@ -79,6 +79,53 @@ describe("prepareGroup og uden for området", () => {
   });
 });
 
+describe("match type", () => {
+  const produkt = { name: "Soundboks 4", price: 695, page: "/soundboks-4" };
+  const pages = { known: ["/soundboks-4"], paused: [] as string[] };
+
+  function gruppe(keyword: string, matchType?: string) {
+    const cluster = clusterKeywords([keyword])[0];
+    const copy = buildAdCopy(produkt, cluster, { deliveryPrice: DEFAULT_DELIVERY_PRICE });
+    return {
+      name: `Soundboks 4 — ${matchType ?? "std"}: ${keyword}`,
+      primary: keyword,
+      keywords: [{ text: keyword }],
+      matchType,
+      headlines: copy.headlines,
+      descriptions: copy.descriptions,
+      finalUrl: copy.finalUrl,
+    };
+  }
+  const byg = (kw: string, mt?: string) =>
+    prepareGroup(gruppe(kw, mt), pages, ["soundboks"], new Set()) as { group: { keywords: Array<{ text: string; matchType: string }> } };
+
+  it("er phrase når intet er valgt — kontoens standard", () => {
+    expect(byg("lej soundboks").group.keywords).toEqual([{ text: "lej soundboks", matchType: "PHRASE" }]);
+  });
+
+  it("kan lave en ultrasmal gruppe på exact alene", () => {
+    expect(byg("lej soundboks", "EXACT").group.keywords).toEqual([{ text: "lej soundboks", matchType: "EXACT" }]);
+  });
+
+  it("lægger begge match types ind når man vil have kontrol OG lang hale", () => {
+    expect(byg("lej soundboks", "BEGGE").group.keywords).toEqual([
+      { text: "lej soundboks", matchType: "EXACT" },
+      { text: "lej soundboks", matchType: "PHRASE" },
+    ]);
+  });
+
+  it("afviser broad med besked om hvorfor", () => {
+    const res = prepareGroup(gruppe("lej soundboks", "BROAD"), pages, ["soundboks"], new Set());
+    expect((res as { errors: string[] }).errors.join(" ")).toContain("Broad match er fravalgt");
+  });
+
+  it("dobbelt-keyword giver ikke dobbelte fejlbeskeder", () => {
+    const res = prepareGroup(gruppe("lej soundboks aalborg", "BEGGE"), pages, ["soundboks"], new Set());
+    const fejl = (res as { errors: string[] }).errors.filter((e) => e.includes("aalborg"));
+    expect(fejl).toHaveLength(1);
+  });
+});
+
 describe("spørgefraser klynger med produktet", () => {
   it("lægger 'hvad koster det at leje en soundboks' i soundboks-gruppen, ikke sin egen", () => {
     const clusters = clusterKeywords([

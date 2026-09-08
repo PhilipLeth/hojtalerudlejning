@@ -371,6 +371,8 @@ interface GroupInput {
   themeKey?: string;
   primary?: string;
   cpcBidMicros?: number;
+  /** "PHRASE" (standard), "EXACT", eller "BEGGE" for begge dele. */
+  matchType?: string;
   keywords?: Array<{ text?: string }>;
   headlines?: string[];
   descriptions?: string[];
@@ -417,14 +419,41 @@ export function prepareGroup(
     errors.push(`Der findes allerede en annoncegruppe der hedder "${name}".`);
   }
 
-  const keywords = strings(input.keywords?.map((k) => k?.text), 50).map((text) => ({
-    text: text.toLowerCase(),
-    matchType: "PHRASE" as const,
-  }));
+  /**
+   * Match type pr. gruppe.
+   *
+   * Kontoen har kørt rent phrase, og det er stadig standarden: en bred
+   * gruppe skal fange de bøjninger vi ikke selv har tænkt på. Men en
+   * ultrasmal gruppe bygget på de fire stavemåder vi VED vi vil vinde —
+   * "fest højtalere", "fest højttaler", "højtalere til fest", "højtaler
+   * fest" — har intet at hente ved at være bred: exact giver fuld kontrol
+   * over hvad der udløser annoncen, og en annoncetekst der matcher
+   * søgningen ord for ord er det annoncerelevansen måles på.
+   *
+   * BEGGE lægger hvert keyword ind som både exact og phrase i samme gruppe.
+   * Google foretrækker exact på den præcise søgning og bruger phrase til
+   * resten, så man får kontrollen uden at tabe den lange hale.
+   *
+   * Broad er fravalgt i hele kontoen og afvises her — se prd'ens
+   * beslutning om match_type.
+   */
+  const ønsket = (input.matchType ?? "PHRASE").toUpperCase();
+  if (!["PHRASE", "EXACT", "BEGGE"].includes(ønsket)) {
+    errors.push(
+      ønsket === "BROAD"
+        ? "Broad match er fravalgt i kontoen — lejeintentionen skal stå i frasen selv."
+        : `Ukendt match type: ${ønsket}. Vælg Phrase, Exact eller Begge.`,
+    );
+  }
+  const typer: Array<"PHRASE" | "EXACT"> =
+    ønsket === "EXACT" ? ["EXACT"] : ønsket === "BEGGE" ? ["EXACT", "PHRASE"] : ["PHRASE"];
+
+  const tekster = strings(input.keywords?.map((k) => k?.text), 50).map((t) => t.toLowerCase());
+  const keywords = tekster.flatMap((text) => typer.map((matchType) => ({ text, matchType })));
   if (!keywords.length) errors.push(`${name || "Gruppen"} har ingen keywords — den ville vise intet.`);
 
-  const primary = (input.primary ?? keywords[0]?.text ?? "").toLowerCase();
-  if (primary && !keywords.some((k) => k.text === primary)) {
+  const primary = (input.primary ?? tekster[0] ?? "").toLowerCase();
+  if (primary && !tekster.includes(primary)) {
     errors.push(`Frasen "${primary}" står ikke blandt gruppens keywords.`);
   }
 
@@ -432,10 +461,10 @@ export function prepareGroup(
   // "Discokugle 40 cm — Udlejning: soundbox", der pegede på /discokugle.
   // Et keyword om et andet produkt end landingssiden er en fejl, uanset
   // hvordan det kom med — også hvis nogen har skrevet det ind i hånden.
-  const fremmede = keywords.filter((k) => !samhandler(k.text, productTerms));
+  const fremmede = tekster.filter((t) => !samhandler(t, productTerms));
   if (fremmede.length) {
     errors.push(
-      `Handler ikke om produktet: ${fremmede.map((k) => `"${k.text}"`).join(", ")}. ` +
+      `Handler ikke om produktet: ${fremmede.map((t) => `"${t}"`).join(", ")}. ` +
         `Landingssiden er produktets egen, så keywordet skal være det også.`,
     );
   }
@@ -443,8 +472,8 @@ export function prepareGroup(
   // Uden for leveringsområdet er ikke en skærpelse men en spærring: en
   // annonce mod /discokugle kan være nok så pæn — kan vi ikke levere i
   // Aalborg, er hvert klik spildt. Frasen hører til på negativlisten.
-  const udenfor = keywords
-    .map((k) => ({ text: k.text, sted: udenforOmraadet(k.text) }))
+  const udenfor = tekster
+    .map((t) => ({ text: t, sted: udenforOmraadet(t) }))
     .filter((x): x is { text: string; sted: string } => Boolean(x.sted));
   if (udenfor.length) {
     errors.push(

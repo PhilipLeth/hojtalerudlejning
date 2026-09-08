@@ -1846,7 +1846,7 @@
         "kampagne": "Eksisterende Højtaler Udlejning - Search (23973439325). Nye annoncer er ad groups heri, aldrig nye kampagner.",
         "status": "PAUSED ved oprettelse. Tændes bevidst fra /admin/ads.",
         "bud": "9 kr som standard, redigerbart. Kampagnen kører MANUAL_CPC — en gruppe uden eksplicit bud serverer intet, som Yderområder med 0,01 kr.",
-        "match_type": "Phrase. Lejeintentionen skal stå i frasen selv.",
+        "match_type": "Phrase som standard — lejeintentionen skal stå i frasen selv. Siden 8. sept 2026 kan man vælge Exact eller Begge pr. gruppe, se match_type_valgfri_2026_09_08. Broad er fravalgt og afvises af serveren.",
         "flertal": "Genereres ikke. Phrase match dækker ental/flertal, og en flertalsterm gav mønstre som 'lej en røgmaskiner'.",
         "termer": "Redigerbare pr. produkt i KV ads_terms, seedet fra produktnavnet. Produktnavne er ikke søgefraser."
       },
@@ -1883,6 +1883,14 @@
         "seedTerms klipper måleenheder væk: 'Discokugle 40 cm' gav frøet 'discokugle cm', og Google svarede med én eneste idé på det. Nu 'discokugle' + 'diskokugle'."
       ],
       "laering": "Googles urlSeed alene er meget løs: for /discokugle returnerer den 259 idéer, hvoraf 249 intet har med en discokugle at gøre ('led lys' 12.100/md, '1 2v batteri'). Det er frøene der holder den i snor — URL + ordentlige frø gav 28 idéer, alle om discokugler. Et skævt frø er derfor ikke en detalje."
+    },
+    "match_type_valgfri_2026_09_08": {
+      "hvorfor": "Byggeren hardkodede PHRASE. Det er rigtigt for en bred gruppe, der skal fange bøjninger vi ikke selv har tænkt på — men forkert for den ultrasmalle gruppe, hele strategien handler om: kender man præcis de fire stavemåder man vil vinde ('fest højtalere', 'fest højttaler', 'højtalere til fest', 'højtaler fest'), er der intet at hente ved at være bred. Exact giver fuld kontrol over hvad der udløser annoncen, og en annoncetekst der matcher søgningen ord for ord er præcis det, annoncerelevansen måles på.",
+      "valget": "Pr. gruppe i /admin/ads/opret: Phrase (standard, uændret), Exact, eller Begge. BEGGE lægger hvert keyword ind som både exact og phrase i samme gruppe — Google foretrækker exact på den præcise søgning og bruger phrase til resten, så man får kontrollen uden at tabe den lange hale. Listen i UI'et viser hvad der faktisk oprettes: [exact] og \"phrase\".",
+      "broad": "Afvises af serveren med en besked om hvorfor, ikke bare som 'ukendt værdi'. Typen findes i NewKeyword, men ingen vej i UI'et fører dertil.",
+      "detalje": "Validering, relevans-, område- og dublettjek kører på de unikke TEKSTER, ikke på criterion-rækkerne — ellers gav BEGGE dobbelte fejlbeskeder for samme frase. Testet i ads-build.test.ts.",
+      "verificeret": "createAdGroup kørt mod 441-020-7627 med validateOnly 8. sept 2026: 4 keywords som ren EXACT og 8 som EXACT+PHRASE, begge godkendt. Intet oprettet.",
+      "forbehold": "Match type ændrer ikke quality score i sig selv — QS regnes pr. keyword på forventet CTR, annoncerelevans og landingsside. Exact hæver dem indirekte ved at snævre de søgninger ind, annoncen overhovedet vises på. Landingssiden er stadig kontoens svageste komponent (70 % under gennemsnit), og den retter ingen match type — se ads-landingsside-pr-vinderfrase."
     },
     "klynger_og_sidevalg_2026_09_08": {
       "to_fejl": "Klyngen 'Anledning: fest' (400/md) samlede højtalere, lys, røgkanon, musikanlæg OG 'fest og leg frederiksværk' i én bunke og pegede på Mackie Thump GO. Årsag 1: demandKey lod anledningen samle alene, men 'fest' er ikke en anledning på linje med bryllup — det er et suffiks på næsten enhver udlejningssøgning, så alt med 'fest' kollapsede, og én landingsside kunne per definition ikke være rigtig. Årsag 2: findSide matchede på produktets REDIGERBARE Google-frø; Mackie Thump GO havde fået frøet udvidet til 'højtaler' og scorede dermed 6/12 — samme score som kategorisiden /lej-hojtaler, og produkter kom først, så modellen vandt en generisk kategorisøgning.",
@@ -3688,11 +3696,11 @@
     "test": "src/__tests__/google-anmeldelser.test.ts (cache, fejl fra Google, sprog, admin-tvang) og google-anmeldelser-visning.test.tsx (kort, fallback, engelsk).",
     "profilen_2026_09_07": "Profilen har 5,0 i snit og 4 anmeldelser, alle fra uge 36 2026: Emilie Kirkegaard (kun stjerner, ingen tekst — filtreres fra), Dora Brink Clausen, Anne Bjørn og Antoine Falzon. Sitet viser derfor tre kort, og kolonnerne skifter til tre, når der er tre.",
     "noegle": "API-nøgle 'Lejhojtaler Places (server)' oprettet 7. sept 2026 i Google Cloud-projektet 'lejecenter' (samme projekt som Search Console-servicekontoen; Places API (New) var allerede slået til, billing: My Billing Account 2). Begrænset til Places API (New), ingen application restriction (kaldet kommer fra Cloudflares IP'er). Mangler: `wrangler pages secret put GOOGLE_PLACES_API_KEY --project-name=speaker-rental`."
-  }
-}
   },
   "forsiden_2026_09_08": {
     "beslutning": "Forsiden viser kun de to små festpakker (50 og 100 gæster), og Google-anmeldelserne er trukket op lige under dem — før produktgitteret. Festpakke 150 og 250 fyldte toppen med tunge kort uden at blive valgt der.",
     "hvor": "src/app/page.tsx og src/app/en/page.tsx bruger FEST_LADDER_FORSIDE_IDS (= FEST_LADDER_IDS.slice(0,2)) i stedet for hele stigen. BundleGrid har fået en `note`-prop til linjen under kortene.",
     "de_store_pakker": "Linkes fra noten under kortene på begge sprog. Dansk har også /lej-hojtaler med hele stigen; engelsk har INGEN tilsvarende kategoriside, så noten er det eneste indgående link til /en/festpakke-150 og /en/festpakke-250. forside-rakkefolge.test.ts vogter både rækkefølgen og de fire links.",
     "topbanner": "TopBar viser Google-ratingen som femte plads: fem små stjerner + '5,0 på Google' med link til profilen, hentet fra /api/anmeldelser (samme kald som sektionen, delt cache). Står der kun når Google har givet et tal, og hentes ikke i admin (useGoogleReviews(locale, enabled)). topbar-rating.test.ts vogter det."
+  }
+}

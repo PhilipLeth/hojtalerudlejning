@@ -70,7 +70,16 @@ interface CopyEdit {
   headlines?: string[];
   descriptions?: string[];
   bidMicros?: number;
+  matchType?: MatchType;
 }
+
+type MatchType = "PHRASE" | "EXACT" | "BEGGE";
+
+const MATCH_LABELS: Record<MatchType, string> = {
+  PHRASE: "Phrase",
+  EXACT: "Exact",
+  BEGGE: "Begge",
+};
 
 const card: React.CSSProperties = {
   background: "#fff",
@@ -256,6 +265,9 @@ export default function AdsOpretPage() {
         nøgle,
         name: redigeret.name ?? adGroupName(product.name, c),
         bidMicros: redigeret.bidMicros ?? data?.defaultBidMicros ?? 9_000_000,
+        // Standarden er phrase, som resten af kontoen. Exact er til den
+        // stramme gruppe, hvor man kender præcis de stavemåder man vil vinde.
+        matchType: redigeret.matchType ?? ("PHRASE" as MatchType),
         headlines,
         descriptions,
         finalUrl: genereret.finalUrl,
@@ -325,6 +337,7 @@ export default function AdsOpretPage() {
           themeKey: g.cluster.key,
           primary: g.cluster.primary,
           cpcBidMicros: g.bidMicros,
+          matchType: g.matchType,
           keywords: g.cluster.keywords.map((text) => ({ text })),
           headlines: g.headlines,
           descriptions: g.descriptions,
@@ -635,13 +648,35 @@ export default function AdsOpretPage() {
                 />{" "}
                 kr
               </span>
+              <span style={{ fontSize: "12px", color: "#888" }}>
+                Match{" "}
+                <select
+                  value={g.matchType}
+                  onChange={(e) => patch(g.nøgle, { matchType: e.target.value as MatchType })}
+                  aria-label={`Match type for ${g.name}`}
+                  style={{ ...input, width: "92px", display: "inline-block" }}
+                >
+                  {(Object.keys(MATCH_LABELS) as MatchType[]).map((m) => (
+                    <option key={m} value={m}>{MATCH_LABELS[m]}</option>
+                  ))}
+                </select>
+              </span>
               <span style={{ fontSize: "12px", color: g.cluster.volume ? "#1e7e34" : "#b58900", fontWeight: 600 }}>
                 {g.cluster.volume || 0} søgninger/md
               </span>
             </div>
 
             <p style={{ fontSize: "13px", color: "#555", margin: "10px 0 0" }}>
-              {g.cluster.keywords.join(" · ")}
+              {g.cluster.keywords
+                .map((k) => (g.matchType === "EXACT" ? `[${k}]` : g.matchType === "BEGGE" ? `[${k}] + "${k}"` : `"${k}"`))
+                .join(" · ")}
+            </p>
+            <p style={{ fontSize: "11px", color: "#888", margin: "4px 0 0" }}>
+              {g.matchType === "EXACT"
+                ? "Exact: annoncen vises kun på præcis de her søgninger — fuld kontrol, ingen lang hale."
+                : g.matchType === "BEGGE"
+                  ? "Begge: exact tager den præcise søgning, phrase fanger resten. Dobbelt antal keywords."
+                  : "Phrase: fanger også søgninger med ord før og efter frasen."}
             </p>
 
             {g.problems.length > 0 && (
