@@ -33,8 +33,9 @@ export const BEHOV = [
   "Lyd og højtalere",
   "Mikrofoner til taler",
   "Lys",
-  // Skærm og projektor stod her, indtil de blev sat på pause — se
-  // PAUSEDE_PRODUKTER. Et afkrydsningsfelt er et løfte om at kunne levere.
+  // Tilbage 8. september 2026 sammen med produkterne. Et afkrydsningsfelt er et
+  // løfte om at kunne levere — derfor stod det her ikke under pausen.
+  "Skærm eller projektor",
   "Røg / low fog",
   "Levering + opsætning",
   "Tekniker på stedet",

@@ -127,9 +127,12 @@ describe("validateFinalUrl", () => {
   });
 
   it("afviser en side vi har taget af sortimentet", () => {
-    const pauset = PAUSEDE_SIDER.find((p) => SIDER.includes(p));
-    expect(pauset, "der skal findes mindst én pauset produktside").toBeTruthy();
-    expect(validateFinalUrl(`https://lejhojtaler.dk${pauset}`, SIDER).join(" ")).toMatch(/på pause/);
+    // PAUSEDE_SIDER er tom, når intet er pauset — valideringen skal stadig
+    // fange en pauset landingsside, så testen sender sin egen liste med
+    const pauset = SIDER[0];
+    expect(validateFinalUrl(`https://lejhojtaler.dk${pauset}`, SIDER, [pauset]).join(" ")).toMatch(/på pause/);
+    // Med den rigtige (tomme) liste er samme side i orden
+    expect(validateFinalUrl(`https://lejhojtaler.dk${pauset}`, SIDER)).toEqual([]);
   });
 
   it("afviser en side der ikke findes", () => {

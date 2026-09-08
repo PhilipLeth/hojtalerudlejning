@@ -2,15 +2,15 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Lej Konferencepakken København — udlejes ikke lige nu | Lejhøjtaler.dk",
+  title: "Lej Konferencepakken København | 1.395 kr | Lejhøjtaler.dk",
   description:
-    "Konferencepakken med storskærm, headset og højtalere. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+    "Konferencepakken med 55\" storskærm, trådløst headset og to højtalere — klar til mødelokalet for 1.395 kr. Spar 140 kr. Book online i København.",
   keywords: ["konferencepakke leje", "lej skærm og lyd konference", "av udstyr konference københavn"],
   alternates: { canonical: "https://lejhojtaler.dk/pakke-konference" },
   openGraph: {
-    title: "Lej Konferencepakken København — udlejes ikke lige nu",
+    title: "Lej Konferencepakken København | 1.395 kr",
     description:
-      "Konferencepakken med storskærm, headset og højtalere. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+      "Konferencepakken med 55\" storskærm, trådløst headset og to højtalere — klar til mødelokalet for 1.395 kr. Spar 140 kr. Book online i København.",
     url: "https://lejhojtaler.dk/pakke-konference",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

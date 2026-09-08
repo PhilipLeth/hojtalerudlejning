@@ -104,9 +104,14 @@ export interface Idea {
   outsideArea: string | null;
 }
 
-/** Sider vi må sende trafik til: har en produktside, ikke skjult, ikke pauset. */
-export function annonceerbare(catalog: CatalogProduct[]): CatalogProduct[] {
-  const pauset = new Set(PAUSEDE_SIDER);
+/** Sider vi må sende trafik til: har en produktside, ikke skjult, ikke pauset.
+ *  `pausedPages` kan sendes med, så filteret kan afprøves uanset om der
+ *  faktisk er noget på pause lige nu — se ads-ideer.test.ts. */
+export function annonceerbare(
+  catalog: CatalogProduct[],
+  pausedPages: string[] = PAUSEDE_SIDER,
+): CatalogProduct[] {
+  const pauset = new Set(pausedPages);
   return catalog.filter((p) => !!p.page && !p.hidden && !pauset.has(p.page));
 }
 

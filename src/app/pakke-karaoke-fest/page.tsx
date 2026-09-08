@@ -2,15 +2,15 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Lej Karaoke-festpakken København — udlejes ikke lige nu | Lejhøjtaler.dk",
+  title: "Lej Karaoke-festpakken København | 2.000 kr | Lejhøjtaler.dk",
   description:
-    "Karaoke-festpakken med maskine, storskærm og store højtalere. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+    "Karaoke-festpakken med maskine, 55\" storskærm og store højtalere — karaoke til op til 100 gæster for 2.000 kr. Spar 285 kr. Book online.",
   keywords: ["stor karaoke pakke", "karaoke anlæg til fest", "karaoke firmafest leje"],
   alternates: { canonical: "https://lejhojtaler.dk/pakke-karaoke-fest" },
   openGraph: {
-    title: "Lej Karaoke-festpakken København — udlejes ikke lige nu",
+    title: "Lej Karaoke-festpakken København | 2.000 kr",
     description:
-      "Karaoke-festpakken med maskine, storskærm og store højtalere. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+      "Karaoke-festpakken med maskine, 55\" storskærm og store højtalere — karaoke til op til 100 gæster for 2.000 kr. Spar 285 kr. Book online.",
     url: "https://lejhojtaler.dk/pakke-karaoke-fest",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

@@ -134,8 +134,8 @@ export default function LydanlaegPage() {
       <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="mb-2 text-2xl font-bold">Til taler og møder</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">
-          Skal der siges noget, er mikrofonen vigtigere end bassen. Vi udlejer lyden og mikrofonen —
-          projektor, lærred og skærm er på pause, så dem skal du have et andet sted fra.
+          Skal der siges noget, er mikrofonen vigtigere end bassen. Vi udlejer både lyden og billedet —
+          mikrofon, højtalere, projektor, lærred og storskærm.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link

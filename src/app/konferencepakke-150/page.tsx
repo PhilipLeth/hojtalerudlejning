@@ -3,15 +3,15 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Konferencepakke 150 | Højtalere, mikrofon, headset og skærm — udlejes ikke lige nu | Lejhøjtaler.dk",
+  title: "Konferencepakke 150 | Højtalere, mikrofon, headset og skærm | 2.395 kr | Lejhøjtaler.dk",
   description:
-    "Konferencepakke 150 med højtalere, mikrofon, headset og skærm. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+    "Konferencepakke 150 med to 12\" højtalere på stativer, Shure trådløs mikrofon, headset og 55\" skærm. Til sale med 100-150 deltagere — 2.395 kr.",
   keywords: ["konferenceudstyr leje", "lej mikrofon og højtaler", "av udstyr til konference", "lydudstyr til generalforsamling", "skærm og mikrofon leje"],
   alternates: { canonical: "https://lejhojtaler.dk/konferencepakke-150" },
   openGraph: {
-    title: "Konferencepakke 150 | Højtalere, mikrofon, headset og skærm — udlejes ikke lige nu",
+    title: "Konferencepakke 150 | Højtalere, mikrofon, headset og skærm | 2.395 kr",
     description:
-      "Konferencepakke 150 med højtalere, mikrofon, headset og skærm. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+      "Konferencepakke 150 med to 12\" højtalere på stativer, Shure trådløs mikrofon, headset og 55\" skærm. Til sale med 100-150 deltagere — 2.395 kr.",
     url: "https://lejhojtaler.dk/konferencepakke-150",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

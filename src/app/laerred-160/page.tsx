@@ -2,15 +2,15 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: "Lej Lærred 160 cm København — udlejes ikke lige nu | Lejhøjtaler.dk",
+  title: "Lej Lærred 160 cm København | 195 kr | Lejhøjtaler.dk",
   description:
-    "160 cm lærred på stativ. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+    "Lej et 160 cm lærred på stativ i København for 195 kr. Passer til alle vores projektorer — stilles op på et minut. Book online.",
   keywords: ["lej lærred", "projektor lærred leje", "lærred til projektor københavn"],
   alternates: { canonical: "https://lejhojtaler.dk/laerred-160" },
   openGraph: {
-    title: "Lej Lærred 160 cm København — udlejes ikke lige nu",
+    title: "Lej Lærred 160 cm København | 195 kr",
     description:
-      "160 cm lærred på stativ. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+      "Lej et 160 cm lærred på stativ i København for 195 kr. Passer til alle vores projektorer — stilles op på et minut. Book online.",
     url: "https://lejhojtaler.dk/laerred-160",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

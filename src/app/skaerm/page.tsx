@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 
 export const metadata: Metadata = {
-  title: "Lej Storskærm København — udlejes ikke lige nu | Lejhøjtaler.dk",
+  title: "Lej Storskærm København | 595 kr | Lejhøjtaler.dk",
   description:
-    "55 tommer LED-storskærm på stativ. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+    "Lej en 55\" LED-storskærm på stativ i København for 595 kr. Justerbar højde, HDMI-kabel med — til møder, konferencer og karaoke. Book online.",
   keywords: [
     "lej storskærm",
     "skærm udlejning",
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/skaerm" },
   openGraph: {
-    title: "Lej Storskærm København — udlejes ikke lige nu",
+    title: "Lej Storskærm København | 595 kr",
     description:
-      "55 tommer LED-storskærm på stativ. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+      "Lej en 55\" LED-storskærm på stativ i København for 595 kr. Justerbar højde, HDMI-kabel med — til møder, konferencer og karaoke. Book online.",
     url: "https://lejhojtaler.dk/skaerm",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

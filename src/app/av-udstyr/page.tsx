@@ -4,26 +4,27 @@ import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import BundleGrid from "@/components/BundleGrid";
-import PausetKategori from "@/components/PausetKategori";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { AV_PAKKER } from "@/lib/products";
 import { LocationKicker } from "@/components/PhoneLink";
 
 /**
- * /av-udstyr efter pausen.
+ * /av-udstyr — hele mødet: billede, lyd og mikrofon.
  *
- * Projektor, skærm og lærred er taget ud af sortimentet (se PAUSEDE_PRODUKTER
- * i src/lib/products.ts), og siden er derfor skåret ned til det, den stadig
- * kan levere: mikrofoner og lyd til mødet. Den siger selv, at billedet er på
- * pause — ellers ville den, der kom efter en projektor, lede forgæves.
+ * Projektor, skærm og lærred var på pause fra august til 8. september 2026 og
+ * er i udlejning igen. Siden viser begge halvdele: billedet først, fordi det er
+ * dét folk søger på ("lej storskærm" alene er ~350 visninger om måneden), og
+ * lyden lige efter — et møde uden lyd er lige så ubrugeligt som et uden billede.
  */
 export const metadata: Metadata = {
-  title: "Lej AV-udstyr København | Mikrofoner og lyd til møder | Lejhøjtaler.dk",
+  title: "Lej AV-udstyr København | Projektor, storskærm og mikrofon | Lejhøjtaler.dk",
   description:
-    "Lej mikrofon og lyd til møder og konferencer i København. Trådløs mikrofon fra 295 kr, headset fra 345 kr og højtalere med mikrofon fra 1.045 kr. Projektor, skærm og lærred er på pause.",
+    "Lej AV-udstyr i København: projektor fra 495 kr, 55\" storskærm fra 595 kr, lærred fra 195 kr og trådløs mikrofon fra 295 kr. Alt til mødet, konferencen og filmaftenen.",
   keywords: [
     "lej av-udstyr",
     "av udstyr udlejning",
+    "lej storskærm",
+    "lej projektor",
     "lej mikrofon",
     "mikrofon til konference",
     "lyd til møde leje",
@@ -31,9 +32,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/av-udstyr" },
   openGraph: {
-    title: "Lej AV-udstyr København | Mikrofoner og lyd til møder | Lejhøjtaler.dk",
+    title: "Lej AV-udstyr København | Projektor, storskærm og mikrofon | Lejhøjtaler.dk",
     description:
-      "Trådløs mikrofon fra 295 kr, headset fra 345 kr og højtalere med mikrofon. Book online.",
+      "Projektor fra 495 kr, 55\" storskærm fra 595 kr og trådløs mikrofon fra 295 kr. Book online.",
     url: "https://lejhojtaler.dk/av-udstyr",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -88,14 +89,14 @@ export default function AVUdstyrPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Mikrofon og lyd til talen, mødet og konferencen. Projektor, skærm og
-            lærred udlejer vi ikke lige nu.
+            Projektor, storskærm og lærred til billedet — mikrofon og højtalere
+            til lyden. Alt til mødet, konferencen og filmaftenen.
           </p>
           <a
-            href="#mikrofoner"
+            href="#billede"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Se mikrofoner
+            Se projektor og skærm
           </a>
         </div>
       </section>
@@ -152,10 +153,23 @@ export default function AVUdstyrPage() {
           />
         </section>
 
-        <PausetKategori
-          hvad="projektor, skærm og lærred"
-          detalje="Billedet er på pause, lyden er ikke: mikrofoner og højtalere til mødet står klar."
-        />
+        <section id="billede" className="mx-auto max-w-6xl px-4 pb-16">
+          <h2 className="mb-2 text-center text-3xl font-bold">Billede</h2>
+          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
+            Skærmen er den nemme løsning — den skal bare have strøm og et HDMI-kabel,
+            og den virker i fuldt dagslys. Projektor og lærred giver et større
+            billede, men vil helst have mørke.
+          </p>
+          <CategoryProductGrid
+            items={[
+              { id: "skaerm_55", href: "/skaerm", tag: "Nemmest" },
+              { id: "skaerm_32", href: "/skaerm-32" },
+              { id: "projektor", href: "/projektor" },
+              { id: "projektor_pro", href: "/projektor-pro", tag: "Skarp i dagslys" },
+              { id: "laerred_160", href: "/laerred-160" },
+            ]}
+          />
+        </section>
 
         {/* Upsell */}
         <section className="mx-auto max-w-3xl px-4 pb-24">

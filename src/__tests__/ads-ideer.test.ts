@@ -48,8 +48,10 @@ describe("annonceerbare", () => {
   });
 
   it("springer sider vi har taget af sortimentet over", () => {
-    const pauset = PAUSEDE_SIDER[0];
-    expect(pauset, "der skal findes mindst én pauset side").toBeTruthy();
-    expect(annonceerbare([p("x", pauset)])).toEqual([]);
+    // Listen er tom, når intet er pauset — filteret skal virke alligevel, så
+    // testen sender sin egen pausede side ind i stedet for at læse den rigtige
+    expect(annonceerbare([p("x", "/pauset-side")], ["/pauset-side"])).toEqual([]);
+    // og den rigtige liste må ikke pludselig spærre for noget uventet
+    expect(annonceerbare([p("sb4", "/soundboks-4")]).map((x) => x.id)).toEqual(["sb4"]);
   });
 });

@@ -54,12 +54,13 @@ describe("/admin/produkter — pause", () => {
 
 describe("hidden virker hele vejen ud", () => {
   /**
-   * Sortimentet er skåret ned til højtalere, lys og røg. Skærme, projektor,
-   * lærred og karaoke står på pause — se PAUSEDE_PRODUKTER i products.ts.
+   * Intet står på pause: skærme, projektor, lærred og karaoke kom i udlejning
+   * igen 8. september 2026 — se PAUSEDE_PRODUKTER i products.ts.
    *
    * Testen låser listen i begge retninger: et produkt der forsvinder for
    * kunderne uden en beslutning bliver fanget, og et produkt der bliver
-   * genoptaget uden at komme ud af listen bliver det også.
+   * genoptaget uden at komme ud af listen bliver det også. Mekanikken bliver
+   * stående, så Frederik kan pause fra /admin/produkter.
    */
   it("præcis de besluttede produkter står på pause", () => {
     const pausede = [
@@ -89,11 +90,16 @@ describe("hidden virker hele vejen ud", () => {
     }
   });
 
-  it("menuen viser hverken karaoke eller AV-udstyr", () => {
-    const ider = NAV_CATEGORIES.map((c) => c.id);
-    expect(ider).not.toContain("karaoke");
-    expect(ider).not.toContain("av");
-    // Mikrofonerne flyttede med over i Lyd, så de ikke forsvandt sammen med AV
+  it("menuen har en vej ind til AV-udstyret igen", () => {
+    // Under pausen var kategorien væk med vilje. Nu kan produkterne bookes, og
+    // uden en vej ind lå siderne som blindgyder uden intern linkværdi.
+    const av = NAV_CATEGORIES.find((c) => c.id === "av");
+    expect(av, "AV-kategorien mangler i menuen").toBeTruthy();
+    const href = av!.links.map((l) => l.href);
+    expect(href).toContain("/skaerm");
+    expect(href).toContain("/karaoke");
+    // Mikrofonerne blev i Lyd, hvor de hører til: de lejes til talen, hvor
+    // højtaleren alligevel er med
     const lyd = NAV_CATEGORIES.find((c) => c.id === "lyd")!;
     expect(lyd.links.map((l) => l.href)).toContain("/lej-mikrofon");
   });

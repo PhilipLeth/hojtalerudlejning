@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 
 export const metadata: Metadata = {
-  title: "Lej Projektor København — udlejes ikke lige nu | Lejhøjtaler.dk",
+  title: "Lej Projektor København | 495 kr | Lejhøjtaler.dk",
   description:
-    "Full HD projektor til præsentationer og film. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+    "Lej en Full HD-projektor i København for 495 kr. Til præsentationer, møder og filmaften — HDMI-kabel og fjernbetjening følger med. Book online.",
   keywords: [
     "lej projektor",
     "projektor udlejning",
@@ -15,9 +15,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/projektor" },
   openGraph: {
-    title: "Lej Projektor København — udlejes ikke lige nu",
+    title: "Lej Projektor København | 495 kr",
     description:
-      "Full HD projektor til præsentationer og film. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+      "Lej en Full HD-projektor i København for 495 kr. Til præsentationer, møder og filmaften — HDMI-kabel og fjernbetjening følger med. Book online.",
     url: "https://lejhojtaler.dk/projektor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

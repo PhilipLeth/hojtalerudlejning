@@ -5,9 +5,9 @@ import { catalogDiscount, catalogPartsPrice, prisTekst } from "@/lib/products";
 import ProductLanding from "@/components/ProductLanding";
 
 export const metadata: Metadata = {
-  title: 'Lej 32" Skærm på Stativ København — udlejes ikke lige nu | Lejhøjtaler.dk',
+  title: 'Lej 32" Skærm på Stativ København | 395 kr | Lejhøjtaler.dk',
   description:
-    "32 tommer LED-skærm på stativ. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+    "Lej en 32\" LED-skærm på stativ i København for 395 kr. Kompakt og nem at flytte — perfekt til karaoke og det lille mødelokale. Book online.",
   keywords: [
     "lej skærm",
     "32 tommer skærm leje",
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/skaerm-32" },
   openGraph: {
-    title: 'Lej 32" Skærm på Stativ — udlejes ikke lige nu',
+    title: 'Lej 32" Skærm på Stativ | 395 kr',
     description:
-      "32 tommer LED-skærm på stativ. Udlejes ikke lige nu — vi har samlet udlejningen om højtalere, festlys og røg i København.",
+      "Lej en 32\" LED-skærm på stativ i København for 395 kr. Kompakt og nem at flytte — perfekt til karaoke og det lille mødelokale. Book online.",
     url: "https://lejhojtaler.dk/skaerm-32",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
