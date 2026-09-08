@@ -124,7 +124,10 @@ describe("/api/book svarer kunden, selv om push hænger", () => {
   it("svarer 200 med ordrenummer, mens push stadig hænger", async () => {
     const { svar, kv } = await Promise.race([
       kald(),
-      new Promise<never>((_, afvis) => setTimeout(() => afvis(new Error("svaret kom aldrig — det var 524-fejlen")), 5000)),
+      // 10 s, ikke 5: pointen er at svaret IKKE venter på den hængende push
+      // (så ville det aldrig komme). Under fuld suite kan selve testkørslen
+      // være CPU-udsultet i sekunder, og 5 s målte maskinens belastning.
+      new Promise<never>((_, afvis) => setTimeout(() => afvis(new Error("svaret kom aldrig — det var 524-fejlen")), 10000)),
     ]);
 
     expect(svar.status).toBe(200);
