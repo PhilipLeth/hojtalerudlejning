@@ -144,16 +144,31 @@ describe("Kalenderen i checkout", () => {
     })) as any;
   });
 
-  async function åbnDatovalg(hours: unknown) {
+  /**
+   * Åbner datovalget OG venter på, at spærren rent faktisk er slået igennem.
+   *
+   * "Vælg datoer" var et dårligt signal at vente på: overskriften står der,
+   * så snart kalenderen rendrer, altså FØR site-settings er hentet. Spærren
+   * (earliestPickup) kommer med den hentning, så en synkron assertion bagefter
+   * løb af og til, mens dagene endnu ikke var spærret — under belastning gav
+   * det rødt på "spærrer dagene før datoen". Nu ventes der på selve
+   * overgangen: linjen om spærren findes først, når indstillingen er nået frem.
+   *
+   * Uden spærre er der ingen overgang at vente på, og så er kalenderen nok.
+   */
+  async function åbnDatovalg(hours: unknown, medSpærredato = false) {
     mockSettings(hours);
     render(<BookingFlow />);
     fireEvent.click(screen.getByText("Lille højtalerpakke").closest("button")!);
     await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
+    if (medSpærredato) {
+      await screen.findByText(/Vi tager først imod bookinger med start fra/, {}, { timeout: 20000 });
+    }
   }
 
   it("spærrer dagene før datoen og lader datoen selv vælge", async () => {
     const første = spærredato();
-    await åbnDatovalg(medSpærre(iso(første)));
+    await åbnDatovalg(medSpærre(iso(første)), true);
 
     const dagen = findDag(første)!;
     expect(dagen).toBeTruthy();
@@ -166,7 +181,7 @@ describe("Kalenderen i checkout", () => {
 
   it("siger hvorfor de første dage er grå", async () => {
     const første = spærredato();
-    await åbnDatovalg(medSpærre(iso(første)));
+    await åbnDatovalg(medSpærre(iso(første)), true);
     expect(screen.getByText(/Vi tager først imod bookinger med start fra/)).toBeInTheDocument();
   }, 20000);
 
