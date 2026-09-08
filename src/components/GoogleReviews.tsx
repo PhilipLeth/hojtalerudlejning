@@ -182,7 +182,6 @@ export default function GoogleReviews({ locale = "da" }: GoogleReviewsProps) {
   if (!data.reviews.length) return null;
 
   const snit = data.rating ?? 0;
-  const antal = data.total || data.reviews.length;
   const profil = data.url || GOOGLE_PROFIL_URL;
   // Google leverer højst fem, og anmeldelser uden tekst ryger fra. Kolonnerne
   // følger antallet, så tre ikke står som to plus en forældreløs.
@@ -200,16 +199,11 @@ export default function GoogleReviews({ locale = "da" }: GoogleReviewsProps) {
         <p className="mt-3 max-w-md text-sm text-white/50">{s.subtitle}</p>
 
         {!!data.rating && (
-          <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-2 rounded-2xl glass px-6 py-4">
+          <div className="mt-6 inline-flex items-center gap-4 rounded-2xl glass px-6 py-4">
             <span className="text-4xl font-bold leading-none text-white">
               {formaterRating(snit, locale)}
             </span>
-            <span className="flex flex-col items-start gap-1">
-              <Stjerner value={snit} size="h-5 w-5" />
-              <span className="text-xs text-white/50">
-                {antal} {antal === 1 ? s.countOne : s.countMany}
-              </span>
-            </span>
+            <Stjerner value={snit} size="h-5 w-5" />
           </div>
         )}
       </div>

@@ -73,7 +73,10 @@ describe("Google-anmeldelser på sitet", () => {
     expect(screen.getByText("for 2 uger siden")).toBeInTheDocument();
     // Gennemsnittet skrives med dansk komma
     expect(screen.getByText("4,9")).toBeInTheDocument();
-    expect(screen.getByText("27 anmeldelser på Google")).toBeInTheDocument();
+    // Antallet står der bevidst ikke: fire anmeldelser læses som "få", også
+    // når de er femstjernede. Anmeldelserne taler for sig selv.
+    expect(screen.queryByText(/27/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/anmeldelser på Google/)).not.toBeInTheDocument();
     // Stjernerne står som tekst for skærmlæsere
     expect(screen.getAllByLabelText("5 / 5").length).toBeGreaterThan(0);
   });
@@ -110,7 +113,7 @@ describe("Google-anmeldelser på sitet", () => {
     const { container } = render(<GoogleReviews />);
 
     await waitFor(() => expect(container).toBeEmptyDOMElement());
-    expect(screen.queryByText(/anmeldelser på Google/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/på Google/)).not.toBeInTheDocument();
   });
 
   it("viser intet hvis /api/anmeldelser fejler", async () => {
@@ -136,7 +139,6 @@ describe("Google-anmeldelser på sitet", () => {
     render(<GoogleReviews locale="en" />);
 
     expect(await screen.findByText("See all on Google")).toBeInTheDocument();
-    expect(screen.getByText("27 reviews on Google")).toBeInTheDocument();
     // Engelsk bruger punktum i decimaltallet
     expect(screen.getByText("4.9")).toBeInTheDocument();
   });
