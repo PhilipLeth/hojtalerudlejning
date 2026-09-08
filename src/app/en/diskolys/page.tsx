@@ -30,7 +30,7 @@ export default function Page() {
       price={845}
       headline="Disco light package — the dancefloor in one box"
       sub="Disco light effect and a motorised disco ball with spotlight. The cheapest way to a real dancefloor — save 145 DKK."
-      image="/images/product-pakke-diskolys.webp"
+      image="/images/product-pakke-diskolys-taendt.webp"
       imageAlt="Disco light package switched on: a mirror ball on its stand with spotlight and an LED par light"
       productId="pakke_diskolys"
       faqPhrase="disco light package"

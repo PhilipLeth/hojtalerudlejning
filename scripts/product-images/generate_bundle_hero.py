@@ -161,7 +161,17 @@ def generer(navn: str, spec: dict, api: str) -> bytes:
 
 
 def install(navn: str) -> None:
+    """
+    Filnavnet får -taendt, og det er ikke pynt.
+
+    /images/* caches 30 dage på CDN'et, og filnavnene er ikke hashede — da de
+    fem billeder blev erstattet under samme navn, blev de gamle serveret
+    videre til alle besøgende, selvom origin havde de nye. Uden en API-token
+    kan cachen ikke tømmes herfra, så et nyt navn er den eneste selvbetjente
+    vej. Skifter billedet igen, skal navnet skifte igen.
+    """
     kilde = os.path.join(RAA, f"{navn}.png")
+    navn = f"{navn}-taendt"
     if not os.path.exists(kilde):
         raise SystemExit(f"Ikke genereret endnu: {kilde}")
     im = Image.open(kilde).convert("RGB").resize((1024, 1024), Image.LANCZOS)

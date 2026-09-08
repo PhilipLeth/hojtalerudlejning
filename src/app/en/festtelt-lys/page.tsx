@@ -30,7 +30,7 @@ export default function Page() {
       price={695}
       headline="Party tent lights — tent and garden lit up"
       sub="20 m of fairy lights (warm white + coloured) and 4 LED uplights. From canteen tent to garden party — save 90 DKK."
-      image="/images/product-pakke-festtelt.webp"
+      image="/images/product-pakke-festtelt-taendt.webp"
       imageAlt="Party tent lights switched on: a warm white string above a coloured string and four LED uplights"
       productId="pakke_festtelt"
       faqPhrase="party tent lights"

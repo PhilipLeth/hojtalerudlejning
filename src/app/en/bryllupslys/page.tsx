@@ -30,7 +30,7 @@ export default function Page() {
       price={1245}
       headline="Wedding light package — waltz on clouds"
       sub="Warm light above the tables, uplights on the walls and low fog for the first dance — save 140 DKK."
-      image="/images/product-pakke-bryllupslys.webp"
+      image="/images/product-pakke-bryllupslys-taendt.webp"
       imageAlt="Wedding light package switched on: warm white string lights, four LED uplights and the low fog machine"
       productId="pakke_bryllupslys"
       faqPhrase="wedding light package"

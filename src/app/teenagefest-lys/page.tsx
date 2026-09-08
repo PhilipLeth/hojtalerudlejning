@@ -29,7 +29,7 @@ export default function Side() {
       price={945}
       headline="Teenagefest-lys — kælderen bliver en klub"
       sub="Diskolyseffekt, discokugle og 10 m farvet lyskæde. Sluk loftslyset, tænd pakken — spar 140 kr."
-      image="/images/product-pakke-teenagefest.webp"
+      image="/images/product-pakke-teenagefest-taendt.webp"
       imageAlt="Teenagefest-lys tændt: discokugle, LED-lyseffekt og farvet lyskæde i et mørkt rum"
       productId="pakke_teenagefest"
       faqPhrase="teenagefest-lys"

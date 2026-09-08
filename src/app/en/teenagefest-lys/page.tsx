@@ -30,7 +30,7 @@ export default function Page() {
       price={945}
       headline="Teen party lights — the basement becomes a club"
       sub="Disco effect, disco ball and 10 m of coloured fairy lights. Kill the ceiling light, switch this on — save 140 DKK."
-      image="/images/product-pakke-teenagefest.webp"
+      image="/images/product-pakke-teenagefest-taendt.webp"
       imageAlt="Teen party lights switched on: mirror ball, LED par light and a coloured festoon string"
       productId="pakke_teenagefest"
       faqPhrase="teen party lights"

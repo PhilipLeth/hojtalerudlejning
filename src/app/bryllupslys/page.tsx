@@ -29,7 +29,7 @@ export default function Side() {
       price={1245}
       headline="Bryllupslys-pakken — dans brudevalsen på skyer"
       sub="Varmt lys over bordene, uplights på væggene og low fog til brudevalsen — spar 140 kr."
-      image="/images/product-pakke-bryllupslys.webp"
+      image="/images/product-pakke-bryllupslys-taendt.webp"
       imageAlt="Bryllupslys-pakken tændt: varm hvid lyskæde, fire LED uplights og low fog-maskinen med røggulv"
       productId="pakke_bryllupslys"
       faqPhrase="bryllupslys-pakken"
