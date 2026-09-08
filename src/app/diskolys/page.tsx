@@ -4,15 +4,15 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Diskolys-pakken | 845 kr | Lejhøjtaler.dk",
-  description: "Diskolyseffekt og discokugle — dansegulvet for 845 kr. Spar 145 kr. Lejes i København.",
+  title: "Lej diskolys i København | Diskolys-pakken 845 kr | Lejhøjtaler.dk",
+  description: "Lej diskolys i København — pakken med lyseffekt og discokugle giver dansegulvet for 845 kr. Spar 145 kr vs. delene enkeltvis. Intet depositum.",
   keywords: ["lej diskolys", "diskolys til fest", "diskokugle leje", "lys til dansegulv", "diskolys sæt"],
   alternates: {
     canonical: "https://lejhojtaler.dk/diskolys",
     languages: localeAlternates("/diskolys"),
   },
   openGraph: {
-    title: "Diskolys-pakken | 845 kr | Lejhøjtaler.dk",
+    title: "Lej diskolys i København | 845 kr",
     description: "Diskolyseffekt og discokugle med motor og spot. Den billigste vej til et rigtigt dansegulv — spar 145 kr.",
     url: "https://lejhojtaler.dk/diskolys",
     siteName: "Lejhøjtaler.dk",
@@ -27,8 +27,9 @@ export default function Side() {
       slug="diskolys"
       name="Diskolys-pakken"
       price={845}
-      headline="Diskolys-pakken — dansegulvet i én kasse"
-      sub="Diskolyseffekt og discokugle med motor og spot. Den billigste vej til et rigtigt dansegulv — spar 145 kr."
+      headline="Lej diskolys i København"
+      sub="Diskolys-pakken: lyseffekt og discokugle med motor og spot — dansegulvet i én kasse. Spar 145 kr vs. delene enkeltvis."
+      weekendAvailability
       image="/images/product-discokugle.webp"
       imageAlt="Diskolys-pakken"
       productId="pakke_diskolys"

@@ -76,6 +76,25 @@ export default function EnHome() {
       <SpeakerCompare locale="en" />
       <FaqSection items={CATEGORY_FAQ["en"]} title="Frequently asked questions" />
 
+      {/* Rent-fraserne — den engelske pendant til forsidens lejefrase-links.
+          /diskolys findes ikke på engelsk endnu; lyspakkerne dækker søgningen. */}
+      <section className="mx-auto max-w-4xl px-4 pb-20 text-center">
+        <p className="mb-3 text-sm uppercase tracking-widest text-white/30">Popular rentals right now</p>
+        <p className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
+          <Link href="/en/soundboks-4" className="text-brand-400 underline-offset-4 transition hover:text-brand-300 hover:underline">
+            Rent a Soundboks
+          </Link>
+          <Link href="/en/lyspakker" className="text-brand-400 underline-offset-4 transition hover:text-brand-300 hover:underline">
+            Rent disco lights
+          </Link>
+          <Link href="/en/festlys" className="text-brand-400 underline-offset-4 transition hover:text-brand-300 hover:underline">
+            Rent party lights
+          </Link>
+          <Link href="/en/roegmaskine" className="text-brand-400 underline-offset-4 transition hover:text-brand-300 hover:underline">
+            Rent a fog machine
+          </Link>
+        </p>
+      </section>
       <HowItWorks locale="en" />
       <Footer locale="en" />
 

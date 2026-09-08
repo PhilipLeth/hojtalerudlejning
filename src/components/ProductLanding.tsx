@@ -2,6 +2,7 @@ import Link from "next/link";
 import CapacityBadge from "@/components/CapacityBadge";
 import LivePrice from "@/components/LivePrice";
 import FaqSection, { type FaqItem } from "@/components/FaqSection";
+import WeekendLedighed from "@/components/WeekendLedighed";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
@@ -91,6 +92,12 @@ export interface ProductLandingProps {
    * "…at leje den store højtalerpakke?" er. Se buildProductFaq.
    */
   faqPhrase?: string;
+  /**
+   * Vis "Ledig den kommende weekend" under prisen — kun på sider hvor
+   * spørgsmålet er det første, kunden stiller (fx Soundboks). Kræver at
+   * produktet har et lagertal; ellers vises ingenting.
+   */
+  weekendAvailability?: boolean;
   /** Sprog. Styrer sidens faste tekster, FAQ'en og hvor "se alle produkter" fører hen. */
   locale?: Locale;
   /** Optional extra section under product detail */
@@ -132,6 +139,7 @@ export default function ProductLanding({
   capacity,
   faqExtra,
   faqPhrase,
+  weekendAvailability,
   locale = "da",
   children,
 }: ProductLandingProps) {
@@ -240,6 +248,11 @@ export default function ProductLanding({
           {capacity && (
             <div className="mt-4 flex justify-center">
               <CapacityBadge level={capacity.level} label={capacity.label} />
+            </div>
+          )}
+          {weekendAvailability && !paused && (
+            <div className="flex justify-center">
+              <WeekendLedighed productId={productId} locale={locale} />
             </div>
           )}
           {paused ? (

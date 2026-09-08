@@ -14,11 +14,12 @@ import { localeAlternates } from "@/lib/hreflang";
 const KOMPLET_FEST = prisTekst(catalogPrice("party") + catalogPrice("lys") + catalogPrice("rog"));
 
 export const metadata: Metadata = {
-  title: "Lej Festlys, Diskokugle og Røgmaskine København | Lejhøjtaler.dk",
+  title: "Lej Festlys, Diskolys og Diskokugle København | Lejhøjtaler.dk",
   description:
-    `Lej festlys i København: lysbar fra ${prisKr("lys")}, røgmaskine fra ${prisKr("rog")}, discokugle og lyskæder. Kombiner med lyd til komplet festpakke fra ${KOMPLET_FEST} kr. Betal ved afhentning.`,
+    `Lej festlys og diskolys i København: lysbar fra ${prisKr("lys")}, røgmaskine fra ${prisKr("rog")}, discokugle og lyskæder. Kombiner med lyd til komplet festpakke fra ${KOMPLET_FEST} kr. Betal ved afhentning.`,
   keywords: [
     "lej festlys københavn",
+    "lej diskolys",
     "festlys udlejning",
     "lysbar til fest",
     "røgmaskine leje",
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festlys"),
   },
   openGraph: {
-    title: "Lej Festlys, Diskokugle og Røgmaskine København | Lejhøjtaler.dk",
+    title: "Lej Festlys, Diskolys og Diskokugle København | Lejhøjtaler.dk",
     description:
       `Lysbar fra ${prisKr("lys")}, røgmaskine fra ${prisKr("rog")}, discokugle og lyskæder. Book online.`,
     url: "https://lejhojtaler.dk/festlys",

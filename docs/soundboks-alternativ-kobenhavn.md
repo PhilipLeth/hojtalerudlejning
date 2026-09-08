@@ -2,7 +2,7 @@
 title: "Soundboks-alternativ i København: Derfor er lejede højtalere bedre"
 description: "Leder du efter et Soundboks-alternativ i København? Se hvorfor professionelle højtalere til leje slår en Soundboks på lyd, pris og batteritid. Fra 395 kr."
 date: "2025-06-10"
-updated: "2026-08-22"
+updated: "2026-09-08"
 keywords:
   - soundboks alternativ
   - soundboks leje
@@ -24,13 +24,13 @@ En Soundboks er designet til udendørs brug med batteri. Det lyder smart i teori
 
 **Batteriet dør.** En Soundboks holder typisk 4-8 timer afhængig af lydstyrke og temperatur. Skruer du op - og det gør du, for det er jo fest - kan batteriet løbe ud efter bare et par timer. Forestil dig scenen: klokken er 23, stemningen er på sit højeste, og så dør musikken. Det er præcis den situation, Frederik Scharling, stifter af lejhøjtaler.dk, oplevede da han skulle holde fødselsdagsfest og lånte en Soundboks. Batteriet løb ud efter 20 minutter.
 
-**Prisen løber op.** En ny Soundboks koster over 6.000 kr. Vi udlejer selv en Soundboks 4 til 795 kr. for en hel weekend, hvis det er den, du vil have — men for de samme penge kan du få to højtalere med mere lyd.
+**Prisen løber op.** En ny Soundboks koster over 6.000 kr. Du kan [leje en Soundboks 4 hos os til 795 kr.](/soundboks-4) for en hel weekend, hvis det er den, du vil have — men for de samme penge kan du få to højtalere med mere lyd.
 
 **Lyden skalerer ikke.** En Soundboks er fin til en lille samling i parken. Men når selskabet vokser til 30, 50 eller 80 gæster, kan den simpelthen ikke følge med. Du ender med at stille to eller tre op for at få nok lyd, og så er prisen pludselig astronomisk.
 
 ## Vores løsning: Professionel lyd fra stikkontakten
 
-Hos lejhøjtaler.dk kan du få begge dele. Skal der ikke være en stikkontakt i nærheden, har vi Mackie Thump GO til 395 kr. og Soundboks 4 til 795 kr. — begge batteridrevne med op til 12 timers spilletid. Men er der strøm, og det er der næsten altid, får du mere lyd for pengene med et sæt aktive højtalere.
+Hos lejhøjtaler.dk kan du få begge dele. Skal der ikke være en stikkontakt i nærheden, har vi [Mackie Thump GO til 395 kr.](/mackie-thump-go) og [Soundboks 4 til 795 kr.](/soundboks-4) — begge batteridrevne med op til 12 timers spilletid. Vil du bare [leje en Soundboks i København](/soundboks-4), er den booket på to minutter. Men er der strøm, og det er der næsten altid, får du mere lyd for pengene med et sæt aktive højtalere.
 
 Det betyder:
 
