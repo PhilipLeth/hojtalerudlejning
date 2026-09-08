@@ -31,7 +31,7 @@ export default function Side() {
       sub="Diskolys-pakken: lyseffekt og discokugle med motor og spot — dansegulvet i én kasse. Spar 145 kr vs. delene enkeltvis."
       weekendAvailability
       image="/images/product-pakke-diskolys.webp"
-      imageAlt="Diskolys-pakken: discokugle med motor og spot samt LED-lyseffekt"
+      imageAlt="Diskolys-pakken tændt: discokugle på stativ med spot og en LED-lyseffekt i farvet lys"
       productId="pakke_diskolys"
       faqPhrase="diskolys-pakken"
       capacity={{ level: 1, label: "dansegulvet" }}
