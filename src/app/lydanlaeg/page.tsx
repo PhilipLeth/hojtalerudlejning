@@ -5,6 +5,7 @@ import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { LADDER_FEST, type LadderStep } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lydanlæg til leje — pakker efter antal gæster | Lejhøjtaler.dk",
@@ -19,7 +20,10 @@ export const metadata: Metadata = {
     "lydanlæg 200 personer",
     "anlæg til firmafest",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/lydanlaeg" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/lydanlaeg",
+    languages: localeAlternates("/lydanlaeg"),
+  },
   openGraph: {
     title: "Lydanlæg til leje — pakker efter antal gæster",
     description:

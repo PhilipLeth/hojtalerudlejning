@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPageEn() {
-  const posts = getAllPosts();
+  const posts = getAllPosts("en");
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
@@ -66,7 +66,7 @@ export default function BlogPageEn() {
             {posts.map((post) => (
               <Link
                 key={post.slug}
-                href={`/blog/${post.slug}`}
+                href={`/en/blog/${post.slug}`}
                 className="block glass rounded-2xl p-6 hover:border-brand-500/40 transition group"
               >
                 <time className="text-xs text-white/30">

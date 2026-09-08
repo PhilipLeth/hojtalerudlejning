@@ -35,8 +35,12 @@ function engelskeSider(): string[] {
 describe("Engelsk udgave", () => {
   it("EN_PAGES svarer til de sider, der ligger i src/app/en", () => {
     // /book er forsiden med bookingen åben og har sin egen canonical — den er
-    // ikke en selvstændig side, man skal kunne linke sprogrigtigt til.
-    const påDisk = engelskeSider().filter((p) => p !== "/book");
+    // ikke en selvstændig side, man skal kunne linke sprogrigtigt til. Det samme
+    // gælder dynamiske ruter: "/blog/[slug]" er en skabelon, ikke en adresse, og
+    // hvert indlægs hreflang sættes i generateMetadata.
+    const påDisk = engelskeSider().filter(
+      (p) => p !== "/book" && !p.includes("[")
+    );
     expect([...EN_PAGES].sort()).toEqual(påDisk);
   });
 
@@ -69,7 +73,9 @@ describe("Engelsk udgave", () => {
     // ved med kun at findes på dansk.
     expect(hasEnglish("/discokugle")).toBe(true);
     expect(localizedHref("/discokugle", "en")).toBe("/en/discokugle");
-    expect(hasEnglish("/privatlivspolitik")).toBe(false);
-    expect(localizedHref("/privatlivspolitik", "en")).toBe("/privatlivspolitik");
+    // /karaoke-maskine er sat på pause som produkt og får ikke en engelsk
+    // udgave — den er derfor et stabilt eksempel på fallback'en.
+    expect(hasEnglish("/karaoke-maskine")).toBe(false);
+    expect(localizedHref("/karaoke-maskine", "en")).toBe("/karaoke-maskine");
   });
 });

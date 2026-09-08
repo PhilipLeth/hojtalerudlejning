@@ -1166,6 +1166,10 @@ export interface LadderStep {
   pris: number | null;
   hvad: string;
   koersel: "tilvalg" | "anbefalet" | "tilbud";
+  /** Engelsk udgave af de tre tekster — /en/lydanlaeg viser samme stige. */
+  navn_en: string;
+  gaester_en: string;
+  hvad_en: string;
 }
 
 /**
@@ -1186,11 +1190,11 @@ export const OCCASION_PACKAGES: Record<string, string> = {
 };
 
 export const LADDER_FEST: LadderStep[] = [
-  { productId: "pakke_fest_lille", navn: "Festpakke 50", gaester: "op til 50", maxGaester: 50, href: "/festpakke-lille", pris: 890, hvad: '2× 10" højtalere + lyseffekt', koersel: "tilvalg" },
-  { productId: "pakke_fest_stor", navn: "Festpakke 100", gaester: "50-100", maxGaester: 100, href: "/festpakke-stor", pris: 1290, hvad: '2× 12" højtalere + lys-pakke', koersel: "tilvalg" },
-  { productId: "pakke_fest_150", navn: "Festpakke 150", gaester: "100-150", maxGaester: 150, href: "/festpakke-150", pris: 2345, hvad: '2× 12" + sub + stativer + lys + røg', koersel: "anbefalet" },
-  { productId: "pakke_fest_250", navn: "Festpakke 250", gaester: "150-250", maxGaester: 250, href: "/festpakke-250", pris: 3645, hvad: '4× 12" + 2 subs + stativer + lys + røg', koersel: "anbefalet" },
-  { productId: null, navn: "Over 250 gæster", gaester: "250+", maxGaester: 9999, href: "/erhverv#tilbud", pris: null, hvad: "Større tops og subs skaffes — tekniker med på dagen", koersel: "tilbud" },
+  { productId: "pakke_fest_lille", navn: "Festpakke 50", navn_en: "Party package 50", gaester: "op til 50", gaester_en: "up to 50", maxGaester: 50, href: "/festpakke-lille", pris: 890, hvad: '2× 10" højtalere + lyseffekt', hvad_en: '2× 10" speakers + light effect', koersel: "tilvalg" },
+  { productId: "pakke_fest_stor", navn: "Festpakke 100", navn_en: "Party package 100", gaester: "50-100", gaester_en: "50-100", maxGaester: 100, href: "/festpakke-stor", pris: 1290, hvad: '2× 12" højtalere + lys-pakke', hvad_en: '2× 12" speakers + light package', koersel: "tilvalg" },
+  { productId: "pakke_fest_150", navn: "Festpakke 150", navn_en: "Party package 150", gaester: "100-150", gaester_en: "100-150", maxGaester: 150, href: "/festpakke-150", pris: 2345, hvad: '2× 12" + sub + stativer + lys + røg', hvad_en: '2× 12" + sub + stands + lights + fog', koersel: "anbefalet" },
+  { productId: "pakke_fest_250", navn: "Festpakke 250", navn_en: "Party package 250", gaester: "150-250", gaester_en: "150-250", maxGaester: 250, href: "/festpakke-250", pris: 3645, hvad: '4× 12" + 2 subs + stativer + lys + røg', hvad_en: '4× 12" + 2 subs + stands + lights + fog', koersel: "anbefalet" },
+  { productId: null, navn: "Over 250 gæster", navn_en: "More than 250 guests", gaester: "250+", gaester_en: "250+", maxGaester: 9999, href: "/erhverv#tilbud", pris: null, hvad: "Større tops og subs skaffes — tekniker med på dagen", hvad_en: "We source larger tops and subs — a technician comes on the day", koersel: "tilbud" },
 ];
 
 /** Pakkerne fra feststigen, i rækkefølge — det forsiden viser. Lejlighedspakkerne

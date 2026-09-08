@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { getAllPosts, getPostBySlug } from "@/lib/blog";
+import { enBlogSlug, getAllPosts, getPostBySlug } from "@/lib/blog";
+import { localeAlternates } from "@/lib/hreflang";
 import { AUTHOR, authorLd } from "@/lib/author";
 
 interface Props {
@@ -18,7 +19,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${post.title} | Lejhøjtaler.dk`,
     description: post.description,
     keywords: post.keywords,
-    alternates: { canonical: `https://lejhojtaler.dk/blog/${post.slug}` },
+    // hreflang begge veje, men kun for de indlæg der faktisk er oversat.
+    alternates: {
+      canonical: `https://lejhojtaler.dk/blog/${post.slug}`,
+      ...(enBlogSlug(post.slug)
+        ? {
+            languages: {
+              da: `https://lejhojtaler.dk/blog/${post.slug}`,
+              en: `https://lejhojtaler.dk/en/blog/${enBlogSlug(post.slug)}`,
+              "x-default": `https://lejhojtaler.dk/blog/${post.slug}`,
+            },
+          }
+        : {}),
+    },
     openGraph: {
       title: post.title,
       description: post.description,

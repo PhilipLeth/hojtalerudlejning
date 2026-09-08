@@ -6,6 +6,59 @@ import Footer from "@/components/Footer";
 import LivePrice from "@/components/LivePrice";
 import { bookHref } from "@/lib/bookUrl";
 import { PhoneText, LiveCopy } from "@/components/PhoneLink";
+import { localizedHref } from "@/lib/enPages";
+import type { Locale } from "@/lib/i18n";
+
+/**
+ * Sidens faste tekster på begge sprog.
+ *
+ * Komponenten var dansk hele vejen, så de seks lejlighedssider — bryllup,
+ * konfirmation, fødselsdag, julefrokost, havefest og studenterkørsel — kunne
+ * ikke laves på engelsk uden at kopiere filen seks gange. Det er samme greb
+ * som i ProductLanding og BundleGrid.
+ */
+const COPY = {
+  da: {
+    kicker: "Book online på 2 min · Ring",
+    city: "København",
+    fra: "fra ",
+    kr: " kr",
+    krPunktum: " kr.",
+    perWeekend: "/weekend",
+    book: (navn: string) => `Book ${navn}`,
+    bookNow: "Book nu",
+    ourPick: "Vores anbefaling",
+    popular: (hvad: string) => `Populært til ${hvad}`,
+    allBookable: "Alt kan bookes online — én pris for op til 5 dages leje.",
+    goodToKnow: "Godt at vide",
+    faqTitle: "Ofte stillede spørgsmål",
+    ctaTitle: "Klar til at booke?",
+    ctaText:
+      "Book online på 2 minutter. Hent i København S eller få det leveret. Betal ved afhentning eller online.",
+    home: "Forside",
+    homeUrl: "https://lejhojtaler.dk",
+  },
+  en: {
+    kicker: "Book online in 2 min · Call",
+    city: "Copenhagen",
+    fra: "from ",
+    kr: " DKK",
+    krPunktum: " DKK",
+    perWeekend: "/weekend",
+    book: (navn: string) => `Book the ${navn}`,
+    bookNow: "Book now",
+    ourPick: "Our recommendation",
+    popular: (hvad: string) => `Popular for ${hvad}`,
+    allBookable: "Everything can be booked online — one price for up to 5 days.",
+    goodToKnow: "Good to know",
+    faqTitle: "Frequently asked questions",
+    ctaTitle: "Ready to book?",
+    ctaText:
+      "Book online in 2 minutes. Collect in Copenhagen S or have it delivered. Pay on pickup or online.",
+    home: "Home",
+    homeUrl: "https://lejhojtaler.dk/en",
+  },
+} as const;
 
 export interface OccasionTip {
   title: string;
@@ -40,6 +93,15 @@ export interface OccasionLandingProps {
   faq: OccasionFaq[];
   /** Interne links til beslægtede lejligheder. `priceId` skriver katalogprisen efter label'en. */
   related?: Array<{ href: string; label: string; priceId?: string }>;
+  /** Sprog. Styrer sidens faste tekster, gitteret, footeren og hvor links fører hen. */
+  locale?: Locale;
+  /**
+   * Ordet efter "Populært til …". Den danske udgave klipper det ud af H1'en
+   * ("Lyd til bryllup" → "bryllup"), men engelsk bøjer ikke ens — "Sound for a
+   * wedding" skal blive til "Popular for weddings", ikke "for a wedding".
+   * Derfor kan siden sende ordet med selv.
+   */
+  popularFor?: string;
 }
 
 /**
@@ -59,15 +121,20 @@ export default function OccasionLanding({
   tips,
   faq,
   related = [],
+  locale = "da",
+  popularFor,
 }: OccasionLandingProps) {
-  const book = bookHref(primaryProductId);
+  const c = COPY[locale];
+  const book = bookHref(primaryProductId, locale);
+  const hvad = popularFor ?? headline.toLowerCase().replace(/^lyd til |^højtaler til /, "");
+  const base = locale === "en" ? "https://lejhojtaler.dk/en" : "https://lejhojtaler.dk";
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Forside", item: "https://lejhojtaler.dk" },
-      { "@type": "ListItem", position: 2, name: headline, item: `https://lejhojtaler.dk/${slug}` },
+      { "@type": "ListItem", position: 1, name: c.home, item: c.homeUrl },
+      { "@type": "ListItem", position: 2, name: headline, item: `${base}/${slug}` },
     ],
   };
 
@@ -82,13 +149,13 @@ export default function OccasionLanding({
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · Book online på 2 min · Ring <PhoneText />
+            {c.city} · {c.kicker} <PhoneText />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             {headline}
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              <LivePrice productId={headlinePriceId} prefix="fra " suffix=" kr." />
+              <LivePrice productId={headlinePriceId} prefix={c.fra} suffix={c.krPunktum} />
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-lg text-lg text-white/60">{intro}</p>
@@ -96,7 +163,7 @@ export default function OccasionLanding({
             href={book}
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book {primaryName} — <LivePrice productId={primaryProductId} prefix="" suffix=" kr" />
+            {c.book(primaryName)} — <LivePrice productId={primaryProductId} prefix="" suffix={c.kr} />
           </a>
         </div>
       </section>
@@ -106,34 +173,32 @@ export default function OccasionLanding({
         <section className="mx-auto max-w-4xl px-4 py-20 sm:py-24">
           <div className="mb-12 rounded-3xl border border-brand-500/25 bg-gradient-to-br from-brand-500/[0.08] via-white/[0.03] to-transparent p-6 sm:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-400">
-              Vores anbefaling
+              {c.ourPick}
             </p>
             <h2 className="mt-2 text-2xl font-bold sm:text-3xl">{primaryName}</h2>
             <p className="mt-3 max-w-xl text-white/60">{primaryWhy}</p>
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <span className="text-3xl font-bold text-brand-400">
-                <LivePrice productId={primaryProductId} prefix="" suffix=" kr" />
-                <span className="ml-1 text-sm font-normal text-white/40">/weekend</span>
+                <LivePrice productId={primaryProductId} prefix="" suffix={c.kr} />
+                <span className="ml-1 text-sm font-normal text-white/40">{c.perWeekend}</span>
               </span>
               <a
                 href={book}
                 className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95"
               >
-                Book nu
+                {c.bookNow}
               </a>
             </div>
           </div>
 
-          <h2 className="mb-4 text-center text-2xl font-bold sm:text-3xl">Populært til {headline.toLowerCase().replace(/^lyd til |^højtaler til /, "")}</h2>
-          <p className="mx-auto mb-10 max-w-2xl text-center text-white/50">
-            Alt kan bookes online — én pris for op til 5 dages leje.
-          </p>
-          <CategoryProductGrid items={gridItems} />
+          <h2 className="mb-4 text-center text-2xl font-bold sm:text-3xl">{c.popular(hvad)}</h2>
+          <p className="mx-auto mb-10 max-w-2xl text-center text-white/50">{c.allBookable}</p>
+          <CategoryProductGrid items={gridItems} locale={locale} />
         </section>
 
         {/* Praktiske råd */}
         <section className="mx-auto max-w-4xl px-4 pb-20">
-          <h2 className="mb-10 text-center text-2xl font-bold sm:text-3xl">Godt at vide</h2>
+          <h2 className="mb-10 text-center text-2xl font-bold sm:text-3xl">{c.goodToKnow}</h2>
           <div className="grid gap-5 sm:grid-cols-2">
             {tips.map((t) => (
               <div key={t.title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
@@ -144,31 +209,29 @@ export default function OccasionLanding({
           </div>
         </section>
 
-        <FaqSection items={faq} />
+        <FaqSection items={faq} title={c.faqTitle} />
 
-        <GoogleReviews />
+        <GoogleReviews locale={locale} />
 
         {/* CTA + interne links */}
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">Klar til at booke?</h2>
-          <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent i København S eller få det leveret. Betal ved afhentning eller online.
-          </p>
+          <h2 className="text-3xl font-bold sm:text-4xl">{c.ctaTitle}</h2>
+          <p className="mx-auto mt-4 max-w-md text-white/50">{c.ctaText}</p>
           <a
             href={book}
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book {primaryName} — <LivePrice productId={primaryProductId} prefix="" suffix=" kr" />
+            {c.book(primaryName)} — <LivePrice productId={primaryProductId} prefix="" suffix={c.kr} />
           </a>
           {related.length > 0 && (
             <p className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-white/40">
               {related.map((r) => (
-                <Link key={r.href} href={r.href} className="transition hover:text-brand-400">
+                <Link key={r.href} href={localizedHref(r.href, locale)} className="transition hover:text-brand-400">
                   {r.label}
                   {r.priceId && (
                     <>
                       {" – "}
-                      <LivePrice productId={r.priceId} prefix="" suffix=" kr" />
+                      <LivePrice productId={r.priceId} prefix="" suffix={c.kr} />
                     </>
                   )}
                 </Link>
@@ -177,7 +240,7 @@ export default function OccasionLanding({
           )}
         </section>
 
-        <Footer />
+        <Footer locale={locale} />
       </main>
     </>
   );

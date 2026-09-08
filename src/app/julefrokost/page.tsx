@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import OccasionLanding from "@/components/OccasionLanding";
 import { catalogDiscount, prisKr } from "@/lib/products";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: `Lyd til julefrokost | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
   description: `Lej højtalere, mikrofon og festlys til julefrokosten i København fra ${prisKr("pakke_fest_lille")}. Talen skal høres, og bagefter skal der danses. Book online — betal ved afhentning.`,
   keywords: ["lyd til julefrokost", "højtaler julefrokost leje", "musikanlæg firmajulefrokost", "anlæg til julefrokost København", "lys til julefrokost"],
-  alternates: { canonical: "https://lejhojtaler.dk/julefrokost" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/julefrokost",
+    languages: localeAlternates("/julefrokost"),
+  },
   openGraph: {
     title: `Lyd til julefrokost | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
     description: `Lej højtalere, mikrofon og festlys til julefrokosten i København fra ${prisKr("pakke_fest_lille")}. Talen skal høres, og bagefter skal der danses. Book online — betal ved afhentning.`,

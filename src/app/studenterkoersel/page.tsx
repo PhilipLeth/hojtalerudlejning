@@ -2,12 +2,16 @@ import { Metadata } from "next";
 import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
 import { PHONE_DISPLAY } from "@/lib/phone";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: `Højtaler til studenterkørsel | Lej Soundboks fra ${prisKr("soundboks")} | Lejhøjtaler.dk`,
   description: `Lej højtaler til studenterkørsel i København fra ${prisKr("soundboks")}. Batteridreven Soundboks med kraftig bas — holder hele turen uden strøm. Book online på 2 minutter.`,
   keywords: ["højtaler til studenterkørsel", "soundboks studenterkørsel", "lej højtaler studentervogn", "musik studenterkørsel", "batteri højtaler student"],
-  alternates: { canonical: "https://lejhojtaler.dk/studenterkoersel" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/studenterkoersel",
+    languages: localeAlternates("/studenterkoersel"),
+  },
   openGraph: {
     title: `Højtaler til studenterkørsel | Lej Soundboks fra ${prisKr("soundboks")} | Lejhøjtaler.dk`,
     description: `Lej højtaler til studenterkørsel i København fra ${prisKr("soundboks")}. Batteridreven Soundboks med kraftig bas — holder hele turen uden strøm. Book online på 2 minutter.`,

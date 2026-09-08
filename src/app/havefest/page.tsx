@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: `Lyd til havefest København | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
   description: `Lej lyd til havefesten i København fra ${prisKr("pakke_fest_lille")}. Højtalere til udendørs brug, lyskæder og batteriløsninger uden strøm. Book online — betal ved afhentning.`,
   keywords: ["lyd til havefest", "højtaler til havefest", "udendørs højtaler leje", "musikanlæg have", "lyskæder til havefest"],
-  alternates: { canonical: "https://lejhojtaler.dk/havefest" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/havefest",
+    languages: localeAlternates("/havefest"),
+  },
   openGraph: {
     title: `Lyd til havefest København | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
     description: `Lej lyd til havefesten i København fra ${prisKr("pakke_fest_lille")}. Højtalere til udendørs brug, lyskæder og batteriløsninger uden strøm. Book online — betal ved afhentning.`,

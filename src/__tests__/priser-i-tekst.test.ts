@@ -184,21 +184,44 @@ describe("Priser i sidetekst", () => {
       if (fundet) fundet.priser.add(pris);
       else navne.push({ navn: navn.toLowerCase(), priser: new Set([pris]) });
     };
-    for (const s of speakers) put(s.da.name, s.price);
-    for (const a of addons) put(a.da.label, a.price);
+    // Begge sprog. Højtalere og tilvalg blev kun registreret på dansk, og det
+    // holdt så længe bloggen var dansk. Med docs/en/ skal de engelske navne med
+    // — og de er samtidig dem, der forhindrer, at "Small Speaker Package"
+    // bliver læst som katalogets "Speaker package" til en anden pris.
+    for (const s of speakers) {
+      put(s.da.name, s.price);
+      put(s.en.name, s.price);
+    }
+    for (const a of addons) {
+      put(a.da.label, a.price);
+      put(a.en.label, a.price);
+    }
     for (const r of rentalProducts) {
       put(r.name_da, r.price);
       put(r.name_en, r.price);
     }
 
+    // Længste navn først. Kataloget har både "Speaker package" (1.045 kr) og
+    // "Small Speaker Package" (595 kr), og det korte navn står inde i det lange:
+    // uden den her sortering blev "Small Speaker Package | 595 DKK" læst som en
+    // forkert pris på den store pakke. Et match, der ligger inde i et længere
+    // match, springes over.
+    navne.sort((a, b) => b.navn.length - a.navn.length);
+
     const fund: string[] = [];
     for (const f of walk(join(ROOT, "docs"), /\.md$/)) {
       const txt = readFileSync(f, "utf8");
       const lower = txt.toLowerCase();
+      const taget: Array<[number, number]> = [];
       for (const { navn, priser } of navne) {
         if (navn.length < 6) continue;
         let fra = lower.indexOf(navn);
         while (fra !== -1) {
+          if (taget.some(([a, b]) => fra >= a && fra + navn.length <= b)) {
+            fra = lower.indexOf(navn, fra + navn.length);
+            continue;
+          }
+          taget.push([fra, fra + navn.length]);
           const efter = lower.slice(fra + navn.length, fra + navn.length + 45);
           const pm = [...efter.matchAll(PRIS)][0];
           // Kun når prisen hænger direkte på navnet: "Soundboks 4 til 795 kr",

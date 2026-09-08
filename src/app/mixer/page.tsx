@@ -5,6 +5,7 @@ import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
+import { localeAlternates } from "@/lib/hreflang";
 
 /**
  * /mixer — de to mixere.
@@ -28,7 +29,10 @@ export const metadata: Metadata = {
     "mixer til band",
     "mixerpult leje",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/mixer" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/mixer",
+    languages: localeAlternates("/mixer"),
+  },
   openGraph: {
     title: "Lej Mixer København | Fra 295 kr | Lejhøjtaler.dk",
     description:

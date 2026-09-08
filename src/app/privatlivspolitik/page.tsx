@@ -4,12 +4,16 @@ import Footer from "@/components/Footer";
 import PhoneLink from "@/components/PhoneLink";
 import SiteText from "@/components/SiteText";
 import { CompanyEmailLink } from "@/components/CompanyInfo";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Privatlivspolitik | Lejhøjtaler.dk",
   description:
     "Sådan behandler Lejhøjtaler.dk dine personoplysninger: hvad vi indsamler, hvorfor, hvor længe vi gemmer det, og hvilke rettigheder du har efter GDPR.",
-  alternates: { canonical: "https://lejhojtaler.dk/privatlivspolitik" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/privatlivspolitik",
+    languages: localeAlternates("/privatlivspolitik"),
+  },
   robots: { index: true, follow: true },
 };
 

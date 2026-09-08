@@ -4,12 +4,16 @@ import PhoneLink, { PhoneText } from "@/components/PhoneLink";
 import PickupSummary from "@/components/PickupSummary";
 import { CompanyEmail } from "@/components/CompanyInfo";
 import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Kontakt os | Lejhøjtaler.dk",
   description:
     "Kontakt Lejhøjtaler.dk — skriv til info@lejhojtaler.dk, ring eller brug formularen. Vi svarer som regel samme dag.",
-  alternates: { canonical: "https://lejhojtaler.dk/kontakt" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/kontakt",
+    languages: localeAlternates("/kontakt"),
+  },
 };
 
 export default function KontaktPage() {

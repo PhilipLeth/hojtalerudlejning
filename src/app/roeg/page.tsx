@@ -8,6 +8,7 @@ import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Røgmaskine & Low Fog København | Røggulv med is | Lejhøjtaler.dk",
@@ -22,7 +23,10 @@ export const metadata: Metadata = {
     "røgmaskine københavn",
     "low fog københavn",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/roeg" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/roeg",
+    languages: localeAlternates("/roeg"),
+  },
   openGraph: {
     title: "Lej Røgmaskine & Low Fog København | Lejhøjtaler.dk",
     description:

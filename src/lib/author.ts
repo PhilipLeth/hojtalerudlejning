@@ -15,6 +15,9 @@ export const AUTHOR = {
   jobTitle: "Lydtekniker og indehaver",
   /** Kort erfaringslinje — vist under overskriften på blogindlæg */
   bio: "har arbejdet med lyd, events og musikproduktion i mere end 15 år og driver Lejhøjtaler.dk i København",
+  /** Samme linje på engelsk — de engelske blogindlæg har også en forfatter. */
+  bio_en:
+    "who has worked with sound, events and music production for more than 15 years and runs Lejhøjtaler.dk in Copenhagen",
   /** Siden der dokumenterer erfaringen */
   url: "https://lejhojtaler.dk/om",
 } as const;

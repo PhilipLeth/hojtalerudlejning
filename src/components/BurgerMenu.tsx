@@ -58,14 +58,20 @@ export default function BurgerMenu() {
    * til forsiden i stedet for til /festlys — og vejen tilbage til dansk fandtes
    * slet ikke.
    *
-   * Findes siden ikke på engelsk, går knappen til den engelske FORSIDE og ikke
-   * gennem localizedHref: den falder tilbage til den danske sti, og så ville
-   * "English" på /mixer pege på /mixer — et link til den side, man allerede
-   * står på. Den anden vej findes modstykket altid, fordi hver engelsk side
-   * skal have en dansk (en-sider.test.ts).
+   * Findes parret ikke, går knappen til den anden udgaves FORSIDE — begge veje.
+   * Ikke gennem localizedHref: den falder tilbage til den danske sti, og så ville
+   * "English" på /mixer pege på /mixer, et link til den side man står på. Og
+   * ikke blindt til danskSti() den anden vej: /en/blog/<slug> har ikke en dansk
+   * side på samme sti, fordi blogindlæggenes slug bærer sit eget sprogs søgeord.
    */
   const daSti = danskSti(pathname ?? "/");
-  const andetSprog = locale === "en" ? daSti : hasEnglish(daSti) ? localizedHref(daSti, "en") : "/en";
+  const andetSprog = !hasEnglish(daSti)
+    ? locale === "en"
+      ? "/"
+      : "/en"
+    : locale === "en"
+      ? daSti
+      : localizedHref(daSti, "en");
   const nav = (sti: string) => localizedHref(sti, locale);
 
   // Lock body scroll when menu is open

@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { LocationKicker } from "@/components/PhoneLink";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: `Lej Højtalere København | Fra ${startPrisKr()}/weekend | Lejhøjtaler.dk`,
@@ -24,7 +25,10 @@ export const metadata: Metadata = {
     "festhøjtalere",
     "lej højtaler billigt",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/lej-hojtaler" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/lej-hojtaler",
+    languages: localeAlternates("/lej-hojtaler"),
+  },
   openGraph: {
     title: `Lej Højtalere København | Fra ${startPrisKr()}/weekend`,
     description:

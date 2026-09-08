@@ -456,6 +456,128 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
    * rental", ikke "rent light bar", så spørgsmålene er formuleret derefter.
    * Tallene er de samme som på dansk, fordi priserne er de samme.
    */
+  "en-lej-hojtaler": [
+    {
+      q: "How much does it cost to rent speakers in Copenhagen?",
+      a:
+        `From ${startPrisKr()} for a whole weekend. The battery-powered Mackie Thump GO is ${prisKr("thumpgo")}, the small speaker ` +
+        `package with two 10" Alto speakers ${prisKr("party")}, the large package with two 12" EV speakers ${prisKr("festival")} and ` +
+        `Soundboks 4 ${prisKr("soundboks")}. The price is the same whether you keep it for 1 or 5 days, and all cables are included.`,
+    },
+    {
+      q: "How powerful a speaker do I need for my party?",
+      a:
+        "Up to 30 guests, the Mackie Thump GO or the small speaker package is enough. For 30-50 guests take the " +
+        "Soundboks 4 or the large speaker package. If you are more, Party package 150 (2.345 kr) and Party package 250 " +
+        "(3.645 kr) bring a subwoofer and stands with them. The guest numbers are for indoor use — outdoors the sound " +
+        "carries less far.",
+    },
+    {
+      q: "Can I rent a speaker that works without power?",
+      a:
+        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (795 kr) run on battery for up to 12 hours, so they work " +
+        "in the park, on the beach or in a courtyard with no socket.",
+    },
+    {
+      q: "Can I carry the speakers on a bike?",
+      a:
+        "Yes. The Mackie Thump GO weighs 10 kg and the small speaker package 12 kg — both fit on the back of a bike. " +
+        "A padded carry bag can be added for 95 kr. The large speaker package is 2× 16 kg and is easier in a car.",
+    },
+    AFHENTNING_EN,
+  ],
+  "en-lydanlaeg": [
+    {
+      q: "Which PA system fits the number of guests?",
+      a:
+        "Party package 50 (890 kr) for up to 50 guests, Party package 100 (1.290 kr) for 50-100, Party package 150 " +
+        "(2.345 kr) for 100-150 with a subwoofer and stands, and Party package 250 (3.645 kr) for 150-250 with four " +
+        "speakers and two subwoofers. If you are over 250, we source larger tops and subs and send a technician on the " +
+        "day — write to us.",
+    },
+    {
+      q: "Do the guest numbers apply outdoors too?",
+      a:
+        "No. The numbers are for indoors, where the walls hold on to the sound. Outdoors it escapes upwards and " +
+        "outwards, so go one step up — or add a subwoofer for 295 kr.",
+    },
+    {
+      q: "Can I get a microphone for speeches?",
+      a:
+        "Yes. A wireless microphone is 295 kr, a stage-quality Shure BLX 595 kr and a wireless headset 345 kr. If you " +
+        "need both speech and music, the speech & music package at 1.195 kr has two 12\" speakers and a wireless " +
+        "microphone. We do not rent out projectors and screens at the moment.",
+    },
+    {
+      q: "What is the difference between a party system and a speech system?",
+      a:
+        "A party system is built for music and bass and has to play loudly for hours. A speech system is built to make " +
+        "a voice clear — a microphone and crisp treble. If you need both, the speech & music package does the two at " +
+        "once.",
+    },
+    LEJEPERIODE_EN,
+    AFHENTNING_EN,
+  ],
+  "en-mixer": [
+    {
+      q: "How much does it cost to rent a mixer in Copenhagen?",
+      a:
+        "The small 4-channel mini mixer is 295 kr for the whole rental period. The large Yamaha mixer with built-in " +
+        "effects is 395 kr. Both prices cover 1 to 5 days — there is no daily surcharge.",
+    },
+    {
+      q: "When do I actually need a mixer?",
+      a:
+        "When more than one thing has to go into the speaker at the same time. A single microphone or a phone plugs " +
+        "straight into the speaker without one. If two microphones and music have to run together — a speech over " +
+        "background music, a band, a duet — the mixer is what ties it together and lets you set each source on its own.",
+    },
+    {
+      q: "What is the difference between the small and the large one?",
+      a:
+        "The number of channels, and the effects. The small one has four channels and does exactly what it needs to: " +
+        "it gathers two microphones and one music source. The large one is a Yamaha with built-in effects, so you can " +
+        "put reverb on a vocal — that is what makes a voice sound like a concert rather than a speaker in a room. " +
+        "Take the large one for bands, choirs and anything with singing.",
+    },
+    {
+      q: "Are the cables included?",
+      a:
+        "Yes. The power supply and the cable to the speaker come with it. Microphone cables come with the microphones. " +
+        "Tell us when you book if you have something particular to connect, and we will put the right one in.",
+    },
+    AFHENTNING_EN,
+    LEJEPERIODE_EN,
+  ],
+  "en-roeg": [
+    {
+      q: "What is the difference between a fog machine and a low fog machine?",
+      a:
+        "An ordinary fog machine (595 kr) sends the fog up into the air, where it makes the light beams visible and " +
+        "the party look like a club. A low fog machine (795 kr) cools the fog with ice so it settles as a carpet along " +
+        "the floor and stays there — the effect you know from a wedding's first dance.",
+    },
+    {
+      q: "Is fog fluid included in the price?",
+      a:
+        "Yes. Both the fog machine and the low fog machine come with fluid and a power cable, so you do not have to " +
+        "buy anything yourself. For low fog you supply the ice — you get an ice tray and instructions with it.",
+    },
+    {
+      q: "Can the fog set off a fire alarm?",
+      a:
+        "Fog from a fog machine can set off sensitive smoke alarms, especially optical ones at ceiling height. Keep the " +
+        "machine away from alarms, and always ask the venue first — most places have a procedure for it. Low fog stays " +
+        "along the floor and is therefore less exposed.",
+    },
+    {
+      q: "How much fog do you actually need?",
+      a:
+        "Less than people think. A couple of short bursts early in the evening is enough to make the light visible — " +
+        "fill the room and the guests cannot see each other. The machine can be run as needed through the evening.",
+    },
+    AFHENTNING_EN,
+  ],
   "en-lej-mikrofon": [
     {
       q: "How much does it cost to rent a microphone in Copenhagen?",

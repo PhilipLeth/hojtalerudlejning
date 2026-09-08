@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: `Lyd til konfirmation København | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
   description: `Lej lyd til konfirmationen i København fra ${prisKr("pakke_fest_lille")}. Højtalere til tale, musik og fest — nemt at betjene, alle kabler med. Book online på 2 minutter.`,
   keywords: ["lyd til konfirmation", "højtaler konfirmation", "musikanlæg konfirmation", "lej lyd konfirmation københavn", "mikrofon til konfirmation"],
-  alternates: { canonical: "https://lejhojtaler.dk/konfirmation" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/konfirmation",
+    languages: localeAlternates("/konfirmation"),
+  },
   openGraph: {
     title: `Lyd til konfirmation København | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
     description: `Lej lyd til konfirmationen i København fra ${prisKr("pakke_fest_lille")}. Højtalere til tale, musik og fest — nemt at betjene, alle kabler med. Book online på 2 minutter.`,

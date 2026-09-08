@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: `Lyd til bryllup København | Fra ${prisKr("pakke_fest_stor")} | Lejhøjtaler.dk`,
   description: `Lej lyd og lys til bryllup i København fra ${prisKr("pakke_fest_stor")}. Højtalere til taler og fest, trådløs mikrofon og stemningslys. Levering og opsætning kan tilvælges.`,
   keywords: ["lyd til bryllup", "højtaler til bryllup leje", "musikanlæg bryllup", "mikrofon til bryllup", "lys til bryllup leje"],
-  alternates: { canonical: "https://lejhojtaler.dk/bryllup" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/bryllup",
+    languages: localeAlternates("/bryllup"),
+  },
   openGraph: {
     title: `Lyd til bryllup København | Fra ${prisKr("pakke_fest_stor")} | Lejhøjtaler.dk`,
     description: `Lej lyd og lys til bryllup i København fra ${prisKr("pakke_fest_stor")}. Højtalere til taler og fest, trådløs mikrofon og stemningslys. Levering og opsætning kan tilvælges.`,

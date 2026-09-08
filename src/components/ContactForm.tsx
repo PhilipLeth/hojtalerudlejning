@@ -2,6 +2,55 @@
 
 import { useState, useEffect, FormEvent } from "react";
 import PhoneLink from "@/components/PhoneLink";
+import type { Locale } from "@/lib/i18n";
+
+/**
+ * Formularens faste tekster.
+ *
+ * Feltnavnene lå kun på dansk, så /en/kontakt ville have bedt en engelsk kunde
+ * om "Navn" og "Din besked — fx hvad du skal bruge". Emnet (?emne=erhverv)
+ * mærkes stadig på dansk i mailen: den læses af Frederik, ikke af kunden.
+ */
+const COPY = {
+  da: {
+    aria: "Kontaktformular",
+    name: "Navn",
+    email: "Email",
+    phone: "Telefon (valgfrit)",
+    message: "Din besked — fx hvad du skal bruge, hvornår og til hvor mange",
+    send: "Send besked",
+    sending: "Sender…",
+    thanks: "Tak for din besked!",
+    thanksBody: "Vi svarer hurtigst muligt — som regel samme dag. Haster det, så ring",
+    failed: "Noget gik galt — prøv igen",
+    network: "Netværksfejl — prøv igen eller ring til os",
+  },
+  en: {
+    aria: "Contact form",
+    name: "Name",
+    email: "Email",
+    phone: "Phone (optional)",
+    message: "Your message — for example what you need, when, and for how many",
+    send: "Send message",
+    sending: "Sending…",
+    thanks: "Thanks for your message!",
+    thanksBody: "We reply as soon as we can — usually the same day. If it is urgent, call",
+    failed: "Something went wrong — please try again",
+    network: "Network error — try again or give us a call",
+  },
+} as const;
+
+/** Hjælpeteksten til et kendt emne, på sidens sprog. */
+const TOPIC_HINT_EN: Record<string, { label: string; hint: string }> = {
+  erhverv: {
+    label: "Business enquiry",
+    hint: "Tell us about the event — date, number of guests, location and what you need. We will come back with one quote for all of it.",
+  },
+  event: {
+    label: "Event enquiry",
+    hint: "Tell us about the event — date, number of guests, location and what you need.",
+  },
+};
 
 /** Kendte emner fra ?emne= — styrer overskrift på mailen og hjælpetekst i formularen */
 const TOPICS: Record<string, { label: string; hint: string }> = {
@@ -15,7 +64,8 @@ const TOPICS: Record<string, { label: string; hint: string }> = {
   },
 };
 
-export default function ContactForm() {
+export default function ContactForm({ locale = "da" }: { locale?: Locale } = {}) {
+  const c = COPY[locale];
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", website: "" });
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState("");
@@ -25,8 +75,9 @@ export default function ContactForm() {
   // lander mærket i indbakken frem for som "endnu en kontaktformular"
   useEffect(() => {
     const key = new URLSearchParams(window.location.search).get("emne");
-    if (key && TOPICS[key]) setTopic({ key, ...TOPICS[key] });
-  }, []);
+    const kilde = locale === "en" ? TOPIC_HINT_EN : TOPICS;
+    if (key && kilde[key]) setTopic({ key, ...kilde[key] });
+  }, [locale]);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -40,13 +91,13 @@ export default function ContactForm() {
       });
       const json = (await res.json()) as { ok?: boolean; error?: string };
       if (!res.ok) {
-        setError(json.error || "Noget gik galt — prøv igen");
+        setError(json.error || c.failed);
         setState("error");
         return;
       }
       setState("sent");
     } catch {
-      setError("Netværksfejl — prøv igen eller ring til os");
+      setError(c.network);
       setState("error");
     }
   }
@@ -55,9 +106,9 @@ export default function ContactForm() {
     return (
       <div className="glass rounded-2xl p-8 text-center" data-testid="contact-success">
         <p className="text-2xl">✅</p>
-        <h2 className="mt-2 text-xl font-bold">Tak for din besked!</h2>
+        <h2 className="mt-2 text-xl font-bold">{c.thanks}</h2>
         <p className="mt-2 text-white/60">
-          Vi svarer hurtigst muligt — som regel samme dag. Haster det, så ring{" "}
+          {c.thanksBody}{" "}
           <PhoneLink className="text-brand-400 hover:underline" />.
         </p>
       </div>
@@ -68,7 +119,7 @@ export default function ContactForm() {
     "w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3" aria-label="Kontaktformular">
+    <form onSubmit={handleSubmit} className="space-y-3" aria-label={c.aria}>
       {topic && (
         <div className="rounded-xl border border-brand-500/30 bg-brand-500/[0.07] px-4 py-3">
           <p className="text-sm font-semibold text-brand-400">{topic.label}</p>
@@ -80,7 +131,7 @@ export default function ContactForm() {
         type="text"
         name="name"
         autoComplete="name"
-        placeholder="Navn"
+        placeholder={c.name}
         value={form.name}
         onChange={(e) => setForm({ ...form, name: e.target.value })}
         className={inputCls}
@@ -91,7 +142,7 @@ export default function ContactForm() {
         name="email"
         autoComplete="email"
         inputMode="email"
-        placeholder="Email"
+        placeholder={c.email}
         value={form.email}
         onChange={(e) => setForm({ ...form, email: e.target.value })}
         className={inputCls}
@@ -101,7 +152,7 @@ export default function ContactForm() {
         name="tel"
         autoComplete="tel"
         inputMode="tel"
-        placeholder="Telefon (valgfrit)"
+        placeholder={c.phone}
         value={form.phone}
         onChange={(e) => setForm({ ...form, phone: e.target.value })}
         className={inputCls}
@@ -121,7 +172,7 @@ export default function ContactForm() {
         required
         name="message"
         rows={5}
-        placeholder="Din besked — fx hvad du skal bruge, hvornår og til hvor mange"
+        placeholder={c.message}
         value={form.message}
         onChange={(e) => setForm({ ...form, message: e.target.value })}
         className={inputCls}
@@ -136,7 +187,7 @@ export default function ContactForm() {
         disabled={state === "sending"}
         className="w-full rounded-xl bg-brand-500 py-3.5 font-bold text-black transition hover:bg-brand-400 disabled:opacity-60"
       >
-        {state === "sending" ? "Sender…" : "Send besked"}
+        {state === "sending" ? c.sending : c.send}
       </button>
     </form>
   );

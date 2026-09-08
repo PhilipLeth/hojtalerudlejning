@@ -53,12 +53,14 @@ describe("Engelsk navigation", () => {
     expect(danskSti("/festlys")).toBe("/festlys");
     expect(localizedHref(danskSti("/en/festlys"), "en")).toBe("/en/festlys");
     // En side uden engelsk udgave falder tilbage til dansk, ikke til en 404.
-    expect(localizedHref(danskSti("/mixer"), "en")).toBe("/mixer");
+    // /mixer stod her, indtil den fik en engelsk udgave.
+    expect(localizedHref(danskSti("/karaoke-maskine"), "en")).toBe("/karaoke-maskine");
   });
 
   it("sprogskifteren peger aldrig på den side, man allerede står på", () => {
     // localizedHref falder tilbage til dansk, når siden ikke findes på engelsk.
     // Brugt råt gav det href="/mixer">English på /mixer — et link til intet.
+    // (/mixer har siden fået en engelsk udgave; fælden er den samme.)
     const src = læs("components/BurgerMenu.tsx");
     expect(src).toContain("hasEnglish");
     expect(src).toMatch(/hasEnglish\(daSti\)[\s\S]{0,80}"\/en"/);

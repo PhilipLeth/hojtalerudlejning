@@ -4,7 +4,24 @@ import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
 
-const docsDir = path.join(process.cwd(), "docs");
+import type { Locale } from "@/lib/i18n";
+
+/**
+ * Hvor indlæggene bor.
+ *
+ * De danske ligger i docs/, de engelske i docs/en/. Bloggen var det sidste
+ * sted, /en stadig viste dansk: /en/blog listede de danske indlæg og linkede
+ * til /blog/<slug>, så en engelsk læser klikkede fra en engelsk overskrift ind
+ * i dansk brødtekst.
+ *
+ * Et indlæg findes kun på de sprog, det er SKREVET på — der er ingen fallback.
+ * Et halvt oversat blogindeks er værre end et kort et.
+ */
+function dirFor(locale: Locale): string {
+  return locale === "en"
+    ? path.join(process.cwd(), "docs", "en")
+    : path.join(process.cwd(), "docs");
+}
 
 export interface PostMeta {
   slug: string;
@@ -26,12 +43,50 @@ export interface Post extends PostMeta {
   contentHtml: string;
 }
 
-export function getAllPosts(): PostMeta[] {
-  const files = fs.readdirSync(docsDir).filter((f) => f.endsWith(".md"));
+/**
+ * Hvilket dansk indlæg et engelsk er oversættelsen af.
+ *
+ * Slug'ene er IKKE ens: den danske bærer et dansk søgeord ("lyd-til-havefest"),
+ * den engelske et engelsk ("garden-party-sound"). Det er med vilje — en URL er
+ * et søgeord — men det betyder, at hreflang ikke kan udledes af stien, som den
+ * kan for resten af sitet. Derfor står parrene her.
+ *
+ * Et indlæg uden makker får ingen `languages`: at påstå et modstykke, der ikke
+ * findes, er værre end at lade være. speaker-rental-copenhagen har aldrig haft
+ * en dansk udgave — den blev skrevet på engelsk fra starten.
+ */
+export const BLOG_PAIRS: Record<string, string> = {
+  "cheap-speaker-rental-copenhagen": "billig-hojtaler-leje",
+  "party-lights-guide": "festlys-guide",
+  "birthday-party-sound": "foedselsdagsfest-lyd",
+  "speaker-on-a-bike-copenhagen": "hojtaler-paa-cykel-kobenhavn",
+  "which-speaker-for-your-party": "hojtaler-til-fest",
+  "garden-party-sound": "lyd-til-havefest",
+  "pa-system-for-a-party": "musikanlaeg-til-fest",
+  "about-lejhojtaler": "om-lejhojtaler",
+  "pa-system-rental-copenhagen": "pa-anlaeg-udlejning-kobenhavn",
+  "soundboks-alternative-copenhagen": "soundboks-alternativ-kobenhavn",
+};
+
+/** Den danske sti et engelsk indlæg er oversættelse af — eller undefined. */
+export function daBlogPath(enSlug: string): string | undefined {
+  const da = BLOG_PAIRS[enSlug];
+  return da ? `/blog/${da}` : undefined;
+}
+
+/** Det engelske indlæg der oversætter et dansk — eller undefined. */
+export function enBlogSlug(daSlug: string): string | undefined {
+  return Object.keys(BLOG_PAIRS).find((en) => BLOG_PAIRS[en] === daSlug);
+}
+
+export function getAllPosts(locale: Locale = "da"): PostMeta[] {
+  const dir = dirFor(locale);
+  if (!fs.existsSync(dir)) return [];
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md"));
 
   const posts: PostMeta[] = files.map((filename) => {
     const slug = filename.replace(/\.md$/, "");
-    const raw = fs.readFileSync(path.join(docsDir, filename), "utf-8");
+    const raw = fs.readFileSync(path.join(dir, filename), "utf-8");
     const { data } = matter(raw);
 
     return {
@@ -66,8 +121,8 @@ function stripLeadingH1(content: string): string {
   return content.replace(/^\s*#\s+.*(\r?\n)+/, "");
 }
 
-export async function getPostBySlug(slug: string): Promise<Post> {
-  const raw = fs.readFileSync(path.join(docsDir, `${slug}.md`), "utf-8");
+export async function getPostBySlug(slug: string, locale: Locale = "da"): Promise<Post> {
+  const raw = fs.readFileSync(path.join(dirFor(locale), `${slug}.md`), "utf-8");
   const { data, content } = matter(raw);
 
   const result = await remark().use(html).process(stripLeadingH1(content));
