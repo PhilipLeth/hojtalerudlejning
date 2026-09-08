@@ -2,7 +2,7 @@
 title: "PA-anlæg udlejning i København – hvad skal du vide?"
 description: "Alt om PA-anlæg udlejning i København. Hvad er et PA-system, hvornår har du brug for det, og hvad koster det? Lej fra 395 kr/weekend."
 date: "2026-06-12"
-updated: "2026-08-22"
+updated: "2026-09-08"
 keywords:
   - PA-anlæg udlejning
   - PA anlæg leje københavn
@@ -38,11 +38,9 @@ En Bluetooth-højtaler kan klare baggrundslyd til 10-15 personer i en stue. Men 
 
 Når du lejer PA-anlæg hos Lejhøjtaler.dk, får du alt hvad du skal bruge:
 
-- Aktive højtalere (ingen separat forstærker nodvendig)
-- Subwoofer til dyb, ren bas
-- Mixer med mikrofon-indgang
-- Alle kabler og stativer
-- Simpel Bluetooth-tilslutning til din telefon
+- Aktive højtalere (ingen separat forstærker nødvendig)
+- Alle kabler og simpel Bluetooth-tilslutning til din telefon
+- Tilkøb efter behov: subwoofer til dyb bas, mixer med mikrofon-indgang, mikrofoner og stativer
 
 Du skal ikke være lydtekniker. Systemet er plug-and-play: stil det op, tilslut din telefon, og tryk play.
 
@@ -52,9 +50,9 @@ Vi holder til på Vermlandsgade 66, 2300 København. Du henter udstyret fredag o
 
 ## Hvad koster det?
 
-Vores priser starter fra **395 kr for en weekend**. Det inkluderer alt udstyr, kabler og stativer. Ingen skjulte gebyrer.
+Vores priser starter fra **395 kr for en weekend** — den lille højtalerpakke koster 595 kr, den store 995 kr. Alle kabler er med i prisen, og der er ingen skjulte gebyrer; subwoofer, mixer, mikrofon og stativer lejes til efter behov.
 
-For flerdagsleje ganges prisen med antal dage (fredag-mandag tæller som 1 weekend).
+Prisen er flad for 1-5 dages leje: en enkelt hverdag koster det samme som hele weekenden, og fredag-mandag tæller som én weekend.
 
 ## Sådan booker du
 

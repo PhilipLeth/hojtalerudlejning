@@ -2,6 +2,7 @@
 title: "Lej en højtaler du kan tage med på cyklen i København"
 description: "Vores lille højtalerpakke vejer kun 12 kg og passer i en bæretaske. Perfekt til københavnere uden bil. Hent på cykel i København S eller få levering for 495 kr."
 date: "2025-06-05"
+updated: "2026-09-08"
 keywords:
   - højtaler cykel
   - højtaler leje københavn
@@ -35,7 +36,7 @@ De fleste henter fredag mellem kl. 14 og 18 og afleverer mandag kl. 15-17. Du m�
 
 ## Ikke til at cykle? Vi leverer
 
-Er du ikke til at cykle med udstyr, kører vi det ud til dig. **Levering i Storkøbenhavn koster 495 kr.** Vi bringer udstyret til din dør og henter det igen efter din lejeperiode. Har du brug for at vi sætter det op også, klarer vi det for 495 kr. ekstra.
+Er du ikke til at cykle med udstyr, kører vi det ud til dig. **Levering + opsætning koster 495 kr.** Vi bringer udstyret til din dør og sætter det op — opsætningen koster ikke ekstra. Skal vi også hente det igen efter festen, koster levering + afhentning begge veje 795 kr.
 
 Leveringen er oplagt hvis du lejer den store pakke med PA-anlæg og subwoofer, som er for tung til cyklen. Men den lille pakke? Den er lavet til at cykle med.
 

@@ -2,7 +2,7 @@
 title: "Musikanlæg til fest – sådan vælger du rigtigt"
 description: "Forskellen på en Bluetooth-højtaler og et rigtigt musikanlæg til fest. Guide til at vælge det rigtige PA-system til din fest."
 date: "2026-06-10"
-updated: "2026-08-22"
+updated: "2026-09-08"
 keywords:
   - musikanlæg til fest
   - musikanlæg udlejning
@@ -23,7 +23,7 @@ keywords:
 | **Rækkevide** | 3-5 meter | 15-30+ meter |
 | **Mikrofon** | Sjaldent | Ja, via mixer |
 | **Gæster** | Op til 15 | Op til 100+ |
-| **Pris (leje)** | – | Fra 395 kr/weekend |
+| **Pris (leje)** | – | Fra 595 kr/weekend |
 
 ### Hvornår er en Bluetooth-højtaler nok?
 
@@ -51,6 +51,8 @@ Et musikanlæg til fest består typisk af:
 
 4. **Kabler:** XLR-kabler mellem mixer og højtalere, strømkabler, og et aux-kabel eller Bluetooth til din telefon.
 
+Hos os er toppene altid med i pakken — den [lille højtalerpakke](/hojtalerpakke-lille) har to 10" højtalere, den [store](/hojtalerpakke-normal) to 12". Subwoofer, mixer og mikrofon lejer du til, når festen kræver det.
+
 ## Sådan setter du det op
 
 Det lyder måske kompliceret, men det tager under 10 minutter:
@@ -71,4 +73,4 @@ Vi gennemgår altid setupmet med dig, når du henter udstyret. Du får også en 
 
 ## Book dit musikanlæg
 
-Lej et komplet musikanlæg til din fest fra 395 kr/weekend. [Book nu](/#book) og hent på Vermlandsgade 66 på Amager.
+Den lille højtalerpakke koster 595 kr for en hel weekend, den store 995 kr — og subwoofer, mixer og mikrofon kan lægges til efter behov. [Book nu](/#book) og hent på Vermlandsgade 66 på Amager.
