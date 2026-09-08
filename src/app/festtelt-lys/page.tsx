@@ -29,8 +29,8 @@ export default function Side() {
       price={695}
       headline="Festtelt-lys — teltet og haven lyst op"
       sub="20 m lyskæde (varm hvid + farvet) og 4 LED uplights. Fra kantine-telt til havefest — spar 90 kr."
-      image="/images/product-lyskaeder.webp"
-      imageAlt="Festtelt-lys"
+      image="/images/product-pakke-festtelt.webp"
+      imageAlt="Festtelt-lys: fire LED uplights og to lyskæder, varm hvid og farvet"
       productId="pakke_festtelt"
       faqPhrase="festtelt-lys"
       capacity={{ level: 2, label: "et festtelt eller en have" }}

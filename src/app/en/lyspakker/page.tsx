@@ -3,6 +3,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import { KATEGORI_PAKKER, bundleListPrice, rentalProducts, type RentalProduct } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
+import { thumbSrcSet } from "@/lib/imageSrcSet";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
@@ -58,6 +59,15 @@ function Card({ p, featured }: { p: RentalProduct; featured: boolean }) {
           Most booked
         </span>
       )}
+      <img
+        loading="lazy"
+        decoding="async"
+        src={p.image}
+        srcSet={thumbSrcSet(p.image)}
+        sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 90vw"
+        alt={p.name_en}
+        className="mb-4 h-44 w-full rounded-xl object-contain"
+      />
       <p className="text-xs font-semibold uppercase tracking-widest text-brand-400">{KICKER[p.id]}</p>
       <h3 className="mt-1 text-2xl font-bold">{p.name_en}</h3>
       <p className="mt-2 flex-1 text-sm text-white/60">{p.bundle?.usecase_en ?? p.desc_en}</p>

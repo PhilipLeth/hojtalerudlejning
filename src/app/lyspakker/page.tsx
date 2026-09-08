@@ -5,6 +5,7 @@ import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { KATEGORI_PAKKER, bundleListPrice, rentalProducts, type RentalProduct } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
+import { thumbSrcSet } from "@/lib/imageSrcSet";
 import { localeAlternates } from "@/lib/hreflang";
 
 /**
@@ -72,6 +73,15 @@ function Kort({ p, fremhaevet }: { p: RentalProduct; fremhaevet: boolean }) {
           Mest booket
         </span>
       )}
+      <img
+        loading="lazy"
+        decoding="async"
+        src={p.image}
+        srcSet={thumbSrcSet(p.image)}
+        sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 90vw"
+        alt={`${p.name_da} — ${(p.contents ?? []).join(", ")}`}
+        className="mb-4 h-44 w-full rounded-xl object-contain"
+      />
       <p className="text-xs font-semibold uppercase tracking-widest text-brand-400">{KICKER[p.id]}</p>
       <h3 className="mt-1 text-2xl font-bold">{p.name_da}</h3>
       <p className="mt-2 flex-1 text-sm text-white/60">{p.bundle?.usecase_da ?? p.desc_da}</p>
