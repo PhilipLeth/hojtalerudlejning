@@ -384,10 +384,21 @@ describe("Footeren", () => {
   });
 
   it("skriver ingen åbningstider når alt er lukket", async () => {
+    /*
+     * CVR-nummeret duede ikke som signal for "indstillingerne er hentet": det
+     * står ens i standarden og i mocken, så ventetiden var opfyldt allerede på
+     * første render — og den synkrone assertion løb, mens footeren stadig viste
+     * standardens åbne dage. Testen bestod kun, når hentningen tilfældigvis
+     * nåede at lande i samme tik, og faldt under belastning.
+     *
+     * Nu ventes der på selve overgangen. Den er ægte, fordi standarden HAR åbne
+     * dage — det slås fast her, så testen ikke stille bliver indholdsløs, hvis
+     * standarden en dag lukker alle dage.
+     */
+    expect(openDays(DEFAULT_OPENING_HOURS).length).toBeGreaterThan(0);
     mockSettings(hoursWith({}));
     render(<Footer />);
-    await waitFor(() => expect(screen.getByText(/CVR 40994904/)).toBeInTheDocument());
-    expect(screen.queryByText("Åbningstider:")).not.toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByText("Åbningstider:")).not.toBeInTheDocument());
   });
 });
 
