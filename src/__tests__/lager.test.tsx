@@ -253,7 +253,7 @@ describe("/admin/lager", () => {
     expect(liste.getByText("Lille højtalerpakke")).toBeInTheDocument();
     expect(liste.getByText("Karaokemaskine")).toBeInTheDocument();
     expect(liste.getByText('55" Storskærm')).toBeInTheDocument();
-  }, 30000);
+  }, 60000);
 
   it("siger tydeligt hvilke produkter der kan overbookes", async () => {
     mockApi({ party: 2 });
@@ -369,13 +369,20 @@ describe("/admin/produkter", () => {
   // Grænsen er hævet frem for at skrumpe mockApi til et lille katalog: de 36
   // tests i filen deler den mock, og et katalog uden fx pakker ville gøre de
   // andre tests svagere for at gøre disse tre hurtigere.
+  //
+  // Tallet er et BUDGET, ikke en påstand. De her tests rendrer hele
+  // produktkataloget som en admin-formular i jsdom, og det koster sekunder:
+  // målt fra 2,6 s på en tom maskine til 16 s under belastning — og over 40 s,
+  // når to sessioner bygger samtidig. Med 30 s røg de tilfældigt, og da npm
+  // test er porten før et deploy, stoppede de deploys, der burde køre.
+  // 60 s er sat efter det værst målte, ikke efter det typiske.
   it("har lagertallet på produktet", async () => {
     mockApi({ party: 2 });
     renderAdmin(<ProdukterPage />);
     await waitFor(() => expect(screen.getAllByText("Lager (antal)").length).toBeGreaterThan(0), { timeout: 20000 });
     expect(screen.getAllByText(/lager ikke sat/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/2 stk\./).length).toBeGreaterThan(0);
-  }, 30000);
+  }, 60000);
 
   it("har overbooking ved siden af lageret", async () => {
     mockApi({ party: 2 }, { overbook: { party: 1 } });
@@ -383,7 +390,7 @@ describe("/admin/produkter", () => {
     await waitFor(() => expect(screen.getAllByText("Overbooking (kan skaffes)").length).toBeGreaterThan(0), { timeout: 20000 });
     expect(screen.getAllByText(/tager imod 3/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/\+1 JIT/).length).toBeGreaterThan(0);
-  }, 30000);
+  }, 60000);
 
   it("gemmer lagertallet med det samme, uden at publicere hele kataloget", async () => {
     mockApi({ thumpgo: 1 });
@@ -398,13 +405,13 @@ describe("/admin/produkter", () => {
       const body = sidsteLagerkald();
       expect(body.action).toBe("set_inventory");
       expect(Object.keys(body.inventory)).toHaveLength(1);
-    });
+    }, { timeout: 20000 });
     // Kataloget må IKKE være skrevet — det venter på "Gem ændringer"
     const katalogPosts = (global.fetch as any).mock.calls.filter(
       (c: unknown[]) => String(c[0]).startsWith("/api/products") && (c[1] as { method?: string })?.method === "POST",
     );
     expect(katalogPosts).toHaveLength(0);
-  }, 30000);
+  }, 60000);
 });
 
 describe("Ingen anden produktliste tilbage", () => {

@@ -147,10 +147,16 @@ describe("/api/book svarer kunden, selv om push hænger", () => {
     // de blev bare flyttet ud af kundens svar
     // (den første er cache-nulstillingen, som altid har kørt i waitUntil)
     expect(baggrund.length).toBe(2);
-    await new Promise((r) => setTimeout(r, 50));
-    expect(hængende, "push blev aldrig forsøgt — så beviser testen ingenting").toBeGreaterThan(0);
+    // Vent på at pushet ER forsøgt — ikke på at 50 ms er gået. Baggrundsarbejdet
+    // starter, når mikrotask-køen kommer dertil, og under fuld suite kan det
+    // tage længere end et fast ophold; så målte testen maskinens belastning i
+    // stedet for koden og blokerede et deploy, der burde køre.
+    await vi.waitFor(() => expect(hængende, "push blev aldrig forsøgt — så beviser testen ingenting").toBeGreaterThan(0));
 
     // Og det hængende kald hænger stadig. Før lå kunden og ventede på netop det.
+    // Her ER et fast ophold det rigtige: vi beviser, at noget IKKE bliver
+    // færdigt, og så er ventetiden selve målestokken. 50 ms rækker, fordi et
+    // svar ville komme med det samme — promisen resolver aldrig.
     const stadigIGang = await Promise.race([
       baggrund[baggrund.length - 1].then(() => "færdig"),
       new Promise((r) => setTimeout(() => r("hænger"), 50)),
