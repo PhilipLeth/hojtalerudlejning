@@ -223,10 +223,23 @@ function mockApi(
 }
 
 /** Kroppen af sidste POST til /api/inventory */
+/**
+ * Sidste POST til /api/inventory.
+ *
+ * Uden vagten nedenfor kastede den "Cannot read properties of undefined", når
+ * der slet ingen POST var — og det er netop den besked, en waitFor viser, når
+ * den løber tør. Så kunne man ikke se forskel på "gemningen skete aldrig" og
+ * "gemningen sendte noget forkert", og en flaky kørsel efterlod ingen spor at
+ * gå efter. Nu siger fejlen selv hvad der mangler.
+ */
 function sidsteLagerkald() {
   const kald = (global.fetch as any).mock.calls.filter(
     (c: unknown[]) => String(c[0]).startsWith("/api/inventory") && (c[1] as { method?: string })?.method === "POST",
   );
+  if (kald.length === 0) {
+    const alle = (global.fetch as any).mock.calls.map((c: unknown[]) => `${(c[1] as { method?: string })?.method ?? "GET"} ${String(c[0])}`);
+    throw new Error(`ingen POST til /api/inventory — kaldene var:\n  ${alle.join("\n  ")}`);
+  }
   return JSON.parse((kald[kald.length - 1][1] as { body: string }).body);
 }
 
