@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
 import { PhoneText } from "@/components/PhoneLink";
 import { buildProductFaq } from "@/lib/productFaq";
-import { erPaaPause } from "@/lib/products";
+import { erPaaPause, erGenereretBillede } from "@/lib/products";
 import ProductGallery from "@/components/ProductGallery";
 import type { Locale } from "@/lib/i18n";
 
@@ -22,6 +22,7 @@ import type { Locale } from "@/lib/i18n";
 const COPY = {
   da: {
     kicker: "Betal ved afhentning · Ring",
+    genereretBillede: "Illustration — genereret ud fra fotos af vores eget udstyr",
     perWeekend: "/weekend",
     book: (navn: string) => `Book ${navn} nu`,
     faqTitle: (navn: string) => `Ofte stillede spørgsmål om ${navn}`,
@@ -38,6 +39,7 @@ const COPY = {
   },
   en: {
     kicker: "Pay on pickup · Call",
+    genereretBillede: "Illustration — generated from photos of our own equipment",
     perWeekend: "/weekend",
     book: (navn: string) => `Book ${navn} now`,
     faqTitle: (navn: string) => `Frequently asked questions about ${navn}`,
@@ -279,6 +281,11 @@ export default function ProductLanding({
                 height={400}
                 className="w-full object-contain p-6"
               />
+              {/* Under billedet, ikke henover det: oplysningen skal være der,
+                  uden at en mærkat lægger sig på produktet. */}
+              {erGenereretBillede(image) && (
+                <p className="px-6 pb-4 text-center text-xs text-white/35">{c.genereretBillede}</p>
+              )}
               {/* Videoerne er slået fra 26. august 2026 — se kommentaren ved
                   ProductYouTube nedenfor. Play-knappen kommer igen ved at
                   sætte linjen herunder ind:

@@ -260,3 +260,41 @@ describe("Produktsiden", () => {
     expect(kilde).toMatch(/locale=\{locale\}/);
   });
 });
+
+describe("Genererede produktbilleder oplyses", () => {
+  /**
+   * De fem lys-pakker og Bryllupspakken har ikke et studiefoto — grejet er
+   * lyst op af en model ud fra fotos af vores eget udstyr. Philip ville ikke
+   * have en mærkat henover billedet, men oplysningen skal være der: en linje
+   * UNDER billedet på produktsiden.
+   */
+  it("står som tekst under billedet, ikke som en mærkat henover", () => {
+    const kilde = readFileSync(join(ROD, "src/components/ProductLanding.tsx"), "utf8");
+    expect(kilde).toMatch(/erGenereretBillede\(image\)/);
+    // Linjen kommer EFTER img-elementet, så den ikke ligger oven på produktet
+    expect(kilde.indexOf("erGenereretBillede(image)")).toBeGreaterThan(kilde.indexOf("alt={imageAlt}"));
+    expect(kilde).not.toMatch(/absolute[^"]*genereretBildede|genereretBillede[^)]*absolute/);
+  });
+
+  it("gælder præcis de billeder, der er genereret — og ingen studiefotos", async () => {
+    const { erGenereretBillede, GENEREREDE_BILLEDER, rentalProducts } = await import("@/lib/products");
+    expect(erGenereretBillede("/images/product-pakke-bryllupslys-taendt.webp")).toBe(true);
+    expect(erGenereretBillede("/images/product-soundboks.webp")).toBe(false);
+    expect(erGenereretBillede(null)).toBe(false);
+    // Et billede fra admin (R2) er ikke vores generering og skal ikke oplyses
+    expect(erGenereretBillede("/api/image/img_123")).toBe(false);
+
+    // Hver sti på listen skal faktisk være i brug — ellers er den efterladt
+    const brugte = new Set(rentalProducts.map((p) => p.image));
+    for (const sti of GENEREREDE_BILLEDER) {
+      expect(brugte.has(sti), `${sti} står på listen, men bruges ikke`).toBe(true);
+    }
+  });
+
+  it("filerne findes på disken", async () => {
+    const { GENEREREDE_BILLEDER } = await import("@/lib/products");
+    for (const sti of GENEREREDE_BILLEDER) {
+      expect(existsSync(join(ROD, "public", sti.replace(/^\//, ""))), sti).toBe(true);
+    }
+  });
+});

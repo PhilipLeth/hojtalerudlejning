@@ -410,6 +410,32 @@ export const addons: Addon[] = [
  * Kørsels-tilvalgene. De udelukker hinanden: man kører enten ud, henter hjem,
  * eller begge dele — aldrig to af dem på samme ordre.
  */
+/**
+ * Billeder der er GENERERET, ikke fotograferet.
+ *
+ * De fem lys-pakker og Bryllupspakken har ikke et studiefoto — grejet er sat
+ * op og lyst af en model ud fra fotos af vores eget udstyr. Kunden skal kunne
+ * se det, men ikke som en mærkat henover billedet: produktsiden skriver en
+ * linje UNDER det. Galleriets billeder har deres egen mærkat og står ikke her.
+ *
+ * Listen er på STIER, ikke på produkt-id'er, og det er med vilje: uploader
+ * nogen et rigtigt foto i admin, peger produktet på en R2-URL i stedet, og så
+ * forsvinder oplysningen af sig selv frem for at blive stående og lyve.
+ */
+export const GENEREREDE_BILLEDER: ReadonlySet<string> = new Set([
+  "/images/product-pakke-diskolys-taendt.webp",
+  "/images/product-pakke-teenagefest-taendt.webp",
+  "/images/product-pakke-festtelt-taendt.webp",
+  "/images/product-pakke-bryllupslys-taendt.webp",
+  "/images/product-pakke-diskotek-taendt.webp",
+  "/images/product-pakke-bryllup-taendt.webp",
+]);
+
+/** Er billedet genereret? Bruges til oplysningen under produktbilledet. */
+export function erGenereretBillede(sti: string | null | undefined): boolean {
+  return !!sti && GENEREREDE_BILLEDER.has(sti);
+}
+
 export const DELIVERY_ADDON_IDS = ["levering_ud", "afhentning_retur", "levering_begge"] as const;
 export type DeliveryAddonId = (typeof DELIVERY_ADDON_IDS)[number];
 
