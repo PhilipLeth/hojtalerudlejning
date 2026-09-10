@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import BookingFlow from "@/components/BookingFlow";
+import { catalogPrice } from "@/lib/products";
 
 // Mock next/image
 vi.mock("next/image", () => ({
@@ -33,10 +34,14 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
   it("shows prices for all speakers", () => {
     render(<BookingFlow />);
     // Original prices shown as strikethrough during summer sale, or as main price outside sale
-    expect(screen.getAllByText("395,-").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("595,-").length).toBeGreaterThan(0);
-    // 695 var karaokemaskinen, som nu er på pause — 795 er Soundboks 4
-    expect(screen.getAllByText("795,-").length).toBeGreaterThan(0);
+    // Tallene slås op i kataloget. Stod de i hånden, gik testen grøn på det
+    // forkerte tal ved næste prisændring: 795 er stadig low fog og kørsel
+    // begge veje, så "795,-" blev ved med at findes, efter at Soundboks var
+    // sat ned til 695.
+    for (const id of ["thumpgo", "party", "soundboks"]) {
+      const pris = `${catalogPrice(id)},-`;
+      expect(screen.getAllByText(pris).length, `${id} → ${pris}`).toBeGreaterThan(0);
+    }
   });
 
   it("shows effects-only section with lys and røg", () => {
@@ -323,9 +328,9 @@ describe("BookingFlow - Preselect via ?product=", () => {
 
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
-      // Soundboks (795) ligger nu i kurven + lys-pakken (495) er valgt
+      // Soundboks ligger nu i kurven + lys-pakken er valgt
       expect(last?.count).toBe(2);
-      expect(last?.total).toBe(795 + 495);
+      expect(last?.total).toBe(catalogPrice("soundboks") + catalogPrice("lys"));
     });
   });
 
@@ -343,7 +348,7 @@ describe("BookingFlow - Preselect via ?product=", () => {
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
       expect(last?.count).toBe(1);
-      expect(last?.total).toBe(795);
+      expect(last?.total).toBe(catalogPrice("soundboks"));
     });
   });
 });

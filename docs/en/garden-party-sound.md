@@ -24,7 +24,7 @@ A Bluetooth speaker that fills a living room perfectly disappears completely in 
 
 - **A small garden, under 30 guests:** the small speaker package manages, especially if you place it well (see below).
 - **A large garden, 30+ guests:** the large package with two 12" tops. Add a subwoofer for 295 DKK and the bass survives the open air.
-- **No power in the garden?** The Mackie Thump GO (395 DKK) runs on battery for up to 12 hours, and the Soundboks 4 (795 DKK) even longer.
+- **No power in the garden?** The Mackie Thump GO (395 DKK) runs on battery for up to 12 hours, and the Soundboks 4 (695 DKK) even longer.
 
 ## Five tips for good outdoor sound
 

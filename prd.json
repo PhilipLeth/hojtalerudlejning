@@ -3631,6 +3631,15 @@
     "redirect_kan_skygge_for_en_side": "FÆLDE: /hojtalerpakke-bas blev bygget og deployet, men var utilgængelig, fordi _redirects stadig sendte den til /subwoofer fra dengang festival_bas udgik. Cloudflare svarer på _redirects FØR den leder efter filen, og build'et siger ingenting. Ny test redirect-mod-side.test.ts fejler, hvis en omdirigeret sti har sin egen page.tsx. Tjek altid en ny side ved at FØLGE redirect'en, ikke kun statuskoden — 301 ligner et harmløst trailing-slash-hop.",
     "aabent": "Mixerfotoene er AI-genererede og viser en generisk mixer, ikke Frederiks konkrete Yamaha — et telefonfoto af den rigtige på gul baggrund er bedre. DBA-annoncerne står stadig i Højbjerg; det kræver login på boost.dba.dk. Annoncegruppe 6 kan flyttes tilbage til /lysshow, nu hvor siden findes. Og de tre lagertests i lager.test.tsx er flaky under parallel kørsel — de består 36/36 alene, men flere sessioner bygger i samme repo samtidig."
   },
+  "soundboks_pris_ned_2026_09_10": {
+    "status": "live",
+    "date": "2026-09-10",
+    "beslutning": "Frederik: Soundboks 4 solgte ikke til 795 kr. Sat 100 kr ned til 695. Prisstigningen 25. august tog den fra 595 til 795 — den her ruller halvdelen af den stigning tilbage.",
+    "bundtreglen_gjaldt_ogsaa_nedad": "De tre Soundboks-pakker fulgte med 100 kr ned, så rabatten i KRONER er uændret — samme regel som ved stigningen, se katalog_og_priser_2026_08_25.bundtreglen. Udendørspakke 995→895 (spar 140), Studenterpakken 945→845 (spar 90), Soundboks-pakken med lys 1190→1090 (spar 100). Det var ikke til at vælge fra: uden nedsættelsen ville Studenterpakken koste 945 kr for dele til 935 kr — altså dyrere end at leje delene hver for sig.",
+    "hvor_tallet_stod": "Katalogprisen ét sted, men beløbet stod som TEKST 20 steder: /soundboks-4 og /en/soundboks-4 (titel, meta, OG, price-prop), fire svar i categoryFaq (to danske, to engelske), /udendorspakke og /studenterpakke, og fem blogindlæg på begge sprog. Bemærk at 795 stadig er både low fog og kørsel begge veje, så et blindt søg-og-erstat ville have ødelagt dem.",
+    "testene_laeser_nu_kataloget": "BookingFlow.test.tsx havde 795 skrevet i hånden tre steder. Den ene assertion ville være blevet grøn på det forkerte tal, fordi '795,-' stadig findes i kurven som low fog. Testen slår nu prisen op med catalogPrice(), så den fejler rigtigt næste gang.",
+    "kv_havde_ingen_override": "products_catalog fandtes ikke i KV (kontrolleret 10. sept 2026), så products.ts ER den levende kilde, og en deploy er nok. Havde nøglen ligget der, ville kodeændringen ikke have ændret noget i produktion — se kv_vinder_over_koden om samme fælde for åbningstider."
+  },
   "produktgalleri_2026_08": {
     "status": "live",
     "date": "2026-08-26",

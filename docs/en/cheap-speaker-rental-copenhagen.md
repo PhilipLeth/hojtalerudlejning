@@ -21,7 +21,7 @@ You are throwing a party, but you have no use for owning a PA system. You need i
 | Mackie Thump GO | 395 DKK | 8" battery speaker, charger, AUX, Bluetooth |
 | Small speaker package | 595 DKK | 2× 10" Alto, all cables, Bluetooth |
 | Large speaker package | 995 DKK | 2× 12" EV, all cables, Bluetooth |
-| Soundboks 4 | 795 DKK | Battery-powered, charger, AUX, Bluetooth |
+| Soundboks 4 | 695 DKK | Battery-powered, charger, AUX, Bluetooth |
 | Light package | 495 DKK | 2 coloured LED lamps, centre effect, stand |
 
 **A weekend means collect Friday, return Monday.** You get the equipment for three days at the price of one.

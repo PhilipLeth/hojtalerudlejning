@@ -20,8 +20,8 @@ describe("Products data", () => {
     expect(speakers.find((s) => s.id === "party")!.price).toBe(595);
   });
 
-  it("soundboks mix is 795 kr", () => {
-    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(795);
+  it("soundboks is 695 kr (sat ned 100 kr 10. sept 2026 — solgte ikke til 795)", () => {
+    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(695);
   });
 
   it("festival speaker is 995 kr (højtaler 30-50, prisstigning 25. aug 2026)", () => {

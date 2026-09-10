@@ -164,7 +164,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan jeg leje en højtaler uden strøm?",
       a:
-        "Ja. Mackie Thump GO (395 kr) og Soundboks 4 (795 kr) er batteridrevne med op til 12 timers spilletid, så de " +
+        "Ja. Mackie Thump GO (395 kr) og Soundboks 4 (695 kr) er batteridrevne med op til 12 timers spilletid, så de " +
         "kan bruges i parken, på stranden eller i baggården, hvor der ikke er en stikkontakt.",
     },
     {
@@ -253,7 +253,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan vi holde festen udenfor, hvor der ikke er strøm?",
       a:
-        "Ja. Mackie Thump GO (395 kr) og Soundboks 4 (795 kr) kører på batteri i op til 12 timer. De resterende " +
+        "Ja. Mackie Thump GO (395 kr) og Soundboks 4 (695 kr) kører på batteri i op til 12 timer. De resterende " +
         "pakker kræver en stikkontakt.",
     },
     {
@@ -515,7 +515,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Can I rent a speaker that works without power?",
       a:
-        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (795 kr) run on battery for up to 12 hours, so they work " +
+        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (695 kr) run on battery for up to 12 hours, so they work " +
         "in the park, on the beach or in a courtyard with no socket.",
     },
     {
@@ -736,7 +736,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Can I rent a speaker that works without power?",
       a:
-        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (795 kr) run on battery for up to 12 hours, so they " +
+        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (695 kr) run on battery for up to 12 hours, so they " +
         "work in the park, on the beach or in a courtyard with no power outlet.",
     },
     {

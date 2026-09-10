@@ -23,13 +23,13 @@ A Soundboks is designed for outdoor use on battery. That sounds clever in theory
 
 **The battery dies.** A Soundboks typically lasts 4-8 hours depending on volume and temperature. Turn it up — and you will, because it is a party — and the battery can run out after a couple of hours. Picture it: it is 11 PM, the evening is at its peak, and the music stops. That is exactly what happened to Frederik Scharling, the founder of Lejhøjtaler.dk, when he borrowed one for a birthday party. The battery died after 20 minutes.
 
-**The price adds up.** A new Soundboks costs over 6.000 DKK. You can [rent a Soundboks 4 from us for 795 DKK](/en/soundboks-4) for a whole weekend if that is what you want — but for the same money you can have two speakers and more sound.
+**The price adds up.** A new Soundboks costs over 6.000 DKK. You can [rent a Soundboks 4 from us for 695 DKK](/en/soundboks-4) for a whole weekend if that is what you want — but for the same money you can have two speakers and more sound.
 
 **The sound does not scale.** A Soundboks is fine for a small gathering in the park. But when the group grows to 30, 50 or 80 guests, it simply cannot keep up. You end up setting two or three of them out to get enough sound, and suddenly the price is astronomical.
 
 ## Our answer: professional sound from a wall socket
 
-At Lejhøjtaler.dk you can have either. If there will be no socket nearby, we have the [Mackie Thump GO at 395 DKK](/en/mackie-thump-go) and the [Soundboks 4 at 795 DKK](/en/soundboks-4) — both battery-powered with up to 12 hours of playtime. But if there is power, and there almost always is, a pair of powered speakers gives you more sound for the money.
+At Lejhøjtaler.dk you can have either. If there will be no socket nearby, we have the [Mackie Thump GO at 395 DKK](/en/mackie-thump-go) and the [Soundboks 4 at 695 DKK](/en/soundboks-4) — both battery-powered with up to 12 hours of playtime. But if there is power, and there almost always is, a pair of powered speakers gives you more sound for the money.
 
 That means:
 
@@ -41,7 +41,7 @@ That means:
 
 Prices start at **395 DKK** for the Mackie Thump GO and **595 DKK** for the small speaker package with every cable included. No hidden fees, and the price is the same for 1 to 5 days. You can pay by card online or when you collect.
 
-For comparison, a Soundboks 4 from us is 795 DKK for the weekend. You get one battery-powered speaker — free of cables, but without the stereo width two speakers give you.
+For comparison, a Soundboks 4 from us is 695 DKK for the weekend. You get one battery-powered speaker — free of cables, but without the stereo width two speakers give you.
 
 ## Collection or delivery in Copenhagen
 

@@ -6,17 +6,17 @@ import LivePrice from "@/components/LivePrice";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej en Soundboks i København | Soundboks 4 fra 795 kr | Lejhøjtaler.dk",
+  title: "Lej en Soundboks i København | Soundboks 4 fra 695 kr | Lejhøjtaler.dk",
   description:
-    "Lej en Soundboks i København — Soundboks 4 fra 795 kr for en hel weekend. Batteridrevet med kraftig bas, intet depositum. Book online, betal ved afhentning.",
+    "Lej en Soundboks i København — Soundboks 4 fra 695 kr for en hel weekend. Batteridrevet med kraftig bas, intet depositum. Book online, betal ved afhentning.",
   keywords: ["lej soundboks", "lej en soundboks", "soundboks leje", "leje af soundboks", "soundboks udlejning københavn", "lej soundbox"],
   alternates: {
     canonical: "https://lejhojtaler.dk/soundboks-4",
     languages: localeAlternates("/soundboks-4"),
   },
   openGraph: {
-    title: "Lej en Soundboks i København | Fra 795 kr",
-    description: "Lej en Soundboks i København fra 795 kr/weekend. Intet depositum. Book online.",
+    title: "Lej en Soundboks i København | Fra 695 kr",
+    description: "Lej en Soundboks i København fra 695 kr/weekend. Intet depositum. Book online.",
     url: "https://lejhojtaler.dk/soundboks-4",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -31,7 +31,7 @@ export default function Soundboks4Page() {
       <ProductLanding
         slug="soundboks-4"
         name="Soundboks 4"
-        price={795}
+        price={695}
         headline="Lej en Soundboks i København"
         sub="Soundboks 4 — batteridrevet med kraftig bas, ingen strøm nødvendig. Intet depositum: du betaler først, når du henter."
         weekendAvailability
