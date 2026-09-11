@@ -211,12 +211,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/en/festpakke-lydmand</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en/festpakke-stor</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en/festtelt-lys</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/firmaevent-lydmand</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -296,6 +306,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/en/lydmand</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en/lys-pakke</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -352,6 +367,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en/stemningslys</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/stor-fest-lydmand</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -416,6 +436,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/festpakke-lydmand</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/festpakke-stor</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -427,6 +452,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/filmaften</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/firmaevent-lydmand</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -542,6 +572,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/lydanlaeg</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/lydmand</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -662,6 +697,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/stemningslys</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/stor-fest-lydmand</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

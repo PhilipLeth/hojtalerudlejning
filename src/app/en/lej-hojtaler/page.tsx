@@ -3,7 +3,7 @@ import Link from "next/link";
 import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import BundleGrid from "@/components/BundleGrid";
-import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER, startPrisDkk } from "@/lib/products";
+import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER, LYDMAND_PAKKER, startPrisDkk } from "@/lib/products";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
@@ -107,6 +107,13 @@ export default function Page() {
           eyebrow="For the occasion"
           title="Packages built for what you are holding"
           subtitle="The same equipment, combined for what has to happen: speeches at the wedding, bass at the company party, battery when there is no power."
+        />
+        <BundleGrid
+          locale="en"
+          ids={LYDMAND_PAKKER}
+          eyebrow="With a sound engineer"
+          title="We arrive, set up and run the sound"
+          subtitle="AV technician for 4 hours, with delivery, setup and collection included. For the party where none of you has to stand at the mixer."
         />
 
         <SpeakerCompare locale="en" bookLinks="booking" />

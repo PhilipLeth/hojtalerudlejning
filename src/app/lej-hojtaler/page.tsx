@@ -3,7 +3,7 @@ import Link from "next/link";
 import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import BundleGrid from "@/components/BundleGrid";
-import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER, startPrisKr } from "@/lib/products";
+import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER, LYDMAND_PAKKER, startPrisKr } from "@/lib/products";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
@@ -109,6 +109,12 @@ export default function LejHojtalerPage() {
           eyebrow="Til anledningen"
           title="Pakker bygget til det du skal holde"
           subtitle="Samme udstyr, sat sammen efter hvad der skal ske: taler til brylluppet, bas til firmafesten, batteri når der ikke er strøm."
+        />
+        <BundleGrid
+          ids={LYDMAND_PAKKER}
+          eyebrow="Med lydmand"
+          title="Vi kommer, sætter op og styrer lyden"
+          subtitle="AV-tekniker i 4 timer, og levering, opsætning og afhentning er med i prisen. Til festen hvor ingen af jer skal stå ved mixeren."
         />
 
         <SpeakerCompare bookLinks="booking" />

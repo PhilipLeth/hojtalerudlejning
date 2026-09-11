@@ -312,7 +312,9 @@ describe("action=edit_order i /api/bookings-update", () => {
   });
 
   it("holder kørsel, faktura og ledighed i sync med de nye varer", () => {
-    expect(src).toContain("booking.deliveryOptionId = kørsel ?? null");
+    // Pakker med lydmand har kørslen i prisen — den må ikke falde af ordren ved en rettelse
+    expect(src).toContain("booking.deliveryOptionId = kørsel ?? pakkeKørsel ?? null");
+    expect(src).toContain("bundleIncludesDelivery(");
     expect(src).toContain("booking.invoice.amount = order.total");
     expect(src).toContain("if (varerRettet) await nulstilBookingIndex");
   });

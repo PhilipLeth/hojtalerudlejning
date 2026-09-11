@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice } from "@/lib/products";
+import { speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice, bundleIncludesDelivery, LYDMAND_PAKKER, KATEGORI_PAKKER, DELIVERY_ADDON_IDS } from "@/lib/products";
 import { stockItems } from "@/lib/stock";
 import { mergeAddonsForTest } from "@/lib/useProducts";
 
@@ -249,7 +249,8 @@ describe("Addons data", () => {
     // sit eget — mixerne fik deres genereret efter husstilen 25. august 2026.
     const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge"];
     for (const a of addons) {
-      if (udenFoto.includes(a.id) || a.intern || a.ydelse) {
+      if (a.ydelse) continue; // en ydelse må have et foto (lydmand har), men skal ikke
+      if (udenFoto.includes(a.id) || a.intern) {
         expect(a.image).toBeNull();
       } else {
         expect(a.image).toMatch(/^\/images\/product-.+\.(webp|svg)$/);
@@ -260,7 +261,8 @@ describe("Addons data", () => {
   it("lydmand 1.000 kr pr. time er en kundevendt ydelse, faktureringsgebyr 100 kr en intern vare (11. sept 2026)", () => {
     const lydmand = addons.find((a) => a.id === "lydmand");
     const gebyr = addons.find((a) => a.id === "faktureringsgebyr");
-    expect(lydmand).toMatchObject({ price: 1000, ydelse: true, image: null, priceUnit: { da: "kr/time", en: "DKK/hour" } });
+    expect(lydmand).toMatchObject({ price: 1000, ydelse: true, page: "/lydmand", image: "/images/product-lydmand.webp", priceUnit: { da: "kr/time", en: "DKK/hour" } });
+    expect(addons.find((a) => a.id === "lydmand_4t")).toMatchObject({ price: 4000, ydelse: true, page: "/lydmand" });
     expect(lydmand?.intern).toBeFalsy();
     expect(lydmand?.da.desc).toMatch(/pr\. time/);
     expect(gebyr).toMatchObject({ price: 100, intern: true, image: null });
@@ -277,6 +279,21 @@ describe("Addons data", () => {
     const gammelt = addons.map((a) => (a.intern ? { ...a, intern: undefined } : a));
     const flettet = mergeAddonsForTest(gammelt);
     expect(flettet.find((a) => a.id === "faktureringsgebyr")?.intern).toBe(true);
+  });
+
+  it("pakkerne med lydmand har kørslen og de 4 timer med — og bookingen kan se det", () => {
+    for (const id of LYDMAND_PAKKER) {
+      const p = rentalProducts.find((r) => r.id === id)!;
+      const dele = p.bundle!.parts.map((x) => x.productId);
+      expect(dele, `${id} mangler levering`).toContain("levering_begge");
+      expect(dele, `${id} mangler lydmand`).toContain("lydmand_4t");
+      expect(bundleIncludesDelivery(p)).toBe("levering_begge");
+      // Kørslen må ikke også kunne vælges som tilvalg — så betales den to gange
+      for (const d of DELIVERY_ADDON_IDS) expect(p.allowedAddons, `${id} tilbyder ${d} oveni`).not.toContain(d);
+      expect(KATEGORI_PAKKER["/lej-hojtaler"]).toContain(id);
+    }
+    expect(bundleIncludesDelivery(rentalProducts.find((r) => r.id === "pakke_fest_lille"))).toBeNull();
+    expect(bundleIncludesDelivery(undefined)).toBeNull();
   });
 
   it("all addons have da and en text", () => {

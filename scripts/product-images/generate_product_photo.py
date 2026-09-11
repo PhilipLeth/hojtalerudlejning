@@ -75,6 +75,19 @@ MOTIVER = {
             "not a recording console. " + STIL
         ),
     },
+    # Lydmanden er en ydelse, ikke en maskine — så motivet er hans værktøj:
+    # mixeren, hovedtelefonerne og mikrofonen, stillet op som ét produktfoto.
+    "lydmand": {
+        "fil": "product-lydmand.png",
+        "prompt": (
+            "A compact matte black live-sound mixer lying flat with a row of "
+            "small round knobs and short faders, a pair of closed-back black "
+            "studio headphones resting on its left corner, and a black handheld "
+            "wireless microphone lying diagonally in front of it. The three "
+            "objects arranged tightly together as one product group, nothing "
+            "else in the frame, no people, no hands, no cables. " + STIL
+        ),
+    },
 }
 
 logger = logging.getLogger("produktfoto")

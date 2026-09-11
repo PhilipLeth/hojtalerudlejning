@@ -424,17 +424,38 @@ export const addons: Addon[] = [
   // admin (Ret ordre) når timerne er aftalt.
   {
     id: "lydmand",
+    page: "/lydmand",
     price: 1000,
-    image: null,
+    image: "/images/product-lydmand.webp",
     ydelse: true,
     priceUnit: { da: "kr/time", en: "DKK/hour" },
+    contents: ["AV-tekniker på stedet", "Opsætning og lydprøve", "Styrer lyd og mikrofoner under festen"],
     da: {
       label: "Lydmand",
-      desc: "Lydtekniker på stedet, der styrer lyden under festen — 1.000 kr pr. time. Skriv antal timer i kommentaren, så retter vi ordren.",
+      desc: "AV-tekniker på stedet, der styrer lyden under festen — 1.000 kr pr. time. Skriv antal timer i kommentaren, så retter vi ordren.",
     },
     en: {
       label: "Sound engineer",
-      desc: "Sound technician on site running the sound during your event — DKK 1,000 per hour. Tell us how many hours in the comment and we adjust the order.",
+      desc: "AV technician on site running the sound during your event — DKK 1,000 per hour. Tell us how many hours in the comment and we adjust the order.",
+    },
+  },
+  // 4 timer som én vare: det er den blok, pakkerne med lydmand er bygget af,
+  // og den kunden vælger, når festen skal have en tekniker hele aftenen.
+  {
+    id: "lydmand_4t",
+    page: "/lydmand",
+    price: 4000,
+    image: "/images/product-lydmand.webp",
+    ydelse: true,
+    priceUnit: { da: "kr/4 timer", en: "DKK/4 hours" },
+    contents: ["AV-tekniker på stedet i 4 timer", "Opsætning og lydprøve", "Styrer lyd og mikrofoner under festen"],
+    da: {
+      label: "Lydmand, 4 timer",
+      desc: "AV-tekniker på stedet i 4 timer — opsætning, lydprøve og styring af lyden under festen",
+    },
+    en: {
+      label: "Sound engineer, 4 hours",
+      desc: "AV technician on site for 4 hours — setup, sound check and running the sound during the event",
     },
   },
   // ── Faktureringsgebyr: intern vare, lægges kun på fra admin.
@@ -504,6 +525,19 @@ export function isDeliveryAddon(id: string): boolean {
   return (DELIVERY_ADDON_IDS as readonly string[]).includes(id) || LEGACY_DELIVERY_IDS.includes(id);
 }
 
+/**
+ * Pakker hvor kørslen ER en del af prisen (pakkerne med lydmand): teknikeren
+ * kommer sammen med grejet, sætter op og tager det med hjem igen. Bookingen
+ * låser derfor leveringen i stedet for at spørge, om kunden henter selv, og
+ * serveren holder deliveryOptionId på ordren selv om tilvalget ikke står der.
+ */
+export function bundleIncludesDelivery(
+  p: { bundle?: ProductBundle } | null | undefined,
+): DeliveryAddonId | null {
+  const part = p?.bundle?.parts?.find((x) => (DELIVERY_ADDON_IDS as readonly string[]).includes(x.productId));
+  return part ? (part.productId as DeliveryAddonId) : null;
+}
+
 /** Hvilke veje vi kører på en given ordre — bruges i admin og på lejesedlen */
 export function deliveryDirections(id: string): { out: boolean; back: boolean } {
   if (id === "levering_ud") return { out: true, back: false };
@@ -514,6 +548,87 @@ export function deliveryDirections(id: string): { out: boolean; back: boolean } 
 
 /** Standalone rental products (lys, av) — bookable via /?product=ID#book */
 export const rentalProducts: RentalProduct[] = [
+  // ── Pakker med lydmand (11. sept 2026) ──
+  // AV-tekniker med på dagen. Levering, opsætning og afhentning er ALTID med:
+  // lydmanden kommer sammen med grejet, sætter op og tager det med hjem igen.
+  // Delen levering_begge ligger derfor i pakken, og bookingen låser kørslen
+  // (bundleIncludesDelivery) i stedet for at spørge om kunden henter selv.
+  {
+    id: "pakke_lydmand_fest",
+    page: "/festpakke-lydmand",
+    category: "lyd",
+    price: 5995,
+    image: "/images/product-pakke-lydmand-fest.webp",
+    name_da: "Festpakke med lydmand",
+    name_en: "Party package with sound engineer",
+    desc_da: "Stor højtalerpakke + lys-pakke + lydmand i 4 timer. Leveret, sat op og hentet igen — spar 290 kr.",
+    desc_en: "Large speaker package + light package + sound engineer for 4 hours. Delivered, set up and collected — save 290 DKK.",
+    contents: ['2× EV 12" højtalere', "Lys-pakke (2 lamper + centereffekt)", "Lydmand i 4 timer", "Levering, opsætning og afhentning"],
+    allowedAddons: ["subwoofer", "rog", "mikrofon", "lydmand"],
+    bundle: {
+      discount: 290,
+      usecase_da: "Festen hvor I ikke selv skal røre en knap — op til 100 pers. Vi kommer, sætter op, styrer lyden og pakker sammen.",
+      usecase_en: "The party where you never touch a knob — up to 100 people. We arrive, set up, run the sound and pack down.",
+      parts: [
+        { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
+        { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
+        { productId: "lydmand_4t", label_da: "Lydmand, 4 timer", label_en: "Sound engineer, 4 hours", price: 4000 },
+        { productId: "levering_begge", label_da: "Levering, opsætning + afhentning", label_en: "Delivery, setup + collection", price: 795 },
+      ],
+    },
+  },
+  {
+    id: "pakke_lydmand_firma",
+    page: "/firmaevent-lydmand",
+    category: "lyd",
+    price: 6195,
+    image: "/images/product-pakke-lydmand-firma.webp",
+    name_da: "Firmaevent med lydmand",
+    name_en: "Corporate event with sound engineer",
+    desc_da: "Stor højtalerpakke + mixer + trådløs mikrofon + lydmand i 4 timer. Taler, musik og en tekniker der styrer det hele — spar 285 kr.",
+    desc_en: "Large speaker package + mixer + wireless mic + sound engineer for 4 hours. Speeches, music and a technician running it all — save 285 DKK.",
+    contents: ['2× EV 12" højtalere', "Yamaha-mixer med effekter", "Trådløs mikrofon", "Lydmand i 4 timer", "Levering, opsætning og afhentning"],
+    allowedAddons: ["subwoofer", "mikrofon", "lys", "lydmand"],
+    bundle: {
+      discount: 285,
+      usecase_da: "Firmafest, reception eller jubilæum med taler — op til 100 pers. Mikrofonen virker, når direktøren rejser sig, fordi der står én og passer den.",
+      usecase_en: "Company party, reception or anniversary with speeches — up to 100 people. The mic works when the boss stands up, because someone is there to make sure.",
+      parts: [
+        { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
+        { productId: "mixer_stor", label_da: "Mixer stor", label_en: "Large mixer", price: 395 },
+        { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 295 },
+        { productId: "lydmand_4t", label_da: "Lydmand, 4 timer", label_en: "Sound engineer, 4 hours", price: 4000 },
+        { productId: "levering_begge", label_da: "Levering, opsætning + afhentning", label_en: "Delivery, setup + collection", price: 795 },
+      ],
+    },
+  },
+  {
+    id: "pakke_lydmand_stor",
+    page: "/stor-fest-lydmand",
+    category: "lyd",
+    price: 6995,
+    image: "/images/product-pakke-lydmand-stor.webp",
+    name_da: "Stor fest med lydmand",
+    name_en: "Big party with sound engineer",
+    desc_da: "Stor højtalerpakke + subwoofer + stativer + lys-pakke + røg + lydmand i 4 timer. Fuldt anlæg med tekniker — spar 280 kr.",
+    desc_en: "Large speaker package + subwoofer + stands + light package + fog + sound engineer for 4 hours. Full rig with a technician — save 280 DKK.",
+    contents: ['2× EV 12" højtalere', 'Subwoofer 12"', "Højtalerstativer", "Lys-pakke + røgmaskine", "Lydmand i 4 timer", "Levering, opsætning og afhentning"],
+    allowedAddons: ["mikrofon", "mixer_stor", "lydmand"],
+    bundle: {
+      discount: 280,
+      usecase_da: "Den store fest med bas, lys og røg — op til 150 pers. Lydmanden sætter det hele op og holder dansegulvet kørende.",
+      usecase_en: "The big party with bass, lights and fog — up to 150 people. The sound engineer sets it all up and keeps the dancefloor going.",
+      parts: [
+        { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
+        { productId: "subwoofer", label_da: 'Subwoofer 12"', label_en: 'Subwoofer 12"', price: 295 },
+        { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 100 },
+        { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
+        { productId: "rog", label_da: "Røgmaskine", label_en: "Fog machine", price: 595 },
+        { productId: "lydmand_4t", label_da: "Lydmand, 4 timer", label_en: "Sound engineer, 4 hours", price: 4000 },
+        { productId: "levering_begge", label_da: "Levering, opsætning + afhentning", label_en: "Delivery, setup + collection", price: 795 },
+      ],
+    },
+  },
   // Festpakke-bundles (lyd + lys) — ikke almindelige produkter; se BundleGrid.
   // Levering/opsætning er bevidst IKKE med i pakken — det kan tilvælges i booking.
   {
@@ -1192,6 +1307,9 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
     "pakke_firmafest",
     "pakke_udendors",
     "pakke_student",
+    "pakke_lydmand_fest",
+    "pakke_lydmand_firma",
+    "pakke_lydmand_stor",
   ],
   // Lyspakkerne bor på /lyspakker — landingssiden der rendrer fra denne liste.
   // /festlys viser dem OGSÅ i sit produktgitter, men kategorisiden er én.
@@ -1211,6 +1329,9 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
 
 /** Lejlighedspakkerne — vises under stigen på /lej-hojtaler */
 export const LYD_LEJLIGHEDSPAKKER = ["pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student"];
+
+/** Pakkerne med lydmand — vises samlet på /lej-hojtaler. Kørslen er med i alle tre. */
+export const LYDMAND_PAKKER = ["pakke_lydmand_fest", "pakke_lydmand_firma", "pakke_lydmand_stor"];
 
 /** AV-pakkerne — vises samlet på /av-udstyr */
 /** Lysshow-pakkerne — vises samlet på /lysshow */

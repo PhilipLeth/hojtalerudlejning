@@ -20,7 +20,7 @@
  *              rabat på udstyr vi mangler at købe) og overbooking-varslingen.
  */
 
-import { isBundleProduct, rentalProducts as defaultRentals } from "../../../src/lib/products";
+import { addons as defaultAddons, isBundleProduct, isDeliveryAddon, isServiceAddon, rentalProducts as defaultRentals } from "../../../src/lib/products";
 import { DEFAULT_INVENTORY, type LoadedBooking } from "./bookings";
 import { expandProductIds } from "./occupancy";
 
@@ -176,6 +176,9 @@ export function bundleSlots(
   let total = Infinity;
   let remaining = Infinity;
   for (const part of parts) {
+    // Kørsel og ydelser (lydmand) står ikke på en hylde — de må hverken
+    // begrænse pakken eller gøre den ubegrænset, fordi de mangler lagertal
+    if (isDeliveryAddon(part) || defaultAddons.some((a) => a.id === part && isServiceAddon(a))) continue;
     const stock = inventory[part];
     if (typeof stock !== "number") return null;
     total = Math.min(total, stock);

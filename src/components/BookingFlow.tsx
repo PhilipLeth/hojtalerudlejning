@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useCallback, useRef, FormEvent } from "re
 import { rapporterFejl } from "@/lib/errorReport";
 import { type Locale, t } from "@/lib/i18n";
 
-import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, isInternalAddon, isServiceAddon, DELIVERY_ADDON_IDS } from "@/lib/products";
+import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, isInternalAddon, isServiceAddon, bundleIncludesDelivery, DELIVERY_ADDON_IDS } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
 import CapacityBadge, { capacityLevel } from "@/components/CapacityBadge";
@@ -433,11 +433,14 @@ function DeliveryPicker({
   addressMissing,
   pickupDate,
   returnDate,
+  included = false,
   locale = "da",
 }: {
   options: Array<{ id: string; label: string; desc: string; price: number }>;
   value: string | null;
   onSelect: (id: string | null) => void;
+  /** Kørslen er en del af pakken — vis den som låst i stedet for som et valg */
+  included?: boolean;
   address: string;
   onAddressChange: (v: string) => void;
   addressMissing: boolean;
@@ -454,10 +457,9 @@ function DeliveryPicker({
   const selfLabel = locale === "en" ? "I pick up and return it myself" : "Jeg henter og afleverer selv";
   const selfDesc = `${pickupAddress} — ${locale === "en" ? "free" : "gratis"}`;
 
-  const rows: Array<{ id: string | null; label: string; desc: string; price: number }> = [
-    { id: null, label: selfLabel, desc: selfDesc, price: 0 },
-    ...options,
-  ];
+  const rows: Array<{ id: string | null; label: string; desc: string; price: number }> = included
+    ? [{ id: value, label: s.deliveryIncludedLabel, desc: s.deliveryIncludedDesc, price: 0 }]
+    : [{ id: null, label: selfLabel, desc: selfDesc, price: 0 }, ...options];
 
   return (
     <div className="glass rounded-2xl p-4">
@@ -467,7 +469,7 @@ function DeliveryPicker({
         </svg>
         <h3 className="text-base font-semibold">{s.deliveryTitle}</h3>
       </div>
-      <p className="mb-3 text-xs text-white/40">{s.deliveryDesc}</p>
+      {!included && <p className="mb-3 text-xs text-white/40">{s.deliveryDesc}</p>}
 
       <div className="space-y-2">
         {rows.map((o) => {
@@ -476,7 +478,9 @@ function DeliveryPicker({
             <div key={o.id ?? "selv"}>
               <button
                 type="button"
-                onClick={() => onSelect(o.id)}
+                disabled={included}
+                aria-disabled={included || undefined}
+                onClick={() => !included && onSelect(o.id)}
                 className={`flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left transition active:scale-[0.99] ${
                   selected ? "border-brand-500 bg-brand-500/10" : "border-white/10 bg-white/[0.03] hover:border-white/25"
                 }`}
@@ -493,7 +497,7 @@ function DeliveryPicker({
                   <p className="text-xs text-white/40">{o.desc}</p>
                 </div>
                 <p className={`shrink-0 text-sm font-bold ${o.price ? "text-brand-400" : "text-white/40"}`}>
-                  {o.price ? `+${o.price},-` : s.deliveryFree}
+                  {included ? s.deliveryIncluded : o.price ? `+${o.price},-` : s.deliveryFree}
                 </p>
               </button>
               {/* Henter kunden selv, skal det stå her hvornår døren er åben —
@@ -1004,8 +1008,11 @@ export default function BookingFlow({
     : null;
   const hasLights = selectedAddons.includes("lys");
   const DELIVERY_IDS: readonly string[] = DELIVERY_ADDON_IDS;
-  const hasDelivery = selectedAddons.some((id) => DELIVERY_IDS.includes(id));
-  const deliveryChoice = selectedAddons.find((id) => DELIVERY_IDS.includes(id)) ?? null;
+  // Pakker med lydmand har kørslen med i prisen: den står ikke som tilvalg
+  // (så den ikke betales to gange), men ordren får stadig deliveryOptionId
+  const includedDelivery = bundleIncludesDelivery(selectedRental);
+  const hasDelivery = !!includedDelivery || selectedAddons.some((id) => DELIVERY_IDS.includes(id));
+  const deliveryChoice = includedDelivery ?? selectedAddons.find((id) => DELIVERY_IDS.includes(id)) ?? null;
   // Kørsel uden adresse er ubrugelig — så ved vi ikke hvor vi skal hen
   const deliveryAddressMissing = hasDelivery && deliveryAddress.trim().length < 5;
 
@@ -1166,6 +1173,13 @@ export default function BookingFlow({
       }
     }
   }
+
+  // Er kørslen med i pakken, må et tidligere valgt kørsels-tilvalg ikke blive
+  // hængende fra et andet produkt — det ville lægge 495-795 kr oveni.
+  useEffect(() => {
+    if (!includedDelivery) return;
+    setSelectedAddons((prev) => (prev.some((id) => DELIVERY_IDS.includes(id)) ? prev.filter((id) => !DELIVERY_IDS.includes(id)) : prev));
+  }, [includedDelivery, DELIVERY_IDS]);
 
   function toggleAddon(id: string) {
     setSelectedAddons((prev) => {
@@ -2017,6 +2031,7 @@ export default function BookingFlow({
 
             <DeliveryPicker
               locale={locale}
+              included={!!includedDelivery}
               options={addons
                 .filter((a) => DELIVERY_IDS.includes(a.id))
                 .map((a) => ({ id: a.id, label: a.label, desc: a.desc, price: a.price }))}

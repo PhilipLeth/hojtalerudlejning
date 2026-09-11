@@ -13,7 +13,7 @@ import { paymentMail, sendOwnerMail } from "./_lib/ownerMail";
 
 import { requireAdmin } from "./_lib/adminAuth";
 import { loadPriceTable } from "./_lib/pricing";
-import { isDeliveryAddon } from "../../src/lib/products";
+import { bundleIncludesDelivery, isDeliveryAddon, rentalProducts as defaultRentals } from "../../src/lib/products";
 import {
   MAX_ORDER_TOTAL,
   legacyLinesOf,
@@ -513,7 +513,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         // afgør hvad bekræftelsesmailen skriver om hentested. Fjernes eller
         // skiftes tilvalget, skal feltet følge med.
         const kørsel = order.addonIds.find((id) => id && isDeliveryAddon(id));
-        booking.deliveryOptionId = kørsel ?? null;
+        // Pakker med lydmand har kørslen inde i prisen — så står den ikke som
+        // tilvalg, men ordren skal stadig vide, at vi kører
+        const pakkeKørsel = [order.speakerId, ...order.cartItems.map((c) => c.productId)]
+          .map((id) => bundleIncludesDelivery(defaultRentals.find((r) => r.id === id)))
+          .find((id) => id);
+        booking.deliveryOptionId = kørsel ?? pakkeKørsel ?? null;
 
         // Fakturaen lyder på ordrens beløb — ellers sender vi et rykkerbrev
         // på et tal, der ikke findes på ordren mere.

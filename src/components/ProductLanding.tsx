@@ -100,6 +100,18 @@ export interface ProductLandingProps {
    * produktet har et lagertal; ellers vises ingenting.
    */
   weekendAvailability?: boolean;
+  /**
+   * Prisenhed i stedet for "/weekend" — fx "/time" for lydmanden, eller "" for
+   * en pakke hvor kørslen er med og prisen derfor ikke er en weekendleje.
+   */
+  priceUnit?: string;
+  /** Sætningen i bunden, når "hent fredag, aflever mandag" ikke passer (ydelser, pakker med levering) */
+  ctaText?: string;
+  /**
+   * "extraOnly": kun faqExtra — de automatiske svar handler om weekendleje,
+   * afhentning og lejeperiode og passer ikke på en ydelse afregnet pr. time.
+   */
+  faqMode?: "auto" | "extraOnly";
   /** Sprog. Styrer sidens faste tekster, FAQ'en og hvor "se alle produkter" fører hen. */
   locale?: Locale;
   /** Optional extra section under product detail */
@@ -142,6 +154,9 @@ export default function ProductLanding({
   faqExtra,
   faqPhrase,
   weekendAvailability,
+  priceUnit,
+  ctaText,
+  faqMode = "auto",
   locale = "da",
   children,
 }: ProductLandingProps) {
@@ -155,7 +170,12 @@ export default function ProductLanding({
    */
   const paused = erPaaPause(productId);
   const cta = bookLabel ?? c.book(name);
-  const faq = buildProductFaq({ name, price, productId, phrase: faqPhrase, capacity: capacity?.label, extra: faqExtra, locale });
+  const faq =
+    faqMode === "extraOnly"
+      ? (faqExtra ?? [])
+      : buildProductFaq({ name, price, productId, phrase: faqPhrase, capacity: capacity?.label, extra: faqExtra, locale });
+  const enhed = priceUnit ?? c.perWeekend;
+  const bundtekst = ctaText ?? c.ctaText;
 
   // Product-schema med pris, lagerstatus og leveringspris (rich results i Google)
   const productLd = {
@@ -297,7 +317,7 @@ export default function ProductLanding({
                 <p className="mb-6 text-xl font-bold text-white/40">{c.pausedTitle}</p>
               ) : (
                 <p className="mb-6 text-3xl font-bold text-brand-400">
-                  <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" /><span className="text-lg font-normal text-white/40">{c.perWeekend}</span>
+                  <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" /><span className="text-lg font-normal text-white/40">{enhed}</span>
                 </p>
               )}
               <ul className="space-y-3 text-white/60">
@@ -334,7 +354,7 @@ export default function ProductLanding({
 
         {/* FAQ'en er bygget af prisen, lejeperioden og afhentningen — svar på
             spørgsmål om noget, der ikke kan lejes. Den udgår på pausede sider. */}
-        {!paused && <FaqSection items={faq} title={c.faqTitle(name)} />}
+        {!paused && faq.length > 0 && <FaqSection items={faq} title={c.faqTitle(name)} />}
 
         <GoogleReviews />
 
@@ -348,7 +368,7 @@ export default function ProductLanding({
           ) : (
             <>
               <p className="mx-auto mt-4 max-w-md text-white/50">
-                {c.ctaText} <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" />{c.perWeekend}.
+                {bundtekst} <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" />{enhed}.
               </p>
               <a
                 href={bookHref}

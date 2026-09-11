@@ -7,6 +7,7 @@ import {
   KATEGORI_PAKKER,
   LADDER_FEST,
   LYD_LEJLIGHEDSPAKKER,
+  LYDMAND_PAKKER,
   OCCASION_PACKAGES,
   addons,
   bundleListPrice,
@@ -153,6 +154,7 @@ describe("Pakkestigen", () => {
           (kilde.includes("FEST_LADDER_IDS") && FEST_LADDER_IDS.includes(id)) ||
           (kilde.includes("LYD_LEJLIGHEDSPAKKER") && LYD_LEJLIGHEDSPAKKER.includes(id)) ||
           (kilde.includes("AV_PAKKER") && AV_PAKKER.includes(id)) ||
+          (kilde.includes("LYDMAND_PAKKER") && LYDMAND_PAKKER.includes(id)) ||
           (kilde.includes("LYSSHOW_PAKKER") && LYSSHOW_PAKKER.includes(id));
         expect(nævnt, `${id} nævnes ikke på ${side}`).toBe(true);
       }

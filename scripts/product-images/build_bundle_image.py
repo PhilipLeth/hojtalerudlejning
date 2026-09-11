@@ -88,6 +88,23 @@ PAKKER: dict[str, list[tuple[str, float, float, float, float]]] = {
         ("product-lys.png", 0.44, 0.78, 0.74, 0.09),
         ("product-lyseffekt.png", 0.28, 0.83, 0.99, 0.09),
     ],
+    # Pakkerne med lydmand (11. sept 2026): højtalerne bagerst, lydmandens
+    # mixer forrest — det er teknikeren, der adskiller dem fra festpakkerne.
+    "product-pakke-lydmand-fest": [
+        ("product-festival.png", 0.50, 0.30, 0.86, 0.09),
+        ("product-lys.png", 0.36, 0.74, 0.72, 0.09),
+        ("product-lydmand.png", 0.36, 0.76, 0.99, 0.09),
+    ],
+    "product-pakke-lydmand-firma": [
+        ("product-festival.png", 0.50, 0.30, 0.86, 0.09),
+        ("product-mikrofon.png", 0.24, 0.80, 0.70, 0.09),
+        ("product-lydmand.png", 0.38, 0.75, 0.99, 0.09),
+    ],
+    "product-pakke-lydmand-stor": [
+        ("product-festival.png", 0.50, 0.30, 0.86, 0.09),
+        ("product-rog.png", 0.34, 0.76, 0.70, 0.09),
+        ("product-lydmand.png", 0.38, 0.75, 0.99, 0.09),
+    ],
 }
 
 

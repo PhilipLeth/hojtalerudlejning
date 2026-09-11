@@ -122,8 +122,8 @@ export function buildSearchIndex(catalog: Catalog, locale: Locale): Entry[] {
     }
     if (!a.page) continue;
     add(entry(
-      { href: localizedHref(a.page, locale), title: t.label, hint: t.desc, price: a.price, kind: "produkt" },
-      `${a.contents?.join(" ") ?? ""} ${a.da.label} ${a.en.label}`,
+      { href: localizedHref(a.page, locale), title: t.label, hint: t.desc, price: a.price, kind: "produkt", priceUnit: a.priceUnit?.[locale] },
+      `${a.contents?.join(" ") ?? ""} ${a.da.label} ${a.en.label}${a.ydelse ? " lydtekniker tekniker sound technician" : ""}`,
     ));
   }
 

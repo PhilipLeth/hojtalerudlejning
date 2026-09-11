@@ -2758,10 +2758,10 @@
       "title": "Nyt produkt: tekniker på stedet",
       "description": "2.500 kr for 4 timer, 500 kr pr. ekstra time. Højeste dækningsbidrag i kataloget, nul lagerplads. Tilvalg på alle pakker fra 150 gæster og op.",
       "priority": "medium",
-      "status": "todo",
+      "status": "done",
       "epic": "epic-aov",
       "story": "aov-5",
-      "note": "11. sept 2026: 'lydmand' 1.000 kr pr. time (inkl. moms) er et kundevendt tilvalg med ydelse:true — kan vælges i bookingen på ALLE produkter (uanset allowedAddons), findes i sitets søgning (fører til /#book, pris vist som kr/time), men står ikke på lageret og har intet foto. Kunden vælger én time; timerne rettes i admin (Ret ordre). 'faktureringsgebyr' 100 kr er intern:true — kun fra admin, ikke i booking, søgning, annoncer, udsalg eller lager. Den oprindelige 4-timers teknikerpakke til 2.500 kr er ikke bygget."
+      "note": "11. sept 2026: Lydmand (AV-tekniker) er bygget som ydelse i kataloget. TILVALG: 'lydmand' 1.000 kr/time og 'lydmand_4t' 4.000 kr/4 timer (ydelse:true — ingen lager, kan vælges på alle produkter uanset allowedAddons, findes i søgningen med kr/time). SIDE: /lydmand (da+en) med eget FAQ (faqMode='extraOnly', priceUnit='/time'). PAKKER (LYDMAND_PAKKER, kategoriside /lej-hojtaler): pakke_lydmand_fest 5.995 (/festpakke-lydmand), pakke_lydmand_firma 6.195 (/firmaevent-lydmand), pakke_lydmand_stor 6.995 (/stor-fest-lydmand) — alle med lydmand_4t OG levering_begge som dele. KØRSEL LÅST: bundleIncludesDelivery() i products.ts; BookingFlow viser DeliveryPicker som 'inkluderet' (ingen 'hent selv', ingen +795), adressen kræves stadig, deliveryOptionId sendes med uden at leveringen står som tilvalg; bookings-update bevarer deliveryOptionId ved Ret ordre; bundleSlots springer kørsel og ydelser over. BILLEDER: product-lydmand (Runway, motiv i generate_product_photo.py) + tre sammensatte pakkebilleder (build_bundle_image.py). INTERN: 'faktureringsgebyr' 100 kr (intern:true) lægges kun på fra admin. Den oprindelige idé (2.500 kr/4 timer) er erstattet af 1.000 kr/time."
     },
     {
       "id": "lager-bekraeft-antal",

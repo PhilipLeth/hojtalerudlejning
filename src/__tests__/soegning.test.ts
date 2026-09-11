@@ -29,10 +29,10 @@ const titler = (q: string, index = da) => search(index, q).map((r) => r.title);
 const stier = (q: string, index = da) => search(index, q).map((r) => r.href);
 
 describe("Søgning", () => {
-  it("finder lydmanden, selv om ydelsen ikke har en produktside", () => {
+  it("finder lydmanden og viser prisen pr. time, ikke pr. weekend", () => {
     const traef = search(da, "lydmand");
-    expect(traef[0]).toMatchObject({ title: "Lydmand", href: "/#book", price: 1000, priceUnit: "kr/time" });
-    expect(search(en, "sound engineer")[0]).toMatchObject({ href: "/en#book", priceUnit: "DKK/hour" });
+    expect(traef[0]).toMatchObject({ title: "Lydmand", href: "/lydmand", price: 1000, priceUnit: "kr/time" });
+    expect(search(en, "sound engineer")[0]).toMatchObject({ href: "/en/lydmand", priceUnit: "DKK/hour" });
     // Faktureringsgebyret er intern og skal ikke kunne findes
     expect(search(da, "faktureringsgebyr")).toHaveLength(0);
   });
