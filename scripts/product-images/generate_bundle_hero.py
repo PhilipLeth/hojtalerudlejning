@@ -45,15 +45,17 @@ PAKKER: dict[str, dict] = {
     "product-pakke-diskolys": {
         "dele": ["product-discokugle.png", "product-lyseffekt.png"],
         "opstilling": (
-            "The mirror ball hangs from its stand at the left, slowly turning, with its own spotlight on the "
-            "floor throwing sharp dots of light across the backdrop. The LED par light stands to the right, "
+            "The mirror ball hangs from its stand at the left, slowly turning, its pin spot on the floor in front of it "
+            "tilted up and lighting the ball itself, so sharp dots of light scatter across the backdrop and floor. "
+            "The LED par light stands to the right, "
             "switched on, washing the floor in deep magenta and blue."
         ),
     },
     "product-pakke-teenagefest": {
         "dele": ["product-discokugle.png", "product-lyseffekt.png", "product-lyskaeder-farvet.png"],
         "opstilling": (
-            "The mirror ball on its stand fills the left of the frame with its spotlight scattering dots, the "
+            "The mirror ball on its stand fills the left of the frame, its pin spot aimed up at the ball so it "
+            "scatters dots over backdrop and floor, the "
             "LED par light stands at the right throwing green and violet across the floor, and the string of "
             "coloured festoon bulbs is draped in a low swag across the foreground, lit warm."
         ),
@@ -101,7 +103,7 @@ PAKKER: dict[str, dict] = {
             "light climb the backdrop and blend into one warm glow. The string of warm white festoon bulbs "
             "swags in two gentle loops across the top of the frame, every bulb glowing. The mirror ball hangs "
             "from its stand slightly right of centre, a little above the uplights, slowly turning, and its own "
-            "small spotlight scatters a fine constellation of soft dots over the backdrop and the floor. "
+            "small pin spot, tilted up at the ball, scatters a fine constellation of soft dots over the backdrop and the floor. "
             "No remote controls, no loose accessories on the floor. The mood is calm, warm and intimate — a "
             "lounge or wedding reception rather than a dance floor."
         ),
@@ -110,7 +112,8 @@ PAKKER: dict[str, dict] = {
         "dele": ["product-lys.png", "product-lyseffekt.png", "product-discokugle.png"],
         "opstilling": (
             "The light bar on its stand dominates the centre, all its heads lit and throwing coloured beams "
-            "outward. The mirror ball on its stand is behind at the right, scattering dots, and the single "
+            "outward. The mirror ball on its stand is behind at the right, its pin spot aimed up at the ball so it "
+            "scatters dots over the backdrop, and the single "
             "LED par light sits low at the left, uplighting the floor."
         ),
     },
@@ -130,6 +133,27 @@ STIL = (
     "Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no people, "
     "no laser beams, no confetti. Square framing with the group centred and generous margin around it."
 )
+
+
+# Facts om VORES eksemplarer, som modellen ellers finder på — samme idé som
+# grej_detaljer i gallery/scenes.json. Sættes ALLERSIDST i prompten: det der
+# står sidst, vejer tungest. 11. sep 2026 hang discokuglen mørk i alle tre
+# pakkebilleder, mens spottet lyste på gulvet ved siden af den.
+GREJ_DETALJER: dict[str, str] = {
+    "product-discokugle.png": (
+        "The mirror ball is lit the classic way: its small pin spot stands on the floor a little in front of and "
+        "below the ball, tilted up so its narrow beam lands squarely ON the mirror ball — never on the floor, the "
+        "backdrop or away from it. The lit ball throws the classic effect: hundreds of small sharp dots of light "
+        "scattered across the backdrop and the floor all around it, and the ball itself glitters."
+    ),
+    "product-uplight-4.png": (
+        "Each uplight has exactly seven lenses on its face: six in a ring around one centre lens. Not more, not fewer."
+    ),
+    "product-lyseffekt.png": (
+        "The LED par light has exactly six lenses on its face, arranged in a ring with no centre lens, and two "
+        "small handles on top."
+    ),
+}
 
 
 def noegle() -> str:
@@ -159,7 +183,9 @@ def find_billede(node) -> str | None:
 
 
 def generer(navn: str, spec: dict, api: str) -> bytes:
-    prompt = STIL.format(opstilling=spec["opstilling"])
+    # Grej-facts allersidst — se GREJ_DETALJER.
+    detaljer = " ".join(GREJ_DETALJER[d] for d in spec["dele"] if d in GREJ_DETALJER)
+    prompt = STIL.format(opstilling=spec["opstilling"]) + (" " + detaljer if detaljer else "")
     krop = [{"type": "text", "text": prompt}]
     for fil in spec["dele"]:
         sti = os.path.join(BILLEDER, fil)
