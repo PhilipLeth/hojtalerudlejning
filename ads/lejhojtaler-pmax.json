@@ -719,7 +719,7 @@
     }
   ],
   "logos": {
-    "square": "ads/assets/logo.jpg",
-    "landscape": "ads/assets/logo-wide.jpg"
+    "square": "ads/assets/logo-v2-1x1.png",
+    "landscape": "ads/assets/logo-v2-4x1.png"
   }
 }
