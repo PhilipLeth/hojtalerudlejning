@@ -91,6 +91,18 @@ PAKKER: dict[str, dict] = {
             "low-lying fog rolls forward across the floor between the speakers."
         ),
     },
+    # Stemningslys (11. sept 2026): den eneste lys-pakke, der stadig stod med et
+    # gult studiefoto mellem fem mørke, tændte pakkebilleder på /lyspakker.
+    "product-pakke-stemningslys": {
+        "dele": ["product-uplight-4.png", "product-lyskaeder.png", "product-discokugle.png"],
+        "opstilling": (
+            "The four LED uplights stand in a loose row along the backdrop, switched on, washing it in a warm "
+            "amber and soft rose wash. The string of warm white festoon bulbs swags across the top of the frame, "
+            "glowing. The mirror ball hangs from its stand at the right, slowly turning, its small spotlight "
+            "scattering soft dots of light across the backdrop and floor — calm, warm and intimate rather than "
+            "a dance floor."
+        ),
+    },
     "product-pakke-diskotek": {
         "dele": ["product-lys.png", "product-lyseffekt.png", "product-discokugle.png"],
         "opstilling": (

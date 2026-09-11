@@ -38,7 +38,7 @@ export default function Page() {
       price={1045}
       headline="Ambient light package — light without sound"
       sub="4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling — save 140 DKK."
-      image="/images/product-uplight-4-v2.webp"
+      image="/images/product-pakke-stemningslys-taendt.webp"
       imageAlt="Ambient light package with uplights, fairy lights and a disco ball"
       productId="pakke_stemningslys"
       faqPhrase="the ambient light package"
