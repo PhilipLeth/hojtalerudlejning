@@ -3718,5 +3718,13 @@
     "hvor": "src/app/page.tsx og src/app/en/page.tsx bruger FEST_LADDER_FORSIDE_IDS (= FEST_LADDER_IDS.slice(0,2)) i stedet for hele stigen. BundleGrid har fået en `note`-prop til linjen under kortene.",
     "de_store_pakker": "Linkes fra noten under kortene på begge sprog. Dansk har også /lej-hojtaler med hele stigen; engelsk har INGEN tilsvarende kategoriside, så noten er det eneste indgående link til /en/festpakke-150 og /en/festpakke-250. forside-rakkefolge.test.ts vogter både rækkefølgen og de fire links.",
     "topbanner": "TopBar viser Google-ratingen som femte plads: fem små stjerner + '5,0 på Google' med link til profilen, hentet fra /api/anmeldelser (samme kald som sektionen, delt cache). Står der kun når Google har givet et tal, og hentes ikke i admin (useGoogleReviews(locale, enabled)). topbar-rating.test.ts vogter det."
+  },
+  "linjefelt_2026_09": {
+    "date": "2026-09-11",
+    "hvad": "Indhold-feltet på produktkortet kunne ikke skrives i. Frederik kunne hverken sætte et mellemrum i enden af en linje eller lave et linjeskift.",
+    "hvorfor": "Feltet var kontrolleret og normaliserede ved HVERT tastetryk: value var contents.join('\\n'), og onChange gemte v.split('\\n').map(trim).filter(Boolean). Mellemrummet blev altså fjernet i samme øjeblik det blev skrevet, og den tomme linje efter Enter blev slettet, før man kunne skrive videre på den. Teksten kom retur uden dem.",
+    "loesning": "src/components/admin/LinjeFelt.tsx holder sin egen kladde, mens der skrives, og viser den råt. Kataloget får stadig den rensede liste ved hvert tastetryk, så 'Gem ændringer' virker uden at klikke ud af feltet. Ved blur kastes kladden væk, og man ser præcis det, der bliver gemt — derfor står der en linje under feltet om, at tomme linjer og mellemrum ryddes væk, så oprydningen ikke ligner endnu en fejl. Feltet vokser også med indholdet i stedet for at stå på to rækker.",
+    "samme_fejl_andre_steder": "Annoncebyggeren (/admin/ads/opret) havde præcis samme fælde i Overskrifter og Beskrivelser — begge er nu LinjeFelt. /admin/ads/efterspoergsel var i forvejen rigtig: den holder frøTekst som rå kladde og parser først ved brug. youtubeUrl-felterne trimmer stadig i onChange, men en URL har ikke mellemrum, så det blokerer intet.",
+    "test": "indhold-felt.test.tsx prøver ADFÆRDEN, ikke kilden. Første udgave læste kildeteksten og sprang den rigtige prøve over, hvis komponenten ikke kunne importeres — derfor ligger komponenten i en egen fil. Bevist ved at gendanne den gamle opførsel: præcis de to tests, der beskriver Frederiks to klager, bliver røde."
   }
 }

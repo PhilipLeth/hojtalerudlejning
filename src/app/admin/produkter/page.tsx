@@ -21,6 +21,7 @@ import { useLager } from "@/lib/useLager";
 import { StockField } from "@/components/admin/StockField";
 import ImageField from "@/components/admin/ImageField";
 import GalleryField, { galleriOpsummering } from "@/components/admin/GalleryField";
+import LinjeFelt, { INDHOLD_LABEL } from "@/components/admin/LinjeFelt";
 import { hentManifest, type GalleryEntry } from "@/lib/galleryAdmin";
 import VideoField from "@/components/admin/VideoField";
 import CreateProductModal, { type ProductType } from "@/components/admin/CreateProductModal";
@@ -117,6 +118,7 @@ function Field({
     </div>
   );
 }
+
 
 /** Lagertallet i produktets sammenfoldede linje — tomt lager er værd at se */
 /**
@@ -546,18 +548,10 @@ export default function AdminProdukterPage() {
                   Skjul på siden
                 </label>
                 <AllowedAddonsField allAddons={addons} value={sp.allowedAddons} onChange={(v) => updateSpeaker(i, { allowedAddons: v })} />
-                <Field
-                  label="Indhold (én linje pr. ting — hover på kort)"
-                  textarea
-                  value={(sp.contents ?? []).join("\n")}
-                  onChange={(v) =>
-                    updateSpeaker(i, {
-                      contents: v
-                        .split("\n")
-                        .map((s) => s.trim())
-                        .filter(Boolean),
-                    })
-                  }
+                <LinjeFelt
+                  label={INDHOLD_LABEL}
+                  value={sp.contents}
+                  onChange={(v) => updateSpeaker(i, { contents: v })}
                 />
                 {sp.page && (
                   <GalleryField productId={sp.id} productName={sp.da.name} erPakke={false} aktiv={aabne.has(sp.id)} manifest={galleri} onManifest={sætGalleri} />
@@ -646,18 +640,10 @@ export default function AdminProdukterPage() {
                 )}
               </div>
               <div style={{ marginTop: "12px" }}>
-                <Field
-                  label="Indhold (én linje pr. ting — hover på kort)"
-                  textarea
-                  value={(r.contents ?? []).join("\n")}
-                  onChange={(v) =>
-                    updateRental(i, {
-                      contents: v
-                        .split("\n")
-                        .map((s) => s.trim())
-                        .filter(Boolean),
-                    })
-                  }
+                <LinjeFelt
+                  label={INDHOLD_LABEL}
+                  value={r.contents}
+                  onChange={(v) => updateRental(i, { contents: v })}
                 />
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginTop: "12px" }}>
@@ -710,18 +696,10 @@ export default function AdminProdukterPage() {
                 )}
               </div>
               <div style={{ marginTop: "12px" }}>
-                <Field
-                  label="Indhold (én linje pr. ting — hover på kort)"
-                  textarea
-                  value={(a.contents ?? []).join("\n")}
-                  onChange={(v) =>
-                    updateAddon(i, {
-                      contents: v
-                        .split("\n")
-                        .map((s) => s.trim())
-                        .filter(Boolean),
-                    })
-                  }
+                <LinjeFelt
+                  label={INDHOLD_LABEL}
+                  value={a.contents}
+                  onChange={(v) => updateAddon(i, { contents: v })}
                 />
               </div>
               {(["da", "en"] as const).map((loc) => (

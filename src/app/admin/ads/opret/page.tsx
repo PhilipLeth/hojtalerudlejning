@@ -14,6 +14,7 @@
  */
 
 import AdminLogin from "@/components/AdminLogin";
+import LinjeFelt from "@/components/admin/LinjeFelt";
 import AdminNav from "@/components/AdminNav";
 import { buildAdCopy, validateAdCopy } from "@/lib/adsCopy";
 import { adGroupName, clusterKeywords, phraseCovers, samhandler, THEME_LABELS, type ThemeKey } from "@/lib/adsIntent";
@@ -687,23 +688,23 @@ export default function AdsOpretPage() {
 
             <div style={{ display: "grid", gap: "12px", gridTemplateColumns: "1fr 1fr", marginTop: "14px" }}>
               <div>
-                <label style={label} htmlFor={`h-${g.nøgle}`}>Overskrifter — én pr. linje, højst 30 tegn</label>
-                <textarea
-                  id={`h-${g.nøgle}`}
-                  value={g.headlines.join("\n")}
-                  onChange={(e) => patch(g.nøgle, { headlines: lines(e.target.value) })}
-                  rows={8}
-                  style={{ ...input, fontFamily: "inherit", resize: "vertical" }}
+                <LinjeFelt
+                  label="Overskrifter — én pr. linje, højst 30 tegn"
+                  value={g.headlines}
+                  onChange={(v: string[]) => patch(g.nøgle, { headlines: v })}
+                  labelStil={label}
+                  feltStil={{ ...input, fontFamily: "inherit" }}
+                  mindstRaekker={8}
                 />
               </div>
               <div>
-                <label style={label} htmlFor={`d-${g.nøgle}`}>Beskrivelser — én pr. linje, højst 90 tegn</label>
-                <textarea
-                  id={`d-${g.nøgle}`}
-                  value={g.descriptions.join("\n")}
-                  onChange={(e) => patch(g.nøgle, { descriptions: lines(e.target.value) })}
-                  rows={8}
-                  style={{ ...input, fontFamily: "inherit", resize: "vertical" }}
+                <LinjeFelt
+                  label="Beskrivelser — én pr. linje, højst 90 tegn"
+                  value={g.descriptions}
+                  onChange={(v: string[]) => patch(g.nøgle, { descriptions: v })}
+                  labelStil={label}
+                  feltStil={{ ...input, fontFamily: "inherit" }}
+                  mindstRaekker={8}
                 />
               </div>
             </div>
