@@ -67,6 +67,14 @@ export interface Addon {
    * i pristabellen, så beløbet slås op i kataloget som alt andet.
    */
   intern?: boolean;
+  /**
+   * Ydelse (fx lydmand): kunden kan vælge den i bookingen og finde den i
+   * søgningen, men den fylder ikke på lageret, har intet foto og kan
+   * tilvælges på ALLE produkter uanset deres allowedAddons-liste.
+   */
+  ydelse?: boolean;
+  /** Prisenhed når den ikke er "pr. weekend" — vises i søgning og booking */
+  priceUnit?: { da: string; en: string };
   da: AddonText;
   en: AddonText;
 }
@@ -411,23 +419,25 @@ export const addons: Addon[] = [
       desc: "Yamaha mixer with built-in effects — for bands, choirs and several microphones",
     },
   },
-  // ── Interne varer (11. sept 2026): lægges på ordren fra admin, ikke af kunden.
-  // Lydmand afregnes pr. time — antallet på ordrelinjen er antal timer.
-  // Alle priser i kataloget er inkl. moms, også disse.
+  // ── Lydmand (11. sept 2026): en ydelse kunden selv kan vælge til. Prisen er
+  // pr. time inkl. moms; i bookingen vælges én time, og antallet rettes i
+  // admin (Ret ordre) når timerne er aftalt.
   {
     id: "lydmand",
     price: 1000,
     image: null,
-    intern: true,
+    ydelse: true,
+    priceUnit: { da: "kr/time", en: "DKK/hour" },
     da: {
-      label: "Lydmand (pr. time)",
-      desc: "Lydtekniker på stedet under arrangementet — 1 linje pr. time",
+      label: "Lydmand",
+      desc: "Lydtekniker på stedet, der styrer lyden under festen — 1.000 kr pr. time. Skriv antal timer i kommentaren, så retter vi ordren.",
     },
     en: {
-      label: "Sound engineer (per hour)",
-      desc: "Sound technician on site during the event — one line per hour",
+      label: "Sound engineer",
+      desc: "Sound technician on site running the sound during your event — DKK 1,000 per hour. Tell us how many hours in the comment and we adjust the order.",
     },
   },
+  // ── Faktureringsgebyr: intern vare, lægges kun på fra admin.
   {
     id: "faktureringsgebyr",
     price: 100,
@@ -480,9 +490,14 @@ export type DeliveryAddonId = (typeof DELIVERY_ADDON_IDS)[number];
 /** Gamle ordrer/kataloger bruger disse ids — de tæller stadig som kørsel */
 export const LEGACY_DELIVERY_IDS = ["levering", "levering_opsaetning"];
 
-/** Interne varer (fx lydmand, faktureringsgebyr) — kun til ordrer fra admin. */
+/** Interne varer (fx faktureringsgebyr) — kun til ordrer fra admin. */
 export function isInternalAddon(a: { intern?: boolean }): boolean {
   return a.intern === true;
+}
+
+/** Ydelser (fx lydmand) — kundevendte, men uden lager og foto. */
+export function isServiceAddon(a: { ydelse?: boolean }): boolean {
+  return a.ydelse === true;
 }
 
 export function isDeliveryAddon(id: string): boolean {

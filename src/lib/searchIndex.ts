@@ -24,6 +24,8 @@ export interface SearchResult {
   /** Weekendpris i kr. Mangler på kategorisider. */
   price?: number;
   kind: "produkt" | "side";
+  /** Prisenhed når den ikke er weekendprisen, fx "kr/time" */
+  priceUnit?: string;
 }
 
 interface Entry extends SearchResult {
@@ -108,8 +110,17 @@ export function buildSearchIndex(catalog: Catalog, locale: Locale): Entry[] {
   }
 
   for (const a of catalog.addons) {
-    if (!a.page) continue;
+    if (a.intern) continue; // faktureringsgebyr o.l. lægges på fra admin
     const t = a[locale];
+    if (!a.page && a.ydelse) {
+      // En ydelse har ingen produktside — den vælges til i bookingen
+      add(entry(
+        { href: `${localizedHref("/", locale)}#book`, title: t.label, hint: t.desc, price: a.price, kind: "produkt", priceUnit: a.priceUnit?.[locale] },
+        `${a.da.label} ${a.en.label} lydtekniker tekniker sound technician`,
+      ));
+      continue;
+    }
+    if (!a.page) continue;
     add(entry(
       { href: localizedHref(a.page, locale), title: t.label, hint: t.desc, price: a.price, kind: "produkt" },
       `${a.contents?.join(" ") ?? ""} ${a.da.label} ${a.en.label}`,
@@ -182,5 +193,5 @@ export function search(index: Entry[], query: string, limit = 8): SearchResult[]
   return hits
     .sort((a, b) => b.score - a.score || a.e.title.localeCompare(b.e.title, "da"))
     .slice(0, limit)
-    .map(({ e }) => ({ href: e.href, title: e.title, hint: e.hint, price: e.price, kind: e.kind }));
+    .map(({ e }) => ({ href: e.href, title: e.title, hint: e.hint, price: e.price, kind: e.kind, priceUnit: e.priceUnit }));
 }

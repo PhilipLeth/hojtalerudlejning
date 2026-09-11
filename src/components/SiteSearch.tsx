@@ -192,7 +192,7 @@ export default function SiteSearch({ locale = "da" }: { locale?: Locale }) {
                     </span>
                     {r.price != null ? (
                       <span className="shrink-0 text-sm font-bold text-brand-400">
-                        {r.price} <span className="text-xs font-normal text-white/40">{c.perWeekend}</span>
+                        {r.price} <span className="text-xs font-normal text-white/40">{r.priceUnit ?? c.perWeekend}</span>
                       </span>
                     ) : (
                       <span className="shrink-0 rounded-full border border-white/10 px-2 py-0.5 text-[11px] text-white/35">

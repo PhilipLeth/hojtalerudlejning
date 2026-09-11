@@ -1890,6 +1890,7 @@
       "broad": "Afvises af serveren med en besked om hvorfor, ikke bare som 'ukendt værdi'. Typen findes i NewKeyword, men ingen vej i UI'et fører dertil.",
       "detalje": "Validering, relevans-, område- og dublettjek kører på de unikke TEKSTER, ikke på criterion-rækkerne — ellers gav BEGGE dobbelte fejlbeskeder for samme frase. Testet i ads-build.test.ts.",
       "verificeret": "createAdGroup kørt mod 441-020-7627 med validateOnly 8. sept 2026: 4 keywords som ren EXACT og 8 som EXACT+PHRASE, begge godkendt. Intet oprettet.",
+      "navngivning_aag": "AAG-præfiks på maskinskrevne exact-grupper (besluttet 11. sept 2026). AG = håndbygget/phrase, AAG = maskinskrevet exact — så de kan måles for sig i rapporterne, og en ultrasmal gruppe kan følges på sin ene frase. Navnet bærer FRASEN frem for mønster + produktord: 'AAG: Lille højtalerpakke — fest højtalere'. Grunden er at mønsteret intet brugbart siger om en exact-gruppe — 'fest højtalere' har intet lejeord, så mønsteret ville hedde 'Uden lejeord', hvilket er sandt og ubrugeligt som gruppenavn. adGroupName() i adsIntent.ts tager nu match type; BEGGE regnes med i AAG-familien, fordi den også bærer exact-keywords. Navnet er stadig redigerbart, så et løbenummer (AAG1, AAG2) kan skrives i hånden.",
       "forbehold": "Match type ændrer ikke quality score i sig selv — QS regnes pr. keyword på forventet CTR, annoncerelevans og landingsside. Exact hæver dem indirekte ved at snævre de søgninger ind, annoncen overhovedet vises på. Landingssiden er stadig kontoens svageste komponent (70 % under gennemsnit), og den retter ingen match type — se ads-landingsside-pr-vinderfrase."
     },
     "klynger_og_sidevalg_2026_09_08": {
@@ -2760,7 +2761,7 @@
       "status": "todo",
       "epic": "epic-aov",
       "story": "aov-5",
-      "note": "11. sept 2026: To interne varer lagt i kataloget som tilvalg med intern:true — 'lydmand' 1.000 kr pr. time (inkl. moms, antal = timer) og 'faktureringsgebyr' 100 kr. Admin lægger dem på ordren via Ret ordre, så de lander på faktura og kvittering; kunden ser dem ikke i bookingen, og de holdes ude af annoncer, udsalg, lager og galleri (isInternalAddon). Den kundevendte tekniker-pakke (2.500 kr/4 timer) er stadig ikke bygget."
+      "note": "11. sept 2026: 'lydmand' 1.000 kr pr. time (inkl. moms) er et kundevendt tilvalg med ydelse:true — kan vælges i bookingen på ALLE produkter (uanset allowedAddons), findes i sitets søgning (fører til /#book, pris vist som kr/time), men står ikke på lageret og har intet foto. Kunden vælger én time; timerne rettes i admin (Ret ordre). 'faktureringsgebyr' 100 kr er intern:true — kun fra admin, ikke i booking, søgning, annoncer, udsalg eller lager. Den oprindelige 4-timers teknikerpakke til 2.500 kr er ikke bygget."
     },
     {
       "id": "lager-bekraeft-antal",

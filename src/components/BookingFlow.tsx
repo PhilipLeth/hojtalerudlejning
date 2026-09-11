@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useCallback, useRef, FormEvent } from "re
 import { rapporterFejl } from "@/lib/errorReport";
 import { type Locale, t } from "@/lib/i18n";
 
-import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, isInternalAddon, DELIVERY_ADDON_IDS } from "@/lib/products";
+import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, isInternalAddon, isServiceAddon, DELIVERY_ADDON_IDS } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
 import CapacityBadge, { capacityLevel } from "@/components/CapacityBadge";
@@ -993,7 +993,10 @@ export default function BookingFlow({
 
   // Filter addons by the product's allowedAddons list (undefined = show all)
   const allowedAddonIds = selectedSpeaker?.allowedAddons ?? selectedRental?.allowedAddons;
-  const visibleAddons = allowedAddonIds ? addons.filter((a) => allowedAddonIds.includes(a.id)) : addons;
+  // Ydelser (lydmand) kan tilvælges på alt — en whitelist handler om grej, der passer sammen
+  const visibleAddons = allowedAddonIds
+    ? addons.filter((a) => allowedAddonIds.includes(a.id) || isServiceAddon(a))
+    : addons;
   const rentalName = selectedRental
     ? locale === "en"
       ? selectedRental.name_en

@@ -93,10 +93,10 @@ describe("productCatalog med katalog i KV", () => {
 
   it("tager ikke interne varer med — de annonceres og rabatteres ikke", () => {
     const ids = productCatalog(null).map((p) => p.id);
-    expect(ids).not.toContain("lydmand");
     expect(ids).not.toContain("faktureringsgebyr");
-    expect(productCatalog({ addons: [{ id: "lydmand", price: 1000, intern: true, da: { label: "Lydmand" } }] })
-      .map((p) => p.id)).not.toContain("lydmand");
+    expect(ids).toContain("lydmand"); // ydelse, ikke intern — kunden kan vælge den
+    expect(productCatalog({ addons: [{ id: "gebyr", price: 100, intern: true, da: { label: "Gebyr" } }] })
+      .map((p) => p.id)).not.toContain("gebyr");
   });
 
   it("tager ikke det opfundne combo-SKU med", () => {

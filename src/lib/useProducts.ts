@@ -75,6 +75,9 @@ function mergeAddons(fromKv: Addon[]): Addon[] {
       if (d?.intern && !next.intern) {
         next = { ...next, intern: true };
       }
+      if (d?.ydelse && !next.ydelse) {
+        next = { ...next, ydelse: true, priceUnit: next.priceUnit ?? d.priceUnit };
+      }
       return next;
     });
   // Nye tilvalg tilføjet i koden (fx subwoofer) skal også dukke op selvom

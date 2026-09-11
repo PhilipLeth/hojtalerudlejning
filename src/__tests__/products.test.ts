@@ -249,7 +249,7 @@ describe("Addons data", () => {
     // sit eget — mixerne fik deres genereret efter husstilen 25. august 2026.
     const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge"];
     for (const a of addons) {
-      if (udenFoto.includes(a.id) || a.intern) {
+      if (udenFoto.includes(a.id) || a.intern || a.ydelse) {
         expect(a.image).toBeNull();
       } else {
         expect(a.image).toMatch(/^\/images\/product-.+\.(webp|svg)$/);
@@ -257,11 +257,12 @@ describe("Addons data", () => {
     }
   });
 
-  it("lydmand 1.000 kr pr. time og faktureringsgebyr 100 kr er interne varer (11. sept 2026)", () => {
+  it("lydmand 1.000 kr pr. time er en kundevendt ydelse, faktureringsgebyr 100 kr en intern vare (11. sept 2026)", () => {
     const lydmand = addons.find((a) => a.id === "lydmand");
     const gebyr = addons.find((a) => a.id === "faktureringsgebyr");
-    expect(lydmand).toMatchObject({ price: 1000, intern: true, image: null });
-    expect(lydmand?.da.label).toMatch(/pr\. time/);
+    expect(lydmand).toMatchObject({ price: 1000, ydelse: true, image: null, priceUnit: { da: "kr/time", en: "DKK/hour" } });
+    expect(lydmand?.intern).toBeFalsy();
+    expect(lydmand?.da.desc).toMatch(/pr\. time/);
     expect(gebyr).toMatchObject({ price: 100, intern: true, image: null });
     // De skal kunne lægges på en ordre fra admin — altså ikke skjult
     expect(lydmand?.hidden).toBeFalsy();
@@ -270,7 +271,7 @@ describe("Addons data", () => {
 
   it("interne varer holdes ude af lageret, men beholder flaget fra et gammelt KV-katalog", () => {
     const lager = stockItems({ speakers, addons, rentalProducts }).map((i) => i.id);
-    expect(lager).not.toContain("lydmand");
+    expect(lager).not.toContain("lydmand"); // ydelse — står ikke på en hylde
     expect(lager).not.toContain("faktureringsgebyr");
     // Et KV-katalog gemt før flaget fandtes må ikke sende gebyret ud til kunden
     const gammelt = addons.map((a) => (a.intern ? { ...a, intern: undefined } : a));
