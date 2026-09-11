@@ -353,6 +353,21 @@ const SPELLING_PAIRS: Array<[string, string]> = [
 ];
 
 /** Annoncegruppens navn. Fast konvention, så den kan læses i Google Ads. */
-export function adGroupName(productName: string, cluster: Cluster): string {
+export function adGroupName(
+  productName: string,
+  cluster: Cluster,
+  matchType: "PHRASE" | "EXACT" | "BEGGE" = "PHRASE",
+): string {
+  // AAG = maskinskrevet exact-gruppe. Præfikset gør dem til at skelne fra de
+  // håndbyggede AG-grupper i rapporterne, og det er den slags man skal kunne
+  // måle for sig: en ultrasmal gruppe står eller falder med sin ene frase.
+  //
+  // Derfor bærer navnet frasen selv frem for mønster + produktord. En
+  // exact-gruppe ER sin frase, og mønsteret siger ingenting brugbart om den:
+  // "fest højtalere" har intet lejeord, så mønsteret ville hedde "Uden
+  // lejeord", hvilket er sandt og ubrugeligt som gruppenavn.
+  if (matchType === "EXACT" || matchType === "BEGGE") {
+    return `AAG: ${productName} — ${cluster.primary}`;
+  }
   return `${productName} — ${cluster.label}: ${cluster.head}`;
 }

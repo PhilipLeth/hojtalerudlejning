@@ -242,6 +242,29 @@ describe("seedTerms", () => {
   });
 });
 
+describe("adGroupName og AAG-konventionen", () => {
+  it("giver exact-grupper AAG-præfiks og lader frasen bære navnet", () => {
+    const c = clusterKeywords([{ text: "fest højtalere", volume: 110 }])[0];
+    expect(adGroupName("Lille højtalerpakke", c, "EXACT")).toBe(
+      "AAG: Lille højtalerpakke — fest højtalere",
+    );
+    // BEGGE bærer også exact-keywords, så den hører i samme familie
+    expect(adGroupName("Lille højtalerpakke", c, "BEGGE")).toMatch(/^AAG: /);
+  });
+
+  it("lader phrase-grupper beholde AG-navnet med mønster og produktord", () => {
+    const c = clusterKeywords([{ text: "lej røgmaskine", volume: 50 }])[0];
+    expect(adGroupName("Røgmaskine", c, "PHRASE")).toBe("Røgmaskine — Lej: røgmaskine");
+    expect(adGroupName("Røgmaskine", c)).toBe("Røgmaskine — Lej: røgmaskine");
+  });
+
+  it("undgår mønsteret 'Uden lejeord' som gruppenavn — sandt, men ubrugeligt", () => {
+    const c = clusterKeywords([{ text: "fest højtalere", volume: 110 }])[0];
+    expect(c.label).toBe("Uden lejeord");
+    expect(adGroupName("Lille højtalerpakke", c, "EXACT")).not.toContain("Uden lejeord");
+  });
+});
+
 describe("adGroupName", () => {
   it("siger både produkt, mønster og produktord", () => {
     const [gruppe] = clusterKeywords([{ text: "lej højtaler", volume: 210 }]);

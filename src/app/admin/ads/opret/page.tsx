@@ -261,14 +261,17 @@ export default function AdsOpretPage() {
       );
       const headlines = redigeret.headlines ?? genereret.headlines;
       const descriptions = redigeret.descriptions ?? genereret.descriptions;
+      const matchType = redigeret.matchType ?? ("PHRASE" as MatchType);
       return {
         cluster: c,
         nøgle,
-        name: redigeret.name ?? adGroupName(product.name, c),
-        bidMicros: redigeret.bidMicros ?? data?.defaultBidMicros ?? 9_000_000,
         // Standarden er phrase, som resten af kontoen. Exact er til den
         // stramme gruppe, hvor man kender præcis de stavemåder man vil vinde.
-        matchType: redigeret.matchType ?? ("PHRASE" as MatchType),
+        matchType: matchType,
+        // Navnet følger match type: exact-grupper får AAG-præfikset, så de kan
+        // måles for sig. Har man selv rettet navnet, står det uændret.
+        name: redigeret.name ?? adGroupName(product.name, c, matchType),
+        bidMicros: redigeret.bidMicros ?? data?.defaultBidMicros ?? 9_000_000,
         headlines,
         descriptions,
         finalUrl: genereret.finalUrl,
