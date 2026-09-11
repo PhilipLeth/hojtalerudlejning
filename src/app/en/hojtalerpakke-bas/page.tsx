@@ -30,7 +30,7 @@ export default function Page() {
       price={1495}
       headline="Rent a speaker package for 50-100 guests"
       sub={"The large 12\" EV speakers on stands with a 12\" subwoofer underneath — the step above the large speaker package."}
-      image="/images/product-festival-bas.webp"
+      image="/images/product-festival-bas-v2.webp"
       imageAlt="Speaker package with two 12 inch EV speakers on stands and a subwoofer for rent in Copenhagen"
       productId="hojtaler_100"
       faqPhrase="the speaker package with subwoofer"

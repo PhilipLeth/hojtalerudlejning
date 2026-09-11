@@ -30,7 +30,7 @@ export default function Page() {
       price={2000}
       headline="The karaoke party bundle — up to 100 people"
       sub={"Karaoke machine + 55\" display + large speakers. Save 285 DKK."}
-      image="/images/product-pakke-karaoke-fest.webp"
+      image="/images/product-pakke-karaoke-fest-v2.webp"
       imageAlt="Large karaoke bundle with a large screen and speakers for rent"
       productId="pakke_karaoke_fest"
       bullets={[

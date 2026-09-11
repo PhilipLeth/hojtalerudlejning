@@ -31,7 +31,7 @@ export default function Page() {
       price={845}
       headline="The graduation package — plays through the whole truck ride"
       sub="Soundboks 4, extra battery and padded carry bag. No power on the truck — save 90 DKK."
-      image="/images/product-soundboks.webp"
+      image="/images/product-soundboks-v2.webp"
       imageAlt="Graduation package with Soundboks 4, extra battery and carry bag"
       productId="pakke_student"
       faqPhrase="the graduation package"

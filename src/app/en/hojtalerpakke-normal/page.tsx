@@ -39,7 +39,7 @@ export default function LargeSpeakerPackageEn() {
       price={995}
       headline="Rent a large speaker package in Copenhagen"
       sub='Two powerful 12" EV active speakers — clear sound for larger rooms and outdoors.'
-      image="/images/product-festival.webp"
+      image="/images/product-festival-v2.webp"
       imageAlt="Large speaker package for rent in Copenhagen"
       productId="festival"
       faqPhrase="the large speaker package"

@@ -28,7 +28,7 @@ export default function Page() {
       price={595}
       headline="Lej trådløs mikrofon PRO (Shure BLX)"
       sub={'Shure BLX trådløs mikrofon — scenekvalitet til events og konferencer.'}
-      image="/images/product-mikrofon-pro.webp"
+      image="/images/product-mikrofon-pro-v2.webp"
       imageAlt="Shure BLX trådløs mikrofon til leje"
       productId="traadloes_mikrofon_pro"
       faqPhrase="en trådløs PRO-mikrofon"

@@ -31,7 +31,7 @@ export default function Page() {
       price={145}
       headline="Rent an extra battery"
       sub="An extra battery for the Mackie Thump GO or Soundboks 4 — so the party does not end when the first one runs dry."
-      image="/images/product-thumpgo.webp"
+      image="/images/product-thumpgo-v2.webp"
       imageAlt="Extra battery for a battery-powered speaker"
       productId="batteri"
       bookLabel="Book an extra battery"

@@ -38,7 +38,7 @@ export default function TraadloesMikrofonPage() {
       price={295}
       headline="Lej trådløs mikrofon"
       sub="Professionel trådløs håndholdt mikrofon til taler, bryllup og events."
-      image="/images/product-mikrofon.webp"
+      image="/images/product-mikrofon-v2.webp"
       imageAlt="Trådløs mikrofon til leje i København"
       productId="traadloes_mikrofon"
       bookLabel="Book mikrofon nu"

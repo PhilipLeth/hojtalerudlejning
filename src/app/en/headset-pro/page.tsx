@@ -36,7 +36,7 @@ export default function Page() {
       price={595}
       headline="Rent a PRO wireless headset"
       sub="Broadcast-quality headset microphone — for conferences and stages."
-      image="/images/product-headset-pro.webp"
+      image="/images/product-headset-pro-v2.webp"
       imageAlt="Professional wireless headset microphone for rent in Copenhagen"
       productId="headset_pro"
       faqPhrase="a PRO wireless headset"

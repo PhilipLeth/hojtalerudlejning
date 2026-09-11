@@ -32,7 +32,7 @@ export default function Page() {
       priceUnit="/event"
       headline="Stor fest med lydmand"
       sub="Fuldt anlæg med bas, lys og røg + AV-tekniker i 4 timer. Vi sætter det hele op og holder dansegulvet kørende — spar 280 kr."
-      image="/images/product-pakke-lydmand-stor.webp"
+      image="/images/product-pakke-lydmand-stor-v2.webp"
       imageAlt="Stor fest med lydmand: højtalere, røgmaskine og lydmandens mixer"
       productId="pakke_lydmand_stor"
       bookLabel="Book stor fest med lydmand"

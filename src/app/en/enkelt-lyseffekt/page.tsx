@@ -37,7 +37,7 @@ export default function Page() {
       price={395}
       headline="Rent a single light effect in Copenhagen"
       sub="One LED par light (no stand) — a plug-and-play colour effect that sets the mood in minutes."
-      image="/images/product-lyseffekt.webp"
+      image="/images/product-lyseffekt-v2.webp"
       imageAlt="Single LED party light for rent in Copenhagen"
       productId="lyseffekt"
       faqPhrase="a single light effect"

@@ -29,7 +29,7 @@ export default function MackieThumpGoPage() {
       price={395}
       headline="Lej Mackie Thump GO i København"
       sub={'Batteridrevet 8" højtaler - park, strand, baggård. Ingen strøm nødvendig.'}
-      image="/images/product-thumpgo.webp"
+      image="/images/product-thumpgo-v2.webp"
       imageAlt="Mackie Thump GO batterihøjtaler til leje"
       productId="thumpgo"
       faqPhrase="Mackie Thump GO"

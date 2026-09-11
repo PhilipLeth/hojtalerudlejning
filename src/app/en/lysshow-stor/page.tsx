@@ -31,7 +31,7 @@ export default function Page() {
       price={1995}
       headline="Large light show — the whole room changes"
       sub="Light package, four uplights, 40 cm disco ball and low fog machine. For the big party or the rented venue with fluorescent ceiling lights — save 285 DKK."
-      image="/images/product-uplight-4.webp"
+      image="/images/product-uplight-4-v2.webp"
       imageAlt="Large light show with uplights, light package, disco ball and low fog"
       productId="pakke_lysshow_stor"
       faqPhrase="the large light show"

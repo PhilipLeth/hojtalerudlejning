@@ -30,7 +30,7 @@ export default function Page() {
       price={145}
       headline="Lej ekstra batteri"
       sub="Et ekstra batteri til Mackie Thump GO eller Soundboks 4 — så festen ikke slutter, når det første løber tørt."
-      image="/images/product-thumpgo.webp"
+      image="/images/product-thumpgo-v2.webp"
       imageAlt="Ekstra batteri til batterihøjtaler"
       productId="batteri"
       bookLabel="Book ekstra batteri nu"

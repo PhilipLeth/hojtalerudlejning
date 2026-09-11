@@ -103,7 +103,7 @@ export default function LydudstyrPage() {
           <div className="grid gap-8 sm:grid-cols-2 items-center">
             <div className="overflow-hidden rounded-2xl">
               <Image
-                src="/images/product-festival.webp"
+                src="/images/product-festival-v2.webp"
                 alt="Festival PA-anlæg med højtalere, mixer og mikrofon"
                 width={600}
                 height={400}
@@ -162,7 +162,7 @@ export default function LydudstyrPage() {
               </div>
               <div className="overflow-hidden rounded-xl">
                 <Image
-                  src="/images/product-party.webp"
+                  src="/images/product-party-v2.webp"
                   alt="Party-højtalerpakke – budget-alternativ"
                   width={600}
                   height={400}

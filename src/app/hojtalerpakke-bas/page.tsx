@@ -34,7 +34,7 @@ export default function HojtalerpakkeBasPage() {
       price={1495}
       headline="Lej højtalerpakke til 50-100 gæster"
       sub={'De store 12" EV-højtalere på stativer med en 12" subwoofer under — trinnet over den store højtalerpakke.'}
-      image="/images/product-festival-bas.webp"
+      image="/images/product-festival-bas-v2.webp"
       imageAlt="Højtalerpakke med to 12 tommer EV-højtalere på stativer og subwoofer til leje i København"
       productId="hojtaler_100"
       faqPhrase="højtalerpakken med subwoofer"

@@ -30,7 +30,7 @@ export default function Page() {
       price={1195}
       headline="The speech & music package"
       sub="Large speaker package + wireless microphone — speeches and music for events. Save 95 DKK."
-      image="/images/product-festival.webp"
+      image="/images/product-festival-v2.webp"
       imageAlt="Speech and music package with large speakers and a wireless microphone"
       productId="pakke_tale_musik"
       bullets={[

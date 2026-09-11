@@ -37,7 +37,7 @@ export default function HeadsetMikrofonPage() {
       price={345}
       headline="Lej headset-mikrofon"
       sub="Trådløst headset til præsentationer og konferencer. Hands-free."
-      image="/images/product-headset.webp"
+      image="/images/product-headset-v2.webp"
       imageAlt="Trådløst headset-mikrofon til leje i København"
       productId="headset"
       bookLabel="Book headset nu"

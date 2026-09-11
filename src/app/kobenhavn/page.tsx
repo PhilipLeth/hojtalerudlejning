@@ -124,7 +124,7 @@ export default function KobenhavnPage() {
             <div className="glass rounded-2xl p-8">
               <div className="mb-4 overflow-hidden rounded-xl">
                 <Image
-                  src="/images/product-party.webp"
+                  src="/images/product-party-v2.webp"
                   alt="Lille højtalerpakke til fest i København"
                   width={600}
                   height={400}
@@ -151,7 +151,7 @@ export default function KobenhavnPage() {
             <div className="glass rounded-2xl p-8">
               <div className="mb-4 overflow-hidden rounded-xl">
                 <Image
-                  src="/images/product-festival.webp"
+                  src="/images/product-festival-v2.webp"
                   alt="Stor højtalerpakke til fest i København"
                   width={600}
                   height={400}

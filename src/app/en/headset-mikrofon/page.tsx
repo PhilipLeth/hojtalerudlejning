@@ -38,7 +38,7 @@ export default function Page() {
       price={345}
       headline="Rent a headset microphone"
       sub="Wireless headset for presentations and conferences. Hands-free."
-      image="/images/product-headset.webp"
+      image="/images/product-headset-v2.webp"
       imageAlt="Wireless headset microphone for rent in Copenhagen"
       productId="headset"
       bookLabel="Book the headset now"

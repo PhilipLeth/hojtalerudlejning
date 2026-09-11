@@ -30,7 +30,7 @@ export default function Page() {
       price={95}
       headline="Lej bæretaske til højtalerne"
       sub="Polstret sportstaske, hvor den lille højtalerpakke og alle kablerne er samlet — så du kan hente på cykel."
-      image="/images/product-taske.webp"
+      image="/images/product-taske-v2.webp"
       imageAlt="Polstret bæretaske til højtalere"
       productId="taske"
       bookLabel="Book bæretaske nu"

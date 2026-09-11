@@ -31,7 +31,7 @@ export default function Page() {
       price={1495}
       headline="Light show package — the beams become visible"
       sub="Light package, 40 cm disco ball and fog machine. Without fog you see coloured dots on the wall; with fog the beams turn into a show — save 190 DKK."
-      image="/images/product-lys.webp"
+      image="/images/product-lys-v2.webp"
       imageAlt="Light show package with light package, disco ball and fog machine"
       productId="pakke_lysshow"
       faqPhrase="the light show package"

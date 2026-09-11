@@ -30,7 +30,7 @@ export default function Page() {
       price={1495}
       headline="Lysshow-pakken — lyset bliver synligt i luften"
       sub="Lys-pakke, discokugle 40 cm og røgmaskine. Uden røg ser man farvede pletter på væggen; med røg bliver strålerne til et show — spar 190 kr."
-      image="/images/product-lys.webp"
+      image="/images/product-lys-v2.webp"
       imageAlt="Lysshow-pakken med lys-pakke, discokugle og røgmaskine"
       productId="pakke_lysshow"
       faqPhrase="lysshow-pakken"

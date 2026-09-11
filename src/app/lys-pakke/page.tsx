@@ -38,7 +38,7 @@ export default function LysPakkePage() {
       price={495}
       headline="Lej lys-pakke i København"
       sub="2 farvede LED-lamper + centereffekt på stativ. Klar på få minutter."
-      image="/images/product-lys.webp"
+      image="/images/product-lys-v2.webp"
       imageAlt="Lys-pakke til leje i København"
       productId="lys"
       bookLabel="Book lys-pakke nu"

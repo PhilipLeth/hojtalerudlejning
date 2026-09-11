@@ -31,7 +31,7 @@ export default function Page() {
       price={1045}
       headline="Speaker package — music and speeches with no mixer in between"
       sub="Large speaker package + wired handheld microphone. The mic plugs straight into the speaker — save 45 DKK."
-      image="/images/product-festival.webp"
+      image="/images/product-festival-v2.webp"
       imageAlt="Speaker package with two EV speakers and a handheld microphone"
       productId="pakke_speaker_mik"
       faqPhrase="the speaker package"

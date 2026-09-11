@@ -78,7 +78,7 @@ export interface FladtProdukt {
   hidden: boolean;
   navn: string;
   navn_en: string;
-  /** Sti til produktfotoet, fx /images/product-festival.webp eller /api/image/<key> */
+  /** Sti til produktfotoet, fx /images/product-festival-v2.webp eller /api/image/<key> */
   billede: string | null;
   kapacitet: string | null;
   kapacitet_en: string | null;

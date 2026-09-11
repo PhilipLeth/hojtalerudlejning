@@ -39,7 +39,7 @@ export default function SmallSpeakerPackageEn() {
       price={595}
       headline="Rent a small speaker package in Copenhagen"
       sub='Two compact 10" Alto speakers with Bluetooth — light enough for a bike.'
-      image="/images/product-party.webp"
+      image="/images/product-party-v2.webp"
       imageAlt="Small speaker package for rent in Copenhagen"
       productId="party"
       faqPhrase="the small speaker package"

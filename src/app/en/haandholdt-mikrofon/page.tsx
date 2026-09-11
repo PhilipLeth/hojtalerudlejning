@@ -36,7 +36,7 @@ export default function Page() {
       price={95}
       headline="Rent a handheld microphone"
       sub="Standard wired handheld microphone — for speeches and vocals."
-      image="/images/product-mikrofon-kabel.webp"
+      image="/images/product-mikrofon-kabel-v2.webp"
       imageAlt="Wired handheld microphone for rent in Copenhagen"
       productId="haandholdt_mikrofon"
       faqPhrase="a wired handheld microphone"

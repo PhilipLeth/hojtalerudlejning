@@ -118,7 +118,7 @@ export default function EnHome() {
             name: "Small Speaker Package rental",
             description:
               '2x 10" Alto speakers with Bluetooth for rent. Up to 40 people. 12 kg in carry bag — ready for your bike. All cables included.',
-            image: "https://lejhojtaler.dk/images/product-party.webp",
+            image: "https://lejhojtaler.dk/images/product-party-v2.webp",
             brand: {
               "@type": "Brand",
               name: "Lejhøjtaler.dk",
@@ -151,7 +151,7 @@ export default function EnHome() {
             name: "Large Speaker Package rental",
             description:
               '2x 12" EV speakers with Bluetooth for rent. 40-100 people. Stands and all cables included. Perfect for large parties and events in Copenhagen.',
-            image: "https://lejhojtaler.dk/images/product-festival.webp",
+            image: "https://lejhojtaler.dk/images/product-festival-v2.webp",
             brand: {
               "@type": "Brand",
               name: "Lejhøjtaler.dk",
@@ -184,7 +184,7 @@ export default function EnHome() {
             name: "Light package rental",
             description:
               "Party lights for rent: 2 coloured LED lamps + centre effect on stand. Add to your speaker rental for the full party experience.",
-            image: "https://lejhojtaler.dk/images/product-lys.webp",
+            image: "https://lejhojtaler.dk/images/product-lys-v2.webp",
             brand: {
               "@type": "Brand",
               name: "Lejhøjtaler.dk",

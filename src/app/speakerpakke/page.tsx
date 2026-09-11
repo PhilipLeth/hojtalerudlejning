@@ -30,7 +30,7 @@ export default function Page() {
       price={1045}
       headline="Speakerpakken — musik og taler uden en mixer imellem"
       sub="Stor højtalerpakke + håndholdt mikrofon med kabel. Mikrofonen går direkte i højtaleren — spar 45 kr."
-      image="/images/product-festival.webp"
+      image="/images/product-festival-v2.webp"
       imageAlt="Speakerpakken med to EV-højtalere og håndholdt mikrofon"
       productId="pakke_speaker_mik"
       faqPhrase="speakerpakken"

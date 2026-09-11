@@ -30,7 +30,7 @@ export default function Page() {
       price={1300}
       headline="The karaoke bundle — machine, screen and sound"
       sub={"Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke — save 385 DKK."}
-      image="/images/product-pakke-karaoke.webp"
+      image="/images/product-pakke-karaoke-v2.webp"
       imageAlt={"Karaoke bundle with machine, 32\" screen and speakers for rent"}
       productId="pakke_karaoke"
       bullets={[

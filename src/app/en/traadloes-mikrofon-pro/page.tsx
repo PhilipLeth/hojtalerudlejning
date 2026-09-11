@@ -36,7 +36,7 @@ export default function Page() {
       price={595}
       headline="Rent a Shure BLX wireless microphone"
       sub="Stage-quality wireless microphone for conferences, events and live performance."
-      image="/images/product-mikrofon-pro.webp"
+      image="/images/product-mikrofon-pro-v2.webp"
       imageAlt="Shure BLX wireless microphone for rent in Copenhagen"
       productId="traadloes_mikrofon_pro"
       faqPhrase="a Shure BLX wireless microphone"

@@ -30,7 +30,7 @@ export default function Page() {
       price={1995}
       headline="Lysshow stort — hele rummet skifter karakter"
       sub="Lys-pakke, fire uplights, discokugle 40 cm og low fog-maskine. Til den store fest eller det lejede lokale med lysstofrør i loftet — spar 285 kr."
-      image="/images/product-uplight-4.webp"
+      image="/images/product-uplight-4-v2.webp"
       imageAlt="Lysshow stort med uplights, lys-pakke, discokugle og low fog"
       productId="pakke_lysshow_stor"
       faqPhrase="det store lysshow"

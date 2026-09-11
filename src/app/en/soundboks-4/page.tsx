@@ -40,7 +40,7 @@ export default function Soundboks4En() {
       headline="Rent a Soundboks in Copenhagen"
       sub="Soundboks 4 — battery-powered with heavy bass, no power outlet needed. No deposit: you only pay when you pick it up."
       weekendAvailability
-      image="/images/product-soundboks.webp"
+      image="/images/product-soundboks-v2.webp"
       imageAlt="Soundboks 4 for rent in Copenhagen"
       productId="soundboks"
       faqPhrase="a Soundboks 4"

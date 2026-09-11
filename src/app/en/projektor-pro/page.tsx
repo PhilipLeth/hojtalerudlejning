@@ -30,7 +30,7 @@ export default function Page() {
       price={795}
       headline="Rent the Projector Pro — 5000 lumen"
       sub="Powerful 5000 lumen projector — sharp even in daylight."
-      image="/images/product-projektor-pro.webp"
+      image="/images/product-projektor-pro-v2.webp"
       imageAlt="5000 lumen projector for rent"
       productId="projektor_pro"
       faqPhrase="the Projector Pro"

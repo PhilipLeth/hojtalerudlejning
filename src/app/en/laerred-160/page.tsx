@@ -30,7 +30,7 @@ export default function Page() {
       price={195}
       headline="Rent a 160 cm projector screen"
       sub="160 cm screen on a stand — the perfect partner for the projector."
-      image="/images/product-laerred.webp"
+      image="/images/product-laerred-v2.webp"
       imageAlt="160 cm projector screen on a stand for rent"
       productId="laerred_160"
       faqPhrase="a 160 cm projector screen"

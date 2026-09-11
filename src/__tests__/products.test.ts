@@ -140,8 +140,8 @@ describe("Addons data", () => {
   it("lyskæder findes i to varianter med hver sit billede", () => {
     const hvid = rentalProducts.find((p) => p.id === "lyskaeder")!;
     const farvet = rentalProducts.find((p) => p.id === "lyskaeder_farvet")!;
-    expect(hvid.image).toBe("/images/product-lyskaeder.webp");
-    expect(farvet.image).toBe("/images/product-lyskaeder-farvet.webp");
+    expect(hvid.image).toBe("/images/product-lyskaeder-v2.webp");
+    expect(farvet.image).toBe("/images/product-lyskaeder-farvet-v2.webp");
     expect(hvid.price).toBe(195);
     expect(farvet.price).toBe(195);
   });
@@ -159,9 +159,9 @@ describe("Addons data", () => {
   it("PRO-mikrofoner findes med egne billeder (Shure)", () => {
     const traadloesPro = rentalProducts.find((p) => p.id === "traadloes_mikrofon_pro")!;
     const haandholdtPro = rentalProducts.find((p) => p.id === "haandholdt_mikrofon_pro")!;
-    expect(traadloesPro.image).toBe("/images/product-mikrofon-pro.webp");
+    expect(traadloesPro.image).toBe("/images/product-mikrofon-pro-v2.webp");
     expect(traadloesPro.price).toBe(595);
-    expect(haandholdtPro.image).toBe("/images/product-mikrofon-kabel-pro.webp");
+    expect(haandholdtPro.image).toBe("/images/product-mikrofon-kabel-pro-v2.webp");
     expect(haandholdtPro.price).toBe(395);
   });
 

@@ -28,7 +28,7 @@ export default function Page() {
       price={1195}
       headline="Tale & musik-pakken"
       sub={'Stor højtalerpakke + trådløs mikrofon — taler og musik til events. Spar 95 kr.'}
-      image="/images/product-festival.webp"
+      image="/images/product-festival-v2.webp"
       imageAlt="Tale og musik pakke med store højtalere og trådløs mikrofon"
       productId="pakke_tale_musik"
       bullets={["2× 12\" EV højtalere med stativer", "Trådløs håndholdt mikrofon", "Op til 100 personer", "Alle kabler inkluderet", "Spar 95 kr ift. enkeltpriser"]}

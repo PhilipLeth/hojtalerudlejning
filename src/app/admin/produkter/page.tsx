@@ -445,7 +445,7 @@ export default function AdminProdukterPage() {
 
         <p style={{ fontSize: "14px", color: "#666", marginBottom: "24px" }}>
           Rediger pris, lager, overbooking, billeder og tekst pr. produkt. Billedstier er relative til sitet, fx{" "}
-          <code>/images/product-party.webp</code>. Bemærk at <strong>lagertallet gemmes med det samme</strong> —
+          <code>/images/product-party-v2.webp</code>. Bemærk at <strong>lagertallet gemmes med det samme</strong> —
           resten venter på "Gem ændringer". Hele lageret på én side: <a href="/admin/lager" style={{ color: "#0070f3" }}>Lager</a>.
         </p>
 

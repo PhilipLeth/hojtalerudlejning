@@ -39,7 +39,7 @@ export default function RoegmaskinePage() {
       price={595}
       headline="Lej røgmaskine i København"
       sub="Inkl. røgvæske, fjernbetjening og nem opsætning."
-      image="/images/product-rog.webp"
+      image="/images/product-rog-v2.webp"
       imageAlt="Røgmaskine til leje i København"
       productId="rog"
       bookLabel="Book røgmaskine nu"

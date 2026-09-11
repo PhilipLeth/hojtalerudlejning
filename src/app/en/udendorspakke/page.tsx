@@ -31,7 +31,7 @@ export default function Page() {
       price={895}
       headline="The outdoor package — the whole party without a socket"
       sub="Soundboks 4, extra battery and 10 m string lights. Courtyard, beach or park — save 140 DKK."
-      image="/images/product-soundboks.webp"
+      image="/images/product-soundboks-v2.webp"
       imageAlt="Outdoor package with Soundboks 4, extra battery and string lights"
       productId="pakke_udendors"
       faqPhrase="the outdoor package"

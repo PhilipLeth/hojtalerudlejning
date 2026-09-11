@@ -3259,6 +3259,14 @@
       "status": "done",
       "description": "Kontaktformularen var kun tilgængelig via et link nederst i footeren. Nu: (1) 'Kontakt' som menupunkt i burger-menuen sammen med Om os/Blog/Lejevilkår/English. (2) Øverst i menuen — før produktkategorierne — en tydelig genvej 'Større arrangement? Firmafest, bryllup eller event' der linker til /kontakt?emne=erhverv, så pro-forespørgsler ikke skal presses gennem det almindelige bookingflow. (3) Kontaktformularen læser ?emne= og viser en relevant hjælpetekst, og emnet ryger med i mailens emnelinje ('Erhvervsforespørgsel: Navn') så det kan kendes i indbakken. Emnet saneres for linjeskift og længde, så det ikke kan bruges til header-injection.",
       "test": "src/__tests__/menu-contact.test.tsx"
+    },
+    "vandmaerke_fjernet_2026_09": {
+      "status": "done",
+      "date": "2026-09-11",
+      "description": "Gemini satte et vandmærke (en lys firetakket stjerne, nogle gange to, nederst til højre) i 33 produktfotos i den gule studiestil. scripts/product-images/fjern_stjerne.py fjerner den: håndverificerede vinduer pr. billede, maske ud fra min-kanal minus lokal median, udfyldning med glat farve + luminans-tekstur fra nabofeltet (eller spejling af rækkerne, hvor stjernen sad i en produktskygge). Resultatet er skrevet som product-<navn>-v2.webp + -v2-400.webp, og ALLE referencer (products.ts, DA/EN-sider, channels.ts, KV-kataloget) peger på -v2.",
+      "hvorfor_nye_filnavne": "/images/* cacher 30 dage i CDN'en uden hash. Derfor nåede fa0a6f6's rigtige fotos (mikrofon, mikrofon-kabel, mikrofon-kabel-pro, mikrofon-pro, soundboks, uplight-4) aldrig kunderne — CDN'en serverede stadig de gamle stjernebilleder 25 dage senere. De seks er kopieret til -v2 uændret, så de bliver synlige for første gang nu. Regel: skift altid filnavn når et billede ændrer indhold.",
+      "bemaerk": "product-uplight-4 (Frederiks eget foto) viser lamper med 12 linser; de fysiske uplights har 7. Var et bevidst valg i fa0a6f6, men er nu synligt live for første gang.",
+      "ikke_roert": "projektor, skaerm, skaerm-32, stativer, mixer-stor, lydmand, pakke-fest-lille/-stor og *-taendt-billederne havde intet vandmærke og beholder deres navne."
     }
   },
   "booking_drawer": {

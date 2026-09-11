@@ -33,7 +33,7 @@ export default function Page() {
       priceUnit="/event"
       headline="Party package with a sound engineer"
       sub="Large speaker package + light package + AV technician for 4 hours. We arrive, set up, run the sound and pack down — save 290 DKK."
-      image="/images/product-pakke-lydmand-fest.webp"
+      image="/images/product-pakke-lydmand-fest-v2.webp"
       imageAlt="Party package with sound engineer: speakers, lights and the engineer's mixer"
       productId="pakke_lydmand_fest"
       bookLabel="Book the party package with sound engineer"

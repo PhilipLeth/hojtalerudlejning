@@ -38,7 +38,7 @@ export default function PartyPackage250En() {
       price={3645}
       headline="Party package for 250 guests"
       sub='4× EV 12" speakers, two subwoofers, stands, lights and fog.'
-      image="/images/product-pakke-fest-250.webp"
+      image="/images/product-pakke-fest-250-v2.webp"
       imageAlt="Party package for 250 guests with four speakers and two subwoofers"
       productId="pakke_fest_250"
       faqPhrase="Party Package 250"

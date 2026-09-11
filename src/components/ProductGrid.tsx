@@ -15,15 +15,15 @@ const GRID: Array<{
   image: string;
   tag?: string;
 }> = [
-  { id: "soundboks", page: "/soundboks-4", name: "Soundboks 4", price: 600, image: "/images/product-soundboks.webp", tag: "Populær" },
-  { id: "thumpgo", page: "/mackie-thump-go", name: "Mackie Thump GO", price: 350, image: "/images/product-thumpgo.webp", tag: "Batteri" },
-  { id: "party", page: "/hojtalerpakke-lille", name: "Højtalerpakke lille", price: 399, image: "/images/product-party.webp" },
-  { id: "festival", page: "/hojtalerpakke-normal", name: "Højtalerpakke normal", price: 700, image: "/images/product-festival.webp" },
+  { id: "soundboks", page: "/soundboks-4", name: "Soundboks 4", price: 600, image: "/images/product-soundboks-v2.webp", tag: "Populær" },
+  { id: "thumpgo", page: "/mackie-thump-go", name: "Mackie Thump GO", price: 350, image: "/images/product-thumpgo-v2.webp", tag: "Batteri" },
+  { id: "party", page: "/hojtalerpakke-lille", name: "Højtalerpakke lille", price: 399, image: "/images/product-party-v2.webp" },
+  { id: "festival", page: "/hojtalerpakke-normal", name: "Højtalerpakke normal", price: 700, image: "/images/product-festival-v2.webp" },
   { id: "subwoofer", page: "/subwoofer", name: "Subwoofer 12\"", price: 295, image: "/images/product-subwoofer-v2.webp", tag: "Ny" },
-  { id: "lys", page: "/lys-pakke", name: "Lys-pakke", price: 495, image: "/images/product-lys.webp" },
-  { id: "rog", page: "/roegmaskine", name: "Røgmaskine", price: 250, image: "/images/product-rog.webp" },
-  { id: "discokugle", page: "/discokugle", name: "Discokugle", price: 250, image: "/images/product-discokugle.webp" },
-  { id: "lyskaeder", page: "/lyskaeder", name: "Lyskæder", price: 200, image: "/images/product-lyskaeder.webp" },
+  { id: "lys", page: "/lys-pakke", name: "Lys-pakke", price: 495, image: "/images/product-lys-v2.webp" },
+  { id: "rog", page: "/roegmaskine", name: "Røgmaskine", price: 250, image: "/images/product-rog-v2.webp" },
+  { id: "discokugle", page: "/discokugle", name: "Discokugle", price: 250, image: "/images/product-discokugle-v2.webp" },
+  { id: "lyskaeder", page: "/lyskaeder", name: "Lyskæder", price: 200, image: "/images/product-lyskaeder-v2.webp" },
 ];
 
 export default function ProductGrid() {

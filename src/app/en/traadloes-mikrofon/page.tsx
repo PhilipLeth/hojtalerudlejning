@@ -38,7 +38,7 @@ export default function Page() {
       price={295}
       headline="Rent a wireless microphone in Copenhagen"
       sub="Wireless handheld microphone for speeches, weddings and events."
-      image="/images/product-mikrofon.webp"
+      image="/images/product-mikrofon-v2.webp"
       imageAlt="Wireless microphone for rent in Copenhagen"
       productId="traadloes_mikrofon"
       bookLabel="Book the microphone now"

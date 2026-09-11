@@ -30,7 +30,7 @@ export default function Page() {
       price={1090}
       headline="Soundboks-pakken med lys — lyd uden stik, lys der gør det til en fest"
       sub="Soundboks 4 + lys-pakke med 2 farvede lamper og centereffekt. Bassen kører på batteri, lyset kræver en stikkontakt — spar 100 kr."
-      image="/images/product-soundboks.webp"
+      image="/images/product-soundboks-v2.webp"
       imageAlt="Soundboks-pakken med lys: Soundboks 4 og lys-pakke"
       productId="pakke_soundboks_lys"
       faqPhrase="Soundboks-pakken med lys"
