@@ -2759,7 +2759,8 @@
       "priority": "medium",
       "status": "todo",
       "epic": "epic-aov",
-      "story": "aov-5"
+      "story": "aov-5",
+      "note": "11. sept 2026: To interne varer lagt i kataloget som tilvalg med intern:true — 'lydmand' 1.000 kr pr. time (inkl. moms, antal = timer) og 'faktureringsgebyr' 100 kr. Admin lægger dem på ordren via Ret ordre, så de lander på faktura og kvittering; kunden ser dem ikke i bookingen, og de holdes ude af annoncer, udsalg, lager og galleri (isInternalAddon). Den kundevendte tekniker-pakke (2.500 kr/4 timer) er stadig ikke bygget."
     },
     {
       "id": "lager-bekraeft-antal",

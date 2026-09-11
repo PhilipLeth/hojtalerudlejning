@@ -60,6 +60,13 @@ export interface Addon {
   youtubeUrl?: string;
   /** Hvad er med — vist ved hover på produktkort */
   contents?: string[];
+  /**
+   * Intern vare: kan kun lægges på en ordre fra admin (Ret ordre) og lander
+   * dermed på faktura og kvittering — men vises aldrig for kunden i
+   * bookingen, i annoncer, i søgning eller på lageret. Prisen står stadig
+   * i pristabellen, så beløbet slås op i kataloget som alt andet.
+   */
+  intern?: boolean;
   da: AddonText;
   en: AddonText;
 }
@@ -404,6 +411,37 @@ export const addons: Addon[] = [
       desc: "Yamaha mixer with built-in effects — for bands, choirs and several microphones",
     },
   },
+  // ── Interne varer (11. sept 2026): lægges på ordren fra admin, ikke af kunden.
+  // Lydmand afregnes pr. time — antallet på ordrelinjen er antal timer.
+  // Alle priser i kataloget er inkl. moms, også disse.
+  {
+    id: "lydmand",
+    price: 1000,
+    image: null,
+    intern: true,
+    da: {
+      label: "Lydmand (pr. time)",
+      desc: "Lydtekniker på stedet under arrangementet — 1 linje pr. time",
+    },
+    en: {
+      label: "Sound engineer (per hour)",
+      desc: "Sound technician on site during the event — one line per hour",
+    },
+  },
+  {
+    id: "faktureringsgebyr",
+    price: 100,
+    image: null,
+    intern: true,
+    da: {
+      label: "Faktureringsgebyr",
+      desc: "Gebyr ved betaling på faktura",
+    },
+    en: {
+      label: "Invoicing fee",
+      desc: "Fee for payment by invoice",
+    },
+  },
 ];
 
 /**
@@ -441,6 +479,11 @@ export type DeliveryAddonId = (typeof DELIVERY_ADDON_IDS)[number];
 
 /** Gamle ordrer/kataloger bruger disse ids — de tæller stadig som kørsel */
 export const LEGACY_DELIVERY_IDS = ["levering", "levering_opsaetning"];
+
+/** Interne varer (fx lydmand, faktureringsgebyr) — kun til ordrer fra admin. */
+export function isInternalAddon(a: { intern?: boolean }): boolean {
+  return a.intern === true;
+}
 
 export function isDeliveryAddon(id: string): boolean {
   return (DELIVERY_ADDON_IDS as readonly string[]).includes(id) || LEGACY_DELIVERY_IDS.includes(id);

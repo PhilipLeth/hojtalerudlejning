@@ -15,6 +15,7 @@
 import {
   isBundleProduct,
   isDeliveryAddon,
+  isInternalAddon,
   type Addon,
   type RentalProduct,
   type Speaker,
@@ -69,7 +70,7 @@ export function stockItems(catalog: StockCatalog): StockItem[] {
     });
   }
   for (const a of catalog.addons) {
-    if (isDeliveryAddon(a.id)) continue;
+    if (isDeliveryAddon(a.id) || isInternalAddon(a)) continue; // ydelser fylder ikke på lageret
     out.push({ id: a.id, name: a.da.label, section: "addons", hidden: a.hidden });
   }
 

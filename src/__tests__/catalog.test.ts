@@ -43,7 +43,7 @@ describe("productCatalog uden katalog i KV", () => {
 
   it("dækker hele kodens katalog — det er dét, kunden ser", () => {
     const ids = new Set(productCatalog(null).map((p) => p.id));
-    const forventet = [...speakers, ...addons, ...rentalProducts]
+    const forventet = [...speakers, ...addons.filter((a) => !a.intern), ...rentalProducts]
       .map((p) => p.id)
       .filter((id) => id !== "festival_bas");
     for (const id of forventet) expect(ids, `${id} mangler`).toContain(id);
@@ -89,6 +89,14 @@ describe("productCatalog med katalog i KV", () => {
 
   it("springer produkter uden gyldig pris over", () => {
     expect(productCatalog(KV).map((p) => p.id)).not.toContain("ugyldig");
+  });
+
+  it("tager ikke interne varer med — de annonceres og rabatteres ikke", () => {
+    const ids = productCatalog(null).map((p) => p.id);
+    expect(ids).not.toContain("lydmand");
+    expect(ids).not.toContain("faktureringsgebyr");
+    expect(productCatalog({ addons: [{ id: "lydmand", price: 1000, intern: true, da: { label: "Lydmand" } }] })
+      .map((p) => p.id)).not.toContain("lydmand");
   });
 
   it("tager ikke det opfundne combo-SKU med", () => {

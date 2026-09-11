@@ -49,6 +49,7 @@ type RawProduct = {
   price?: number;
   page?: string;
   hidden?: boolean;
+  intern?: boolean;
   contents?: string[];
   da?: { name?: string; label?: string };
 };
@@ -66,6 +67,9 @@ function flatten(groups: Record<string, RawProduct[] | null | undefined>): Catal
       if (!p?.id || seen.has(p.id)) continue;
       // Opfundet combo-SKU — ikke et fysisk produkt
       if (p.id === "festival_bas") continue;
+      // Interne varer (lydmand, faktureringsgebyr) lægges på fra admin —
+      // de skal hverken annonceres, sættes på udsalg eller rabatteres
+      if (p.intern === true) continue;
       const price = Number(p.price);
       if (!Number.isFinite(price) || price < 0) continue;
       seen.add(p.id);

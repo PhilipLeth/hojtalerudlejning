@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice } from "@/lib/products";
+import { stockItems } from "@/lib/stock";
+import { mergeAddonsForTest } from "@/lib/useProducts";
 
 describe("Products data", () => {
   it("har fem højtalerpakker i stigen 0-30, 30-50, 50-100", () => {
@@ -247,12 +249,33 @@ describe("Addons data", () => {
     // sit eget — mixerne fik deres genereret efter husstilen 25. august 2026.
     const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge"];
     for (const a of addons) {
-      if (udenFoto.includes(a.id)) {
+      if (udenFoto.includes(a.id) || a.intern) {
         expect(a.image).toBeNull();
       } else {
         expect(a.image).toMatch(/^\/images\/product-.+\.(webp|svg)$/);
       }
     }
+  });
+
+  it("lydmand 1.000 kr pr. time og faktureringsgebyr 100 kr er interne varer (11. sept 2026)", () => {
+    const lydmand = addons.find((a) => a.id === "lydmand");
+    const gebyr = addons.find((a) => a.id === "faktureringsgebyr");
+    expect(lydmand).toMatchObject({ price: 1000, intern: true, image: null });
+    expect(lydmand?.da.label).toMatch(/pr\. time/);
+    expect(gebyr).toMatchObject({ price: 100, intern: true, image: null });
+    // De skal kunne lægges på en ordre fra admin — altså ikke skjult
+    expect(lydmand?.hidden).toBeFalsy();
+    expect(gebyr?.hidden).toBeFalsy();
+  });
+
+  it("interne varer holdes ude af lageret, men beholder flaget fra et gammelt KV-katalog", () => {
+    const lager = stockItems({ speakers, addons, rentalProducts }).map((i) => i.id);
+    expect(lager).not.toContain("lydmand");
+    expect(lager).not.toContain("faktureringsgebyr");
+    // Et KV-katalog gemt før flaget fandtes må ikke sende gebyret ud til kunden
+    const gammelt = addons.map((a) => (a.intern ? { ...a, intern: undefined } : a));
+    const flettet = mergeAddonsForTest(gammelt);
+    expect(flettet.find((a) => a.id === "faktureringsgebyr")?.intern).toBe(true);
   });
 
   it("all addons have da and en text", () => {

@@ -70,6 +70,11 @@ function mergeAddons(fromKv: Addon[]): Addon[] {
       if (!next.contents?.length && d?.contents?.length) {
         next = { ...next, contents: d.contents };
       }
+      // Intern-flaget styres fra koden — et gammelt KV-katalog må ikke
+      // sende faktureringsgebyret ud i kundens bookingflow.
+      if (d?.intern && !next.intern) {
+        next = { ...next, intern: true };
+      }
       return next;
     });
   // Nye tilvalg tilføjet i koden (fx subwoofer) skal også dukke op selvom

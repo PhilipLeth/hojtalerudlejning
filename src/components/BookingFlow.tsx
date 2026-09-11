@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useCallback, useRef, FormEvent } from "re
 import { rapporterFejl } from "@/lib/errorReport";
 import { type Locale, t } from "@/lib/i18n";
 
-import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, DELIVERY_ADDON_IDS } from "@/lib/products";
+import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, isInternalAddon, DELIVERY_ADDON_IDS } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
 import CapacityBadge, { capacityLevel } from "@/components/CapacityBadge";
@@ -693,8 +693,9 @@ export default function BookingFlow({
     () => catalog.speakers.map((sd) => ({ ...sd, ...sd[locale] })),
     [catalog.speakers, locale]
   );
+  // Interne varer (lydmand, faktureringsgebyr) lægges på fra admin — ikke her
   const addons = useMemo(
-    () => catalog.addons.map((ad) => ({ ...ad, ...ad[locale] })),
+    () => catalog.addons.filter((ad) => !isInternalAddon(ad)).map((ad) => ({ ...ad, ...ad[locale] })),
     [catalog.addons, locale]
   );
   const rentalProducts = catalog.rentalProducts;

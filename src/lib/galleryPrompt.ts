@@ -13,7 +13,7 @@
  */
 
 import scener from "../../gallery/scenes.json";
-import { LADDER_FEST, type Addon, type RentalProduct, type Speaker } from "./products";
+import { LADDER_FEST, isInternalAddon, type Addon, type RentalProduct, type Speaker } from "./products";
 
 export interface GalleryScene {
   id: string;
@@ -105,6 +105,7 @@ export function fladtKatalog(kat: Katalog): Map<string, FladtProdukt> {
     });
   }
   for (const a of kat.addons) {
+    if (isInternalAddon(a)) continue; // ingen vare at fotografere
     ud.set(a.id, {
       id: a.id, page: a.page, hidden: !!a.hidden,
       navn: a.da.label, navn_en: a.en.label, billede: a.image,
