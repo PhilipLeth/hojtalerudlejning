@@ -96,11 +96,14 @@ PAKKER: dict[str, dict] = {
     "product-pakke-stemningslys": {
         "dele": ["product-uplight-4.png", "product-lyskaeder.png", "product-discokugle.png"],
         "opstilling": (
-            "The four LED uplights stand in a loose row along the backdrop, switched on, washing it in a warm "
-            "amber and soft rose wash. The string of warm white festoon bulbs swags across the top of the frame, "
-            "glowing. The mirror ball hangs from its stand at the right, slowly turning, its small spotlight "
-            "scattering soft dots of light across the backdrop and floor — calm, warm and intimate rather than "
-            "a dance floor."
+            "The four LED uplights stand spaced out along the foot of the backdrop, two at the left and two at "
+            "the right, each tilted up and switched on, so four tall soft columns of warm amber and blush-pink "
+            "light climb the backdrop and blend into one warm glow. The string of warm white festoon bulbs "
+            "swags in two gentle loops across the top of the frame, every bulb glowing. The mirror ball hangs "
+            "from its stand slightly right of centre, a little above the uplights, slowly turning, and its own "
+            "small spotlight scatters a fine constellation of soft dots over the backdrop and the floor. "
+            "No remote controls, no loose accessories on the floor. The mood is calm, warm and intimate — a "
+            "lounge or wedding reception rather than a dance floor."
         ),
     },
     "product-pakke-diskotek": {

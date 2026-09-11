@@ -497,7 +497,7 @@ export const addons: Addon[] = [
  * forsvinder oplysningen af sig selv frem for at blive stående og lyve.
  */
 export const GENEREREDE_BILLEDER: ReadonlySet<string> = new Set([
-  "/images/product-pakke-stemningslys-taendt.webp",
+  "/images/product-pakke-stemningslys-taendt-v2.webp",
   "/images/product-pakke-diskolys-taendt.webp",
   "/images/product-pakke-teenagefest-taendt.webp",
   "/images/product-pakke-festtelt-taendt.webp",
@@ -881,7 +881,7 @@ export const rentalProducts: RentalProduct[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c",
     category: "lys",
     price: 1045,
-    image: "/images/product-pakke-stemningslys-taendt.webp",
+    image: "/images/product-pakke-stemningslys-taendt-v2.webp",
     name_da: "Stemningslys-pakken",
     name_en: "Ambient light package",
     desc_da: "4 uplights, lyskæde og discokugle — hele rummet skifter karakter. Spar 140 kr.",
