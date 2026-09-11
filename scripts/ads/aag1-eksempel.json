@@ -1,0 +1,38 @@
+{
+  "name": "AAG1: ad group example",
+  "status": "PAUSED",
+  "cpcBidMicros": 9000000,
+  "matchType": "EXACT",
+  "primary": "fest højtalere",
+  "keywords": [
+    { "text": "fest højtalere", "matchType": "EXACT" },
+    { "text": "fest højttaler", "matchType": "EXACT" },
+    { "text": "højtalere til fest", "matchType": "EXACT" },
+    { "text": "højtaler fest", "matchType": "EXACT" }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/hojtalerpakke-lille",
+  "path1": "fest-hoejtalere",
+  "headlines": [
+    "Fest Højtalere Til Leje",
+    "Fest Højtalere Fra 595 kr.",
+    "Lej Fest Højtalere I KBH",
+    "Højtalere Til Fest",
+    "2 Stk. Alto 10\" Højtalere",
+    "Bluetooth — Bare Stream Løs",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "Alle Kabler Med I Prisen",
+    "Nem Opsætning, Ingen Teknik",
+    "Klar Til Weekendens Fest",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Fest højtalere til leje i København fra 595 kr. 2× Alto 10\" med Bluetooth og kabler.",
+    "Book fest højtalere online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Højtalere til fest fra 595 kr/weekend. Hent i København S eller få leveret for 495 kr.",
+    "Alt med i prisen: to højtalere, Bluetooth, AUX og strømkabler. Nem opsætning uden teknik."
+  ]
+}

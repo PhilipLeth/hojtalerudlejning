@@ -11,7 +11,9 @@
     "test:watch": "vitest",
     "postbuild": "python3 scripts/generate-sitemap.py --write && python3 scripts/generate-llms-txt.py --write",
     "gallery": "node scripts/product-images/generate.mjs",
-    "gallery:manifest": "node scripts/product-images/generate.mjs --manifest"
+    "gallery:manifest": "node scripts/product-images/generate.mjs --manifest",
+    "ads": "node scripts/ads/manage.mjs",
+    "ads:opret": "node scripts/ads/create-ad-group.mjs"
   },
   "dependencies": {
     "@stripe/stripe-js": "^9.12.1",
