@@ -24,7 +24,7 @@
  */
 
 import fs from "node:fs";
-import { CAMPAIGN_ID, CUSTOMER_ID, GROUP_NEGATIVES, adGroupUrl, connect, mutate } from "./lib.mjs";
+import { CAMPAIGN_ID, CUSTOMER_ID, GROUP_NEGATIVES, adGroupUrl, connect, mutate, nextAagNumber } from "./lib.mjs";
 
 /** Samme opbygning som createAdGroup() i functions/api/_lib/googleads.ts. */
 function operations(group, cid) {
@@ -103,6 +103,15 @@ async function main() {
   console.log("");
 
   const { creds, token } = await connect();
+
+  // "AAG:" uden nummer får det næste ledige. Kontoen er kilden — to kørsler
+  // ville ellers give samme nummer.
+  if (/^aag\s*:/i.test(group.name ?? "")) {
+    const nr = await nextAagNumber(token, creds);
+    group.name = group.name.trim().replace(/^aag\s*:/i, `AAG${nr}:`);
+    console.log(`Nummereret: ${group.name}\n`);
+  }
+
   const ops = operations(group, CUSTOMER_ID);
 
   // Preflight altid — også når vi opretter. Uden det kan Google afvise en

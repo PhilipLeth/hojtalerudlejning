@@ -10,6 +10,7 @@
  *   node scripts/ads/manage.mjs bud      <id> 6.50
  *   node scripts/ads/manage.mjs status   <id> paused|enabled
  *   node scripts/ads/manage.mjs negativ  <id> "fest højtalere" [exact|phrase]
+ *   node scripts/ads/manage.mjs nummerer            # AAG: … -> AAG1:, AAG2: …
  *
  * Uden --udfoer er alt tørløb: scriptet viser nuværende tilstand, hvad der
  * ville ændres, og kører ændringen gennem Googles validateOnly — men skriver
@@ -20,7 +21,7 @@
  * gamle gruppe lukker præcis den ene søgning ud og lader resten køre.
  */
 
-import { CAMPAIGN_ID, CUSTOMER_ID, adGroupUrl, connect, mutate, search } from "./lib.mjs";
+import { CAMPAIGN_ID, CUSTOMER_ID, adGroupUrl, connect, mutate, nextAagNumber, search } from "./lib.mjs";
 
 const KR = (micros) => (Number(micros) / 1e6).toFixed(2);
 
@@ -62,10 +63,45 @@ function opdater(id, felter, mask) {
   };
 }
 
+/** Giv de AAG-grupper der mangler nummer et fortløbende ét. */
+async function nummerer(token, creds, udfoer) {
+  const rows = await search(
+    token,
+    creds,
+    "SELECT ad_group.id, ad_group.name FROM ad_group WHERE ad_group.status != 'REMOVED' ORDER BY ad_group.id",
+  );
+  const uden = rows.filter((r) => /^aag\s*:/i.test((r.adGroup?.name ?? "").trim()));
+  if (!uden.length) {
+    console.log("Ingen AAG-grupper mangler nummer.");
+    return;
+  }
+  let nr = await nextAagNumber(token, creds);
+  const ops = [];
+  for (const r of uden) {
+    const gammelt = r.adGroup.name.trim();
+    const nyt = gammelt.replace(/^aag\s*:/i, `AAG${nr++}:`);
+    console.log(`  "${gammelt}"  ->  "${nyt}"`);
+    ops.push(opdater(r.adGroup.id, { name: nyt }, "name"));
+  }
+  await mutate(token, creds, ops, true);
+  console.log("\nPreflight hos Google: OK");
+  if (!udfoer) {
+    console.log("Tørløb. Intet er ændret. Kør igen med --udfoer.");
+    return;
+  }
+  await mutate(token, creds, ops, false);
+  console.log(`GEMT — ${ops.length} grupper nummereret.`);
+}
+
 async function main() {
   const [kommando, id, ...rest] = process.argv.slice(2);
-  const udfoer = rest.includes("--udfoer");
+  const udfoer = rest.includes("--udfoer") || (id ?? "") === "--udfoer";
   const arg = rest.filter((a) => !a.startsWith("--"));
+
+  if (kommando === "nummerer") {
+    const { creds, token } = await connect();
+    return nummerer(token, creds, udfoer);
+  }
 
   if (!kommando || !id) {
     console.error("Brug: node scripts/ads/manage.mjs <vis|omdoeb|bud|status|negativ> <id> [værdi] [--udfoer]");

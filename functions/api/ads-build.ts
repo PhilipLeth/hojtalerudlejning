@@ -395,6 +395,23 @@ function strings(list: unknown, max: number): string[] {
 }
 
 /**
+ * Næste ledige AAG-nummer.
+ *
+ * AAG-grupperne er maskinskrevne exact-grupper, og de skal kunne læses i
+ * rækkefølge i rapporterne — AAG1, AAG2, AAG3. Nummeret kan ikke findes i
+ * klienten, for den kender ikke kontoen; det tildeles her, hvor navnene
+ * allerede er hentet til dublettjekket.
+ */
+export function nextAagNumber(navne: Iterable<string>): number {
+  let hoejest = 0;
+  for (const n of navne) {
+    const m = /^aag\s*(\d+)\s*:/i.exec(n.trim());
+    if (m) hoejest = Math.max(hoejest, Number(m[1]));
+  }
+  return hoejest + 1;
+}
+
+/**
  * Gør ét indsendt forslag til noget vi tør sende til Google.
  *
  * Returnerer enten gruppen eller en liste af fejl — aldrig en halvt godkendt
@@ -592,9 +609,17 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       // fejler i næste kald med en besked fra Google
     }
 
+    // AAG-grupper nummereres fortløbende. Kunne klienten selv gøre det, ville
+    // to faner give samme nummer — kontoen er kilden, og den kendes kun her.
+    let aagNr = nextAagNumber(existingNames);
+
     const prepared: Array<{ group: NewAdGroup; primary: string }> = [];
     const errors: string[] = [];
-    for (const input of groups) {
+    for (let input of groups) {
+      const navn = (input.name ?? "").trim();
+      if (/^aag\s*:/i.test(navn)) {
+        input = { ...input, name: navn.replace(/^aag\s*:/i, `AAG${aagNr++}:`) };
+      }
       const result = prepareGroup(input, pages, productTerms, existingNames);
       if ("errors" in result) errors.push(...result.errors);
       else prepared.push(result);

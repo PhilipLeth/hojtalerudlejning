@@ -106,3 +106,21 @@ export async function connect() {
 export function adGroupUrl(id) {
   return `https://ads.google.com/aw/adgroups?campaignId=${CAMPAIGN_ID}&adGroupId=${id}`;
 }
+
+/**
+ * Næste ledige AAG-nummer, læst af kontoen. Samme regel som
+ * nextAagNumber() i functions/api/ads-build.ts.
+ */
+export async function nextAagNumber(token, creds) {
+  const rows = await search(
+    token,
+    creds,
+    "SELECT ad_group.name FROM ad_group WHERE ad_group.status != 'REMOVED'",
+  );
+  let hoejest = 0;
+  for (const r of rows) {
+    const m = /^aag\s*(\d+)\s*:/i.exec((r.adGroup?.name ?? "").trim());
+    if (m) hoejest = Math.max(hoejest, Number(m[1]));
+  }
+  return hoejest + 1;
+}
