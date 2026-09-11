@@ -53,6 +53,7 @@ export default function Page() {
       ]}
       related={[
         { href: "/festpakke-stor", label: "Large party package", priceId: "pakke_fest_stor" },
+        { href: "/ungdomsfest", label: "Sound and lights for a youth party", priceId: "pakke_ungdomsfest" },
         { href: "/havefest", label: "Sound for a garden party" },
         { href: "/konfirmation", label: "Sound for a confirmation party" },
         { href: "/festlys", label: "Party lights" },

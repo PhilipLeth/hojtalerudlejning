@@ -60,6 +60,26 @@ PAKKER: dict[str, dict] = {
             "coloured festoon bulbs is draped in a low swag across the foreground, lit warm."
         ),
     },
+    "product-pakke-ungdomsfest": {
+        "dele": ["product-soundboks.png", "product-lyseffekt.png", "product-discokugle.png"],
+        "opstilling": (
+            "The Soundboks stands upright a little left of centre, its black grille catching the coloured light. "
+            "The mirror ball on its stand rises at the right, its pin spot on the floor in front of it aimed up "
+            "at the ball so it scatters dots over backdrop and floor. The LED par light sits low on the floor "
+            "between them, tilted up, throwing magenta and blue across the floor and the side of the speaker."
+        ),
+    },
+    "product-pakke-ungdomsfest-stor": {
+        "dele": ["product-festival.png", "product-lys.png", "product-discokugle.png", "product-rog.png"],
+        "opstilling": (
+            "The two large speakers stand upright at the far left and far right of the frame like the edges of a "
+            "stage. Between them the light package on its stand rises at the back, its two colour lamps and the "
+            "centre effect throwing red, green and blue beams up and out. The mirror ball on its stand stands "
+            "just right of centre in front of the light stand, its pin spot on the floor aimed up at the ball so "
+            "it scatters dots everywhere. The fog machine sits low at the front left, a soft plume of fog "
+            "drifting out of it and hanging in the beams."
+        ),
+    },
     "product-pakke-festtelt": {
         "dele": ["product-uplight-4.png", "product-lyskaeder.png", "product-lyskaeder-farvet.png"],
         "opstilling": (
@@ -215,7 +235,7 @@ def generer(navn: str, spec: dict, api: str) -> bytes:
     return base64.b64decode(b64)
 
 
-def install(navn: str) -> None:
+def install(navn: str, suffiks: str = "") -> None:
     """
     Filnavnet får -taendt, og det er ikke pynt.
 
@@ -226,7 +246,8 @@ def install(navn: str) -> None:
     vej. Skifter billedet igen, skal navnet skifte igen.
     """
     kilde = os.path.join(RAA, f"{navn}.png")
-    navn = f"{navn}-taendt"
+    # --suffiks -v2: findes -taendt allerede i cachen, skal det nye have nyt navn
+    navn = f"{navn}-taendt{suffiks}"
     if not os.path.exists(kilde):
         raise SystemExit(f"Ikke genereret endnu: {kilde}")
     im = Image.open(kilde).convert("RGB").resize((1024, 1024), Image.LANCZOS)
@@ -241,6 +262,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true", help="kald modellen (koster penge)")
     ap.add_argument("--install", action="store_true", help="flyt et gennemset billede til public/images")
+    ap.add_argument("--suffiks", default="", help="fx --suffiks=-v2 (med lighedstegn, ellers læses -v2 som et flag): nyt filnavn, når -taendt allerede er cachet på CDN'et")
     ap.add_argument("--only", help="kun ét navn")
     flag = ap.parse_args()
 
@@ -250,7 +272,7 @@ def main() -> None:
 
     if flag.install:
         for n in navne:
-            install(n)
+            install(n, flag.suffiks)
         return
 
     if not flag.apply:

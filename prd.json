@@ -3750,5 +3750,33 @@
     "loesning": "src/components/admin/LinjeFelt.tsx holder sin egen kladde, mens der skrives, og viser den råt. Kataloget får stadig den rensede liste ved hvert tastetryk, så 'Gem ændringer' virker uden at klikke ud af feltet. Ved blur kastes kladden væk, og man ser præcis det, der bliver gemt — derfor står der en linje under feltet om, at tomme linjer og mellemrum ryddes væk, så oprydningen ikke ligner endnu en fejl. Feltet vokser også med indholdet i stedet for at stå på to rækker.",
     "samme_fejl_andre_steder": "Annoncebyggeren (/admin/ads/opret) havde præcis samme fælde i Overskrifter og Beskrivelser — begge er nu LinjeFelt. /admin/ads/efterspoergsel var i forvejen rigtig: den holder frøTekst som rå kladde og parser først ved brug. youtubeUrl-felterne trimmer stadig i onChange, men en URL har ikke mellemrum, så det blokerer intet.",
     "test": "indhold-felt.test.tsx prøver ADFÆRDEN, ikke kilden. Første udgave læste kildeteksten og sprang den rigtige prøve over, hvis komponenten ikke kunne importeres — derfor ligger komponenten i en egen fil. Bevist ved at gendanne den gamle opførsel: præcis de to tests, der beskriver Frederiks to klager, bliver røde."
+  },
+  "ungdomsfest_pakker_2026_09_11": {
+    "status": "kode klar — live når KV-kataloget er nulstillet (se kv_katalog_stale_2026_09_11)",
+    "date": "2026-09-11",
+    "beslutning": "Philip: 'VI skal have ungdomsfest pakker - det gav udlejninger i gamle dage'. Keyword Planner viser næsten ingen lejevolumen på UV/strobe/laser, men værdien er SEO og at ramme dem, der ikke leder aktivt efter grej — de leder efter 'ungdomsfest'.",
+    "pakker": "Ungdomsfest-pakken 1.395 kr (Soundboks 4 + lyseffekt + discokugle 30, spar 190; op til 50 gæster i kælder/garage/stue) og Stor ungdomsfest-pakke 2.395 kr (festival-sæt 2× 12\" + lys-pakke + discokugle 40 + røgmaskine, spar 285; op til 100 gæster i forsamlingshus/hal). Kapaciteterne følger katalogets egne ('0-30 pers.' / '30-50 pers.' + pakke_fest_stor's 100) — ingen påstande om timer på batteri eller flere gæster end delene kan bære.",
+    "sider": "/ungdomsfest (OccasionLanding: pakkerne, teenagefest-lys, soundboks, røg, discokugle; fire tips; fem FAQ) + /ungdomsfest-pakke + /ungdomsfest-pakke-stor (ProductLanding), alle tre med engelsk udgave og localeAlternates begge veje, skrevet i EN_PAGES. Krydslinks fra /foedselsdag, /studenterkoersel og /teenagefest-lys (DA+EN). IKKE i 'Til din anledning'-menuen: den har allerede seks links og testen låser loftet — vil man have ungdomsfest ind, skal et andet ud.",
+    "uv_strobe_laser": "Bevidst IKKE på siderne som udstyr: vi ejer det ikke, og en udlejning kan ikke reklamere med grej, den ikke har. FAQ'en på /ungdomsfest siger det ærligt ('Ikke endnu … får vi nok forespørgsler, køber vi det ind'), så søgningen fanges uden at love noget.",
+    "billeder": "Stilede pakkebilleder via generate_bundle_hero.py (product-pakke-ungdomsfest-taendt, product-pakke-ungdomsfest-stor-taendt), med spot på discokuglen som reglen nedenfor. Ingen galleribilleder endnu — 6 billeder ≈ 0,80 $, Philips kald.",
+    "seo_ord": "ungdomsfest, lyd og lys til ungdomsfest, 18 års fødselsdag fest, gymnasiefest, efterfest, blå mandag."
+  },
+  "discokugle_spot_regel_2026_09_11": {
+    "date": "2026-09-11",
+    "regel": "Philip: 'Når der er billeder med discokugle og spot er det bedst, hvis spottet lyser på discokuglen og laver den klassiske effekt'. Alle billeder med discokugle skal vise pin-spottet rettet MOD kuglen og lysprikkerne på vægge og loft — ikke en kugle der hænger mørkt ved siden af en lampe.",
+    "gjort": "Seks pakkebilleder lavet om (diskolys, teenagefest, diskotek → -taendt-v2; stemningslys → -taendt-v3; de to ungdomsfest-pakker nye) og 18 galleribilleder (discokugle, discokugle_30, pakke_diskolys, pakke_diskotek, pakke_teenagefest, pakke_stemningslys) genereret igen, ≈3 $ godkendt af Philip. Prompterne i generate_bundle_hero.py og gallery/scenes.json siger nu eksplicit 'pin spot aimed at the mirror ball'.",
+    "hero_suffiks": "generate_bundle_hero.py --install --suffiks=-v2 --only <navn> installerer under nyt navn (product-<navn>-taendt-v2.*), så cache-reglen kan overholdes uden at omdøbe i hånden. Skriv det med '=' — '--suffiks -v2' læses som et flag."
+  },
+  "galleri_cache_version_2026_09_11": {
+    "date": "2026-09-11",
+    "problem": "Galleribillederne ligger på faste stier (/images/gallery/<id>/<scene>.webp), og manifestet bygges af filerne på disken. At lave et billede om betød samme filnavn — og dermed det gamle billede i 30 dage fra CDN'et (lyspakker_2026_09.cache_faelden). Oven i det kopierer KV-manifestet (gallery_manifest) stien den dag billedet slås til, så selv en omdøbning i koden nåede ikke de ni disko-billeder, der allerede var aktive.",
+    "loesning": "generate.mjs --manifest sætter en indholdshash på stien: src = '/images/gallery/…/i_brug.webp?v=1a2b3c4d' (også thumb). Filen på disken hedder det samme; produktgalleri.test.tsx stripper ?v= før den tjekker at filen findes. GET /api/gallery erstatter src/thumb på alle poster, der peger på /images/gallery/, med kodens aktuelle sti (medKodensStier) — KV husker kun om billedet er slået til. Admin-uploads (/api/image/…) røres ikke; de har ingen kopi i koden. galleri-admin.test.tsx låser adfærden.",
+    "regel": "Genererer du et galleribillede om, så kør --manifest bagefter og deploy — så følger den nye hash med af sig selv. Katalog- og pakkebilleder (product-*.webp) har stadig ingen hash: der gælder nyt filnavn (-v2, -v3 …)."
+  },
+  "kv_katalog_stale_2026_09_11": {
+    "date": "2026-09-11",
+    "fund": "products_catalog i KV er et gammelt øjebliksbillede, gemt ved et uheld 10. sep af 'lav produktfoto om'-testen. Det skygger for HELE koden (functions/api/products.ts returnerer KV råt): Soundboks står til 795 (koden siger 695 siden 10/9), tolv AV-produkter er stadig skjult mod Philips beslutning 8/9, og elleve produkter mangler (de fem lys-pakker, tre lydmand-pakker, lydmand, lydmand_4t, faktureringsgebyr). Alle forskelle er ældre end koden — der er intet i KV, der skal bevares.",
+    "konsekvens": "Ingen katalogændring fra koden er live, før nøglen slettes — heller ikke ungdomsfest-pakkerne. Wrangler-kald mod KV er spærret for AI-sessionen, så Philip kører selv: CLOUDFLARE_ACCOUNT_ID=3e5a00606c7d80a43b229f6d15994043 npx wrangler kv key delete --namespace-id=c46378bfa06c46c19841331217f812c5 products_catalog (eller Frederik trykker 'Nulstil til standard' i /admin/produkter). Backup af KV-indholdet ligger i sessionens scratchpad som products_catalog.backup.json.",
+    "laere": "Den admin-test/funktion, der skriver kataloget, må ikke gemme hele kataloget som bivirkning af en billedhandling. Se kv-skygger-for-koden."
   }
 }

@@ -30,7 +30,7 @@ export default function StemningslysPage() {
       price={1045}
       headline="Stemningslys-pakken — lys uden lyd"
       sub="4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet — spar 140 kr."
-      image="/images/product-pakke-stemningslys-taendt-v2.webp"
+      image="/images/product-pakke-stemningslys-taendt-v3.webp"
       imageAlt="Stemningslys-pakken med uplights, lyskæde og discokugle"
       productId="pakke_stemningslys"
       faqPhrase="stemningslys-pakken"

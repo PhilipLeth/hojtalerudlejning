@@ -63,6 +63,7 @@ export default function Page() {
       related={[
         { href: "/studenterpakke", label: "The graduation package", priceId: "pakke_student" },
         { href: "/soundboks-4", label: "Soundboks 4" },
+        { href: "/ungdomsfest", label: "Sound and lights for the graduation party" },
         { href: "/lej-hojtaler", label: "All speakers" },
         { href: "/mackie-thump-go", label: "Mackie Thump GO" },
       ]}

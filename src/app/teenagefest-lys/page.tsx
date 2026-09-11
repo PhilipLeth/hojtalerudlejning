@@ -29,7 +29,7 @@ export default function Side() {
       price={945}
       headline="Teenagefest-lys — kælderen bliver en klub"
       sub="Diskolyseffekt, discokugle og 10 m farvet lyskæde. Sluk loftslyset, tænd pakken — spar 140 kr."
-      image="/images/product-pakke-teenagefest-taendt.webp"
+      image="/images/product-pakke-teenagefest-taendt-v2.webp"
       imageAlt="Teenagefest-lys tændt: discokugle, LED-lyseffekt og farvet lyskæde i et mørkt rum"
       productId="pakke_teenagefest"
       faqPhrase="teenagefest-lys"
@@ -51,6 +51,9 @@ export default function Side() {
           <div className="flex flex-wrap gap-3">
             <Link href="/soundboks-4" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
               Lej en Soundboks
+            </Link>
+            <Link href="/ungdomsfest" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
+              Lyd og lys samlet: ungdomsfest-pakken
             </Link>
             <Link href="/festlys" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
               Alt om festlys

@@ -30,7 +30,7 @@ export default function Page() {
       price={945}
       headline="Teen party lights — the basement becomes a club"
       sub="Disco effect, disco ball and 10 m of coloured fairy lights. Kill the ceiling light, switch this on — save 140 DKK."
-      image="/images/product-pakke-teenagefest-taendt.webp"
+      image="/images/product-pakke-teenagefest-taendt-v2.webp"
       imageAlt="Teen party lights switched on: mirror ball, LED par light and a coloured festoon string"
       productId="pakke_teenagefest"
       faqPhrase="teen party lights"
@@ -52,6 +52,9 @@ export default function Page() {
           <div className="flex flex-wrap gap-3">
             <Link href="/en/soundboks-4" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
               Rent a Soundboks
+            </Link>
+            <Link href="/en/ungdomsfest" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">
+              Sound and lights together: the youth party package
             </Link>
           </div>
         </div>

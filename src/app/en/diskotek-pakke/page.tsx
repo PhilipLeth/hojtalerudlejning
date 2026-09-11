@@ -30,7 +30,7 @@ export default function Page() {
       price={1295}
       headline="Club light package — a full dancefloor, no fog"
       sub="Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms — save 190 DKK."
-      image="/images/product-pakke-diskotek-taendt.webp"
+      image="/images/product-pakke-diskotek-taendt-v2.webp"
       imageAlt="Club light package switched on: light bar on a stand, mirror ball and an extra LED par light"
       productId="pakke_diskotek"
       faqPhrase="club light package"

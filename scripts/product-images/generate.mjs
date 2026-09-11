@@ -30,6 +30,7 @@
  *   node scripts/product-images/generate.mjs --manifest       # kun manifestet
  */
 
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -175,15 +176,29 @@ async function skrivWebp(raa, udSti, cfg) {
  * planen. Så kan galleriet aldrig komme til at pege på et billede, der ikke
  * blev genereret, og en halv kørsel giver et halvt galleri frem for 404'ere.
  */
+/**
+ * Indholdshash som query-streng på stien.
+ *
+ * /images/* caches 30 dage i CDN'et, og filnavnene bærer ingen hash. Da disko-
+ * billederne blev genereret om under samme navn, ville kunderne have set de
+ * gamle i en måned. Hashen skifter, når indholdet gør — og stien er stadig den
+ * samme fil på disken, så produktgalleri.test.tsx kan tjekke at den findes.
+ */
+function versioneret(sti) {
+  const hash = createHash("sha1").update(readFileSync(sti)).digest("hex").slice(0, 8);
+  return `?v=${hash}`;
+}
+
 function skrivManifest(opgaver, cfg) {
   const pr = new Map();
   for (const o of opgaver) {
     if (!existsSync(o.udSti)) continue;
     const rel = "/" + relative(join(ROD, "public"), o.udSti).split("\\").join("/");
+    const thumbSti = o.udSti.replace(/\.webp$/, "-400.webp");
     if (!pr.has(o.produkt.id)) pr.set(o.produkt.id, []);
     pr.get(o.produkt.id).push({
-      src: rel,
-      thumb: rel.replace(/\.webp$/, "-400.webp"),
+      src: rel + versioneret(o.udSti),
+      thumb: rel.replace(/\.webp$/, "-400.webp") + (existsSync(thumbSti) ? versioneret(thumbSti) : ""),
       scene: o.scene.id,
       ratio: o.ratio,
       titel_da: o.scene.titel_da,
@@ -214,7 +229,7 @@ function skrivManifest(opgaver, cfg) {
  */
 
 export interface GalleryImage {
-  /** 1600px WebP */
+  /** 1600px WebP — med indholdshash som ?v=, så CDN'et slipper det gamle billede ved en ny generering */
   src: string;
   /** 400px WebP til gitteret */
   thumb: string;

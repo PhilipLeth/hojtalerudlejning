@@ -128,6 +128,36 @@ describe("/api/gallery", () => {
     const get = kilde.slice(kilde.indexOf("onRequestGet"), kilde.indexOf("hentKatalog"));
     expect(get).not.toMatch(/requireAdmin/);
   });
+
+  /**
+   * KV kopierede stien den dag billedet blev slået til. Blev billedet så
+   * genereret om, sad kunderne med det gamle: CDN'et cacher /images/* i 30
+   * dage, og ingen trykkede på knappen igen. Nu bærer kodens sti en
+   * indholdshash (?v=…), og GET skal svare med DEN — ikke med KV's kopi.
+   */
+  it("svarer med kodens sti for committede billeder, så en ny hash når kunderne", async () => {
+    const { onRequestGet } = await import("../../functions/api/gallery");
+    const { PRODUCT_GALLERY } = await import("@/lib/productGallery");
+    const [productId, billeder] = Object.entries(PRODUCT_GALLERY).find(([, l]) => l.length > 0)!;
+    const statisk = billeder[0];
+    expect(statisk.src).toMatch(/\?v=[0-9a-f]{8}$/);
+
+    const gammel = statisk.src.replace(/\?.*$/, ""); // som KV husker den fra før hashen
+    const kv = {
+      [productId]: [
+        { ...statisk, src: gammel, thumb: statisk.thumb.replace(/\?.*$/, ""), aktiv: true },
+        { ...statisk, scene: "admin_upload", src: "/api/image/img_1", thumb: "/api/image/img_1", aktiv: true },
+      ],
+    };
+    const env = { BOOKINGS: { get: vi.fn().mockResolvedValue(JSON.stringify(kv)) } };
+    const res = await (onRequestGet as any)({ request: new Request("https://x/api/gallery"), env });
+    const svar = await res.json();
+    expect(svar[productId][0].src).toBe(statisk.src);
+    expect(svar[productId][0].thumb).toBe(statisk.thumb);
+    expect(svar[productId][0].aktiv).toBe(true);
+    // Admin-uploads har ingen kopi i koden og skal stå urørte
+    expect(svar[productId][1].src).toBe("/api/image/img_1");
+  });
 });
 
 describe("useGallery", () => {

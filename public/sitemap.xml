@@ -536,6 +536,21 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/en/ungdomsfest</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/ungdomsfest-pakke</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/ungdomsfest-pakke-stor</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en/uplights</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -902,6 +917,21 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/udendorspakke</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/ungdomsfest</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/ungdomsfest-pakke</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/ungdomsfest-pakke-stor</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

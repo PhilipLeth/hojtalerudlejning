@@ -117,10 +117,31 @@ export const onRequestOptions: PagesFunction<Env> = async () =>
 
 /* ───── offentligt: manifestet ───── */
 
+/**
+ * Stien til et committet billede kommer fra koden, ikke fra KV.
+ *
+ * KV husker, om billedet er slået til, og kopierer stien den dag det sker. Men
+ * generate.mjs sætter en indholdshash på stien (?v=…), som skifter når billedet
+ * laves om — og den skal nå kunderne uden at nogen trykker på knappen igen.
+ * Admin-uploads (/api/image/…) rører vi ikke; de har ingen kopi i koden.
+ */
+function medKodensStier(manifest: Manifest): Manifest {
+  const ud: Manifest = {};
+  for (const [productId, liste] of Object.entries(manifest)) {
+    ud[productId] = liste.map((b) => {
+      if (!b.src?.startsWith("/images/gallery/")) return b;
+      const statisk = (PRODUCT_GALLERY[productId] ?? []).find((s) => s.scene === b.scene);
+      return statisk ? { ...b, src: statisk.src, thumb: statisk.thumb } : b;
+    });
+  }
+  return ud;
+}
+
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
     const raw = await context.env.BOOKINGS.get(MANIFEST_KEY);
-    return new Response(raw ?? "{}", { status: 200, headers: cors });
+    const manifest: Manifest = JSON.parse(raw ?? "{}");
+    return svar(medKodensStier(manifest));
   } catch (e) {
     console.error("[gallery] GET fejlede:", e);
     return svar({}, 200); // et galleri er pynt — siden skal ikke knække med det

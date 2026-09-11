@@ -24,7 +24,9 @@ describe("Manifestet", () => {
     for (const [id, billeder] of Object.entries(PRODUCT_GALLERY)) {
       for (const b of billeder) {
         for (const sti of [b.src, b.thumb]) {
-          if (!existsSync(join(ROD, "public", sti.replace(/^\//, "")))) mangler.push(`${id}: ${sti}`);
+          // ?v=<hash> er cache-versionen, ikke en del af filnavnet
+          const fil = sti.replace(/^\//, "").replace(/\?.*$/, "");
+          if (!existsSync(join(ROD, "public", fil))) mangler.push(`${id}: ${sti}`);
         }
       }
     }

@@ -497,13 +497,15 @@ export const addons: Addon[] = [
  * forsvinder oplysningen af sig selv frem for at blive stående og lyve.
  */
 export const GENEREREDE_BILLEDER: ReadonlySet<string> = new Set([
-  "/images/product-pakke-stemningslys-taendt-v2.webp",
-  "/images/product-pakke-diskolys-taendt.webp",
-  "/images/product-pakke-teenagefest-taendt.webp",
+  "/images/product-pakke-stemningslys-taendt-v3.webp",
+  "/images/product-pakke-diskolys-taendt-v2.webp",
+  "/images/product-pakke-teenagefest-taendt-v2.webp",
   "/images/product-pakke-festtelt-taendt.webp",
   "/images/product-pakke-bryllupslys-taendt.webp",
-  "/images/product-pakke-diskotek-taendt.webp",
+  "/images/product-pakke-diskotek-taendt-v2.webp",
   "/images/product-pakke-bryllup-taendt.webp",
+  "/images/product-pakke-ungdomsfest-taendt.webp",
+  "/images/product-pakke-ungdomsfest-stor-taendt.webp",
 ]);
 
 /** Er billedet genereret? Bruges til oplysningen under produktbilledet. */
@@ -881,7 +883,7 @@ export const rentalProducts: RentalProduct[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c",
     category: "lys",
     price: 1045,
-    image: "/images/product-pakke-stemningslys-taendt-v2.webp",
+    image: "/images/product-pakke-stemningslys-taendt-v3.webp",
     name_da: "Stemningslys-pakken",
     name_en: "Ambient light package",
     desc_da: "4 uplights, lyskæde og discokugle — hele rummet skifter karakter. Spar 140 kr.",
@@ -905,7 +907,7 @@ export const rentalProducts: RentalProduct[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=XhecuXfY0vo",
     category: "lys",
     price: 845,
-    image: "/images/product-pakke-diskolys-taendt.webp",
+    image: "/images/product-pakke-diskolys-taendt-v2.webp",
     name_da: "Diskolys-pakken",
     name_en: "Disco light package",
     desc_da: "Diskolyseffekt og discokugle — dansegulvet for 845 kr. Spar 145 kr.",
@@ -928,7 +930,7 @@ export const rentalProducts: RentalProduct[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM",
     category: "lys",
     price: 945,
-    image: "/images/product-pakke-teenagefest-taendt.webp",
+    image: "/images/product-pakke-teenagefest-taendt-v2.webp",
     name_da: "Teenagefest-lys",
     name_en: "Teen party lights",
     desc_da: "Diskolyseffekt, discokugle og farvet lyskæde — kælderen bliver en klub for 945 kr. Spar 140 kr.",
@@ -1000,7 +1002,7 @@ export const rentalProducts: RentalProduct[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=FcOqGlPsyYY",
     category: "lys",
     price: 1295,
-    image: "/images/product-pakke-diskotek-taendt.webp",
+    image: "/images/product-pakke-diskotek-taendt-v2.webp",
     name_da: "Diskotek-pakken",
     name_en: "Club light package",
     desc_da: "Lys-pakke, diskolyseffekt og discokugle — fuldt dansegulv uden røg for 1.295 kr. Spar 190 kr.",
@@ -1037,6 +1039,58 @@ export const rentalProducts: RentalProduct[] = [
       parts: [
         { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 695 },
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
+      ],
+    },
+  },
+  // Ungdomsfest-pakkerne (11. sept 2026): lyd + diskolys i én pris. De gav
+  // udlejninger dengang sitet var nyt, og "ungdomsfest"/"18 års fødselsdag" er
+  // søgeord med værdi, selv om Keyword Planner ikke måler lejevolumen på dem.
+  // Ingen UV, strobe eller laser — det ejer vi ikke, og vi lister ikke grej,
+  // vi ikke kan levere. Siden /ungdomsfest siger det ærligt og samler efterspørgslen.
+  {
+    id: "pakke_ungdomsfest",
+    page: "/ungdomsfest-pakke",
+    category: "lyd",
+    price: 1395,
+    image: "/images/product-pakke-ungdomsfest-taendt.webp",
+    name_da: "Ungdomsfest-pakken",
+    name_en: "Youth party package",
+    desc_da: "Soundboks 4, diskolyseffekt og discokugle — lyd og lys til ungdomsfesten for 1.395 kr. Spar 190 kr.",
+    desc_en: "Soundboks 4, disco light effect and mirror ball — sound and lights for a youth party at 1,395 DKK. Save 190 DKK.",
+    contents: ["Soundboks 4 (batteri)", "LED-par-lys med automatiske farveeffekter", "Discokugle 30 cm med motor og spot", "Strømkabler"],
+    allowedAddons: ["rog", "lyskaeder_farvet", "batteri", ...DELIVERY_ADDON_IDS],
+    bundle: {
+      discount: 190,
+      usecase_da: "Til 16-, 18- og 20-årsfødselsdagen, efterfesten og gymnasiefesten hjemme: Soundboksen spiller højt nok til 50 gæster og kører på batteri, kuglen og lyseffekten laver dansegulvet. Sæt op på ti minutter, uden teknikker.",
+      usecase_en: "For the 16th, 18th or 20th birthday, the after-party or the school party at home: the Soundboks is loud enough for 50 guests and runs on battery, the mirror ball and light effect make the dancefloor. Set up in ten minutes, no technician.",
+      parts: [
+        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 695 },
+        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 395 },
+        { productId: "discokugle_30", label_da: "Discokugle 30 cm", label_en: "Disco ball 30 cm", price: 495 },
+      ],
+    },
+  },
+  {
+    id: "pakke_ungdomsfest_stor",
+    page: "/ungdomsfest-pakke-stor",
+    category: "lyd",
+    price: 2395,
+    image: "/images/product-pakke-ungdomsfest-stor-taendt.webp",
+    name_da: "Stor ungdomsfest-pakke",
+    name_en: "Large youth party package",
+    desc_da: "2× 12\" højtalere, lys-pakke, discokugle 40 cm og røgmaskine — et rigtigt diskotek til 100 gæster for 2.395 kr. Spar 285 kr.",
+    desc_en: "2× 12\" speakers, light package, 40 cm mirror ball and fog machine — a proper disco for 100 guests at 2,395 DKK. Save 285 DKK.",
+    contents: ['2× EV 12" højtalere', "2× farvede LED-lamper + centereffekt på stativ", "Discokugle 40 cm med motor og spot", "Røgmaskine med væske", "Alle kabler"],
+    allowedAddons: ["subwoofer", "stativer", "mikrofon", "lyskaeder_farvet", ...DELIVERY_ADDON_IDS],
+    bundle: {
+      discount: 285,
+      usecase_da: "Til den store ungdomsfest i forsamlingshuset, hallen eller laden — studenterfesten, blå mandag-festen eller 18-årsfødselsdagen med hele årgangen. Højtalerne fylder rummet til 100 gæster — tag subwooferen med, hvis I er flere, røgen får lysstrålerne og kuglens prikker frem.",
+      usecase_en: "For the big youth party in a community hall, sports hall or barn — the graduation party or the 18th birthday with the whole year group. The speakers fill a room of 100 guests — add the subwoofer if you are more, and the fog makes the light beams and the ball's dots visible.",
+      parts: [
+        { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
+        { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
+        { productId: "discokugle", label_da: "Discokugle 40 cm", label_en: "Disco ball 40 cm", price: 595 },
+        { productId: "rog", label_da: "Røgmaskine", label_en: "Fog machine", price: 595 },
       ],
     },
   },
@@ -1318,6 +1372,8 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
     "pakke_udendors",
     "pakke_student",
     "pakke_soundboks_lys",
+    "pakke_ungdomsfest",
+    "pakke_ungdomsfest_stor",
     "pakke_lydmand_fest",
     "pakke_lydmand_firma",
     "pakke_lydmand_stor",
@@ -1339,7 +1395,7 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
 };
 
 /** Lejlighedspakkerne — vises under stigen på /lej-hojtaler */
-export const LYD_LEJLIGHEDSPAKKER = ["pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys"];
+export const LYD_LEJLIGHEDSPAKKER = ["pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys", "pakke_ungdomsfest", "pakke_ungdomsfest_stor"];
 
 /** Pakkerne med lydmand — vises samlet på /lej-hojtaler. Kørslen er med i alle tre. */
 export const LYDMAND_PAKKER = ["pakke_lydmand_fest", "pakke_lydmand_firma", "pakke_lydmand_stor"];
@@ -1398,6 +1454,7 @@ export const OCCASION_PACKAGES: Record<string, string> = {
   studenterkoersel: "pakke_student",
   foedselsdag: "pakke_fest_stor",
   konfirmation: "pakke_fest_stor",
+  ungdomsfest: "pakke_ungdomsfest",
   nytaar: "pakke_fest_150",
 };
 

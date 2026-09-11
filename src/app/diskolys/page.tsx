@@ -30,7 +30,7 @@ export default function Side() {
       headline="Lej diskolys i København"
       sub="Diskolys-pakken: lyseffekt og discokugle med motor og spot — dansegulvet i én kasse. Spar 145 kr vs. delene enkeltvis."
       weekendAvailability
-      image="/images/product-pakke-diskolys-taendt.webp"
+      image="/images/product-pakke-diskolys-taendt-v2.webp"
       imageAlt="Diskolys-pakken tændt: discokugle på stativ med spot og en LED-lyseffekt i farvet lys"
       productId="pakke_diskolys"
       faqPhrase="diskolys-pakken"
