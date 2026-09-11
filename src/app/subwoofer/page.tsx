@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: 'Lej Subwoofer 12" København | 295 kr | Lejhøjtaler.dk',
@@ -12,7 +13,10 @@ export const metadata: Metadata = {
     "lej bas til fest",
     "aktiv subwoofer udlejning",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/subwoofer" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/subwoofer",
+    languages: localeAlternates("/subwoofer"),
+  },
   openGraph: {
     title: 'Lej Subwoofer 12" København | 295 kr',
     description:

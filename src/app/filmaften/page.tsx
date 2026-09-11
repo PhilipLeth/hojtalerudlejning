@@ -1,13 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Filmaften-pakken | Projektor, lærred og højtalere | 1.195 kr | Lejhøjtaler.dk",
   description:
     "Filmaften-pakken med projektor, lærred og højtalere — alt til udendørs biograf i baghaven for 1.195 kr. Book online i København.",
   keywords: ["lej projektor og lærred", "udendørs biograf leje", "projektor til fest", "filmaften udstyr", "lærred leje københavn"],
-  alternates: { canonical: "https://lejhojtaler.dk/filmaften" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/filmaften",
+    languages: localeAlternates("/filmaften"),
+  },
   openGraph: {
     title: "Filmaften-pakken | Projektor, lærred og højtalere | 1.195 kr | Lejhøjtaler.dk",
     description:

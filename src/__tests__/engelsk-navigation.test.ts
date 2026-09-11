@@ -53,8 +53,8 @@ describe("Engelsk navigation", () => {
     expect(danskSti("/festlys")).toBe("/festlys");
     expect(localizedHref(danskSti("/en/festlys"), "en")).toBe("/en/festlys");
     // En side uden engelsk udgave falder tilbage til dansk, ikke til en 404.
-    // /mixer stod her, indtil den fik en engelsk udgave.
-    expect(localizedHref(danskSti("/karaoke-maskine"), "en")).toBe("/karaoke-maskine");
+    // /mixer og /karaoke-maskine stod her, indtil de fik engelske udgaver.
+    expect(localizedHref(danskSti("/polterabend"), "en")).toBe("/polterabend");
   });
 
   it("sprogskifteren peger aldrig på den side, man allerede står på", () => {

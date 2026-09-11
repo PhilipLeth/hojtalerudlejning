@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Projektor Pro (5000 lumen) København | 795 kr | Lejhøjtaler.dk",
   description:
     "Lej en 5000 lumen PRO-projektor i København for 795 kr. Skarp selv i oplyste lokaler og i dagslys — til sale, messer og store møder. Book online.",
   keywords: ["lej projektor pro", "5000 lumen projektor leje", "kraftig projektor udlejning"],
-  alternates: { canonical: "https://lejhojtaler.dk/projektor-pro" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/projektor-pro",
+    languages: localeAlternates("/projektor-pro"),
+  },
   openGraph: {
     title: "Lej Projektor Pro (5000 lumen) København | 795 kr",
     description:

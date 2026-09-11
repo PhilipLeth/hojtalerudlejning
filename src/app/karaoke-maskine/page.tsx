@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Karaokemaskine København | 695 kr | Lejhøjtaler.dk",
   description:
     "Lej en Singing Machine karaokemaskine i København for 695 kr. Indbygget skærm, to trådløse mikrofoner og festlys — tilslut dit TV via HDMI.",
   keywords: ["lej karaokemaskine", "karaoke maskine leje københavn", "singing machine leje"],
-  alternates: { canonical: "https://lejhojtaler.dk/karaoke-maskine" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/karaoke-maskine",
+    languages: localeAlternates("/karaoke-maskine"),
+  },
   openGraph: {
     title: "Lej Karaokemaskine København | 695 kr",
     description:

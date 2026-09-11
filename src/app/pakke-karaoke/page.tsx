@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Karaokepakken København | 1.300 kr | Lejhøjtaler.dk",
   description:
     "Karaokepakken med maskine, 32\" skærm og to højtalere — karaoke op til 40 personer for 1.300 kr. Spar 385 kr. Book online i København.",
   keywords: ["karaoke pakke leje", "karaoke med storskærm", "lej karaoke anlæg"],
-  alternates: { canonical: "https://lejhojtaler.dk/pakke-karaoke" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/pakke-karaoke",
+    languages: localeAlternates("/pakke-karaoke"),
+  },
   openGraph: {
     title: "Lej Karaokepakken København | 1.300 kr",
     description:

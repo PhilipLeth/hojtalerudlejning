@@ -1,13 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Bryllupspakke | Lyd, mikrofon, lys og low fog | 2.695 kr | Lejhøjtaler.dk",
   description:
     "Bryllupspakke: 2× EV 12\" højtalere på stativer, trådløs mikrofon til talerne, lys-pakke, lyskæde og low fog-maskine for 2.695 kr — spar 180 kr. Levering og opsætning kan tilvælges i København.",
   keywords: ["lyd til bryllup", "bryllupspakke leje", "mikrofon til bryllup", "low fog bryllup", "lys til bryllup"],
-  alternates: { canonical: "https://lejhojtaler.dk/bryllupspakke" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/bryllupspakke",
+    languages: localeAlternates("/bryllupspakke"),
+  },
   openGraph: {
     title: "Bryllupspakke | Lyd, mikrofon, lys og low fog | 2.695 kr | Lejhøjtaler.dk",
     description: "Højtalere på stativer, trådløs mikrofon, lys, lyskæde og low fog til første dans. Spar 180 kr.",

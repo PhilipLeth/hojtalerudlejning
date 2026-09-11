@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Konferencepakken København | 1.395 kr | Lejhøjtaler.dk",
   description:
     "Konferencepakken med 55\" storskærm, trådløst headset og to højtalere — klar til mødelokalet for 1.395 kr. Spar 140 kr. Book online i København.",
   keywords: ["konferencepakke leje", "lej skærm og lyd konference", "av udstyr konference københavn"],
-  alternates: { canonical: "https://lejhojtaler.dk/pakke-konference" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/pakke-konference",
+    languages: localeAlternates("/pakke-konference"),
+  },
   openGraph: {
     title: "Lej Konferencepakken København | 1.395 kr",
     description:

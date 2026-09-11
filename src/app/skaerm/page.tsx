@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 import UpsellBox from "@/components/UpsellBox";
 
 export const metadata: Metadata = {
@@ -14,7 +15,10 @@ export const metadata: Metadata = {
     "lej skærm præsentation",
     "skærm til konference",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/skaerm" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/skaerm",
+    languages: localeAlternates("/skaerm"),
+  },
   openGraph: {
     title: "Lej Storskærm København | 595 kr",
     description:

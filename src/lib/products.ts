@@ -313,6 +313,7 @@ export const addons: Addon[] = [
   },
   {
     id: "stativer",
+    page: "/hojtalerstativer",
     price: 100,
     image: "/images/product-stativer.webp",
     da: { label: "Højtalerstativer", desc: "2 professionelle stativer — løfter lyden op i øjenhøjde" },
@@ -320,6 +321,8 @@ export const addons: Addon[] = [
   },
   {
     id: "mikrofon",
+    // Samme mikrofon som rental-varen traadloes_mikrofon (295 kr) — én side til begge
+    page: "/traadloes-mikrofon",
     youtubeUrl: "https://www.youtube.com/watch?v=ED_w3MHXjxk",
     price: 295,
     image: "/images/product-mikrofon.webp",
@@ -328,6 +331,7 @@ export const addons: Addon[] = [
   },
   {
     id: "batteri",
+    page: "/ekstra-batteri",
     price: 145,
     image: "/images/product-thumpgo.webp",
     da: { label: "Ekstra batteri", desc: "Ekstra batteri til batterihøjtaler — mere spilletid uden strøm" },
@@ -335,6 +339,7 @@ export const addons: Addon[] = [
   },
   {
     id: "taske",
+    page: "/baeretaske",
     price: 95,
     image: "/images/product-taske.webp",
     da: { label: "Bæretaske", desc: "Polstret sportstaske til sikker transport på cykel eller i bil" },
@@ -1014,6 +1019,7 @@ export const rentalProducts: RentalProduct[] = [
   },
   {
     id: "pakke_soundboks_lys",
+    page: "/soundboks-pakke-lys",
     category: "lyd",
     price: 1090,
     image: "/images/product-soundboks.webp",
@@ -1035,6 +1041,7 @@ export const rentalProducts: RentalProduct[] = [
   },
   {
     id: "pakke_speaker_mik",
+    page: "/speakerpakke",
     category: "lyd",
     price: 1045,
     image: "/images/product-festival.webp",
@@ -1056,6 +1063,7 @@ export const rentalProducts: RentalProduct[] = [
   },
   {
     id: "pakke_lysshow",
+    page: "/lysshow-pakke",
     category: "lys",
     price: 1495,
     image: "/images/product-lys.webp",
@@ -1078,6 +1086,7 @@ export const rentalProducts: RentalProduct[] = [
   },
   {
     id: "pakke_lysshow_stor",
+    page: "/lysshow-stor",
     category: "lys",
     price: 1995,
     image: "/images/product-uplight-4.webp",
@@ -1307,6 +1316,7 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
     "pakke_firmafest",
     "pakke_udendors",
     "pakke_student",
+    "pakke_soundboks_lys",
     "pakke_lydmand_fest",
     "pakke_lydmand_firma",
     "pakke_lydmand_stor",
@@ -1323,12 +1333,12 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
   ],
   "/lysshow": ["pakke_lysshow", "pakke_lysshow_stor"],
   "/karaoke": ["pakke_karaoke", "pakke_karaoke_fest"],
-  "/av-udstyr": ["pakke_tale_musik", "pakke_praesentation", "pakke_konference", "pakke_konference_150"],
+  "/av-udstyr": ["pakke_tale_musik", "pakke_praesentation", "pakke_konference", "pakke_konference_150", "pakke_speaker_mik"],
   "/lej-projektor": ["pakke_filmaften"],
 };
 
 /** Lejlighedspakkerne — vises under stigen på /lej-hojtaler */
-export const LYD_LEJLIGHEDSPAKKER = ["pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student"];
+export const LYD_LEJLIGHEDSPAKKER = ["pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys"];
 
 /** Pakkerne med lydmand — vises samlet på /lej-hojtaler. Kørslen er med i alle tre. */
 export const LYDMAND_PAKKER = ["pakke_lydmand_fest", "pakke_lydmand_firma", "pakke_lydmand_stor"];
@@ -1337,7 +1347,7 @@ export const LYDMAND_PAKKER = ["pakke_lydmand_fest", "pakke_lydmand_firma", "pak
 /** Lysshow-pakkerne — vises samlet på /lysshow */
 export const LYSSHOW_PAKKER = ["pakke_lysshow", "pakke_lysshow_stor", "pakke_stemningslys"];
 
-/** Lydpakker uden egen side — vises på /lej-hojtaler under stigen */
+/** Lydpakker der (også) vises som ekstra på /av-udstyr og i anledningslisten */
 export const LYD_EKSTRAPAKKER = ["pakke_speaker_mik", "pakke_soundboks_lys"];
 
 /** Det der er tilbage på /av-udstyr, når projektor, skærm og lærred er på

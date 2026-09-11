@@ -1,13 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Udendørspakke | Soundboks, ekstra batteri og lyskæde | 895 kr | Lejhøjtaler.dk",
   description:
     "Udendørspakke: Soundboks 4, ekstra batteri og 10 m lyskæde for 895 kr — spar 140 kr. Fest i baggård, park eller på stranden helt uden strøm. Lejes i København.",
   keywords: ["fest uden strøm", "soundboks leje", "havefest lyd", "polterabend højtaler", "batteri højtaler leje"],
-  alternates: { canonical: "https://lejhojtaler.dk/udendorspakke" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/udendorspakke",
+    languages: localeAlternates("/udendorspakke"),
+  },
   openGraph: {
     title: "Udendørspakke | Soundboks, ekstra batteri og lyskæde | 895 kr | Lejhøjtaler.dk",
     description: "Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park — spar 140 kr.",

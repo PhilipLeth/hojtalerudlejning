@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 import UpsellBox from "@/components/UpsellBox";
 
 export const metadata: Metadata = {
@@ -13,7 +14,10 @@ export const metadata: Metadata = {
     "projektor leje københavn",
     "lej projektor til event",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/projektor" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/projektor",
+    languages: localeAlternates("/projektor"),
+  },
   openGraph: {
     title: "Lej Projektor København | 495 kr",
     description:

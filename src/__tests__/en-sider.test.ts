@@ -73,9 +73,11 @@ describe("Engelsk udgave", () => {
     // ved med kun at findes på dansk.
     expect(hasEnglish("/discokugle")).toBe(true);
     expect(localizedHref("/discokugle", "en")).toBe("/en/discokugle");
-    // /karaoke-maskine er sat på pause som produkt og får ikke en engelsk
-    // udgave — den er derfor et stabilt eksempel på fallback'en.
-    expect(hasEnglish("/karaoke-maskine")).toBe(false);
-    expect(localizedHref("/karaoke-maskine", "en")).toBe("/karaoke-maskine");
+    // /polterabend er en dansk anledningsside uden engelsk udgave — et
+    // stabilt eksempel på fallback'en. (/karaoke-maskine fik engelsk udgave
+    // 11. sept 2026, da alle produkter fik sider på begge sprog.)
+    expect(hasEnglish("/polterabend")).toBe(false);
+    expect(localizedHref("/polterabend", "en")).toBe("/polterabend");
+    expect(hasEnglish("/karaoke-maskine")).toBe(true);
   });
 });

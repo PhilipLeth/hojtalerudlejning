@@ -2889,6 +2889,13 @@
       "description": "Varelinjer og kundeoplysninger kan rettes (2026-08-27), men ikke datoerne. Kræver ledighedstjek mod kalenderen og genberegning af SMS-påmindelser.",
       "priority": "medium",
       "status": "todo"
+    },
+    {
+      "id": "alle-produkter-har-side",
+      "title": "Alle produkter har en side på begge sprog",
+      "description": "11. sept 2026: Philip: 'Produkter skal næsten altid have en side.' Optælling fandt 31 huller. Nye danske sider: /lysshow-pakke, /lysshow-stor, /soundboks-pakke-lys, /speakerpakke, /hojtalerstativer, /ekstra-batteri, /baeretaske (+ engelske udgaver). Engelske udgaver af 19 dansk-only sider (hojtalerpakke-bas, bryllupspakke, firmafestpakke, udendorspakke, studenterpakke, filmaften, projektor, skaerm, skaerm-32, laerred-160, projektor-pro, pakke-praesentation, pakke-konference, konferencepakke-150, pakke-tale-musik, karaoke-maskine, pakke-karaoke, pakke-karaoke-fest, subwoofer) — og hreflang begge veje på de danske. Tilvalget 'mikrofon' peger på /traadloes-mikrofon (samme mic, samme pris). Uden side med vilje: kørsels-tilvalgene og det interne faktureringsgebyr. pakke_soundboks_lys ligger nu i LYD_LEJLIGHEDSPAKKER, pakke_speaker_mik i KATEGORI_PAKKER['/av-udstyr']. Tests: /polterabend er nu eksemplet på en dansk-only side.",
+      "priority": "high",
+      "status": "done"
     }
   ],
   "status": {

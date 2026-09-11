@@ -3,6 +3,7 @@ import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
 import { catalogDiscount, catalogPartsPrice, prisTekst } from "@/lib/products";
 import ProductLanding from "@/components/ProductLanding";
+import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: 'Lej 32" Skærm på Stativ København | 395 kr | Lejhøjtaler.dk',
@@ -15,7 +16,10 @@ export const metadata: Metadata = {
     "lille skærm til event",
     "karaoke skærm leje",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/skaerm-32" },
+  alternates: {
+    canonical: "https://lejhojtaler.dk/skaerm-32",
+    languages: localeAlternates("/skaerm-32"),
+  },
   openGraph: {
     title: 'Lej 32" Skærm på Stativ | 395 kr',
     description:
