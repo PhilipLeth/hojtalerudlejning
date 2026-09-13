@@ -15,7 +15,7 @@
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import BookingFlow from "@/components/BookingFlow";
+import BookingFlow, { TIDSVALG_AKTIVT } from "@/components/BookingFlow";
 import {
   DEFAULT_OPENING_HOURS,
   defaultTimeSlot,
@@ -149,6 +149,12 @@ function næste(ugedag: number): Date {
   return d;
 }
 
+/*
+ * 13. september 2026: tidsvalget er SAT PÅ PAUSE i checkout. Frederik: "det er
+ * mere man skal tage stilling til". Funktionerne ovenfor lever videre (serveren
+ * og lejesedlen bruger dem), men kunden ser ingen knapper, og ordren sendes
+ * med "unknown" — tidspunktet aftales i SMS'en dagen før.
+ */
 describe("tidsvalget i checkout", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -159,27 +165,30 @@ describe("tidsvalget i checkout", () => {
   });
   afterEach(() => window.history.pushState({}, "", "/"));
 
-  it("koster ingenting, uanset hvad kunden vælger", async () => {
+  it("er sat på pause — kunden ser ingen knapper at tage stilling til", async () => {
+    expect(TIDSVALG_AKTIVT).toBe(false);
     const fredag = næste(5);
     const mandag = new Date(fredag);
     mandag.setDate(mandag.getDate() + 3);
     await vælgDatoer(fredag, mandag);
 
-    await waitFor(() => expect(screen.getByText("Hvornår henter du?")).toBeInTheDocument());
-    fireEvent.click(screen.getAllByText("Først på dagen")[0]);
-
-    // Ingen gebyrlinje nogen steder — hverken ved datoerne eller i prisen
+    // Datoerne er valgt, så Videre er aktiv — men der spørges ikke om klokkeslæt
+    await waitFor(() => expect((screen.getByText("Videre") as HTMLButtonElement).disabled).toBe(false));
+    expect(screen.queryByText("Hvornår henter du?")).not.toBeInTheDocument();
+    expect(screen.queryByText("Hvornår afleverer du?")).not.toBeInTheDocument();
+    expect(screen.queryByText("Før 12")).not.toBeInTheDocument();
+    expect(screen.queryByText("Ved jeg ikke endnu")).not.toBeInTheDocument();
+    // Og ingen gebyrlinje — der er stadig intet at opkræve
     expect(screen.queryByText(/uden for åbningstid/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/\+\d+ kr/)).not.toBeInTheDocument();
   });
 
-  it("sender tidsrummet med til serveren", async () => {
+  it("sender stadig standardvalget med til serveren, så mails og lejeseddel virker uændret", async () => {
     const fredag = næste(5);
     const mandag = new Date(fredag);
     mandag.setDate(mandag.getDate() + 3);
     await vælgDatoer(fredag, mandag);
-    await waitFor(() => expect(screen.getByText("Hvornår henter du?")).toBeInTheDocument());
-    fireEvent.click(screen.getAllByText("Sidst på dagen")[0]);
+    await waitFor(() => expect((screen.getByText("Videre") as HTMLButtonElement).disabled).toBe(false));
 
     fireEvent.click(screen.getByText("Videre"));
     await waitFor(() => expect(screen.getByText("Levering og afhentning")).toBeInTheDocument());
@@ -198,8 +207,8 @@ describe("tidsvalget i checkout", () => {
       );
       expect(call).toBeTruthy();
       const body = JSON.parse((call![1] as { body: string }).body);
-      expect(body.pickupSlot).toBe("late");
-      // Aflevering er ikke rørt — så står den på standardvalget
+      // Intet valgt, for der var intet at vælge — begge står på standardvalget
+      expect(body.pickupSlot).toBe("unknown");
       expect(body.returnSlot).toBe("unknown");
       // Kalenderdagen sendes med, så serveren ikke skal gætte ud fra et UTC-tidspunkt
       expect(body.pickupDay).toMatch(/^\d{4}-\d{2}-\d{2}$/);

@@ -84,8 +84,10 @@ export interface BundlePart {
   productId: string;
   label_da: string;
   label_en: string;
-  /** Listepris for denne del (til “spar X”-beregning) */
+  /** Listepris for denne del (til “spar X”-beregning) — for hele antallet */
   price: number;
+  /** Antal af produktet i pakken, fx 4 timer lydmand. Udeladt = 1 */
+  qty?: number;
 }
 
 export interface ProductBundle {
@@ -425,8 +427,8 @@ export const addons: Addon[] = [
     },
   },
   // ── Lydmand (11. sept 2026): en ydelse kunden selv kan vælge til. Prisen er
-  // pr. time inkl. moms; i bookingen vælges én time, og antallet rettes i
-  // admin (Ret ordre) når timerne er aftalt.
+  // pr. time inkl. moms. Antallet i bookingen ER timerne (13. sept 2026) — før
+  // lå der en "4 timer"-udgave ved siden af, og det var én vare for meget.
   {
     id: "lydmand",
     page: "/lydmand",
@@ -437,30 +439,11 @@ export const addons: Addon[] = [
     contents: ["AV-tekniker på stedet", "Opsætning og lydprøve", "Styrer lyd og mikrofoner under festen"],
     da: {
       label: "Lydmand",
-      desc: "AV-tekniker på stedet, der styrer lyden under festen — 1.000 kr pr. time. Skriv antal timer i kommentaren, så retter vi ordren.",
+      desc: "AV-tekniker på stedet — sætter op, laver lydprøve og styrer lyden under festen. 1.000 kr pr. time.",
     },
     en: {
       label: "Sound engineer",
-      desc: "AV technician on site running the sound during your event — DKK 1,000 per hour. Tell us how many hours in the comment and we adjust the order.",
-    },
-  },
-  // 4 timer som én vare: det er den blok, pakkerne med lydmand er bygget af,
-  // og den kunden vælger, når festen skal have en tekniker hele aftenen.
-  {
-    id: "lydmand_4t",
-    page: "/lydmand",
-    price: 4000,
-    image: "/images/product-lydmand.webp",
-    ydelse: true,
-    priceUnit: { da: "kr/4 timer", en: "DKK/4 hours" },
-    contents: ["AV-tekniker på stedet i 4 timer", "Opsætning og lydprøve", "Styrer lyd og mikrofoner under festen"],
-    da: {
-      label: "Lydmand, 4 timer",
-      desc: "AV-tekniker på stedet i 4 timer — opsætning, lydprøve og styring af lyden under festen",
-    },
-    en: {
-      label: "Sound engineer, 4 hours",
-      desc: "AV technician on site for 4 hours — setup, sound check and running the sound during the event",
+      desc: "AV technician on site — sets up, runs the sound check and controls the sound during your event. DKK 1,000 per hour.",
     },
   },
   // ── Faktureringsgebyr: intern vare, lægges kun på fra admin.
@@ -518,6 +501,13 @@ export type DeliveryAddonId = (typeof DELIVERY_ADDON_IDS)[number];
 
 /** Gamle ordrer/kataloger bruger disse ids — de tæller stadig som kørsel */
 export const LEGACY_DELIVERY_IDS = ["levering", "levering_opsaetning"];
+
+/**
+ * Tilvalg der er udgået af koden, men kan ligge i et gammelt KV-katalog.
+ * lydmand_4t (4 timer som én vare, 11.–13. sept 2026) blev til "lydmand" med
+ * antal timer — én vare i to udgaver var det, kunden faldt over.
+ */
+export const RETIRED_ADDON_IDS = ["lydmand_4t"];
 
 /** Interne varer (fx faktureringsgebyr) — kun til ordrer fra admin. */
 export function isInternalAddon(a: { intern?: boolean }): boolean {
@@ -580,7 +570,7 @@ export const rentalProducts: RentalProduct[] = [
       parts: [
         { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
-        { productId: "lydmand_4t", label_da: "Lydmand, 4 timer", label_en: "Sound engineer, 4 hours", price: 4000 },
+        { productId: "lydmand", qty: 4, label_da: "Lydmand, 4 timer", label_en: "Sound engineer, 4 hours", price: 4000 },
         { productId: "levering_begge", label_da: "Levering, opsætning + afhentning", label_en: "Delivery, setup + collection", price: 795 },
       ],
     },
@@ -605,7 +595,7 @@ export const rentalProducts: RentalProduct[] = [
         { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
         { productId: "mixer_stor", label_da: "Mixer stor", label_en: "Large mixer", price: 395 },
         { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 295 },
-        { productId: "lydmand_4t", label_da: "Lydmand, 4 timer", label_en: "Sound engineer, 4 hours", price: 4000 },
+        { productId: "lydmand", qty: 4, label_da: "Lydmand, 4 timer", label_en: "Sound engineer, 4 hours", price: 4000 },
         { productId: "levering_begge", label_da: "Levering, opsætning + afhentning", label_en: "Delivery, setup + collection", price: 795 },
       ],
     },
@@ -632,7 +622,7 @@ export const rentalProducts: RentalProduct[] = [
         { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 100 },
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
         { productId: "rog", label_da: "Røgmaskine", label_en: "Fog machine", price: 595 },
-        { productId: "lydmand_4t", label_da: "Lydmand, 4 timer", label_en: "Sound engineer, 4 hours", price: 4000 },
+        { productId: "lydmand", qty: 4, label_da: "Lydmand, 4 timer", label_en: "Sound engineer, 4 hours", price: 4000 },
         { productId: "levering_begge", label_da: "Levering, opsætning + afhentning", label_en: "Delivery, setup + collection", price: 795 },
       ],
     },

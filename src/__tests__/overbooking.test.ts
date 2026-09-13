@@ -57,7 +57,7 @@ describe("Overbooking pr. produkt", () => {
     expect(bundleSlots(["festival", "lys"], bookable, { festival: 1, lys: 1 })).toEqual({ total: 2, used: 1 });
     // Lydmand og kørsel har intet lagertal — de må hverken begrænse pakken
     // eller gøre den ubegrænset (pakkerne med lydmand, 11. sept 2026)
-    expect(bundleSlots(["festival", "lys", "lydmand_4t", "levering_begge"], bookable, { festival: 1, lys: 1 })).toEqual({ total: 2, used: 1 });
+    expect(bundleSlots(["festival", "lys", "lydmand", "levering_begge"], bookable, { festival: 1, lys: 1 })).toEqual({ total: 2, used: 1 });
   });
 });
 

@@ -60,7 +60,7 @@ export default function SoundEngineerPage() {
         },
         {
           q: "How much does a sound engineer cost?",
-          a: "1,000 DKK per hour incl. VAT. If you add the sound engineer as an extra in the booking, that counts as one hour — write in the comment how many hours you need and we adjust the order before you pay. If you need him for the whole evening, the 4-hour block is the cheapest option, and it is included in the packages below.",
+          a: "1,000 DKK per hour incl. VAT. When you add the sound engineer in the booking, you set the number of hours yourself — and if you like, enter when the party starts and ends and we work out the hours. The packages below include 4 hours.",
         },
         {
           q: "Do I still have to collect the equipment myself?",

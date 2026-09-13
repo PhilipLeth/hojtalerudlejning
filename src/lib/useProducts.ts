@@ -8,6 +8,7 @@ import {
   cheapestSpeakerPrice,
   DELIVERY_ADDON_IDS,
   LEGACY_DELIVERY_IDS,
+  RETIRED_ADDON_IDS,
   type DeliveryAddonId,
   type Speaker,
   type Addon,
@@ -61,6 +62,7 @@ export const mergeAddonsForTest = (fromKv: Addon[]): Addon[] => mergeAddons(from
 function mergeAddons(fromKv: Addon[]): Addon[] {
   const merged = fromKv
     .filter((a) => !LEGACY_DELIVERY_IDS.includes(a.id)) // erstattet af levering_ud / afhentning_retur / levering_begge
+    .filter((a) => !RETIRED_ADDON_IDS.includes(a.id)) // fx lydmand_4t — timerne er antal nu
     .map((a) => {
       const d = defaultAddons.find((x) => x.id === a.id);
       if (DELIVERY_ADDON_IDS.includes(a.id as DeliveryAddonId) && d) {
@@ -75,8 +77,11 @@ function mergeAddons(fromKv: Addon[]): Addon[] {
       if (d?.intern && !next.intern) {
         next = { ...next, intern: true };
       }
-      if (d?.ydelse && !next.ydelse) {
-        next = { ...next, ydelse: true, priceUnit: next.priceUnit ?? d.priceUnit };
+      // En ydelse (lydmand) styres fra koden: enheden, teksterne og siden.
+      // Beskrivelsen ændrede sig, da timerne blev til antal, og et KV-katalog
+      // gemt før det må ikke bede kunden skrive timer i kommentaren.
+      if (d?.ydelse) {
+        next = { ...next, ydelse: true, priceUnit: d.priceUnit, page: d.page, da: d.da, en: d.en };
       }
       return next;
     });

@@ -6,7 +6,9 @@
  *    så ud som ét produkt, så man ikke kunne se hvad der konkret var bestilt.
  * 2. "+ Tilføj et produkt mere" var skjult for lejeprodukter (isRentalOnly) og
  *    effekter, så man bogstaveligt talt ikke KUNNE lægge uplights i kurven, når
- *    man havde valgt en lyskæde.
+ *    man havde valgt en lyskæde. Knappen er væk igen (13. sept 2026) — den
+ *    sendte kunden tilbage gennem kalenderen. Nu er søgefeltet vejen til mere,
+ *    og det skal stå der uanset hvilken slags produkt man har valgt.
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
@@ -68,10 +70,11 @@ describe("Man kan tilføje flere produkter uanset produkttype", () => {
     }
   }
 
-  it("lejeprodukt (lyskæde) kan lægges i kurven så man kan tilføje uplights", async () => {
+  it("lejeprodukt (lyskæde) kan få uplights lagt oveni — via søgefeltet, ikke en tur tilbage i flowet", async () => {
     await toStep3("lyskaeder");
     if (!screen.queryByText("Tilvalg")) return; // kalendergrænse i denne måned
-    expect(screen.getByText("+ Tilføj et produkt mere")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Søg tilvalg/)).toBeInTheDocument();
+    expect(screen.queryByText("+ Tilføj et produkt mere")).not.toBeInTheDocument();
   });
 
   /**

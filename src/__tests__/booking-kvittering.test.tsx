@@ -154,15 +154,15 @@ describe("Flere varer i samme ordre", () => {
     await waitFor(() => expect(screen.getByText("Videre").closest("button")).not.toBeDisabled());
     await frem();
 
-    // "+ Tilføj et produkt mere" fører tilbage til trin 1 med varen i kurven
-    await waitFor(() => expect(screen.getByText("+ Tilføj et produkt mere")).toBeInTheDocument(), { timeout: 3000 });
-    fireEvent.click(screen.getByText("+ Tilføj et produkt mere").closest("button")!);
-    await waitFor(() => expect(screen.getByText("Vælg højtalere")).toBeInTheDocument());
-
-    fireEvent.click(screen.getAllByText("Lille højtalerpakke")[0].closest("button")!);
-    await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
-    await frem();
-    await waitFor(() => expect(screen.queryByText("Vælg datoer")).not.toBeInTheDocument());
+    // Vare nummer to findes i søgefeltet og lægges i kurven med ét tryk — uden
+    // at gå tilbage til produktvalget og kalenderen igen. "+ Tilføj et produkt
+    // mere" gjorde netop det, og blev fjernet 13. september 2026.
+    await waitFor(() => expect(screen.getByPlaceholderText(/Søg tilvalg/)).toBeInTheDocument(), { timeout: 3000 });
+    expect(screen.queryByText("+ Tilføj et produkt mere")).not.toBeInTheDocument();
+    fireEvent.change(screen.getByPlaceholderText(/Søg tilvalg/), { target: { value: "lille højtaler" } });
+    await waitFor(() => expect(screen.getByText("Læg i kurven som ekstra produkt")).toBeInTheDocument());
+    fireEvent.click(screen.getByText("Læg i kurven som ekstra produkt").closest("button")!);
+    await waitFor(() => expect(screen.getByText("I din kurv:")).toBeInTheDocument());
     await frem();
     await waitFor(() => expect(screen.getByPlaceholderText("Navn")).toBeInTheDocument(), { timeout: 3000 });
 

@@ -61,7 +61,7 @@ export default function LydmandPage() {
         },
         {
           q: "Hvad koster en lydmand?",
-          a: "1.000 kr pr. time inkl. moms. Vælger du lydmanden som tilvalg i bookingen, tæller det som én time — skriv i kommentaren hvor mange timer I skal bruge, så retter vi ordren, før I betaler. Skal han være der hele aftenen, er 4 timer som én vare billigst, og den ligger i pakkerne herunder.",
+          a: "1.000 kr pr. time inkl. moms. Vælger du lydmanden i bookingen, sætter du selv antallet af timer — og vil du, kan du skrive hvornår festen starter og slutter, så regner vi timerne ud. I pakkerne herunder er 4 timer med i prisen.",
         },
         {
           q: "Skal jeg selv hente udstyret, når jeg har en lydmand med?",
@@ -69,7 +69,7 @@ export default function LydmandPage() {
         },
         {
           q: "Kan lydmanden også styre lys og røg?",
-          a: "Ja. Han er AV-tekniker, så lys-pakke, røgmaskine og mikrofoner passer han sammen med lyden. Sig til i kommentaren, hvad der skal ske, så er han forberedt.",
+          a: "Ja. Han er AV-tekniker, så lys-pakke, røgmaskine og mikrofoner passer han sammen med lyden. Skriv gerne i kommentaren, hvad der skal ske på dagen, så er han forberedt.",
         },
         {
           q: "Hvor langt ud kører I?",

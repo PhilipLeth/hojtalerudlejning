@@ -235,7 +235,8 @@ describe("Addons data", () => {
       addons.find((p) => p.id === id)?.price;
     for (const p of rentalProducts) {
       for (const part of p.bundle?.parts ?? []) {
-        const actual = priceOf(part.productId);
+        // En del kan være flere af samme produkt — lydmand i 4 timer er 4 × timeprisen
+        const actual = (priceOf(part.productId) ?? NaN) * (part.qty ?? 1);
         expect(
           actual,
           `${p.id} → ${part.productId} står til ${part.price} men koster ${actual}`
@@ -262,7 +263,9 @@ describe("Addons data", () => {
     const lydmand = addons.find((a) => a.id === "lydmand");
     const gebyr = addons.find((a) => a.id === "faktureringsgebyr");
     expect(lydmand).toMatchObject({ price: 1000, ydelse: true, page: "/lydmand", image: "/images/product-lydmand.webp", priceUnit: { da: "kr/time", en: "DKK/hour" } });
-    expect(addons.find((a) => a.id === "lydmand_4t")).toMatchObject({ price: 4000, ydelse: true, page: "/lydmand" });
+    // 13. sept 2026: "Lydmand, 4 timer" som egen vare er væk — timerne er antallet på den ene lydmand
+    expect(addons.find((a) => a.id === "lydmand_4t")).toBeUndefined();
+    expect(lydmand?.da.desc).not.toMatch(/kommentar/);
     expect(lydmand?.intern).toBeFalsy();
     expect(lydmand?.da.desc).toMatch(/pr\. time/);
     expect(gebyr).toMatchObject({ price: 100, intern: true, image: null });
@@ -286,7 +289,8 @@ describe("Addons data", () => {
       const p = rentalProducts.find((r) => r.id === id)!;
       const dele = p.bundle!.parts.map((x) => x.productId);
       expect(dele, `${id} mangler levering`).toContain("levering_begge");
-      expect(dele, `${id} mangler lydmand`).toContain("lydmand_4t");
+      expect(dele, `${id} mangler lydmand`).toContain("lydmand");
+      expect(p.bundle!.parts.find((x) => x.productId === "lydmand")).toMatchObject({ qty: 4, price: 4000 });
       expect(bundleIncludesDelivery(p)).toBe("levering_begge");
       // Kørslen må ikke også kunne vælges som tilvalg — så betales den to gange
       for (const d of DELIVERY_ADDON_IDS) expect(p.allowedAddons, `${id} tilbyder ${d} oveni`).not.toContain(d);

@@ -568,6 +568,44 @@ const KVITTERING_NØGLE = "booking_kvittering_";
 const TILVALG_RELEVANS = ["lys", "rog", "stativer", "subwoofer", "mikrofon", "lyseffekt", "batteri", "taske"];
 const ANTAL_SYNLIGE_TILVALG = 5;
 
+/**
+ * Tidsvalget på dagen (før 12 / efter 12) er sat på pause 13. sept 2026.
+ * Frederik: det er ét valg mere at tage stilling til. Koden bliver stående,
+ * så det kan tændes igen; imens sendes "unknown", og tidspunktet aftales i
+ * SMS'en dagen før.
+ */
+export const TIDSVALG_AKTIVT = false;
+
+/**
+ * Lydmand: antallet i bookingen ER timerne. Start og slut er valgfrit — er
+ * begge sat, regnes timerne ud af dem, så kunden ikke skal gøre det selv.
+ */
+const LYDMAND_ID = "lydmand";
+const LYDMAND_STANDARD_TIMER = 4;
+const LYDMAND_MAX_TIMER = 12;
+
+/** Timer mellem to klokkeslæt ("18:00" → "22:30"): rundet op, mindst 1. null når de ikke duer */
+export function timerMellem(fra: string, til: string): number | null {
+  const min = (t: string) => {
+    const m = /^(\d{1,2}):(\d{2})$/.exec(t);
+    return m ? Number(m[1]) * 60 + Number(m[2]) : NaN;
+  };
+  const a = min(fra);
+  const b = min(til);
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return null;
+  let diff = b - a;
+  if (diff === 0) return null; // samme klokkeslæt er ikke et tidsrum
+  if (diff < 0) diff += 24 * 60; // hen over midnat: 20–02 er seks timer
+  return Math.min(LYDMAND_MAX_TIMER, Math.max(1, Math.ceil(diff / 60)));
+}
+
+/** "kl. 18–22.30" på dansk, "18:00–22:30" på engelsk */
+function tidsrumTekst(fra: string, til: string, locale: Locale): string {
+  if (locale === "en") return `${fra}–${til}`;
+  const f = (t: string) => t.replace(/:00$/, "").replace(":", ".");
+  return `kl. ${f(fra)}–${f(til)}`;
+}
+
 
 /**
  * Print af kvitteringen.
@@ -732,6 +770,24 @@ export default function BookingFlow({
   const [pickupSlot, setPickupSlot] = useState<TimeSlotId>("unknown");
   const [returnSlot, setReturnSlot] = useState<TimeSlotId>("unknown");
   const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
+  /* Lydmand: timer som antal, og et valgfrit start/slut der regner timerne ud */
+  const [lydmandTimer, setLydmandTimer] = useState(LYDMAND_STANDARD_TIMER);
+  const [lydmandFra, setLydmandFra] = useState("");
+  const [lydmandTil, setLydmandTil] = useState("");
+  const harLydmand = selectedAddons.includes(LYDMAND_ID);
+  const lydmandAddon = addons.find((a) => a.id === LYDMAND_ID);
+  const lydmandFraTil = timerMellem(lydmandFra, lydmandTil);
+  const lydmandAntal = lydmandFraTil ?? lydmandTimer;
+  const lydmandPris = (lydmandAddon?.price ?? 0) * lydmandAntal;
+  /** Linjen som den står på ordren: "Lydmand, 4 timer (kl. 18–22)" */
+  const lydmandLabel = (() => {
+    const enhed = lydmandAntal === 1 ? s.lydmandHour : s.lydmandHoursWord;
+    const base = `${lydmandAddon?.label ?? "Lydmand"}, ${lydmandAntal} ${enhed}`;
+    return lydmandFraTil ? `${base} (${tidsrumTekst(lydmandFra, lydmandTil, locale)})` : base;
+  })();
+  /** Tilvalgets linje og pris som de vises — lydmanden ganges op med timerne */
+  const addonLabel = (a: { id: string; label: string }) => (a.id === LYDMAND_ID ? lydmandLabel : a.label);
+  const addonPris = (a: { id: string; price: number }) => (a.id === LYDMAND_ID ? lydmandPris : a.price);
   const [deliveryAddress, setDeliveryAddress] = useState("");
   /** Adresse-fejlen vises først når man forsøger at gå videre */
   const [showDeliveryError, setShowDeliveryError] = useState(false);
@@ -855,15 +911,18 @@ export default function BookingFlow({
       // Valgte tilvalg følger med i kurven (undtagen levering — den gælder ordren)
       for (const a of addons) {
         if (selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id)) {
-          items.push({ productId: a.id, name: a.label, price: priceOf(a.price) });
+          items.push({ productId: a.id, name: addonLabel(a), price: priceOf(addonPris(a)) });
         }
       }
       return items;
     });
     setSpeaker(null);
     setSelectedAddons((prev) => prev.filter((id) => DELIVERY_IDS.includes(id)));
+    setLydmandTimer(LYDMAND_STANDARD_TIMER);
+    setLydmandFra("");
+    setLydmandTil("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [speaker, selectedAddons, addons, speakers, rentalProducts, locale]);
+  }, [speaker, selectedAddons, addons, speakers, rentalProducts, locale, lydmandLabel, lydmandPris]);
 
   // Preselect product from ?product=ID — re-runs on soft-nav (urlTick).
   // Er der allerede et produkt i gang, lægges det i kurven først, så
@@ -1064,7 +1123,7 @@ export default function BookingFlow({
   const speakerPrice = summer ? applyDiscount(speakerBasePrice) : speakerBasePrice;
   const addonsBasePrice = addons
     .filter((a) => selectedAddons.includes(a.id))
-    .reduce((sum, a) => sum + a.price, 0);
+    .reduce((sum, a) => sum + addonPris(a), 0);
   const addonsPrice = summer ? applyDiscount(addonsBasePrice) : addonsBasePrice;
   const cartTotal = cartItems.reduce((sum, item) => sum + item.price, 0);
   const subtotal = speakerPrice + addonsPrice + cartTotal;
@@ -1203,13 +1262,6 @@ export default function BookingFlow({
     setStep((st) => Math.max(st - 1, 1));
   }
 
-  function addCurrentToCart() {
-    if (!speaker) return;
-    // Produkt + valgte tilvalg ryger i kurven; levering + adresse beholdes (gælder ordren)
-    stashSelectionToCart();
-    setStep(1);
-  }
-
   /** Læg endnu en enhed af et produkt i kurven — "4 stk. af samme højtaler" */
   function lægEnhedTil(productId: string) {
     const priceOf = (base: number) => (isSummerSale() ? applyDiscount(base) : base);
@@ -1287,12 +1339,17 @@ export default function BookingFlow({
           returnSlot,
           days: rentalDays,
           addons: addons
-            .filter((a) => selectedAddons.includes(a.id))
+            .filter((a) => selectedAddons.includes(a.id) && a.id !== LYDMAND_ID)
             .map((a) => a.label),
           addonIds: addons
-            .filter((a) => selectedAddons.includes(a.id))
+            .filter((a) => selectedAddons.includes(a.id) && a.id !== LYDMAND_ID)
             .map((a) => a.id),
-          cartItems: cartItems.map((item) => ({ name: item.name, price: item.price, productId: item.productId })),
+          // Lydmanden er én linje med timerne i navnet og hele beløbet — så
+          // står "Lydmand, 4 timer (kl. 18–22)" i mail, admin og på lejesedlen
+          cartItems: [
+            ...cartItems.map((item) => ({ name: item.name, price: item.price, productId: item.productId })),
+            ...(harLydmand ? [{ name: lydmandLabel, price: lydmandPris, productId: LYDMAND_ID }] : []),
+          ],
           deliveryAddress: hasDelivery ? deliveryAddress.trim() : undefined,
           deliveryOptionId: deliveryChoice ?? undefined,
           total,
@@ -1346,7 +1403,7 @@ export default function BookingFlow({
             ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
             ...(isRentalOnly && rentalName ? [{ label: rentalName, value: `${speakerPrice} kr` }] : []),
             ...cartItems.map((c) => ({ label: c.name, value: `${c.price} kr` })),
-            ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: a.label, value: `${a.price} kr` })),
+            ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: addonLabel(a), value: `${addonPris(a)} kr` })),
           ],
           total,
           betaling: payMethod,
@@ -1388,7 +1445,7 @@ export default function BookingFlow({
       const purchaseItems = [
         ...(selectedSpeaker ? [{ id: selectedSpeaker.id, name: selectedSpeaker.name, price: speakerPrice }] : []),
         ...(selectedRental ? [{ id: selectedRental.id, name: rentalName ?? selectedRental.id, price: speakerPrice }] : []),
-        ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ id: a.id, name: a.label, price: a.price })),
+        ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ id: a.id, name: addonLabel(a), price: addonPris(a) })),
         ...cartItems.map((ci) => ({ id: ci.productId, name: ci.name, price: ci.price })),
       ];
       if (payMethod !== "online") {
@@ -1401,9 +1458,11 @@ export default function BookingFlow({
       }
       if (payMethod === "online") {
         // Online-betaling: opret Checkout Session (beløb beregnes server-side)
+        // Stripe regner pr. id — lydmanden sendes én gang pr. time
         const itemIds: string[] = [
           ...(!isEffectsOnly && speaker ? [speaker] : []),
-          ...selectedAddons,
+          ...selectedAddons.filter((id) => id !== LYDMAND_ID),
+          ...(harLydmand ? Array.from({ length: lydmandAntal }, () => LYDMAND_ID) : []),
           ...cartItems.map((c) => c.productId),
         ];
         const payRes = await fetch("/api/stripe/create-checkout-session", {
@@ -1504,10 +1563,10 @@ export default function BookingFlow({
           .filter((a) => selectedAddons.includes(a.id))
           .map((a) => (
             <div key={a.id} className="flex justify-between text-sm text-white/50">
-              <span>{a.label}</span>
+              <span>{addonLabel(a)}</span>
               <span>
-                {summer && <span className="line-through text-white/30 mr-2">{a.price} kr</span>}
-                {summer ? applyDiscount(a.price) : a.price} kr
+                {summer && <span className="line-through text-white/30 mr-2">{addonPris(a)} kr</span>}
+                {summer ? applyDiscount(addonPris(a)) : addonPris(a)} kr
               </span>
             </div>
           ))}
@@ -1542,7 +1601,7 @@ export default function BookingFlow({
     const orderItems = [
       ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
       ...(isRentalOnly && rentalName ? [{ label: rentalName, value: `${speakerPrice} kr` }] : []),
-      ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: a.label, value: `${a.price} kr` })),
+      ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: addonLabel(a), value: `${addonPris(a)} kr` })),
     ];
 
     return (
@@ -1960,7 +2019,7 @@ export default function BookingFlow({
                   {pickupDate ? formatDate(pickupDate) : s.selectDate}
                 </span>
               </div>
-              {pickupDate &&
+              {TIDSVALG_AKTIVT && pickupDate &&
                 (kørselsveje.out ? (
                   <p className="mt-2 text-xs text-white/30">{s.timeDelivered}</p>
                 ) : (
@@ -1980,7 +2039,7 @@ export default function BookingFlow({
                   {returnDate ? formatDate(returnDate) : s.selectDate}
                 </span>
               </div>
-              {returnDate &&
+              {TIDSVALG_AKTIVT && returnDate &&
                 (kørselsveje.back ? (
                   <p className="mt-2 text-xs text-white/30">{s.timeDelivered}</p>
                 ) : (
@@ -2098,8 +2157,56 @@ export default function BookingFlow({
                           <p className="truncate text-sm font-semibold">{a.label}</p>
                           <p className="truncate text-xs text-white/40">{a.desc}</p>
                         </div>
-                        <p className="shrink-0 text-sm font-bold text-brand-400">+{a.price},-</p>
+                        <p className="shrink-0 text-right text-sm font-bold text-brand-400">
+                          +{a.price},-
+                          {a.id === LYDMAND_ID && <span className="block text-[11px] font-normal text-white/40">{s.perHour}</span>}
+                        </p>
                       </button>
+                      {/* Lydmanden: timerne er antallet, og start/slut er en hjælp — ikke et krav */}
+                      {a.id === LYDMAND_ID && selected && (
+                        <div className="mt-2 rounded-xl border border-brand-500/30 bg-brand-500/5 p-3">
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="text-sm text-white/70">{s.lydmandHours}</span>
+                            {lydmandFraTil ? (
+                              <span className="text-sm font-semibold tabular-nums">
+                                {lydmandAntal} {lydmandAntal === 1 ? s.lydmandHour : s.lydmandHoursWord}
+                              </span>
+                            ) : (
+                              <AntalVælger
+                                antal={lydmandTimer}
+                                onMinus={() => setLydmandTimer((t) => Math.max(1, t - 1))}
+                                onPlus={() => setLydmandTimer((t) => Math.min(LYDMAND_MAX_TIMER, t + 1))}
+                                locale={locale}
+                              />
+                            )}
+                          </div>
+                          <div className="mt-2 grid grid-cols-2 gap-2">
+                            <label className="text-xs text-white/40">
+                              {s.lydmandFrom}
+                              <input
+                                type="time"
+                                value={lydmandFra}
+                                onChange={(e) => setLydmandFra(e.target.value)}
+                                className="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-sm text-white focus:border-brand-500 focus:outline-none [color-scheme:dark]"
+                              />
+                            </label>
+                            <label className="text-xs text-white/40">
+                              {s.lydmandTo}
+                              <input
+                                type="time"
+                                value={lydmandTil}
+                                onChange={(e) => setLydmandTil(e.target.value)}
+                                className="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-sm text-white focus:border-brand-500 focus:outline-none [color-scheme:dark]"
+                              />
+                            </label>
+                          </div>
+                          <p className="mt-1.5 text-[11px] text-white/30">{s.lydmandTimesHint}</p>
+                          <div className="mt-2 flex justify-between gap-3 border-t border-white/10 pt-2 text-sm">
+                            <span className="text-white/60">{lydmandLabel}</span>
+                            <span className="shrink-0 font-bold text-brand-400">{lydmandPris} kr</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -2286,17 +2393,6 @@ export default function BookingFlow({
               <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-center text-sm text-red-400">
                 {qtyShortageMsg}
               </div>
-            )}
-
-            {/* Add another product to cart */}
-            {!!speaker && (
-              <button
-                type="button"
-                onClick={addCurrentToCart}
-                className="w-full rounded-xl border border-dashed border-white/20 py-3 text-sm text-white/50 transition hover:border-brand-500/40 hover:text-brand-400"
-              >
-                {locale === "en" ? "+ Add another product" : "+ Tilføj et produkt mere"}
-              </button>
             )}
 
             <div className="flex gap-3 pt-2">
@@ -2507,10 +2603,10 @@ export default function BookingFlow({
                 .filter((a) => selectedAddons.includes(a.id))
                 .map((a) => (
                   <div key={a.id} className="flex justify-between text-sm text-white/50">
-                    <span>{a.label}</span>
+                    <span>{addonLabel(a)}</span>
                     <span>
-                      {summer && <span className="line-through text-white/30 mr-2">{a.price} kr</span>}
-                      {summer ? applyDiscount(a.price) : a.price} kr
+                      {summer && <span className="line-through text-white/30 mr-2">{addonPris(a)} kr</span>}
+                      {summer ? applyDiscount(addonPris(a)) : addonPris(a)} kr
                     </span>
                   </div>
                 ))}
