@@ -1,0 +1,93 @@
+{
+  "name": "AAG: AV-udstyr — lej av udstyr",
+  "status": "ENABLED",
+  "cpcBidMicros": 9000000,
+  "matchType": "EXACT",
+  "primary": "lej av udstyr",
+  "keywords": [
+    {
+      "text": "lej av udstyr",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej av-udstyr",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af av udstyr",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af av-udstyr",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "av udstyr udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af av udstyr",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af av udstyr københavn",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej av udstyr københavn",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "av udstyr leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning av udstyr",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje av udstyr",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej en av løsning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "konferenceudstyr udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej konferenceudstyr",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej videoudstyr københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/av-udstyr",
+  "path1": "av-udstyr",
+  "headlines": [
+    "Lej AV Udstyr I København",
+    "Lej AV Udstyr Fra 95 kr.",
+    "AV Udstyr Leje Fra 95 kr.",
+    "Projektor, Skærm Og Mikrofon",
+    "Til Konference Og Firmaevent",
+    "Alle Kabler Med I Prisen",
+    "Lej AV Udstyr Til Mødet",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lej AV udstyr i København fra 95 kr. Projektor, storskærm, lærred og mikrofoner.",
+    "Book dit AV udstyr online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "AV udstyr leje til konference, møde og firmaevent. Hent i København S eller få leveret.",
+    "Lej AV udstyr som pakke: præsentationspakken med projektor, lærred og mikrofon fra 695 kr."
+  ]
+}
