@@ -1,0 +1,54 @@
+{
+  "name": "AAG: Lille højtalerpakke — lej højtaler til fest",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lej højtaler til fest",
+  "keywords": [
+    {
+      "text": "lej højtaler til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej højtalere til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af højtaler til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af højtalere til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "højtaler til fest leje",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/hojtalerpakke-lille",
+  "path1": "fest",
+  "headlines": [
+    "Lej Højtaler Til Fest",
+    "Lej Højtalere Til Fest",
+    "Leje Af Højtaler Til Fest",
+    "Leje Af Højtalere Til Fest",
+    "Højtaler Til Fest Leje",
+    "2 Stk. Alto 10\" Højtalere",
+    "Bluetooth — Bare Stream Løs",
+    "Klar Til Weekendens Fest",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lej højtaler til fest i København fra 595 kr. 2× Alto 10\" med Bluetooth og alle kabler.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lej højtalere til fest til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej højtaler til fest med nem opsætning: tænd, par med telefonen og spil. Ingen teknik."
+  ]
+}

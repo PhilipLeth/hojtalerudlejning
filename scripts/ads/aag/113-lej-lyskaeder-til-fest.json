@@ -1,0 +1,44 @@
+{
+  "name": "AAG: Lyskæder — lej lyskæder til fest",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lej lyskæder til fest",
+  "keywords": [
+    {
+      "text": "lej lyskæder til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lyskæder til fest leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af lyskæder til fest",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lyskaeder",
+  "path1": "lyskaeder",
+  "headlines": [
+    "Lej Lyskæder Til Fest",
+    "Lyskæder Til Fest Leje",
+    "Leje Af Lyskæder Til Fest",
+    "10 m Lyskæde, Varm Hvid",
+    "Farvede Eller Varm Hvide Pærer",
+    "Klar Til Telt, Have Og Sal",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lej lyskæder til fest fra 195 kr. 10 m kæder i varm hvid eller farvet, klar til fest.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lyskæder til fest leje til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej lyskæder til festtelt, have og sal. Strømforsyning med, bare hæng op og tænd."
+  ]
+}

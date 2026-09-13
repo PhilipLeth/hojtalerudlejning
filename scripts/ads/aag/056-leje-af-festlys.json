@@ -1,0 +1,41 @@
+{
+  "name": "AAG: Festlys — leje af festlys",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "leje af festlys",
+  "keywords": [
+    {
+      "text": "leje af festlys",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje festlys",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/festlys",
+  "path1": "festlys",
+  "headlines": [
+    "Leje Af Festlys",
+    "Leje Festlys",
+    "Leje Af Festlys Fra 495 kr.",
+    "Leje Festlys Fra 495 kr.",
+    "Diskolys, Diskokugle Og Røg",
+    "Plug And Play, Ingen Teknik",
+    "Klar Til Dansegulvet",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Leje af festlys fra 495 kr. Diskolys, diskokugle, uplights og røg, klar til fest.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Leje festlys til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lys til fest der kører selv til musikken. Plug and play med stativ og alle kabler med."
+  ]
+}

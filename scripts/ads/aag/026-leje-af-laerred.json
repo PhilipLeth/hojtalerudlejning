@@ -1,0 +1,41 @@
+{
+  "name": "AAG: Lærred — leje af lærred",
+  "status": "ENABLED",
+  "cpcBidMicros": 9000000,
+  "matchType": "EXACT",
+  "primary": "leje af lærred",
+  "keywords": [
+    {
+      "text": "leje af lærred",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje lærred",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/laerred-160",
+  "path1": "laerred",
+  "headlines": [
+    "Leje Af Lærred",
+    "Leje Lærred",
+    "Leje Af Lærred Fra 195 kr.",
+    "Leje Lærred Fra 195 kr.",
+    "Lærred 160 cm På Stativ",
+    "Projektor Fås Fra 495 kr.",
+    "Klar Til Filmaften",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Leje af lærred i København fra 195 kr. 160 cm lærred på stativ, klar til projektor.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Leje lærred til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej lærred alene eller sammen med projektor. Præsentationspakken fra 695 kr."
+  ]
+}

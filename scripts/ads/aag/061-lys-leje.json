@@ -1,0 +1,46 @@
+{
+  "name": "AAG: Festlys — lys leje",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lys leje",
+  "keywords": [
+    {
+      "text": "lys leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lys til leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lys leje københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/festlys",
+  "path1": "festlys",
+  "headlines": [
+    "Lys Leje",
+    "Lys Til Leje",
+    "Lys Leje København",
+    "Lys Leje Fra 195 kr.",
+    "Lys Til Leje Fra 195 kr.",
+    "Diskolys, Diskokugle Og Røg",
+    "Lyskæder Fra 195 kr.",
+    "Plug And Play, Ingen Teknik",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lys leje fra 195 kr. Diskolys, diskokugle, lyskæder og uplights, klar til fest.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lys til leje til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej lys til fest der kører selv til musikken. Plug and play med stativ og alle kabler med."
+  ]
+}

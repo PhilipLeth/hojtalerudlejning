@@ -1,0 +1,44 @@
+{
+  "name": "AAG: Lille festpakke — lyd og lys udlejning",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lyd og lys udlejning",
+  "keywords": [
+    {
+      "text": "lyd og lys udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lys og lyd udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af lyd og lys",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/festpakke-lille",
+  "path1": "lyd-og-lys",
+  "headlines": [
+    "Lyd Og Lys Udlejning",
+    "Lys Og Lyd Udlejning",
+    "Udlejning Af Lyd Og Lys",
+    "Højtalere + Festlys I Én Pakke",
+    "Lille Festpakke 890 kr.",
+    "Klar Til Dansegulvet",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lyd og lys udlejning fra 890 kr. Højtalere og festlys i én pakke med alle kabler.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lys og lyd udlejning til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lyd og lys udlejning som pakke: 2 højtalere med Bluetooth, diskolys og stativ."
+  ]
+}

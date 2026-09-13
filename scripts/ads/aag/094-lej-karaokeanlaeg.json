@@ -1,0 +1,50 @@
+{
+  "name": "AAG: Karaokeanlæg — lej karaokeanlæg",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lej karaokeanlæg",
+  "keywords": [
+    {
+      "text": "lej karaokeanlæg",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej et karaokeanlæg",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej karaoke anlæg",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej karaokeanlæg københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/karaoke",
+  "path1": "karaoke",
+  "headlines": [
+    "Lej Karaokeanlæg",
+    "Lej Et Karaokeanlæg",
+    "Lej Karaoke Anlæg",
+    "Lej Karaokeanlæg København",
+    "Lej Karaokeanlæg Fra 695 kr.",
+    "Lej Karaoke Anlæg Fra 695 kr.",
+    "Karaokemaskine, 2 Mikrofoner",
+    "Karaokepakke Med Højtalere",
+    "Tilslut TV Via HDMI",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris"
+  ],
+  "descriptions": [
+    "Lej karaokeanlæg fra 695 kr. Maskine, 2 mikrofoner og højtalere, klar til brug.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lej et karaokeanlæg til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej karaokeanlæg som pakke med højtalere fra 1.300 kr. Tilslut dit TV via HDMI."
+  ]
+}

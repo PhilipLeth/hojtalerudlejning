@@ -1,0 +1,54 @@
+{
+  "name": "AAG: Lyskæder — lyskæde udlejning",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lyskæde udlejning",
+  "keywords": [
+    {
+      "text": "lyskæde udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af lyskæde",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lyskæder udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af lyskæder",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lyskæde udlejning københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lyskaeder",
+  "path1": "lyskaeder",
+  "headlines": [
+    "Lyskæde Udlejning",
+    "Udlejning Af Lyskæde",
+    "Lyskæder Udlejning",
+    "Udlejning Af Lyskæder",
+    "Lyskæde Udlejning København",
+    "Lyskæde Udlejning Fra 195 kr.",
+    "Lyskæder Udlejning Fra 195 kr.",
+    "10 m Lyskæde, Varm Hvid",
+    "Farvede Eller Varm Hvide Pærer",
+    "Klar Til Telt, Have Og Sal",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S"
+  ],
+  "descriptions": [
+    "Lyskæde udlejning fra 195 kr. 10 m kæder i varm hvid eller farvet, klar til fest.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Udlejning af lyskæde til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej lyskæder til festtelt, have og sal. Strømforsyning med, bare hæng op og tænd."
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "AAG: Mikrofon — lej mikrofon",
+  "status": "ENABLED",
+  "cpcBidMicros": 9000000,
+  "matchType": "EXACT",
+  "primary": "lej mikrofon",
+  "keywords": [
+    {
+      "text": "lej mikrofon",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej en mikrofon",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej mikrofoner",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej mikrofon københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lej-mikrofon",
+  "path1": "mikrofon",
+  "headlines": [
+    "Lej Mikrofon",
+    "Lej En Mikrofon",
+    "Lej Mikrofoner",
+    "Lej Mikrofon København",
+    "Lej Mikrofon Fra 95 kr.",
+    "Lej En Mikrofon Fra 95 kr.",
+    "Lej Mikrofoner Fra 95 kr.",
+    "Trådløs, Headset Eller Shure",
+    "Modtager Og Kabler Med",
+    "Til Taler, Sang Og Karaoke",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S"
+  ],
+  "descriptions": [
+    "Lej mikrofon i København fra 95 kr. Trådløs, headset eller Shure. Modtager og kabler med.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lej en mikrofon til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej mikrofon fra 95 kr. Passer til vores højtalere og til dit eget anlæg."
+  ]
+}

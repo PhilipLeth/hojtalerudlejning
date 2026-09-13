@@ -1,0 +1,54 @@
+{
+  "name": "AAG: 55\" Storskærm — led skærm udlejning",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "led skærm udlejning",
+  "keywords": [
+    {
+      "text": "led skærm udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af led skærm",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "led skærme udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af led skærme",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "led skærm udlejning københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/skaerm",
+  "path1": "storskaerm",
+  "headlines": [
+    "Led Skærm Udlejning",
+    "Udlejning Af Led Skærm",
+    "Led Skærme Udlejning",
+    "Udlejning Af Led Skærme",
+    "Led Skærm Udlejning København",
+    "Led Skærm Udlejning 595 kr.",
+    "Udlejning Af Led Skærm 595 kr.",
+    "Led Skærme Udlejning 595 kr.",
+    "55\" LED-Skærm På Stativ",
+    "Til Event, Møde Og Fest",
+    "HDMI-Kabel Og Stativ Med",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr."
+  ],
+  "descriptions": [
+    "Led skærm udlejning i København 595 kr. 55\" LED-skærm på stativ med HDMI-kabel.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Udlejning af led skærm til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej LED skærm alene eller med projektor, lærred og mikrofon. Justerbar højde på stativet."
+  ]
+}

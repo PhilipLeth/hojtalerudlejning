@@ -1,0 +1,50 @@
+{
+  "name": "AAG: Lille højtalerpakke — party højtaler leje",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "party højtaler leje",
+  "keywords": [
+    {
+      "text": "party højtaler leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej party højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej partyhøjtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "partyhøjtaler leje",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/hojtalerpakke-lille",
+  "path1": "fest",
+  "headlines": [
+    "Party Højtaler Leje",
+    "Lej Party Højtaler",
+    "Lej Partyhøjtaler",
+    "Partyhøjtaler Leje",
+    "Lej Party Højtaler Fra 595 kr.",
+    "Lej Partyhøjtaler Fra 595 kr.",
+    "Partyhøjtaler Leje Fra 595 kr.",
+    "2 Stk. Alto 10\" Højtalere",
+    "Bluetooth — Bare Stream Løs",
+    "Klar Til Weekendens Fest",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S"
+  ],
+  "descriptions": [
+    "Party højtaler leje i København fra 595 kr. 2× Alto 10\" med Bluetooth og alle kabler.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lej party højtaler til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej party højtaler med nem opsætning: tænd, par med telefonen og spil. Ingen teknik."
+  ]
+}

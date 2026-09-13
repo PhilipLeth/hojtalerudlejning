@@ -1,0 +1,49 @@
+{
+  "name": "AAG: Karaokemaskine — karaokemaskine leje",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "karaokemaskine leje",
+  "keywords": [
+    {
+      "text": "karaokemaskine leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "karaokemaskine til leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "karaoke maskine leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "karaokemaskine leje københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/karaoke-maskine",
+  "path1": "karaoke",
+  "headlines": [
+    "Karaokemaskine Leje",
+    "Karaokemaskine Til Leje",
+    "Karaoke Maskine Leje",
+    "Karaokemaskine Leje København",
+    "Indbygget Skærm Og Festlys",
+    "2 Trådløse Mikrofoner Med",
+    "Tilslut TV Via HDMI",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Karaokemaskine leje fra 695 kr. Singing Machine med skærm, 2 mikrofoner og lys.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Karaokemaskine til leje. Hent i København S eller få leveret for 495 kr.",
+    "Lej karaokemaskine med 2 trådløse mikrofoner og indbygget festlys. Bluetooth og HDMI."
+  ]
+}

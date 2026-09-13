@@ -1,0 +1,54 @@
+{
+  "name": "AAG: Røgmaskine — røgmaskine udlejning",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "røgmaskine udlejning",
+  "keywords": [
+    {
+      "text": "røgmaskine udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af røgmaskine",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "røgmaskiner udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af røgmaskiner",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "røgmaskine udlejning københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/roegmaskine",
+  "path1": "roegmaskine",
+  "headlines": [
+    "Røgmaskine Udlejning",
+    "Udlejning Af Røgmaskine",
+    "Røgmaskiner Udlejning",
+    "Udlejning Af Røgmaskiner",
+    "Røgmaskine Udlejning København",
+    "Røgvæske Er Med I Prisen",
+    "Fjernbetjening Og Kabler Med",
+    "Klar Til Dansegulvet",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Røgmaskine udlejning i København fra 595 kr. Røgvæske og fjernbetjening er med i prisen.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Udlejning af røgmaskine. Hent i København S eller få leveret for 495 kr.",
+    "Lej røgmaskine til fest, diskotek eller halloween. Kombinér med diskolys og diskokugle."
+  ]
+}

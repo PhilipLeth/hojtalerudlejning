@@ -1,0 +1,50 @@
+{
+  "name": "AAG: Højtalere — leje af højtaler",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "leje af højtaler",
+  "keywords": [
+    {
+      "text": "leje af højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af højtalere",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje højtalere",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lej-hojtaler",
+  "path1": "hojtaler",
+  "headlines": [
+    "Leje Af Højtaler",
+    "Leje Højtaler",
+    "Leje Af Højtalere",
+    "Leje Højtalere",
+    "Leje Af Højtaler Fra 395 kr.",
+    "Leje Højtaler Fra 395 kr.",
+    "Leje Af Højtalere Fra 395 kr.",
+    "Leje Højtalere Fra 395 kr.",
+    "Fra Soundboks Til Stort Anlæg",
+    "Bluetooth Og Alle Kabler Med",
+    "Vælg Efter Antal Gæster",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr."
+  ],
+  "descriptions": [
+    "Leje af højtaler fra 395 kr. Soundboks, festhøjtalere og PA-anlæg med alle kabler.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Leje højtaler til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej højtaler med Bluetooth og nem opsætning. Vælg størrelse efter antal gæster."
+  ]
+}

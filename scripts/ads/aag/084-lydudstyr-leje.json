@@ -1,0 +1,46 @@
+{
+  "name": "AAG: Lydudstyr — lydudstyr leje",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lydudstyr leje",
+  "keywords": [
+    {
+      "text": "lydudstyr leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lydudstyr til leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lydudstyr leje københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lydanlaeg",
+  "path1": "lydudstyr",
+  "headlines": [
+    "Lydudstyr Leje",
+    "Lydudstyr Til Leje",
+    "Lydudstyr Leje København",
+    "Lydudstyr Leje Fra 495 kr.",
+    "Lydudstyr Til Leje Fra 495 kr.",
+    "Højtalere, Mikrofon Og Mixer",
+    "Bluetooth Og Alle Kabler Med",
+    "Anlæg Efter Antal Gæster",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lydudstyr leje i København fra 495 kr. Højtalere, mikrofon og mixer, klar til brug.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lydudstyr til leje til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej lydudstyr med Bluetooth og alle kabler. Nem opsætning uden teknik."
+  ]
+}

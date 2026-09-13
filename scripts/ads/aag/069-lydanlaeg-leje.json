@@ -1,0 +1,46 @@
+{
+  "name": "AAG: Lydanlæg — lydanlæg leje",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lydanlæg leje",
+  "keywords": [
+    {
+      "text": "lydanlæg leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lydanlæg til leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lydanlæg leje københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lydanlaeg",
+  "path1": "lydanlaeg",
+  "headlines": [
+    "Lydanlæg Leje",
+    "Lydanlæg Til Leje",
+    "Lydanlæg Leje København",
+    "Lydanlæg Leje Fra 495 kr.",
+    "Lydanlæg Til Leje Fra 495 kr.",
+    "Anlæg Efter Antal Gæster",
+    "Bluetooth Og Alle Kabler Med",
+    "Til 30–250 Gæster",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lydanlæg leje i København fra 495 kr. Vælg anlæg efter antal gæster, fra 30 til 250.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lydanlæg til leje til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej lydanlæg med Bluetooth, mikrofon og alle kabler. Nem opsætning uden teknik."
+  ]
+}

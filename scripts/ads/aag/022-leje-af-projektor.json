@@ -1,0 +1,50 @@
+{
+  "name": "AAG: Projektor — leje af projektor",
+  "status": "ENABLED",
+  "cpcBidMicros": 9000000,
+  "matchType": "EXACT",
+  "primary": "leje af projektor",
+  "keywords": [
+    {
+      "text": "leje af projektor",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje projektor",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af projektorer",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje projektorer",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lej-projektor",
+  "path1": "projektor",
+  "headlines": [
+    "Leje Af Projektor",
+    "Leje Projektor",
+    "Leje Af Projektorer",
+    "Leje Projektorer",
+    "Leje Af Projektor Fra 495 kr.",
+    "Leje Projektor Fra 495 kr.",
+    "Leje Projektorer Fra 495 kr.",
+    "Full HD, HDMI-Kabel Med",
+    "Lærred 160 cm Fra 195 kr.",
+    "5000 Lumen Pro Fås Også",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S"
+  ],
+  "descriptions": [
+    "Leje af projektor i København fra 495 kr. Full HD med HDMI-kabel og fjernbetjening.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Leje projektor til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej projektor med lærred 160 cm eller 55\" storskærm. Pro-model med 5000 lumen til dagslys."
+  ]
+}

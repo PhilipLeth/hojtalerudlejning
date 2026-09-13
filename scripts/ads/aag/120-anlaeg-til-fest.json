@@ -1,0 +1,50 @@
+{
+  "name": "AAG: Anlæg — anlæg til fest",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "anlæg til fest",
+  "keywords": [
+    {
+      "text": "lej anlæg til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af anlæg til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "anlæg til fest leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lydanlæg til fest leje",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lydanlaeg",
+  "path1": "lydanlaeg",
+  "headlines": [
+    "Lej Anlæg Til Fest",
+    "Leje Af Anlæg Til Fest",
+    "Anlæg Til Fest Leje",
+    "Lydanlæg Til Fest Leje",
+    "Lej Anlæg Til Fest Fra 495 kr.",
+    "Anlæg Efter Antal Gæster",
+    "Bluetooth Og Alle Kabler Med",
+    "Til Fest Og Event",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Anlæg til fest i København fra 495 kr. Vælg anlæg efter antal gæster, fra 30 til 250.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Leje af anlæg til fest til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej anlæg med Bluetooth, mikrofon og alle kabler. Nem opsætning uden teknik."
+  ]
+}

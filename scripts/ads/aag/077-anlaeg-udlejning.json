@@ -1,0 +1,46 @@
+{
+  "name": "AAG: Anlæg — anlæg udlejning",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "anlæg udlejning",
+  "keywords": [
+    {
+      "text": "anlæg udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af anlæg",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "anlæg udlejning københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lydanlaeg",
+  "path1": "lydanlaeg",
+  "headlines": [
+    "Anlæg Udlejning",
+    "Udlejning Af Anlæg",
+    "Anlæg Udlejning København",
+    "Anlæg Udlejning Fra 495 kr.",
+    "Udlejning Af Anlæg Fra 495 kr.",
+    "Anlæg Efter Antal Gæster",
+    "Bluetooth Og Alle Kabler Med",
+    "Til Fest Og Event",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Anlæg udlejning i København fra 495 kr. Vælg anlæg efter antal gæster, fra 30 til 250.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Udlejning af anlæg til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej anlæg med Bluetooth, mikrofon og alle kabler. Nem opsætning uden teknik."
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "AAG: Soundboks 4 — lej soundboks",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lej soundboks",
+  "keywords": [
+    {
+      "text": "lej soundboks",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej en soundboks",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej soundboks københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/soundboks-4",
+  "path1": "soundboks",
+  "headlines": [
+    "Lej Soundboks",
+    "Lej En Soundboks",
+    "Lej Soundboks København",
+    "Lej Soundboks Fra 695 kr.",
+    "Lej En Soundboks Fra 695 kr.",
+    "Soundboks 4 Med Bluetooth",
+    "Fuldt Opladet, Klar Til Fest",
+    "Bluetooth — Bare Stream Løs",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lej soundboks i København fra 695 kr. Soundboks 4 med Bluetooth, opladet og klar til fest.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lej en soundboks til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej en Soundboks 4 til fest, havefest eller studentertur. Nem booking, klar til at hente."
+  ]
+}
