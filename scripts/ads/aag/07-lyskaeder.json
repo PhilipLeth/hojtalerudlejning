@@ -1,0 +1,81 @@
+{
+  "name": "AAG: Lyskæder — lej lyskæder",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lej lyskæder",
+  "keywords": [
+    {
+      "text": "lej lyskæder",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af lyskæder",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lyskæder leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje lyskæder",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej lyskæde",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lyskæde leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af lyskæde",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "party lyskæde leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej party lyskæde",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lyskæder udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej lyskæder til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej lyskæder københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lyskaeder",
+  "path1": "lyskaeder",
+  "headlines": [
+    "Lej Lyskæder I København",
+    "Lej Lyskæder Fra 195 kr.",
+    "Lyskæder Leje Fra 195 kr.",
+    "10 m Lyskæde, Varm Hvid",
+    "Farvede Eller Varm Hvide Pærer",
+    "Lej Lyskæder Til Havefesten",
+    "Klar Til Telt, Have Og Sal",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lej lyskæder i København fra 195 kr. 10 m kæder i varm hvid eller farvet, klar til fest.",
+    "Book lyskæder online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lyskæder leje til en hel weekend. Hent i København S eller få dem leveret for 495 kr.",
+    "Lej lyskæder til festtelt, have og sal. Strømforsyning med, bare hæng op og tænd."
+  ]
+}

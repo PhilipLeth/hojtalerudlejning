@@ -1,0 +1,81 @@
+{
+  "name": "AAG: Lille højtalerpakke — lej højtaler til fest",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lej højtaler til fest",
+  "keywords": [
+    {
+      "text": "lej højtaler til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "højtaler til fest leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af højtaler til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje højtaler til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej højtalere til fest",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "festhøjtaler leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej festhøjtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af festhøjtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "party højtaler leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej party højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej partyhøjtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "festhøjtaler udlejning",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/hojtalerpakke-lille",
+  "path1": "fest",
+  "headlines": [
+    "Lej Højtaler Til Fest I KBH",
+    "Lej Højtaler Til Fest 595 kr.",
+    "Festhøjtaler Leje Fra 595 kr.",
+    "2 Stk. Alto 10\" Højtalere",
+    "Bluetooth — Bare Stream Løs",
+    "Nem Opsætning, Ingen Teknik",
+    "Klar Til Weekendens Fest",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lej højtaler til fest i København fra 595 kr. 2× Alto 10\" med Bluetooth og alle kabler.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Festhøjtaler leje til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej højtaler til fest med nem opsætning: tænd, par med telefonen og spil. Ingen teknik."
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "name": "AAG: Højtalere — lej højtaler",
+  "status": "ENABLED",
+  "cpcBidMicros": 12000000,
+  "matchType": "EXACT",
+  "primary": "lej højtaler",
+  "keywords": [
+    {
+      "text": "lej højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej en højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "højtaler leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej højtalere",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje højtalere",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "højtaler til leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "højtaler udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "højtalere leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej højtaler københavn",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "højtaler leje københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lej-hojtaler",
+  "path1": "lej-hojtaler",
+  "headlines": [
+    "Lej Højtaler I København",
+    "Lej Højtaler Fra 395 kr.",
+    "Højtaler Leje Fra 395 kr.",
+    "Højtalere Til Leje I KBH",
+    "Fra Soundboks Til Stort Anlæg",
+    "Bluetooth Og Alle Kabler Med",
+    "Lej Højtaler Til Weekenden",
+    "Højtaler Udlejning København",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lej højtaler i København fra 395 kr. Soundboks, festhøjtalere og PA-anlæg med alle kabler.",
+    "Book online på 3 minutter og betal først ved afhentning. Intet depositum, ingen bøvl.",
+    "Højtaler leje til fest, bryllup og firmaevent. Hent i København S eller få leveret.",
+    "Lej højtaler med Bluetooth og nem opsætning. Vælg størrelse efter antal gæster."
+  ]
+}

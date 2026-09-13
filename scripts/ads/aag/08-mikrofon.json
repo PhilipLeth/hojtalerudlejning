@@ -1,0 +1,81 @@
+{
+  "name": "AAG: Mikrofon — lej mikrofon",
+  "status": "ENABLED",
+  "cpcBidMicros": 9000000,
+  "matchType": "EXACT",
+  "primary": "lej mikrofon",
+  "keywords": [
+    {
+      "text": "lej mikrofon",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af mikrofon",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "mikrofon leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje mikrofon",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej en mikrofon",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej trådløs mikrofon",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "trådløs mikrofon leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af trådløs mikrofon",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "mikrofon udlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej mikrofon københavn",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "udlejning af mikrofon",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej trådløs mikrofon københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lej-mikrofon",
+  "path1": "mikrofon",
+  "headlines": [
+    "Lej Mikrofon I København",
+    "Lej Mikrofon Fra 95 kr.",
+    "Mikrofon Leje Fra 95 kr.",
+    "Trådløs Mikrofon Fra 295 kr.",
+    "Headset Og Shure Fås Også",
+    "Lej Mikrofon Til Taler Og Sang",
+    "Modtager Og Kabler Med",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lej mikrofon i København fra 95 kr. Trådløs, headset eller Shure — modtager og kabler med.",
+    "Book din mikrofon online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Mikrofon leje til taler, karaoke og konference. Hent i København S eller få leveret.",
+    "Lej trådløs mikrofon fra 295 kr. Passer til vores højtalere og til dit eget anlæg."
+  ]
+}
