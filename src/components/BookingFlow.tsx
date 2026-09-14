@@ -1083,7 +1083,7 @@ export default function BookingFlow({
     soloAddons.length === 1 && soloAddons[0].image
       ? soloAddons[0].image
       : hasLights
-        ? "/images/product-lys-v2.webp"
+        ? "/images/product-lys-v3.webp"
         : "/images/product-rog-v2.webp";
 
   /*
@@ -1856,7 +1856,7 @@ export default function BookingFlow({
                   }}
                   className="rounded-xl border border-dashed border-white/15 p-3 text-center transition active:scale-[0.98] hover:border-brand-500/40 hover:bg-white/[0.02]"
                 >
-                  <img loading="lazy" decoding="async" src="/images/product-lys-v2.webp" srcSet={thumbSrcSet("/images/product-lys-v2.webp")} sizes={THUMB_IMAGE_SIZES} alt="Lys-pakke med LED-lamper og centereffekt" className="mx-auto h-12 w-12 object-contain rounded-lg" />
+                  <img loading="lazy" decoding="async" src="/images/product-lys-v3.webp" srcSet={thumbSrcSet("/images/product-lys-v3.webp")} sizes={THUMB_IMAGE_SIZES} alt="Lys-pakke med LED-lamper og centereffekt" className="mx-auto h-12 w-12 object-contain rounded-lg" />
                   <p className="mt-2 text-sm font-medium text-white/70">
                     {lysAddon?.label}
                   </p>

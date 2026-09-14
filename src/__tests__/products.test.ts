@@ -245,11 +245,12 @@ describe("Addons data", () => {
     }
   });
 
-  it("all addons except kørsel have an image", () => {
+  it("visible equipment addons have an image", () => {
     // Kørsel er en ydelse og har aldrig haft et billede. Alt andet skal have
     // sit eget — mixerne fik deres genereret efter husstilen 25. august 2026.
     const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge"];
     for (const a of addons) {
+      if (a.hidden) continue; // skjulte kladder kan afvente model og foto
       if (a.ydelse) continue; // en ydelse må have et foto (lydmand har), men skal ikke
       if (udenFoto.includes(a.id) || a.intern) {
         expect(a.image).toBeNull();

@@ -3866,5 +3866,15 @@
     "forebyggelse": "useProducts beregner nu delpriser og faktisk besparelse fra aktuelle katalogpriser, inklusive antal. BundleGrid og lyspakkernes prisfelt viser beregnet besparelse. Adminpriser ændres ikke automatisk.",
     "billeder": "Tre produktrelevante Halloween-pakkebilleder, med de korrekte typer og antal højtalere, lys og røgmaskiner. Monsterfesten uden højtalerstativer; Midnatsklubben med.",
     "udgivelse": "Opdater både kode og products_catalog i KV, da KV overskriver defaults."
+  },
+  "lysbar_og_stroboskop_2026_09_14": {
+    "lysbar": "Produktbillede rettet: centereffekt ovenpå baren, sidelamper nedenunder. Ny v3-fil på begge sprog.",
+    "stroboskop": {
+      "status": "Skjult addon-kladde, ikke klar til kundebooking. Ejerskab, model, foto og lagerantal afventer afklaring.",
+      "prisforslag": 95,
+      "forespurgt_model": "Eurolite LED Disco Strobe white Sound, Thomann 413813, 134 kr inkl. moms ved opslag",
+      "anbefalet_alternativ": "Fun Generation LED Pot Strobe 100, Thomann 383840, 375 kr inkl. moms ved opslag",
+      "begrundelse": "Eurolite er en meget lille 1 W-effekt med 1–3 Hz. Fun Generation tilbyder 0–20 Hz, dæmper og DMX til beskeden merpris. Ingen indkøb foretaget."
+    }
   }
 }

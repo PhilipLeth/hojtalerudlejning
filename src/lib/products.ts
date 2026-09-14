@@ -286,6 +286,15 @@ export const speakers: Speaker[] = [
 ];
 
 export const addons: Addon[] = [
+  // Skjult kladde: model og beholdning afklares før aktivering. 95 kr er prisforslag.
+  {
+    id: "stroboskop",
+    price: 95,
+    image: null,
+    hidden: true,
+    da: { label: "Stroboskop", desc: "Kladde — model og tilgængelighed afventer indkøb. Foreslået lejepris: 95 kr." },
+    en: { label: "Strobe light", desc: "Draft — model and availability pending purchase. Suggested rental price: DKK 95." },
+  },
   {
     id: "lyseffekt",
     page: "/enkelt-lyseffekt",
@@ -301,7 +310,7 @@ export const addons: Addon[] = [
     page: "/lys-pakke",
     youtubeUrl: "https://www.youtube.com/watch?v=FcOqGlPsyYY",
     price: 495,
-    image: "/images/product-lys-v2.webp",
+    image: "/images/product-lys-v3.webp",
     contents: ["2× farvede LED-lamper", "Centereffekt", "Stativ", "Strøm + DMX/kabler"],
     da: { label: "Lys-pakke", desc: "2 farvede lamper + centereffekt på stativ" },
     en: { label: "Light package", desc: "2 coloured lamps + centre effect on stand" },
@@ -1177,7 +1186,7 @@ export const rentalProducts: RentalProduct[] = [
     page: "/lysshow-pakke",
     category: "lys",
     price: 1495,
-    image: "/images/product-lys-v2.webp",
+    image: "/images/product-lys-v3.webp",
     name_da: "Lysshow",
     name_en: "Light show",
     desc_da: "Lys-pakke, discokugle og røgmaskine. Lyset bliver synligt i luften — spar 190 kr.",
@@ -1296,7 +1305,7 @@ export const rentalProducts: RentalProduct[] = [
 
 /* ───── På pause ─────
  *
- * INTET er på pause på sitet. Skærme, projektor, lærred og karaoke var taget
+ * Stroboskop er en skjult kladde indtil indkøb og modelvalg. Skærme, projektor, lærred og karaoke var taget
  * ud af sortimentet i august 2026, men blev sat i udlejning igen 8. september:
  * Search Console viste ~350 visninger om måneden på "lej storskærm"-søgninger,
  * der landede på en side, som svarede "udlejes ikke lige nu". Efterspørgslen
@@ -1307,10 +1316,10 @@ export const rentalProducts: RentalProduct[] = [
  * /admin/produkter, sætter det `hidden`, og så filtreres produktet væk hos
  * kunden (useProducts), i søgningen, i DBA-feedet og i serverens prisopslag —
  * så et pauset produkt hverken kan findes eller betales. Listen herunder er
- * for de sider og tests, der skal kunne sige pausen højt; den er tom nu.
+ * for de sider og tests, der skal kunne sige pausen højt.
  * Sandheden om hvad kunden kan booke er `hidden` i kataloget ovenfor.
  */
-export const PAUSEDE_PRODUKTER: string[] = [];
+export const PAUSEDE_PRODUKTER: string[] = ["stroboskop"];
 
 /** Er produktet sat på pause? Bruges af produktsiderne, der ellers ville stå
  *  med en bookingknap til noget, vi ikke udlejer. */

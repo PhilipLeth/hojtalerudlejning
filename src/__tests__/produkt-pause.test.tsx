@@ -54,7 +54,7 @@ describe("/admin/produkter — pause", () => {
 
 describe("hidden virker hele vejen ud", () => {
   /**
-   * Intet står på pause: skærme, projektor, lærred og karaoke kom i udlejning
+   * Stroboskop afventer indkøb. Skærme, projektor, lærred og karaoke kom i udlejning
    * igen 8. september 2026 — se PAUSEDE_PRODUKTER i products.ts.
    *
    * Testen låser listen i begge retninger: et produkt der forsvinder for

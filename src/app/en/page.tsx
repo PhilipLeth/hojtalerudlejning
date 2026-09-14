@@ -184,7 +184,7 @@ export default function EnHome() {
             name: "Light package rental",
             description:
               "Party lights for rent: 2 coloured LED lamps + centre effect on stand. Add to your speaker rental for the full party experience.",
-            image: "https://lejhojtaler.dk/images/product-lys-v2.webp",
+            image: "https://lejhojtaler.dk/images/product-lys-v3.webp",
             brand: {
               "@type": "Brand",
               name: "Lejhøjtaler.dk",
