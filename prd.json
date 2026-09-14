@@ -3868,7 +3868,7 @@
     "udgivelse": "Opdater både kode og products_catalog i KV, da KV overskriver defaults."
   },
   "lysbar_og_stroboskop_2026_09_14": {
-    "lysbar": "Produktbillede rettet: centereffekt ovenpå baren, sidelamper nedenunder. Ny v3-fil på begge sprog.",
+    "lysbar": "Produktbillede rettet: centereffekt ovenpå baren, sidelamper nedenunder. Stativbeslag med fingerskrue under barens midte tilføjet efter produktrettelse. Ny v4-fil på begge sprog.",
     "stroboskop": {
       "status": "Skjult addon-kladde, ikke klar til kundebooking. Ejerskab, model, foto og lagerantal afventer afklaring.",
       "prisforslag": 95,
