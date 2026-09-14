@@ -26,6 +26,9 @@ import type { Locale } from "@/lib/i18n";
  * listen dansk igen.
  */
 export const CONTENTS_EN: Record<string, string> = {
+  "1 LED-lyseffekt uden stativ": "1 LED light effect without stand",
+  "Røgmaskine inkl. væske": "Fog machine with fluid",
+  "Lys-pakke på stativ": "Light package on stand",
   // Højtalere og lyd
   '2× Alto 10" højtalere': '2× Alto 10" speakers',
   '2× EV 12" højtalere': '2× EV 12" speakers',

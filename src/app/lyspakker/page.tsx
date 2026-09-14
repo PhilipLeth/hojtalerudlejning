@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej lys til festen — færdige lyspakker fra 695 kr",
     description:
-      "Seks færdige lyspakker efter anledning: teenagefest, festtelt, bryllup, dansegulv — eller hele lokalet. Plug and play, uden tekniker.",
+      "Færdige lyspakker efter anledning: teenagefest, festtelt, bryllup, dansegulv — eller hele lokalet. Plug and play, uden tekniker.",
     url: "https://lejhojtaler.dk/lyspakker",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -50,6 +50,7 @@ function kr(n: number) {
 
 /** Anledningen øverst på kortet — det er den, folk søger på, ikke grejet. */
 const KICKER: Record<string, string> = {
+  "halloween_lys": "Halloween",
   "pakke_festtelt": "Festtelt & have",
   "pakke_diskolys": "Dansegulvet",
   "pakke_teenagefest": "Teenagefest",

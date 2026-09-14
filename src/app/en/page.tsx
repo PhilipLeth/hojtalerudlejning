@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Hero from "@/components/Hero";
+import HalloweenHome from "@/components/HalloweenHome";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import BundleGrid from "@/components/BundleGrid";
 import GoogleReviews from "@/components/GoogleReviews";
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 export default function EnHome() {
   return (
     <main className="min-h-screen" lang="en">
-      <Hero locale="en" />
+      <HalloweenHome locale="en" />
       {/* Pakkestigen manglede på engelsk — den engelske forside viste kun
           enkelthøjtalere, mens den danske havde hele stigen efter antal gæster.
           Det var også grunden til, at de engelske pakkesider stod uden ét

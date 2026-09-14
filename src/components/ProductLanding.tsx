@@ -160,7 +160,7 @@ export default function ProductLanding({
   locale = "da",
   children,
 }: ProductLandingProps) {
-  const bookHref = toBook(productId);
+  const bookHref = toBook(productId, locale);
   const c = COPY[locale];
   /**
    * Produktet er sat på pause i kataloget (se PAUSEDE_PRODUKTER). Siden bliver
@@ -257,13 +257,13 @@ export default function ProductLanding({
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            København · {c.kicker} <PhoneText />
+            {locale === "en" ? "Copenhagen" : "København"} · {c.kicker} <PhoneText />
           </p>
           <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
             {headline}
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              {paused ? c.pausedTitle : <LivePrice productId={productId} fallback={price} />}
+              {paused ? c.pausedTitle : <LivePrice productId={productId} fallback={price} prefix={locale === "en" ? "from " : "fra "} suffix={locale === "en" ? " DKK" : " kr."} />}
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">{sub}</p>
@@ -317,7 +317,7 @@ export default function ProductLanding({
                 <p className="mb-6 text-xl font-bold text-white/40">{c.pausedTitle}</p>
               ) : (
                 <p className="mb-6 text-3xl font-bold text-brand-400">
-                  <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" /><span className="text-lg font-normal text-white/40">{enhed}</span>
+                  <LivePrice productId={productId} fallback={price} prefix="" suffix={locale === "en" ? " DKK" : " kr"} /><span className="text-lg font-normal text-white/40">{enhed}</span>
                 </p>
               )}
               <ul className="space-y-3 text-white/60">
@@ -368,7 +368,7 @@ export default function ProductLanding({
           ) : (
             <>
               <p className="mx-auto mt-4 max-w-md text-white/50">
-                {bundtekst} <LivePrice productId={productId} fallback={price} prefix="" suffix=" kr" />{enhed}.
+                {bundtekst} <LivePrice productId={productId} fallback={price} prefix="" suffix={locale === "en" ? " DKK" : " kr"} />{enhed}.
               </p>
               <a
                 href={bookHref}

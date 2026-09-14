@@ -3797,5 +3797,52 @@
     },
     "tilfoej_produkt_mere_fjernet": "'+ Tilføj et produkt mere' på trin 3 sendte kunden tilbage til trin 1 og gennem kalenderen igen — datoerne var gemt, men kunden læste kalenderen som 'vælg igen'. Knappen og addCurrentToCart er væk. Mere lægges i kurven via søgefeltet på trin 3 (resultater lægges direkte i kurven) eller via Book på en anden produktside (stashSelectionToCart). booking-kvittering.test.tsx og order-completeness.test.tsx er lagt om til søgefeltet.",
     "aabent": "Resten af forslaget — kurven som datamodel (speaker/selectedAddons/cartItems → én liste), betalingsvalg på kvitteringen, firma og nyhedsbrev væk fra trin 4 — er ikke bygget. Frederik beslutter."
+  },
+  "halloween_2026": {
+    "dato": "2026-09-14",
+    "beslutning": "Dansk og engelsk forside med Halloween-kampagne, orange/violet festplakat og komprimeret stemningsillustration. Almindelige festpakker bevares under kampagnen.",
+    "pakker": [
+      {
+        "id": "halloween_lys",
+        "navn": "Heksetimen",
+        "pris": 895,
+        "dele": [
+          "lyseffekt",
+          "rog"
+        ]
+      },
+      {
+        "id": "halloween_lille",
+        "navn": "Monsterfesten",
+        "pris": 1495,
+        "dele": [
+          "party",
+          "lys",
+          "rog"
+        ],
+        "kapacitet": "op til 30 gæster"
+      },
+      {
+        "id": "halloween_stor",
+        "navn": "Midnatsklubben",
+        "pris": 1995,
+        "dele": [
+          "festival",
+          "stativer",
+          "lys",
+          "rog"
+        ],
+        "kapacitet": "30–50 gæster"
+      }
+    ],
+    "booking": "Rigtige katalogprodukter. useProducts læser adminpriser. Serverpriser og lager bruger de eksisterende katalog- og bundle-funktioner. Bookinglinks bevarer locale.",
+    "indhold": "Kabler og røgvæske inkluderet; pynt/græskar ikke inkluderet. Røg skal aftales med feststedet. Levering kan tilvælges.",
+    "sider": [
+      "/halloween-lys",
+      "/halloween-festpakke",
+      "/halloween-festpakke-stor"
+    ],
+    "sprog": "Alle tre sider findes også under /en med gensidig hreflang.",
+    "saeson": "Forsidens kampagne er aktiv indtil den erstattes; ingen automatisk udløbsdato på pakkerne."
   }
 }

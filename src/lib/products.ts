@@ -546,6 +546,55 @@ export function deliveryDirections(id: string): { out: boolean; back: boolean } 
 
 /** Standalone rental products (lys, av) — bookable via /?product=ID#book */
 export const rentalProducts: RentalProduct[] = [
+  // Halloween: nye kombinationer af eksisterende udstyr. Lager følger delene.
+  {
+    id: "halloween_lys", page: "/halloween-lys", category: "lys", price: 895,
+    image: "/images/halloween-hero.webp",
+    name_da: "Heksetimen", name_en: "The Witching Hour",
+    desc_da: "Halloween-lys og røg til dig, der allerede har lyd. LED-lyseffekt og røgmaskine med væske.",
+    desc_en: "Halloween lighting and fog rental for a party with its own sound system. LED effect and fog machine with fluid.",
+    contents: ["1 LED-lyseffekt uden stativ", "Røgmaskine inkl. væske", "Strømkabler"],
+    allowedAddons: ["mikrofon", ...DELIVERY_ADDON_IDS],
+    bundle: { discount: 95, usecase_da: "Lys og røg · uden højtalere", usecase_en: "Lights and fog · no speakers",
+      parts: [
+        { productId: "lyseffekt", label_da: "LED-lyseffekt", label_en: "LED light effect", price: 395 },
+        { productId: "rog", label_da: "Røgmaskine inkl. væske", label_en: "Fog machine with fluid", price: 595 },
+      ],
+    },
+  },
+  {
+    id: "halloween_lille", page: "/halloween-festpakke", category: "lyd", price: 1495,
+    image: "/images/halloween-hero.webp",
+    name_da: "Monsterfesten", name_en: "Monster Party",
+    desc_da: "Halloween-festpakke til op til 30 gæster: to Alto-højtalere, lys-pakke og røgmaskine med væske. Tilslut din egen playliste via Bluetooth.",
+    desc_en: "Halloween party rental for up to 30 guests: two Alto speakers, a light package and a fog machine with fluid. Connect your playlist via Bluetooth.",
+    contents: ['2× Alto 10" højtalere', "Lys-pakke på stativ", "Røgmaskine inkl. væske", "Bluetooth + alle kabler"],
+    allowedAddons: ["stativer", "subwoofer", "mikrofon", ...DELIVERY_ADDON_IDS],
+    bundle: { discount: 190, usecase_da: "Lyd, lys og røg · op til 30 gæster", usecase_en: "Sound, lights and fog · up to 30 guests",
+      parts: [
+        { productId: "party", label_da: "2× Alto-højtalere", label_en: "2× Alto speakers", price: 595 },
+        { productId: "lys", label_da: "Lys-pakke på stativ", label_en: "Light package on stand", price: 495 },
+        { productId: "rog", label_da: "Røgmaskine inkl. væske", label_en: "Fog machine with fluid", price: 595 },
+      ],
+    },
+  },
+  {
+    id: "halloween_stor", page: "/halloween-festpakke-stor", category: "lyd", price: 1995,
+    image: "/images/halloween-hero.webp",
+    name_da: "Midnatsklubben", name_en: "The Midnight Club",
+    desc_da: "Halloween-festpakke til 30–50 gæster: to EV-højtalere på stativer, lys-pakke og røgmaskine med væske. Klar til dansegulvet.",
+    desc_en: "Halloween party equipment for 30–50 guests: two EV speakers on stands, a light package and a fog machine with fluid. Ready for the dance floor.",
+    contents: ['2× EV 12" højtalere', "Højtalerstativer", "Lys-pakke på stativ", "Røgmaskine inkl. væske", "Bluetooth + alle kabler"],
+    allowedAddons: ["subwoofer", "mikrofon", ...DELIVERY_ADDON_IDS],
+    bundle: { discount: 190, usecase_da: "Lyd, lys og røg · 30–50 gæster", usecase_en: "Sound, lights and fog · 30–50 guests",
+      parts: [
+        { productId: "festival", label_da: "2× EV-højtalere", label_en: "2× EV speakers", price: 995 },
+        { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 100 },
+        { productId: "lys", label_da: "Lys-pakke på stativ", label_en: "Light package on stand", price: 495 },
+        { productId: "rog", label_da: "Røgmaskine inkl. væske", label_en: "Fog machine with fluid", price: 595 },
+      ],
+    },
+  },
   // ── Pakker med lydmand (11. sept 2026) ──
   // AV-tekniker med på dagen. Levering, opsætning og afhentning er ALTID med:
   // lydmanden kommer sammen med grejet, sætter op og tager det med hjem igen.
@@ -1353,6 +1402,8 @@ export const NAV_CATEGORIES: NavCategory[] = [
  */
 export const KATEGORI_PAKKER: Record<string, string[]> = {
   "/lej-hojtaler": [
+    "halloween_lille",
+    "halloween_stor",
     "pakke_fest_lille",
     "pakke_fest_stor",
     "pakke_fest_150",
@@ -1371,6 +1422,7 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
   // Lyspakkerne bor på /lyspakker — landingssiden der rendrer fra denne liste.
   // /festlys viser dem OGSÅ i sit produktgitter, men kategorisiden er én.
   "/lyspakker": [
+    "halloween_lys",
     "pakke_stemningslys",
     "pakke_diskolys",
     "pakke_teenagefest",
@@ -1385,7 +1437,7 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
 };
 
 /** Lejlighedspakkerne — vises under stigen på /lej-hojtaler */
-export const LYD_LEJLIGHEDSPAKKER = ["pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys", "pakke_ungdomsfest", "pakke_ungdomsfest_stor"];
+export const LYD_LEJLIGHEDSPAKKER = ["halloween_lille", "halloween_stor", "pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys", "pakke_ungdomsfest", "pakke_ungdomsfest_stor"];
 
 /** Pakkerne med lydmand — vises samlet på /lej-hojtaler. Kørslen er med i alle tre. */
 export const LYDMAND_PAKKER = ["pakke_lydmand_fest", "pakke_lydmand_firma", "pakke_lydmand_stor"];

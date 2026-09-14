@@ -1,4 +1,4 @@
-import HomeHero from "@/components/HomeHero";
+import HalloweenHome from "@/components/HalloweenHome";
 import BundleGrid from "@/components/BundleGrid";
 import Link from "next/link";
 import { FEST_LADDER_FORSIDE_IDS, prisSpaend, startPrisKr } from "@/lib/products";
@@ -14,7 +14,7 @@ import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <HomeHero />
+      <HalloweenHome />
       <BundleGrid
         ids={FEST_LADDER_FORSIDE_IDS}
         title="Vælg anlæg efter antal gæster"

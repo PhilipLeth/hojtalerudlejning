@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Party Light Rental Copenhagen — packages from 695 DKK",
     description:
-      "Six ready-made light packages by occasion: teen party, party tent, wedding, dancefloor — or the whole venue. Plug and play, no technician.",
+      "Ready-made light packages by occasion: teen party, party tent, wedding, dancefloor — or the whole venue. Plug and play, no technician.",
     url: "https://lejhojtaler.dk/en/lyspakker",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -36,6 +36,7 @@ function kr(n: number) {
 }
 
 const KICKER: Record<string, string> = {
+  "halloween_lys": "Halloween",
   "pakke_festtelt": "Party tent & garden",
   "pakke_diskolys": "The dancefloor",
   "pakke_teenagefest": "Teen party",
