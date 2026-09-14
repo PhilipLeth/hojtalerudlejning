@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Soundboks Package with Lights | Soundboks 4 + light package | 1,090 DKK | Lejhøjtaler.dk",
+  title: "Soundboks Package with Lights | Soundboks 4 + light package | 1,190 DKK | Lejhøjtaler.dk",
   description:
-    "Soundboks package with lights: Soundboks 4 and light package for 1,090 DKK — save 100 DKK. Battery-powered sound and party lights for up to 50 people. Rent in Copenhagen.",
+    "Soundboks package with lights: Soundboks 4 and light package for 1,190 DKK — save 100 DKK. Battery-powered sound and party lights for up to 50 people. Rent in Copenhagen.",
   keywords: ["soundboks with lights rental copenhagen", "soundboks package hire", "battery speaker and party lights rental", "soundboks 4 rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/soundboks-pakke-lys",
     languages: localeAlternates("/soundboks-pakke-lys"),
   },
   openGraph: {
-    title: "Soundboks package with lights | 1,090 DKK",
+    title: "Soundboks package with lights | 1,190 DKK",
     description: "Soundboks 4 + light package. Battery-powered sound and lights — save 100 DKK.",
     url: "https://lejhojtaler.dk/en/soundboks-pakke-lys",
     siteName: "Lejhøjtaler.dk",
@@ -28,7 +28,7 @@ export default function Page() {
       locale="en"
       slug="en/soundboks-pakke-lys"
       name="Soundboks package with lights"
-      price={1090}
+      price={1190}
       headline="Soundboks package with lights — sound without a socket, lights that make it a party"
       sub="Soundboks 4 + light package with 2 coloured lamps and a centre effect. The bass runs on battery, the lights need a socket — save 100 DKK."
       image="/images/product-soundboks-v2.webp"

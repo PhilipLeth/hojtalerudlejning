@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Enkelt Lyseffekt København | 395 kr | Lejhøjtaler.dk",
+  title: "Lej Enkelt Lyseffekt København | 195 kr | Lejhøjtaler.dk",
   description:
-    "Lej enkelt LED-festlys i København fra 395 kr/weekend. Plug and play farveeffekt på fod — perfekt til fødselsdag, konfirmation og hjemmefest. Book online på 2 min.",
+    "Lej enkelt LED-festlys i København fra 195 kr/weekend. Plug and play farveeffekt på fod — perfekt til fødselsdag, konfirmation og hjemmefest. Book online på 2 min.",
   keywords: [
     "lej lyseffekt københavn",
     "enkelt lyseffekt leje",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/enkelt-lyseffekt"),
   },
   openGraph: {
-    title: "Lej Enkelt Lyseffekt København | 395 kr",
+    title: "Lej Enkelt Lyseffekt København | 195 kr",
     description:
       "1 LED-par-lys (uden stativ) — plug and play farveeffekt til din fest. Book online, betal ved afhentning.",
     url: "https://lejhojtaler.dk/enkelt-lyseffekt",
@@ -33,7 +33,7 @@ export default function Page() {
     <ProductLanding
       slug="enkelt-lyseffekt"
       name="Enkelt lyseffekt"
-      price={395}
+      price={195}
       headline="Lej enkelt lyseffekt i København"
       sub="1 LED-par-lys (uden stativ) — plug and play farveeffekt der sætter stemning på få minutter."
       image="/images/product-lyseffekt-v2.webp"

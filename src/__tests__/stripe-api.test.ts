@@ -47,9 +47,9 @@ describe("Server-side prisberegning (pricing)", () => {
     expect(lineItems[0].price_data.currency).toBe("dkk");
   });
 
-  it("festpakke lille = præcis 890 kr", async () => {
+  it("festpakke lille = præcis 690 kr", async () => {
     const table = await loadPriceTable(fakeKv());
-    expect(buildLineItems(table, [{ id: "pakke_fest_lille" }]).totalOre).toBe(89000);
+    expect(buildLineItems(table, [{ id: "pakke_fest_lille" } ]).totalOre).toBe(69000);
   });
 
   it("flere varer summeres korrekt (party + lys + rog)", async () => {

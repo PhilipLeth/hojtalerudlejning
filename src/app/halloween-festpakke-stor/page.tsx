@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: "Midnatsklubben | Halloween-pakke i København",
     description: product.desc_da,
     url: "https://lejhojtaler.dk/halloween-festpakke-stor",
-    images: ["/images/halloween-hero.webp"],
+    images: [product.image],
     locale: "da_DK",
     type: "website",
   },

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: "Monster Party | Halloween party rental Copenhagen",
     description: product.desc_en,
     url: "https://lejhojtaler.dk/en/halloween-festpakke",
-    images: ["/images/halloween-hero.webp"],
+    images: [product.image],
     locale: "en_GB",
     type: "website",
   },

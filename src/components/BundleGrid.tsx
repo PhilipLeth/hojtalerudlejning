@@ -9,6 +9,7 @@ import {
 import { useProducts } from "@/lib/useProducts";
 import { thumbSrcSet, GRID_IMAGE_SIZES } from "@/lib/imageSrcSet";
 import { localizedHref } from "@/lib/enPages";
+import { bookHref } from "@/lib/bookUrl";
 import type { Locale } from "@/lib/i18n";
 
 /** Kortets faste tekster. Katalogets navne og beskrivelser findes allerede på begge sprog. */
@@ -82,7 +83,7 @@ function BundleCard({ product: p, locale }: { product: RentalProduct; locale: Lo
     rentalProducts.find((x) => x.id === id)?.page;
   const bundle = p.bundle!;
   const list = bundleListPrice(p);
-  const savings = bundle.discount > 0 ? bundle.discount : Math.max(0, list - p.price);
+  const savings = Math.max(0, list - p.price);
 
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-brand-500/25 bg-gradient-to-br from-brand-500/[0.08] via-white/[0.03] to-transparent transition hover:border-brand-500/50">
@@ -92,7 +93,7 @@ function BundleCard({ product: p, locale }: { product: RentalProduct; locale: Lo
           object-contain. Kun en let gradient nederst så teksten kan læses uden
           at mudre billedet til. */}
       <Link
-        href={side ?? `/?product=${p.id}#book`}
+        href={side ?? bookHref(p.id, locale)}
         aria-label={c.see(navn)}
         className="relative block h-48 overflow-hidden bg-[#0d0c12] sm:h-56"
       >
@@ -151,7 +152,7 @@ function BundleCard({ product: p, locale }: { product: RentalProduct; locale: Lo
           </div>
           <div className="flex gap-2">
             <Link
-              href={`/?product=${p.id}#book`}
+              href={bookHref(p.id, locale)}
               className="rounded-full bg-brand-500 px-6 py-2.5 text-sm font-semibold text-black transition hover:bg-brand-400 active:scale-[0.98]"
             >
               {c.book}

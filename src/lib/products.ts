@@ -139,6 +139,19 @@ export function bundleListPrice(p: RentalProduct): number {
   return p.bundle.parts.reduce((sum, part) => sum + part.price, 0);
 }
 
+/** Delpriser og besparelse følger det aktuelle katalog, også efter adminændringer. */
+export function refreshBundlePrices(rentals: RentalProduct[], items: Array<{ id: string; price: number }>): RentalProduct[] {
+  const prices = new Map(items.map(p => [p.id, p.price]));
+  return rentals.map(p => {
+    if (!p.bundle?.parts.length) return p;
+    const parts = p.bundle.parts.map(part => ({
+      ...part,
+      price: (prices.get(part.productId) ?? part.price / (part.qty ?? 1)) * (part.qty ?? 1),
+    }));
+    return { ...p, bundle: { ...p.bundle, parts, discount: Math.max(0, parts.reduce((sum, part) => sum + part.price, 0) - p.price) } };
+  });
+}
+
 export const speakers: Speaker[] = [
   {
     id: "thumpgo",
@@ -196,7 +209,7 @@ export const speakers: Speaker[] = [
     id: "soundboks",
     page: "/soundboks-4",
     youtubeUrl: "https://www.youtube.com/watch?v=k7nG3O4I6JI",
-    price: 695,
+    price: 795,
     product: "/images/product-soundboks-v2.webp",
     mood: "/images/mood-party.webp",
     power: "batteri",
@@ -277,7 +290,7 @@ export const addons: Addon[] = [
     id: "lyseffekt",
     page: "/enkelt-lyseffekt",
     youtubeUrl: "https://www.youtube.com/watch?v=XhecuXfY0vo",
-    price: 395,
+    price: 195,
     image: "/images/product-lyseffekt-v2.webp",
     contents: ["1× LED-par-lys (uden stativ)", "Strømkabel", "Automatiske farveeffekter"],
     da: { label: "Enkelt lyseffekt", desc: "1 LED-par-lys med farveeffekter — leveres uden stativ, plug and play" },
@@ -480,6 +493,9 @@ export const addons: Addon[] = [
  * forsvinder oplysningen af sig selv frem for at blive stående og lyve.
  */
 export const GENEREREDE_BILLEDER: ReadonlySet<string> = new Set([
+  "/images/product-halloween-heksetimen.webp",
+  "/images/product-halloween-monsterfesten.webp",
+  "/images/product-halloween-midnatsklubben.webp",
   "/images/product-pakke-stemningslys-taendt-v3.webp",
   "/images/product-pakke-diskolys-taendt-v2.webp",
   "/images/product-pakke-teenagefest-taendt-v2.webp",
@@ -548,23 +564,24 @@ export function deliveryDirections(id: string): { out: boolean; back: boolean } 
 export const rentalProducts: RentalProduct[] = [
   // Halloween: nye kombinationer af eksisterende udstyr. Lager følger delene.
   {
-    id: "halloween_lys", page: "/halloween-lys", category: "lys", price: 895,
-    image: "/images/halloween-hero.webp",
+    id: "halloween_lys", page: "/halloween-lys", category: "lyd", price: 895,
+    image: "/images/product-halloween-heksetimen.webp",
     name_da: "Heksetimen", name_en: "The Witching Hour",
-    desc_da: "Halloween-lys og røg til dig, der allerede har lyd. LED-lyseffekt og røgmaskine med væske.",
-    desc_en: "Halloween lighting and fog rental for a party with its own sound system. LED effect and fog machine with fluid.",
-    contents: ["1 LED-lyseffekt uden stativ", "Røgmaskine inkl. væske", "Strømkabler"],
+    desc_da: "Halloween-pakke med Mackie Thump GO, LED-lyseffekt og røgmaskine med væske. Kompakt lyd, lys og røg til den lille fest.",
+    desc_en: "A compact Halloween party package with a Mackie Thump GO speaker, LED light effect and fog machine with fluid. Sound, lights and fog for a small party.",
+    contents: ['Mackie Thump GO 8"', "Oplader", "Bluetooth", "1 LED-lyseffekt uden stativ", "Røgmaskine inkl. væske", "Strømkabler"],
     allowedAddons: ["mikrofon", ...DELIVERY_ADDON_IDS],
-    bundle: { discount: 95, usecase_da: "Lys og røg · uden højtalere", usecase_en: "Lights and fog · no speakers",
+    bundle: { discount: 290, usecase_da: "Kompakt lyd, lys og røg", usecase_en: "Compact sound, lights and fog",
       parts: [
-        { productId: "lyseffekt", label_da: "LED-lyseffekt", label_en: "LED light effect", price: 395 },
+        { productId: "thumpgo", label_da: "Mackie Thump GO", label_en: "Mackie Thump GO", price: 395 },
+        { productId: "lyseffekt", label_da: "LED-lyseffekt", label_en: "LED light effect", price: 195 },
         { productId: "rog", label_da: "Røgmaskine inkl. væske", label_en: "Fog machine with fluid", price: 595 },
       ],
     },
   },
   {
     id: "halloween_lille", page: "/halloween-festpakke", category: "lyd", price: 1495,
-    image: "/images/halloween-hero.webp",
+    image: "/images/product-halloween-monsterfesten.webp",
     name_da: "Monsterfesten", name_en: "Monster Party",
     desc_da: "Halloween-festpakke til op til 30 gæster: to Alto-højtalere, lys-pakke og røgmaskine med væske. Tilslut din egen playliste via Bluetooth.",
     desc_en: "Halloween party rental for up to 30 guests: two Alto speakers, a light package and a fog machine with fluid. Connect your playlist via Bluetooth.",
@@ -580,7 +597,7 @@ export const rentalProducts: RentalProduct[] = [
   },
   {
     id: "halloween_stor", page: "/halloween-festpakke-stor", category: "lyd", price: 1995,
-    image: "/images/halloween-hero.webp",
+    image: "/images/product-halloween-midnatsklubben.webp",
     name_da: "Midnatsklubben", name_en: "The Midnight Club",
     desc_da: "Halloween-festpakke til 30–50 gæster: to EV-højtalere på stativer, lys-pakke og røgmaskine med væske. Klar til dansegulvet.",
     desc_en: "Halloween party equipment for 30–50 guests: two EV speakers on stands, a light package and a fog machine with fluid. Ready for the dance floor.",
@@ -683,7 +700,7 @@ export const rentalProducts: RentalProduct[] = [
     page: "/festpakke-lille",
     youtubeUrl: "https://www.youtube.com/watch?v=0VN2Q2bMufA",
     category: "lyd",
-    price: 890,
+    price: 690,
     image: "/images/product-pakke-fest-lille.webp",
     cardImageCrop: "50% 46%",
     name_da: "Lille festpakke",
@@ -698,7 +715,7 @@ export const rentalProducts: RentalProduct[] = [
       usecase_en: "Sound and lights for the small party — up to 40 people. Compact set, ready in 10 minutes.",
       parts: [
         { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speaker package", price: 595 },
-        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 395 },
+        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 195 },
       ],
     },
   },
@@ -849,7 +866,7 @@ export const rentalProducts: RentalProduct[] = [
     page: "/udendorspakke",
     youtubeUrl: "https://www.youtube.com/watch?v=k7nG3O4I6JI",
     category: "lyd",
-    price: 895,
+    price: 995,
     image: "/images/product-soundboks-v2.webp",
     name_da: "Udendørspakke",
     name_en: "Outdoor package",
@@ -862,7 +879,7 @@ export const rentalProducts: RentalProduct[] = [
       usecase_da: "Baggård, strand, park eller polterabend: der er ingen strøm, og festen skal holde til langt ud på aftenen.",
       usecase_en: "Courtyard, beach, park or stag do: there is no power, and the party has to last all evening.",
       parts: [
-        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 695 },
+        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 795 },
         { productId: "batteri", label_da: "Ekstra batteri", label_en: "Extra battery", price: 145 },
         { productId: "lyskaeder", label_da: "Lyskæde varm hvid", label_en: "Fairy lights warm white", price: 195 },
       ],
@@ -873,7 +890,7 @@ export const rentalProducts: RentalProduct[] = [
     page: "/studenterpakke",
     youtubeUrl: "https://www.youtube.com/watch?v=k7nG3O4I6JI",
     category: "lyd",
-    price: 845,
+    price: 945,
     image: "/images/product-soundboks-v2.webp",
     name_da: "Studenterpakken",
     name_en: "Graduation package",
@@ -886,7 +903,7 @@ export const rentalProducts: RentalProduct[] = [
       usecase_da: "Studenterkørsel: ingen strøm på ladet, og anlægget skal kunne løftes op og ned hele dagen.",
       usecase_en: "Graduation truck: no power on the truck bed, and the speaker gets lifted on and off all day.",
       parts: [
-        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 695 },
+        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 795 },
         { productId: "batteri", label_da: "Ekstra batteri", label_en: "Extra battery", price: 145 },
         { productId: "taske", label_da: "Bæretaske", label_en: "Carry bag", price: 95 },
       ],
@@ -945,12 +962,12 @@ export const rentalProducts: RentalProduct[] = [
     page: "/diskolys",
     youtubeUrl: "https://www.youtube.com/watch?v=XhecuXfY0vo",
     category: "lys",
-    price: 845,
+    price: 645,
     image: "/images/product-pakke-diskolys-taendt-v2.webp",
     name_da: "Diskolys-pakken",
     name_en: "Disco light package",
-    desc_da: "Diskolyseffekt og discokugle — dansegulvet for 845 kr. Spar 145 kr.",
-    desc_en: "Disco light effect and disco ball — the dancefloor for 845 DKK. Save 145 DKK.",
+    desc_da: "Diskolyseffekt og discokugle — dansegulvet for 645 kr. Spar 145 kr.",
+    desc_en: "Disco light effect and disco ball — the dancefloor for 645 DKK. Save 145 DKK.",
     contents: ["LED-par-lys med automatiske farveeffekter", "Discokugle 40 cm med motor og spot", "Stativ/ophæng til kuglen", "Strømkabler"],
     allowedAddons: ["rog", "lyskaeder_farvet", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -958,7 +975,7 @@ export const rentalProducts: RentalProduct[] = [
       usecase_da: "Den billigste vej til et dansegulv: kuglen over gulvet, effekten pegende hen over det. Alt kører på almindelig strøm — sæt til, og det virker.",
       usecase_en: "The cheapest way to a dancefloor: the ball above the floor, the effect pointing across it. Everything runs on a normal socket — plug in and it works.",
       parts: [
-        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 395 },
+        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 195 },
         { productId: "discokugle", label_da: "Discokugle 40 cm", label_en: "Disco ball 40 cm", price: 595 },
       ],
     },
@@ -968,12 +985,12 @@ export const rentalProducts: RentalProduct[] = [
     page: "/teenagefest-lys",
     youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM",
     category: "lys",
-    price: 945,
+    price: 745,
     image: "/images/product-pakke-teenagefest-taendt-v2.webp",
     name_da: "Teenagefest-lys",
     name_en: "Teen party lights",
-    desc_da: "Diskolyseffekt, discokugle og farvet lyskæde — kælderen bliver en klub for 945 kr. Spar 140 kr.",
-    desc_en: "Disco effect, disco ball and coloured fairy lights — the basement becomes a club for 945 DKK. Save 140 DKK.",
+    desc_da: "Diskolyseffekt, discokugle og farvet lyskæde — kælderen bliver en klub for 745 kr. Spar 140 kr.",
+    desc_en: "Disco effect, disco ball and coloured fairy lights — the basement becomes a club for 745 DKK. Save 140 DKK.",
     contents: ["LED-par-lys med automatiske farveeffekter", "Discokugle 30 cm med motor og spot", "10 m farvet lyskæde", "Strømkabler"],
     allowedAddons: ["rog", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -981,7 +998,7 @@ export const rentalProducts: RentalProduct[] = [
       usecase_da: "Til 16- og 18-årsfødselsdagen i kælderen eller garagen: kuglen og effekten laver dansegulvet, den farvede kæde tegner rummet op. Forældre bestiller, teenageren godkender.",
       usecase_en: "For the 16th or 18th birthday in the basement or garage: ball and effect make the dancefloor, the coloured string outlines the room. Parents book it, the teenager approves.",
       parts: [
-        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 395 },
+        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 195 },
         { productId: "discokugle_30", label_da: "Discokugle 30 cm", label_en: "Disco ball 30 cm", price: 495 },
         { productId: "lyskaeder_farvet", label_da: "Lyskæde farvet", label_en: "Fairy lights coloured", price: 195 },
       ],
@@ -1040,12 +1057,12 @@ export const rentalProducts: RentalProduct[] = [
     page: "/diskotek-pakke",
     youtubeUrl: "https://www.youtube.com/watch?v=FcOqGlPsyYY",
     category: "lys",
-    price: 1295,
+    price: 1095,
     image: "/images/product-pakke-diskotek-taendt-v2.webp",
     name_da: "Diskotek-pakken",
     name_en: "Club light package",
-    desc_da: "Lys-pakke, diskolyseffekt og discokugle — fuldt dansegulv uden røg for 1.295 kr. Spar 190 kr.",
-    desc_en: "Light package, disco effect and disco ball — a full dancefloor without fog for 1,295 DKK. Save 190 DKK.",
+    desc_da: "Lys-pakke, diskolyseffekt og discokugle — fuldt dansegulv uden røg for 1.095 kr. Spar 190 kr.",
+    desc_en: "Light package, disco effect and disco ball — a full dancefloor without fog for 1,095 DKK. Save 190 DKK.",
     contents: ["2× farvede LED-lamper + centereffekt på stativ", "Ekstra LED-par-lys", "Discokugle 40 cm med motor og spot", "Strøm og kabler"],
     allowedAddons: ["rog", "uplight_4", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -1054,7 +1071,7 @@ export const rentalProducts: RentalProduct[] = [
       usecase_en: "The full dancefloor — without a fog machine. Many rented venues have smoke alarms where fog is off limits; here four lamps and the ball make the show on their own.",
       parts: [
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
-        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 395 },
+        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 195 },
         { productId: "discokugle", label_da: "Discokugle 40 cm", label_en: "Disco ball 40 cm", price: 595 },
       ],
     },
@@ -1063,7 +1080,7 @@ export const rentalProducts: RentalProduct[] = [
     id: "pakke_soundboks_lys",
     page: "/soundboks-pakke-lys",
     category: "lyd",
-    price: 1090,
+    price: 1190,
     image: "/images/product-soundboks-v2.webp",
     name_da: "Soundboks-pakken med lys",
     name_en: "Soundboks package with lights",
@@ -1076,7 +1093,7 @@ export const rentalProducts: RentalProduct[] = [
       usecase_da: "Soundboks klarer lyden uden en stikkontakt, men står ofte i et rum med loftslys tændt. Lys-pakken er det, der gør det til en fest — og den kræver strøm, så den skal tænkes med, hvis I er udenfor.",
       usecase_en: "The Soundboks handles sound without a socket, but often stands in a room with the ceiling lights on. The light package is what makes it a party — and it needs power, so plan for that if you are outdoors.",
       parts: [
-        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 695 },
+        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 795 },
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
       ],
     },
@@ -1090,12 +1107,12 @@ export const rentalProducts: RentalProduct[] = [
     id: "pakke_ungdomsfest",
     page: "/ungdomsfest-pakke",
     category: "lyd",
-    price: 1395,
+    price: 1295,
     image: "/images/product-pakke-ungdomsfest-taendt.webp",
     name_da: "Ungdomsfest-pakken",
     name_en: "Youth party package",
-    desc_da: "Soundboks 4, diskolyseffekt og discokugle — lyd og lys til ungdomsfesten for 1.395 kr. Spar 190 kr.",
-    desc_en: "Soundboks 4, disco light effect and mirror ball — sound and lights for a youth party at 1,395 DKK. Save 190 DKK.",
+    desc_da: "Soundboks 4, diskolyseffekt og discokugle — lyd og lys til ungdomsfesten for 1.295 kr. Spar 190 kr.",
+    desc_en: "Soundboks 4, disco light effect and mirror ball — sound and lights for a youth party at 1,295 DKK. Save 190 DKK.",
     contents: ["Soundboks 4 (batteri)", "LED-par-lys med automatiske farveeffekter", "Discokugle 30 cm med motor og spot", "Strømkabler"],
     allowedAddons: ["rog", "lyskaeder_farvet", "batteri", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -1103,8 +1120,8 @@ export const rentalProducts: RentalProduct[] = [
       usecase_da: "Til 16-, 18- og 20-årsfødselsdagen, efterfesten og gymnasiefesten hjemme: Soundboksen spiller højt nok til 50 gæster og kører på batteri, kuglen og lyseffekten laver dansegulvet. Sæt op på ti minutter, uden teknikker.",
       usecase_en: "For the 16th, 18th or 20th birthday, the after-party or the school party at home: the Soundboks is loud enough for 50 guests and runs on battery, the mirror ball and light effect make the dancefloor. Set up in ten minutes, no technician.",
       parts: [
-        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 695 },
-        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 395 },
+        { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 795 },
+        { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 195 },
         { productId: "discokugle_30", label_da: "Discokugle 30 cm", label_en: "Disco ball 30 cm", price: 495 },
       ],
     },
@@ -1402,6 +1419,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
  */
 export const KATEGORI_PAKKER: Record<string, string[]> = {
   "/lej-hojtaler": [
+    "halloween_lys",
     "halloween_lille",
     "halloween_stor",
     "pakke_fest_lille",
@@ -1422,7 +1440,6 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
   // Lyspakkerne bor på /lyspakker — landingssiden der rendrer fra denne liste.
   // /festlys viser dem OGSÅ i sit produktgitter, men kategorisiden er én.
   "/lyspakker": [
-    "halloween_lys",
     "pakke_stemningslys",
     "pakke_diskolys",
     "pakke_teenagefest",
@@ -1437,7 +1454,7 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
 };
 
 /** Lejlighedspakkerne — vises under stigen på /lej-hojtaler */
-export const LYD_LEJLIGHEDSPAKKER = ["halloween_lille", "halloween_stor", "pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys", "pakke_ungdomsfest", "pakke_ungdomsfest_stor"];
+export const LYD_LEJLIGHEDSPAKKER = ["halloween_lys", "halloween_lille", "halloween_stor", "pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys", "pakke_ungdomsfest", "pakke_ungdomsfest_stor"];
 
 /** Pakkerne med lydmand — vises samlet på /lej-hojtaler. Kørslen er med i alle tre. */
 export const LYDMAND_PAKKER = ["pakke_lydmand_fest", "pakke_lydmand_firma", "pakke_lydmand_stor"];
@@ -1501,7 +1518,7 @@ export const OCCASION_PACKAGES: Record<string, string> = {
 };
 
 export const LADDER_FEST: LadderStep[] = [
-  { productId: "pakke_fest_lille", navn: "Festpakke 50", navn_en: "Party package 50", gaester: "op til 50", gaester_en: "up to 50", maxGaester: 50, href: "/festpakke-lille", pris: 890, hvad: '2× 10" højtalere + lyseffekt', hvad_en: '2× 10" speakers + light effect', koersel: "tilvalg" },
+  { productId: "pakke_fest_lille", navn: "Festpakke 50", navn_en: "Party package 50", gaester: "op til 50", gaester_en: "up to 50", maxGaester: 50, href: "/festpakke-lille", pris: 690, hvad: '2× 10" højtalere + lyseffekt', hvad_en: '2× 10" speakers + light effect', koersel: "tilvalg" },
   { productId: "pakke_fest_stor", navn: "Festpakke 100", navn_en: "Party package 100", gaester: "50-100", gaester_en: "50-100", maxGaester: 100, href: "/festpakke-stor", pris: 1290, hvad: '2× 12" højtalere + lys-pakke', hvad_en: '2× 12" speakers + light package', koersel: "tilvalg" },
   { productId: "pakke_fest_150", navn: "Festpakke 150", navn_en: "Party package 150", gaester: "100-150", gaester_en: "100-150", maxGaester: 150, href: "/festpakke-150", pris: 2345, hvad: '2× 12" + sub + stativer + lys + røg', hvad_en: '2× 12" + sub + stands + lights + fog', koersel: "anbefalet" },
   { productId: "pakke_fest_250", navn: "Festpakke 250", navn_en: "Party package 250", gaester: "150-250", gaester_en: "150-250", maxGaester: 250, href: "/festpakke-250", pris: 3645, hvad: '4× 12" + 2 subs + stativer + lys + røg', hvad_en: '4× 12" + 2 subs + stands + lights + fog', koersel: "anbefalet" },

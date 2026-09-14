@@ -164,7 +164,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan jeg leje en højtaler uden strøm?",
       a:
-        "Ja. Mackie Thump GO (395 kr) og Soundboks 4 (695 kr) er batteridrevne med op til 12 timers spilletid, så de " +
+        "Ja. Mackie Thump GO (395 kr) og Soundboks 4 (795 kr) er batteridrevne med op til 12 timers spilletid, så de " +
         "kan bruges i parken, på stranden eller i baggården, hvor der ikke er en stikkontakt.",
     },
     {
@@ -180,7 +180,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvilket lydanlæg passer til antallet af gæster?",
       a:
-        "Festpakke 50 (890 kr) til op til 50 gæster, Festpakke 100 (1.290 kr) til 50-100, Festpakke 150 (2.345 kr) til " +
+        "Festpakke 50 (690 kr) til op til 50 gæster, Festpakke 100 (1.290 kr) til 50-100, Festpakke 150 (2.345 kr) til " +
         "100-150 med subwoofer og stativer, og Festpakke 250 (3.645 kr) til 150-250 med fire højtalere og to " +
         "subwoofere. Er I over 250, skaffer vi større tops og subs og sender en tekniker med på dagen — skriv til os.",
     },
@@ -242,7 +242,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvad koster lyd til en fest?",
       a:
         "Den lille højtalerpakke koster 595 kr for en weekend. Vil du have lys med, koster Festpakke 50 med to " +
-        "højtalere og en lyseffekt 890 kr, og Festpakke 100 med større højtalere og hele lys-pakken 1.290 kr.",
+        "højtalere og en lyseffekt 690 kr, og Festpakke 100 med større højtalere og hele lys-pakken 1.290 kr.",
     },
     {
       q: "Hvordan spiller jeg musik gennem højtalerne?",
@@ -253,7 +253,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan vi holde festen udenfor, hvor der ikke er strøm?",
       a:
-        "Ja. Mackie Thump GO (395 kr) og Soundboks 4 (695 kr) kører på batteri i op til 12 timer. De resterende " +
+        "Ja. Mackie Thump GO (395 kr) og Soundboks 4 (795 kr) kører på batteri i op til 12 timer. De resterende " +
         "pakker kræver en stikkontakt.",
     },
     {
@@ -270,9 +270,9 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje en lyspakke?",
       a:
-        "Fra 695 kr for en weekend. Festtelt-lys med to lyskæder og fire uplights koster 695 kr, Diskolys-pakken med " +
-        "lyseffekt og discokugle 845 kr, Teenagefest-lys 945 kr og Stemningslys-pakken 1.045 kr. Bryllupslys med low fog " +
-        "til brudevalsen koster 1.245 kr, og Diskotek-pakken — det fulde dansegulv uden røg — 1.295 kr.",
+        "Fra 645 kr for en weekend. Festtelt-lys med to lyskæder og fire uplights koster 695 kr, Diskolys-pakken med " +
+        "lyseffekt og discokugle 645 kr, Teenagefest-lys 745 kr og Stemningslys-pakken 1.045 kr. Bryllupslys med low fog " +
+        "til brudevalsen koster 1.245 kr, og Diskotek-pakken — det fulde dansegulv uden røg — 1.095 kr.",
     },
     {
       q: "Hvilken lyspakke skal jeg vælge?",
@@ -298,7 +298,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje festlys?",
       a:
-        "En enkelt lyseffekt koster 395 kr, en uplight 125 kr (fire stk. 395 kr), en discokugle 495 kr (30 cm) eller 595 kr (40 cm) og en 10 m " +
+        "En enkelt lyseffekt koster 195 kr, en uplight 125 kr (fire stk. 395 kr), en discokugle 495 kr (30 cm) eller 595 kr (40 cm) og en 10 m " +
         "lyskæde 195 kr. Lys-pakken med to farvede LED-lamper, centereffekt og stativ koster 495 kr. Røgmaskine " +
         "koster 595 kr og low fog-maskinen, der laver et røggulv, 795 kr.",
     },
@@ -515,7 +515,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Can I rent a speaker that works without power?",
       a:
-        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (695 kr) run on battery for up to 12 hours, so they work " +
+        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (795 kr) run on battery for up to 12 hours, so they work " +
         "in the park, on the beach or in a courtyard with no socket.",
     },
     {
@@ -530,7 +530,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Which PA system fits the number of guests?",
       a:
-        "Party package 50 (890 kr) for up to 50 guests, Party package 100 (1.290 kr) for 50-100, Party package 150 " +
+        "Party package 50 (690 kr) for up to 50 guests, Party package 100 (1.290 kr) for 50-100, Party package 150 " +
         "(2.345 kr) for 100-150 with a subwoofer and stands, and Party package 250 (3.645 kr) for 150-250 with four " +
         "speakers and two subwoofers. If you are over 250, we source larger tops and subs and send a technician on the " +
         "day — write to us.",
@@ -654,7 +654,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How much does it cost to rent party lights in Copenhagen?",
       a:
-        "A single light effect is 395 DKK, one uplight 125 DKK (four of them 395 DKK), a disco ball 495 DKK " +
+        "A single light effect is 195 DKK, one uplight 125 DKK (four of them 395 DKK), a disco ball 495 DKK " +
         "(30 cm) or 595 DKK (40 cm) and 10 m of fairy lights 195 DKK. The light package with two coloured LED " +
         "lamps, a centre effect and a stand is 495 DKK. A fog machine is 595 DKK, and the low fog machine that " +
         "lays fog along the floor 795 DKK.",
@@ -736,7 +736,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Can I rent a speaker that works without power?",
       a:
-        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (695 kr) run on battery for up to 12 hours, so they " +
+        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (795 kr) run on battery for up to 12 hours, so they " +
         "work in the park, on the beach or in a courtyard with no power outlet.",
     },
     {

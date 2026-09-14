@@ -4,9 +4,9 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Single Light Effect Rental Copenhagen | 395 DKK | Lejhøjtaler.dk",
+  title: "Single Light Effect Rental Copenhagen | 195 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a single LED party light in Copenhagen for 395 DKK per weekend. Plug-and-play colour effect for birthdays, house parties and small venues. Book online in 2 minutes.",
+    "Rent a single LED party light in Copenhagen for 195 DKK per weekend. Plug-and-play colour effect for birthdays, house parties and small venues. Book online in 2 minutes.",
   keywords: [
     "party light rental copenhagen",
     "led light effect rental copenhagen",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/enkelt-lyseffekt"),
   },
   openGraph: {
-    title: "Single Light Effect Rental Copenhagen | 395 DKK",
+    title: "Single Light Effect Rental Copenhagen | 195 DKK",
     description:
       "One LED par light (no stand) — a plug-and-play colour effect for your party. Book online, pay on pickup.",
     url: "https://lejhojtaler.dk/en/enkelt-lyseffekt",
@@ -34,7 +34,7 @@ export default function Page() {
       locale="en"
       slug="en/enkelt-lyseffekt"
       name="Single light effect"
-      price={395}
+      price={195}
       headline="Rent a single light effect in Copenhagen"
       sub="One LED par light (no stand) — a plug-and-play colour effect that sets the mood in minutes."
       image="/images/product-lyseffekt-v2.webp"

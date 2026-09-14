@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Soundboks-pakken med lys | Soundboks 4 + lys-pakke | 1.090 kr | Lejhøjtaler.dk",
+  title: "Soundboks-pakken med lys | Soundboks 4 + lys-pakke | 1.190 kr | Lejhøjtaler.dk",
   description:
-    "Soundboks-pakken med lys: Soundboks 4 og lys-pakke for 1.090 kr — spar 100 kr. Batteridrevet lyd og festlys til op til 50 personer. Lejes i København.",
+    "Soundboks-pakken med lys: Soundboks 4 og lys-pakke for 1.190 kr — spar 100 kr. Batteridrevet lyd og festlys til op til 50 personer. Lejes i København.",
   keywords: ["soundboks med lys leje", "soundboks pakke", "lej soundboks og festlys", "batterihøjtaler og lys københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/soundboks-pakke-lys",
     languages: localeAlternates("/soundboks-pakke-lys"),
   },
   openGraph: {
-    title: "Soundboks-pakken med lys | 1.090 kr",
+    title: "Soundboks-pakken med lys | 1.190 kr",
     description: "Soundboks 4 + lys-pakke. Batteridrevet lyd og lys til festen — spar 100 kr.",
     url: "https://lejhojtaler.dk/soundboks-pakke-lys",
     siteName: "Lejhøjtaler.dk",
@@ -27,7 +27,7 @@ export default function Page() {
     <ProductLanding
       slug="soundboks-pakke-lys"
       name="Soundboks-pakken med lys"
-      price={1090}
+      price={1190}
       headline="Soundboks-pakken med lys — lyd uden stik, lys der gør det til en fest"
       sub="Soundboks 4 + lys-pakke med 2 farvede lamper og centereffekt. Bassen kører på batteri, lyset kræver en stikkontakt — spar 100 kr."
       image="/images/product-soundboks-v2.webp"

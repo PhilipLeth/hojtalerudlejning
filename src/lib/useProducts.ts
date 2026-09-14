@@ -6,6 +6,7 @@ import {
   addons as defaultAddons,
   rentalProducts as defaultRentals,
   cheapestSpeakerPrice,
+  refreshBundlePrices,
   DELIVERY_ADDON_IDS,
   LEGACY_DELIVERY_IDS,
   RETIRED_ADDON_IDS,
@@ -135,7 +136,8 @@ export function useProducts(): Catalog {
         Array.isArray(data.rentalProducts) && data.rentalProducts.length
           ? visible(mergeRentals(data.rentalProducts))
           : visible(defaultRentals);
-      setCatalog({ speakers, addons, rentalProducts, startPrice: cheapestSpeakerPrice(speakers) });
+      const pricedRentals = refreshBundlePrices(rentalProducts, [...speakers, ...addons, ...rentalProducts]);
+      setCatalog({ speakers, addons, rentalProducts: pricedRentals, startPrice: cheapestSpeakerPrice(speakers) });
     };
 
     if (cached) {

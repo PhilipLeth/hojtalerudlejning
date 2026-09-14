@@ -26,9 +26,8 @@
 .featured { border-color: var(--pumpkin); }
 .cardTop { background: #33213f; min-height: 39px; padding: 11px 8px; text-align: center; font-size: 12px; font-weight: 650; line-height: 1.4; color: #e0cfed; }
 .featured .cardTop { background: var(--pumpkin); color: #251329; }
-.equipment { display: flex; align-items: center; justify-content: center; height: 180px; background: #100c18; padding: 16px 12px; gap: 3px; }
-.equipment img { width: 32%; min-width: 0; height: 145px; object-fit: contain; }
-.equipment img:only-child { width: 80%; }
+.equipment { display: block; aspect-ratio: 3 / 2; overflow: hidden; background: #100c18; }
+.equipment img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .cardBody { display: flex; flex: 1; flex-direction: column; padding: 25px; }
 .cardBody h3 { font-size: 27px; font-weight: 750; letter-spacing: -.035em; }
 .usecase { font-size: 13px; color: var(--violet); margin-top: 5px; line-height: 1.5; }
@@ -52,8 +51,6 @@
   .grid { gap: 12px; }
   .cardBody { padding: 18px; }
   .cardBody h3 { font-size: 23px; }
-  .equipment { height: 150px; padding-inline: 6px; }
-  .equipment img { height: 120px; }
   .cardBody li { font-size: 12px; }
   .price strong { font-size: 28px; }
 }
@@ -76,8 +73,6 @@
   .cardBody { padding: 23px; }
   .cardBody h3 { font-size: 30px; }
   .cardBody li { font-size: 14px; }
-  .equipment { height: 170px; }
-  .equipment img { height: 145px; }
   .price strong { font-size: 34px; }
   .outro { flex-direction: column; gap: 14px; align-items: flex-start; }
 }

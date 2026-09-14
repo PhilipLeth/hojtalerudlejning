@@ -28,7 +28,7 @@ export default function HalloweenProduct({ productId, locale = "da" }: { product
       ]}
       faqExtra={[
         { q: en ? "Can I use the fog machine at any venue?" : "Kan jeg bruge røgmaskinen alle steder?", a: en ? "Ask your venue before using fog: it can activate smoke alarms. Follow the machine’s instructions and the venue’s rules." : "Aftal det med feststedet først: røg kan aktivere røgalarmer. Følg maskinens vejledning og stedets regler." },
-        { q: en ? "Do I need to provide music?" : "Skal jeg selv sørge for musik?", a: en ? "Yes. The speaker packages connect to your own playlist via Bluetooth. The Witching Hour contains lights and fog only, so you need your own sound system." : "Ja. Pakkerne med højtalere tilsluttes din egen playliste via Bluetooth. Heksetimen indeholder kun lys og røg, så her skal du selv have lydanlæg." },
+        { q: en ? "Do I need to provide music?" : "Skal jeg selv sørge for musik?", a: en ? "Yes. The speaker packages connect to your own playlist via Bluetooth. Every Halloween package now includes a speaker." : "Ja. Pakkerne med højtalere tilsluttes din egen playliste via Bluetooth. Alle Halloween-pakker indeholder nu en højtaler." },
       ]}
     >
       <section className="mx-auto max-w-4xl px-5 pb-14 text-center">

@@ -1,15 +1,16 @@
+import LiveBundlePrice from "@/components/LiveBundlePrice";
 import { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
-import { KATEGORI_PAKKER, bundleListPrice, rentalProducts, type RentalProduct } from "@/lib/products";
+import { KATEGORI_PAKKER, rentalProducts, type RentalProduct } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
 import { thumbSrcSet } from "@/lib/imageSrcSet";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Party Light Rental Copenhagen — packages from 695 DKK | Lejhøjtaler.dk",
+  title: "Party Light Rental Copenhagen — packages from 645 DKK | Lejhøjtaler.dk",
   description:
-    "Light rental in Copenhagen: ready-made light packages for teen parties, party tents, weddings and dancefloors from 695 DKK. Everything is plug and play — pick up for free or have it delivered.",
+    "Light rental in Copenhagen: ready-made light packages for teen parties, party tents, weddings and dancefloors from 645 DKK. Everything is plug and play — pick up for free or have it delivered.",
   keywords: [
     "party light rental copenhagen",
     "disco light rental",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lyspakker"),
   },
   openGraph: {
-    title: "Party Light Rental Copenhagen — packages from 695 DKK",
+    title: "Party Light Rental Copenhagen — packages from 645 DKK",
     description:
       "Ready-made light packages by occasion: teen party, party tent, wedding, dancefloor — or the whole venue. Plug and play, no technician.",
     url: "https://lejhojtaler.dk/en/lyspakker",
@@ -30,10 +31,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-function kr(n: number) {
-  return n.toLocaleString("da-DK");
-}
 
 const KICKER: Record<string, string> = {
   "halloween_lys": "Halloween",
@@ -46,7 +43,6 @@ const KICKER: Record<string, string> = {
 };
 
 function Card({ p, featured }: { p: RentalProduct; featured: boolean }) {
-  const save = bundleListPrice(p) - p.price;
   return (
     <article
       className={`relative flex flex-col rounded-2xl border p-6 transition ${
@@ -73,11 +69,7 @@ function Card({ p, featured }: { p: RentalProduct; featured: boolean }) {
       <h3 className="mt-1 text-2xl font-bold">{p.name_en}</h3>
       <p className="mt-2 flex-1 text-sm text-white/60">{p.bundle?.usecase_en ?? p.desc_en}</p>
 
-      <p className="mt-4 text-3xl font-bold">
-        {kr(p.price)} DKK
-        <span className="ml-1 text-sm font-normal text-white/40">/ weekend</span>
-      </p>
-      {save > 0 && <p className="mt-1 text-xs font-semibold text-brand-400">Save {kr(save)} DKK vs the parts separately</p>}
+      <LiveBundlePrice productId={p.id} locale="en" />
 
       <div className="mt-5 flex gap-2">
         <Link

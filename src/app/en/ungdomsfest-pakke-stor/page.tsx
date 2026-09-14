@@ -47,7 +47,7 @@ export default function Page() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Smaller party — or no power?</h2>
           <p className="mb-6 text-white/50">
-            For the basement or garage the small youth party package is enough: a Soundboks on battery, a light effect and a mirror ball for 1,395 DKK.
+            For the basement or garage the small youth party package is enough: a Soundboks on battery, a light effect and a mirror ball for 1,295 DKK.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/en/ungdomsfest-pakke" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">

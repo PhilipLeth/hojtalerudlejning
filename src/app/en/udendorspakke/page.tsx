@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Outdoor Package | Soundboks, extra battery and string lights | 895 DKK | Lejhøjtaler.dk",
+  title: "Outdoor Package | Soundboks, extra battery and string lights | 995 DKK | Lejhøjtaler.dk",
   description:
-    "Outdoor package: Soundboks 4, extra battery and 10 m string lights for 895 DKK — save 140 DKK. Party in the courtyard, park or on the beach with no power at all. Rent in Copenhagen.",
+    "Outdoor package: Soundboks 4, extra battery and 10 m string lights for 995 DKK — save 140 DKK. Party in the courtyard, park or on the beach with no power at all. Rent in Copenhagen.",
   keywords: ["party without power speaker rental", "soundboks rental copenhagen", "garden party sound hire", "bachelor party speaker rental", "battery speaker rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/udendorspakke",
     languages: localeAlternates("/udendorspakke"),
   },
   openGraph: {
-    title: "Outdoor package | Soundboks, extra battery and string lights | 895 DKK",
+    title: "Outdoor package | Soundboks, extra battery and string lights | 995 DKK",
     description: "Soundboks 4, extra battery and 10 m string lights. Courtyard, beach or park — save 140 DKK.",
     url: "https://lejhojtaler.dk/en/udendorspakke",
     siteName: "Lejhøjtaler.dk",
@@ -28,7 +28,7 @@ export default function Page() {
       locale="en"
       slug="en/udendorspakke"
       name="Outdoor package"
-      price={895}
+      price={995}
       headline="The outdoor package — the whole party without a socket"
       sub="Soundboks 4, extra battery and 10 m string lights. Courtyard, beach or park — save 140 DKK."
       image="/images/product-soundboks-v2.webp"

@@ -46,7 +46,7 @@ export default function Side() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Mindre fest — eller ingen strøm?</h2>
           <p className="mb-6 text-white/50">
-            Til kælderen og garagen er den lille ungdomsfest-pakke nok: Soundboks på batteri, lyseffekt og discokugle for 1.395 kr.
+            Til kælderen og garagen er den lille ungdomsfest-pakke nok: Soundboks på batteri, lyseffekt og discokugle for 1.295 kr.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/ungdomsfest-pakke" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: "Monsterfesten | Halloween-pakke i København",
     description: product.desc_da,
     url: "https://lejhojtaler.dk/halloween-festpakke",
-    images: ["/images/halloween-hero.webp"],
+    images: [product.image],
     locale: "da_DK",
     type: "website",
   },

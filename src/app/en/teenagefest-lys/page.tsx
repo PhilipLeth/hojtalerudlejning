@@ -4,15 +4,15 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Teen party lights Copenhagen | 945 DKK | Lejhøjtaler.dk",
-  description: "Disco effect, disco ball and coloured fairy lights — the basement becomes a club for 945 DKK. Save 140 DKK. Rental in Copenhagen.",
+  title: "Teen party lights Copenhagen | 745 DKK | Lejhøjtaler.dk",
+  description: "Disco effect, disco ball and coloured fairy lights — the basement becomes a club for 745 DKK. Save 140 DKK. Rental in Copenhagen.",
   keywords: ["teen party lights rental", "18th birthday party lights", "disco lights for birthday party"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/teenagefest-lys",
     languages: localeAlternates("/teenagefest-lys"),
   },
   openGraph: {
-    title: "Teen party lights Copenhagen | 945 DKK | Lejhøjtaler.dk",
+    title: "Teen party lights Copenhagen | 745 DKK | Lejhøjtaler.dk",
     description: "Disco effect, disco ball and 10 m of coloured fairy lights. Kill the ceiling light, switch this on — save 140 DKK.",
     url: "https://lejhojtaler.dk/en/teenagefest-lys",
     siteName: "Lejhøjtaler.dk",
@@ -27,7 +27,7 @@ export default function Page() {
       locale="en"
       slug="en/teenagefest-lys"
       name="Teen party lights"
-      price={945}
+      price={745}
       headline="Teen party lights — the basement becomes a club"
       sub="Disco effect, disco ball and 10 m of coloured fairy lights. Kill the ceiling light, switch this on — save 140 DKK."
       image="/images/product-pakke-teenagefest-taendt-v2.webp"

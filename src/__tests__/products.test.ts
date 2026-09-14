@@ -22,8 +22,8 @@ describe("Products data", () => {
     expect(speakers.find((s) => s.id === "party")!.price).toBe(595);
   });
 
-  it("soundboks is 695 kr (sat ned 100 kr 10. sept 2026 — solgte ikke til 795)", () => {
-    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(695);
+  it("soundboks følger adminprisen på 795 kr", () => {
+    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(795);
   });
 
   it("festival speaker is 995 kr (højtaler 30-50, prisstigning 25. aug 2026)", () => {
@@ -118,11 +118,11 @@ describe("Addons data", () => {
     expect(deliveryDirections("levering_opsaetning")).toEqual({ out: true, back: true });
   });
 
-  it("festpakker: 890 og 1290 kr med rund rabat (25. aug 2026)", () => {
+  it("festpakker: 690 og 1290 kr med korrekt rabat", () => {
     const lille = rentalProducts.find((p) => p.id === "pakke_fest_lille")!;
     const stor = rentalProducts.find((p) => p.id === "pakke_fest_stor")!;
     expect(lille.bundle?.parts.map((x) => x.productId)).toEqual(["party", "lyseffekt"]);
-    expect(lille.price).toBe(890); // 595 + 395 - 100
+    expect(lille.price).toBe(690); // 595 + 195 - 100
     expect(lille.bundle?.discount).toBe(100);
     expect(stor.bundle?.parts.map((x) => x.productId)).toEqual(["festival", "lys"]);
     expect(stor.price).toBe(1290); // 995 + 495 - 200

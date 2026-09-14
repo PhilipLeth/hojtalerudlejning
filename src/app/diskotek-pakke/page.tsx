@@ -4,15 +4,15 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Diskotek-pakken | 1.295 kr | Lejhøjtaler.dk",
-  description: "Lys-pakke, diskolyseffekt og discokugle — fuldt dansegulv uden røg for 1.295 kr. Spar 190 kr. Lejes i København.",
+  title: "Diskotek-pakken | 1.095 kr | Lejhøjtaler.dk",
+  description: "Lys-pakke, diskolyseffekt og discokugle — fuldt dansegulv uden røg for 1.095 kr. Spar 190 kr. Lejes i København.",
   keywords: ["diskotekslys leje", "dj lys leje", "diskolys uden røg", "lys til fest i forsamlingshus"],
   alternates: {
     canonical: "https://lejhojtaler.dk/diskotek-pakke",
     languages: localeAlternates("/diskotek-pakke"),
   },
   openGraph: {
-    title: "Diskotek-pakken | 1.295 kr | Lejhøjtaler.dk",
+    title: "Diskotek-pakken | 1.095 kr | Lejhøjtaler.dk",
     description: "Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm — spar 190 kr.",
     url: "https://lejhojtaler.dk/diskotek-pakke",
     siteName: "Lejhøjtaler.dk",
@@ -26,7 +26,7 @@ export default function Side() {
     <ProductLanding
       slug="diskotek-pakke"
       name="Diskotek-pakken"
-      price={1295}
+      price={1095}
       headline="Diskotek-pakken — fuldt dansegulv uden røg"
       sub="Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm — spar 190 kr."
       image="/images/product-pakke-diskotek-taendt-v2.webp"

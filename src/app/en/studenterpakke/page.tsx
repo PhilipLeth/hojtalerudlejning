@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Graduation Package | Soundboks, extra battery and bag | 845 DKK | Lejhøjtaler.dk",
+  title: "Graduation Package | Soundboks, extra battery and bag | 945 DKK | Lejhøjtaler.dk",
   description:
-    "Graduation package: Soundboks 4, extra battery and padded carry bag for 845 DKK — save 90 DKK. Plays through the whole graduation truck ride without power. Rent in Copenhagen.",
+    "Graduation package: Soundboks 4, extra battery and padded carry bag for 945 DKK — save 90 DKK. Plays through the whole graduation truck ride without power. Rent in Copenhagen.",
   keywords: ["graduation truck speaker rental", "soundboks for graduation ride copenhagen", "student party speaker hire", "music for graduation truck"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/studenterpakke",
     languages: localeAlternates("/studenterpakke"),
   },
   openGraph: {
-    title: "Graduation package | Soundboks, extra battery and bag | 845 DKK",
+    title: "Graduation package | Soundboks, extra battery and bag | 945 DKK",
     description: "Soundboks 4, extra battery and padded carry bag. No power on the truck — save 90 DKK.",
     url: "https://lejhojtaler.dk/en/studenterpakke",
     siteName: "Lejhøjtaler.dk",
@@ -28,7 +28,7 @@ export default function Page() {
       locale="en"
       slug="en/studenterpakke"
       name="Graduation package"
-      price={845}
+      price={945}
       headline="The graduation package — plays through the whole truck ride"
       sub="Soundboks 4, extra battery and padded carry bag. No power on the truck — save 90 DKK."
       image="/images/product-soundboks-v2.webp"

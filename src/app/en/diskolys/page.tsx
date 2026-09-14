@@ -4,15 +4,15 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Disco light package Copenhagen | 845 DKK | Lejhøjtaler.dk",
-  description: "Disco light effect and disco ball — the dancefloor for 845 DKK. Save 145 DKK. Rental in Copenhagen.",
+  title: "Disco light package Copenhagen | 645 DKK | Lejhøjtaler.dk",
+  description: "Disco light effect and disco ball — the dancefloor for 645 DKK. Save 145 DKK. Rental in Copenhagen.",
   keywords: ["disco light rental copenhagen", "disco ball rental", "dancefloor lights rental", "party lights copenhagen"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/diskolys",
     languages: localeAlternates("/diskolys"),
   },
   openGraph: {
-    title: "Disco light package Copenhagen | 845 DKK | Lejhøjtaler.dk",
+    title: "Disco light package Copenhagen | 645 DKK | Lejhøjtaler.dk",
     description: "Disco light effect and a motorised disco ball with spotlight. The cheapest way to a real dancefloor — save 145 DKK.",
     url: "https://lejhojtaler.dk/en/diskolys",
     siteName: "Lejhøjtaler.dk",
@@ -27,7 +27,7 @@ export default function Page() {
       locale="en"
       slug="en/diskolys"
       name="Disco light package"
-      price={845}
+      price={645}
       headline="Disco light package — the dancefloor in one box"
       sub="Disco light effect and a motorised disco ball with spotlight. The cheapest way to a real dancefloor — save 145 DKK."
       image="/images/product-pakke-diskolys-taendt-v2.webp"

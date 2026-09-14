@@ -1,9 +1,10 @@
+import LiveBundlePrice from "@/components/LiveBundlePrice";
 import { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
-import { KATEGORI_PAKKER, bundleListPrice, rentalProducts, type RentalProduct } from "@/lib/products";
+import { KATEGORI_PAKKER, rentalProducts, type RentalProduct } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
 import { thumbSrcSet } from "@/lib/imageSrcSet";
 import { localeAlternates } from "@/lib/hreflang";
@@ -18,9 +19,9 @@ import { localeAlternates } from "@/lib/hreflang";
  */
 
 export const metadata: Metadata = {
-  title: "Lej lys til festen — færdige lyspakker fra 695 kr | Lejhøjtaler.dk",
+  title: "Lej lys til festen — færdige lyspakker fra 645 kr | Lejhøjtaler.dk",
   description:
-    "Lysudlejning i København: færdige lyspakker til teenagefest, festtelt, bryllup og dansegulv fra 695 kr. Alt er plug and play — hent selv, eller få det leveret.",
+    "Lysudlejning i København: færdige lyspakker til teenagefest, festtelt, bryllup og dansegulv fra 645 kr. Alt er plug and play — hent selv, eller få det leveret.",
   keywords: [
     "lysudlejning",
     "lej festlys",
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lyspakker"),
   },
   openGraph: {
-    title: "Lej lys til festen — færdige lyspakker fra 695 kr",
+    title: "Lej lys til festen — færdige lyspakker fra 645 kr",
     description:
       "Færdige lyspakker efter anledning: teenagefest, festtelt, bryllup, dansegulv — eller hele lokalet. Plug and play, uden tekniker.",
     url: "https://lejhojtaler.dk/lyspakker",
@@ -43,10 +44,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-function kr(n: number) {
-  return n.toLocaleString("da-DK");
-}
 
 /** Anledningen øverst på kortet — det er den, folk søger på, ikke grejet. */
 const KICKER: Record<string, string> = {
@@ -60,7 +57,6 @@ const KICKER: Record<string, string> = {
 };
 
 function Kort({ p, fremhaevet }: { p: RentalProduct; fremhaevet: boolean }) {
-  const spar = bundleListPrice(p) - p.price;
   return (
     <article
       className={`relative flex flex-col rounded-2xl border p-6 transition ${
@@ -93,11 +89,7 @@ function Kort({ p, fremhaevet }: { p: RentalProduct; fremhaevet: boolean }) {
         ))}
       </ul>
 
-      <p className="mt-4 text-3xl font-bold">
-        {kr(p.price)} kr
-        <span className="ml-1 text-sm font-normal text-white/40">/ weekend</span>
-      </p>
-      {spar > 0 && <p className="mt-1 text-xs font-semibold text-brand-400">Spar {kr(spar)} kr vs. delene enkeltvis</p>}
+      <LiveBundlePrice productId={p.id} locale="da" />
 
       <div className="mt-5 flex gap-2">
         <Link

@@ -3800,13 +3800,14 @@
   },
   "halloween_2026": {
     "dato": "2026-09-14",
-    "beslutning": "Dansk og engelsk forside med Halloween-kampagne, orange/violet festplakat og komprimeret stemningsillustration. Almindelige festpakker bevares under kampagnen.",
+    "beslutning": "Dansk og engelsk forside med Halloween-kampagne, orange/violet festplakat og komprimeret stemningsillustration. Almindelige festpakker bevares under kampagnen. Heksetimen inkluderer nu Mackie Thump GO til samme 895 kr. Alle tre kort har særskilte produktrelevante Halloween-illustrationer baseret på fotos af pakkernes udstyr.",
     "pakker": [
       {
         "id": "halloween_lys",
         "navn": "Heksetimen",
         "pris": 895,
         "dele": [
+          "thumpgo",
           "lyseffekt",
           "rog"
         ]
@@ -3844,5 +3845,26 @@
     ],
     "sprog": "Alle tre sider findes også under /en med gensidig hreflang.",
     "saeson": "Forsidens kampagne er aktiv indtil den erstattes; ingen automatisk udløbsdato på pakkerne."
+  },
+  "pakkepris_gennemgang_2026_09_14": {
+    "godkendt": "Brugeren godkendte alle foreslåede prisrettelser.",
+    "priser": {
+      "halloween_lys": 895,
+      "pakke_fest_lille": 690,
+      "pakke_diskolys": 645,
+      "pakke_teenagefest": 745,
+      "pakke_diskotek": 1095,
+      "pakke_ungdomsfest": 1295
+    },
+    "adminpriser_synkroniseret_til_defaults": {
+      "soundboks": 795,
+      "lyseffekt": 195,
+      "pakke_udendors": 995,
+      "pakke_student": 945,
+      "pakke_soundboks_lys": 1190
+    },
+    "forebyggelse": "useProducts beregner nu delpriser og faktisk besparelse fra aktuelle katalogpriser, inklusive antal. BundleGrid og lyspakkernes prisfelt viser beregnet besparelse. Adminpriser ændres ikke automatisk.",
+    "billeder": "Tre produktrelevante Halloween-pakkebilleder, med de korrekte typer og antal højtalere, lys og røgmaskiner. Monsterfesten uden højtalerstativer; Midnatsklubben med.",
+    "udgivelse": "Opdater både kode og products_catalog i KV, da KV overskriver defaults."
   }
 }

@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Studenterpakken | Soundboks, ekstra batteri og taske | 845 kr | Lejhøjtaler.dk",
+  title: "Studenterpakken | Soundboks, ekstra batteri og taske | 945 kr | Lejhøjtaler.dk",
   description:
-    "Studenterpakken: Soundboks 4, ekstra batteri og polstret bæretaske for 845 kr — spar 90 kr. Spiller hele studenterkørslen uden strøm. Lejes i København.",
+    "Studenterpakken: Soundboks 4, ekstra batteri og polstret bæretaske for 945 kr — spar 90 kr. Spiller hele studenterkørslen uden strøm. Lejes i København.",
   keywords: ["studenterkørsel højtaler", "soundboks til studenterkørsel", "lej højtaler studenter", "musik til studentervogn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/studenterpakke",
     languages: localeAlternates("/studenterpakke"),
   },
   openGraph: {
-    title: "Studenterpakken | Soundboks, ekstra batteri og taske | 845 kr | Lejhøjtaler.dk",
+    title: "Studenterpakken | Soundboks, ekstra batteri og taske | 945 kr | Lejhøjtaler.dk",
     description: "Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet — spar 90 kr.",
     url: "https://lejhojtaler.dk/studenterpakke",
     siteName: "Lejhøjtaler.dk",
@@ -27,7 +27,7 @@ export default function StudenterpakkePage() {
     <ProductLanding
       slug="studenterpakke"
       name="Studenterpakken"
-      price={845}
+      price={945}
       headline="Studenterpakken — spiller hele vognturen"
       sub="Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet — spar 90 kr."
       image="/images/product-soundboks-v2.webp"

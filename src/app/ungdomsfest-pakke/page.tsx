@@ -4,15 +4,15 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Ungdomsfest-pakken | Lyd og diskolys | 1.395 kr | Lejhøjtaler.dk",
-  description: "Soundboks 4, diskolyseffekt og discokugle i én pakke — lyd og lys til ungdomsfesten for 1.395 kr. Spar 190 kr. Lejes i København, sat op på ti minutter.",
+  title: "Ungdomsfest-pakken | Lyd og diskolys | 1.295 kr | Lejhøjtaler.dk",
+  description: "Soundboks 4, diskolyseffekt og discokugle i én pakke — lyd og lys til ungdomsfesten for 1.295 kr. Spar 190 kr. Lejes i København, sat op på ti minutter.",
   keywords: ["ungdomsfest pakke", "lyd og lys til ungdomsfest", "18 års fødselsdag fest udstyr", "lej diskolys og højtaler", "fest for unge lys"],
   alternates: {
     canonical: "https://lejhojtaler.dk/ungdomsfest-pakke",
     languages: localeAlternates("/ungdomsfest-pakke"),
   },
   openGraph: {
-    title: "Ungdomsfest-pakken | Lyd og diskolys | 1.395 kr | Lejhøjtaler.dk",
+    title: "Ungdomsfest-pakken | Lyd og diskolys | 1.295 kr | Lejhøjtaler.dk",
     description: "Soundboks 4, diskolyseffekt og discokugle. Sluk loftslyset, tænd pakken — spar 190 kr.",
     url: "https://lejhojtaler.dk/ungdomsfest-pakke",
     siteName: "Lejhøjtaler.dk",
@@ -26,7 +26,7 @@ export default function Side() {
     <ProductLanding
       slug="ungdomsfest-pakke"
       name="Ungdomsfest-pakken"
-      price={1395}
+      price={1295}
       headline="Ungdomsfest-pakken — lyd og diskolys i én pris"
       sub="Soundboks 4, diskolyseffekt og discokugle 30 cm. Batteridrevet lyd, lys der laver dansegulvet — spar 190 kr."
       image="/images/product-pakke-ungdomsfest-taendt.webp"

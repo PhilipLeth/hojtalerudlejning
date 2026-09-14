@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: "Heksetimen | Halloween-pakke i København",
     description: product.desc_da,
     url: "https://lejhojtaler.dk/halloween-lys",
-    images: ["/images/halloween-hero.webp"],
+    images: [product.image],
     locale: "da_DK",
     type: "website",
   },

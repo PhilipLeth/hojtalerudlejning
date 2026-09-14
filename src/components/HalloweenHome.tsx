@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useProducts } from "@/lib/useProducts";
 import { bookHref } from "@/lib/bookUrl";
+import { thumbSrcSet } from "@/lib/imageSrcSet";
 import { localizedHref } from "@/lib/enPages";
 import type { Locale } from "@/lib/i18n";
 import styles from "./HalloweenHome.module.css";
@@ -17,7 +18,7 @@ const COPY = {
     promise: ["Én pris · op til 5 dage", "Hent i København S", "Levering kan tilvælges"],
     title: "Hvor uhyggelig skal festen være?", sub: "Tre specialpakker. Fra den første tåge til det sidste nummer.",
     featured: "Til festen derhjemme", book: "Book pakken", details: "Se alt i pakken", currency: "kr", period: "/ op til 5 dage",
-    note: "Røgvæske og kabler er med. Pynt og græskar er ikke inkluderet. Aftal brug af røg med dit feststed — den kan aktivere røgalarmer.",
+    note: "Illustrationer baseret på vores udstyr. Røgvæske og kabler er med. Pynt og græskar er ikke inkluderet. Aftal brug af røg med dit feststed — den kan aktivere røgalarmer.",
     imageNote: "Stemningsillustration", tipTitle: "Du vælger kostumet. Vi har grejet.",
     tip: "Vælg pakken, find din dato, og book online. Brug din egen playliste via Bluetooth i pakkerne med højtalere.",
   },
@@ -28,7 +29,7 @@ const COPY = {
     promise: ["One price · up to 5 days", "Collect in Copenhagen S", "Delivery available"],
     title: "How spooky is your party?", sub: "Three Halloween packages. From the first fog to the final track.",
     featured: "Made for house parties", book: "Book package", details: "See what’s included", currency: "DKK", period: "/ up to 5 days",
-    note: "Fog fluid and cables included. Decorations and pumpkins are not included. Check with your venue before using fog — it can trigger smoke alarms.",
+    note: "Illustrations based on our equipment. Fog fluid and cables included. Decorations and pumpkins are not included. Check with your venue before using fog — it can trigger smoke alarms.",
     imageNote: "Atmosphere illustration", tipTitle: "Bring the costumes. We’ll bring the sound.",
     tip: "Choose your package, select your dates and book online. Speaker packages connect to your own playlist via Bluetooth.",
   },
@@ -36,9 +37,8 @@ const COPY = {
 
 export default function HalloweenHome({ locale = "da" }: { locale?: Locale }) {
   const c = COPY[locale];
-  const { rentalProducts, speakers, addons } = useProducts();
+  const { rentalProducts } = useProducts();
   const packages = HALLOWEEN_IDS.map(id => rentalProducts.find(p => p.id === id)).filter(p => !!p);
-  const partImage = (id: string) => speakers.find(p => p.id === id)?.product ?? addons.find(p => p.id === id)?.image;
 
   return (
     <div className={styles.campaign}>
@@ -69,13 +69,11 @@ export default function HalloweenHome({ locale = "da" }: { locale?: Locale }) {
           {packages.map(p => {
             const name = locale === "en" ? p.name_en : p.name_da;
             const featured = p.id === "halloween_lille";
-            // Vis de faktiske dele, ikke stemningsbilledets dekorative udstyr.
-            const pictures = p.bundle!.parts.filter(part => part.productId !== "stativer");
             return (
               <article key={p.id} className={`${styles.card} ${featured ? styles.featured : ""}`}>
                 <div className={styles.cardTop}>{featured ? c.featured : p.bundle![locale === "en" ? "usecase_en" : "usecase_da"]}</div>
                 <Link href={localizedHref(p.page!, locale)} className={styles.equipment} aria-label={`${c.details}: ${name}`}>
-                  {pictures.map(part => <img key={part.productId} src={partImage(part.productId) ?? p.image} alt={locale === "en" ? part.label_en : part.label_da} width={180} height={180} loading="lazy" />)}
+                  <img src={p.image} srcSet={thumbSrcSet(p.image)} sizes="(min-width: 1024px) 370px, (min-width: 641px) 33vw, 95vw" alt={`${name} — ${locale === "en" ? "package equipment in a Halloween setting" : "pakkens udstyr i Halloween-stemning"}`} width={1200} height={800} loading="lazy" />
                 </Link>
                 <div className={styles.cardBody}>
                   <h3>{name}</h3>

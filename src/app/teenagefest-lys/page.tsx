@@ -4,15 +4,15 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Teenagefest-lys | 945 kr | Lejhøjtaler.dk",
-  description: "Diskolyseffekt, discokugle og farvet lyskæde — kælderen bliver en klub for 945 kr. Spar 140 kr. Lejes i København.",
+  title: "Teenagefest-lys | 745 kr | Lejhøjtaler.dk",
+  description: "Diskolyseffekt, discokugle og farvet lyskæde — kælderen bliver en klub for 745 kr. Spar 140 kr. Lejes i København.",
   keywords: ["lys til teenagefest", "18 års fødselsdag fest lys", "diskolys til fødselsdag", "fest i kælderen lys"],
   alternates: {
     canonical: "https://lejhojtaler.dk/teenagefest-lys",
     languages: localeAlternates("/teenagefest-lys"),
   },
   openGraph: {
-    title: "Teenagefest-lys | 945 kr | Lejhøjtaler.dk",
+    title: "Teenagefest-lys | 745 kr | Lejhøjtaler.dk",
     description: "Diskolyseffekt, discokugle og 10 m farvet lyskæde. Sluk loftslyset, tænd pakken — spar 140 kr.",
     url: "https://lejhojtaler.dk/teenagefest-lys",
     siteName: "Lejhøjtaler.dk",
@@ -26,7 +26,7 @@ export default function Side() {
     <ProductLanding
       slug="teenagefest-lys"
       name="Teenagefest-lys"
-      price={945}
+      price={745}
       headline="Teenagefest-lys — kælderen bliver en klub"
       sub="Diskolyseffekt, discokugle og 10 m farvet lyskæde. Sluk loftslyset, tænd pakken — spar 140 kr."
       image="/images/product-pakke-teenagefest-taendt-v2.webp"
