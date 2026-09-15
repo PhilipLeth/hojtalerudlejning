@@ -246,9 +246,8 @@ describe("Addons data", () => {
   });
 
   it("visible equipment addons have an image", () => {
-    // Kørsel er en ydelse og har aldrig haft et billede. Alt andet skal have
-    // sit eget — mixerne fik deres genereret efter husstilen 25. august 2026.
-    const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge"];
+    // Mixerfotos afventer bekræftede modeller; opdigtede fotos er fjernet.
+    const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge", "mixer_lille", "mixer_stor"];
     for (const a of addons) {
       if (a.hidden) continue; // skjulte kladder kan afvente model og foto
       if (a.ydelse) continue; // en ydelse må have et foto (lydmand har), men skal ikke

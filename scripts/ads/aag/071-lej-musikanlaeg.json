@@ -1,7 +1,7 @@
 {
   "name": "AAG: Musikanlæg — lej musikanlæg",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "lej musikanlæg",
   "keywords": [

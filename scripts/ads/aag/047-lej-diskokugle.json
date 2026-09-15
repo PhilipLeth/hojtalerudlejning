@@ -1,7 +1,7 @@
 {
   "name": "AAG: Discokugle — lej diskokugle",
   "status": "ENABLED",
-  "cpcBidMicros": 9000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "lej diskokugle",
   "keywords": [

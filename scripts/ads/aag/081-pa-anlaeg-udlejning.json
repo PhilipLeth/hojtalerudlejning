@@ -1,7 +1,7 @@
 {
   "name": "AAG: PA-anlæg — pa anlæg udlejning",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "pa anlæg udlejning",
   "keywords": [

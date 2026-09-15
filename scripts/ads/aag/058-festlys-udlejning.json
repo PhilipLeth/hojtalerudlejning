@@ -1,7 +1,7 @@
 {
   "name": "AAG: Festlys — festlys udlejning",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "festlys udlejning",
   "keywords": [

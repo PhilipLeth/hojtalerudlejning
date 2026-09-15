@@ -3876,5 +3876,77 @@
       "anbefalet_alternativ": "Fun Generation LED Pot Strobe 100, Thomann 383840, 375 kr inkl. moms ved opslag",
       "begrundelse": "Eurolite er en meget lille 1 W-effekt med 1–3 Hz. Fun Generation tilbyder 0–20 Hz, dæmper og DMX til beskeden merpris. Ingen indkøb foretaget."
     }
+  },
+  "mikrofonpakker_og_aag_2026_09_15": {
+    "brugerintention": "Efterspørgsel måles som relevante søgninger i markedet, ikke kontoens egne klik. Smalle AAG-grupper med tæt annonce- og siderelevans. 10/10 Quality Score kan ikke garanteres.",
+    "soundboks_bud": {
+      "status": "Verificeret live: 9 eksisterende AAG-grupper sat fra 12 til 4 kr i manuelt grundbud 15. september 2026; ingen keyword-overrides fundet. Generator og de ni kladder rettet til 4 kr.",
+      "maal_cpc": "3–5 kr; faktisk CPC afhænger af auktion og eventuelle budjusteringer.",
+      "grupper": [
+        "195424686690",
+        "197921689657",
+        "198491005845",
+        "199404527479",
+        "200594620976",
+        "201645955913",
+        "203756217281",
+        "203756218241",
+        "203756219721"
+      ]
+    },
+    "marked": {
+      "kilde": "Google Keyword Planner, generateKeywordIdeas og generateKeywordHistoricalMetrics, hentet 2026-09-15",
+      "omraade": "Danmark, dansk, Google Search",
+      "periode": "september 2025–august 2026",
+      "eksempler_pr_md": {
+        "lej soundboks": 720,
+        "lydudlejning": 590,
+        "lej højtaler": 170,
+        "højtalere til fest": 110,
+        "diskolys til fest": 110,
+        "lej karaoke": 90,
+        "lej diskolys": 50,
+        "lej røgmaskine": 50,
+        "lej mikrofon": 20
+      },
+      "forbehold": "Afrundede estimater inkl. nære varianter; rå fraser summeres ikke som unikke søgninger. Landsvolumen er ikke Københavnsvolumen eller forventede klik. Et manglende estimat betyder ikke dokumenteret nul efterspørgsel.",
+      "data": "docs/_internal/ads-markedsdata-2026-09-15.json"
+    },
+    "pakker": {
+      "side": "/lej-mikrofon og /en/lej-mikrofon",
+      "varer": {
+        "pakke_mikrofon_batteri": 445,
+        "pakke_mikrofon_traadloes": 645,
+        "pakke_mikrofon_duo": 1395,
+        "pakke_mikrofon_av": 1995
+      },
+      "krav": "Faktiske komponenter, qty=2 for duo-mikrofoner, bookbar samlet pris; billedfelt viser delene. Batteripakke = Thump GO + mikrofon med kabel. Trådløse modtagere forudsættes netdrevne indtil andet er verificeret.",
+      "lager": "qty tælles i både standardkatalog, KV-katalog, ledighed og kalenderbaner; en duo optager to mikrofoner."
+    },
+    "mixerforslag": {
+      "status": "Indkøbsforslag, ikke bestilt og ikke præsenteret som bekræftet lager. Nuværende misvisende genererede mixerbilleder fjernes.",
+      "lille": {
+        "model": "Mackie Mix12FX",
+        "indkoeb_inkl_moms": 969,
+        "mikrofonindgange": 4,
+        "leje_forslag": 295,
+        "kilde": "https://www.thomann.dk/mackie_mix12fx.htm",
+        "foto": "https://thumbs.static-thomann.de/thumb//bdbmagic/pics/prod/350835.jpg"
+      },
+      "stor": {
+        "model": "the t.mix xmix 1402 FXMP USB",
+        "indkoeb_inkl_moms": 1499,
+        "mikrofonindgange": 8,
+        "stereoindgange": 2,
+        "leje_forslag": 495,
+        "kilde": "https://www.thomann.dk/the_t.mix_xmix_1402_fxmp_usb.htm",
+        "foto": "https://thumbs.static-thomann.de/thumb//bdbmagic/pics/prod/422796.jpg"
+      },
+      "afventer": "Valg af faktiske modeller og bekræftelse af modtagernes strømforsyning. Eksisterende mixerpriser ændres først sammen med modelvalget."
+    },
+    "oevrige_aag_bud": {
+      "status": "113 øvrige AAG-grupper sænket til 6,50 kr. Verificeret efter skrivning: 124 grupper, heraf 9 til 4 kr og 115 til 6,50 kr. Ingen keywords havde højere individuelle bud.",
+      "princip": "Forsigtigt manuelt startbud; ingen forhøjelser, statusskift eller kampagnebudgetændringer. Generatorens øvrige bud og gemte kladder har højst 6,50 kr."
+    }
   }
 }

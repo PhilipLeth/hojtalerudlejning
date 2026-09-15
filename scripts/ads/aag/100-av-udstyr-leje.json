@@ -1,7 +1,7 @@
 {
   "name": "AAG: AV-udstyr — av udstyr leje",
   "status": "ENABLED",
-  "cpcBidMicros": 9000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "av udstyr leje",
   "keywords": [

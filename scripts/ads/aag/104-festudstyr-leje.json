@@ -1,7 +1,7 @@
 {
   "name": "AAG: Festudstyr — festudstyr leje",
   "status": "ENABLED",
-  "cpcBidMicros": 9000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "festudstyr leje",
   "keywords": [

@@ -1,3 +1,4 @@
+import MicrophonePackages from "@/components/MicrophonePackages";
 import { Metadata } from "next";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
@@ -95,19 +96,20 @@ export default function LejMikrofonPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Trådløs, headset eller kabel — alle går direkte i vores højtalere.
-            Ingen mixer nødvendig, alle kabler følger med.
+            Vælg en mikrofon alene eller en færdig pakke med højtalere.
+            Batteridrevet tale, trådløse mikrofoner eller AV med to mikrofoner og mixer.
           </p>
           <a
-            href="#mikrofoner"
+            href="#pakker"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Se mikrofonerne
+            Se mikrofonpakkerne
           </a>
         </div>
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
+        <MicrophonePackages locale="da" />
         {/* Valget står sjældent mellem modeller — det står mellem situationer */}
         <section className="mx-auto max-w-5xl px-4 pt-16 pb-4">
           <h2 className="mb-2 text-center text-3xl font-bold">Hvilken skal du bruge?</h2>

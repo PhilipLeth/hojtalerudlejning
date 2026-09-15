@@ -95,29 +95,46 @@ function BundleCard({ product: p, locale }: { product: RentalProduct; locale: Lo
       <Link
         href={side ?? bookHref(p.id, locale)}
         aria-label={c.see(navn)}
-        className="relative block h-48 overflow-hidden bg-[#0d0c12] sm:h-56"
+        className={`relative block overflow-hidden bg-[#0d0c12] ${p.showPartImages ? "h-36 sm:h-40" : "h-48 sm:h-56"}`}
       >
-        <img loading="lazy" decoding="async"
+        {p.showPartImages ? <div className="flex h-full items-start justify-center gap-2 px-4 pt-5">
+          {bundle.parts.map((part) => {
+            const speaker = speakers.find((x) => x.id === part.productId);
+            const addon = addons.find((x) => x.id === part.productId);
+            const rental = rentalProducts.find((x) => x.id === part.productId);
+            const image = speaker?.product ?? addon?.image ?? rental?.image;
+            const label = locale === "en" ? part.label_en : part.label_da;
+            return <div key={part.productId} className="min-w-0 flex-1 text-center">
+              {image ? <img src={image} alt={label} loading="lazy" decoding="async" className="mx-auto h-20 w-full object-contain sm:h-24" />
+                : <span className="flex h-20 items-center justify-center text-xs text-white/60 sm:h-24">{label}</span>}
+              {(part.qty ?? 1) > 1 && <span className="text-xs text-brand-400">× {part.qty}</span>}
+            </div>;
+          })}
+        </div> : <img loading="lazy" decoding="async"
           src={p.image}
           srcSet={thumbSrcSet(p.image)}
           sizes={GRID_IMAGE_SIZES}
           alt={navn}
           style={p.cardImageCrop ? { objectPosition: p.cardImageCrop } : undefined}
           className={`h-full w-full transition duration-500 group-hover:scale-105 ${p.cardImageCrop ? "object-cover" : "object-contain"}`}
-        />
-        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#0d0c12] via-[#0d0c12]/70 to-transparent" />
+        />}
+        {!p.showPartImages && <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#0d0c12] via-[#0d0c12]/70 to-transparent" />}
         {savings > 0 && (
           <span className="absolute right-4 top-4 rounded-full bg-brand-500 px-3 py-1 text-xs font-bold text-black">
             {c.save(savings)}
           </span>
         )}
-        <div className="absolute bottom-4 left-5 right-5">
+        {!p.showPartImages && <div className="absolute bottom-4 left-5 right-5">
           <h3 className="text-2xl font-bold text-white">{navn}</h3>
           <p className="mt-1 text-sm text-white/70">{usecase}</p>
-        </div>
+        </div>}
       </Link>
 
       <div className="flex flex-1 flex-col gap-5 p-5 sm:p-6">
+        {p.showPartImages && <div>
+          <h3 className="text-2xl font-bold text-white">{navn}</h3>
+          <p className="mt-2 text-sm text-white/70">{usecase}</p>
+        </div>}
         {/* Delene i pakken */}
         <div className="flex flex-wrap items-center gap-2">
           {bundle.parts.map((part, i) => {

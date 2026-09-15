@@ -1,7 +1,7 @@
 {
   "name": "AAG: Lyskæder — lej lyskæder til fest",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "lej lyskæder til fest",
   "keywords": [

@@ -1,7 +1,7 @@
 {
   "name": "AAG: Soundboks 4 — soundboks udlejning",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 4000000,
   "matchType": "EXACT",
   "primary": "soundboks udlejning",
   "keywords": [

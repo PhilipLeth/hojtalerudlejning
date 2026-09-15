@@ -68,10 +68,9 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er forskellen på den lille og den store?",
       a:
-        "Antallet af kanaler og effekterne. Den lille har fire kanaler og gør præcis det, den skal: samler to " +
-        "mikrofoner og en musikkilde. Den store er en Yamaha med indbyggede effekter, så du kan lægge rumklang " +
-        "på vokalen — det er dét, der får en stemme til at lyde som til en koncert frem for som en højtaler i " +
-        "et lokale. Vælg den store til band, kor og alt hvor der bliver sunget.",
+        "Vælg efter antallet af mikrofoner og musikkilder, der skal bruges samtidig. Den lille samler to " +
+        "mikrofoner og musik. Den store er til flere kilder, panel, band og kor og har indbyggede effekter. " +
+        "Oplys dine kilder ved booking; et oplyst kanalantal er ikke nødvendigvis antallet af mikrofonindgange.",
     },
     {
       q: "Følger kablerne med?",
@@ -575,10 +574,9 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "What is the difference between the small and the large one?",
       a:
-        "The number of channels, and the effects. The small one has four channels and does exactly what it needs to: " +
-        "it gathers two microphones and one music source. The large one is a Yamaha with built-in effects, so you can " +
-        "put reverb on a vocal — that is what makes a voice sound like a concert rather than a speaker in a room. " +
-        "Take the large one for bands, choirs and anything with singing.",
+        "Choose by the number of microphones and music sources you need at the same time. The small mixer " +
+        "combines two microphones and music. The large mixer handles more sources for panels, bands and choirs " +
+        "and includes effects. Tell us your sources when booking; channel counts do not necessarily mean microphone inputs.",
     },
     {
       q: "Are the cables included?",

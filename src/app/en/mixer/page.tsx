@@ -79,7 +79,7 @@ export default function Page() {
         <section className="mx-auto max-w-4xl px-4 pt-16 pb-4">
           <h2 className="mb-2 text-center text-3xl font-bold">Small or large?</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            It depends on whether anyone is going to sing.
+            Count the microphones and music sources that need to work at the same time.
           </p>
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="glass rounded-2xl p-6">
@@ -96,9 +96,9 @@ export default function Page() {
               <h3 className="mb-1 text-lg font-semibold text-white">Large mixer</h3>
               <p className="mb-3 text-2xl font-bold text-brand-400">395 DKK</p>
               <p className="text-sm text-white/50">
-                A Yamaha with built-in effects. More channels for a band or a
-                choir — but the reverb is the real reason to choose it. It makes a
-                voice sound like a concert rather than a speaker in a room.
+                A mixer with effects for several microphones and instruments.
+                Choose it for panels, bands and choirs. Tell us how many microphones
+                and stereo sources you need so we can match the inputs.
               </p>
             </div>
           </div>

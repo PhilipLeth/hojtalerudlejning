@@ -42,12 +42,8 @@ describe("Mixerne", () => {
     for (const m of mixere) expect(m.page).toBe("/mixer");
   });
 
-  it("har egne fotos — ikke et lånt fra et andet produkt", () => {
-    for (const m of mixere) {
-      expect(m.image).toMatch(/^\/images\/product-mixer-(lille|stor)(-v2)?\.webp$/);
-    }
-    // Hver sin — ellers ser de to størrelser ens ud i griddet
-    expect(new Set(mixere.map((m) => m.image)).size).toBe(2);
+  it("viser neutral flade indtil de faktiske modeller er bekræftet", () => {
+    for (const m of mixere) expect(m.image).toBeNull();
   });
 });
 

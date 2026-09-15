@@ -129,7 +129,7 @@ describe("Pakkedele på serveren", () => {
     expect(BUNDLE_PARTS.pakke_karaoke).toEqual(["karaoke", "skaerm_32", "party"]);
     for (const p of rentalProducts) {
       if (p.bundle?.parts?.length) {
-        expect(BUNDLE_PARTS[p.id]).toEqual(p.bundle.parts.map((x) => x.productId));
+        expect(BUNDLE_PARTS[p.id]).toEqual(p.bundle.parts.flatMap((x) => Array.from({ length: x.qty ?? 1 }, () => x.productId)));
       }
     }
   });

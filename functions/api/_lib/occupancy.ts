@@ -5,7 +5,7 @@
  * belægning. Overbookinger får ekstra baner (markeret).
  */
 
-import { isBundleProduct, rentalProducts as defaultRentals } from "../../../src/lib/products";
+import { bundlePartIds, addons, isServiceAddon, isBundleProduct, rentalProducts as defaultRentals } from "../../../src/lib/products";
 import { addDays, bookedProductIds } from "./bookings";
 
 /**
@@ -21,7 +21,7 @@ export const BUNDLE_PARTS: Record<string, string[]> = {
   ...Object.fromEntries(
     defaultRentals
       .filter(isBundleProduct)
-      .map((p) => [p.id, p.bundle!.parts.map((part) => part.productId)]),
+      .map((p) => [p.id, bundlePartIds(p.bundle!.parts)]),
   ),
 };
 
@@ -99,6 +99,7 @@ const SKIP_IDS = new Set([
   "afhentning_retur",
   "levering_begge",
   "effects-only",
+  ...addons.filter(isServiceAddon).map((p) => p.id),
 ]);
 
 /**
@@ -110,7 +111,7 @@ export function expandProductIds(ids: string[], parts_ = BUNDLE_PARTS): string[]
   for (const id of ids) {
     if (SKIP_IDS.has(id)) continue;
     const parts = parts_[id];
-    if (parts) out.push(...parts);
+    if (parts) out.push(...parts.filter((part) => !SKIP_IDS.has(part)));
     else out.push(id);
   }
   return out;
@@ -259,8 +260,7 @@ export function buildOccupancy(
       b.productIds.length ? b.productIds : bookedProductIds(b as unknown as Record<string, unknown>),
       bundleParts,
     );
-    const unique = [...new Set(ids)];
-    for (const id of unique) {
+    for (const id of ids) {
       if (SKIP_IDS.has(id)) continue;
       const list = byProduct.get(id) ?? [];
       list.push(b);
@@ -279,16 +279,16 @@ export function buildOccupancy(
     const stock = typeof inventory[id] === "number" ? inventory[id] : 0;
     const list = byProduct.get(id) ?? [];
     const laneAssign = packLanes(
-      list.map((b) => ({ bookingId: b.id, pickup: b.pickup, returnDate: b.returnDate })),
+      list.map((b, index) => ({ bookingId: String(index), pickup: b.pickup, returnDate: b.returnDate })),
       Math.max(stock, 1),
     );
     const laneById = new Map(laneAssign.map((x) => [x.bookingId, x]));
 
     const bookings: OccupancyBooking[] = [];
-    for (const b of list) {
+    for (const [index, b] of list.entries()) {
       const clamped = clampRange(b.pickup, b.returnDate, from, to);
       if (!clamped) continue;
-      const lane = laneById.get(b.id)!;
+      const lane = laneById.get(String(index))!;
       bookings.push({
         bookingId: b.id,
         customerName: b.name || "Ukendt",

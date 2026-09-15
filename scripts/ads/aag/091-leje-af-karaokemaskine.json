@@ -1,7 +1,7 @@
 {
   "name": "AAG: Karaokemaskine — leje af karaokemaskine",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "leje af karaokemaskine",
   "keywords": [

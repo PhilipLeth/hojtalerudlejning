@@ -20,7 +20,7 @@
  *              rabat på udstyr vi mangler at købe) og overbooking-varslingen.
  */
 
-import { addons as defaultAddons, isBundleProduct, isDeliveryAddon, isServiceAddon, rentalProducts as defaultRentals } from "../../../src/lib/products";
+import { bundlePartIds, addons as defaultAddons, isBundleProduct, isDeliveryAddon, isServiceAddon, rentalProducts as defaultRentals } from "../../../src/lib/products";
 import { DEFAULT_INVENTORY, type LoadedBooking } from "./bookings";
 import { expandProductIds } from "./occupancy";
 
@@ -141,17 +141,15 @@ export function productLabels(
 export function bundlePartsFromCatalog(catalog: unknown): Record<string, string[]> {
   const out: Record<string, string[]> = {};
   for (const p of defaultRentals) {
-    if (isBundleProduct(p)) out[p.id] = p.bundle!.parts.map((part) => part.productId);
+    if (isBundleProduct(p)) out[p.id] = bundlePartIds(p.bundle!.parts);
   }
   if (!catalog) return out;
   try {
     const cat = (typeof catalog === "string" ? JSON.parse(catalog) : catalog) as {
-      rentalProducts?: Array<{ id?: string; bundle?: { parts?: Array<{ productId?: string }> } }>;
+      rentalProducts?: Array<{ id?: string; bundle?: { parts?: Array<{ productId?: string; qty?: number }> } }>;
     };
     for (const p of cat.rentalProducts || []) {
-      const parts = (p.bundle?.parts || [])
-        .map((x) => x?.productId)
-        .filter((x): x is string => typeof x === "string" && x.length > 0);
+      const parts = bundlePartIds(p.bundle?.parts || []);
       if (p.id && parts.length) out[p.id] = parts;
     }
   } catch {
@@ -175,14 +173,16 @@ export function bundleSlots(
   if (!parts.length) return null;
   let total = Infinity;
   let remaining = Infinity;
-  for (const part of parts) {
+  const quantities = new Map<string, number>();
+  for (const part of parts) quantities.set(part, (quantities.get(part) ?? 0) + 1);
+  for (const [part, qty] of quantities) {
     // Kørsel og ydelser (lydmand) står ikke på en hylde — de må hverken
     // begrænse pakken eller gøre den ubegrænset, fordi de mangler lagertal
     if (isDeliveryAddon(part) || defaultAddons.some((a) => a.id === part && isServiceAddon(a))) continue;
     const stock = inventory[part];
     if (typeof stock !== "number") return null;
-    total = Math.min(total, stock);
-    remaining = Math.min(remaining, stock - (booked[part] ?? 0));
+    total = Math.min(total, Math.floor(stock / qty));
+    remaining = Math.min(remaining, Math.floor((stock - (booked[part] ?? 0)) / qty));
   }
   if (total === Infinity) return null;
   return { total, used: Math.max(0, total - remaining) };

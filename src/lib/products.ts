@@ -1,3 +1,5 @@
+import { microphonePackages } from "./microphonePackages";
+
 /* ───── Single source of truth for all product data (v2 — cache-rotation 4/8) ─────
  *
  * These arrays are the DEFAULT catalog (fallback/seed).
@@ -90,6 +92,15 @@ export interface BundlePart {
   qty?: number;
 }
 
+/** Fold antal ud til fysiske enheder; samme repræsentation i kalender og lager. */
+export function bundlePartIds(parts: Array<{ productId?: string; qty?: number }>): string[] {
+  return parts.flatMap((part) => {
+    if (!part || typeof part.productId !== "string" || !part.productId) return [];
+    const qty = Number.isInteger(part.qty) && part.qty! > 0 && part.qty! <= 999 ? part.qty! : 1;
+    return Array.from({ length: qty }, () => part.productId!);
+  });
+}
+
 export interface ProductBundle {
   parts: BundlePart[];
   /** Rabat i kr vs sum af parts (0 = convenience-pakke uden prisrabat) */
@@ -128,6 +139,8 @@ export interface RentalProduct {
    * Kun til billeder hvor motivet ligger i et vandret bånd med luft over/under.
    */
   cardImageCrop?: string;
+  /** Vis de faktiske dele og antal i pakkekortets billedfelt. */
+  showPartImages?: boolean;
 }
 
 export function isBundleProduct(p: RentalProduct): boolean {
@@ -412,17 +425,12 @@ export const addons: Addon[] = [
     },
   },
   // Fotoene er genereret med scripts/product-images/generate_product_photo.py
-  // efter husstilen i docs/_internal/produktbilleder-styleguide.md. De viser
-  // en generisk kompakt mixer uden mærkelogo — ikke Frederiks konkrete Yamaha.
-  //
-  // Modellen er bevidst ikke nævnt for den lille: den er "en simpel 4-kanals",
-  // ikke et bestemt fabrikat. Den store er en Yamaha, og effekterne er dét,
-  // der adskiller den — rumklang på vokalen er grunden til at vælge den.
+  // De gamle genererede fotos var misvisende. Vis neutral flade indtil modeller er bekræftet.
   {
     id: "mixer_lille",
     page: "/mixer",
     price: 295,
-    image: "/images/product-mixer-lille-v2.webp",
+    image: null,
     contents: ["4-kanals minimixer", "Strømforsyning", "Kabel til højtaler"],
     da: {
       label: "Mixer lille",
@@ -437,7 +445,7 @@ export const addons: Addon[] = [
     id: "mixer_stor",
     page: "/mixer",
     price: 395,
-    image: "/images/product-mixer-stor.webp",
+    image: null,
     contents: ["Yamaha-mixer med indbyggede effekter", "Strømforsyning", "Kabler til højtaler"],
     da: {
       label: "Mixer stor",
@@ -571,6 +579,7 @@ export function deliveryDirections(id: string): { out: boolean; back: boolean } 
 
 /** Standalone rental products (lys, av) — bookable via /?product=ID#book */
 export const rentalProducts: RentalProduct[] = [
+  ...microphonePackages,
   // Halloween: nye kombinationer af eksisterende udstyr. Lager følger delene.
   {
     id: "halloween_lys", page: "/halloween-lys", category: "lyd", price: 895,

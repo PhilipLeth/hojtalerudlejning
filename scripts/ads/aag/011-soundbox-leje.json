@@ -1,7 +1,7 @@
 {
   "name": "AAG: Soundboks 4 — soundbox leje",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 4000000,
   "matchType": "EXACT",
   "primary": "soundbox leje",
   "keywords": [

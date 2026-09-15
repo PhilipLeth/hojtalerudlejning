@@ -1,7 +1,7 @@
 {
   "name": "AAG: Lille festpakke — lej lyd og lys",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "lej lyd og lys",
   "keywords": [

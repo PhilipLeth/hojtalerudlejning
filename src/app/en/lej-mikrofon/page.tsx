@@ -1,3 +1,4 @@
+import MicrophonePackages from "@/components/MicrophonePackages";
 import { Metadata } from "next";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
@@ -96,19 +97,20 @@ export default function Page() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Wireless, headset or wired — all of them plug straight into our
-            speakers. No mixer needed, every cable included.
+            Choose a microphone on its own or a complete package with speakers.
+            Battery speech setup, wireless microphones or AV with two microphones and a mixer.
           </p>
           <a
-            href="#microphones"
+            href="#pakker"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            See the microphones
+            See microphone packages
           </a>
         </div>
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
+        <MicrophonePackages locale="en" />
         {/* Valget står sjældent mellem modeller — det står mellem situationer */}
         <section className="mx-auto max-w-5xl px-4 pt-16 pb-4">
           <h2 className="mb-2 text-center text-3xl font-bold">Which one do you need?</h2>

@@ -1,7 +1,7 @@
 {
   "name": "AAG: 55\" Storskærm — lej led skærm",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "lej led skærm",
   "keywords": [

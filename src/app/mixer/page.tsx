@@ -7,16 +7,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
-/**
- * /mixer — de to mixere.
- *
- * Egen side frem for en linje på mikrofonsiden, fordi "lej mixer" er en
- * selvstændig søgning, og fordi valget mellem de to kræver en forklaring:
- * det er effekterne, ikke kanalerne, folk reelt vælger den store for.
- *
- * Produktfotos mangler endnu — CategoryProductGrid viser navnet i en neutral
- * flade i stedet for at låne et andet produkts billede.
- */
+/** Vælg mixer efter samtidige mikrofoner og musikkilder. */
 export const metadata: Metadata = {
   title: "Lej Mixer København | 4-kanals og Yamaha m. effekter | Lejhøjtaler.dk",
   description:
@@ -86,11 +77,11 @@ export default function MixerPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        {/* Valget står ikke på kanaler — det står på om der bliver sunget */}
+        {/* Antal samtidige kilder afgør hvilken mixer kunden har brug for */}
         <section className="mx-auto max-w-4xl px-4 pt-16 pb-4">
           <h2 className="mb-2 text-center text-3xl font-bold">Lille eller stor?</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Det afhænger af, om der bliver sunget.
+            Tæl de mikrofoner og musikkilder, der skal være tilsluttet samtidig.
           </p>
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="glass rounded-2xl p-6">
@@ -106,10 +97,9 @@ export default function MixerPage() {
               <h3 className="mb-1 text-lg font-semibold text-white">Mixer stor</h3>
               <p className="mb-3 text-2xl font-bold text-brand-400">395 kr</p>
               <p className="text-sm text-white/50">
-                Yamaha med indbyggede effekter. Flere kanaler til band og kor —
-                men det er rumklangen, der er grunden til at vælge den. Den får en
-                stemme til at lyde som til en koncert frem for som en højtaler i
-                et lokale.
+                Mixer med effekter til flere mikrofoner og instrumenter.
+                Vælg den til panel, band og kor. Oplys antallet af mikrofoner
+                og stereokilder ved booking, så vi matcher indgangene.
               </p>
             </div>
           </div>

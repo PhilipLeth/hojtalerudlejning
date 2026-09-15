@@ -1,7 +1,7 @@
 {
   "name": "AAG: Diskolys — lej diskolys",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "lej diskolys",
   "keywords": [

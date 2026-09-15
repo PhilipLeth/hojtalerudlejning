@@ -1,0 +1,6612 @@
+{
+  "retrieved": "2026-09-15",
+  "source": "Google Ads KeywordPlanIdeaService.GenerateKeywordHistoricalMetrics",
+  "geo": "Denmark",
+  "language": "Danish",
+  "network": "GOOGLE_SEARCH",
+  "note": "Search estimates, not clicks. Close variants must not be summed again. No market-total claim from adding individual rows.",
+  "results": [
+    {
+      "text": "lej soundboks",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "720"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "1000"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "1600"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "880"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "720"
+          }
+        ],
+        "avgMonthlySearches": "720",
+        "competitionIndex": "90",
+        "lowTopOfPageBidMicros": "3302314",
+        "highTopOfPageBidMicros": "11139944"
+      }
+    },
+    {
+      "text": "lej højtaler",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "210"
+          }
+        ],
+        "avgMonthlySearches": "170",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7234752",
+        "highTopOfPageBidMicros": "27591232"
+      },
+      "closeVariants": [
+        "leje højttaler"
+      ]
+    },
+    {
+      "text": "leje lydanlæg",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "30"
+          }
+        ],
+        "avgMonthlySearches": "40",
+        "competitionIndex": "96",
+        "lowTopOfPageBidMicros": "7956424",
+        "highTopOfPageBidMicros": "26911723"
+      }
+    },
+    {
+      "text": "lej mikrofon",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "99",
+        "lowTopOfPageBidMicros": "6046192",
+        "highTopOfPageBidMicros": "20082416"
+      }
+    },
+    {
+      "text": "lej diskolys",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "50"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "5543638",
+        "highTopOfPageBidMicros": "20234468"
+      }
+    },
+    {
+      "text": "lej røgmaskine",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "50"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "4585231",
+        "highTopOfPageBidMicros": "19642496"
+      }
+    },
+    {
+      "text": "højtalere til fest",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "110"
+          }
+        ],
+        "avgMonthlySearches": "110",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "3073410",
+        "highTopOfPageBidMicros": "12650840"
+      }
+    },
+    {
+      "text": "lej en soundboks",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "260"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "260"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "260"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "260"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "590"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "880"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "1000"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "590"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "480"
+          }
+        ],
+        "avgMonthlySearches": "480",
+        "competitionIndex": "84",
+        "lowTopOfPageBidMicros": "2709894",
+        "highTopOfPageBidMicros": "11212938"
+      }
+    },
+    {
+      "text": "soundboks leje",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "720"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "1000"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "1600"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "880"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "720"
+          }
+        ],
+        "avgMonthlySearches": "720",
+        "competitionIndex": "90",
+        "lowTopOfPageBidMicros": "3302314",
+        "highTopOfPageBidMicros": "11139944"
+      }
+    },
+    {
+      "text": "leje af soundboks",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "590"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "260"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "260"
+          }
+        ],
+        "avgMonthlySearches": "210",
+        "competitionIndex": "94",
+        "lowTopOfPageBidMicros": "3782436",
+        "highTopOfPageBidMicros": "12609486"
+      }
+    },
+    {
+      "text": "leje soundboks",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "170"
+          }
+        ],
+        "avgMonthlySearches": "140",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "3797600",
+        "highTopOfPageBidMicros": "12433650"
+      }
+    },
+    {
+      "text": "soundboks udlejning",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "110"
+          }
+        ],
+        "avgMonthlySearches": "170",
+        "competitionIndex": "64",
+        "lowTopOfPageBidMicros": "4453144",
+        "highTopOfPageBidMicros": "11024890"
+      }
+    },
+    {
+      "text": "lej højtalere til fest",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "70"
+          }
+        ],
+        "avgMonthlySearches": "70",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6910209",
+        "highTopOfPageBidMicros": "27690087"
+      }
+    },
+    {
+      "text": "udlejning af soundboks",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "40"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "76",
+        "lowTopOfPageBidMicros": "3996604",
+        "highTopOfPageBidMicros": "9098336"
+      }
+    },
+    {
+      "text": "lyd og lys udlejning",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "50"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "67",
+        "lowTopOfPageBidMicros": "8083308",
+        "highTopOfPageBidMicros": "31217506"
+      }
+    },
+    {
+      "text": "leje af højtalere",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "20"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "33",
+        "lowTopOfPageBidMicros": "8994608",
+        "highTopOfPageBidMicros": "24992682"
+      }
+    },
+    {
+      "text": "leje højtaler",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "210"
+          }
+        ],
+        "avgMonthlySearches": "170",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7234752",
+        "highTopOfPageBidMicros": "27591232"
+      }
+    },
+    {
+      "text": "røgmaskine leje",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "40"
+          }
+        ],
+        "avgMonthlySearches": "40",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "4379379",
+        "highTopOfPageBidMicros": "17916681"
+      }
+    },
+    {
+      "text": "højtaler udlejning",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "50"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6299520",
+        "highTopOfPageBidMicros": "24291131"
+      }
+    },
+    {
+      "text": "lej en højtaler",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "210"
+          }
+        ],
+        "avgMonthlySearches": "170",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7234752",
+        "highTopOfPageBidMicros": "27591232"
+      }
+    },
+    {
+      "text": "lej lyd og lys",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "40"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "53",
+        "lowTopOfPageBidMicros": "9189399",
+        "highTopOfPageBidMicros": "50965284"
+      }
+    },
+    {
+      "text": "lej en røgmaskine",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "20"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "3602575",
+        "highTopOfPageBidMicros": "9268173"
+      }
+    },
+    {
+      "text": "diskolys til fest",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "170"
+          }
+        ],
+        "avgMonthlySearches": "110",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "3928697",
+        "highTopOfPageBidMicros": "12997594"
+      }
+    },
+    {
+      "text": "udlejning af højtalere",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "50"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6299520",
+        "highTopOfPageBidMicros": "24291131"
+      }
+    },
+    {
+      "text": "leje af mikrofon og højtaler",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6662718",
+        "highTopOfPageBidMicros": "29717179"
+      }
+    },
+    {
+      "text": "udlejning soundboks",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "30"
+          }
+        ],
+        "avgMonthlySearches": "30",
+        "competitionIndex": "56",
+        "lowTopOfPageBidMicros": "4445714",
+        "highTopOfPageBidMicros": "10400274"
+      }
+    },
+    {
+      "text": "leje af røgmaskine",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "40"
+          }
+        ],
+        "avgMonthlySearches": "40",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "4379379",
+        "highTopOfPageBidMicros": "17916681"
+      }
+    },
+    {
+      "text": "lej højtaler til fest",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "70"
+          }
+        ],
+        "avgMonthlySearches": "70",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6910209",
+        "highTopOfPageBidMicros": "27690087"
+      }
+    },
+    {
+      "text": "diskolys leje",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6359991",
+        "highTopOfPageBidMicros": "20805454"
+      }
+    },
+    {
+      "text": "lys og lyd til fest",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7552409",
+        "highTopOfPageBidMicros": "29933625"
+      }
+    },
+    {
+      "text": "højtaler leje",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "210"
+          }
+        ],
+        "avgMonthlySearches": "170",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7234752",
+        "highTopOfPageBidMicros": "27591232"
+      }
+    },
+    {
+      "text": "leje af højtaler",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "210"
+          }
+        ],
+        "avgMonthlySearches": "170",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7234752",
+        "highTopOfPageBidMicros": "27591232"
+      }
+    },
+    {
+      "text": "leje en soundboks",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "20"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "72",
+        "lowTopOfPageBidMicros": "3599624",
+        "highTopOfPageBidMicros": "7985255"
+      }
+    },
+    {
+      "text": "soundboks lej",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "20"
+          }
+        ],
+        "avgMonthlySearches": "30",
+        "competitionIndex": "71",
+        "lowTopOfPageBidMicros": "2117320",
+        "highTopOfPageBidMicros": "10706262"
+      }
+    },
+    {
+      "text": "leje af diskolys",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "50"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "5543638",
+        "highTopOfPageBidMicros": "20234468"
+      }
+    },
+    {
+      "text": "leje af lydanlæg",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "30"
+          }
+        ],
+        "avgMonthlySearches": "40",
+        "competitionIndex": "96",
+        "lowTopOfPageBidMicros": "7956424",
+        "highTopOfPageBidMicros": "26911723"
+      }
+    },
+    {
+      "text": "leje diskolys",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6094568",
+        "highTopOfPageBidMicros": "17446324"
+      }
+    },
+    {
+      "text": "lej festlys",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "5120467",
+        "highTopOfPageBidMicros": "18966889"
+      }
+    },
+    {
+      "text": "soundboks til leje",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "30"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "63",
+        "lowTopOfPageBidMicros": "6240310",
+        "highTopOfPageBidMicros": "25538726"
+      }
+    },
+    {
+      "text": "lyd til din fest",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "40"
+          }
+        ],
+        "avgMonthlySearches": "30",
+        "competitionIndex": "73",
+        "lowTopOfPageBidMicros": "6513151",
+        "highTopOfPageBidMicros": "24760937"
+      }
+    },
+    {
+      "text": "højtaler til leje",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "210"
+          }
+        ],
+        "avgMonthlySearches": "170",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7234752",
+        "highTopOfPageBidMicros": "27591232"
+      }
+    },
+    {
+      "text": "udlejning af diskolys",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "90",
+        "lowTopOfPageBidMicros": "4938165",
+        "highTopOfPageBidMicros": "13925182"
+      }
+    },
+    {
+      "text": "soundboks 3 leje",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100"
+      }
+    },
+    {
+      "text": "leje af lyd og lys",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "40"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "53",
+        "lowTopOfPageBidMicros": "9189399",
+        "highTopOfPageBidMicros": "50965284"
+      }
+    },
+    {
+      "text": "leje af lys og lyd",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "87",
+        "lowTopOfPageBidMicros": "6133463",
+        "highTopOfPageBidMicros": "30304841"
+      }
+    },
+    {
+      "text": "lyd og lys til fest",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "94",
+        "lowTopOfPageBidMicros": "7204878",
+        "highTopOfPageBidMicros": "51991398"
+      }
+    },
+    {
+      "text": "lys og lyd udlejning",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "77",
+        "lowTopOfPageBidMicros": "10758994",
+        "highTopOfPageBidMicros": "44520998"
+      }
+    },
+    {
+      "text": "leje af soundboks 3",
+      "keywordMetrics": {
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "0"
+          }
+        ],
+        "avgMonthlySearches": "10"
+      }
+    },
+    {
+      "text": "leje af mikrofon",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "20"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "8000865",
+        "highTopOfPageBidMicros": "25508936"
+      }
+    },
+    {
+      "text": "lej lyd",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "90",
+        "lowTopOfPageBidMicros": "7628121",
+        "highTopOfPageBidMicros": "29966572"
+      }
+    },
+    {
+      "text": "udlejning af røgmaskine",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "3050921",
+        "highTopOfPageBidMicros": "14181863"
+      }
+    },
+    {
+      "text": "fest højtaler",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "110"
+          }
+        ],
+        "avgMonthlySearches": "110",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "3073410",
+        "highTopOfPageBidMicros": "12650840"
+      },
+      "closeVariants": [
+        "fest højttaler"
+      ]
+    },
+    {
+      "text": "leje højtalere",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "320"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "210"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "210"
+          }
+        ],
+        "avgMonthlySearches": "170",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7234752",
+        "highTopOfPageBidMicros": "27591232"
+      }
+    },
+    {
+      "text": "udlejning af højtaler",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "50"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6299520",
+        "highTopOfPageBidMicros": "24291131"
+      }
+    },
+    {
+      "text": "leje af bluetooth højtaler",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "57"
+      }
+    },
+    {
+      "text": "lydanlæg leje",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "30"
+          }
+        ],
+        "avgMonthlySearches": "40",
+        "competitionIndex": "96",
+        "lowTopOfPageBidMicros": "7956424",
+        "highTopOfPageBidMicros": "26911723"
+      }
+    },
+    {
+      "text": "røgmaskine udlejning",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "3050921",
+        "highTopOfPageBidMicros": "14181863"
+      }
+    },
+    {
+      "text": "lyd til fest",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "50",
+        "lowTopOfPageBidMicros": "9766416",
+        "highTopOfPageBidMicros": "30368594"
+      }
+    },
+    {
+      "text": "soundboks 3 udlejning",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "67",
+        "lowTopOfPageBidMicros": "4760744",
+        "highTopOfPageBidMicros": "8074863"
+      }
+    },
+    {
+      "text": "lån en soundboks",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "73",
+        "lowTopOfPageBidMicros": "2557117",
+        "highTopOfPageBidMicros": "9988499"
+      }
+    },
+    {
+      "text": "fest højtaler bluetooth",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "30"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "1017746",
+        "highTopOfPageBidMicros": "3758899"
+      }
+    },
+    {
+      "text": "fest højtalere",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "170"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "110"
+          }
+        ],
+        "avgMonthlySearches": "110",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "3073410",
+        "highTopOfPageBidMicros": "12650840"
+      }
+    },
+    {
+      "text": "højtaler fest",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100"
+      }
+    },
+    {
+      "text": "jbl fest højtaler",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "511180",
+        "highTopOfPageBidMicros": "1957294"
+      }
+    },
+    {
+      "text": "lej en soundboks 3",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "57"
+      }
+    },
+    {
+      "text": "lej en soundboks til festival",
+      "keywordMetrics": {
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "0"
+          }
+        ],
+        "avgMonthlySearches": "10"
+      }
+    },
+    {
+      "text": "lej højtalere billigt",
+      "keywordMetrics": {
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "0"
+          }
+        ],
+        "avgMonthlySearches": "10"
+      }
+    },
+    {
+      "text": "lej soundboks 3",
+      "keywordMetrics": {
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "0"
+          }
+        ],
+        "avgMonthlySearches": "10"
+      }
+    },
+    {
+      "text": "lej trådløs mikrofon",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "5133326",
+        "highTopOfPageBidMicros": "8176261"
+      }
+    },
+    {
+      "text": "leje af højtaler til fest",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "70"
+          }
+        ],
+        "avgMonthlySearches": "70",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6910209",
+        "highTopOfPageBidMicros": "27690087"
+      }
+    },
+    {
+      "text": "leje af lyd",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "90",
+        "lowTopOfPageBidMicros": "7628121",
+        "highTopOfPageBidMicros": "29966572"
+      }
+    },
+    {
+      "text": "leje mikrofon",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "20"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7416056",
+        "highTopOfPageBidMicros": "21053805"
+      }
+    },
+    {
+      "text": "leje soundboks 3",
+      "keywordMetrics": {
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "0"
+          }
+        ],
+        "avgMonthlySearches": "10"
+      }
+    },
+    {
+      "text": "lydanlæg udlejning",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "20"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "69",
+        "lowTopOfPageBidMicros": "7587705",
+        "highTopOfPageBidMicros": "38907840"
+      }
+    },
+    {
+      "text": "mikrofon leje",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6088581",
+        "highTopOfPageBidMicros": "18142783"
+      }
+    },
+    {
+      "text": "mikrofon udlejning",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "100"
+      }
+    },
+    {
+      "text": "soundboksudlejning",
+      "keywordMetrics": {
+        "competition": "LOW",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "20"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "5"
+      }
+    },
+    {
+      "text": "udlejning af soundboks 3",
+      "keywordMetrics": {
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "0"
+          }
+        ],
+        "avgMonthlySearches": "10"
+      }
+    },
+    {
+      "text": "udlejning af soundbox",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "57"
+      }
+    },
+    {
+      "text": "udlejning højtaler",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "50"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6299520",
+        "highTopOfPageBidMicros": "24291131"
+      }
+    },
+    {
+      "text": "udlejning højtalere",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "50"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "6299520",
+        "highTopOfPageBidMicros": "24291131"
+      }
+    },
+    {
+      "text": "udlejning lydanlæg",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "20"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "69",
+        "lowTopOfPageBidMicros": "7587705",
+        "highTopOfPageBidMicros": "38907840"
+      }
+    },
+    {
+      "text": "udlejning soundbox",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "0"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "10",
+        "competitionIndex": "52",
+        "lowTopOfPageBidMicros": "5436693",
+        "highTopOfPageBidMicros": "21677606"
+      }
+    },
+    {
+      "text": "lej lys",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "40"
+          }
+        ],
+        "avgMonthlySearches": "40",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7617113",
+        "highTopOfPageBidMicros": "35342134"
+      }
+    },
+    {
+      "text": "leje lys",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "40"
+          }
+        ],
+        "avgMonthlySearches": "40",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "7617113",
+        "highTopOfPageBidMicros": "35342134"
+      }
+    },
+    {
+      "text": "festlys",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "140"
+          }
+        ],
+        "avgMonthlySearches": "110",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "3719518",
+        "highTopOfPageBidMicros": "12555272"
+      }
+    },
+    {
+      "text": "lej karaoke",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "110"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "140"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "90"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "90"
+          }
+        ],
+        "avgMonthlySearches": "90",
+        "competitionIndex": "100",
+        "lowTopOfPageBidMicros": "4800176",
+        "highTopOfPageBidMicros": "9250965"
+      }
+    },
+    {
+      "text": "leje karaoke",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "100"
+      }
+    },
+    {
+      "text": "lysudlejning",
+      "keywordMetrics": {
+        "competition": "MEDIUM",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "10"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "10"
+          }
+        ],
+        "avgMonthlySearches": "20",
+        "competitionIndex": "52",
+        "lowTopOfPageBidMicros": "10823885",
+        "highTopOfPageBidMicros": "29004852"
+      }
+    },
+    {
+      "text": "lydudlejning",
+      "keywordMetrics": {
+        "competition": "LOW",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "590"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "390"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "590"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "720"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "880"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "480"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "880"
+          }
+        ],
+        "avgMonthlySearches": "590",
+        "competitionIndex": "22",
+        "lowTopOfPageBidMicros": "11482653",
+        "highTopOfPageBidMicros": "35659267"
+      }
+    },
+    {
+      "text": "lej musikanlæg",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "70"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "86",
+        "lowTopOfPageBidMicros": "5628333",
+        "highTopOfPageBidMicros": "20892614"
+      }
+    },
+    {
+      "text": "leje musikanlæg",
+      "keywordMetrics": {
+        "competition": "HIGH",
+        "monthlySearchVolumes": [
+          {
+            "month": "SEPTEMBER",
+            "year": "2025",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "OCTOBER",
+            "year": "2025",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "NOVEMBER",
+            "year": "2025",
+            "monthlySearches": "30"
+          },
+          {
+            "month": "DECEMBER",
+            "year": "2025",
+            "monthlySearches": "20"
+          },
+          {
+            "month": "JANUARY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "FEBRUARY",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "MARCH",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "APRIL",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "MAY",
+            "year": "2026",
+            "monthlySearches": "50"
+          },
+          {
+            "month": "JUNE",
+            "year": "2026",
+            "monthlySearches": "40"
+          },
+          {
+            "month": "JULY",
+            "year": "2026",
+            "monthlySearches": "70"
+          },
+          {
+            "month": "AUGUST",
+            "year": "2026",
+            "monthlySearches": "70"
+          }
+        ],
+        "avgMonthlySearches": "50",
+        "competitionIndex": "86",
+        "lowTopOfPageBidMicros": "5628333",
+        "highTopOfPageBidMicros": "20892614"
+      }
+    },
+    {
+      "text": "leje festlys"
+    },
+    {
+      "text": "lej mixer"
+    },
+    {
+      "text": "leje lys og lyd"
+    },
+    {
+      "text": "trådløs mikrofon leje"
+    }
+  ]
+}

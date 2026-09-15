@@ -1,7 +1,7 @@
 {
   "name": "AAG: Lille højtalerpakke — lej højtaler til fest",
   "status": "ENABLED",
-  "cpcBidMicros": 12000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "lej højtaler til fest",
   "keywords": [

@@ -1,7 +1,7 @@
 {
   "name": "AAG: Discokugle — leje af diskokugle",
   "status": "ENABLED",
-  "cpcBidMicros": 9000000,
+  "cpcBidMicros": 6500000,
   "matchType": "EXACT",
   "primary": "leje af diskokugle",
   "keywords": [
