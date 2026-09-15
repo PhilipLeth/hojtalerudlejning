@@ -3921,7 +3921,7 @@
         "pakke_mikrofon_av": 1995
       },
       "krav": "Faktiske komponenter, qty=2 for duo-mikrofoner, bookbar samlet pris; billedfelt viser delene. Batteripakke = Thump GO + mikrofon med kabel. Trådløse modtagere forudsættes netdrevne indtil andet er verificeret.",
-      "lager": "qty tælles i både standardkatalog, KV-katalog, ledighed og kalenderbaner; en duo optager to mikrofoner."
+      "lager": "qty tælles i både standardkatalog, KV-katalog, ledighed og kalenderbaner; en duo optager to mikrofoner. Live-kontrol viste dog manglende lagertal for mikrofoner, mixere, projektor og lærred. De behandles derfor fortsat som ubegrænsede, indtil faktiske antal er indtastet; antal må ikke opfindes."
     },
     "mixerforslag": {
       "status": "Indkøbsforslag, ikke bestilt og ikke præsenteret som bekræftet lager. Nuværende misvisende genererede mixerbilleder fjernes.",
