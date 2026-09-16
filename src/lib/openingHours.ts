@@ -110,7 +110,9 @@ export const DEFAULT_OTHER_EN = "Other times can be chosen directly in the booki
 export function otherLine(hours: OpeningHours, locale: "da" | "en" = "da"): string {
   if (!hours.other) return "";
   if (locale === "en" && hours.other.trim() === DEFAULT_OTHER) return DEFAULT_OTHER_EN;
-  return hours.other;
+  const text = hours.other.replace(/ — /g, ", ").replace(/—/g, "").trim();
+  if(locale === "en" && text === "Andre tidspunkter efter aftale, skriv i kommentarfeltet ved booking.") return "Other times by arrangement. Add a note when booking.";
+  return text;
 }
 
 export const DEFAULT_OPENING_HOURS: OpeningHours = {
