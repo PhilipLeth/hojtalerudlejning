@@ -38,7 +38,7 @@ export default function Page() {
       price={495}
       headline="Rent a party light package in Copenhagen"
       sub="2 coloured LED lamps and a centre effect on a stand. Ready in a few minutes."
-      image="/images/product-lys-v4.webp"
+      image="/images/product-lys-v4-white.webp"
       imageAlt="Party light package for rent in Copenhagen"
       productId="lys"
       bookLabel="Book the light package now"

@@ -2,8 +2,8 @@
 """
 Produktfotos i husstilen, genereret med Runway.
 
-Stilen står i docs/_internal/produktbilleder-styleguide.md: gul sømløs
-baggrund (#D4A017), blødt studielys fra øverste venstre, let 3/4-vinkel,
+Stilen står i docs/_internal/produktbilleder-styleguide.md: hvid sømløs
+baggrund (#FFFFFF), blødt studielys fra øverste venstre, let 3/4-vinkel,
 kvadratisk. Prompten herunder er styleguidens skabelon.
 
 To ting gør resultatet brugbart frem for "et gult billede":
@@ -42,8 +42,8 @@ STYLE_REF = os.path.join(IMAGES_DIR, "product-rog.webp")
 MODEL = "gen4_image"
 
 STIL = (
-    "professional studio product photograph, seamless warm mustard-yellow "
-    "backdrop (#D4A017) filling the whole frame, soft diffused light from the "
+    "professional studio product photograph, seamless pure white "
+    "backdrop (#FFFFFF) filling the whole frame, soft diffused light from the "
     "upper left, gentle shadow under the product, product centred and shot "
     "almost straight on at a slight three-quarter angle from just above eye "
     "level, clean and minimal, matte background, square 1:1 crop. "

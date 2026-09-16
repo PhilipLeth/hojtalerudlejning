@@ -36,7 +36,7 @@ export default function Page() {
       price={295}
       headline="Lej subwoofer i København"
       sub={'Behringer 12" aktiv subwoofer — den dybe bas der får festen til at sidde i kroppen.'}
-      image="/images/product-subwoofer-v2.webp"
+      image="/images/product-subwoofer-v2-white.webp"
       imageAlt={'Behringer 12" aktiv subwoofer til leje i København'}
       productId="subwoofer"
       faqPhrase="en subwoofer"

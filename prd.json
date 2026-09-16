@@ -4023,5 +4023,30 @@
     "tilbud": "Fire scopes i eventSolutions.ts. Ingen opfundne faste totalpriser. Transport, opsætning, afhentning og teknikertid specificeres individuelt.",
     "billeder": "IMG_3146 og IMG_3144 bruges som konkret opstilling uden kunde- eller venuenavn. Tre AI-visualiseringer mærkes Illustreret opstilling. Bella Center er potentiel venue, ikke påstået samarbejdspartner.",
     "kontakt": "Eksisterende /api/contact bevares. Forespørgslen oversættes og forudfyldes efter valgt løsning."
+  },
+  "situationssider_2026_09_16": {
+    "scope": "16 situationssider på dansk og engelsk, to konkrete online-bookbare udstyrspakker pr. situation.",
+    "situations": [
+      "konference",
+      "moede",
+      "praesentation",
+      "generalforsamling",
+      "foredrag",
+      "messe",
+      "produktlancering",
+      "reception",
+      "fredagsbar",
+      "firmafest",
+      "koncert",
+      "bryllup",
+      "privatfest",
+      "filmaften",
+      "udendoers",
+      "forening"
+    ],
+    "packages": "32 pakker fra eksisterende katalogdele, 5% rabat afrundet ned til nærmeste 5 kr. Enkeltproduktvalg har ingen rabat. Transport, opsætning og bemanding er separat.",
+    "dj": "DJ/musikafvikler med DJ-pult, minimum tre hele timer. 1.000 kr/time før kl. 23 og 1.500 kr/time efter, inkl. moms bekræftet af bruger. To timefelter; timer efter midnat hører til efter kl. 23. Servervalideret pris i booking og Stripe. DJ-opgave og transport koordineres manuelt som øvrig bemanding.",
+    "images": "Alle aktive katalogfotos flyttes til hvide studiebaggrunde. Naturlige event- og casefotos bevares. Nye billed-URLer undgår månedlang browsercache.",
+    "reviews": "GoogleReviews er genindsat under forsidens intro og på situationssiderne. Kun eksisterende autentiske Google-data."
   }
 }

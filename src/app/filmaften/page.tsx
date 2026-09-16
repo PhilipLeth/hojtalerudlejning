@@ -31,7 +31,7 @@ export default function FilmaftenPage() {
       price={1195}
       headline="Filmaften-pakken — biograf i gården"
       sub="Full HD projektor, 160 cm lærred på stativ og to højtalere. Alt til filmaftenen — spar 90 kr."
-      image="/images/product-projektor.webp"
+      image="/images/product-projektor-white.webp"
       imageAlt="Filmaften-pakken med projektor, lærred og højtalere"
       productId="pakke_filmaften"
       capacity={{ level: 2, label: "op til 40 pers." }}

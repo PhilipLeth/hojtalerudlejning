@@ -1,0 +1,331 @@
+{
+  "dato": "2026-09-16",
+  "vaerktoej": "Indbygget image_gen",
+  "formaal": "Ensartede produktfotos på hvid baggrund. Naturlige event- og casefotos bevares.",
+  "promptprincipper": [
+    "Redigér det eksisterende produktfoto. Bevar udstyrets identitet, antal, proportioner og relevante detaljer.",
+    "Erstat guldfarvet eller grå baggrund med ren hvid studiobaggrund, blødt neutralt lys og en diskret kontaktskygge.",
+    "Ingen tekst, mærkater, ekstra udstyr eller dekorative omgivelser. Bevar synlige lys i tændt udstyr.",
+    "For lysbarer: centereffekten oven på baren; stativet monteret under baren.",
+    "DJ: realistisk sort DJ-pult med controller, laptop og hovedtelefoner på hvid baggrund; ingen personer."
+  ],
+  "filer": [
+    {
+      "reference": "product-thumpgo-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-32d9d6bd-47ef-4a8e-ab94-cd30a40ba910.png",
+      "web": "public/images/product-thumpgo-v2-white.webp",
+      "thumbnail": "public/images/product-thumpgo-v2-white-400.webp"
+    },
+    {
+      "reference": "product-party-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-31a03b14-66e7-48ff-911c-02301df90052.png",
+      "web": "public/images/product-party-v2-white.webp",
+      "thumbnail": "public/images/product-party-v2-white-400.webp"
+    },
+    {
+      "reference": "product-festival-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-2f788d87-3c0b-433a-8bef-ea38562da7b8.png",
+      "web": "public/images/product-festival-v2-white.webp",
+      "thumbnail": "public/images/product-festival-v2-white-400.webp"
+    },
+    {
+      "reference": "product-soundboks-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-38496d4e-dc4a-4276-823f-dfaa21a6fd27.png",
+      "web": "public/images/product-soundboks-v2-white.webp",
+      "thumbnail": "public/images/product-soundboks-v2-white-400.webp"
+    },
+    {
+      "reference": "product-discokugle-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-eb7820b0-7f4b-4006-bc78-7f40a1523bdd.png",
+      "web": "public/images/product-discokugle-v2-white.webp",
+      "thumbnail": "public/images/product-discokugle-v2-white-400.webp"
+    },
+    {
+      "reference": "product-festival-bas-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-fb3fcea2-ac69-41ff-9f0a-7fce077603be.png",
+      "web": "public/images/product-festival-bas-v2-white.webp",
+      "thumbnail": "public/images/product-festival-bas-v2-white-400.webp"
+    },
+    {
+      "reference": "product-headset-pro-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-c19d32f8-d6ce-4620-b1ca-a67d22f978ae.png",
+      "web": "public/images/product-headset-pro-v2-white.webp",
+      "thumbnail": "public/images/product-headset-pro-v2-white-400.webp"
+    },
+    {
+      "reference": "product-headset-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-748b9499-f75d-4b96-8d04-6a19097d9aba.png",
+      "web": "public/images/product-headset-v2-white.webp",
+      "thumbnail": "public/images/product-headset-v2-white-400.webp"
+    },
+    {
+      "reference": "product-karaoke-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-be259335-04d7-4496-a43e-ab826b85b46f.png",
+      "web": "public/images/product-karaoke-v2-white.webp",
+      "thumbnail": "public/images/product-karaoke-v2-white-400.webp"
+    },
+    {
+      "reference": "product-laerred-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-42ff6d29-0d1a-4844-98ea-5d0f613394a6.png",
+      "web": "public/images/product-laerred-v2-white.webp",
+      "thumbnail": "public/images/product-laerred-v2-white-400.webp"
+    },
+    {
+      "reference": "product-lowfog-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-c69550a3-664f-4682-8489-378bdae7bfac.png",
+      "web": "public/images/product-lowfog-v2-white.webp",
+      "thumbnail": "public/images/product-lowfog-v2-white-400.webp"
+    },
+    {
+      "reference": "product-lydmand.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-bc6851cb-17c5-4a3a-8d38-9a8381753fee.png",
+      "web": "public/images/product-lydmand-white.webp",
+      "thumbnail": "public/images/product-lydmand-white-400.webp"
+    },
+    {
+      "reference": "product-lys-v4.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-95a4ff3c-944d-4162-86f7-6d6dad4328aa.png",
+      "web": "public/images/product-lys-v4-white.webp",
+      "thumbnail": "public/images/product-lys-v4-white-400.webp"
+    },
+    {
+      "reference": "product-lyseffekt-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-3e1c3f53-d591-4200-b4ec-7c0db8ef56d1.png",
+      "web": "public/images/product-lyseffekt-v2-white.webp",
+      "thumbnail": "public/images/product-lyseffekt-v2-white-400.webp"
+    },
+    {
+      "reference": "product-lyskaeder-farvet-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-c2780c1e-8e5e-41b1-ba85-2042c897bb0d.png",
+      "web": "public/images/product-lyskaeder-farvet-v2-white.webp",
+      "thumbnail": "public/images/product-lyskaeder-farvet-v2-white-400.webp"
+    },
+    {
+      "reference": "product-lyskaeder-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-cac8c8b1-cda6-418f-b3a4-492effdc81f2.png",
+      "web": "public/images/product-lyskaeder-v2-white.webp",
+      "thumbnail": "public/images/product-lyskaeder-v2-white-400.webp"
+    },
+    {
+      "reference": "product-mikrofon-kabel-pro-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-071ac714-a5d8-435c-9f5e-5f6a4c2337f8.png",
+      "web": "public/images/product-mikrofon-kabel-pro-v2-white.webp",
+      "thumbnail": "public/images/product-mikrofon-kabel-pro-v2-white-400.webp"
+    },
+    {
+      "reference": "product-mikrofon-kabel-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-5a96df78-1f1b-4c5f-abda-ec919c83b080.png",
+      "web": "public/images/product-mikrofon-kabel-v2-white.webp",
+      "thumbnail": "public/images/product-mikrofon-kabel-v2-white-400.webp"
+    },
+    {
+      "reference": "product-mikrofon-pro-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-ca42f858-b26e-4be5-9847-e1b8cbe28492.png",
+      "web": "public/images/product-mikrofon-pro-v2-white.webp",
+      "thumbnail": "public/images/product-mikrofon-pro-v2-white-400.webp"
+    },
+    {
+      "reference": "product-mikrofon-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-4f842e0c-da80-4b63-bd65-e08e41d98d20.png",
+      "web": "public/images/product-mikrofon-v2-white.webp",
+      "thumbnail": "public/images/product-mikrofon-v2-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-fest-150-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-e63e7872-8ff7-47e5-a338-86e7a0159350.png",
+      "web": "public/images/product-pakke-fest-150-v2-white.webp",
+      "thumbnail": "public/images/product-pakke-fest-150-v2-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-fest-250-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-6d4b439b-1996-42c6-8492-1a28128aae21.png",
+      "web": "public/images/product-pakke-fest-250-v2-white.webp",
+      "thumbnail": "public/images/product-pakke-fest-250-v2-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-fest-lille.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-2d5d11ee-0725-4c4a-b7ca-e4afbc3815bb.png",
+      "web": "public/images/product-pakke-fest-lille-white.webp",
+      "thumbnail": "public/images/product-pakke-fest-lille-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-fest-stor.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-96c38fad-618f-4ecc-9665-5452be278660.png",
+      "web": "public/images/product-pakke-fest-stor-white.webp",
+      "thumbnail": "public/images/product-pakke-fest-stor-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-karaoke-fest-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-5b63ff9d-f483-46d0-8b4e-da2b9a49759f.png",
+      "web": "public/images/product-pakke-karaoke-fest-v2-white.webp",
+      "thumbnail": "public/images/product-pakke-karaoke-fest-v2-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-karaoke-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-0f8b8324-34a5-4467-8d1a-00487b48d7f7.png",
+      "web": "public/images/product-pakke-karaoke-v2-white.webp",
+      "thumbnail": "public/images/product-pakke-karaoke-v2-white-400.webp"
+    },
+    {
+      "reference": "product-projektor-pro-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-95699487-5563-4b42-be9b-0598deeedb2b.png",
+      "web": "public/images/product-projektor-pro-v2-white.webp",
+      "thumbnail": "public/images/product-projektor-pro-v2-white-400.webp"
+    },
+    {
+      "reference": "product-projektor.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-435500a5-eace-4838-9e85-a90487848a11.png",
+      "web": "public/images/product-projektor-white.webp",
+      "thumbnail": "public/images/product-projektor-white-400.webp"
+    },
+    {
+      "reference": "product-rog-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-ce9d47b2-6d80-495e-99ed-462bf8ea1120.png",
+      "web": "public/images/product-rog-v2-white.webp",
+      "thumbnail": "public/images/product-rog-v2-white-400.webp"
+    },
+    {
+      "reference": "product-skaerm-32.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-89017716-7704-4296-8337-afa8cc0c5c4e.png",
+      "web": "public/images/product-skaerm-32-white.webp",
+      "thumbnail": "public/images/product-skaerm-32-white-400.webp"
+    },
+    {
+      "reference": "product-skaerm.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-6d1c2db3-6519-4301-bb69-ad99c2a61b96.png",
+      "web": "public/images/product-skaerm-white.webp",
+      "thumbnail": "public/images/product-skaerm-white-400.webp"
+    },
+    {
+      "reference": "product-stativer.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-e771d35a-a89e-4567-acdb-9e7256b1afb6.png",
+      "web": "public/images/product-stativer-white.webp",
+      "thumbnail": "public/images/product-stativer-white-400.webp"
+    },
+    {
+      "reference": "product-subwoofer-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-efffa48b-2c78-451e-97f2-c68065c11c8e.png",
+      "web": "public/images/product-subwoofer-v2-white.webp",
+      "thumbnail": "public/images/product-subwoofer-v2-white-400.webp"
+    },
+    {
+      "reference": "product-taske-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-5d276986-fae3-4fa4-8529-fc75afaf120a.png",
+      "web": "public/images/product-taske-v2-white.webp",
+      "thumbnail": "public/images/product-taske-v2-white-400.webp"
+    },
+    {
+      "reference": "product-uplight-4-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-8658dea1-ccc2-4c36-b53b-14b017df5e56.png",
+      "web": "public/images/product-uplight-4-v2-white.webp",
+      "thumbnail": "public/images/product-uplight-4-v2-white-400.webp"
+    },
+    {
+      "reference": "product-uplight-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-775eeb3e-e88f-43e0-ae4c-30439c2072a9.png",
+      "web": "public/images/product-uplight-v2-white.webp",
+      "thumbnail": "public/images/product-uplight-v2-white-400.webp"
+    },
+    {
+      "reference": "product-halloween-heksetimen.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-03b4c9cc-8475-46e0-9287-a878948b2253.png",
+      "web": "public/images/product-halloween-heksetimen-white.webp",
+      "thumbnail": "public/images/product-halloween-heksetimen-white-400.webp"
+    },
+    {
+      "reference": "product-halloween-midnatsklubben.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-4e6e0284-b804-460a-8e61-4c9b3dfd1032.png",
+      "web": "public/images/product-halloween-midnatsklubben-white.webp",
+      "thumbnail": "public/images/product-halloween-midnatsklubben-white-400.webp"
+    },
+    {
+      "reference": "product-halloween-monsterfesten.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-4c1c7e7a-154a-44ec-b027-13666b20b0d8.png",
+      "web": "public/images/product-halloween-monsterfesten-white.webp",
+      "thumbnail": "public/images/product-halloween-monsterfesten-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-bryllup-taendt.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-c1d2c032-92d6-46c7-a649-a3703e02dccc.png",
+      "web": "public/images/product-pakke-bryllup-taendt-white.webp",
+      "thumbnail": "public/images/product-pakke-bryllup-taendt-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-bryllupslys-taendt.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-cf1cda92-e7f6-4a4d-aff0-4c9f256dd4bd.png",
+      "web": "public/images/product-pakke-bryllupslys-taendt-white.webp",
+      "thumbnail": "public/images/product-pakke-bryllupslys-taendt-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-diskolys-taendt-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-e9426314-dbfa-45d8-a634-157351533fe0.png",
+      "web": "public/images/product-pakke-diskolys-taendt-v2-white.webp",
+      "thumbnail": "public/images/product-pakke-diskolys-taendt-v2-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-diskotek-taendt-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-ee439e57-c144-44e7-a8c0-3575f8fd2b34.png",
+      "web": "public/images/product-pakke-diskotek-taendt-v2-white.webp",
+      "thumbnail": "public/images/product-pakke-diskotek-taendt-v2-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-festtelt-taendt.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-eac89d19-45c6-4f13-a84a-e8bc82d65fc4.png",
+      "web": "public/images/product-pakke-festtelt-taendt-white.webp",
+      "thumbnail": "public/images/product-pakke-festtelt-taendt-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-lydmand-fest-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-05d049b2-3dbf-4ecb-bf8a-d0d4b2920308.png",
+      "web": "public/images/product-pakke-lydmand-fest-v2-white.webp",
+      "thumbnail": "public/images/product-pakke-lydmand-fest-v2-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-lydmand-firma-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-1df2f29a-4371-45b3-a325-de96e4aeb39d.png",
+      "web": "public/images/product-pakke-lydmand-firma-v2-white.webp",
+      "thumbnail": "public/images/product-pakke-lydmand-firma-v2-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-lydmand-stor-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-3caac947-2d42-4079-a3c6-8fc40d5af4c3.png",
+      "web": "public/images/product-pakke-lydmand-stor-v2-white.webp",
+      "thumbnail": "public/images/product-pakke-lydmand-stor-v2-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-stemningslys-taendt-v3.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-a03583af-ee3f-4d91-9cfe-d7af377b41c7.png",
+      "web": "public/images/product-pakke-stemningslys-taendt-v3-white.webp",
+      "thumbnail": "public/images/product-pakke-stemningslys-taendt-v3-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-teenagefest-taendt-v2.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-010290ea-ae18-40ab-aa3a-0d5cf7c2d681.png",
+      "web": "public/images/product-pakke-teenagefest-taendt-v2-white.webp",
+      "thumbnail": "public/images/product-pakke-teenagefest-taendt-v2-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-ungdomsfest-stor-taendt.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-6488ddc8-bc84-4735-8cd0-b2de35aa9881.png",
+      "web": "public/images/product-pakke-ungdomsfest-stor-taendt-white.webp",
+      "thumbnail": "public/images/product-pakke-ungdomsfest-stor-taendt-white-400.webp"
+    },
+    {
+      "reference": "product-pakke-ungdomsfest-taendt.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-b80d423a-f124-41bf-b340-e1c2b614eb79.png",
+      "web": "public/images/product-pakke-ungdomsfest-taendt-white.webp",
+      "thumbnail": "public/images/product-pakke-ungdomsfest-taendt-white-400.webp"
+    },
+    {
+      "reference": "product-lyseffekt-live.webp",
+      "original_generation": "/Users/philipleth/.codex/generated_images/01a0a184-0b41-7200-a2c7-eef23bb7220f/exec-bd696f51-6397-4437-a3e3-3e07d0913ad6.png",
+      "web": "public/images/product-lyseffekt-live-white.webp",
+      "thumbnail": "public/images/product-lyseffekt-live-white-400.webp"
+    },
+    {
+      "reference": "Ny DJ-illustration",
+      "web": "public/images/product-dj.webp",
+      "thumbnail": "public/images/product-dj-400.webp"
+    }
+  ]
+}

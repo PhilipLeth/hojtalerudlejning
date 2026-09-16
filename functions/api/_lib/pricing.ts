@@ -1,3 +1,4 @@
+import { DJ_ID, priceDj, djLabel, type DjHours } from "../../../src/lib/dj";
 /** Server-side prisopslag til Stripe — beløb beregnes ALTID her, aldrig fra klienten. */
 import {
   speakers as defaultSpeakers,
@@ -64,6 +65,7 @@ export async function loadPriceTable(kv: KVNamespace): Promise<Map<string, Price
 
 export interface LineItemInput {
   id: string;
+  dj?: DjHours;
 }
 
 export interface BuiltLineItem {
@@ -91,15 +93,17 @@ export function buildLineItems(
   for (const item of items) {
     const priced = table.get(String(item?.id ?? ""));
     if (!priced) throw new Error(`Unknown product: ${item?.id}`);
+    const dj = item.id === DJ_ID ? priceDj(item.dj) : null;
+    const unitAmount = dj ? dj.total * 100 : priced.unitAmount;
     lineItems.push({
       price_data: {
         currency: "dkk",
-        unit_amount: priced.unitAmount,
-        product_data: { name: priced.name },
+        unit_amount: unitAmount,
+        product_data: { name: dj ? djLabel(dj) : priced.name },
       },
       quantity: 1,
     });
-    totalOre += priced.unitAmount;
+    totalOre += unitAmount;
   }
   return { lineItems, totalOre };
 }

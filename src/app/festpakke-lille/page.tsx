@@ -31,7 +31,7 @@ export default function FestpakkeLillePage() {
       price={690}
       headline="Lille festpakke — lyd og lys"
       sub="2× Alto 10&quot; højtalere + enkelt lyseffekt. Alt til den lille fest — spar 100 kr."
-      image="/images/product-pakke-fest-lille.webp"
+      image="/images/product-pakke-fest-lille-white.webp"
       imageAlt="Lille festpakke med Alto højtalere og lyseffekt"
       productId="pakke_fest_lille"
       faqPhrase="den lille festpakke"

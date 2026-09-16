@@ -30,7 +30,7 @@ export default function BryllupspakkePage() {
       price={2695}
       headline="Bryllupspakken — talerne og dansegulvet i ét"
       sub="Højtalere på stativer, trådløs mikrofon, lys, lyskæde og low fog til første dans. Spar 180 kr."
-      image="/images/product-pakke-bryllup-taendt.webp"
+      image="/images/product-pakke-bryllup-taendt-white.webp"
       imageAlt="Bryllupspakken: to EV-højtalere på stativer, trådløs mikrofon, varm hvid lyskæde og low fog-maskinen med røggulv"
       productId="pakke_bryllup"
       faqPhrase="bryllupspakken"

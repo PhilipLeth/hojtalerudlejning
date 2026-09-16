@@ -30,7 +30,7 @@ export default function Page() {
       price={100}
       headline="Lej højtalerstativer"
       sub="2 professionelle stativer, der løfter højtalerne op i øjenhøjde — så lyden går over hovederne i stedet for ind i ryggen på første række."
-      image="/images/product-stativer.webp"
+      image="/images/product-stativer-white.webp"
       imageAlt="To professionelle højtalerstativer til leje"
       productId="stativer"
       bookLabel="Book stativer nu"

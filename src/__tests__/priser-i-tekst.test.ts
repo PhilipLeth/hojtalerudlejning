@@ -1,3 +1,4 @@
+import { DJ_DAY_RATE, DJ_NIGHT_RATE } from "@/lib/dj";
 /**
  * Priser i sidetekst må ikke sige noget andet end kataloget.
  *
@@ -52,7 +53,7 @@ const PRIS = /(\d{1,3}(?:[.,]\d{3})*)\s*(?:kr|DKK)/gi;
 const tal = (s: string) => Number(s.replace(/[.,]/g, ""));
 
 function katalogBeloeb(): Set<number> {
-  const b = new Set<number>();
+  const b = new Set<number>([DJ_DAY_RATE,DJ_NIGHT_RATE]);
   const add = (n: number) => b.add(n);
   for (const s of speakers) add(s.price);
   for (const a of addons) add(a.price);
@@ -90,6 +91,7 @@ function sidePriser(): Map<string, { priser: Set<number>; navne: string[] }> {
   for (const s of speakers) add(s.page, s.price, s.da.name);
   for (const a of addons) add(a.page, a.price, a.da.label);
   for (const r of rentalProducts) add(r.page, r.price, r.name_da);
+  add("/dj", DJ_NIGHT_RATE, "DJ efter kl. 23");
   return m;
 }
 
@@ -151,6 +153,7 @@ describe("Priser i sidetekst", () => {
     };
     for (const s of speakers) add(s.page, s.price);
     for (const a of addons) add(a.page, a.price);
+    add("/dj", DJ_NIGHT_RATE);
     for (const r of rentalProducts) add(r.page, r.price, r.bundle?.discount);
 
     const fund: string[] = [];

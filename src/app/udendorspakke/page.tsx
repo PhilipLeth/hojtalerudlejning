@@ -30,7 +30,7 @@ export default function UdendorspakkePage() {
       price={995}
       headline="Udendørspakken — hele festen uden en stikkontakt"
       sub="Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park — spar 140 kr."
-      image="/images/product-soundboks-v2.webp"
+      image="/images/product-soundboks-v2-white.webp"
       imageAlt="Udendørspakke med Soundboks 4, ekstra batteri og lyskæde"
       productId="pakke_udendors"
       faqPhrase="udendørspakken"

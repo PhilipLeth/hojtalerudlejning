@@ -31,7 +31,7 @@ export default function Page() {
       price={100}
       headline="Rent speaker stands"
       sub="2 professional stands that lift the speakers to ear level — so the sound travels over heads instead of into the backs of the front row."
-      image="/images/product-stativer.webp"
+      image="/images/product-stativer-white.webp"
       imageAlt="Two professional speaker stands for rent"
       productId="stativer"
       bookLabel="Book speaker stands"

@@ -41,7 +41,7 @@ export default function LydmandPage() {
       priceUnit="/time"
       headline="Lej en lydmand til festen"
       sub="En AV-tekniker, der sætter op, laver lydprøve og styrer lyden — så I kan holde fest i stedet for at stå ved mixeren."
-      image="/images/product-lydmand.webp"
+      image="/images/product-lydmand-white.webp"
       imageAlt="Lydmand: mixer, hovedtelefoner og mikrofon"
       productId="lydmand"
       bookLabel="Book lydmand nu"

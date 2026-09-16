@@ -30,7 +30,7 @@ export default function Page() {
       price={695}
       headline="The presentation bundle — everything for the meeting"
       sub="Projector + 160 cm screen + handheld microphone. Save 90 DKK compared to single prices."
-      image="/images/product-projektor.webp"
+      image="/images/product-projektor-white.webp"
       imageAlt="Presentation bundle with projector, screen and microphone"
       productId="pakke_praesentation"
       bullets={[

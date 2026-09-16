@@ -1,4 +1,5 @@
 "use client";
+import { whiteProductImage } from "./whiteProductImages";
 
 import { useEffect, useState } from "react";
 import {
@@ -31,7 +32,10 @@ interface CatalogResponse {
 }
 
 function visible<T extends { hidden?: boolean }>(list: T[]): T[] {
-  return list.filter((p) => !p.hidden);
+  return list.filter((p) => !p.hidden).map(p => ({...p,
+    ...("image" in p && typeof p.image === "string" ? {image:whiteProductImage(p.image)} : {}),
+    ...("product" in p && typeof p.product === "string" ? {product:whiteProductImage(p.product)} : {}),
+  }));
 }
 
 /** Keep admin catalog, but add any new default rentals (e.g. festpakker) missing in KV. */
@@ -82,7 +86,7 @@ function mergeAddons(fromKv: Addon[]): Addon[] {
       // Beskrivelsen ændrede sig, da timerne blev til antal, og et KV-katalog
       // gemt før det må ikke bede kunden skrive timer i kommentaren.
       if (d?.ydelse) {
-        next = { ...next, ydelse: true, priceUnit: d.priceUnit, page: d.page, da: d.da, en: d.en };
+        next = { ...next, ...(d.id === "dj_musikafvikler" ? {price:d.price} : {}), ydelse: true, priceUnit: d.priceUnit, page: d.page, da: d.da, en: d.en };
       }
       return next;
     });

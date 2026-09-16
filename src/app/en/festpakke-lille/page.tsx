@@ -38,7 +38,7 @@ export default function SmallPartyPackageEn() {
       price={690}
       headline="Small party package — sound and lights"
       sub='2× Alto 10" speakers + a light effect. Everything for the small party — save 100 DKK.'
-      image="/images/product-pakke-fest-lille.webp"
+      image="/images/product-pakke-fest-lille-white.webp"
       imageAlt="Small party package with Alto speakers and a light effect"
       productId="pakke_fest_lille"
       faqPhrase="the small party package"

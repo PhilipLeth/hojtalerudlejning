@@ -31,7 +31,7 @@ export default function Page() {
       price={2695}
       headline="The wedding package — speeches and dancefloor in one"
       sub="Speakers on stands, wireless microphone, lights, string lights and low fog for the first dance. Save 180 DKK."
-      image="/images/product-pakke-bryllup-taendt.webp"
+      image="/images/product-pakke-bryllup-taendt-white.webp"
       imageAlt="The wedding package: two EV speakers on stands, wireless microphone, warm white string lights and the low fog machine"
       productId="pakke_bryllup"
       faqPhrase="the wedding package"

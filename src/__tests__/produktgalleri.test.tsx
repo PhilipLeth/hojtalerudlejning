@@ -280,7 +280,7 @@ describe("Genererede produktbilleder oplyses", () => {
 
   it("gælder præcis de billeder, der er genereret — og ingen studiefotos", async () => {
     const { erGenereretBillede, GENEREREDE_BILLEDER, rentalProducts } = await import("@/lib/products");
-    expect(erGenereretBillede("/images/product-pakke-bryllupslys-taendt.webp")).toBe(true);
+    expect(erGenereretBillede("/images/product-pakke-bryllupslys-taendt-white.webp")).toBe(true);
     expect(erGenereretBillede("/images/product-soundboks.webp")).toBe(false);
     expect(erGenereretBillede(null)).toBe(false);
     // Et billede fra admin (R2) er ikke vores generering og skal ikke oplyses

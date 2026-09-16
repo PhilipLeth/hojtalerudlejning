@@ -12,6 +12,24 @@ import type { Locale } from "@/lib/i18n";
  * den her, fejler testen — og omvendt.
  */
 export const EN_PAGES = [
+  "/dj",
+  "/events/konference",
+  "/events/moede",
+  "/events/praesentation",
+  "/events/generalforsamling",
+  "/events/foredrag",
+  "/events/messe",
+  "/events/produktlancering",
+  "/events/reception",
+  "/events/fredagsbar",
+  "/events/firmafest",
+  "/events/koncert",
+  "/events/bryllup",
+  "/events/privatfest",
+  "/events/filmaften",
+  "/events/udendoers",
+  "/events/forening",
+
   "/av-udstyr",
   "/eventloesninger",
   "/cases",

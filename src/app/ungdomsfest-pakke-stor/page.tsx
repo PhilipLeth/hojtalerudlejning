@@ -29,7 +29,7 @@ export default function Side() {
       price={2395}
       headline="Stor ungdomsfest-pakke — et rigtigt diskotek"
       sub="To 12&quot; højtalere, lys-pakke på stativ, discokugle 40 cm og røgmaskine. Forsamlingshuset bliver til en klub — spar 285 kr."
-      image="/images/product-pakke-ungdomsfest-stor-taendt.webp"
+      image="/images/product-pakke-ungdomsfest-stor-taendt-white.webp"
       imageAlt="Stor ungdomsfest-pakke tændt: to 12-tommer højtalere, lys-pakke på stativ, discokugle med spot og røgmaskine"
       productId="pakke_ungdomsfest_stor"
       faqPhrase="den store ungdomsfest-pakke"

@@ -1,4 +1,5 @@
 "use client";
+import { eventSituations } from "@/lib/eventSituations";
 
 import { useState, useEffect, useId, FormEvent } from "react";
 import type { Locale } from "@/lib/i18n";
@@ -121,7 +122,7 @@ const EN: Record<string, string> = {
   "Tekniker på stedet": "On-site technician"
 };
 
-export default function EventInquiryForm({ locale = "da", initialSolution }: { locale?: Locale; initialSolution?: string }) {
+export default function EventInquiryForm({ locale = "da", initialSolution, initialSituation }: { locale?: Locale; initialSolution?: string; initialSituation?: string }) {
   const formId = useId();
   const en = locale === "en";
   const tr = (da: string) => en ? (EN[da] ?? da) : da;
@@ -140,9 +141,12 @@ export default function EventInquiryForm({ locale = "da", initialSolution }: { l
 
   useEffect(() => {
     const id = initialSolution || new URLSearchParams(window.location.search).get("loesning");
+    const situationId = initialSituation || window.location.pathname.split("/events/")[1];
+    const situation = eventSituations.find(s => s.slug === situationId);
+    if (situation) setF(prev => ({...prev, type: "Andet", besked: situation[locale].title + ": " + situation[locale].check.join(", ")}));
     const solution = eventSolutions.find(s => s.id === id);
     if (solution) setF(prev => ({ ...prev, type: id === "messe" ? "Messe / stand" : id === "moeder" ? "Konference / møde" : id === "koncert" ? "Koncert / DJ" : "Reception", besked: `${solution[locale].title}: ${solution[locale].equipment.join(", ")}.` }));
-  }, [locale, initialSolution]);
+  }, [locale, initialSolution, initialSituation]);
 
   function toggleBehov(b: string) {
     setF((prev) => ({

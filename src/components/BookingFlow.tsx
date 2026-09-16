@@ -1,4 +1,6 @@
 "use client";
+import { DJ_ID, DJ_DEFAULT, priceDj, djLabel, type DjHours } from "@/lib/dj";
+import DjHoursPicker from "./DjHoursPicker";
 
 import { useState, useMemo, useEffect, useCallback, useRef, FormEvent } from "react";
 import { rapporterFejl } from "@/lib/errorReport";
@@ -746,6 +748,7 @@ export default function BookingFlow({
 
   // Multi-product cart: items added before the current selection
   interface CartItem {
+    dj?: DjHours;
     productId: string;
     name: string;
     price: number;
@@ -774,6 +777,15 @@ export default function BookingFlow({
   const [lydmandTimer, setLydmandTimer] = useState(LYDMAND_STANDARD_TIMER);
   const [lydmandFra, setLydmandFra] = useState("");
   const [lydmandTil, setLydmandTil] = useState("");
+  const [djHours, setDjHours] = useState<DjHours>(DJ_DEFAULT);
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    if(q.get("product") !== DJ_ID || !q.has("djBefore") || !q.has("djAfter")) return;
+    try { const parsed = priceDj({before23:Number(q.get("djBefore")),after23:Number(q.get("djAfter"))}); setDjHours({before23:parsed.before23,after23:parsed.after23}); } catch { /* Standardvalget beholdes ved ugyldig URL. */ }
+  }, [urlTick]);
+  const harDj = selectedAddons.includes(DJ_ID);
+  const djPris = priceDj(djHours).total;
+  const djNavn = djLabel(djHours, locale);
   const harLydmand = selectedAddons.includes(LYDMAND_ID);
   const lydmandAddon = addons.find((a) => a.id === LYDMAND_ID);
   const lydmandFraTil = timerMellem(lydmandFra, lydmandTil);
@@ -786,8 +798,8 @@ export default function BookingFlow({
     return lydmandFraTil ? `${base} (${tidsrumTekst(lydmandFra, lydmandTil, locale)})` : base;
   })();
   /** Tilvalgets linje og pris som de vises — lydmanden ganges op med timerne */
-  const addonLabel = (a: { id: string; label: string }) => (a.id === LYDMAND_ID ? lydmandLabel : a.label);
-  const addonPris = (a: { id: string; price: number }) => (a.id === LYDMAND_ID ? lydmandPris : a.price);
+  const addonLabel = (a: { id: string; label: string }) => (a.id === DJ_ID ? djNavn : a.id === LYDMAND_ID ? lydmandLabel : a.label);
+  const addonPris = (a: { id: string; price: number }) => (a.id === DJ_ID ? djPris : a.id === LYDMAND_ID ? lydmandPris : a.price);
   const [deliveryAddress, setDeliveryAddress] = useState("");
   /** Adresse-fejlen vises først når man forsøger at gå videre */
   const [showDeliveryError, setShowDeliveryError] = useState(false);
@@ -835,7 +847,7 @@ export default function BookingFlow({
     const productIds = [
       ...(speaker && speaker !== "effects-only" ? [speaker] : []),
       ...selectedAddons,
-      ...cartItems.map((c) => c.productId),
+      ...cartItems.filter(c => c.productId !== DJ_ID).map((c) => c.productId),
     ].filter(Boolean);
     const params = new URLSearchParams({ code });
     // dateKey, ikke toISOString: en dato valgt i kalenderen er lokal midnat, og
@@ -911,18 +923,19 @@ export default function BookingFlow({
       // Valgte tilvalg følger med i kurven (undtagen levering — den gælder ordren)
       for (const a of addons) {
         if (selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id)) {
-          items.push({ productId: a.id, name: addonLabel(a), price: priceOf(addonPris(a)) });
+          items.push({ productId: a.id, name: addonLabel(a), price: a.id === DJ_ID ? djPris : priceOf(addonPris(a)), ...(a.id === DJ_ID ? {dj: djHours} : {}) });
         }
       }
       return items;
     });
     setSpeaker(null);
     setSelectedAddons((prev) => prev.filter((id) => DELIVERY_IDS.includes(id)));
+    setDjHours(DJ_DEFAULT);
     setLydmandTimer(LYDMAND_STANDARD_TIMER);
     setLydmandFra("");
     setLydmandTil("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [speaker, selectedAddons, addons, speakers, rentalProducts, locale, lydmandLabel, lydmandPris]);
+  }, [speaker, selectedAddons, addons, speakers, rentalProducts, locale, lydmandLabel, lydmandPris, djHours, djNavn, djPris]);
 
   // Preselect product from ?product=ID — re-runs on soft-nav (urlTick).
   // Er der allerede et produkt i gang, lægges det i kurven først, så
@@ -944,6 +957,10 @@ export default function BookingFlow({
         return;
       }
       if (hasCurrent) stashSelectionToCart();
+      if(product === DJ_ID) {
+        const q=new URLSearchParams(window.location.search);
+        try {const v=priceDj({before23:Number(q.get("djBefore") ?? 3),after23:Number(q.get("djAfter") ?? 0)});setDjHours({before23:v.before23,after23:v.after23});} catch {setDjHours(DJ_DEFAULT);}
+      }
       setSpeaker("effects-only");
       setSelectedAddons((prev) => [...prev.filter((id) => DELIVERY_IDS.includes(id)), product]);
       setStep(2);
@@ -1083,8 +1100,8 @@ export default function BookingFlow({
     soloAddons.length === 1 && soloAddons[0].image
       ? soloAddons[0].image
       : hasLights
-        ? "/images/product-lys-v4.webp"
-        : "/images/product-rog-v2.webp";
+        ? "/images/product-lys-v4-white.webp"
+        : "/images/product-rog-v2-white.webp";
 
   /*
    * Skifter datoen, skal tidsrummet passe til den nye dag — en fredag har
@@ -1124,7 +1141,7 @@ export default function BookingFlow({
   const addonsBasePrice = addons
     .filter((a) => selectedAddons.includes(a.id))
     .reduce((sum, a) => sum + addonPris(a), 0);
-  const addonsPrice = summer ? applyDiscount(addonsBasePrice) : addonsBasePrice;
+  const addonsPrice = summer ? applyDiscount(addonsBasePrice - (harDj ? djPris : 0)) + (harDj ? djPris : 0) : addonsBasePrice;
   const cartTotal = cartItems.reduce((sum, item) => sum + item.price, 0);
   const subtotal = speakerPrice + addonsPrice + cartTotal;
   // Rabatkode: procenten kommer fra /api/discount og er kun til visning —
@@ -1150,7 +1167,7 @@ export default function BookingFlow({
       : Infinity;
 
   /** Kan der lægges én enhed mere i kurven uden at booke forbi det ledige? */
-  const kanLæggeTil = (id: string) => antalAf(id) < ledigeAf(id);
+  const kanLæggeTil = (id: string) => id !== DJ_ID && antalAf(id) < ledigeAf(id);
 
   /** Første produkt hvor ordren kræver flere enheder end der er ledige i perioden */
   const qtyShortage = (() => {
@@ -1339,15 +1356,16 @@ export default function BookingFlow({
           returnSlot,
           days: rentalDays,
           addons: addons
-            .filter((a) => selectedAddons.includes(a.id) && a.id !== LYDMAND_ID)
+            .filter((a) => selectedAddons.includes(a.id) && a.id !== LYDMAND_ID && a.id !== DJ_ID)
             .map((a) => a.label),
           addonIds: addons
-            .filter((a) => selectedAddons.includes(a.id) && a.id !== LYDMAND_ID)
+            .filter((a) => selectedAddons.includes(a.id) && a.id !== LYDMAND_ID && a.id !== DJ_ID)
             .map((a) => a.id),
           // Lydmanden er én linje med timerne i navnet og hele beløbet — så
           // står "Lydmand, 4 timer (kl. 18–22)" i mail, admin og på lejesedlen
           cartItems: [
-            ...cartItems.map((item) => ({ name: item.name, price: item.price, productId: item.productId })),
+            ...cartItems.map((item) => ({ name: item.name, price: item.price, productId: item.productId, ...(item.dj ? {dj:item.dj} : {}) })),
+            ...(harDj ? [{ name: djNavn, price: djPris, productId: DJ_ID, dj: djHours }] : []),
             ...(harLydmand ? [{ name: lydmandLabel, price: lydmandPris, productId: LYDMAND_ID }] : []),
           ],
           deliveryAddress: hasDelivery ? deliveryAddress.trim() : undefined,
@@ -1461,15 +1479,15 @@ export default function BookingFlow({
         // Stripe regner pr. id — lydmanden sendes én gang pr. time
         const itemIds: string[] = [
           ...(!isEffectsOnly && speaker ? [speaker] : []),
-          ...selectedAddons.filter((id) => id !== LYDMAND_ID),
+          ...selectedAddons.filter((id) => id !== LYDMAND_ID && id !== DJ_ID),
           ...(harLydmand ? Array.from({ length: lydmandAntal }, () => LYDMAND_ID) : []),
-          ...cartItems.map((c) => c.productId),
+          ...cartItems.filter(c => c.productId !== DJ_ID).map((c) => c.productId),
         ];
         const payRes = await fetch("/api/stripe/create-checkout-session", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            items: itemIds.map((id) => ({ id })),
+            items: [...itemIds.map((id) => ({ id })), ...(harDj ? [{id:DJ_ID,dj:djHours}] : []), ...cartItems.filter(c=>c.productId===DJ_ID).map(c=>({id:DJ_ID,dj:c.dj}))],
             bookingId: bookResult.bookingId,
             locale,
             discountCode: coupon?.code,
@@ -1856,7 +1874,7 @@ export default function BookingFlow({
                   }}
                   className="rounded-xl border border-dashed border-white/15 p-3 text-center transition active:scale-[0.98] hover:border-brand-500/40 hover:bg-white/[0.02]"
                 >
-                  <img loading="lazy" decoding="async" src="/images/product-lys-v4.webp" srcSet={thumbSrcSet("/images/product-lys-v4.webp")} sizes={THUMB_IMAGE_SIZES} alt="Lys-pakke med LED-lamper og centereffekt" className="mx-auto h-12 w-12 object-contain rounded-lg" />
+                  <img loading="lazy" decoding="async" src="/images/product-lys-v4-white.webp" srcSet={thumbSrcSet("/images/product-lys-v4-white.webp")} sizes={THUMB_IMAGE_SIZES} alt="Lys-pakke med LED-lamper og centereffekt" className="mx-auto h-12 w-12 object-contain rounded-lg" />
                   <p className="mt-2 text-sm font-medium text-white/70">
                     {lysAddon?.label}
                   </p>
@@ -1874,7 +1892,7 @@ export default function BookingFlow({
                   }}
                   className="rounded-xl border border-dashed border-white/15 p-3 text-center transition active:scale-[0.98] hover:border-brand-500/40 hover:bg-white/[0.02]"
                 >
-                  <img loading="lazy" decoding="async" src="/images/product-rog-v2.webp" srcSet={thumbSrcSet("/images/product-rog-v2.webp")} sizes={THUMB_IMAGE_SIZES} alt="Røgmaskine til fest" className="mx-auto h-12 w-12 object-contain rounded-lg" />
+                  <img loading="lazy" decoding="async" src="/images/product-rog-v2-white.webp" srcSet={thumbSrcSet("/images/product-rog-v2-white.webp")} sizes={THUMB_IMAGE_SIZES} alt="Røgmaskine til fest" className="mx-auto h-12 w-12 object-contain rounded-lg" />
                   <p className="mt-2 text-sm font-medium text-white/70">
                     {rogAddon?.label}
                   </p>
@@ -2159,9 +2177,10 @@ export default function BookingFlow({
                         </div>
                         <p className="shrink-0 text-right text-sm font-bold text-brand-400">
                           +{a.price},-
-                          {a.id === LYDMAND_ID && <span className="block text-[11px] font-normal text-white/40">{s.perHour}</span>}
+                          {(a.id === LYDMAND_ID || a.id === DJ_ID) && <span className="block text-[11px] font-normal text-white/40">{s.perHour}</span>}
                         </p>
                       </button>
+                      {a.id === DJ_ID && selected && <DjHoursPicker value={djHours} onChange={setDjHours} locale={locale}/>}
                       {/* Lydmanden: timerne er antallet, og start/slut er en hjælp — ikke et krav */}
                       {a.id === LYDMAND_ID && selected && (
                         <div className="mt-2 rounded-xl border border-brand-500/30 bg-brand-500/5 p-3">

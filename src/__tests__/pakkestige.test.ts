@@ -1,3 +1,4 @@
+import { eventSituations } from "@/lib/eventSituations";
 import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import {
@@ -150,6 +151,7 @@ describe("Pakkestigen", () => {
       const kilde = fs.readFileSync(`src/app${side}/page.tsx`, "utf8");
       for (const id of ids) {
         const nævnt =
+          (kilde.includes("SituationPage") && eventSituations.some(s => `/events/${s.slug}` === side && (s.packageIds as readonly string[]).includes(id))) ||
           kilde.includes(`"${id}"`) ||
           (kilde.includes("FEST_LADDER_IDS") && FEST_LADDER_IDS.includes(id)) ||
           (kilde.includes("LYD_LEJLIGHEDSPAKKER") && LYD_LEJLIGHEDSPAKKER.includes(id)) ||

@@ -30,7 +30,7 @@ export default function Page() {
       price={1295}
       headline="Youth party package — sound and disco lights in one price"
       sub="Soundboks 4, disco light effect and 30 cm mirror ball. Battery-powered sound, lights that make the dancefloor — save 190 DKK."
-      image="/images/product-pakke-ungdomsfest-taendt.webp"
+      image="/images/product-pakke-ungdomsfest-taendt-white.webp"
       imageAlt="Youth party package switched on: Soundboks 4, LED par light and mirror ball with spotlight in a dark room"
       productId="pakke_ungdomsfest"
       faqPhrase="youth party package"

@@ -1,3 +1,4 @@
+import { DJ_ID, priceDj, djLabel, type DjHours } from "../../src/lib/dj";
 import { resolveDiscountFor } from "./_lib/discounts";
 import { sendPush } from "../../src/lib/webpush";
 import { KV_PUSH_SUBS, loadSubscriptions } from "./push";
@@ -32,7 +33,7 @@ interface BookingData {
   days: number;
   addons: string[];
   addonIds?: string[];
-  cartItems?: Array<{ name: string; price: number; productId?: string }>;
+  cartItems?: Array<{ name: string; price: number; productId?: string; dj?: DjHours }>;
   /** Lejeperioden som ISO — sendes af kalenderen, bruges til weekendudsalget */
   pickup?: string;
   returnDate?: string;
@@ -288,6 +289,20 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   const data: BookingData = await context.request.json();
+
+  // DJ er en konfigureret ydelse: mindst tre timer og priser fra serverens regler.
+  try {
+    if (data.speakerId === DJ_ID || data.addonIds?.includes(DJ_ID)) throw new Error("DJ kræver valg af timer");
+    for (const item of data.cartItems ?? []) {
+      if (item.productId !== DJ_ID) continue;
+      const priced = priceDj(item.dj);
+      if (item.price !== priced.total) throw new Error("DJ-prisen stemmer ikke med de valgte timer");
+      item.price = priced.total;
+      item.name = djLabel(priced, data.locale === "en" ? "en" : "da");
+    }
+  } catch (error) {
+    return new Response(JSON.stringify({error: error instanceof Error ? error.message : "Ugyldige DJ-timer"}), {status:400,headers:{"Content-Type":"application/json"}});
+  }
 
   // Har vi lige taget imod præcis denne ordre? Så er det et dobbelttryk, ikke
   // en ny booking. Kunden får samme kvittering som første gang — han skal ikke

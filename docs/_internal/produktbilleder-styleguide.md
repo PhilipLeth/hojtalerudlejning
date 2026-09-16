@@ -1,3 +1,11 @@
+# Gældende produktstil fra 16. september 2026
+
+Alle katalog- og pakkefotos skal have hvid sømløs baggrund og en diskret neutral kontaktskygge. Bevar produktmodel, antal, stativer, beslag og mærkning. Funktionslys må gerne være tændt; fjern dekorative farvefelter, badges og baggrundseffekter. Casefotos og billeder af udstyr i brug bevarer deres naturlige omgivelser.
+
+Nye filer får nye URLer, så gamle fotos ikke bliver liggende i kundens browsercache. `src/lib/whiteProductImages.ts` oversætter kendte gamle katalogbilleder; nyere adminuploads bevares.
+
+## Historisk stil (afløst)
+
 # Produktbilleder — Style Guide
 
 Alle produktbilleder på lejhojtaler.dk følger en konsistent visuel stil. Nye billeder **skal** matche denne stil præcist.

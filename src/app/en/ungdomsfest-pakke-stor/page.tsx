@@ -30,7 +30,7 @@ export default function Page() {
       price={2395}
       headline="Large youth party package — a proper disco"
       sub="Two 12&quot; speakers, a light package on a stand, a 40 cm mirror ball and a fog machine. The hall becomes a club — save 285 DKK."
-      image="/images/product-pakke-ungdomsfest-stor-taendt.webp"
+      image="/images/product-pakke-ungdomsfest-stor-taendt-white.webp"
       imageAlt="Large youth party package switched on: two 12-inch speakers, light package on a stand, mirror ball with spotlight and fog machine"
       productId="pakke_ungdomsfest_stor"
       faqPhrase="the large youth party package"
