@@ -90,7 +90,7 @@ export default function LejHojtalerPage() {
             Batterihøjtalere og PA-pakker <LiveStartPrice />, book online, betal først ved afhentning.
           </p>
           <a
-            href="/#book"
+            href="/book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book højtaler nu
@@ -202,7 +202,7 @@ export default function LejHojtalerPage() {
             <LiveStartPrice prefix="Fra " suffix=" kr/weekend." />
           </p>
           <a
-            href="/#book"
+            href="/book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book højtaler nu

@@ -38,9 +38,7 @@ describe("Engelsk udgave", () => {
     // ikke en selvstændig side, man skal kunne linke sprogrigtigt til. Det samme
     // gælder dynamiske ruter: "/blog/[slug]" er en skabelon, ikke en adresse, og
     // hvert indlægs hreflang sættes i generateMetadata.
-    const påDisk = engelskeSider().filter(
-      (p) => p !== "/book" && !p.includes("[")
-    );
+    const påDisk = engelskeSider().filter((p) => !p.includes("["));
     expect([...EN_PAGES].sort()).toEqual(påDisk);
   });
 

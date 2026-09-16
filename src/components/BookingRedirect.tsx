@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { bookHref } from "@/lib/bookUrl";
 
 /**
- * Legacy /book?product=ID → forsiden med drawer (/?product=ID#book).
- * Draweren bor i layout; /book er kun alias for gamle links.
+ * Legacy-komponent. Checkout er en fuld side på /book, ikke en drawer.
+ * BookingDrawer i layoutet sender #book og /?product= derhen.
  */
 export default function BookingRedirect({ locale = "da" }: { locale?: "da" | "en" }) {
   useEffect(() => {

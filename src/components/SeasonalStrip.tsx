@@ -12,15 +12,15 @@ export default function SeasonalStrip({ locale }: { locale: Locale }) {
   if (!seasons.length) return null;
   const en = locale === "en";
   return (
-    <section className={styles.seasonStrip} aria-label={en ? "Seasonal packages" : "Sæsonpakker"}>
+    <section className={styles.seasonStrip} aria-label={en ? "Seasonal inspiration" : "Sæson · inspiration"}>
       {seasons.map((s) => (
         <Link key={s.id} href={localizedHref(s.href, locale)} className={styles.seasonCard} style={{ ["--season-accent" as string]: s.accent }}>
-          <img src={s.hero} alt="" width="800" height="450" loading="lazy" />
+          <img src={s.hero} alt="" width="1280" height="720" loading="lazy" />
           <div>
             <p>{en ? s.kickerEn : s.kickerDa}</p>
             <h2>{seasonNavLabel(s, locale)}</h2>
             <span>{en ? s.titleEn : s.titleDa}</span>
-            <strong>{en ? "See packages →" : "Se pakkerne →"}</strong>
+            <strong>{en ? "Get inspired →" : "Bliv inspireret →"}</strong>
           </div>
         </Link>
       ))}

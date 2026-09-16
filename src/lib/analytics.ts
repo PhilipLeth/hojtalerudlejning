@@ -94,7 +94,7 @@ export function trackBookingFormStart(e: BookingFormStartEvent = {}): void {
     event: "form_start",
     form_id: "booking",
     form_name: "Book udstyr",
-    form_destination: "https://lejhojtaler.dk/#book",
+    form_destination: "https://lejhojtaler.dk/book",
     value: e.value,
     currency,
     item_count: e.itemCount,

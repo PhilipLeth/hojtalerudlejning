@@ -306,8 +306,8 @@ export const addons: Addon[] = [
   { id: "dj_musikafvikler", page: "/dj", price: 1000, image: null, ydelse: true,
     priceUnit: { da: "kr/time før kl. 23", en: "DKK/hour before 23:00" },
     contents: ["DJ/musikafvikler", "Minimum 3 timer"],
-    da: { label: "DJ/musikafvikler", desc: "Minimum 3 timer. 1.000 kr/time før kl. 23, 1.500 kr/time efter. Inkl. moms. Vælg DJ-pult og udstyrspakke separat." },
-    en: { label: "DJ/music host", desc: "Minimum 3 hours. DKK 1,000/hour before 23:00, DKK 1,500/hour after. VAT included. Choose a DJ controller and equipment package separately." } },
+    da: { label: "DJ/musikafvikler", desc: "Minimum 3 timer. 1.000 kr/time før kl. 23, 1.500 kr/time efter. Levering, opsætning og nedtagning er med. 20 % højere i julefrokost-perioden. Vælg anlæg og evt. lys." },
+    en: { label: "DJ/music host", desc: "Minimum 3 hours. DKK 1,000/hour before 23:00, DKK 1,500/hour after. Delivery, setup and collection included. 20% higher in the Christmas party season. Choose a sound system and optional lights." } },
   // Skjult kladde: model og beholdning afklares før aktivering. 95 kr er prisforslag.
   {
     id: "stroboskop",
@@ -555,7 +555,7 @@ export function deliveryDirections(id: string): { out: boolean; back: boolean } 
   return { out: false, back: false };
 }
 
-/** Standalone rental products (lys, av), bookable via /?product=ID#book */
+/** Standalone rental products (lys, av), bookable via /?product=ID */
 export const rentalProducts: RentalProduct[] = [
   ...djGearProducts,
   ...situationPackages,

@@ -20,6 +20,9 @@ export const t = {
       socialProofFootnote: "*Fra Frederiks tidligere udlejningsvirksomhed",
     },
     booking: {
+      emptyCartTitle: "Ingen produkter valgt",
+      emptyCartBody: "Kurven er tom. Vælg udstyr på sitet, og kom tilbage for at booke.",
+      emptyCartCta: "Se udstyr",
       step1Title: "Vælg højtalere",
       step2Title: "Vælg datoer",
       step2Desc: "Vælg afhentning og returnering (maks 5 dage)",
@@ -206,6 +209,9 @@ export const t = {
       socialProofFootnote: "*From Frederik's previous rental business",
     },
     booking: {
+      emptyCartTitle: "No products selected",
+      emptyCartBody: "Your basket is empty. Choose equipment on the site, then come back to book.",
+      emptyCartCta: "Browse equipment",
       step1Title: "Choose speakers",
       step2Title: "Choose dates",
       step2Desc: "Select pickup and return dates (max 5 days)",

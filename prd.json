@@ -3861,7 +3861,11 @@
       "ny_pakke": "Julehyggen: thumpgo + lyskaeder + lyseffekt, page /julehyggen. Kun på /lej-hojtaler i KATEGORI_PAKKER."
     },
     "anledningskort": "Shop efter anledning bruger scener (situation-*.webp), ikke produktfotos. Messe, reception og koncert beholder rigtige eventfotos.",
-    "ny_saeson": "Tilføj objekt i SEASONS, hub DA+EN, COPY i SeasonCampaign, evt. tema i HalloweenHome.module.css."
+    "enkeltprodukter": "Halloween-hubben viser røg, LED-effekt, discokugle og lys-pakke. Stroboskop er skjult kladde og sælges ikke. Julefrokost-hubben viser lyskæder, farvede lyskæder, uplight 4-pak, lyseffekt og trådløs mikrofon.",
+    "favicon": "Blåt lh-mærke (#1249cf) som i ProHeader. icon.svg + icon-192/512 + apple-touch-icon + favicon.ico.",
+    "forside": "SeasonalStrip er store inspirationskort (min. 460px) med hero-scener, ikke produktfotos.",
+    "julefrokost_hero": "Firmajulefrokost i kantinen med vores lyskæder, PAR-uplights og EV-højtalere. Fil julefrokost-kantine.webp. Grøn/rød julestemning i HalloweenHome.module.css data-theme=jul.",
+    "checkout": "Tom /book uden produkt viser 'Ingen produkter valgt' og CTA til udstyr, ikke højtalervælgeren. Flowet bor i layout, så kurven overlever navigation."
   },
   "pakkepris_gennemgang_2026_09_14": {
     "godkendt": "Brugeren godkendte alle foreslåede prisrettelser.",
@@ -4062,7 +4066,7 @@
       "forening"
     ],
     "packages": "32 pakker fra eksisterende katalogdele, 5% rabat afrundet ned til nærmeste 5 kr. Enkeltproduktvalg har ingen rabat. Transport, opsætning og bemanding er separat.",
-    "dj": "DJ/musikafvikler med DJ-pult, minimum tre hele timer. 1.000 kr/time før kl. 23 og 1.500 kr/time efter, inkl. moms bekræftet af bruger. To timefelter; timer efter midnat hører til efter kl. 23. Servervalideret pris i booking og Stripe. DJ-opgave og transport koordineres manuelt som øvrig bemanding.",
+    "dj": "DJ/musikafvikler med start/slut. 1.000 kr/time før kl. 23 og 1.500 kr/time efter, inkl. moms. Levering, opsætning og nedtagning med i DJ-prisen. 20 % højere i julefrokost-perioden. Anlæg efter gæsteantal og valgfrit lys. Servervalideret i booking og Stripe.",
     "images": "Alle aktive katalogfotos flyttes til hvide studiebaggrunde. Naturlige event- og casefotos bevares. Nye billed-URLer undgår månedlang browsercache.",
     "reviews": "GoogleReviews er genindsat under forsidens intro og på situationssiderne. Kun eksisterende autentiske Google-data."
   },
@@ -4070,7 +4074,7 @@
     "beslutning": "Shop og direkte booking prioriteres frem for forespørgsler. Begge sprog følges ad.",
     "forside": "16 anledninger vælges som filtre over produktpakker. Klik på hero skifter mellem fem billeder, uden autoplay. Google-anmeldelser bevares.",
     "situationer": "Pakker står før praktisk vejledning. DJ-anledninger viser også tre DJ-udstyrspakker.",
-    "dj": "Timeindtastning, minimum 3 timer, 1.000 kr før 23 og 1.500 efter, inklusive moms. Gear er separat og påkrævet ved DJ-booking, valideres også på serveren.",
+    "dj": "Start og sluttid. Timepriser i teksten (1.000 før kl. 23 / 1.500 efter). Tilbuddet vises som sum. Levering, opsætning og nedtagning (795 kr, levering_begge) er med i DJ-prisen. 20 % højere timepris i julefrokost-sæsonen (15. sep–23. dec). Kunden vælger musikanlæg efter gæsteantal og kan tilføje lys (lyseffekt eller lys-pakke). Stor DJ-pakke har allerede lys. Serveren slår prisen op fra pickup-datoen, klienten stoler vi ikke på.",
     "pult": {
       "id": "dj_pult",
       "pris_inkl_moms": 1995,
@@ -4098,7 +4102,14 @@
       "/eventloesninger": "Anledningshub. Pakker bookes online. Tilbud kun ved særlig opstilling.",
       "/cases": "Egne fotos af opstillinger, med link til booking. Ikke en kopi af forsiden."
     },
-    "udlejning": " /av-udstyr viser skærme, lys, lyd og mikrofoner. 55\" vises som skærmfoto på hvid baggrund, ligesom projektor og lærred.",
+    "udlejning": " /av-udstyr viser skærme, lys, lyd og mikrofoner. 55\" (skaerm_55) er et LED-foto på 3-fod stativ, product-skaerm-white.webp.",
     "ikke_ring": "Panelpakke (4 mikrofoner) og Teams/Zoom-pakke bookes online. FAQ og konferencepakke-150 peger derhen i stedet for telefon."
+  },
+  "lys_ai_2026_09_16": {
+    "side": "/lys-ai og /en/lys-ai",
+    "api": "/api/lys-visualiser. Uden GEMINI_API_KEY (samme secret som galleriet) returneres scenen uændret + anbefalingen lyskaeder, uplight_4, lyseffekt.",
+    "produkter": ["lyskaeder", "lyskaeder_farvet", "uplight", "uplight_4", "lyseffekt", "lys", "discokugle"],
+    "kurv": "Læg hele setuppet via bookSetupHref (?product=første&extras=resten). Link fra /lyspakker, /festlys og DJ-lysvælgeren.",
+    "loft": "8 forsøg pr. IP pr. dag i KV."
   }
 }

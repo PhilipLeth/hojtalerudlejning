@@ -96,7 +96,7 @@ export default function FestlysPage() {
             Røgmaskine <LivePrice productId="rog" />
           </p>
           <a
-            href="/?product=lys#book"
+            href="/book?product=lys"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book festlys nu
@@ -131,7 +131,13 @@ export default function FestlysPage() {
               { id: "lyskaeder", href: "/lyskaeder" },
             ]}
           />
-          <div className="mt-8 text-center">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/lys-ai"
+              className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
+            >
+              Prøv lyset i jeres lokale
+            </Link>
             <Link
               href="/lyspakker"
               className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
@@ -187,7 +193,7 @@ export default function FestlysPage() {
             Book online på 2 minutter. Hent fredag i København S, aflever mandag.
           </p>
           <a
-            href="/?product=lys#book"
+            href="/book?product=lys"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book festlys nu

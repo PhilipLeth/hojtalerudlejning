@@ -9,14 +9,16 @@
 .caseCard p{padding:0 16px;color:var(--muted);font-size:15px}
 .caseCard strong{display:block;padding:16px;color:var(--blue)}
 @media(max-width:800px){.caseGallery{grid-template-columns:1fr}}
-.seasonStrip{max-width:1216px;margin:8px auto 0;padding:0 24px 8px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.seasonCard{display:grid;grid-template-columns:140px 1fr;overflow:hidden;border-radius:8px;border:1px solid #dce4ef;background:#fff;color:var(--ink);min-height:120px}
-.seasonCard:hover{border-color:var(--season-accent,#1249cf)}
-.seasonCard img{width:140px;height:100%;object-fit:cover}
-.seasonCard>div{padding:16px 18px}
-.seasonCard p{font-size:12px;color:var(--season-accent,#1249cf);font-weight:600;margin-bottom:6px}
-.seasonCard h2{font-size:22px;margin:0 0 6px}
-.seasonCard span{display:block;font-size:14px;color:var(--muted)}
-.seasonCard strong{display:block;margin-top:10px;color:var(--season-accent,#1249cf);font-size:14px}
-@media(max-width:800px){.seasonStrip{grid-template-columns:1fr;padding:0 20px}}
+.seasonStrip{max-width:1280px;margin:28px auto 8px;padding:0 24px 12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.seasonCard{position:relative;display:block;overflow:hidden;border-radius:14px;min-height:460px;color:#fff}
+.seasonCard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s}
+.seasonCard:hover img{transform:scale(1.04)}
+.seasonCard>div{position:relative;z-index:1;min-height:460px;display:flex;flex-direction:column;justify-content:flex-end;padding:36px 32px;background:linear-gradient(180deg,transparent 32%,rgba(8,10,22,.9))}
+.seasonCard p{font-size:13px;color:var(--season-accent,#ffd7a8);font-weight:600;margin-bottom:8px;letter-spacing:.02em}
+.seasonCard h2{font-size:clamp(36px,3.6vw,52px);margin:0 0 8px;letter-spacing:-.04em;color:#fff}
+.seasonCard span{display:block;font-size:18px;color:rgba(255,255,255,.86);max-width:18em}
+.seasonCard strong{display:inline-block;margin-top:18px;color:#fff;font-size:15px;border-bottom:2px solid var(--season-accent,#fff);padding-bottom:2px}
+@media(max-width:800px){.seasonStrip{grid-template-columns:1fr;padding:0 20px}.seasonCard,.seasonCard>div{min-height:320px}}
+.soloHero{max-width:820px;margin:auto;padding:48px 42px 20px}
+@media(max-width:800px){.soloHero{padding:28px 20px 12px}}
 

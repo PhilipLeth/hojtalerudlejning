@@ -1,4 +1,4 @@
-import { DJ_DAY_RATE, DJ_NIGHT_RATE } from "@/lib/dj";
+import { DJ_DAY_RATE, DJ_NIGHT_RATE, DJ_DELIVERY_KR } from "@/lib/dj";
 /**
  * Priser i sidetekst må ikke sige noget andet end kataloget.
  *
@@ -53,7 +53,7 @@ const PRIS = /(\d{1,3}(?:[.,]\d{3})*)\s*(?:kr|DKK)/gi;
 const tal = (s: string) => Number(s.replace(/[.,]/g, ""));
 
 function katalogBeloeb(): Set<number> {
-  const b = new Set<number>([DJ_DAY_RATE,DJ_NIGHT_RATE]);
+  const b = new Set<number>([DJ_DAY_RATE, DJ_NIGHT_RATE, DJ_DELIVERY_KR]);
   const add = (n: number) => b.add(n);
   for (const s of speakers) add(s.price);
   for (const a of addons) add(a.price);

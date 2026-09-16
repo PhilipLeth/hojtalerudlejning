@@ -27,6 +27,8 @@ const COPY = {
       imageNote: "Stemningsillustration",
       tipTitle: "Du vælger kostumet. Vi har grejet.",
       tip: "Vælg pakken, find din dato, og book online. Brug din egen playliste via Bluetooth.",
+      extras: "Enkeltprodukter",
+      extrasSub: "Røg og lys uden en hel pakke. Stroboskop er ikke i udlejning endnu. LED-effekten og discokuglen dækker det meste.",
     },
     en: {
       explore: "Find your Halloween package",
@@ -43,6 +45,8 @@ const COPY = {
       imageNote: "Atmosphere illustration",
       tipTitle: "Bring the costumes. We’ll bring the sound.",
       tip: "Choose your package, pick your dates and book online. Speaker packages connect via Bluetooth.",
+      extras: "Single products",
+      extrasSub: "Fog and lights without a full package. Strobe is not for hire yet. The LED effect and disco ball cover most parties.",
     },
   },
   julefrokost: {
@@ -61,6 +65,8 @@ const COPY = {
       imageNote: "Stemningsillustration",
       tipTitle: "Talen skal høres. Bagefter skal der danses.",
       tip: "Book online. Skriv i kommentaren hvis I vil have levering til kantinen.",
+      extras: "Enkeltprodukter",
+      extrasSub: "Lyskæder, uplights, mikrofon og lyseffekt, hvis pakken skal justeres.",
     },
     en: {
       explore: "Find the Christmas party package",
@@ -77,6 +83,8 @@ const COPY = {
       imageNote: "Atmosphere illustration",
       tipTitle: "The speech has to carry. Then people dance.",
       tip: "Book online. Add a note if you want delivery to the canteen.",
+      extras: "Single products",
+      extrasSub: "Fairy lights, uplights, a microphone and a light effect if you want to adjust the package.",
     },
   },
 } as const;
@@ -100,10 +108,19 @@ export default function SeasonCampaign({
   const season = seasonById(seasonId)!;
   const en = locale === "en";
   const c = COPY[seasonId][locale];
-  const { rentalProducts } = useProducts();
+  const { rentalProducts, addons, speakers } = useProducts();
   const packages = season.productIds
     .map((id) => rentalProducts.find((p) => p.id === id))
     .filter((p): p is NonNullable<typeof p> => !!p);
+  const extras = (season.extraIds ?? []).map((id) => {
+    const r = rentalProducts.find((p) => p.id === id);
+    if (r) return { id, name: en ? r.name_en : r.name_da, price: r.price, image: r.image, page: r.page };
+    const a = addons.find((p) => p.id === id);
+    if (a) return { id, name: en ? a.en.label : a.da.label, price: a.price, image: a.image, page: a.page };
+    const s = speakers.find((p) => p.id === id);
+    if (s) return { id, name: en ? s.en.name : s.da.name, price: s.price, image: s.product, page: s.page };
+    return null;
+  }).filter((p): p is NonNullable<typeof p> => !!p);
   const href = (p: string) => localizedHref(p, locale);
   const headingId = `${season.id}-title`;
   const packId = `${season.id}-pakker`;
@@ -163,10 +180,30 @@ export default function SeasonCampaign({
             })}
           </div>
           <p className={styles.note}>{c.note}</p>
+          {extras.length > 0 && (
+            <div className={styles.extras}>
+              <div className={styles.sectionHeading}>
+                <h2>{c.extras}</h2>
+                <p>{c.extrasSub}</p>
+              </div>
+              <div className={styles.extrasGrid}>
+                {extras.map((p) => (
+                  <article key={p.id} className={styles.extraCard}>
+                    <Link href={p.page ? href(p.page) : bookHref(p.id, locale)} className={styles.extraImg}>
+                      {p.image ? <img src={p.image} srcSet={thumbSrcSet(p.image)} sizes="160px" alt="" width={400} height={400} loading="lazy" /> : null}
+                    </Link>
+                    <h3>{p.name}</h3>
+                    <strong>{p.price.toLocaleString("da-DK")} {c.currency}</strong>
+                    <Link href={bookHref(p.id, locale)} className={styles.extraBook}>{c.book}</Link>
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
           <div className={styles.outro}><h3>{c.tipTitle}</h3><p>{c.tip}</p></div>
         </section>
+        <Footer locale={locale} />
       </div>
-      <Footer locale={locale} />
     </>
   );
 }

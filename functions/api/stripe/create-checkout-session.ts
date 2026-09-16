@@ -4,6 +4,7 @@
  */
 import Stripe from "stripe";
 import { loadPriceTable, buildLineItems, type LineItemInput } from "../_lib/pricing";
+import { dateFromDay } from "../../../src/lib/dj";
 import { resolveDiscountFor, discountOre } from "../_lib/discounts";
 
 interface Env {
@@ -80,7 +81,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   let lineItems, totalOre;
   try {
     const table = await loadPriceTable(context.env.BOOKINGS);
-    ({ lineItems, totalOre } = buildLineItems(table, body.items));
+    ({ lineItems, totalOre } = buildLineItems(table, body.items, dateFromDay(body.pickupDay, body.pickup)));
   } catch (e) {
     return json({ error: e instanceof Error ? e.message : "Invalid items" }, 400);
   }

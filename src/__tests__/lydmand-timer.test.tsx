@@ -35,7 +35,7 @@ const stripeKald = () =>
 
 /** Stor højtalerpakke (995 kr), datoer valgt, frem til tilvalgene — og lydmanden valgt til */
 async function medLydmand() {
-  window.history.pushState({}, "", "/?product=festival#book");
+  window.history.pushState({}, "", "/?product=festival");
   render(<BookingFlow />);
   await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
   vælgDatoer();

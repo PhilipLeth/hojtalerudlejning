@@ -97,7 +97,7 @@ export default function Page() {
             Fog machine <LivePrice productId="rog" prefix="from " suffix=" DKK" />
           </p>
           <a
-            href="/en?product=lys#book"
+            href="/en/book?product=lys"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book party lights now
@@ -134,6 +134,20 @@ export default function Page() {
               { id: "lyskaeder", href: "/lyskaeder" },
             ]}
           />
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/en/lys-ai"
+              className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
+            >
+              Try the lights in your venue
+            </Link>
+            <Link
+              href="/en/lyspakker"
+              className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
+            >
+              See all light packages, choose by the party
+            </Link>
+          </div>
         </section>
 
         {/* Upsell */}
@@ -182,7 +196,7 @@ export default function Page() {
             Book online in 2 minutes. Collect on Friday in Copenhagen S, return Monday.
           </p>
           <a
-            href="/en?product=lys#book"
+            href="/en/book?product=lys"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book party lights now

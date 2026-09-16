@@ -25,7 +25,7 @@ const COPY = {
 export interface CategoryItem {
   /** Produkt-id i kataloget (speaker, addon eller rentalProduct) */
   id: string;
-  /** Link, produktside hvis den findes, ellers /?product=ID#book */
+  /** Link, produktside hvis den findes, ellers /?product=ID */
   href?: string;
   tag?: string;
 }
@@ -39,7 +39,7 @@ export interface CategoryItem {
  */
 function enSti(sti: string | undefined, locale: Locale): string | undefined {
   if (!sti) return undefined;
-  if (sti.includes("#book") || sti.startsWith("/book")) return undefined;
+  if (sti.startsWith("/book") || sti.startsWith("/en/book")) return undefined;
   return localizedHref(sti, locale);
 }
 

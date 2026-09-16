@@ -86,7 +86,7 @@ export default function Page() {
             <LiveStartPrice prefix="from " suffix=" DKK" />, book online, pay when you collect.
           </p>
           <a
-            href="/en#book"
+            href="/en/book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book a speaker now
@@ -191,7 +191,7 @@ export default function Page() {
             <LiveStartPrice prefix="From " suffix=" DKK/weekend." />
           </p>
           <a
-            href="/en#book"
+            href="/en/book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book a speaker now

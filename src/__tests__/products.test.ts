@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { existsSync } from "node:fs";
 import { speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice, bundleIncludesDelivery, LYDMAND_PAKKER, KATEGORI_PAKKER, DELIVERY_ADDON_IDS } from "@/lib/products";
 import { stockItems } from "@/lib/stock";
 import { mergeAddonsForTest } from "@/lib/useProducts";
@@ -197,6 +198,8 @@ describe("Addons data", () => {
     expect(s55.contents).toContain("3-fod stativ");
     expect(s55.contents).not.toContain("Gulvstativ");
     expect(s55.desc_da).toContain("3-fod");
+    expect(s55.image).toBe("/images/product-skaerm-white.webp");
+    expect(existsSync("public/images/product-skaerm-white.webp")).toBe(true);
   });
 
   it("karaokepakkerne har stærke rabatter og korrekt sum af dele", () => {

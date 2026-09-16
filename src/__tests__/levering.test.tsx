@@ -24,7 +24,7 @@ afterEach(() => window.history.pushState({}, "", "/"));
  * noget andet end kørslen.
  */
 async function toAddonStep() {
-  window.history.pushState({}, "", "/?product=festival#book");
+  window.history.pushState({}, "", "/?product=festival");
   render(<BookingFlow />);
   await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
 
