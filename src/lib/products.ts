@@ -622,6 +622,22 @@ export const rentalProducts: RentalProduct[] = [
       ],
     },
   },
+  {
+    id: "jul_hygge", page: "/julehyggen", category: "lyd", price: 695,
+    image: "/images/product-jul-hygge.webp",
+    name_da: "Julehyggen", name_en: "Christmas Hygge",
+    desc_da: "Kompakt julefrokost til kontoret: Mackie Thump GO, varm lyskæde og en LED-lyseffekt. Bluetooth, ingen røg.",
+    desc_en: "A compact Christmas lunch for the office: Mackie Thump GO, warm fairy lights and an LED effect. Bluetooth, no fog.",
+    contents: ['Mackie Thump GO 8"', "Lyskæde varm hvid", "1 LED-lyseffekt uden stativ", "Oplader", "Bluetooth", "Strømkabler"],
+    allowedAddons: ["mikrofon", ...DELIVERY_ADDON_IDS],
+    bundle: { discount: 90, usecase_da: "Kontorets julehygge uden dansegulv", usecase_en: "Office Christmas hygge, no dance floor",
+      parts: [
+        { productId: "thumpgo", label_da: "Mackie Thump GO", label_en: "Mackie Thump GO", price: 395 },
+        { productId: "lyskaeder", label_da: "Lyskæde varm hvid", label_en: "Fairy lights warm white", price: 195 },
+        { productId: "lyseffekt", label_da: "LED-lyseffekt", label_en: "LED light effect", price: 195 },
+      ],
+    },
+  },
   // ── Pakker med lydmand (11. sept 2026) ──
   // AV-tekniker med på dagen. Levering, opsætning og afhentning er ALTID med:
   // lydmanden kommer sammen med grejet, sætter op og tager det med hjem igen.
@@ -1399,7 +1415,6 @@ export const NAV_CATEGORIES: NavCategory[] = [
       { href: "/bryllup", label: "Bryllup", label_en: "Weddings" },
       { href: "/konfirmation", label: "Konfirmation", label_en: "Confirmations" },
       { href: "/foedselsdag", label: "Fødselsdag", label_en: "Birthdays" },
-      { href: "/julefrokost", label: "Julefrokost & firmafest", label_en: "Christmas & company parties" },
       { href: "/havefest", label: "Havefest", label_en: "Garden parties" },
       { href: "/studenterkoersel", label: "Studenterkørsel", label_en: "Graduation trucks" },
     ],
@@ -1434,6 +1449,7 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
     "halloween_lys",
     "halloween_lille",
     "halloween_stor",
+    "jul_hygge",
     "pakke_fest_lille",
     "pakke_fest_stor",
     "pakke_fest_150",
@@ -1466,7 +1482,7 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
 };
 
 /** Lejlighedspakkerne, vises under stigen på /lej-hojtaler */
-export const LYD_LEJLIGHEDSPAKKER = ["halloween_lys", "halloween_lille", "halloween_stor", "pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys", "pakke_ungdomsfest", "pakke_ungdomsfest_stor"];
+export const LYD_LEJLIGHEDSPAKKER = ["halloween_lys", "halloween_lille", "halloween_stor", "jul_hygge", "pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys", "pakke_ungdomsfest", "pakke_ungdomsfest_stor"];
 
 /** Pakkerne med lydmand, vises samlet på /lej-hojtaler. Kørslen er med i alle tre. */
 export const LYDMAND_PAKKER = ["pakke_lydmand_fest", "pakke_lydmand_firma", "pakke_lydmand_stor"];
@@ -1519,7 +1535,6 @@ export interface LadderStep {
  */
 export const OCCASION_PACKAGES: Record<string, string> = {
   bryllup: "pakke_bryllup",
-  julefrokost: "pakke_firmafest",
   havefest: "pakke_udendors",
   polterabend: "pakke_udendors",
   studenterkoersel: "pakke_student",

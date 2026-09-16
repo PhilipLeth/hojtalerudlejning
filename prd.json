@@ -3839,12 +3839,29 @@
     "booking": "Rigtige katalogprodukter. useProducts læser adminpriser. Serverpriser og lager bruger de eksisterende katalog- og bundle-funktioner. Bookinglinks bevarer locale.",
     "indhold": "Kabler og røgvæske inkluderet; pynt/græskar ikke inkluderet. Røg skal aftales med feststedet. Levering kan tilvælges.",
     "sider": [
+      "/halloween",
       "/halloween-lys",
       "/halloween-festpakke",
       "/halloween-festpakke-stor"
     ],
-    "sprog": "Alle tre sider findes også under /en med gensidig hreflang.",
-    "saeson": "Forsidens kampagne er aktiv indtil den erstattes; ingen automatisk udløbsdato på pakkerne."
+    "sprog": "Hub og alle tre pakkesider findes også under /en med gensidig hreflang.",
+    "saeson": "Ikke længere forsidens erstatning. Halloween er en SEASONS-kampagne (09-01–11-02) med hub /halloween, link i topmenu og kort på forsiden. Heksetimen, Monsterfesten og Midnatsklubben er de tre Halloween-specifikke pakker."
+  },
+  "saesonkampagner_2026_09_16": {
+    "beslutning": "Sæsoner er et lille register i src/lib/seasons.ts, ikke en erstatning af forsiden. Aktivt interval MM-DD styrer topmenu, burgermenu og SeasonalStrip. Siderne ligger året rundt, så gamle bookinger og links virker.",
+    "halloween": {
+      "hub": "/halloween",
+      "pakker": ["halloween_lys Heksetimen 895", "halloween_lille Monsterfesten 1495", "halloween_stor Midnatsklubben 1995"],
+      "vindue": "09-01 til 11-02"
+    },
+    "julefrokost": {
+      "hub": "/julefrokost",
+      "pakker": ["jul_hygge Julehyggen 695 (kontor, ingen røg)", "pakke_firmafest Firmafestpakke 2645 (tale + dansegulv)", "event_fredagsbar_2 Fredagsbar med dansegulv 2070"],
+      "vindue": "09-15 til 12-23",
+      "ny_pakke": "Julehyggen: thumpgo + lyskaeder + lyseffekt, page /julehyggen. Kun på /lej-hojtaler i KATEGORI_PAKKER."
+    },
+    "anledningskort": "Shop efter anledning bruger scener (situation-*.webp), ikke produktfotos. Messe, reception og koncert beholder rigtige eventfotos.",
+    "ny_saeson": "Tilføj objekt i SEASONS, hub DA+EN, COPY i SeasonCampaign, evt. tema i HalloweenHome.module.css."
   },
   "pakkepris_gennemgang_2026_09_14": {
     "godkendt": "Brugeren godkendte alle foreslåede prisrettelser.",

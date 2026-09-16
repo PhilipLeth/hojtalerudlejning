@@ -416,6 +416,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/en/halloween</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en/halloween-festpakke</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -467,6 +472,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en/julefrokost</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/julehyggen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -871,6 +881,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/halloween</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/halloween-festpakke</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -922,6 +937,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/julefrokost</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/julehyggen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

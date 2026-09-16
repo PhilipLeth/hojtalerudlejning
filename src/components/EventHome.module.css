@@ -9,4 +9,14 @@
 .caseCard p{padding:0 16px;color:var(--muted);font-size:15px}
 .caseCard strong{display:block;padding:16px;color:var(--blue)}
 @media(max-width:800px){.caseGallery{grid-template-columns:1fr}}
+.seasonStrip{max-width:1216px;margin:8px auto 0;padding:0 24px 8px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.seasonCard{display:grid;grid-template-columns:140px 1fr;overflow:hidden;border-radius:8px;border:1px solid #dce4ef;background:#fff;color:var(--ink);min-height:120px}
+.seasonCard:hover{border-color:var(--season-accent,#1249cf)}
+.seasonCard img{width:140px;height:100%;object-fit:cover}
+.seasonCard>div{padding:16px 18px}
+.seasonCard p{font-size:12px;color:var(--season-accent,#1249cf);font-weight:600;margin-bottom:6px}
+.seasonCard h2{font-size:22px;margin:0 0 6px}
+.seasonCard span{display:block;font-size:14px;color:var(--muted)}
+.seasonCard strong{display:block;margin-top:10px;color:var(--season-accent,#1249cf);font-size:14px}
+@media(max-width:800px){.seasonStrip{grid-template-columns:1fr;padding:0 20px}}
 

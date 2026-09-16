@@ -79,3 +79,12 @@
 @media (prefers-reduced-motion: reduce) {
   .campaign { scroll-behavior: auto; }
 }
+.campaign[data-theme="jul"] { --pumpkin: #d4a017; --paper: #f7efe3; --violet: #e0c49a; background: #140e0c; color: var(--paper); }
+.campaign[data-theme="jul"] .shade { background: linear-gradient(90deg, #140e0c 0%, #140e0ccc 30%, #140e0c00 72%), linear-gradient(0deg, #140e0c 0%, transparent 28%); }
+.campaign[data-theme="jul"] .promises { background: #1c1310; border-block-color: #d4a01728; }
+.campaign[data-theme="jul"] .card { background: #1f1512; border-color: #d4a01740; }
+.campaign[data-theme="jul"] .cardTop { background: #2a1b16; color: #f0d9b8; }
+.campaign[data-theme="jul"] .featured { border-color: var(--pumpkin); }
+.campaign[data-theme="jul"] .featured .cardTop { background: var(--pumpkin); color: #1a100c; }
+.campaign[data-theme="jul"] .equipment { background: #100b09; }
+.campaign[data-theme="jul"] .book:hover { background: #3a241c; }

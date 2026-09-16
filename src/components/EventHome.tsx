@@ -3,6 +3,7 @@ import GoogleReviews from "./GoogleReviews";
 import SituationDirectory from "./SituationDirectory";
 import EventHeroGallery from "./EventHeroGallery";
 import ShopPackagePicker from "./ShopPackagePicker";
+import SeasonalStrip from "./SeasonalStrip";
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
 import { localizedHref } from "@/lib/enPages";
@@ -128,6 +129,7 @@ export default function EventHome({locale = "da", detail = false, cases = false}
       <span>{en ? "Soundcheck & handover" : "Lydprøve & gennemgang"}</span>
       <span>{en ? "Technician if you add it" : "Tekniker, hvis I tilvælger det"}</span>
     </div>
+    <SeasonalStrip locale={locale} />
     <GoogleReviews locale={locale} />
     <ShopPackagePicker locale={locale} />
     <section className={styles.equipment}>

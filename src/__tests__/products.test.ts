@@ -245,6 +245,13 @@ describe("Addons data", () => {
     }
   });
 
+  it("Julehyggen koster 695 kr med Thump GO, lyskæde og lyseffekt", () => {
+    const p = rentalProducts.find((x) => x.id === "jul_hygge")!;
+    expect(p.price).toBe(695);
+    expect(p.page).toBe("/julehyggen");
+    expect(p.bundle!.parts.map((x) => x.productId)).toEqual(["thumpgo", "lyskaeder", "lyseffekt"]);
+  });
+
   it("DJ-hovedtelefoner koster 100 kr og følger med pulten", () => {
     const hp = rentalProducts.find((p) => p.id === "dj_headphones")!;
     const pult = rentalProducts.find((p) => p.id === "dj_pult")!;

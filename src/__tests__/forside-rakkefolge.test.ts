@@ -29,4 +29,7 @@ describe("AV-forsiden og eventløsningerne", () => {
    const source=fs.readFileSync(path,"utf8");expect(source).toContain("EventHome");expect(source).not.toContain("HalloweenHome");
   }
  });
+ it("forsiden linker til aktive sæsoner i stedet for at erstatte EventHome", () => {
+  expect(fs.readFileSync("src/components/EventHome.tsx","utf8")).toContain("SeasonalStrip");
+ });
 });

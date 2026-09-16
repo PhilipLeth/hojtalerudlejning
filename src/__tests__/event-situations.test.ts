@@ -26,6 +26,7 @@ describe("DJ-priser",()=>{
   for(const s of eventSituations){
    const src=s.image.startsWith("/")?`public${s.image}`:`public/images/events/${s.image}.webp`;
    expect(existsSync(src),src).toBe(true);
+   expect(s.image.startsWith("/images/product"), `${s.slug} bruger et produktfoto`).toBe(false);
   }
  });
 });

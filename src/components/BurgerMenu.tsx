@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_CATEGORIES } from "@/lib/products";
+import { activeSeasons } from "@/lib/seasons";
 import PhoneLink from "@/components/PhoneLink";
 import { danskSti, hasEnglish, localizedHref } from "@/lib/enPages";
 
@@ -145,6 +146,9 @@ export default function BurgerMenu() {
           </Link>
 
           <div className="mb-5 flex flex-col gap-3 text-lg font-semibold text-brand-500">
+            {activeSeasons().map((s) => (
+              <Link key={s.id} href={nav(s.href)} onClick={() => setOpen(false)} style={{color: s.accent}}>{locale === "en" ? s.navEn : s.navDa}</Link>
+            ))}
             <Link href={localizedHref("/dj-pult", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "DJ equipment" : "DJ-pult & pakker"}</Link>
             <Link href={localizedHref("/dj", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "Hire a DJ" : "Lej en DJ"}</Link>
             <Link href={localizedHref("/eventloesninger", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "Event solutions" : "Eventløsninger"}</Link>

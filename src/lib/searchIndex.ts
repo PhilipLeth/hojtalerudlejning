@@ -161,6 +161,8 @@ export const EKSTRA_SIDER: Array<[string, string, string]> = [
   ["/lydanlaeg", "Lydanlæg efter antal gæster", "anlæg gæster pakke"],
   ["/kobenhavn", "Højtalerudlejning i København", "billig udlejning københavn"],
   ["/erhverv", "Erhverv og firmaevents", "firma konference event tilbud"],
+  ["/halloween", "Halloween-pakker", "halloween heksetimen monsterfesten midnatsklubben"],
+  ["/julefrokost", "Lyd til julefrokost", "julefrokost firmafest fredagsbar december hygge"],
 ];
 
 /**
