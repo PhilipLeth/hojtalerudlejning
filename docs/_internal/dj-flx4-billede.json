@@ -1,0 +1,7 @@
+{
+  "tool": "image_gen",
+  "prompt": "Create a photorealistic square catalogue product photograph on seamless pure white #ffffff with a subtle contact shadow. Use the attached manufacturer's exact Pioneer DJ DDJ-FLX4 controller as reference, preserve its correct compact 2-channel shape, two jog wheels, orange-lit performance pads and actual control layout and markings. Show this exact controller fitted neatly into the bottom of an open black protective flight case with silver aluminium edges, foam lining and realistic latches. Behind the controller, an iPad in landscape orientation is secured on a compact raised support integrated with the flight case, displaying a subtle generic two-deck music app without legible copy. Lid removed and not shown. No laptop, no separate DJ table/booth/furniture, no headphones, no speaker, no people, no extra gear, no text banners. Camera three-quarter view slightly above, natural studio light, authentic equipment rental shop, all edges of entire portable setup visible with generous white margins. The flightcase is compact, not oversized. High fidelity to reference controller.",
+  "reference": "https://www.pioneerdj.com/product-images/557/7d1a9b8f-5d35-4ab0-9b49-1e7d0d98007d/ddj-flx4_2.png",
+  "output": "public/images/product-dj-flx4-white.webp",
+  "thumbnail": "public/images/product-dj-flx4-white-400.webp"
+}

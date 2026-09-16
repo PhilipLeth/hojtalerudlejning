@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Graduation Package | Soundboks, extra battery and bag | 945 DKK | Lejhøjtaler.dk",
   description:
-    "Graduation package: Soundboks 4, extra battery and padded carry bag for 945 DKK — save 90 DKK. Plays through the whole graduation truck ride without power. Rent in Copenhagen.",
+    "Graduation package: Soundboks 4, extra battery and padded carry bag for 945 DKK, save 90 DKK. Plays through the whole graduation truck ride without power. Rent in Copenhagen.",
   keywords: ["graduation truck speaker rental", "soundboks for graduation ride copenhagen", "student party speaker hire", "music for graduation truck"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/studenterpakke",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Graduation package | Soundboks, extra battery and bag | 945 DKK",
-    description: "Soundboks 4, extra battery and padded carry bag. No power on the truck — save 90 DKK.",
+    description: "Soundboks 4, extra battery and padded carry bag. No power on the truck, save 90 DKK.",
     url: "https://lejhojtaler.dk/en/studenterpakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,18 +29,18 @@ export default function Page() {
       slug="en/studenterpakke"
       name="Graduation package"
       price={945}
-      headline="The graduation package — plays through the whole truck ride"
-      sub="Soundboks 4, extra battery and padded carry bag. No power on the truck — save 90 DKK."
+      headline="The graduation package, plays through the whole truck ride"
+      sub="Soundboks 4, extra battery and padded carry bag. No power on the truck, save 90 DKK."
       image="/images/product-soundboks-v2-white.webp"
       imageAlt="Graduation package with Soundboks 4, extra battery and carry bag"
       productId="pakke_student"
       faqPhrase="the graduation package"
       capacity={{ level: 2, label: "up to 50 people" }}
       bullets={[
-        "Soundboks 4 — the one that can be heard over the engine",
+        "Soundboks 4, the one that can be heard over the engine",
         "Extra battery, so it lasts from morning to the last address",
         "Padded carry bag: the system is lifted on and off all day",
-        "Bluetooth — everyone can change the track from their phone",
+        "Bluetooth, everyone can change the track from their phone",
         "Save 90 DKK compared to renting the parts separately",
       ]}
     >

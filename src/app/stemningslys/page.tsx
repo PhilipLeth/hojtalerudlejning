@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.045 kr | Lejhøjtaler.dk",
   description:
-    "Stemningslys-pakken: 4 LED uplights, 10 m lyskæde og discokugle for 1.045 kr — spar 140 kr. Lys der laver et lejet lokale om. Lejes i København.",
+    "Stemningslys-pakken: 4 LED uplights, 10 m lyskæde og discokugle for 1.045 kr, spar 140 kr. Lys der laver et lejet lokale om. Lejes i København.",
   keywords: ["lej festlys", "uplights leje", "diskolys til fest", "lys til lokale leje", "lyskæder og discokugle"],
   alternates: {
     canonical: "https://lejhojtaler.dk/stemningslys",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.045 kr | Lejhøjtaler.dk",
-    description: "4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet — spar 140 kr.",
+    description: "4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet, spar 140 kr.",
     url: "https://lejhojtaler.dk/stemningslys",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,15 +28,15 @@ export default function StemningslysPage() {
       slug="stemningslys"
       name="Stemningslys-pakken"
       price={1045}
-      headline="Stemningslys-pakken — lys uden lyd"
-      sub="4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet — spar 140 kr."
+      headline="Stemningslys-pakken, lys uden lyd"
+      sub="4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet, spar 140 kr."
       image="/images/product-pakke-stemningslys-taendt-v3-white.webp"
       imageAlt="Stemningslys-pakken med uplights, lyskæde og discokugle"
       productId="pakke_stemningslys"
       faqPhrase="stemningslys-pakken"
       capacity={{ level: 2, label: "et helt lokale" }}
       bullets={[
-        "4× LED uplight — vasker vægge og hjørner i farvet lys",
+        "4× LED uplight, vasker vægge og hjørner i farvet lys",
         "10 m lyskæde til loft, telt eller bardisk",
         "Discokugle med motor og spot til dansegulvet",
         "Plug and play: alt kører på almindelig strøm, ingen DMX-styring",
@@ -47,7 +47,7 @@ export default function StemningslysPage() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Har I allerede lyd?</h2>
           <p className="mb-6 text-white/50">
-            Så er det her pakken der mangler. Et lejet lokale med lysstofrør i loftet ligner en kantine indtil lyset bliver skiftet ud — fire uplights langs væggene er den billigste forandring der findes.
+            Så er det her pakken der mangler. Et lejet lokale med lysstofrør i loftet ligner en kantine indtil lyset bliver skiftet ud, fire uplights langs væggene er den billigste forandring der findes.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link

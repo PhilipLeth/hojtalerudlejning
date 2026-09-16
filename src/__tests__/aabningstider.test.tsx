@@ -604,7 +604,7 @@ describe("Checkout", () => {
     expect(knap).toBeTruthy();
     expect(knap.textContent?.trim()).toBe(String(Number(dato.slice(8, 10))));
     expect(knap).not.toBeDisabled();
-    expect(knap.getAttribute("title")).toMatch(/14–18 \(afhentning\) — Nytår/);
+    expect(knap.getAttribute("title")).toMatch(/14–18 \(afhentning\), Nytår/);
   });
 
   it("spærrer lukkede dage når admin har slået 'kun åbne dage' til", async () => {

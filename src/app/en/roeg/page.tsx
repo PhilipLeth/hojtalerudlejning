@@ -72,7 +72,7 @@ export default function Page() {
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             A classic fog machine that fills the room and makes the light show ten
-            times better. Fluid and remote included — ready in 5 minutes.
+            times better. Fluid and remote included, ready in 5 minutes.
           </p>
           <a
             href="#products"
@@ -89,7 +89,7 @@ export default function Page() {
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
             The classic fog machine fills the room and makes the light show ten
             times better. The low fog machine lays a carpet of fog along the floor
-            — the &quot;dancing on clouds&quot; effect from weddings and music videos.
+           , the &quot;dancing on clouds&quot; effect from weddings and music videos.
           </p>
 
           <CategoryProductGrid

@@ -50,7 +50,7 @@ describe("Topbåndet", () => {
     mockSvar({ rating: null, total: 0, url: null, reviews: [], fetchedAt: "" });
     render(<TopBar />);
 
-    await waitFor(() => expect(screen.getAllByText(/Ring og vend jeres arrangement/)[0]).toBeInTheDocument());
+    await waitFor(() => expect(screen.getAllByText(/Book online med priser inklusive moms/)[0]).toBeInTheDocument());
     expect(screen.queryByText(/på Google/)).not.toBeInTheDocument();
   });
 

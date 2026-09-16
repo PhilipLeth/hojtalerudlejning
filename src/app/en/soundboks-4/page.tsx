@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Rent a Soundboks in Copenhagen | Soundboks 4, 795 DKK/weekend | Lejhøjtaler.dk",
   description:
-    "Rent a Soundboks in Copenhagen — Soundboks 4 from 795 DKK for a whole weekend. Battery-powered with heavy bass, no deposit. Pick up Friday, return Monday.",
+    "Rent a Soundboks in Copenhagen, Soundboks 4 from 795 DKK for a whole weekend. Battery-powered with heavy bass, no deposit. Pick up Friday, return Monday.",
   keywords: [
     "rent soundboks copenhagen",
     "soundboks rental",
@@ -38,7 +38,7 @@ export default function Soundboks4En() {
       name="Soundboks 4"
       price={795}
       headline="Rent a Soundboks in Copenhagen"
-      sub="Soundboks 4 — battery-powered with heavy bass, no power outlet needed. No deposit: you only pay when you pick it up."
+      sub="Soundboks 4, battery-powered with heavy bass, no power outlet needed. No deposit: you only pay when you pick it up."
       weekendAvailability
       image="/images/product-soundboks-v2-white.webp"
       imageAlt="Soundboks 4 for rent in Copenhagen"
@@ -47,19 +47,19 @@ export default function Soundboks4En() {
       faqExtra={[
         {
           q: "Do I have to pay a deposit to rent a Soundboks?",
-          a: "No. We charge neither deposit nor bond — you only pay the rent. You are liable for the equipment from pickup to return, but nothing is held up front.",
+          a: "No. We charge neither deposit nor bond, you only pay the rent. You are liable for the equipment from pickup to return, but nothing is held up front.",
         },
         {
           q: "How long does the battery last on a Soundboks 4?",
-          a: "Expect up to 12 hours of playtime at party volume — plenty for a full evening with no power outlet. The charger is included, so on a weekend rental you can recharge for the next day.",
+          a: "Expect up to 12 hours of playtime at party volume, plenty for a full evening with no power outlet. The charger is included, so on a weekend rental you can recharge for the next day.",
         },
         {
           q: "Is a Soundboks loud enough for my party?",
-          a: "Yes — the Soundboks 4 covers up to 50 people, outdoors too. For bigger crowds or more low end, look at the large speaker package with subwoofer. And if you play outdoors at night, be kind to the neighbours — you are the host.",
+          a: "Yes, the Soundboks 4 covers up to 50 people, outdoors too. For bigger crowds or more low end, look at the large speaker package with subwoofer. And if you play outdoors at night, be kind to the neighbours, you are the host.",
         },
       ]}
       bullets={[
-        "Battery-powered — take it anywhere",
+        "Battery-powered, take it anywhere",
         "Heavy bass for outdoor parties",
         "Bluetooth + AUX",
         "Charger and cables included",

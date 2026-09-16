@@ -10,12 +10,12 @@ import { AV_PAKKER } from "@/lib/products";
 import { LocationKicker } from "@/components/PhoneLink";
 
 /**
- * /av-udstyr — hele mødet: billede, lyd og mikrofon.
+ * /av-udstyr, hele mødet: billede, lyd og mikrofon.
  *
  * Projektor, skærm og lærred var på pause fra august til 8. september 2026 og
  * er i udlejning igen. Siden viser begge halvdele: billedet først, fordi det er
  * dét folk søger på ("lej storskærm" alene er ~350 visninger om måneden), og
- * lyden lige efter — et møde uden lyd er lige så ubrugeligt som et uden billede.
+ * lyden lige efter, et møde uden lyd er lige så ubrugeligt som et uden billede.
  */
 export const metadata: Metadata = {
   title: "Lej AV-udstyr København | Projektor, storskærm og mikrofon | Lejhøjtaler.dk",
@@ -90,7 +90,7 @@ export default function AVUdstyrPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Projektor, storskærm og lærred til billedet — mikrofon og højtalere
+            Projektor, storskærm og lærred til billedet, mikrofon og højtalere
             til lyden. Alt til mødet, konferencen og filmaftenen.
           </p>
           <a
@@ -103,14 +103,14 @@ export default function AVUdstyrPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        {/* Pakkerne først. Siden havde før hverken pakker eller produktlinks —
+        {/* Pakkerne først. Siden havde før hverken pakker eller produktlinks
             alt AV-udstyr kunne kun findes gennem menuen, og da menuen blev
             kortet ned, ville det have været usynligt. */}
         <BundleGrid
           ids={AV_PAKKER}
           eyebrow="AV-pakke"
           title="Færdig opsætning"
-          subtitle="Højtalere og trådløs mikrofon sat sammen til talen — billigere end delene hver for sig."
+          subtitle="Højtalere og trådløs mikrofon sat sammen til talen, billigere end delene hver for sig."
         />
 
         {/* Højtalere hørte ikke til her før, og det var forkert: et møde
@@ -119,7 +119,7 @@ export default function AVUdstyrPage() {
         <section className="mx-auto max-w-6xl px-4 pb-16">
           <h2 className="mb-2 text-center text-3xl font-bold">Lyd til mødet</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Et lokale med mere end tyve mennesker kræver forstærkning — en stemme
+            Et lokale med mere end tyve mennesker kræver forstærkning, en stemme
             rækker ikke bagest i salen. Speakerpakken er højtaler og mikrofon i ét.
           </p>
           <CategoryProductGrid
@@ -140,7 +140,7 @@ export default function AVUdstyrPage() {
             </a>
           </div>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Alle går direkte i højtaleren — der skal ikke en mixer imellem.
+            Alle går direkte i højtaleren, der skal ikke en mixer imellem.
           </p>
           <CategoryProductGrid
             items={[
@@ -157,7 +157,7 @@ export default function AVUdstyrPage() {
         <section id="billede" className="mx-auto max-w-6xl px-4 pb-16">
           <h2 className="mb-2 text-center text-3xl font-bold">Billede</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Skærmen er den nemme løsning — den skal bare have strøm og et HDMI-kabel,
+            Skærmen er den nemme løsning, den skal bare have strøm og et HDMI-kabel,
             og den virker i fuldt dagslys. Projektor og lærred giver et større
             billede, men vil helst have mørke.
           </p>

@@ -37,7 +37,7 @@ export default function LivePrice({
   );
 }
 
-/** "fra 395 kr" — billigste højtaler i kataloget, live. Brug den i stedet for et tal. */
+/** "fra 395 kr", billigste højtaler i kataloget, live. Brug den i stedet for et tal. */
 export function LiveStartPrice({
   prefix = "fra ",
   suffix = " kr",

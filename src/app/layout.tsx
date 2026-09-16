@@ -17,7 +17,7 @@ const GA_ID = "G-QDXW7S53GF";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lejhojtaler.dk"),
-  // Hjemmeskærms-appen — se /admin/notifikationer. iOS henter ikonet herfra,
+  // Hjemmeskærms-appen, se /admin/notifikationer. iOS henter ikonet herfra,
   // når siden lægges på hjemmeskærmen.
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "Lejhøjtaler", statusBarStyle: "black-translucent" },
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   title: `Lej Højtaler København | Fra ${startPrisKr()}/weekend | Lejhøjtaler.dk`,
   description:
-    `Lej højtaler i København fra ${startPrisKr()}/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje — hent fredag, aflever mandag. Book online på 2 min.`,
+    `Lej højtaler i København fra ${startPrisKr()}/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje, hent fredag, aflever mandag. Book online på 2 min.`,
   keywords: [
     "lej højtaler københavn",
     "højtalerudlejning københavn",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Lej Højtaler København | Fra ${startPrisKr()}/weekend | Lejhøjtaler.dk`,
     description:
-      `Lej højtaler og PA-anlæg til din fest i København. Lydudstyr udlejning fra ${startPrisKr()}/weekend. Festudstyr til leje — book online på 2 minutter.`,
+      `Lej højtaler og PA-anlæg til din fest i København. Lydudstyr udlejning fra ${startPrisKr()}/weekend. Festudstyr til leje, book online på 2 minutter.`,
     url: "https://lejhojtaler.dk",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   },
   // Bemærk: en side der sætter sin egen alternates.canonical erstatter HELE
   // dette objekt og taber languages. Sider med en engelsk tvilling skal derfor
-  // sætte begge — se localeAlternates i src/lib/hreflang.ts.
+  // sætte begge, se localeAlternates i src/lib/hreflang.ts.
   alternates: {
     canonical: "https://lejhojtaler.dk",
     languages: localeAlternates("/"),
@@ -68,7 +68,7 @@ export default function RootLayout({
     <html lang="da">
       <head>
         {/* The hero is the LCP element on the front page, every product page
-            and every occasion page, but it is applied as a CSS background — so
+            and every occasion page, but it is applied as a CSS background, so
             the browser only discovers it after the stylesheet has parsed and
             laid out. Preloading moves that discovery to the first bytes of the
             document. */}
@@ -84,7 +84,7 @@ export default function RootLayout({
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
         />
-        {/* Samme gtag.js betjener flere destinationer — script-URL'en skal blot
+        {/* Samme gtag.js betjener flere destinationer, script-URL'en skal blot
             bære ét af id'erne. Uden config-linjen for AW-id'et bliver
             conversion-eventet i trackPurchase tavst kasseret. */}
         <Script id="gtag-init" strategy="afterInteractive">{`
@@ -111,7 +111,7 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        {/* Fanger fejl hos kunderne — de skriver dem ikke til os selv */}
+        {/* Fanger fejl hos kunderne, de skriver dem ikke til os selv */}
         <Fejlopsamling />
         <TopBar />
         <BurgerMenu />

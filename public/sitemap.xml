@@ -111,6 +111,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/dj-pult</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/ekstra-batteri</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -227,6 +232,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en/dj</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/dj-pult</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

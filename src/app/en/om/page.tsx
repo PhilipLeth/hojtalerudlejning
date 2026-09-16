@@ -132,7 +132,7 @@ export default function AboutPageEn() {
               <div className="space-y-4 text-sm leading-relaxed text-white/70">
                 <p>
                   We&rsquo;ve deliberately cut away everything unnecessary. No
-                  long contracts. No hidden fees — you pay at pickup. You book online in
+                  long contracts. No hidden fees, you pay at pickup. You book online in
                   three minutes, show up in Copenhagen S, pay when you pick up
                   &ndash; and you&rsquo;re good to go.
                 </p>

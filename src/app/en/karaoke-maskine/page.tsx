@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Karaoke Machine Rental Copenhagen | 695 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a Singing Machine karaoke machine in Copenhagen for 695 DKK. Built-in screen, two wireless microphones and party lights — connect your TV via HDMI.",
+    "Rent a Singing Machine karaoke machine in Copenhagen for 695 DKK. Built-in screen, two wireless microphones and party lights, connect your TV via HDMI.",
   keywords: ["karaoke machine rental copenhagen", "karaoke hire denmark", "singing machine rental"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/karaoke-maskine",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Karaoke machine rental Copenhagen | 695 DKK",
-    description: "Singing Machine with built-in screen, 2 wireless microphones and party lights — connect a TV via HDMI.",
+    description: "Singing Machine with built-in screen, 2 wireless microphones and party lights, connect a TV via HDMI.",
     url: "https://lejhojtaler.dk/en/karaoke-maskine",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,7 +29,7 @@ export default function Page() {
       name="Karaoke machine"
       price={695}
       headline="Rent a karaoke machine in Copenhagen"
-      sub="Singing Machine with built-in screen, 2 wireless microphones and party lights — connect a TV via HDMI."
+      sub="Singing Machine with built-in screen, 2 wireless microphones and party lights, connect a TV via HDMI."
       image="/images/product-karaoke-v2-white.webp"
       imageAlt="Singing Machine karaoke machine with two wireless microphones for rent"
       productId="karaoke"
@@ -40,7 +40,7 @@ export default function Page() {
         "Party lights in the speaker",
         "HDMI to TV/projector + Bluetooth",
         "Ready in 5 minutes",
-        "Cheapest in the Karaoke bundle — save 385 DKK",
+        "Cheapest in the Karaoke bundle, save 385 DKK",
       ]}
     />
   );

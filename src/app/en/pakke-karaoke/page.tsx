@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Karaoke Bundle Rental Copenhagen | 1,300 DKK | Lejhøjtaler.dk",
   description:
-    "Karaoke bundle with machine, 32\" screen and two speakers — karaoke for up to 40 people for 1,300 DKK. Save 385 DKK. Book online in Copenhagen.",
+    "Karaoke bundle with machine, 32\" screen and two speakers, karaoke for up to 40 people for 1,300 DKK. Save 385 DKK. Book online in Copenhagen.",
   keywords: ["karaoke package rental copenhagen", "karaoke with screen hire", "karaoke system rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/pakke-karaoke",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Karaoke bundle rental | 1,300 DKK",
-    description: "Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke — save 385 DKK.",
+    description: "Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke, save 385 DKK.",
     url: "https://lejhojtaler.dk/en/pakke-karaoke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -28,8 +28,8 @@ export default function Page() {
       slug="en/pakke-karaoke"
       name="Karaoke bundle"
       price={1300}
-      headline="The karaoke bundle — machine, screen and sound"
-      sub={"Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke — save 385 DKK."}
+      headline="The karaoke bundle, machine, screen and sound"
+      sub={"Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke, save 385 DKK."}
       image="/images/product-pakke-karaoke-v2-white.webp"
       imageAlt={"Karaoke bundle with machine, 32\" screen and speakers for rent"}
       productId="pakke_karaoke"

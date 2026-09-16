@@ -6,7 +6,7 @@ export interface FaqItem {
 }
 
 /**
- * Spørgsmål og svar — synligt på siden OG som FAQPage-markup.
+ * Spørgsmål og svar, synligt på siden OG som FAQPage-markup.
  *
  * Skrevet fordi de fandtes hver for sig: forsiden har sin egen FAQ i en
  * klientkomponent (FAQ.tsx), lejlighedssiderne havde en kopi inde i
@@ -21,9 +21,9 @@ export interface FaqItem {
  *
  * Bevidst <details> og ikke en useState-accordion: teksten står i den statiske
  * HTML og er læsbar uden JavaScript. Crawlere fra svarmaskinerne kører ikke
- * JavaScript — et svar der først findes efter hydrering, findes ikke.
+ * JavaScript, et svar der først findes efter hydrering, findes ikke.
  *
- * Én FAQPage pr. side. Har siden allerede en, skal den ikke også have denne —
+ * Én FAQPage pr. side. Har siden allerede en, skal den ikke også have denne
  * se faq-markup.test.ts, der fejler ved dubletter.
  */
 export default function FaqSection({

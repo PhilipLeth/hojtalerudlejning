@@ -7,7 +7,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Firmaevent med lydmand | Anlæg + mixer + mikrofon + tekniker | 6.195 kr | Lejhøjtaler.dk",
   description:
-    "Firmaevent med lydmand: stor højtalerpakke + t.mix 1202 FX USB-mixer + trådløs mikrofon + AV-tekniker i 4 timer. Leveret, sat op og hentet igen for 6.195 kr — spar 285 kr. Taler og musik til op til 100 personer.",
+    "Firmaevent med lydmand: stor højtalerpakke + t.mix 1202 FX USB-mixer + trådløs mikrofon + AV-tekniker i 4 timer. Leveret, sat op og hentet igen for 6.195 kr, spar 285 kr. Taler og musik til op til 100 personer.",
   keywords: ["lydmand firmafest", "lydanlæg med tekniker erhverv", "firmaevent lyd københavn", "mikrofon og tekniker til reception", "av-tekniker firmaevent"],
   alternates: {
     canonical: "https://lejhojtaler.dk/firmaevent-lydmand",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Firmaevent med lydmand | 6.195 kr",
-    description: "Stor højtalerpakke + mixer + trådløs mikrofon + lydmand i 4 timer. Leveret, sat op og hentet igen — spar 285 kr.",
+    description: "Stor højtalerpakke + mixer + trådløs mikrofon + lydmand i 4 timer. Leveret, sat op og hentet igen, spar 285 kr.",
     url: "https://lejhojtaler.dk/firmaevent-lydmand",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -31,7 +31,7 @@ export default function Page() {
       price={6195}
       priceUnit="/event"
       headline="Firmaevent med lydmand"
-      sub="Stor højtalerpakke + mixer + trådløs mikrofon + AV-tekniker i 4 timer. Taler, musik og én der passer det hele — spar 285 kr."
+      sub="Stor højtalerpakke + mixer + trådløs mikrofon + AV-tekniker i 4 timer. Taler, musik og én der passer det hele, spar 285 kr."
       image="/images/product-pakke-lydmand-firma-v2-white.webp"
       imageAlt="Firmaevent med lydmand: højtalere, mixer og mikrofon"
       productId="pakke_lydmand_firma"
@@ -41,7 +41,7 @@ export default function Page() {
       faqExtra={[
         {
           q: "Skal jeg selv hente noget?",
-          a: "Nej. Levering, opsætning og afhentning er med i prisen. Lydmanden kommer med grejet, sætter op og laver lydprøve, før gæsterne kommer — og tager det hele med hjem igen bagefter. Vi kører i hele København og omegn.",
+          a: "Nej. Levering, opsætning og afhentning er med i prisen. Lydmanden kommer med grejet, sætter op og laver lydprøve, før gæsterne kommer, og tager det hele med hjem igen bagefter. Vi kører i hele København og omegn.",
         },
         {
           q: "Kan vi få faktura med EAN-nummer?",
@@ -49,18 +49,18 @@ export default function Page() {
         },
         {
           q: "Kan lydmanden også køre en præsentation eller en skærm?",
-          a: "Han er AV-tekniker, så lyd til en præsentation, flere mikrofoner og musik mellem talerne er hverdag. Skærm og projektor udlejer vi ikke lige nu — skriv, hvis I har jeres eget, så sætter han det sammen med lyden.",
+          a: "Han er AV-tekniker, så lyd til en præsentation, flere mikrofoner og musik mellem talerne er hverdag. Skærm og projektor udlejer vi ikke lige nu, skriv, hvis I har jeres eget, så sætter han det sammen med lyden.",
         },
         {
           q: "Hvad hvis festen varer længere end 4 timer?",
-          a: "Så vælger du ekstra timer med lydmanden som tilvalg i bookingen — 1.000 kr pr. time. Skriv i kommentaren hvornår festen starter og slutter, så planlægger vi opsætningen efter det.",
+          a: "Så vælger du ekstra timer med lydmanden som tilvalg i bookingen, 1.000 kr pr. time. Skriv i kommentaren hvornår festen starter og slutter, så planlægger vi opsætningen efter det.",
         },
       ]}
       bullets={[
         "2× EV 12\" højtalere (op til 100 pers.)",
-        "t.mix 1202 FX USB-mixer med effekter — rumklang på talerne",
+        "t.mix 1202 FX USB-mixer med effekter, rumklang på talerne",
         "Trådløs håndholdt mikrofon til taler og præsentationer",
-        "Lydmand i 4 timer — mikrofonen virker, når direktøren rejser sig",
+        "Lydmand i 4 timer, mikrofonen virker, når direktøren rejser sig",
         "Levering, opsætning og afhentning er med",
         "Spar 285 kr vs. at leje delene enkeltvis",
       ]}

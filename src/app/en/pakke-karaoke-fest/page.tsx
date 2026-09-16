@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Karaoke Party Bundle Rental Copenhagen | 2,000 DKK | Lejhøjtaler.dk",
   description:
-    "Karaoke party bundle with machine, 55\" display and large speakers — karaoke for up to 100 guests for 2,000 DKK. Save 285 DKK. Book online.",
+    "Karaoke party bundle with machine, 55\" display and large speakers, karaoke for up to 100 guests for 2,000 DKK. Save 285 DKK. Book online.",
   keywords: ["large karaoke package rental", "karaoke system for party hire copenhagen", "karaoke company party rental"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/pakke-karaoke-fest",
@@ -28,7 +28,7 @@ export default function Page() {
       slug="en/pakke-karaoke-fest"
       name="Karaoke party bundle"
       price={2000}
-      headline="The karaoke party bundle — up to 100 people"
+      headline="The karaoke party bundle, up to 100 people"
       sub={"Karaoke machine + 55\" display + large speakers. Save 285 DKK."}
       image="/images/product-pakke-karaoke-fest-v2-white.webp"
       imageAlt="Large karaoke bundle with a large screen and speakers for rent"

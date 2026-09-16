@@ -9,7 +9,7 @@ import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
 /**
- * /lej-mikrofon — kategorisiden for mikrofoner.
+ * /lej-mikrofon, kategorisiden for mikrofoner.
  *
  * Navnet følger /lej-hojtaler, fordi det er sådan folk søger: "lej mikrofon",
  * ikke "mikrofoner". Mikrofonerne lå før kun spredt på /av-udstyr sammen med
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Mikrofon København | Fra 95 kr | Lejhøjtaler.dk",
     description:
-      "Trådløs, headset og håndholdt. Passer direkte i vores højtalere — ingen mixer nødvendig.",
+      "Trådløs, headset og håndholdt. Passer direkte i vores højtalere, ingen mixer nødvendig.",
     url: "https://lejhojtaler.dk/lej-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -58,22 +58,22 @@ export default function LejMikrofonPage() {
     {
       titel: "Til taler ved middagen",
       svar: "Håndholdt trådløs. Den bliver sendt rundt mellem talerne, og man kan holde den ned, når man ikke taler.",
-      grej: "Trådløs mikrofon — 295 kr, eller Shure BLX 595 kr",
+      grej: "Trådløs mikrofon, 295 kr, eller Shure BLX 595 kr",
     },
     {
       titel: "Til den der taler længe",
       svar: "Headset. Underviseren eller toastmasteren skal kunne bruge hænderne og gå rundt, uden at lyden svinger.",
-      grej: "Trådløst headset — 345 kr, PRO 595 kr",
+      grej: "Trådløst headset, 345 kr, PRO 595 kr",
     },
     {
       titel: "Til karaoke og fest",
       svar: "To trådløse. Der er altid en, der skal synge med, og en mikrofon, der skal videre til næste sang.",
-      grej: "To trådløse mikrofoner — 295 kr stykket",
+      grej: "To trådløse mikrofoner, 295 kr stykket",
     },
     {
       titel: "Når den står ét sted",
       svar: "Kabel. Skal mikrofonen alligevel blive ved talerstolen, er der ingen grund til at betale for trådløs.",
-      grej: "Håndholdt med kabel — 95 kr, Shure 395 kr",
+      grej: "Håndholdt med kabel, 95 kr, Shure 395 kr",
     },
   ];
 
@@ -110,7 +110,7 @@ export default function LejMikrofonPage() {
 
       <main className="relative z-20 bg-[#07060b]">
         <MicrophonePackages locale="da" />
-        {/* Valget står sjældent mellem modeller — det står mellem situationer */}
+        {/* Valget står sjældent mellem modeller, det står mellem situationer */}
         <section className="mx-auto max-w-5xl px-4 pt-16 pb-4">
           <h2 className="mb-2 text-center text-3xl font-bold">Hvilken skal du bruge?</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
@@ -130,7 +130,7 @@ export default function LejMikrofonPage() {
         <section id="mikrofoner" className="mx-auto max-w-6xl px-4 py-16">
           <h2 className="mb-2 text-center text-3xl font-bold">Alle mikrofoner</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Priserne er for hele lejeperioden — 1 til 5 dage koster det samme.
+            Priserne er for hele lejeperioden, 1 til 5 dage koster det samme.
           </p>
           <CategoryProductGrid
             items={[
@@ -169,7 +169,7 @@ export default function LejMikrofonPage() {
             <h2 className="mb-4 text-2xl font-bold text-white">Mangler du noget at spille i?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
               Mikrofonen skal have en højtaler. Speakerpakken er stor højtalerpakke
-              plus mikrofon i ét — til arrangementet hvor der både skal spilles og tales.
+              plus mikrofon i ét, til arrangementet hvor der både skal spilles og tales.
             </p>
             <a
               href="/lej-hojtaler"

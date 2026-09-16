@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lej Ekstra Batteri til Batterihøjtaler | 145 kr | Lejhøjtaler.dk",
   description:
-    "Lej et ekstra batteri til Mackie Thump GO eller Soundboks for 145 kr. Dobbelt spilletid uden strøm — til havefest, strand og studenterkørsel. Lejes i København.",
+    "Lej et ekstra batteri til Mackie Thump GO eller Soundboks for 145 kr. Dobbelt spilletid uden strøm, til havefest, strand og studenterkørsel. Lejes i København.",
   keywords: ["ekstra batteri højtaler leje", "soundboks ekstra batteri", "thump go batteri leje", "batterihøjtaler hele natten"],
   alternates: {
     canonical: "https://lejhojtaler.dk/ekstra-batteri",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Lej Ekstra Batteri | 145 kr",
-    description: "Ekstra batteri til batterihøjtaler — dobbelt spilletid uden strøm.",
+    description: "Ekstra batteri til batterihøjtaler, dobbelt spilletid uden strøm.",
     url: "https://lejhojtaler.dk/ekstra-batteri",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,7 +29,7 @@ export default function Page() {
       name="Ekstra batteri"
       price={145}
       headline="Lej ekstra batteri"
-      sub="Et ekstra batteri til Mackie Thump GO eller Soundboks 4 — så festen ikke slutter, når det første løber tørt."
+      sub="Et ekstra batteri til Mackie Thump GO eller Soundboks 4, så festen ikke slutter, når det første løber tørt."
       image="/images/product-thumpgo-v2-white.webp"
       imageAlt="Ekstra batteri til batterihøjtaler"
       productId="batteri"
@@ -37,7 +37,7 @@ export default function Page() {
       faqPhrase="et ekstra batteri"
       bullets={[
         "Passer til Mackie Thump GO og Soundboks 4",
-        "Dobbelt spilletid — typisk 20+ timer i alt ved festlydstyrke",
+        "Dobbelt spilletid, typisk 20+ timer i alt ved festlydstyrke",
         "Skiftes på et halvt minut uden værktøj",
         "Leveres fuldt opladet sammen med højtaleren",
         "Inkluderet i Udendørspakken og Studenterpakken",

@@ -3,7 +3,7 @@
 /**
  * Regnskab: hvad kom der ind, hvad mangler, og hvor kommer det fra.
  *
- * Tallene regnes i /api/accounting ud fra bookingerne — omsætning bogføres på
+ * Tallene regnes i /api/accounting ud fra bookingerne, omsætning bogføres på
  * lejeperiodens start, ikke på hvornår ordren blev oprettet, fordi det er dér
  * udstyret rent faktisk tjener penge.
  */
@@ -137,7 +137,7 @@ export default function AccountingPage() {
   }, [secret, from, to, basis]);
 
   /** Annonceforbruget kommer fra Google og hentes for sig, så regnskabstallene
-   *  ikke venter på — eller falder med — Google Ads. */
+   *  ikke venter på, eller falder med, Google Ads. */
   const loadSpend = useCallback(async () => {
     if (!secret) return;
     setSpendError("");
@@ -269,8 +269,8 @@ export default function AccountingPage() {
           })}
           <span style={{ display: "flex", gap: 4, alignItems: "center", marginLeft: "auto" }}>
             {([
-              { id: "booket" as const, label: "Booket", hint: "Datoen ordren kom ind — den annoncerne skal måles mod" },
-              { id: "leje" as const, label: "Leje", hint: "Lejeperiodens start — hvornår udstyret var ude" },
+              { id: "booket" as const, label: "Booket", hint: "Datoen ordren kom ind, den annoncerne skal måles mod" },
+              { id: "leje" as const, label: "Leje", hint: "Lejeperiodens start, hvornår udstyret var ude" },
             ]).map((o) => (
               <button
                 key={o.id}
@@ -326,7 +326,7 @@ export default function AccountingPage() {
           </div>
         )}
 
-        {/* ROAS — det tal der afgør om annoncerne løber rundt */}
+        {/* ROAS, det tal der afgør om annoncerne løber rundt */}
         <div
           style={{
             ...card,
@@ -338,10 +338,10 @@ export default function AccountingPage() {
         >
           <div>
             <div style={{ fontSize: 11, color: "#888", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.04em" }}>
-              ROAS — omsætning pr. annoncekrone
+              ROAS, omsætning pr. annoncekrone
             </div>
             <div style={{ fontSize: isMobile ? 30 : 38, fontWeight: 800, lineHeight: 1.1, marginTop: 2 }}>
-              {!data || !spend ? "—" : spend.cost === 0 ? "ingen annonceudgift" : `${(data.revenue / spend.cost).toFixed(1)}×`}
+              {!data || !spend ? "" : spend.cost === 0 ? "ingen annonceudgift" : `${(data.revenue / spend.cost).toFixed(1)}×`}
             </div>
             <div style={{ fontSize: 12, color: "#666", marginTop: 2 }}>
               {data && spend && spend.cost > 0
@@ -351,7 +351,7 @@ export default function AccountingPage() {
           </div>
           <div style={{ fontSize: 12, color: "#777", maxWidth: 320, lineHeight: 1.5 }}>
             {basis === "booket"
-              ? "Ordrer bogført på den dag de kom ind — samme periode som annoncekronerne blev brugt."
+              ? "Ordrer bogført på den dag de kom ind, samme periode som annoncekronerne blev brugt."
               : "Ordrer bogført på lejeperiodens start. Til ROAS bør du bruge Booket, ellers sammenlignes august-annoncer med september-fester."}
           </div>
         </div>
@@ -438,7 +438,7 @@ export default function AccountingPage() {
                       </td>
                       <td style={{ ...td, whiteSpace: "nowrap", color: "#666" }}>{u.period}</td>
                       <td style={num}>{kr(u.total)}</td>
-                      <td style={{ ...num, color: u.paid > 0 ? "#155724" : "#bbb" }}>{u.paid > 0 ? kr(u.paid) : "—"}</td>
+                      <td style={{ ...num, color: u.paid > 0 ? "#155724" : "#bbb" }}>{u.paid > 0 ? kr(u.paid) : ""}</td>
                       <td style={{ ...num, fontWeight: 700, color: "#c0392b" }}>{kr(u.outstanding)}</td>
                       <td style={td}>
                         {u.invoiceNumber ? (
@@ -549,7 +549,7 @@ export default function AccountingPage() {
               {data && data.revenue > 0 && spend.cost > 0 && (
                 <p style={{ margin: "10px 0 0", fontSize: 12, color: "#666" }}>
                   Hver annoncekrone har hentet <strong>{(data.revenue / spend.cost).toFixed(1)} kr</strong> hjem i omsætning
-                  i perioden. Tallet er ikke attribueret pr. ordre — det er hele omsætningen mod hele forbruget.
+                  i perioden. Tallet er ikke attribueret pr. ordre, det er hele omsætningen mod hele forbruget.
                 </p>
               )}
             </>
@@ -583,7 +583,7 @@ export default function AccountingPage() {
             ? "Omsætning bogføres på den dag ordren kom ind."
             : "Omsætning bogføres på lejeperiodens første dag."}{" "}Beløb pr. produkt er ordrens total fordelt efter katalogpriserne, så rabatter
           tælles med der hvor de blev givet. Weekender grupperes altid på lejeperioden, uanset opgørelse.
-          Annullerede ordrer indgår ikke. ROAS er hele omsætningen mod hele forbruget — ikke attribueret pr. ordre.
+          Annullerede ordrer indgår ikke. ROAS er hele omsætningen mod hele forbruget, ikke attribueret pr. ordre.
         </p>
       </main>
     </div>

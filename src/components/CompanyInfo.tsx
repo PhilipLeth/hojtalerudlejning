@@ -5,7 +5,7 @@
  *
  * Små byggeklodser i stedet for tekst i hver enkelt side, så en flytning eller
  * en ny mailadresse kun skal skrives ét sted. Første render viser standarden
- * fra koden — den samme som ligger i den statiske HTML — og bytter til admins
+ * fra koden, den samme som ligger i den statiske HTML, og bytter til admins
  * værdier, når indstillingerne er hentet.
  */
 
@@ -30,7 +30,7 @@ export function CompanyCvr() {
   return <>{company.cvr}</>;
 }
 
-/** Alt på én linje — til lejesedler, bunden af sider og lign. */
+/** Alt på én linje, til lejesedler, bunden af sider og lign. */
 export function CompanyLine({ className = "" }: { className?: string }) {
   const { company } = useSiteSettings();
   return <span className={className}>{formatCompanyLine(company)}</span>;
@@ -55,7 +55,7 @@ export function CompanyEmailLink({ className = "", children }: {
   );
 }
 
-/** Navn, adresse og CVR som tre linjer — footeren */
+/** Navn, adresse og CVR som tre linjer, footeren */
 export function CompanyBlock() {
   const { company } = useSiteSettings();
   return (

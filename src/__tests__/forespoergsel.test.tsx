@@ -103,7 +103,7 @@ describe("EventInquiryForm", () => {
     const body = JSON.parse(fetchMock.mock.calls[0][1].body);
     expect(body.message).toContain("Exhibitions & launches");
     expect(body.message).toContain("55″ display");
-    expect(screen.getByText("Thank you — we have your enquiry")).toBeInTheDocument();
+    expect(screen.getByText("Thank you, we have your enquiry")).toBeInTheDocument();
   });
 
   it("viser fejlen fra serveren i stedet for at kvittere", async () => {

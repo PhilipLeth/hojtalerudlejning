@@ -47,7 +47,7 @@ export default function SoundboksAltPopup() {
           Overvej Mackie Thump GO
         </h2>
         <p className="mb-6 text-sm text-white/50">
-          Billigere batterihøjtaler — mobil, let at tage med, og ofte nok til de fleste fester.{" "}
+          Billigere batterihøjtaler, mobil, let at tage med, og ofte nok til de fleste fester.{" "}
           <LivePrice productId="thumpgo" prefix="Fra " suffix=" kr." />
         </p>
         <Link

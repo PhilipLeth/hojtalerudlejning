@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { bookHref } from "@/lib/bookUrl";
 
-/** /book er alias — send til forsiden med kurv-drawer. */
+/** /book er alias, send til forsiden med kurv-drawer. */
 export default function BookPage() {
   useEffect(() => {
     const product = new URLSearchParams(window.location.search).get("product");

@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Filmaften-pakken | Projektor, lærred og højtalere | 1.195 kr | Lejhøjtaler.dk",
   description:
-    "Filmaften-pakken med projektor, lærred og højtalere — alt til udendørs biograf i baghaven for 1.195 kr. Book online i København.",
+    "Filmaften-pakken med projektor, lærred og højtalere, alt til udendørs biograf i baghaven for 1.195 kr. Book online i København.",
   keywords: ["lej projektor og lærred", "udendørs biograf leje", "projektor til fest", "filmaften udstyr", "lærred leje københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/filmaften",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Filmaften-pakken | Projektor, lærred og højtalere | 1.195 kr | Lejhøjtaler.dk",
     description:
-      "Filmaften-pakken med projektor, lærred og højtalere — alt til udendørs biograf i baghaven for 1.195 kr. Book online i København.",
+      "Filmaften-pakken med projektor, lærred og højtalere, alt til udendørs biograf i baghaven for 1.195 kr. Book online i København.",
     url: "https://lejhojtaler.dk/filmaften",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,15 +29,15 @@ export default function FilmaftenPage() {
       slug="filmaften"
       name="Filmaften-pakken"
       price={1195}
-      headline="Filmaften-pakken — biograf i gården"
-      sub="Full HD projektor, 160 cm lærred på stativ og to højtalere. Alt til filmaftenen — spar 90 kr."
+      headline="Filmaften-pakken, biograf i gården"
+      sub="Full HD projektor, 160 cm lærred på stativ og to højtalere. Alt til filmaftenen, spar 90 kr."
       image="/images/product-projektor-white.webp"
       imageAlt="Filmaften-pakken med projektor, lærred og højtalere"
       productId="pakke_filmaften"
       capacity={{ level: 2, label: "op til 40 pers." }}
       bullets={[
         "Full HD projektor med HDMI og fjernbetjening",
-        "Lærred 160 cm på stativ — står frit, skal ikke hænges op",
+        "Lærred 160 cm på stativ, står frit, skal ikke hænges op",
         '2× Alto 10" højtalere: en projektors egen lyd rækker ikke',
         "Alle kabler og strøm med",
         "Spar 90 kr vs. at leje delene enkeltvis",
@@ -47,7 +47,7 @@ export default function FilmaftenPage() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Skal der ses film udenfor?</h2>
           <p className="mb-6 text-white/50">
-            Vent til det er rigtigt mørkt — en Full HD-projektor kan ikke konkurrere med sommeraftenlys. Skal der vises noget i dagslys eller i et stort lokale, tager vi Projektor Pro med 5000 lumen i stedet.
+            Vent til det er rigtigt mørkt, en Full HD-projektor kan ikke konkurrere med sommeraftenlys. Skal der vises noget i dagslys eller i et stort lokale, tager vi Projektor Pro med 5000 lumen i stedet.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link

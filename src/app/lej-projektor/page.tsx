@@ -6,10 +6,10 @@ import GoogleReviews from "@/components/GoogleReviews";
 import { LocationKicker } from "@/components/PhoneLink";
 
 /**
- * /lej-projektor — kategorisiden for projektor, lærred og skærm.
+ * /lej-projektor, kategorisiden for projektor, lærred og skærm.
  *
  * Siden var en ren beskedside under pausen fra august til 8. september 2026.
- * Den sælger igen — og den er vigtig: "lej storskærm"-søgningerne alene giver
+ * Den sælger igen, og den er vigtig: "lej storskærm"-søgningerne alene giver
  * ~350 visninger om måneden på position 8-16 i Google.
  */
 export const metadata: Metadata = {
@@ -83,7 +83,7 @@ export default function LejProjektorPage() {
           <h2 className="mb-2 text-center text-3xl font-bold">Billede</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
             Til et møde med op til tyve mennesker er en skærm på stativ det nemmeste.
-            Skal hele salen kunne se med — eller skal det være filmaften — er
+            Skal hele salen kunne se med, eller skal det være filmaften, er
             projektor og lærred vejen.
           </p>
           <CategoryProductGrid
@@ -101,7 +101,7 @@ export default function LejProjektorPage() {
           ids={["pakke_filmaften"]}
           eyebrow="Pakke"
           title="Filmaften i baghaven"
-          subtitle="Projektor, lærred og højtalere sat sammen — billigere end delene hver for sig."
+          subtitle="Projektor, lærred og højtalere sat sammen, billigere end delene hver for sig."
         />
 
         <section className="mx-auto max-w-3xl px-4 pb-24">
@@ -109,7 +109,7 @@ export default function LejProjektorPage() {
             <h2 className="mb-4 text-2xl font-bold text-white">Skal der også holdes tale?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
               Billedet er kun den halve historie. Mikrofon og højtalere til mødet
-              eller konferencen står på AV-siden — også som færdige pakker.
+              eller konferencen står på AV-siden, også som færdige pakker.
             </p>
             <a
               href="/av-udstyr"

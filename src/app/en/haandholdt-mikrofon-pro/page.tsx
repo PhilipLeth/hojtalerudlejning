@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Shure Beta 58A Rental Copenhagen | 395 DKK",
     description:
-      "Shure Beta 58A wired microphone — the classic for vocals and speeches. Book online.",
+      "Shure Beta 58A wired microphone, the classic for vocals and speeches. Book online.",
     url: "https://lejhojtaler.dk/en/haandholdt-mikrofon-pro",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -35,13 +35,13 @@ export default function Page() {
       name="Handheld microphone PRO (wired)"
       price={395}
       headline="Rent a Shure Beta 58A"
-      sub="Shure Beta 58A with cable — the classic for vocals and speeches."
+      sub="Shure Beta 58A with cable, the classic for vocals and speeches."
       image="/images/product-mikrofon-kabel-pro-v2-white.webp"
       imageAlt="Shure Beta 58A microphone for rent in Copenhagen"
       productId="haandholdt_mikrofon_pro"
       faqPhrase="a Shure Beta 58A"
       bullets={[
-        "Shure Beta 58A — the industry standard",
+        "Shure Beta 58A, the industry standard",
         "XLR cable included",
         "Made for vocals and speeches",
         "Plugs straight into our speakers",

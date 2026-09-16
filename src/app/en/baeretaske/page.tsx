@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Speaker Carry Bag Rental | 95 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a padded carry bag for the small speaker package for 95 DKK. Safe transport by bike, bus or car — speakers and cables together in one place. Rent in Copenhagen.",
+    "Rent a padded carry bag for the small speaker package for 95 DKK. Safe transport by bike, bus or car, speakers and cables together in one place. Rent in Copenhagen.",
   keywords: ["speaker carry bag rental", "bag for speakers hire copenhagen", "speakers by bike copenhagen", "speaker transport bag"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/baeretaske",
@@ -30,14 +30,14 @@ export default function Page() {
       name="Carry bag"
       price={95}
       headline="Rent a carry bag for the speakers"
-      sub="A padded sports bag that holds the small speaker package and all the cables — so you can collect by bike."
+      sub="A padded sports bag that holds the small speaker package and all the cables, so you can collect by bike."
       image="/images/product-taske-v2-white.webp"
       imageAlt="Padded carry bag for speakers"
       productId="taske"
       bookLabel="Book a carry bag"
       faqPhrase="a carry bag"
       bullets={[
-        "Padded — the speakers do not take knocks on the bike path",
+        "Padded, the speakers do not take knocks on the bike path",
         "Room for 2× Alto 10\" speakers and all cables",
         "Shoulder strap and handles",
         "Fits in a bike basket, a cargo bike or on the back seat",

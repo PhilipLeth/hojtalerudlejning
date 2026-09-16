@@ -1,13 +1,14 @@
+import {djGearProducts} from "./djGearProducts";
 import { eventSituations } from "./eventSituations";
 import { situationPackages } from "./situationPackages";
 import { mixerModels } from "./mixerModels";
 import { microphonePackages } from "./microphonePackages";
 
-/* ───── Single source of truth for all product data (v2 — cache-rotation 4/8) ─────
+/* ───── Single source of truth for all product data (v2, cache-rotation 4/8) ─────
  *
  * These arrays are the DEFAULT catalog (fallback/seed).
  * The live catalog can be overridden from /admin/produkter and is stored in
- * Cloudflare KV under "products_catalog" — served by GET /api/products.
+ * Cloudflare KV under "products_catalog", served by GET /api/products.
  * Client components should read products via the useProducts() hook so
  * admin edits apply everywhere without a deploy.
  */
@@ -35,13 +36,13 @@ export interface Speaker {
   sizeClass: SizeClass;
   weight: string;
   hidden?: boolean;
-  /** Produktvideo (instruktion/demo) — vist med play-knap i produkt-hero */
+  /** Produktvideo (instruktion/demo), vist med play-knap i produkt-hero */
   video?: string;
-  /** YouTube-URL fra producenten — vist som ekstra info under produktbeskrivelsen */
+  /** YouTube-URL fra producenten, vist som ekstra info under produktbeskrivelsen */
   youtubeUrl?: string;
   /** Addon IDs shown to the customer during booking. Undefined = show all. */
   allowedAddons?: string[];
-  /** Hvad er med i pakken — vist ved hover på produktkort */
+  /** Hvad er med i pakken, vist ved hover på produktkort */
   contents?: string[];
   da: SpeakerText;
   en: SpeakerText;
@@ -59,15 +60,15 @@ export interface Addon {
   price: number;
   image: string | null;
   hidden?: boolean;
-  /** Produktvideo (instruktion/demo) — vist med play-knap i produkt-hero */
+  /** Produktvideo (instruktion/demo), vist med play-knap i produkt-hero */
   video?: string;
-  /** YouTube-URL fra producenten — vist som ekstra info under produktbeskrivelsen */
+  /** YouTube-URL fra producenten, vist som ekstra info under produktbeskrivelsen */
   youtubeUrl?: string;
-  /** Hvad er med — vist ved hover på produktkort */
+  /** Hvad er med, vist ved hover på produktkort */
   contents?: string[];
   /**
    * Intern vare: kan kun lægges på en ordre fra admin (Ret ordre) og lander
-   * dermed på faktura og kvittering — men vises aldrig for kunden i
+   * dermed på faktura og kvittering, men vises aldrig for kunden i
    * bookingen, i annoncer, i søgning eller på lageret. Prisen står stadig
    * i pristabellen, så beløbet slås op i kataloget som alt andet.
    */
@@ -78,18 +79,18 @@ export interface Addon {
    * tilvælges på ALLE produkter uanset deres allowedAddons-liste.
    */
   ydelse?: boolean;
-  /** Prisenhed når den ikke er "pr. weekend" — vises i søgning og booking */
+  /** Prisenhed når den ikke er "pr. weekend", vises i søgning og booking */
   priceUnit?: { da: string; en: string };
   da: AddonText;
   en: AddonText;
 }
 
-/** Del af en sammensat pakke (bundle) — listes visuelt med + og rabat */
+/** Del af en sammensat pakke (bundle), listes visuelt med + og rabat */
 export interface BundlePart {
   productId: string;
   label_da: string;
   label_en: string;
-  /** Listepris for denne del (til “spar X”-beregning) — for hele antallet */
+  /** Listepris for denne del (til “spar X”-beregning), for hele antallet */
   price: number;
   /** Antal af produktet i pakken, fx 4 timer lydmand. Udeladt = 1 */
   qty?: number;
@@ -124,20 +125,20 @@ export interface RentalProduct {
   desc_da?: string;
   desc_en?: string;
   hidden?: boolean;
-  /** Produktvideo (instruktion/demo) — vist med play-knap i produkt-hero */
+  /** Produktvideo (instruktion/demo), vist med play-knap i produkt-hero */
   video?: string;
-  /** YouTube-URL fra producenten — vist som ekstra info under produktbeskrivelsen */
+  /** YouTube-URL fra producenten, vist som ekstra info under produktbeskrivelsen */
   youtubeUrl?: string;
   /** Addon IDs shown to the customer during booking. Undefined = show all. */
   allowedAddons?: string[];
-  /** Hvad er med i pakken — vist ved hover på produktkort */
+  /** Hvad er med i pakken, vist ved hover på produktkort */
   contents?: string[];
-  /** Sammensat produkt — vises i BundleGrid, ikke i almindeligt produktgrid */
+  /** Sammensat produkt, vises i BundleGrid, ikke i almindeligt produktgrid */
   bundle?: ProductBundle;
   /**
    * Lader kortbilledet i BundleGrid fylde hele kortets bredde (object-cover)
    * i stedet for at stå som en lille firkant midt i feltet (object-contain).
-   * Værdien er en CSS object-position — altså hvor beskæringens midte lander,
+   * Værdien er en CSS object-position, altså hvor beskæringens midte lander,
    * fx "50% 46%" når motivet ligger lidt over billedets midte.
    * Kun til billeder hvor motivet ligger i et vandret bånd med luft over/under.
    */
@@ -184,14 +185,14 @@ export const speakers: Speaker[] = [
       name: "Mackie Thump GO",
       size: '8" batterihøjtaler',
       capacity: "Op til 30 pers.",
-      desc: 'Batteridrevet 8" højtaler med Bluetooth og op til 12 timers batteri. Ingen strøm nødvendig — tag den med i parken, på stranden eller i baggården.',
+      desc: 'Batteridrevet 8" højtaler med Bluetooth og op til 12 timers batteri. Ingen strøm nødvendig, tag den med i parken, på stranden eller i baggården.',
       extra: "Inkl. oplader og AUX-kabel. Batteriet holder hele festen.",
     },
     en: {
       name: "Mackie Thump GO",
       size: '8" battery speaker',
       capacity: "Up to 30 people",
-      desc: 'Battery-powered 8" speaker with Bluetooth and up to 12 hours of battery. No power needed — bring it to the park, the beach or the courtyard.',
+      desc: 'Battery-powered 8" speaker with Bluetooth and up to 12 hours of battery. No power needed, bring it to the park, the beach or the courtyard.',
       extra: "Incl. charger and AUX cable. The battery lasts the whole party.",
     },
   },
@@ -210,14 +211,14 @@ export const speakers: Speaker[] = [
       name: "Lille højtalerpakke",
       size: '2× 10" Alto',
       capacity: "0-30 pers.",
-      desc: 'To kompakte 10" højtalere med Bluetooth. Vejer kun 12 kg — passer i bæretaske, klar til cyklen.',
+      desc: 'To kompakte 10" højtalere med Bluetooth. Vejer kun 12 kg, passer i bæretaske, klar til cyklen.',
       extra: "Inkl. alle kabler. Bæretaske og stativ kan tilkøbes.",
     },
     en: {
       name: "Small Speaker Package",
       size: '2× 10" Alto',
       capacity: "0-30 people",
-      desc: 'Two compact 10" speakers with Bluetooth. Only 12 kg — fits in a carry bag, ready for your bike.',
+      desc: 'Two compact 10" speakers with Bluetooth. Only 12 kg, fits in a carry bag, ready for your bike.',
       extra: "Incl. all cables. Carry bag and stands available as add-ons.",
     },
   },
@@ -236,14 +237,14 @@ export const speakers: Speaker[] = [
       name: "Soundboks 4",
       size: "Soundboks 4",
       capacity: "Op til 50 pers.",
-      desc: "Den populære Soundboks 4 med kraftig bas og Bluetooth. Batteridrevet — ingen strøm nødvendig. Perfekt til udendørs fester.",
+      desc: "Den populære Soundboks 4 med kraftig bas og Bluetooth. Batteridrevet, ingen strøm nødvendig. Perfekt til udendørs fester.",
       extra: "Inkl. oplader og AUX-kabel.",
     },
     en: {
       name: "Soundboks 4",
       size: "Soundboks 4",
       capacity: "Up to 50 people",
-      desc: "The popular Soundboks 4 with powerful bass and Bluetooth. Battery-powered — no power needed. Perfect for outdoor parties.",
+      desc: "The popular Soundboks 4 with powerful bass and Bluetooth. Battery-powered, no power needed. Perfect for outdoor parties.",
       extra: "Incl. charger and AUX cable.",
     },
   },
@@ -289,32 +290,32 @@ export const speakers: Speaker[] = [
       size: '2× 12" + subwoofer',
       capacity: "50-100 pers.",
       desc: 'To aktive 12" EV-højtalere på stativer med en 12" subwoofer under. Trinnet over den store højtalerpakke, når rummet er større end 50 gæster.',
-      extra: "Uden lys — vil du have lys med, er Festpakke 150 samme lyd plus lys og røg.",
+      extra: "Uden lys, vil du have lys med, er Festpakke 150 samme lyd plus lys og røg.",
     },
     en: {
       name: "Speaker package 100",
       size: '2× 12" + subwoofer',
       capacity: "50-100 people",
       desc: 'Two active 12" EV speakers on stands with a 12" subwoofer. The step above the large speaker package, for rooms with more than 50 guests.',
-      extra: "Without lights — for lights, Party package 150 is the same sound plus lights and fog.",
+      extra: "Without lights, for lights, Party package 150 is the same sound plus lights and fog.",
     },
   },
 ];
 
 export const addons: Addon[] = [
-  { id: "dj_musikafvikler", page: "/dj", price: 1000, image: "/images/product-dj.webp", ydelse: true,
+  { id: "dj_musikafvikler", page: "/dj", price: 1000, image: null, ydelse: true,
     priceUnit: { da: "kr/time før kl. 23", en: "DKK/hour before 23:00" },
-    contents: ["DJ/musikafvikler", "DJ-pult", "Minimum 3 timer"],
-    da: { label: "DJ/musikafvikler med DJ-pult", desc: "Minimum 3 timer. 1.000 kr/time før kl. 23, 1.500 kr/time efter. Inkl. moms. Lyd og lys lejes separat." },
-    en: { label: "DJ/music host with DJ booth", desc: "Minimum 3 hours. DKK 1,000/hour before 23:00, DKK 1,500/hour after. VAT included. Sound and lights hired separately." } },
+    contents: ["DJ/musikafvikler", "Minimum 3 timer"],
+    da: { label: "DJ/musikafvikler", desc: "Minimum 3 timer. 1.000 kr/time før kl. 23, 1.500 kr/time efter. Inkl. moms. Vælg DJ-pult og udstyrspakke separat." },
+    en: { label: "DJ/music host", desc: "Minimum 3 hours. DKK 1,000/hour before 23:00, DKK 1,500/hour after. VAT included. Choose a DJ controller and equipment package separately." } },
   // Skjult kladde: model og beholdning afklares før aktivering. 95 kr er prisforslag.
   {
     id: "stroboskop",
     price: 95,
     image: null,
     hidden: true,
-    da: { label: "Stroboskop", desc: "Kladde — model og tilgængelighed afventer indkøb. Foreslået lejepris: 95 kr." },
-    en: { label: "Strobe light", desc: "Draft — model and availability pending purchase. Suggested rental price: DKK 95." },
+    da: { label: "Stroboskop", desc: "Kladde, model og tilgængelighed afventer indkøb. Foreslået lejepris: 95 kr." },
+    en: { label: "Strobe light", desc: "Draft, model and availability pending purchase. Suggested rental price: DKK 95." },
   },
   {
     id: "lyseffekt",
@@ -323,8 +324,8 @@ export const addons: Addon[] = [
     price: 195,
     image: "/images/product-lyseffekt-live-white.webp",
     contents: ["1× LED-par-lys (uden stativ)", "Strømkabel", "Automatiske farveeffekter"],
-    da: { label: "Enkelt lyseffekt", desc: "1 LED-par-lys med farveeffekter — leveres uden stativ, plug and play" },
-    en: { label: "Single light effect", desc: "1 LED par light with colour effects — comes without a stand, plug and play" },
+    da: { label: "Enkelt lyseffekt", desc: "1 LED-par-lys med farveeffekter, leveres uden stativ, plug and play" },
+    en: { label: "Single light effect", desc: "1 LED par light with colour effects, comes without a stand, plug and play" },
   },
   {
     id: "lys",
@@ -343,8 +344,8 @@ export const addons: Addon[] = [
     price: 595,
     image: "/images/product-rog-v2-white.webp",
     contents: ["Røgmaskine", "Røgvæske", "Strømkabel"],
-    da: { label: "Røgmaskine", desc: "Kompakt røgmaskine inkl. røgvæske — gør lyset 10x federe" },
-    en: { label: "Fog machine", desc: "Compact fog machine incl. fluid — makes the lights 10x better" },
+    da: { label: "Røgmaskine", desc: "Kompakt røgmaskine inkl. røgvæske, gør lyset 10x federe" },
+    en: { label: "Fog machine", desc: "Compact fog machine incl. fluid, makes the lights 10x better" },
   },
   {
     id: "subwoofer",
@@ -353,20 +354,20 @@ export const addons: Addon[] = [
     price: 295,
     image: "/images/product-subwoofer-v2-white.webp",
     contents: ["Behringer 12\" aktiv subwoofer", "Strømkabel", "Signalkabel til højtalere"],
-    da: { label: "Subwoofer 12\"", desc: "Behringer 12\" aktiv sub — giver festen den dybe bas" },
-    en: { label: "Subwoofer 12\"", desc: "Behringer 12\" powered sub — adds the deep bass" },
+    da: { label: "Subwoofer 12\"", desc: "Behringer 12\" aktiv sub, giver festen den dybe bas" },
+    en: { label: "Subwoofer 12\"", desc: "Behringer 12\" powered sub, adds the deep bass" },
   },
   {
     id: "stativer",
     page: "/hojtalerstativer",
     price: 100,
     image: "/images/product-stativer-white.webp",
-    da: { label: "Højtalerstativer", desc: "2 professionelle stativer — løfter lyden op i øjenhøjde" },
-    en: { label: "Speaker stands", desc: "2 professional stands — lifts the sound to ear level" },
+    da: { label: "Højtalerstativer", desc: "2 professionelle stativer, løfter lyden op i øjenhøjde" },
+    en: { label: "Speaker stands", desc: "2 professional stands, lifts the sound to ear level" },
   },
   {
     id: "mikrofon",
-    // Samme mikrofon som rental-varen traadloes_mikrofon (295 kr) — én side til begge
+    // Samme mikrofon som rental-varen traadloes_mikrofon (295 kr), én side til begge
     page: "/traadloes-mikrofon",
     youtubeUrl: "https://www.youtube.com/watch?v=ED_w3MHXjxk",
     price: 295,
@@ -379,8 +380,8 @@ export const addons: Addon[] = [
     page: "/ekstra-batteri",
     price: 145,
     image: "/images/product-thumpgo-v2-white.webp",
-    da: { label: "Ekstra batteri", desc: "Ekstra batteri til batterihøjtaler — mere spilletid uden strøm" },
-    en: { label: "Extra battery", desc: "Extra battery for battery speakers — more playtime without power" },
+    da: { label: "Ekstra batteri", desc: "Ekstra batteri til batterihøjtaler, mere spilletid uden strøm" },
+    en: { label: "Extra battery", desc: "Extra battery for battery speakers, more playtime without power" },
   },
   {
     id: "taske",
@@ -391,7 +392,7 @@ export const addons: Addon[] = [
     en: { label: "Carry bag", desc: "Padded sports bag for safe transport by bike or car" },
   },
   // ── Kørsel: levering (ud) og afhentning (retur) er to selvstændige ture.
-  // Én vej koster 495, begge veje 795 — derfor er "begge veje" et selvstændigt
+  // Én vej koster 495, begge veje 795, derfor er "begge veje" et selvstændigt
   // id med sin egen pris i stedet for to linjer der lægges sammen til 990.
   {
     id: "levering_ud",
@@ -399,11 +400,11 @@ export const addons: Addon[] = [
     image: null,
     da: {
       label: "Levering + opsætning",
-      desc: "Vi kører ud, sætter op klar til brug — du afleverer selv bagefter",
+      desc: "Vi kører ud, sætter op klar til brug, du afleverer selv bagefter",
     },
     en: {
       label: "Delivery + setup",
-      desc: "We drive out and set everything up — you return it yourself",
+      desc: "We drive out and set everything up, you return it yourself",
     },
   },
   {
@@ -412,11 +413,11 @@ export const addons: Addon[] = [
     image: null,
     da: {
       label: "Afhentning efter festen",
-      desc: "Du henter selv — vi henter udstyret igen bagefter",
+      desc: "Du henter selv, vi henter udstyret igen bagefter",
     },
     en: {
       label: "Collection after the party",
-      desc: "You pick it up yourself — we collect the gear afterwards",
+      desc: "You pick it up yourself, we collect the gear afterwards",
     },
   },
   {
@@ -425,16 +426,16 @@ export const addons: Addon[] = [
     image: null,
     da: {
       label: "Levering + afhentning (begge veje)",
-      desc: "Vi kører ud, sætter op og henter igen — spar 195 kr.",
+      desc: "Vi kører ud, sætter op og henter igen, spar 195 kr.",
     },
     en: {
       label: "Delivery + collection (both ways)",
-      desc: "We deliver, set up and collect again — save 195 DKK",
+      desc: "We deliver, set up and collect again, save 195 DKK",
     },
   },
   ...mixerModels,
   // ── Lydmand (11. sept 2026): en ydelse kunden selv kan vælge til. Prisen er
-  // pr. time inkl. moms. Antallet i bookingen ER timerne (13. sept 2026) — før
+  // pr. time inkl. moms. Antallet i bookingen ER timerne (13. sept 2026), før
   // lå der en "4 timer"-udgave ved siden af, og det var én vare for meget.
   {
     id: "lydmand",
@@ -446,11 +447,11 @@ export const addons: Addon[] = [
     contents: ["AV-tekniker på stedet", "Opsætning og lydprøve", "Styrer lyd og mikrofoner under festen"],
     da: {
       label: "Lydmand",
-      desc: "AV-tekniker på stedet — sætter op, laver lydprøve og styrer lyden under festen. 1.000 kr pr. time.",
+      desc: "AV-tekniker på stedet, sætter op, laver lydprøve og styrer lyden under festen. 1.000 kr pr. time.",
     },
     en: {
       label: "Sound engineer",
-      desc: "AV technician on site — sets up, runs the sound check and controls the sound during your event. DKK 1,000 per hour.",
+      desc: "AV technician on site, sets up, runs the sound check and controls the sound during your event. DKK 1,000 per hour.",
     },
   },
   // ── Faktureringsgebyr: intern vare, lægges kun på fra admin.
@@ -472,12 +473,12 @@ export const addons: Addon[] = [
 
 /**
  * Kørsels-tilvalgene. De udelukker hinanden: man kører enten ud, henter hjem,
- * eller begge dele — aldrig to af dem på samme ordre.
+ * eller begge dele, aldrig to af dem på samme ordre.
  */
 /**
  * Billeder der er GENERERET, ikke fotograferet.
  *
- * De fem lys-pakker og Bryllupspakken har ikke et studiefoto — grejet er sat
+ * De fem lys-pakker og Bryllupspakken har ikke et studiefoto, grejet er sat
  * op og lyst af en model ud fra fotos af vores eget udstyr. Kunden skal kunne
  * se det, men ikke som en mærkat henover billedet: produktsiden skriver en
  * linje UNDER det. Galleriets billeder har deres egen mærkat og står ikke her.
@@ -509,22 +510,22 @@ export function erGenereretBillede(sti: string | null | undefined): boolean {
 export const DELIVERY_ADDON_IDS = ["levering_ud", "afhentning_retur", "levering_begge"] as const;
 export type DeliveryAddonId = (typeof DELIVERY_ADDON_IDS)[number];
 
-/** Gamle ordrer/kataloger bruger disse ids — de tæller stadig som kørsel */
+/** Gamle ordrer/kataloger bruger disse ids, de tæller stadig som kørsel */
 export const LEGACY_DELIVERY_IDS = ["levering", "levering_opsaetning"];
 
 /**
  * Tilvalg der er udgået af koden, men kan ligge i et gammelt KV-katalog.
  * lydmand_4t (4 timer som én vare, 11.–13. sept 2026) blev til "lydmand" med
- * antal timer — én vare i to udgaver var det, kunden faldt over.
+ * antal timer, én vare i to udgaver var det, kunden faldt over.
  */
 export const RETIRED_ADDON_IDS = ["lydmand_4t"];
 
-/** Interne varer (fx faktureringsgebyr) — kun til ordrer fra admin. */
+/** Interne varer (fx faktureringsgebyr), kun til ordrer fra admin. */
 export function isInternalAddon(a: { intern?: boolean }): boolean {
   return a.intern === true;
 }
 
-/** Ydelser (fx lydmand) — kundevendte, men uden lager og foto. */
+/** Ydelser (fx lydmand), kundevendte, men uden lager og foto. */
 export function isServiceAddon(a: { ydelse?: boolean }): boolean {
   return a.ydelse === true;
 }
@@ -546,7 +547,7 @@ export function bundleIncludesDelivery(
   return part ? (part.productId as DeliveryAddonId) : null;
 }
 
-/** Hvilke veje vi kører på en given ordre — bruges i admin og på lejesedlen */
+/** Hvilke veje vi kører på en given ordre, bruges i admin og på lejesedlen */
 export function deliveryDirections(id: string): { out: boolean; back: boolean } {
   if (id === "levering_ud") return { out: true, back: false };
   if (id === "afhentning_retur") return { out: false, back: true };
@@ -554,8 +555,9 @@ export function deliveryDirections(id: string): { out: boolean; back: boolean } 
   return { out: false, back: false };
 }
 
-/** Standalone rental products (lys, av) — bookable via /?product=ID#book */
+/** Standalone rental products (lys, av), bookable via /?product=ID#book */
 export const rentalProducts: RentalProduct[] = [
+  ...djGearProducts,
   ...situationPackages,
   ...microphonePackages,
   // Halloween: nye kombinationer af eksisterende udstyr. Lager følger delene.
@@ -621,14 +623,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-lydmand-fest-v2-white.webp",
     name_da: "Festpakke med lydmand",
     name_en: "Party package with sound engineer",
-    desc_da: "Stor højtalerpakke + lys-pakke + lydmand i 4 timer. Leveret, sat op og hentet igen — spar 290 kr.",
-    desc_en: "Large speaker package + light package + sound engineer for 4 hours. Delivered, set up and collected — save 290 DKK.",
+    desc_da: "Stor højtalerpakke + lys-pakke + lydmand i 4 timer. Leveret, sat op og hentet igen, spar 290 kr.",
+    desc_en: "Large speaker package + light package + sound engineer for 4 hours. Delivered, set up and collected, save 290 DKK.",
     contents: ['2× EV 12" højtalere', "Lys-pakke (2 lamper + centereffekt)", "Lydmand i 4 timer", "Levering, opsætning og afhentning"],
     allowedAddons: ["subwoofer", "rog", "mikrofon", "lydmand"],
     bundle: {
       discount: 290,
-      usecase_da: "Festen hvor I ikke selv skal røre en knap — op til 100 pers. Vi kommer, sætter op, styrer lyden og pakker sammen.",
-      usecase_en: "The party where you never touch a knob — up to 100 people. We arrive, set up, run the sound and pack down.",
+      usecase_da: "Festen hvor I ikke selv skal røre en knap, op til 100 pers. Vi kommer, sætter op, styrer lyden og pakker sammen.",
+      usecase_en: "The party where you never touch a knob, up to 100 people. We arrive, set up, run the sound and pack down.",
       parts: [
         { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
@@ -645,14 +647,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-lydmand-firma-v2-white.webp",
     name_da: "Firmaevent med lydmand",
     name_en: "Corporate event with sound engineer",
-    desc_da: "Stor højtalerpakke + mixer + trådløs mikrofon + lydmand i 4 timer. Taler, musik og en tekniker der styrer det hele — spar 285 kr.",
-    desc_en: "Large speaker package + mixer + wireless mic + sound engineer for 4 hours. Speeches, music and a technician running it all — save 285 DKK.",
+    desc_da: "Stor højtalerpakke + mixer + trådløs mikrofon + lydmand i 4 timer. Taler, musik og en tekniker der styrer det hele, spar 285 kr.",
+    desc_en: "Large speaker package + mixer + wireless mic + sound engineer for 4 hours. Speeches, music and a technician running it all, save 285 DKK.",
     contents: ['2× EV 12" højtalere', "the t.mix xmix 1202 FX USB", "Trådløs mikrofon", "Lydmand i 4 timer", "Levering, opsætning og afhentning"],
     allowedAddons: ["subwoofer", "mikrofon", "lys", "lydmand"],
     bundle: {
       discount: 285,
-      usecase_da: "Firmafest, reception eller jubilæum med taler — op til 100 pers. Mikrofonen virker, når direktøren rejser sig, fordi der står én og passer den.",
-      usecase_en: "Company party, reception or anniversary with speeches — up to 100 people. The mic works when the boss stands up, because someone is there to make sure.",
+      usecase_da: "Firmafest, reception eller jubilæum med taler, op til 100 pers. Mikrofonen virker, når direktøren rejser sig, fordi der står én og passer den.",
+      usecase_en: "Company party, reception or anniversary with speeches, up to 100 people. The mic works when the boss stands up, because someone is there to make sure.",
       parts: [
         { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
         { productId: "mixer_stor", label_da: "Mixer mellem · 6 mikrofonindgange", label_en: "Medium mixer · 6 microphone inputs", price: 395 },
@@ -670,14 +672,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-lydmand-stor-v2-white.webp",
     name_da: "Stor fest med lydmand",
     name_en: "Big party with sound engineer",
-    desc_da: "Stor højtalerpakke + subwoofer + stativer + lys-pakke + røg + lydmand i 4 timer. Fuldt anlæg med tekniker — spar 280 kr.",
-    desc_en: "Large speaker package + subwoofer + stands + light package + fog + sound engineer for 4 hours. Full rig with a technician — save 280 DKK.",
+    desc_da: "Stor højtalerpakke + subwoofer + stativer + lys-pakke + røg + lydmand i 4 timer. Fuldt anlæg med tekniker, spar 280 kr.",
+    desc_en: "Large speaker package + subwoofer + stands + light package + fog + sound engineer for 4 hours. Full rig with a technician, save 280 DKK.",
     contents: ['2× EV 12" højtalere', 'Subwoofer 12"', "Højtalerstativer", "Lys-pakke + røgmaskine", "Lydmand i 4 timer", "Levering, opsætning og afhentning"],
     allowedAddons: ["mikrofon", "mixer_stor", "lydmand"],
     bundle: {
       discount: 280,
-      usecase_da: "Den store fest med bas, lys og røg — op til 150 pers. Lydmanden sætter det hele op og holder dansegulvet kørende.",
-      usecase_en: "The big party with bass, lights and fog — up to 150 people. The sound engineer sets it all up and keeps the dancefloor going.",
+      usecase_da: "Den store fest med bas, lys og røg, op til 150 pers. Lydmanden sætter det hele op og holder dansegulvet kørende.",
+      usecase_en: "The big party with bass, lights and fog, up to 150 people. The sound engineer sets it all up and keeps the dancefloor going.",
       parts: [
         { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
         { productId: "subwoofer", label_da: 'Subwoofer 12"', label_en: 'Subwoofer 12"', price: 295 },
@@ -689,8 +691,8 @@ export const rentalProducts: RentalProduct[] = [
       ],
     },
   },
-  // Festpakke-bundles (lyd + lys) — ikke almindelige produkter; se BundleGrid.
-  // Levering/opsætning er bevidst IKKE med i pakken — det kan tilvælges i booking.
+  // Festpakke-bundles (lyd + lys), ikke almindelige produkter; se BundleGrid.
+  // Levering/opsætning er bevidst IKKE med i pakken, det kan tilvælges i booking.
   {
     id: "pakke_fest_lille",
     page: "/festpakke-lille",
@@ -701,14 +703,14 @@ export const rentalProducts: RentalProduct[] = [
     cardImageCrop: "50% 46%",
     name_da: "Lille festpakke",
     name_en: "Small party package",
-    desc_da: "Lille højtalerpakke + enkelt lyseffekt. Lyd og lys til op til 40 pers. — spar 100 kr.",
-    desc_en: "Small speaker package + single light effect. Sound and lights for up to 40 people — save 100 DKK.",
+    desc_da: "Lille højtalerpakke + enkelt lyseffekt. Lyd og lys til op til 40 pers., spar 100 kr.",
+    desc_en: "Small speaker package + single light effect. Sound and lights for up to 40 people, save 100 DKK.",
     contents: ['2× Alto 10" højtalere', "1 LED-lyseffekt", "Bluetooth + alle kabler"],
     allowedAddons: ["subwoofer", "rog", "stativer", "mikrofon", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 100,
-      usecase_da: "Lyd og lys til den lille fest — op til 40 pers. Kompakt sæt, klar på 10 minutter.",
-      usecase_en: "Sound and lights for the small party — up to 40 people. Compact set, ready in 10 minutes.",
+      usecase_da: "Lyd og lys til den lille fest, op til 40 pers. Kompakt sæt, klar på 10 minutter.",
+      usecase_en: "Sound and lights for the small party, up to 40 people. Compact set, ready in 10 minutes.",
       parts: [
         { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speaker package", price: 595 },
         { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 195 },
@@ -725,14 +727,14 @@ export const rentalProducts: RentalProduct[] = [
     cardImageCrop: "50% 47%",
     name_da: "Stor festpakke",
     name_en: "Large party package",
-    desc_da: "Stor højtalerpakke + lys-pakke. Lyd og lys til op til 100 pers. — spar 200 kr.",
-    desc_en: "Large speaker package + light package. Sound and lights for up to 100 people — save 200 DKK.",
+    desc_da: "Stor højtalerpakke + lys-pakke. Lyd og lys til op til 100 pers., spar 200 kr.",
+    desc_en: "Large speaker package + light package. Sound and lights for up to 100 people, save 200 DKK.",
     contents: ['2× EV 12" højtalere', "Lys-pakke (2 lamper + centereffekt)", "Bluetooth + alle kabler"],
     allowedAddons: ["subwoofer", "rog", "mikrofon", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 200,
-      usecase_da: "Lyd og lys til den store fest — op til 100 pers. med de store højtalere.",
-      usecase_en: "Sound and lights for the big party — up to 100 people with the large speakers.",
+      usecase_da: "Lyd og lys til den store fest, op til 100 pers. med de store højtalere.",
+      usecase_en: "Sound and lights for the big party, up to 100 people with the large speakers.",
       parts: [
         { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
@@ -741,7 +743,7 @@ export const rentalProducts: RentalProduct[] = [
   },
   // ── Pakkestigen 150 og 250: navngivet efter antal gæster, ikke efter grej.
   // Kunden ved hvor mange der kommer; han ved ikke hvad 2× 12" EV betyder.
-  // Kørsel er stadig et tilvalg her — se epic_aov i prd.json for hvorfor den
+  // Kørsel er stadig et tilvalg her, se epic_aov i prd.json for hvorfor den
   // skal med i prisen på sigt, og hvad der mangler i flowet før det kan lade sig gøre.
   {
     id: "pakke_fest_150",
@@ -752,8 +754,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-fest-150-v2-white.webp",
     name_da: "Festpakke 150",
     name_en: "Party package 150",
-    desc_da: 'Højtalere, sub, lys og røg til op til 150 gæster — spar 135 kr.',
-    desc_en: "Speakers, sub, lights and fog for up to 150 guests — save 135 DKK.",
+    desc_da: 'Højtalere, sub, lys og røg til op til 150 gæster, spar 135 kr.',
+    desc_en: "Speakers, sub, lights and fog for up to 150 guests, save 135 DKK.",
     contents: ['2× EV 12" højtalere', '12" subwoofer', "Stativer", "Lys-pakke (2 lamper + centereffekt)", "Røgmaskine + væske", "Alle kabler"],
     allowedAddons: ["mikrofon", "subwoofer", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -778,8 +780,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-fest-250-v2-white.webp",
     name_da: "Festpakke 250",
     name_en: "Party package 250",
-    desc_da: "Dobbelt anlæg med to subs, lys og røg til op til 250 gæster — spar 225 kr. Leveres og sættes op.",
-    desc_en: "Double system with two subs, lights and fog for up to 250 guests — save 225 DKK.",
+    desc_da: "Dobbelt anlæg med to subs, lys og røg til op til 250 gæster, spar 225 kr. Leveres og sættes op.",
+    desc_en: "Double system with two subs, lights and fog for up to 250 guests, save 225 DKK.",
     contents: ['4× EV 12" højtalere', '2× 12" subwoofer', "2 sæt stativer", "Lys-pakke", "Røgmaskine + væske", "Alle kabler + strøm"],
     allowedAddons: ["mikrofon", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -800,7 +802,7 @@ export const rentalProducts: RentalProduct[] = [
   },
   // ── Lejlighedspakker: én pakke pr. område kunden faktisk søger på.
   // Anledningssiderne pegede før på et enkeltprodukt eller en generisk
-  // festpakke — polterabend anbefalede en højtaler til 345 kr. Her er
+  // festpakke, polterabend anbefalede en højtaler til 345 kr. Her er
   // pakken bygget til det der skal ske: taler, ingen strøm, film, eller lys.
   {
     id: "pakke_bryllup",
@@ -811,8 +813,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-bryllup-taendt-white.webp",
     name_da: "Bryllupspakke",
     name_en: "Wedding package",
-    desc_da: "Højtalere, mikrofon til talerne, lys, lyskæder og low fog til første dans — spar 180 kr.",
-    desc_en: "Speakers, a mic for the speeches, lights, fairy lights and low fog for the first dance — save 180 DKK.",
+    desc_da: "Højtalere, mikrofon til talerne, lys, lyskæder og low fog til første dans, spar 180 kr.",
+    desc_en: "Speakers, a mic for the speeches, lights, fairy lights and low fog for the first dance, save 180 DKK.",
     contents: ['2× EV 12" højtalere + stativer', "Trådløs mikrofon til talerne", "Lys-pakke", "10 m lyskæde", "Low fog-maskine"],
     allowedAddons: ["mikrofon", "subwoofer", "rog", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -839,8 +841,8 @@ export const rentalProducts: RentalProduct[] = [
     cardImageCrop: "50% 47%",
     name_da: "Firmafestpakke",
     name_en: "Company party package",
-    desc_da: "Mikrofon til chefens tale, sub til dansegulvet bagefter, lys og røg — spar 130 kr.",
-    desc_en: "A mic for the speech, a sub for the dancefloor afterwards, lights and fog — save 130 DKK.",
+    desc_da: "Mikrofon til chefens tale, sub til dansegulvet bagefter, lys og røg, spar 130 kr.",
+    desc_en: "A mic for the speech, a sub for the dancefloor afterwards, lights and fog, save 130 DKK.",
     contents: ['2× EV 12" højtalere + stativer', "Trådløs mikrofon", '12" subwoofer', "Lys-pakke", "Røgmaskine"],
     allowedAddons: ["mikrofon", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -866,8 +868,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-soundboks-v2-white.webp",
     name_da: "Udendørspakke",
     name_en: "Outdoor package",
-    desc_da: "Soundboks 4, ekstra batteri og lyskæde — hele festen uden en eneste stikkontakt. Spar 140 kr.",
-    desc_en: "Soundboks 4, spare battery and fairy lights — a whole party without a single power socket. Save 140 DKK.",
+    desc_da: "Soundboks 4, ekstra batteri og lyskæde, hele festen uden en eneste stikkontakt. Spar 140 kr.",
+    desc_en: "Soundboks 4, spare battery and fairy lights, a whole party without a single power socket. Save 140 DKK.",
     contents: ["Soundboks 4 (batteri)", "Ekstra batteri", "10 m lyskæde", "Oplader + AUX-kabel"],
     allowedAddons: ["taske", "lyseffekt", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -890,8 +892,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-soundboks-v2-white.webp",
     name_da: "Studenterpakken",
     name_en: "Graduation package",
-    desc_da: "Soundboks 4, ekstra batteri og bæretaske — spiller hele vognturen. Spar 90 kr.",
-    desc_en: "Soundboks 4, spare battery and carry bag — plays the whole truck ride. Save 90 DKK.",
+    desc_da: "Soundboks 4, ekstra batteri og bæretaske, spiller hele vognturen. Spar 90 kr.",
+    desc_en: "Soundboks 4, spare battery and carry bag, plays the whole truck ride. Save 90 DKK.",
     contents: ["Soundboks 4 (batteri)", "Ekstra batteri", "Polstret bæretaske", "Oplader + AUX-kabel"],
     allowedAddons: ["lyseffekt", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -914,14 +916,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-projektor-white.webp",
     name_da: "Filmaften-pakken",
     name_en: "Movie night package",
-    desc_da: "Projektor, lærred og to højtalere — biograf i haven eller i gården. Spar 90 kr.",
-    desc_en: "Projector, screen and two speakers — cinema in the garden or the courtyard. Save 90 DKK.",
+    desc_da: "Projektor, lærred og to højtalere, biograf i haven eller i gården. Spar 90 kr.",
+    desc_en: "Projector, screen and two speakers, cinema in the garden or the courtyard. Save 90 DKK.",
     contents: ["Full HD projektor", "Lærred 160 cm på stativ", '2× Alto 10" højtalere', "HDMI + alle kabler"],
     allowedAddons: ["stativer", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 90,
-      usecase_da: "Film i gården, fodboldkamp til festen eller børnebiograf til fødselsdagen. Lyden fra en projektor rækker ikke — derfor er højtalerne med.",
-      usecase_en: "A film in the courtyard, the match at the party or a kids' cinema for the birthday. A projector's own sound is not enough — that is why the speakers are included.",
+      usecase_da: "Film i gården, fodboldkamp til festen eller børnebiograf til fødselsdagen. Lyden fra en projektor rækker ikke, derfor er højtalerne med.",
+      usecase_en: "A film in the courtyard, the match at the party or a kids' cinema for the birthday. A projector's own sound is not enough, that is why the speakers are included.",
       parts: [
         { productId: "projektor", label_da: "Projektor", label_en: "Projector", price: 495 },
         { productId: "laerred_160", label_da: "Lærred 160 cm", label_en: "Screen 160 cm", price: 195 },
@@ -938,8 +940,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-stemningslys-taendt-v3-white.webp",
     name_da: "Stemningslys-pakken",
     name_en: "Ambient light package",
-    desc_da: "4 uplights, lyskæde og discokugle — hele rummet skifter karakter. Spar 140 kr.",
-    desc_en: "4 uplights, fairy lights and a disco ball — the whole room changes character. Save 140 DKK.",
+    desc_da: "4 uplights, lyskæde og discokugle, hele rummet skifter karakter. Spar 140 kr.",
+    desc_en: "4 uplights, fairy lights and a disco ball, the whole room changes character. Save 140 DKK.",
     contents: ["4× LED uplight til vægge og hjørner", "10 m lyskæde", "Discokugle med motor og spot", "Strømkabler"],
     allowedAddons: ["rog", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -962,14 +964,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-diskolys-taendt-v2-white.webp",
     name_da: "Diskolys-pakken",
     name_en: "Disco light package",
-    desc_da: "Diskolyseffekt og discokugle — dansegulvet for 645 kr. Spar 145 kr.",
-    desc_en: "Disco light effect and disco ball — the dancefloor for 645 DKK. Save 145 DKK.",
+    desc_da: "Diskolyseffekt og discokugle, dansegulvet for 645 kr. Spar 145 kr.",
+    desc_en: "Disco light effect and disco ball, the dancefloor for 645 DKK. Save 145 DKK.",
     contents: ["LED-par-lys med automatiske farveeffekter", "Discokugle 40 cm med motor og spot", "Stativ/ophæng til kuglen", "Strømkabler"],
     allowedAddons: ["rog", "lyskaeder_farvet", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 145,
-      usecase_da: "Den billigste vej til et dansegulv: kuglen over gulvet, effekten pegende hen over det. Alt kører på almindelig strøm — sæt til, og det virker.",
-      usecase_en: "The cheapest way to a dancefloor: the ball above the floor, the effect pointing across it. Everything runs on a normal socket — plug in and it works.",
+      usecase_da: "Den billigste vej til et dansegulv: kuglen over gulvet, effekten pegende hen over det. Alt kører på almindelig strøm, sæt til, og det virker.",
+      usecase_en: "The cheapest way to a dancefloor: the ball above the floor, the effect pointing across it. Everything runs on a normal socket, plug in and it works.",
       parts: [
         { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 195 },
         { productId: "discokugle", label_da: "Discokugle 40 cm", label_en: "Disco ball 40 cm", price: 595 },
@@ -985,8 +987,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-teenagefest-taendt-v2-white.webp",
     name_da: "Teenagefest-lys",
     name_en: "Teen party lights",
-    desc_da: "Diskolyseffekt, discokugle og farvet lyskæde — kælderen bliver en klub for 745 kr. Spar 140 kr.",
-    desc_en: "Disco effect, disco ball and coloured fairy lights — the basement becomes a club for 745 DKK. Save 140 DKK.",
+    desc_da: "Diskolyseffekt, discokugle og farvet lyskæde, kælderen bliver en klub for 745 kr. Spar 140 kr.",
+    desc_en: "Disco effect, disco ball and coloured fairy lights, the basement becomes a club for 745 DKK. Save 140 DKK.",
     contents: ["LED-par-lys med automatiske farveeffekter", "Discokugle 30 cm med motor og spot", "10 m farvet lyskæde", "Strømkabler"],
     allowedAddons: ["rog", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -1009,8 +1011,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-festtelt-taendt-white.webp",
     name_da: "Festtelt-lys",
     name_en: "Party tent lights",
-    desc_da: "To lyskæder og fire uplights — teltet og haven lyst op for 695 kr. Spar 90 kr.",
-    desc_en: "Two strings of fairy lights and four uplights — tent and garden lit for 695 DKK. Save 90 DKK.",
+    desc_da: "To lyskæder og fire uplights, teltet og haven lyst op for 695 kr. Spar 90 kr.",
+    desc_en: "Two strings of fairy lights and four uplights, tent and garden lit for 695 DKK. Save 90 DKK.",
     contents: ["10 m lyskæde varm hvid", "10 m lyskæde farvet", "4× LED uplight", "Strømkabler"],
     allowedAddons: ["discokugle", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -1033,14 +1035,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-bryllupslys-taendt-white.webp",
     name_da: "Bryllupslys-pakken",
     name_en: "Wedding light package",
-    desc_da: "Lyskæde, uplights og low fog til brudevalsen — dans på skyer for 1.245 kr. Spar 140 kr.",
-    desc_en: "Fairy lights, uplights and low fog for the wedding waltz — dancing on clouds for 1,245 DKK. Save 140 DKK.",
+    desc_da: "Lyskæde, uplights og low fog til brudevalsen, dans på skyer for 1.245 kr. Spar 140 kr.",
+    desc_en: "Fairy lights, uplights and low fog for the wedding waltz, dancing on clouds for 1,245 DKK. Save 140 DKK.",
     contents: ["10 m lyskæde varm hvid", "4× LED uplight", "Low fog-maskine med væske og is-instruks", "Strømkabler"],
     allowedAddons: ["discokugle", "lyskaeder_farvet", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 140,
-      usecase_da: "Lys uden lyd — til brylluppet hvor musikken er en DJ eller en playliste. Uplightene løfter laden eller salen, kæden giver det varme lys over bordene, og til brudevalsen lægger low fog-maskinen et gulv af skyer.",
-      usecase_en: "Light without sound — for the wedding where the music is a DJ or a playlist. Uplights lift the barn or hall, the string gives warm light above the tables, and for the first dance the low fog machine lays a floor of clouds.",
+      usecase_da: "Lys uden lyd, til brylluppet hvor musikken er en DJ eller en playliste. Uplightene løfter laden eller salen, kæden giver det varme lys over bordene, og til brudevalsen lægger low fog-maskinen et gulv af skyer.",
+      usecase_en: "Light without sound, for the wedding where the music is a DJ or a playlist. Uplights lift the barn or hall, the string gives warm light above the tables, and for the first dance the low fog machine lays a floor of clouds.",
       parts: [
         { productId: "lyskaeder", label_da: "Lyskæde varm hvid", label_en: "Fairy lights warm white", price: 195 },
         { productId: "uplight_4", label_da: "Uplight 4-pak", label_en: "Uplight 4-pack", price: 395 },
@@ -1057,14 +1059,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-diskotek-taendt-v2-white.webp",
     name_da: "Diskotek-pakken",
     name_en: "Club light package",
-    desc_da: "Lys-pakke, diskolyseffekt og discokugle — fuldt dansegulv uden røg for 1.095 kr. Spar 190 kr.",
-    desc_en: "Light package, disco effect and disco ball — a full dancefloor without fog for 1,095 DKK. Save 190 DKK.",
+    desc_da: "Lys-pakke, diskolyseffekt og discokugle, fuldt dansegulv uden røg for 1.095 kr. Spar 190 kr.",
+    desc_en: "Light package, disco effect and disco ball, a full dancefloor without fog for 1,095 DKK. Save 190 DKK.",
     contents: ["2× farvede LED-lamper + centereffekt på stativ", "Ekstra LED-par-lys", "Discokugle 40 cm med motor og spot", "Strøm og kabler"],
     allowedAddons: ["rog", "uplight_4", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 190,
-      usecase_da: "Det fulde dansegulv — uden røgmaskine. Mange forsamlingshuse og lejede lokaler har røgalarm, hvor Lysshowets røg ikke må tændes; her laver fire lamper og kuglen showet alene.",
-      usecase_en: "The full dancefloor — without a fog machine. Many rented venues have smoke alarms where fog is off limits; here four lamps and the ball make the show on their own.",
+      usecase_da: "Det fulde dansegulv, uden røgmaskine. Mange forsamlingshuse og lejede lokaler har røgalarm, hvor Lysshowets røg ikke må tændes; her laver fire lamper og kuglen showet alene.",
+      usecase_en: "The full dancefloor, without a fog machine. Many rented venues have smoke alarms where fog is off limits; here four lamps and the ball make the show on their own.",
       parts: [
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
         { productId: "lyseffekt", label_da: "Enkelt lyseffekt", label_en: "Single light effect", price: 195 },
@@ -1080,14 +1082,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-soundboks-v2-white.webp",
     name_da: "Soundboks-pakken med lys",
     name_en: "Soundboks package with lights",
-    desc_da: "Soundboks 4 + lys-pakke. Batteridrevet lyd og lys til festen — spar 100 kr.",
-    desc_en: "Soundboks 4 + light package. Battery-powered sound and lights — save 100 DKK.",
+    desc_da: "Soundboks 4 + lys-pakke. Batteridrevet lyd og lys til festen, spar 100 kr.",
+    desc_en: "Soundboks 4 + light package. Battery-powered sound and lights, save 100 DKK.",
     contents: ["Soundboks 4 (batteri)", "2× LED-lyseffekt", "Centereffekt", "Stativ", "Alle kabler"],
     allowedAddons: ["rog", "batteri", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 100,
-      usecase_da: "Soundboks klarer lyden uden en stikkontakt, men står ofte i et rum med loftslys tændt. Lys-pakken er det, der gør det til en fest — og den kræver strøm, så den skal tænkes med, hvis I er udenfor.",
-      usecase_en: "The Soundboks handles sound without a socket, but often stands in a room with the ceiling lights on. The light package is what makes it a party — and it needs power, so plan for that if you are outdoors.",
+      usecase_da: "Soundboks klarer lyden uden en stikkontakt, men står ofte i et rum med loftslys tændt. Lys-pakken er det, der gør det til en fest, og den kræver strøm, så den skal tænkes med, hvis I er udenfor.",
+      usecase_en: "The Soundboks handles sound without a socket, but often stands in a room with the ceiling lights on. The light package is what makes it a party, and it needs power, so plan for that if you are outdoors.",
       parts: [
         { productId: "soundboks", label_da: "Soundboks 4", label_en: "Soundboks 4", price: 795 },
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
@@ -1097,7 +1099,7 @@ export const rentalProducts: RentalProduct[] = [
   // Ungdomsfest-pakkerne (11. sept 2026): lyd + diskolys i én pris. De gav
   // udlejninger dengang sitet var nyt, og "ungdomsfest"/"18 års fødselsdag" er
   // søgeord med værdi, selv om Keyword Planner ikke måler lejevolumen på dem.
-  // Ingen UV, strobe eller laser — det ejer vi ikke, og vi lister ikke grej,
+  // Ingen UV, strobe eller laser, det ejer vi ikke, og vi lister ikke grej,
   // vi ikke kan levere. Siden /ungdomsfest siger det ærligt og samler efterspørgslen.
   {
     id: "pakke_ungdomsfest",
@@ -1107,8 +1109,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-ungdomsfest-taendt-white.webp",
     name_da: "Ungdomsfest-pakken",
     name_en: "Youth party package",
-    desc_da: "Soundboks 4, diskolyseffekt og discokugle — lyd og lys til ungdomsfesten for 1.295 kr. Spar 190 kr.",
-    desc_en: "Soundboks 4, disco light effect and mirror ball — sound and lights for a youth party at 1,295 DKK. Save 190 DKK.",
+    desc_da: "Soundboks 4, diskolyseffekt og discokugle, lyd og lys til ungdomsfesten for 1.295 kr. Spar 190 kr.",
+    desc_en: "Soundboks 4, disco light effect and mirror ball, sound and lights for a youth party at 1,295 DKK. Save 190 DKK.",
     contents: ["Soundboks 4 (batteri)", "LED-par-lys med automatiske farveeffekter", "Discokugle 30 cm med motor og spot", "Strømkabler"],
     allowedAddons: ["rog", "lyskaeder_farvet", "batteri", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -1130,14 +1132,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-ungdomsfest-stor-taendt-white.webp",
     name_da: "Stor ungdomsfest-pakke",
     name_en: "Large youth party package",
-    desc_da: "2× 12\" højtalere, lys-pakke, discokugle 40 cm og røgmaskine — et rigtigt diskotek til 100 gæster for 2.395 kr. Spar 285 kr.",
-    desc_en: "2× 12\" speakers, light package, 40 cm mirror ball and fog machine — a proper disco for 100 guests at 2,395 DKK. Save 285 DKK.",
+    desc_da: "2× 12\" højtalere, lys-pakke, discokugle 40 cm og røgmaskine, et rigtigt diskotek til 100 gæster for 2.395 kr. Spar 285 kr.",
+    desc_en: "2× 12\" speakers, light package, 40 cm mirror ball and fog machine, a proper disco for 100 guests at 2,395 DKK. Save 285 DKK.",
     contents: ['2× EV 12" højtalere', "2× farvede LED-lamper + centereffekt på stativ", "Discokugle 40 cm med motor og spot", "Røgmaskine med væske", "Alle kabler"],
     allowedAddons: ["subwoofer", "stativer", "mikrofon", "lyskaeder_farvet", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 285,
-      usecase_da: "Til den store ungdomsfest i forsamlingshuset, hallen eller laden — studenterfesten, blå mandag-festen eller 18-årsfødselsdagen med hele årgangen. Højtalerne fylder rummet til 100 gæster — tag subwooferen med, hvis I er flere, røgen får lysstrålerne og kuglens prikker frem.",
-      usecase_en: "For the big youth party in a community hall, sports hall or barn — the graduation party or the 18th birthday with the whole year group. The speakers fill a room of 100 guests — add the subwoofer if you are more, and the fog makes the light beams and the ball's dots visible.",
+      usecase_da: "Til den store ungdomsfest i forsamlingshuset, hallen eller laden, studenterfesten, blå mandag-festen eller 18-årsfødselsdagen med hele årgangen. Højtalerne fylder rummet til 100 gæster, tag subwooferen med, hvis I er flere, røgen får lysstrålerne og kuglens prikker frem.",
+      usecase_en: "For the big youth party in a community hall, sports hall or barn, the graduation party or the 18th birthday with the whole year group. The speakers fill a room of 100 guests, add the subwoofer if you are more, and the fog makes the light beams and the ball's dots visible.",
       parts: [
         { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
@@ -1176,8 +1178,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-lys-v4-white.webp",
     name_da: "Lysshow",
     name_en: "Light show",
-    desc_da: "Lys-pakke, discokugle og røgmaskine. Lyset bliver synligt i luften — spar 190 kr.",
-    desc_en: "Light package, disco ball and fog machine. The beams become visible in the air — save 190 DKK.",
+    desc_da: "Lys-pakke, discokugle og røgmaskine. Lyset bliver synligt i luften, spar 190 kr.",
+    desc_en: "Light package, disco ball and fog machine. The beams become visible in the air, save 190 DKK.",
     contents: ["2× farvet LED-lyseffekt", "Centereffekt", "Discokugle 40 cm med motor og spot", "Røgmaskine med væske", "Stativer og kabler"],
     allowedAddons: ["uplight_4", "lyskaeder", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -1199,14 +1201,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-uplight-4-v2-white.webp",
     name_da: "Lysshow stort",
     name_en: "Light show large",
-    desc_da: "Lys-pakke, fire uplights, discokugle og low fog. Hele rummet skifter karakter — spar 285 kr.",
-    desc_en: "Light package, four uplights, disco ball and low fog. The whole room changes — save 285 DKK.",
+    desc_da: "Lys-pakke, fire uplights, discokugle og low fog. Hele rummet skifter karakter, spar 285 kr.",
+    desc_en: "Light package, four uplights, disco ball and low fog. The whole room changes, save 285 DKK.",
     contents: ["2× farvet LED-lyseffekt", "Centereffekt", "4× LED uplight til vægge og hjørner", "Discokugle 40 cm", "Low fog-maskine (røggulv)", "Stativer og kabler"],
     allowedAddons: ["lyskaeder", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 285,
-      usecase_da: "Til den store fest eller det lejede lokale med lysstofrør i loftet. Uplights maler væggene, lyseffekterne dækker dansegulvet, og low fog lægger et røggulv i stedet for at fylde rummet med røg — så røgalarmen får fred.",
-      usecase_en: "For the big party or the rented venue with fluorescent ceiling lights. Uplights paint the walls, the effects cover the dancefloor, and low fog lays a carpet of fog instead of filling the room — so the smoke alarm stays quiet.",
+      usecase_da: "Til den store fest eller det lejede lokale med lysstofrør i loftet. Uplights maler væggene, lyseffekterne dækker dansegulvet, og low fog lægger et røggulv i stedet for at fylde rummet med røg, så røgalarmen får fred.",
+      usecase_en: "For the big party or the rented venue with fluorescent ceiling lights. Uplights paint the walls, the effects cover the dancefloor, and low fog lays a carpet of fog instead of filling the room, so the smoke alarm stays quiet.",
       parts: [
         { productId: "lys", label_da: "Lys-pakke", label_en: "Light package", price: 495 },
         { productId: "uplight_4", label_da: "Uplight 4-pak", label_en: "Uplight 4-pack", price: 395 },
@@ -1216,29 +1218,29 @@ export const rentalProducts: RentalProduct[] = [
     },
   },
   { id: "discokugle", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 595, image: "/images/product-discokugle-v2-white.webp", name_da: "Discokugle 40 cm", name_en: "Disco ball 40 cm", desc_da: "Komplet pakke: 40 cm roterende discokugle med motor, spot og stativ.", desc_en: "Complete package: 40 cm rotating disco ball with motor, spotlight and stand.", contents: ["Discokugle 40 cm", "Motor", "LED-spot", "Stativ/ophæng", "Strømkabel"] },
-  // Samme pakke, mindre kugle. Egen side er ikke lavet — begge peger på
+  // Samme pakke, mindre kugle. Egen side er ikke lavet, begge peger på
   // /discokugle, hvor størrelserne står beskrevet.
   { id: "discokugle_30", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 495, image: "/images/product-discokugle-v2-white.webp", name_da: "Discokugle 30 cm", name_en: "Disco ball 30 cm", desc_da: "Komplet pakke: 30 cm roterende discokugle med motor, spot og stativ.", desc_en: "Complete package: 30 cm rotating disco ball with motor, spotlight and stand.", contents: ["Discokugle 30 cm", "Motor", "LED-spot", "Stativ/ophæng", "Strømkabel"] },
-  { id: "lyskaeder", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-v2-white.webp", name_da: "Lyskæde varm hvid", name_en: "Fairy lights warm white", desc_da: "10m lyskæde med varmt hvidt lys — hyggelig festbelysning.", desc_en: "10m fairy lights with warm white light — cosy party lighting.", contents: ["10m lyskæde", "Varm hvide pærer", "Strømforsyning"] },
-  { id: "lyskaeder_farvet", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-farvet-v2-white.webp", name_da: "Lyskæde farvet", name_en: "Fairy lights coloured", desc_da: "10m lyskæde med farvede pærer — festlig stemning fra første sekund.", desc_en: "10m fairy lights with coloured bulbs — party mood instantly.", contents: ["10m lyskæde", "Farvede pærer", "Strømforsyning"] },
-  { id: "uplight", page: "/uplights", category: "lys", price: 125, image: "/images/product-uplight-v2-white.webp", name_da: "Uplight", name_en: "Uplight", desc_da: "Simpel LED uplight på gulv — plug and play. Vasker vægge og hjørner i farvet lys.", desc_en: "Simple floor LED uplight — plug and play. Washes walls and corners in coloured light.", contents: ["1× LED uplight", "Strømkabel", "Automatiske farver"] },
-  { id: "uplight_4", page: "/uplights", category: "lys", price: 395, image: "/images/product-uplight-4-v2-white.webp", name_da: "Uplight 4-pak", name_en: "Uplight 4-pack", desc_da: "4 simple LED uplights til vægge og hjørner — spar 105 kr vs enkeltvis.", desc_en: "4 simple LED uplights for walls and corners — save 105 DKK vs singles.", contents: ["4× LED uplight", "Strømkabler", "Plug and play"] },
+  { id: "lyskaeder", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-v2-white.webp", name_da: "Lyskæde varm hvid", name_en: "Fairy lights warm white", desc_da: "10m lyskæde med varmt hvidt lys, hyggelig festbelysning.", desc_en: "10m fairy lights with warm white light, cosy party lighting.", contents: ["10m lyskæde", "Varm hvide pærer", "Strømforsyning"] },
+  { id: "lyskaeder_farvet", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-farvet-v2-white.webp", name_da: "Lyskæde farvet", name_en: "Fairy lights coloured", desc_da: "10m lyskæde med farvede pærer, festlig stemning fra første sekund.", desc_en: "10m fairy lights with coloured bulbs, party mood instantly.", contents: ["10m lyskæde", "Farvede pærer", "Strømforsyning"] },
+  { id: "uplight", page: "/uplights", category: "lys", price: 125, image: "/images/product-uplight-v2-white.webp", name_da: "Uplight", name_en: "Uplight", desc_da: "Simpel LED uplight på gulv, plug and play. Vasker vægge og hjørner i farvet lys.", desc_en: "Simple floor LED uplight, plug and play. Washes walls and corners in coloured light.", contents: ["1× LED uplight", "Strømkabel", "Automatiske farver"] },
+  { id: "uplight_4", page: "/uplights", category: "lys", price: 395, image: "/images/product-uplight-4-v2-white.webp", name_da: "Uplight 4-pak", name_en: "Uplight 4-pack", desc_da: "4 simple LED uplights til vægge og hjørner, spar 105 kr vs enkeltvis.", desc_en: "4 simple LED uplights for walls and corners, save 105 DKK vs singles.", contents: ["4× LED uplight", "Strømkabler", "Plug and play"] },
   { id: "projektor", page: "/projektor", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", price: 495, image: "/images/product-projektor-white.webp", name_da: "Projektor", name_en: "Projector", desc_da: "Full HD projektor til præsentationer og film.", desc_en: "Full HD projector for presentations and film.", contents: ["Full HD projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
-  { id: "skaerm_55", page: "/skaerm", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 595, image: "/images/product-skaerm-white.webp", name_da: '55" Storskærm', name_en: '55" Screen', desc_da: "55\" LED-skærm på 3-fod stativ — justerbar højde.", desc_en: '55" LED screen on tripod stand — adjustable height.', contents: ['55" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
-  { id: "skaerm_32", page: "/skaerm-32", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 395, image: "/images/product-skaerm-32-white.webp", name_da: '32" Skærm', name_en: '32" Screen', desc_da: "32\" LED-skærm på 3-fod stativ — kompakt og nem at flytte. Perfekt til karaoke.", desc_en: '32" LED screen on tripod stand — compact and easy to move. Perfect for karaoke.', contents: ['32" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
+  { id: "skaerm_55", page: "/skaerm", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 595, image: "/images/product-skaerm-white.webp", name_da: '55" Storskærm', name_en: '55" Screen', desc_da: "55\" LED-skærm på 3-fod stativ, justerbar højde.", desc_en: '55" LED screen on tripod stand, adjustable height.', contents: ['55" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
+  { id: "skaerm_32", page: "/skaerm-32", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 395, image: "/images/product-skaerm-32-white.webp", name_da: '32" Skærm', name_en: '32" Screen', desc_da: "32\" LED-skærm på 3-fod stativ, kompakt og nem at flytte. Perfekt til karaoke.", desc_en: '32" LED screen on tripod stand, compact and easy to move. Perfect for karaoke.', contents: ['32" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
   { id: "traadloes_mikrofon", page: "/traadloes-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=ED_w3MHXjxk", category: "av", price: 295, image: "/images/product-mikrofon-v2-white.webp", name_da: "Trådløs mikrofon", name_en: "Wireless mic", desc_da: "Trådløs håndholdt mikrofon til taler og karaoke.", desc_en: "Wireless handheld microphone for speeches and karaoke.", contents: ["Trådløs håndholdt mic", "Modtager", "Kabelforbindelse til højtaler"] },
-  { id: "traadloes_mikrofon_pro", page: "/traadloes-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 595, image: "/images/product-mikrofon-pro-v2-white.webp", name_da: "Trådløs mikrofon PRO", name_en: "Wireless mic PRO", desc_da: "Shure BLX trådløs mikrofon — scenekvalitet til events og konferencer.", desc_en: "Shure BLX wireless microphone — stage quality for events and conferences.", contents: ["Shure trådløs håndholdt mic", "Shure modtager", "Kabelforbindelse til højtaler"] },
+  { id: "traadloes_mikrofon_pro", page: "/traadloes-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 595, image: "/images/product-mikrofon-pro-v2-white.webp", name_da: "Trådløs mikrofon PRO", name_en: "Wireless mic PRO", desc_da: "Shure BLX trådløs mikrofon, scenekvalitet til events og konferencer.", desc_en: "Shure BLX wireless microphone, stage quality for events and conferences.", contents: ["Shure trådløs håndholdt mic", "Shure modtager", "Kabelforbindelse til højtaler"] },
   { id: "headset", page: "/headset-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 345, image: "/images/product-headset-v2-white.webp", name_da: "Trådløst headset", name_en: "Wireless headset", desc_da: "Headset-mikrofon til præsentationer.", desc_en: "Headset mic for presentations.", contents: ["Headset-mikrofon", "Bodypack + modtager", "Kabelforbindelse"] },
-  { id: "headset_pro", page: "/headset-pro", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 595, image: "/images/product-headset-pro-v2-white.webp", name_da: "Trådløst headset PRO", name_en: "Wireless headset PRO", desc_da: "Professionelt headset i broadcast-kvalitet — til konferencer og scener.", desc_en: "Professional broadcast-quality headset — for conferences and stages.", contents: ["PRO headset-mikrofon", "Bodypack + modtager", "Kabelforbindelse"] },
-  { id: "haandholdt_mikrofon", page: "/haandholdt-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=4gssAwctUFQ", category: "av", price: 95, image: "/images/product-mikrofon-kabel-v2-white.webp", name_da: "Håndholdt mikrofon (kabel)", name_en: "Handheld microphone (wired)", desc_da: "Almindelig håndholdt mikrofon med kabel — til taler og sang.", desc_en: "Standard wired handheld microphone — for speeches and vocals.", contents: ["Håndholdt mic", "XLR/kabel"] },
-  { id: "haandholdt_mikrofon_pro", page: "/haandholdt-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=Y8CBYnicB5g", category: "av", price: 395, image: "/images/product-mikrofon-kabel-pro-v2-white.webp", name_da: "Håndholdt mikrofon PRO (kabel)", name_en: "Handheld microphone PRO (wired)", desc_da: "Shure Beta 58A med kabel — klassikeren til sang og taler.", desc_en: "Shure Beta 58A wired — the classic for vocals and speeches.", contents: ["Shure Beta 58A", "XLR/kabel"] },
-  { id: "laerred_160", page: "/laerred-160", youtubeUrl: "https://www.youtube.com/watch?v=PLqEcB93Sac", category: "av", price: 195, image: "/images/product-laerred-v2-white.webp", name_da: "Lærred 160 cm", name_en: "Projector screen 160 cm", desc_da: "160 cm lærred på stativ — perfekt til projektor.", desc_en: "160 cm projector screen on stand.", contents: ["160 cm lærred", "Stativ"] },
-  { id: "projektor_pro", page: "/projektor-pro", youtubeUrl: "https://www.youtube.com/watch?v=7FhRTCCKCm0", category: "av", price: 795, image: "/images/product-projektor-pro-v2-white.webp", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor — skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector — sharp even in daylight.", contents: ["5000 lumen projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
-  { id: "pakke_praesentation", page: "/pakke-praesentation", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", price: 695, image: "/images/product-projektor-white.webp", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen — spar 90 kr.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation — save 90 kr.", contents: ["Full HD projektor", "Lærred 160 cm", "Håndholdt mic + kabel", "HDMI + strøm"], bundle: { discount: 90, usecase_da: "Alt til præsentationen — projektor, lærred og mikrofon.", usecase_en: "Everything for your presentation.", parts: [ { productId: "projektor", label_da: "Projektor", label_en: "Projector", price: 495 }, { productId: "laerred_160", label_da: "Lærred 160 cm", label_en: "Screen 160 cm", price: 195 }, { productId: "haandholdt_mikrofon", label_da: "Håndholdt mikrofon", label_en: "Wired mic", price: 95 } ] } },
-  { id: "pakke_konference", page: "/pakke-konference", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 1395, image: "/images/product-skaerm-white.webp", name_da: "Konferencepakken", name_en: "Conference bundle", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke. Klar til konference — spar 140 kr.", desc_en: "55\" screen + wireless headset + small speaker package. Conference-ready — save 140 kr.", contents: ['55" skærm + stativ', "Trådløst headset", '2× 10" højtalere', "Kabler + adapter"], bundle: { discount: 140, usecase_da: "Klar til konference — skærm, headset og lyd.", usecase_en: "Conference-ready — screen, headset and sound.", parts: [ { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 345 }, { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speakers", price: 595 } ] } },
-  { id: "pakke_konference_150", page: "/konferencepakke-150", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 2395, image: "/images/product-skaerm-white.webp", name_da: "Konferencepakke 150", name_en: "Conference package 150", desc_da: '2× 12" højtalere på stativer + Shure trådløs mikrofon + headset + 55" skærm. Til sale med 100-150 deltagere — spar 235 kr.', desc_en: 'Two 12" speakers on stands + Shure wireless mic + headset + 55" screen. For rooms with 100-150 attendees — save 235 DKK.', contents: ['2× EV 12" højtalere + stativer', "Shure trådløs mikrofon PRO", "Trådløst headset", '55" skærm på stativ', "HDMI + alle kabler"], allowedAddons: ["mikrofon", ...DELIVERY_ADDON_IDS], bundle: { discount: 235, usecase_da: "Konference eller generalforsamling hvor både taleren og salen skal kunne høres og se med.", usecase_en: "Conference or general assembly where both the speaker and the room must be heard and seen.", parts: [ { productId: "festival", label_da: 'Stor højtalerpakke (2× 12")', label_en: 'Large speakers (2× 12")', price: 995 }, { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 100 }, { productId: "traadloes_mikrofon_pro", label_da: "Trådløs mikrofon PRO", label_en: "Wireless mic PRO", price: 595 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 345 }, { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 } ] } },
-  { id: "pakke_tale_musik", page: "/pakke-tale-musik", youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0", category: "av", price: 1195, image: "/images/product-festival-v2-white.webp", name_da: "Tale & musik-pakken", name_en: "Speech & music bundle", desc_da: "Stor højtalerpakke + trådløs mikrofon. Taler og musik til events — spar 95 kr.", desc_en: "Large speaker package + wireless mic. Speeches and music for events — save 95 kr.", contents: ['2× 12" højtalere', "Trådløs mikrofon", "Alle kabler"], bundle: { discount: 95, usecase_da: "Taler og musik til events.", usecase_en: "Speeches and music for events.", parts: [ { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speakers", price: 995 }, { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 295 } ] } },
-  { id: "karaoke", page: "/karaoke-maskine", youtubeUrl: "https://www.youtube.com/watch?v=_UaBe_xR3JY", category: "av", price: 695, image: "/images/product-karaoke-v2-white.webp", name_da: "Karaokemaskine", name_en: "Karaoke machine", desc_da: "Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys — tilslut TV via HDMI.", desc_en: "Singing Machine with built-in screen, 2 wireless mics and party lights — HDMI for your TV.", contents: ["Singing Machine karaoke-maskine", "2 trådløse mikrofoner", "Indbygget skærm + festlys", "HDMI-kabel + Bluetooth"] },
+  { id: "headset_pro", page: "/headset-pro", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 595, image: "/images/product-headset-pro-v2-white.webp", name_da: "Trådløst headset PRO", name_en: "Wireless headset PRO", desc_da: "Professionelt headset i broadcast-kvalitet, til konferencer og scener.", desc_en: "Professional broadcast-quality headset, for conferences and stages.", contents: ["PRO headset-mikrofon", "Bodypack + modtager", "Kabelforbindelse"] },
+  { id: "haandholdt_mikrofon", page: "/haandholdt-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=4gssAwctUFQ", category: "av", price: 95, image: "/images/product-mikrofon-kabel-v2-white.webp", name_da: "Håndholdt mikrofon (kabel)", name_en: "Handheld microphone (wired)", desc_da: "Almindelig håndholdt mikrofon med kabel, til taler og sang.", desc_en: "Standard wired handheld microphone, for speeches and vocals.", contents: ["Håndholdt mic", "XLR/kabel"] },
+  { id: "haandholdt_mikrofon_pro", page: "/haandholdt-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=Y8CBYnicB5g", category: "av", price: 395, image: "/images/product-mikrofon-kabel-pro-v2-white.webp", name_da: "Håndholdt mikrofon PRO (kabel)", name_en: "Handheld microphone PRO (wired)", desc_da: "Shure Beta 58A med kabel, klassikeren til sang og taler.", desc_en: "Shure Beta 58A wired, the classic for vocals and speeches.", contents: ["Shure Beta 58A", "XLR/kabel"] },
+  { id: "laerred_160", page: "/laerred-160", youtubeUrl: "https://www.youtube.com/watch?v=PLqEcB93Sac", category: "av", price: 195, image: "/images/product-laerred-v2-white.webp", name_da: "Lærred 160 cm", name_en: "Projector screen 160 cm", desc_da: "160 cm lærred på stativ, perfekt til projektor.", desc_en: "160 cm projector screen on stand.", contents: ["160 cm lærred", "Stativ"] },
+  { id: "projektor_pro", page: "/projektor-pro", youtubeUrl: "https://www.youtube.com/watch?v=7FhRTCCKCm0", category: "av", price: 795, image: "/images/product-projektor-pro-v2-white.webp", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor, skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector, sharp even in daylight.", contents: ["5000 lumen projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
+  { id: "pakke_praesentation", page: "/pakke-praesentation", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", price: 695, image: "/images/product-projektor-white.webp", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen, spar 90 kr.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation, save 90 kr.", contents: ["Full HD projektor", "Lærred 160 cm", "Håndholdt mic + kabel", "HDMI + strøm"], bundle: { discount: 90, usecase_da: "Alt til præsentationen, projektor, lærred og mikrofon.", usecase_en: "Everything for your presentation.", parts: [ { productId: "projektor", label_da: "Projektor", label_en: "Projector", price: 495 }, { productId: "laerred_160", label_da: "Lærred 160 cm", label_en: "Screen 160 cm", price: 195 }, { productId: "haandholdt_mikrofon", label_da: "Håndholdt mikrofon", label_en: "Wired mic", price: 95 } ] } },
+  { id: "pakke_konference", page: "/pakke-konference", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 1395, image: "/images/product-skaerm-white.webp", name_da: "Konferencepakken", name_en: "Conference bundle", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke. Klar til konference, spar 140 kr.", desc_en: "55\" screen + wireless headset + small speaker package. Conference-ready, save 140 kr.", contents: ['55" skærm + stativ', "Trådløst headset", '2× 10" højtalere', "Kabler + adapter"], bundle: { discount: 140, usecase_da: "Klar til konference, skærm, headset og lyd.", usecase_en: "Conference-ready, screen, headset and sound.", parts: [ { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 345 }, { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speakers", price: 595 } ] } },
+  { id: "pakke_konference_150", page: "/konferencepakke-150", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 2395, image: "/images/product-skaerm-white.webp", name_da: "Konferencepakke 150", name_en: "Conference package 150", desc_da: '2× 12" højtalere på stativer + Shure trådløs mikrofon + headset + 55" skærm. Til sale med 100-150 deltagere, spar 235 kr.', desc_en: 'Two 12" speakers on stands + Shure wireless mic + headset + 55" screen. For rooms with 100-150 attendees, save 235 DKK.', contents: ['2× EV 12" højtalere + stativer', "Shure trådløs mikrofon PRO", "Trådløst headset", '55" skærm på stativ', "HDMI + alle kabler"], allowedAddons: ["mikrofon", ...DELIVERY_ADDON_IDS], bundle: { discount: 235, usecase_da: "Konference eller generalforsamling hvor både taleren og salen skal kunne høres og se med.", usecase_en: "Conference or general assembly where both the speaker and the room must be heard and seen.", parts: [ { productId: "festival", label_da: 'Stor højtalerpakke (2× 12")', label_en: 'Large speakers (2× 12")', price: 995 }, { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 100 }, { productId: "traadloes_mikrofon_pro", label_da: "Trådløs mikrofon PRO", label_en: "Wireless mic PRO", price: 595 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 345 }, { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 } ] } },
+  { id: "pakke_tale_musik", page: "/pakke-tale-musik", youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0", category: "av", price: 1195, image: "/images/product-festival-v2-white.webp", name_da: "Tale & musik-pakken", name_en: "Speech & music bundle", desc_da: "Stor højtalerpakke + trådløs mikrofon. Taler og musik til events, spar 95 kr.", desc_en: "Large speaker package + wireless mic. Speeches and music for events, save 95 kr.", contents: ['2× 12" højtalere', "Trådløs mikrofon", "Alle kabler"], bundle: { discount: 95, usecase_da: "Taler og musik til events.", usecase_en: "Speeches and music for events.", parts: [ { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speakers", price: 995 }, { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 295 } ] } },
+  { id: "karaoke", page: "/karaoke-maskine", youtubeUrl: "https://www.youtube.com/watch?v=_UaBe_xR3JY", category: "av", price: 695, image: "/images/product-karaoke-v2-white.webp", name_da: "Karaokemaskine", name_en: "Karaoke machine", desc_da: "Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys, tilslut TV via HDMI.", desc_en: "Singing Machine with built-in screen, 2 wireless mics and party lights, HDMI for your TV.", contents: ["Singing Machine karaoke-maskine", "2 trådløse mikrofoner", "Indbygget skærm + festlys", "HDMI-kabel + Bluetooth"] },
   {
     id: "pakke_karaoke",
     page: "/pakke-karaoke",
@@ -1248,14 +1250,14 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-karaoke-v2-white.webp",
     name_da: "Karaokepakken",
     name_en: "Karaoke bundle",
-    desc_da: "Karaokemaskine + 32\" skærm + lille højtalerpakke. Alt til karaoke op til 40 pers. — spar 385 kr.",
-    desc_en: "Karaoke machine + 32\" screen + small speaker package. Everything for karaoke up to 40 people — save 385 kr.",
+    desc_da: "Karaokemaskine + 32\" skærm + lille højtalerpakke. Alt til karaoke op til 40 pers., spar 385 kr.",
+    desc_en: "Karaoke machine + 32\" screen + small speaker package. Everything for karaoke up to 40 people, save 385 kr.",
     contents: ["Singing Machine + 2 trådløse mikrofoner", '32" LED-skærm på 3-fod stativ', '2× Alto 10" højtalere', "HDMI + alle kabler"],
     allowedAddons: ["rog", "lyseffekt", "subwoofer", "stativer", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 385,
-      usecase_da: "Karaoke til hjemmefesten — skærm til teksterne og rigtige højtalere til lyden.",
-      usecase_en: "Karaoke for the house party — a screen for the lyrics and real speakers for the sound.",
+      usecase_da: "Karaoke til hjemmefesten, skærm til teksterne og rigtige højtalere til lyden.",
+      usecase_en: "Karaoke for the house party, a screen for the lyrics and real speakers for the sound.",
       parts: [
         { productId: "karaoke", label_da: "Karaokemaskine", label_en: "Karaoke machine", price: 695 },
         { productId: "skaerm_32", label_da: '32" Skærm', label_en: '32" Screen', price: 395 },
@@ -1272,8 +1274,8 @@ export const rentalProducts: RentalProduct[] = [
     image: "/images/product-pakke-karaoke-fest-v2-white.webp",
     name_da: "Karaoke-festpakken",
     name_en: "Karaoke party bundle",
-    desc_da: "Karaokemaskine + 55\" storskærm + store højtalere — karaoke til op til 100 pers. Spar 285 kr.",
-    desc_en: "Karaoke machine + 55\" screen + large speakers — karaoke for up to 100 people. Save 285 kr.",
+    desc_da: "Karaokemaskine + 55\" storskærm + store højtalere, karaoke til op til 100 pers. Spar 285 kr.",
+    desc_en: "Karaoke machine + 55\" screen + large speakers, karaoke for up to 100 people. Save 285 kr.",
     contents: ["Singing Machine + 2 trådløse mikrofoner", '55" LED-skærm på 3-fod stativ', '2× 12" højtalere', "Alle kabler"],
     allowedAddons: ["rog", "lyseffekt", "lys", "subwoofer", ...DELIVERY_ADDON_IDS],
     bundle: {
@@ -1287,7 +1289,7 @@ export const rentalProducts: RentalProduct[] = [
       ],
     },
   },
-  { id: "low_fog", page: "/roeg", youtubeUrl: "https://www.youtube.com/watch?v=GM_WsXv1FU4", category: "roeg", price: 795, image: "/images/product-lowfog-v2-white.webp", name_da: "Low fog-maskine (røggulv)", name_en: "Low fog machine (fog floor)", desc_da: "Laver et flot gulv af røg vha. is — 'dansen på skyer'-effekten fra bryllupper og musikvideoer.", desc_en: "Creates a floor of low-lying fog using ice — the 'dancing on clouds' effect.", contents: ["Low fog-maskine", "Røgvæske", "Is-bakke / instruks"] },
+  { id: "low_fog", page: "/roeg", youtubeUrl: "https://www.youtube.com/watch?v=GM_WsXv1FU4", category: "roeg", price: 795, image: "/images/product-lowfog-v2-white.webp", name_da: "Low fog-maskine (røggulv)", name_en: "Low fog machine (fog floor)", desc_da: "Laver et flot gulv af røg vha. is, 'dansen på skyer'-effekten fra bryllupper og musikvideoer.", desc_en: "Creates a floor of low-lying fog using ice, the 'dancing on clouds' effect.", contents: ["Low fog-maskine", "Røgvæske", "Is-bakke / instruks"] },
 ];
 
 /* ───── På pause ─────
@@ -1297,11 +1299,11 @@ export const rentalProducts: RentalProduct[] = [
  * Search Console viste ~350 visninger om måneden på "lej storskærm"-søgninger,
  * der landede på en side, som svarede "udlejes ikke lige nu". Efterspørgslen
  * var der, svaret var forkert. Kun ANNONCERNE for de produkter er stadig
- * pauset — vi køber ikke klik på dem, men vi tager imod dem, der selv finder os.
+ * pauset, vi køber ikke klik på dem, men vi tager imod dem, der selv finder os.
  *
  * Mekanikken bliver stående og virker: sætter Frederik et produkt på pause i
  * /admin/produkter, sætter det `hidden`, og så filtreres produktet væk hos
- * kunden (useProducts), i søgningen, i DBA-feedet og i serverens prisopslag —
+ * kunden (useProducts), i søgningen, i DBA-feedet og i serverens prisopslag
  * så et pauset produkt hverken kan findes eller betales. Listen herunder er
  * for de sider og tests, der skal kunne sige pausen højt.
  * Sandheden om hvad kunden kan booke er `hidden` i kataloget ovenfor.
@@ -1319,12 +1321,12 @@ export const PAUSEDE_SIDER: string[] = rentalProducts
   .filter((p) => p.hidden && p.page)
   .map((p) => p.page!);
 
-/** Navigation categories — single source of truth used by BurgerMenu and admin */
+/** Navigation categories, single source of truth used by BurgerMenu and admin */
 export interface NavLink { href: string; label: string; label_en: string }
 export interface NavCategory { id: string; title: string; title_en: string; href: string; links: NavLink[] }
 
 /**
- * Menuen er en vej ind i en kategori — ikke et katalog.
+ * Menuen er en vej ind i en kategori, ikke et katalog.
  *
  * Da pakkestigen og lejlighedspakkerne kom til, voksede menuen til 44 links,
  * hvoraf fjorten lå under Lyd alene. Det gør det sværere at vælge, ikke
@@ -1333,7 +1335,7 @@ export interface NavCategory { id: string; title: string; title_en: string; href
  * hvor kategorisiden har hele udvalget.
  *
  * Reglen holdes af en test: højst seks links pr. kategori, og hvert produkt
- * skal kunne nås fra sin kategoriside — ikke fra menuen.
+ * skal kunne nås fra sin kategoriside, ikke fra menuen.
  */
 export const NAV_CATEGORIES: NavCategory[] = [
   {
@@ -1358,11 +1360,11 @@ export const NAV_CATEGORIES: NavCategory[] = [
     title_en: "Lighting & Effects",
     href: "/festlys",
     links: [
-      { href: "/lyspakker", label: "Lyspakker — vælg efter festen", label_en: "Light packages — by occasion" },
+      { href: "/lyspakker", label: "Lyspakker, vælg efter festen", label_en: "Light packages, by occasion" },
       { href: "/stemningslys", label: "Stemningslys-pakken", label_en: "Ambient light package" },
       { href: "/lys-pakke", label: "Lys-pakke", label_en: "Light package" },
       { href: "/discokugle", label: "Discokugle", label_en: "Disco ball" },
-      { href: "/lysshow", label: "Lysshow — færdige pakker", label_en: "Light shows — ready-made" },
+      { href: "/lysshow", label: "Lysshow, færdige pakker", label_en: "Light shows, ready-made" },
       { href: "/festlys", label: "Se alt lys", label_en: "All party lights" },
     ],
   },
@@ -1373,7 +1375,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
     href: "/roeg",
     links: [
       { href: "/roegmaskine", label: "Røgmaskine", label_en: "Fog machine" },
-      { href: "/roeg", label: "Low fog — røggulv", label_en: "Low fog — fog floor" },
+      { href: "/roeg", label: "Low fog, røggulv", label_en: "Low fog, fog floor" },
     ],
   },
   {
@@ -1393,7 +1395,7 @@ export const NAV_CATEGORIES: NavCategory[] = [
   {
     // Kom tilbage 8. september 2026 sammen med produkterne. Uden en vej ind i
     // menuen lå de ti sider som blindgyder, Google crawlede uden intern
-    // linkværdi — se generate-sitemap.py's advarsel om forældreløse sider.
+    // linkværdi, se generate-sitemap.py's advarsel om forældreløse sider.
     id: "av",
     title: "Billede & Karaoke",
     title_en: "Screens & Karaoke",
@@ -1410,10 +1412,11 @@ export const NAV_CATEGORIES: NavCategory[] = [
 
 /**
  * Hvilke pakker der bor på hvilken kategoriside. Menuen viser dem ikke længere,
- * så det her er kontrakten for at de stadig kan findes — en test kræver at hver
+ * så det her er kontrakten for at de stadig kan findes, en test kræver at hver
  * pakke med en egen side står på præcis én kategoriside.
  */
 export const KATEGORI_PAKKER: Record<string, string[]> = {
+  "/dj-pult": ["dj_pakke_lille", "dj_pakke_mellem", "dj_pakke_stor"],
   ...Object.fromEntries(eventSituations.map(s => [`/events/${s.slug}`, [...s.packageIds]])),
   "/lej-hojtaler": [
     "halloween_lys",
@@ -1434,7 +1437,7 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
     "pakke_lydmand_firma",
     "pakke_lydmand_stor",
   ],
-  // Lyspakkerne bor på /lyspakker — landingssiden der rendrer fra denne liste.
+  // Lyspakkerne bor på /lyspakker, landingssiden der rendrer fra denne liste.
   // /festlys viser dem OGSÅ i sit produktgitter, men kategorisiden er én.
   "/lyspakker": [
     "pakke_stemningslys",
@@ -1450,14 +1453,14 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
   "/lej-projektor": ["pakke_filmaften"],
 };
 
-/** Lejlighedspakkerne — vises under stigen på /lej-hojtaler */
+/** Lejlighedspakkerne, vises under stigen på /lej-hojtaler */
 export const LYD_LEJLIGHEDSPAKKER = ["halloween_lys", "halloween_lille", "halloween_stor", "pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys", "pakke_ungdomsfest", "pakke_ungdomsfest_stor"];
 
-/** Pakkerne med lydmand — vises samlet på /lej-hojtaler. Kørslen er med i alle tre. */
+/** Pakkerne med lydmand, vises samlet på /lej-hojtaler. Kørslen er med i alle tre. */
 export const LYDMAND_PAKKER = ["pakke_lydmand_fest", "pakke_lydmand_firma", "pakke_lydmand_stor"];
 
-/** AV-pakkerne — vises samlet på /av-udstyr */
-/** Lysshow-pakkerne — vises samlet på /lysshow */
+/** AV-pakkerne, vises samlet på /av-udstyr */
+/** Lysshow-pakkerne, vises samlet på /lysshow */
 export const LYSSHOW_PAKKER = ["pakke_lysshow", "pakke_lysshow_stor", "pakke_stemningslys"];
 
 /** Lydpakker der (også) vises som ekstra på /av-udstyr og i anledningslisten */
@@ -1471,26 +1474,26 @@ export const AV_PAKKER = ["pakke_tale_musik", "pakke_praesentation", "pakke_konf
  *
  * Stigen er navngivet efter antal gæster, ikke efter grej: kunden ved hvor
  * mange der kommer, men ikke hvad 2× 12" EV betyder. Den bruges af
- * /lydanlaeg og er samtidig kontrakten mellem siden og kataloget — en test
+ * /lydanlaeg og er samtidig kontrakten mellem siden og kataloget, en test
  * låser at hvert trin peger på et produkt der findes, og at pakkeprisen er
  * lavere end delene hver for sig.
  *
  * Gæstetallene gælder INDENDØRS. Udendørs uden vægge halveres de, og det skal
- * stå på siden — ellers lover vi mere end anlægget kan.
+ * stå på siden, ellers lover vi mere end anlægget kan.
  */
 export interface LadderStep {
   /** Produkt-id i kataloget. null = for stor til hylden, kun tilbud. */
   productId: string | null;
   navn: string;
   gaester: string;
-  /** Øvre grænse indendørs — bruges til at sortere og til at vælge trin */
+  /** Øvre grænse indendørs, bruges til at sortere og til at vælge trin */
   maxGaester: number;
   href: string;
   /** null = pris efter tilbud */
   pris: number | null;
   hvad: string;
   koersel: "tilvalg" | "anbefalet" | "tilbud";
-  /** Engelsk udgave af de tre tekster — /en/lydanlaeg viser samme stige. */
+  /** Engelsk udgave af de tre tekster, /en/lydanlaeg viser samme stige. */
   navn_en: string;
   gaester_en: string;
   hvad_en: string;
@@ -1498,7 +1501,7 @@ export interface LadderStep {
 
 /**
  * Hvilken pakke en anledningsside anbefaler. Før pegede siderne på et
- * enkeltprodukt — polterabend anbefalede en højtaler til 345 kr — og så bliver
+ * enkeltprodukt, polterabend anbefalede en højtaler til 345 kr, og så bliver
  * ordren i den størrelse. En test låser at hver anledning har en pakke, og at
  * siden rent faktisk bruger den.
  */
@@ -1519,10 +1522,10 @@ export const LADDER_FEST: LadderStep[] = [
   { productId: "pakke_fest_stor", navn: "Festpakke 100", navn_en: "Party package 100", gaester: "50-100", gaester_en: "50-100", maxGaester: 100, href: "/festpakke-stor", pris: 1290, hvad: '2× 12" højtalere + lys-pakke', hvad_en: '2× 12" speakers + light package', koersel: "tilvalg" },
   { productId: "pakke_fest_150", navn: "Festpakke 150", navn_en: "Party package 150", gaester: "100-150", gaester_en: "100-150", maxGaester: 150, href: "/festpakke-150", pris: 2345, hvad: '2× 12" + sub + stativer + lys + røg', hvad_en: '2× 12" + sub + stands + lights + fog', koersel: "anbefalet" },
   { productId: "pakke_fest_250", navn: "Festpakke 250", navn_en: "Party package 250", gaester: "150-250", gaester_en: "150-250", maxGaester: 250, href: "/festpakke-250", pris: 3645, hvad: '4× 12" + 2 subs + stativer + lys + røg', hvad_en: '4× 12" + 2 subs + stands + lights + fog', koersel: "anbefalet" },
-  { productId: null, navn: "Over 250 gæster", navn_en: "More than 250 guests", gaester: "250+", gaester_en: "250+", maxGaester: 9999, href: "/erhverv#tilbud", pris: null, hvad: "Større tops og subs skaffes — tekniker med på dagen", hvad_en: "We source larger tops and subs — a technician comes on the day", koersel: "tilbud" },
+  { productId: null, navn: "Over 250 gæster", navn_en: "More than 250 guests", gaester: "250+", gaester_en: "250+", maxGaester: 9999, href: "/erhverv#tilbud", pris: null, hvad: "Større tops og subs skaffes, tekniker med på dagen", hvad_en: "We source larger tops and subs, a technician comes on the day", koersel: "tilbud" },
 ];
 
-/** Pakkerne fra feststigen, i rækkefølge — det forsiden viser. Lejlighedspakkerne
+/** Pakkerne fra feststigen, i rækkefølge, det forsiden viser. Lejlighedspakkerne
  *  (bryllup, firmafest, udendørs …) hører til på deres egne sider, ikke i en
  *  grid med otte kort hvor ingen af dem bliver læst. */
 export const FEST_LADDER_IDS: string[] = LADDER_FEST.map((t) => t.productId).filter(
@@ -1535,13 +1538,13 @@ export const FEST_LADDER_IDS: string[] = LADDER_FEST.map((t) => t.productId).fil
  *  Forsiden linker videre til dem i teksten under kortene. */
 export const FEST_LADDER_FORSIDE_IDS: string[] = FEST_LADDER_IDS.slice(0, 2);
 
-/* LADDER_TALE er fjernet sammen med pausen: alle tre trin — Præsentation,
- * Møde 100 og Konference 150 — havde projektor eller skærm med, og en stige
+/* LADDER_TALE er fjernet sammen med pausen: alle tre trin, Præsentation,
+ * Møde 100 og Konference 150, havde projektor eller skærm med, og en stige
  * hvor hvert trin er udsolgt er ikke en stige. /lydanlaeg henviser i stedet
  * til Tale & musik-pakken, mikrofonerne og et tilbud på det større.
  */
 
-/** Price multiplier by number of rental days — flat price regardless of duration */
+/** Price multiplier by number of rental days, flat price regardless of duration */
 export const dayMultiplier: Record<number, number> = {
   1: 1.0,
   2: 1.0,
@@ -1560,7 +1563,7 @@ export function applyDiscount(price: number): number {
   return price;
 }
 
-/** Cheapest speaker price — use in meta tags, hero, etc. */
+/** Cheapest speaker price, use in meta tags, hero, etc. */
 export function cheapestSpeakerPrice(list: Speaker[] = speakers): number {
   const visible = list.filter((s) => !s.hidden);
   return visible.length ? Math.min(...visible.map((s) => s.price)) : 0;
@@ -1579,7 +1582,7 @@ export const startPrice = cheapestSpeakerPrice();
  * er en fejl ved build, ikke en tavs nul-pris.
  */
 
-/** Katalogpris for et produkt-id (default-kataloget — brug LivePrice for admin-redigerede tal). */
+/** Katalogpris for et produkt-id (default-kataloget, brug LivePrice for admin-redigerede tal). */
 export function catalogPrice(id: string): number {
   const p =
     speakers.find((s) => s.id === id) ??
@@ -1589,14 +1592,14 @@ export function catalogPrice(id: string): number {
   return p.price;
 }
 
-/** Rabatten i kr på en pakke — "spar X kr". */
+/** Rabatten i kr på en pakke, "spar X kr". */
 export function catalogDiscount(id: string): number {
   const p = rentalProducts.find((r) => r.id === id);
   if (!p?.bundle) throw new Error(`catalogDiscount: "${id}" er ikke en pakke`);
   return p.bundle.discount;
 }
 
-/** Hvad delene koster hver for sig — "1.300 kr i stedet for 1.685 kr". */
+/** Hvad delene koster hver for sig, "1.300 kr i stedet for 1.685 kr". */
 export function catalogPartsPrice(id: string): number {
   const p = rentalProducts.find((r) => r.id === id);
   if (!p?.bundle) throw new Error(`catalogPartsPrice: "${id}" er ikke en pakke`);
@@ -1608,7 +1611,7 @@ export function prisTekst(n: number): string {
   return n.toLocaleString("da-DK");
 }
 
-/** "595 kr" — prisen som den skrives midt i en sætning. */
+/** "595 kr", prisen som den skrives midt i en sætning. */
 export function prisKr(id: string): string {
   return `${prisTekst(catalogPrice(id))} kr`;
 }
@@ -1618,12 +1621,12 @@ export function rabatKr(id: string): string {
   return `${prisTekst(catalogDiscount(id))} kr`;
 }
 
-/** "fra 395 kr" som tekst — billigste højtaler, til sidetitler og meta. */
+/** "fra 395 kr" som tekst, billigste højtaler, til sidetitler og meta. */
 export function startPrisKr(): string {
   return `${prisTekst(startPrice)} kr`;
 }
 
-/** "95-3645 kr" — LocalBusiness priceRange over hele det synlige katalog. */
+/** "95-3645 kr", LocalBusiness priceRange over hele det synlige katalog. */
 export function prisSpaend(): string {
   const alle = [...speakers, ...addons, ...rentalProducts]
     .filter((p) => !p.hidden)
@@ -1631,12 +1634,12 @@ export function prisSpaend(): string {
   return `${Math.min(...alle)}-${Math.max(...alle)} kr`;
 }
 
-/** "595 DKK" — samme tal, engelsk valutakode. Til /en-sider. */
+/** "595 DKK", samme tal, engelsk valutakode. Til /en-sider. */
 export function prisDkk(id: string): string {
   return `${prisTekst(catalogPrice(id))} DKK`;
 }
 
-/** "395 DKK" — billigste højtaler, engelsk. */
+/** "395 DKK", billigste højtaler, engelsk. */
 export function startPrisDkk(): string {
   return `${prisTekst(startPrice)} DKK`;
 }

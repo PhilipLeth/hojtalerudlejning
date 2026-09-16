@@ -59,7 +59,7 @@ export default function KobenhavnPage() {
     ],
   };
 
-  // LocalBusiness-markup bygges af indstillingerne — se LocalBusinessJsonLd
+  // LocalBusiness-markup bygges af indstillingerne, se LocalBusinessJsonLd
 
   return (
     <>
@@ -116,7 +116,7 @@ export default function KobenhavnPage() {
             Sammenlign priser p&aring; h&oslash;jtalerudlejning i K&oslash;benhavn
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Vi tilbyder K&oslash;benhavns laveste priser p&aring; professionelt lydudstyr. Ingen skjulte gebyrer — du betaler f&oslash;rst ved afhentning.
+            Vi tilbyder K&oslash;benhavns laveste priser p&aring; professionelt lydudstyr. Ingen skjulte gebyrer, du betaler f&oslash;rst ved afhentning.
           </p>
 
           <div className="grid gap-6 sm:grid-cols-2">
@@ -232,7 +232,7 @@ export default function KobenhavnPage() {
               </div>
               <h3 className="font-semibold text-white">K&oslash;benhavn S</h3>
               <p className="mt-2 text-sm text-white/50">
-                Afhentning p&aring; Amager. Eller billig levering i hele K&oslash;benhavn — kun{" "}
+                Afhentning p&aring; Amager. Eller billig levering i hele K&oslash;benhavn, kun{" "}
                 <LivePrice productId="levering_ud" prefix="" suffix=" kr" /> inkl. ops&aelig;tning.
               </p>
             </div>
@@ -301,7 +301,7 @@ export default function KobenhavnPage() {
               <div>
                 <h3 className="mb-2 font-semibold text-white">Billig levering ({prisKr("levering_ud")} inkl. ops&aelig;tning)</h3>
                 <p>Hele Stork&oslash;benhavn: Indre By, &Oslash;sterbro, N&oslash;rrebro, Vesterbro, Frederiksberg, Amager, Valby, Vanl&oslash;se, Br&oslash;nsh&oslash;j</p>
-                <p className="mt-1 text-white/40">Vi bringer udstyret ud, s&aelig;tter det op og henter det igen — alt inkluderet i prisen</p>
+                <p className="mt-1 text-white/40">Vi bringer udstyret ud, s&aelig;tter det op og henter det igen, alt inkluderet i prisen</p>
               </div>
             </div>
           </div>

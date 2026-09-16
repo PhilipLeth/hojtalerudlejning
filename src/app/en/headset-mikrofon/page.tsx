@@ -48,14 +48,14 @@ export default function Page() {
         "Bodypack transmitter included",
         "Receiver and batteries included",
         "Cable to speaker or mixer included",
-        "Hands-free — made for presentations",
+        "Hands-free, made for presentations",
         "Collect Friday, return Monday",
       ]}
     >
       <UpsellBox
         locale="en"
         title="Add a microphone and speakers"
-        text="The headset keeps the speaker's hands free while a wireless microphone goes round the room for questions. The speaker has to come too — the headset amplifies nothing on its own."
+        text="The headset keeps the speaker's hands free while a wireless microphone goes round the room for questions. The speaker has to come too, the headset amplifies nothing on its own."
         links={[
           {
             href: "/en/traadloes-mikrofon",

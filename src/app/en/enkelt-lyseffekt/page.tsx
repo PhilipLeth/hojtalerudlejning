@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Single Light Effect Rental Copenhagen | 195 DKK",
     description:
-      "One LED par light (no stand) — a plug-and-play colour effect for your party. Book online, pay on pickup.",
+      "One LED par light (no stand), a plug-and-play colour effect for your party. Book online, pay on pickup.",
     url: "https://lejhojtaler.dk/en/enkelt-lyseffekt",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -36,14 +36,14 @@ export default function Page() {
       name="Single light effect"
       price={195}
       headline="Rent a single light effect in Copenhagen"
-      sub="One LED par light (no stand) — a plug-and-play colour effect that sets the mood in minutes."
+      sub="One LED par light (no stand), a plug-and-play colour effect that sets the mood in minutes."
       image="/images/product-lyseffekt-live-white.webp"
       imageAlt="Single LED party light for rent in Copenhagen"
       productId="lyseffekt"
       faqPhrase="a single light effect"
       bullets={[
         "1 LED par light (no stand) with automatic colour effects",
-        "Plug and play — connect the power and it runs",
+        "Plug and play, connect the power and it runs",
         "Right for living rooms, small venues and garden parties up to about 40 people",
         "Combine it with a speaker package, or pick the small party package instead",
         "Add a fog machine to make the beams visible in the air",
@@ -63,7 +63,7 @@ export default function Page() {
           </p>
           <p className="text-white/50">
             You can add the light effect directly in the booking together with
-            speakers — or choose the{" "}
+            speakers, or choose the{" "}
             <Link href="/en/festpakke-lille" className="text-brand-400 underline-offset-2 hover:underline">
               small party package
             </Link>

@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Festtelt-lys | 695 kr | Lejhøjtaler.dk",
-  description: "To lyskæder og fire uplights — teltet og haven lyst op for 695 kr. Spar 90 kr. Lejes i København.",
+  description: "To lyskæder og fire uplights, teltet og haven lyst op for 695 kr. Spar 90 kr. Lejes i København.",
   keywords: ["lys til festtelt", "lyskæder til telt leje", "party lyskæde udendørs", "lys til havefest"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festtelt-lys",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Festtelt-lys | 695 kr | Lejhøjtaler.dk",
-    description: "20 m lyskæde (varm hvid + farvet) og 4 LED uplights. Fra kantine-telt til havefest — spar 90 kr.",
+    description: "20 m lyskæde (varm hvid + farvet) og 4 LED uplights. Fra kantine-telt til havefest, spar 90 kr.",
     url: "https://lejhojtaler.dk/festtelt-lys",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,8 +27,8 @@ export default function Side() {
       slug="festtelt-lys"
       name="Festtelt-lys"
       price={695}
-      headline="Festtelt-lys — teltet og haven lyst op"
-      sub="20 m lyskæde (varm hvid + farvet) og 4 LED uplights. Fra kantine-telt til havefest — spar 90 kr."
+      headline="Festtelt-lys, teltet og haven lyst op"
+      sub="20 m lyskæde (varm hvid + farvet) og 4 LED uplights. Fra kantine-telt til havefest, spar 90 kr."
       image="/images/product-pakke-festtelt-taendt-white.webp"
       imageAlt="Festtelt-lys tændt: varm hvid lyskæde over en farvet lyskæde og fire LED uplights"
       productId="pakke_festtelt"
@@ -46,7 +46,7 @@ export default function Side() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Holder festen ved efter mørkefald?</h2>
           <p className="mb-6 text-white/50">
-            Så gør en discokugle i teltet mere end du tror — den samler dansegulvet, når lyskæderne har gjort resten af arbejdet.
+            Så gør en discokugle i teltet mere end du tror, den samler dansegulvet, når lyskæderne har gjort resten af arbejdet.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/discokugle" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">

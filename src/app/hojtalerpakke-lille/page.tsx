@@ -36,7 +36,7 @@ export default function HojtalerpakkeLillePage() {
       capacity={{ level: 1, label: "0-30 pers." }}
       bullets={[
         '2× 10" Alto med Bluetooth',
-        "Alle kabler inkl. — bæretaske og stativ kan tilkøbes",
+        "Alle kabler inkl., bæretaske og stativ kan tilkøbes",
         "Kun 12 kg",
         "Hent fredag, aflever mandag",
       ]}

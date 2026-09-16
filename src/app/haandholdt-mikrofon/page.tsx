@@ -4,7 +4,7 @@ import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Håndholdt mikrofon (kabel) København | 95 kr | Lejhøjtaler.dk",
-  description: "Almindelig håndholdt mikrofon med kabel — til taler og sang. 95 kr/weekend. Betal ved afhentning. Book online.",
+  description: "Almindelig håndholdt mikrofon med kabel, til taler og sang. 95 kr/weekend. Betal ved afhentning. Book online.",
   keywords: ["lej mikrofon", "håndholdt mikrofon leje", "mikrofon til tale leje københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/haandholdt-mikrofon",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Lej Håndholdt mikrofon (kabel) København | 95 kr",
-    description: "Almindelig håndholdt mikrofon med kabel — til taler og sang. 95 kr/weekend. Betal ved afhentning. Book online.",
+    description: "Almindelig håndholdt mikrofon med kabel, til taler og sang. 95 kr/weekend. Betal ved afhentning. Book online.",
     url: "https://lejhojtaler.dk/haandholdt-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,7 +27,7 @@ export default function Page() {
       name="Håndholdt mikrofon (kabel)"
       price={95}
       headline="Lej håndholdt mikrofon"
-      sub={'Almindelig håndholdt mikrofon med kabel — til taler og sang.'}
+      sub={'Almindelig håndholdt mikrofon med kabel, til taler og sang.'}
       image="/images/product-mikrofon-kabel-v2-white.webp"
       imageAlt="Håndholdt mikrofon med kabel til leje"
       productId="haandholdt_mikrofon"

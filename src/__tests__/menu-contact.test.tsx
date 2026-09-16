@@ -21,17 +21,17 @@ describe("Burger-menu: kontakt", () => {
     expect(link).toHaveAttribute("href", "/kontakt");
   });
 
-  it("har en pro-request øverst der bærer emnet med", () => {
+  it("prioriterer pakker og priser øverst i menuen", () => {
     render(<BurgerMenu />);
-    expect(screen.getByText("Større arrangement?")).toBeInTheDocument();
-    const cta = screen.getByText("Større arrangement?").closest("a")!;
-    expect(cta).toHaveAttribute("href", "/kontakt?emne=erhverv");
+    expect(screen.getByText("Find pakken til festen")).toBeInTheDocument();
+    const cta = screen.getByText("Find pakken til festen").closest("a")!;
+    expect(cta).toHaveAttribute("href", "/eventloesninger");
   });
 
   it("pro-request står før produktkategorierne i DOM-rækkefølgen", () => {
     const { container } = render(<BurgerMenu />);
     const html = container.innerHTML;
-    expect(html.indexOf("Større arrangement?")).toBeLessThan(html.indexOf("Lyd &amp; Højtalere"));
+    expect(html.indexOf("Find pakken til festen")).toBeLessThan(html.indexOf("Lyd &amp; Højtalere"));
   });
 });
 

@@ -44,10 +44,10 @@ export default function Page() {
       bookLabel="Book the fog machine now"
       faqPhrase="a fog machine"
       bullets={[
-        "Fog fluid included — ready to use",
-        "Remote control included — run the fog from the sofa",
-        "Easy setup — warms up in 5 minutes",
-        "Pay on pickup — you only pay the rental",
+        "Fog fluid included, ready to use",
+        "Remote control included, run the fog from the sofa",
+        "Easy setup, warms up in 5 minutes",
+        "Pay on pickup, you only pay the rental",
         "Collect Friday, return Monday",
       ]}
     >

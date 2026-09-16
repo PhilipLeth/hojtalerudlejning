@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Ambient Light Package | Uplights, Fairy Lights & Disco Ball | 1.045 DKK | Lejhøjtaler.dk",
   description:
-    "The ambient light package: 4 LED uplights, 10 m of fairy lights and a disco ball for 1.045 DKK — save 140 DKK. Lighting that transforms a rented venue. Rental in Copenhagen.",
+    "The ambient light package: 4 LED uplights, 10 m of fairy lights and a disco ball for 1.045 DKK, save 140 DKK. Lighting that transforms a rented venue. Rental in Copenhagen.",
   keywords: [
     "uplighting rental copenhagen",
     "wedding lighting rental copenhagen",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ambient Light Package | Uplights, Fairy Lights & Disco Ball | 1.045 DKK",
     description:
-      "4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling — save 140 DKK.",
+      "4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling, save 140 DKK.",
     url: "https://lejhojtaler.dk/en/stemningslys",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -36,15 +36,15 @@ export default function Page() {
       slug="en/stemningslys"
       name="Ambient light package"
       price={1045}
-      headline="Ambient light package — light without sound"
-      sub="4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling — save 140 DKK."
+      headline="Ambient light package, light without sound"
+      sub="4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling, save 140 DKK."
       image="/images/product-pakke-stemningslys-taendt-v3-white.webp"
       imageAlt="Ambient light package with uplights, fairy lights and a disco ball"
       productId="pakke_stemningslys"
       faqPhrase="the ambient light package"
       capacity={{ level: 2, label: "a whole venue" }}
       bullets={[
-        "4× LED uplight — washes walls and corners in coloured light",
+        "4× LED uplight, washes walls and corners in coloured light",
         "10 m of fairy lights for the ceiling, a marquee or the bar",
         "Disco ball with motor and spotlight for the dancefloor",
         "Plug and play: everything runs on ordinary power, no DMX control",
@@ -56,7 +56,7 @@ export default function Page() {
           <h2 className="mb-3 text-2xl font-bold">Already sorted for sound?</h2>
           <p className="mb-6 text-white/50">
             Then this is the package you are missing. A rented venue with fluorescent
-            tubes in the ceiling looks like a canteen until the light is replaced —
+            tubes in the ceiling looks like a canteen until the light is replaced
             four uplights along the walls are the cheapest transformation there is.
           </p>
           <div className="flex flex-wrap gap-3">

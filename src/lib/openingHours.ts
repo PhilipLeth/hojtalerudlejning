@@ -1,13 +1,13 @@
 /** Åbningstider, ét sted.
  *
  * Tiderne stod før som tekst i i18n, i tre JSON-LD-blokke og i et par
- * brødtekster — otte kopier af "fredag 14-18". Ændrede Frederik åbningstiden,
+ * brødtekster, otte kopier af "fredag 14-18". Ændrede Frederik åbningstiden,
  * skulle en udvikler rette dem alle og deploye.
  *
  * Nu er strukturen her, standardtiderne er koden, og admin kan overskrive dem i
  * KV (site_settings.hours) fra /admin/indstillinger. Footeren, "Åbningstider" på
  * forsiden og FAQ'en læser de levende tider; JSON-LD til Google bygges af
- * standardtiderne ved build, fordi statisk HTML ikke kan hente KV — se
+ * standardtiderne ved build, fordi statisk HTML ikke kan hente KV, se
  * kommentaren ved openingHoursSpecification().
  */
 
@@ -21,7 +21,7 @@ export type DayPurpose = "" | "afhentning" | "aflevering" | "begge";
 export const DAY_PURPOSES: DayPurpose[] = ["", "afhentning", "aflevering", "begge"];
 
 export interface DayHours {
-  /** Lukket dag — tiderne bevares, så man kan åbne igen uden at tastes forfra */
+  /** Lukket dag, tiderne bevares, så man kan åbne igen uden at tastes forfra */
   closed: boolean;
   /** "HH:MM" i 24-timers format */
   open: string;
@@ -43,19 +43,19 @@ export interface HoursException {
   open: string;
   close: string;
   purpose: DayPurpose;
-  /** Fx "Nytår — hent 30. dec". Tom er fint. */
+  /** Fx "Nytår, hent 30. dec". Tom er fint. */
   note: string;
 }
 
 /**
  * Afhentning uden for åbningstid var et betalt tilvalg her (6.30–21 mod 50 kr).
  * Frederik 25. august 2026: der er ikke mulighed for at komme uden for
- * åbningstiden — heller ikke mod ekstra betaling. Feltet er fjernet frem for at
+ * åbningstiden, heller ikke mod ekstra betaling. Feltet er fjernet frem for at
  * stå og love noget vi ikke holder; ligger det stadig i KV, springes det over.
  */
 export interface OpeningHours {
   days: Record<Weekday, DayHours>;
-  /** Linjen under tiderne — fx "Andre tidspunkter efter aftale" */
+  /** Linjen under tiderne, fx "Andre tidspunkter efter aftale" */
   other: string;
   /** Datoer der slår ugedagen ud, sorteret efter dato */
   exceptions: HoursException[];
@@ -65,7 +65,7 @@ export interface OpeningHours {
    * Slået fra som standard, fordi det altid har været muligt at vælge en
    * hvilken som helst dato og aftale tidspunktet i kommentarfeltet. Slår man
    * den til, kan kalenderen i checkout kun vælge åbne dage og de særlige
-   * datoer — så er åbningstiderne ikke længere kun information.
+   * datoer, så er åbningstiderne ikke længere kun information.
    */
   onlyOpenDays: boolean;
   /**
@@ -74,7 +74,7 @@ export interface OpeningHours {
    * Til de uger hvor vi ikke kan levere: er udstyret på et andet job, er
    * lageret ikke klar, eller er Frederik væk, skal kunden ikke kunne vælge
    * en startdato i den periode overhovedet. En spærret dato pr. produkt
-   * (/admin/lager) svarer ikke på det — det her er hele butikken lukket for
+   * (/admin/lager) svarer ikke på det, det her er hele butikken lukket for
    * nye lejeperioder frem til datoen.
    *
    * Kun STARTdatoen. En igangværende leje afleveres som aftalt, og
@@ -87,7 +87,7 @@ const LUKKET: DayHours = { closed: true, open: "10:00", close: "16:00", purpose:
 
 /**
  * Sådan har det været siden starten: åbent fredag eftermiddag og mandag.
- * Begge dage kan bruges til både afhentning og aflevering — derfor står der
+ * Begge dage kan bruges til både afhentning og aflevering, derfor står der
  * ikke noget formål på dem. Alt andet aftales i kommentarfeltet.
  */
 /**
@@ -95,7 +95,7 @@ const LUKKET: DayHours = { closed: true, open: "10:00", close: "16:00", purpose:
  *
  * `other` er et frit felt, Frederik selv skriver i /admin/indstillinger, så
  * det findes kun på ét sprog. Standardsætningen er den, der står på sitet i
- * praksis, og den kan derfor oversættes — se otherLine(). Har han skrevet sin
+ * praksis, og den kan derfor oversættes, se otherLine(). Har han skrevet sin
  * egen tekst, vises den som skrevet, for den kan vi ikke oversætte.
  */
 export const DEFAULT_OTHER = "Andre tidspunkter vælges direkte i bookingen.";
@@ -159,7 +159,7 @@ export function isTime(value: string): boolean {
   return TIME.test(value);
 }
 
-/** Minutter siden midnat — bruges til at holde luk efter åbn */
+/** Minutter siden midnat, bruges til at holde luk efter åbn */
 export function minutesOf(time: string): number {
   const m = TIME.exec(time);
   if (!m) return -1;
@@ -183,7 +183,7 @@ export function formatTime(time: string, locale: "da" | "en" = "da"): string {
   return min === "00" ? String(hour) : `${hour}.${min}`;
 }
 
-/** "14–18" — en bindestreg man kan læse, ikke et minustegn */
+/** "14–18", en bindestreg man kan læse, ikke et minustegn */
 export function formatRange(day: DayHours, locale: "da" | "en" = "da"): string {
   if (locale === "en") {
     // "2–6 PM" når begge ender er eftermiddag; ellers begge med suffiks
@@ -210,7 +210,7 @@ export function formatDayLine(entry: OpenDay, locale: "da" | "en" = "da"): strin
   return `${dayName(entry.day, locale)} ${formatRange(entry, locale)}${p ? ` (${p})` : ""}`;
 }
 
-/** Alle åbne dage på én linje — til footeren */
+/** Alle åbne dage på én linje, til footeren */
 export function formatOneLine(hours: OpeningHours, locale: "da" | "en" = "da"): string {
   return openDays(hours).map((d) => formatDayLine(d, locale)).join(" · ");
 }
@@ -274,7 +274,7 @@ export interface ResolvedDay extends DayHours {
 
 /**
  * Hvad gælder på en bestemt dato: ugedagens tider, medmindre der er en
- * undtagelse — den vinder altid, både når den åbner og når den lukker.
+ * undtagelse, den vinder altid, både når den åbner og når den lukker.
  */
 export function hoursForDate(hours: OpeningHours, isoDate: string): ResolvedDay {
   const date = isoDate.slice(0, 10);
@@ -301,7 +301,7 @@ export function isBeforeEarliestPickup(hours: OpeningHours, isoDate: string): bo
   return isoDate.slice(0, 10) < hours.earliestPickup;
 }
 
-/** "Fredag 14–18 (afhentning)" — eller "30. dec 14–18 (afhentning)" for en særlig dato */
+/** "Fredag 14–18 (afhentning)", eller "30. dec 14–18 (afhentning)" for en særlig dato */
 export function formatDateLine(hours: OpeningHours, isoDate: string, locale: "da" | "en" = "da"): string {
   const r = hoursForDate(hours, isoDate);
   // En særlig dato nævnes ved sin dato ("30. dec"), en almindelig ved sin ugedag
@@ -323,12 +323,12 @@ export function formatShortDate(isoDate: string, locale: "da" | "en" = "da"): st
       month: "short",
       timeZone: "UTC",
     })
-    // Dansk skriver "30. dec." — punktummet klodser når datoen efterfølges af
+    // Dansk skriver "30. dec.", punktummet klodser når datoen efterfølges af
     // tider eller kolon ("30. dec.: lukket")
     .replace(/\.$/, "");
 }
 
-/** Særlige datoer fra i dag og frem — det er dem kunden skal kende */
+/** Særlige datoer fra i dag og frem, det er dem kunden skal kende */
 export function upcomingExceptions(
   hours: OpeningHours,
   todayIso: string,
@@ -347,9 +347,9 @@ export function upcomingExceptions(
 /**
  * Hvornår på dagen kunden vil hente eller aflevere.
  *
- * Før stod der "andre tidspunkter efter aftale — skriv i kommentarfeltet", og
+ * Før stod der "andre tidspunkter efter aftale, skriv i kommentarfeltet", og
  * så ringede vi frem og tilbage bagefter. Nu deler vi åbningstiden i to, så
- * kunden kan sige før eller efter middag — eller lade være.
+ * kunden kan sige før eller efter middag, eller lade være.
  *
  * Alle valg ligger INDEN FOR åbningstiden. Vi møder ikke uden for den, heller
  * ikke mod betaling (Frederik, 25. august 2026), så et tidsrum uden for
@@ -357,7 +357,7 @@ export function upcomingExceptions(
  *
  *   early   første halvdel af dagen
  *   late    anden halvdel
- *   unknown ved det ikke endnu — VALGT PÅ FORHÅND, så tidsvalget ikke koster
+ *   unknown ved det ikke endnu, VALGT PÅ FORHÅND, så tidsvalget ikke koster
  *           kunden et klik, og vi kun får et signal når han selv giver det
  */
 export type TimeSlotId = "early" | "late" | "unknown";
@@ -366,9 +366,9 @@ export const TIME_SLOT_IDS: TimeSlotId[] = ["early", "late", "unknown"];
 
 export interface TimeSlot {
   id: TimeSlotId;
-  /** Teksten på knappen — "Før 12" */
+  /** Teksten på knappen, "Før 12" */
   label: string;
-  /** Selve tidsrummet under teksten — "9.30–12". Tom når vi ikke ved det. */
+  /** Selve tidsrummet under teksten, "9.30–12". Tom når vi ikke ved det. */
   window: string;
 }
 
@@ -377,7 +377,7 @@ const MIDDAG = "12:00";
 
 /**
  * En åbningstid skal have en vis længde, før det giver mening at dele den.
- * Mandag 15–17 er ikke et valg, det er en aftale — der er intet at spørge om.
+ * Mandag 15–17 er ikke et valg, det er en aftale, der er intet at spørge om.
  */
 const MINDSTE_VINDUE_MIN = 180;
 
@@ -392,7 +392,7 @@ function timeOf(minutes: number): string {
  *
  * Tom liste betyder "intet at spørge om": dagen er lukket, eller åbningstiden
  * er så kort, at der ikke er to halvdele at vælge imellem. Så vises der ingen
- * knapper — et valg med ét svar er kun støj i checkout.
+ * knapper, et valg med ét svar er kun støj i checkout.
  */
 export function timeSlots(
   hours: OpeningHours,
@@ -437,7 +437,7 @@ export function timeSlots(
 /**
  * Det tidsrum der er valgt på forhånd: "ved jeg ikke endnu".
  *
- * Ingen af valgene koster noget, og ingen af dem er påkrævede — så skal vi
+ * Ingen af valgene koster noget, og ingen af dem er påkrævede, så skal vi
  * ikke lægge kunden et svar i munden. Vælger han selv, ved vi noget; gør han
  * ikke, har det ikke kostet ham et klik.
  */
@@ -455,7 +455,7 @@ export function resolveTimeSlot(
 }
 
 /**
- * Tidsrummet som én linje til mails, lejesedlen og admin — "Før 12 (9.30–12)".
+ * Tidsrummet som én linje til mails, lejesedlen og admin, "Før 12 (9.30–12)".
  * Tom når der intet er valgt, så en gammel booking ikke får en tom række.
  */
 export function formatTimeSlot(
@@ -480,7 +480,7 @@ function normalizeDay(input: unknown, fallback: DayHours): DayHours {
   return {
     closed: raw.closed === true,
     open,
-    // Luk kan ikke ligge før åbn — så ville dagen være tom
+    // Luk kan ikke ligge før åbn, så ville dagen være tom
     close: minutesOf(close) > minutesOf(open) ? close : fallback.close,
     purpose,
   };
@@ -488,7 +488,7 @@ function normalizeDay(input: unknown, fallback: DayHours): DayHours {
 
 /**
  * Læs åbningstider fra KV eller fra et POST-kald. Alt der ikke kan læses,
- * falder tilbage på standardtiderne — sitet skal vise noget rigtigt, også hvis
+ * falder tilbage på standardtiderne, sitet skal vise noget rigtigt, også hvis
  * KV indeholder skrald.
  */
 export function normalizeOpeningHours(input: unknown): OpeningHours {
@@ -507,7 +507,7 @@ export function normalizeOpeningHours(input: unknown): OpeningHours {
   if (Array.isArray(rawEx)) {
     for (const item of rawEx) {
       const e = normalizeException(item);
-      // Én undtagelse pr. dato — den første vinder, så et dubleret felt i KV
+      // Én undtagelse pr. dato, den første vinder, så et dubleret felt i KV
       // ikke gør det uforudsigeligt hvilke tider der gælder
       if (e && !seen.has(e.date)) {
         seen.add(e.date);
@@ -526,7 +526,7 @@ export function normalizeOpeningHours(input: unknown): OpeningHours {
   };
 }
 
-/** En ugyldig dato er ingen spærre — vi lukker ikke butikken på en tastefejl */
+/** En ugyldig dato er ingen spærre, vi lukker ikke butikken på en tastefejl */
 function normalizeEarliestPickup(input: unknown): string {
   const date = String(input ?? "").slice(0, 10);
   return isIsoDate(date) ? date : "";
@@ -620,7 +620,7 @@ export function validateOpeningHours(
   }
 
   // Tidligste startdato: tom er fint (ingen spærre), men står der noget, skal
-  // det være en rigtig dato — ellers har Frederik troet han lukkede for
+  // det være en rigtig dato, ellers har Frederik troet han lukkede for
   // bookinger uden at have gjort det
   const rawEarliest = (raw as { earliestPickup?: unknown }).earliestPickup;
   const earliestPickup = String(rawEarliest ?? "").slice(0, 10);
@@ -658,7 +658,7 @@ const SCHEMA_DAY: Record<Weekday, string> = {
  * Kaldes med DEFAULT_OPENING_HOURS fra siderne, fordi de er statisk eksporteret
  * HTML og ikke kan læse KV. Retter Frederik tiderne i admin, følger sitets
  * synlige tider med det samme, mens Googles strukturerede data først opdateres
- * ved næste deploy — og Google Business Profile skal rettes i hånden. Det står
+ * ved næste deploy, og Google Business Profile skal rettes i hånden. Det står
  * som en note i /admin/indstillinger.
  */
 export function openingHoursSpecification(hours: OpeningHours = DEFAULT_OPENING_HOURS) {

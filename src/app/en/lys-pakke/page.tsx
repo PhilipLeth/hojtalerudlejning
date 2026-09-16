@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Party Light Package Rental Copenhagen | 495 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a party light package in Copenhagen for 495 DKK per weekend. 2 coloured LED lamps and a centre effect on a stand — plug and play, ready in minutes. Pay on pickup.",
+    "Rent a party light package in Copenhagen for 495 DKK per weekend. 2 coloured LED lamps and a centre effect on a stand, plug and play, ready in minutes. Pay on pickup.",
   keywords: [
     "party light rental copenhagen",
     "light package rental copenhagen",
@@ -54,7 +54,7 @@ export default function Page() {
       <UpsellBox
         locale="en"
         title="Add fog and sound"
-        text="Fog makes the light ten times better — the beams only become visible when there is something in the air. Add speakers for the full party package."
+        text="Fog makes the light ten times better, the beams only become visible when there is something in the air. Add speakers for the full party package."
         links={[
           { href: "/en/roegmaskine", label: "See the fog machine", priceId: "rog" },
           { href: "/en", label: "See speakers", startpris: true },

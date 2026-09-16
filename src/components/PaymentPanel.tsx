@@ -4,8 +4,8 @@
  * Betalingen på én ordre: status, de enkelte indbetalinger, faktura og
  * depositum. Bruges både i admin-tabellen og på mobilkortet.
  *
- * En ordre kan betales ad flere gange og med flere metoder — 500 kontant i
- * døren og resten på MobilePay dagen efter — så panelet viser en liste, ikke
+ * En ordre kan betales ad flere gange og med flere metoder, 500 kontant i
+ * døren og resten på MobilePay dagen efter, så panelet viser en liste, ikke
  * et flueben, og regner selv ud hvad der mangler.
  */
 
@@ -64,7 +64,7 @@ export default function PaymentPanel({
   busy?: boolean;
   onAddPayment: (id: string, payment: { amount: number; method: PaymentMethod; note?: string }) => void;
   onDeletePayment: (id: string, paymentId: string) => void;
-  /** Sender fakturamail — opretter fakturaen hvis den ikke findes */
+  /** Sender fakturamail, opretter fakturaen hvis den ikke findes */
   onSendInvoice: (id: string) => void;
   onClearInvoice: (id: string) => void;
   /** Depositum-kontrollen, som ligger uden for selve betalingen */
@@ -176,7 +176,7 @@ export default function PaymentPanel({
         </div>
       )}
 
-      {/* Faktura: en tilstand, ikke en betaling — ordren er stadig ubetalt */}
+      {/* Faktura: en tilstand, ikke en betaling, ordren er stadig ubetalt */}
       {invoice ? (
         <div style={{ fontSize: "11px", color: "#555", display: "flex", flexDirection: "column", gap: "2px" }}>
           <span>

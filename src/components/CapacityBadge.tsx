@@ -5,7 +5,7 @@
 
 export type CapacityLevel = 1 | 2 | 3;
 
-/** Niveau pr. produkt — matcher prisstigen, ikke fritekst-kapaciteten */
+/** Niveau pr. produkt, matcher prisstigen, ikke fritekst-kapaciteten */
 const LEVELS: Record<string, CapacityLevel> = {
   thumpgo: 1,
   party: 1,

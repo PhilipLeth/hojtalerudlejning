@@ -4048,5 +4048,23 @@
     "dj": "DJ/musikafvikler med DJ-pult, minimum tre hele timer. 1.000 kr/time før kl. 23 og 1.500 kr/time efter, inkl. moms bekræftet af bruger. To timefelter; timer efter midnat hører til efter kl. 23. Servervalideret pris i booking og Stripe. DJ-opgave og transport koordineres manuelt som øvrig bemanding.",
     "images": "Alle aktive katalogfotos flyttes til hvide studiebaggrunde. Naturlige event- og casefotos bevares. Nye billed-URLer undgår månedlang browsercache.",
     "reviews": "GoogleReviews er genindsat under forsidens intro og på situationssiderne. Kun eksisterende autentiske Google-data."
+  },
+  "shop_dj_2026_09_16": {
+    "beslutning": "Shop og direkte booking prioriteres frem for forespørgsler. Begge sprog følges ad.",
+    "forside": "16 anledninger vælges som filtre over produktpakker. Klik på hero skifter mellem fem billeder, uden autoplay. Google-anmeldelser bevares.",
+    "situationer": "Pakker står før praktisk vejledning. DJ-anledninger viser også tre DJ-udstyrspakker.",
+    "dj": "Timeindtastning, minimum 3 timer, 1.000 kr før 23 og 1.500 efter, inklusive moms. Gear er separat og påkrævet ved DJ-booking, valideres også på serveren.",
+    "pult": {
+      "id": "dj_pult",
+      "pris_inkl_moms": 1995,
+      "indhold": "Pioneer DDJ-FLX4 med iPad i flightcase og tilslutningskabler",
+      "spotify": "Via djay med Spotify Premium. Internet under afspilning, kun privat brug.",
+      "pakker": [
+        "dj_pakke_lille",
+        "dj_pakke_mellem",
+        "dj_pakke_stor"
+      ]
+    },
+    "tekst": "Em dash fjernet fra egne offentlige tekster. Historiske ordredata og kundeanmeldelser bevares."
   }
 }

@@ -8,9 +8,9 @@ import { bookHref } from "@/lib/bookUrl";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lydanlæg til leje — pakker efter antal gæster | Lejhøjtaler.dk",
+  title: "Lydanlæg til leje, pakker efter antal gæster | Lejhøjtaler.dk",
   description:
-    "Lej lydanlæg i København efter hvor mange gæster der kommer: 50, 100, 150 eller 250 personer. Færdige pakker med højtalere, sub, lys og røg — levering og opsætning kan tilvælges.",
+    "Lej lydanlæg i København efter hvor mange gæster der kommer: 50, 100, 150 eller 250 personer. Færdige pakker med højtalere, sub, lys og røg, levering og opsætning kan tilvælges.",
   keywords: [
     "lej lydanlæg",
     "lydanlæg til fest",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lydanlaeg"),
   },
   openGraph: {
-    title: "Lydanlæg til leje — pakker efter antal gæster",
+    title: "Lydanlæg til leje, pakker efter antal gæster",
     description:
       "Vælg anlæg efter hvor mange der kommer: 50, 100, 150 eller 250 gæster. Færdige pakker, klar til at blive stillet op.",
     url: "https://lejhojtaler.dk/lydanlaeg",
@@ -66,7 +66,7 @@ function Trin({ step, fremhaevet }: { step: LadderStep; fremhaevet: boolean }) {
       </p>
       <p className="mt-1 text-xs text-white/40">
         {step.koersel === "tilvalg" && "Hent selv, eller tilvælg levering + opsætning"}
-        {step.koersel === "anbefalet" && "Levering + opsætning anbefales — 795 kr begge veje"}
+        {step.koersel === "anbefalet" && "Levering + opsætning anbefales, 795 kr begge veje"}
         {step.koersel === "tilbud" && "Levering, opsætning og tekniker er med i tilbuddet"}
       </p>
 
@@ -114,7 +114,7 @@ export default function LydanlaegPage() {
           Vælg anlæg efter hvor mange der kommer
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
-          Du skal ikke gætte på tommer og watt. Sig hvor mange gæster der kommer, så er pakken sat sammen på forhånd —
+          Du skal ikke gætte på tommer og watt. Sig hvor mange gæster der kommer, så er pakken sat sammen på forhånd
           højtalere, bas, stativer, lys og kabler i ét.
         </p>
       </section>
@@ -130,11 +130,11 @@ export default function LydanlaegPage() {
 
       {/* Konference-stigen er væk: alle tre trin havde projektor eller skærm
           med, og det udlejer vi ikke lige nu. Lyden til en tale kan vi stadig,
-          og det er den, afsnittet lover — hverken mere eller mindre. */}
+          og det er den, afsnittet lover, hverken mere eller mindre. */}
       <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="mb-2 text-2xl font-bold">Til taler og møder</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">
-          Skal der siges noget, er mikrofonen vigtigere end bassen. Vi udlejer både lyden og billedet —
+          Skal der siges noget, er mikrofonen vigtigere end bassen. Vi udlejer både lyden og billedet
           mikrofon, højtalere, projektor, lærred og storskærm.
         </p>
         <div className="flex flex-wrap gap-3">
@@ -163,12 +163,12 @@ export default function LydanlaegPage() {
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
           <h2 className="mb-3 text-lg font-bold">Gæstetallene gælder indendørs</h2>
           <p className="text-sm text-white/60">
-            Fire vægge og et loft sender lyden tilbage til gæsterne. Udendørs uden vægge forsvinder den — regn dér med
+            Fire vægge og et loft sender lyden tilbage til gæsterne. Udendørs uden vægge forsvinder den, regn dér med
             cirka det halve antal gæster pr. pakke, eller gå ét trin op. Er du i tvivl, så ring: vi har set stedet før,
             eller også kan vi se det på et billede.
           </p>
           <p className="mt-4 text-sm text-white/60">
-            Alle pakker kan bookes med levering, opsætning og afhentning. Fra Festpakke 150 og op anbefaler vi det —
+            Alle pakker kan bookes med levering, opsætning og afhentning. Fra Festpakke 150 og op anbefaler vi det
             fire højtalere og en subwoofer kommer ikke hjem på en ladcykel.
           </p>
         </div>

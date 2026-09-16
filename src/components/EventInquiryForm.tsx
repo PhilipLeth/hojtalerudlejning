@@ -7,11 +7,11 @@ import { eventSolutions } from "@/lib/eventSolutions";
 import PhoneLink from "@/components/PhoneLink";
 
 /**
- * Forespørgsel på et helt arrangement — modstykket til bookingflowet.
+ * Forespørgsel på et helt arrangement, modstykket til bookingflowet.
  *
  * "Jeg skal bruge en Soundboks på fredag" hører hjemme i /book: kunden ved
  * hvad han vil have, og prisen står fast. "Vi er 80 til reception på torsdag,
- * kan I sørge for lyd, mikrofoner og lys?" gør ikke — der er et arrangement
+ * kan I sørge for lyd, mikrofoner og lys?" gør ikke, der er et arrangement
  * der skal forstås først, og svaret er et tilbud.
  *
  * Felterne er de fem ting vi ALTID skal spørge om, hvis svaret skal kunne
@@ -38,7 +38,7 @@ export const BEHOV = [
   "Mikrofoner til taler",
   "Lys",
   // Tilbage 8. september 2026 sammen med produkterne. Et afkrydsningsfelt er et
-  // løfte om at kunne levere — derfor stod det her ikke under pausen.
+  // løfte om at kunne levere, derfor stod det her ikke under pausen.
   "Skærm eller projektor",
   "Røg / low fog",
   "Levering + opsætning",
@@ -89,7 +89,7 @@ const EN: Record<string, string> = {
   "Hvornår? *": "Event date *",
   "Hvor mange gæster? *": "How many guests? *",
   "Hvor foregår det? *": "Venue or address *",
-  "Adresse eller stedets navn — og om det er inde eller ude": "Address or venue name — indoors or outdoors",
+  "Adresse eller stedets navn, og om det er inde eller ude": "Address or venue name, indoors or outdoors",
   "Hvad er det for et arrangement? *": "What kind of event? *",
   "Vælg …": "Choose …",
   "Hvad skal vi sørge for?": "What do you need?",
@@ -99,13 +99,13 @@ const EN: Record<string, string> = {
   "Email *": "Email *",
   "Telefon": "Phone",
   "Firma og EAN-nummer (hvis I skal have faktura)": "Company and EAN number (for invoicing)",
-  "Tak — vi er i gang": "Thank you — we have your enquiry",
+  "Tak, vi er i gang": "Thank you, we have your enquiry",
   "Du får et tilbud med udstyr, levering og opsætning, som regel samme dag. Haster det, så ring": "We will get back to you with a quote for equipment, delivery and setup. If it is urgent, call",
-  "Du får et tilbud med udstyr, levering og opsætning — som regel samme dag.": "We will get back to you with a quote for equipment, delivery and setup.",
+  "Du får et tilbud med udstyr, levering og opsætning, som regel samme dag.": "We will get back to you with a quote for equipment, delivery and setup.",
   "Sender …": "Sending …",
   "Send forespørgsel": "Send enquiry",
-  "Noget gik galt — prøv igen": "Something went wrong — please try again",
-  "Netværksfejl — prøv igen eller ring til os": "Network error — please try again or call us",
+  "Noget gik galt, prøv igen": "Something went wrong, please try again",
+  "Netværksfejl, prøv igen eller ring til os": "Network error, please try again or call us",
   "Reception": "Reception",
   "Firmafest / julefrokost": "Company party",
   "Konference / møde": "Conference / meeting",
@@ -174,13 +174,13 @@ export default function EventInquiryForm({ locale = "da", initialSolution, initi
       });
       const json = (await res.json()) as { ok?: boolean; error?: string };
       if (!res.ok) {
-        setError(en ? tr("Noget gik galt — prøv igen") : (json.error || "Noget gik galt — prøv igen"));
+        setError(en ? tr("Noget gik galt, prøv igen") : (json.error || "Noget gik galt, prøv igen"));
         setState("error");
         return;
       }
       setState("sent");
     } catch {
-      setError(tr("Netværksfejl — prøv igen eller ring til os"));
+      setError(tr("Netværksfejl, prøv igen eller ring til os"));
       setState("error");
     }
   }
@@ -189,7 +189,7 @@ export default function EventInquiryForm({ locale = "da", initialSolution, initi
     return (
       <div className="glass rounded-2xl p-8 text-center" data-testid="forespoergsel-sendt">
         <p className="text-2xl">✅</p>
-        <h2 className="mt-2 text-xl font-bold">{tr("Tak — vi er i gang")}</h2>
+        <h2 className="mt-2 text-xl font-bold">{tr("Tak, vi er i gang")}</h2>
         <p className="mt-2 text-white/60">
           {tr("Du får et tilbud med udstyr, levering og opsætning, som regel samme dag. Haster det, så ring")}{" "}
           <PhoneLink className="text-brand-400 hover:underline" />.
@@ -240,7 +240,7 @@ export default function EventInquiryForm({ locale = "da", initialSolution, initi
           id={`${formId}-sted`}
           required
           type="text"
-          placeholder={tr("Adresse eller stedets navn — og om det er inde eller ude")}
+          placeholder={tr("Adresse eller stedets navn, og om det er inde eller ude")}
           value={f.sted}
           onChange={(e) => setF({ ...f, sted: e.target.value })}
           className={inputCls}
@@ -359,7 +359,7 @@ export default function EventInquiryForm({ locale = "da", initialSolution, initi
         />
       </div>
 
-      {/* Honeypot — skjult for mennesker, udfyldes af bots */}
+      {/* Honeypot, skjult for mennesker, udfyldes af bots */}
       <input
         type="text"
         name="website"
@@ -381,7 +381,7 @@ export default function EventInquiryForm({ locale = "da", initialSolution, initi
         {state === "sending" ? tr("Sender …") : tr("Send forespørgsel")}
       </button>
       <p className="text-center text-xs text-white/40">
-        {tr("Du får et tilbud med udstyr, levering og opsætning — som regel samme dag.")}
+        {tr("Du får et tilbud med udstyr, levering og opsætning, som regel samme dag.")}
       </p>
     </form>
   );

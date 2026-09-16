@@ -9,7 +9,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Contact us | Lejhøjtaler.dk",
   description:
-    "Contact Lejhøjtaler.dk — write to info@lejhojtaler.dk, call, or use the form. We usually reply the same day, and we speak English.",
+    "Contact Lejhøjtaler.dk, write to info@lejhojtaler.dk, call, or use the form. We usually reply the same day, and we speak English.",
   alternates: {
     canonical: "https://lejhojtaler.dk/en/kontakt",
     languages: localeAlternates("/kontakt"),
@@ -23,7 +23,7 @@ export default function Page() {
       <section className="mx-auto max-w-2xl px-4 py-16">
         <h1 className="text-4xl font-bold">Contact us</h1>
         <p className="mt-3 text-white/60">
-          A question about equipment, dates or something else entirely? Write or call — we usually reply the same day,
+          A question about equipment, dates or something else entirely? Write or call, we usually reply the same day,
           and everything can be handled in English.
         </p>
 

@@ -13,23 +13,23 @@ export const HALLOWEEN_IDS = ["halloween_lys", "halloween_lille", "halloween_sto
 const COPY = {
   da: {
     season: "Halloween · 31. oktober", headline: "Skru op for uhyggen.",
-    intro: "Lej højtalere, lys og røg i København. Vi har samlet grejet til din Halloween-fest — du står for kostumerne.",
+    intro: "Lej højtalere, lys og røg i København. Vi har samlet grejet til din Halloween-fest, du står for kostumerne.",
     explore: "Find din Halloween-pakke", ordinary: "Se almindelige festpakker",
     promise: ["Én pris · op til 5 dage", "Hent i København S", "Levering kan tilvælges"],
     title: "Hvor uhyggelig skal festen være?", sub: "Tre specialpakker. Fra den første tåge til det sidste nummer.",
     featured: "Til festen derhjemme", book: "Book pakken", details: "Se alt i pakken", currency: "kr", period: "/ op til 5 dage",
-    note: "Illustrationer baseret på vores udstyr. Røgvæske og kabler er med. Pynt og græskar er ikke inkluderet. Aftal brug af røg med dit feststed — den kan aktivere røgalarmer.",
+    note: "Illustrationer baseret på vores udstyr. Røgvæske og kabler er med. Pynt og græskar er ikke inkluderet. Aftal brug af røg med dit feststed, den kan aktivere røgalarmer.",
     imageNote: "Stemningsillustration", tipTitle: "Du vælger kostumet. Vi har grejet.",
     tip: "Vælg pakken, find din dato, og book online. Brug din egen playliste via Bluetooth i pakkerne med højtalere.",
   },
   en: {
     season: "Halloween · 31 October", headline: "Turn up the fright.",
-    intro: "Halloween speaker, lighting and fog rental in Copenhagen. We have the party equipment covered — you bring the costumes.",
+    intro: "Halloween speaker, lighting and fog rental in Copenhagen. We have the party equipment covered, you bring the costumes.",
     explore: "Find your Halloween package", ordinary: "See regular party packages",
     promise: ["One price · up to 5 days", "Collect in Copenhagen S", "Delivery available"],
     title: "How spooky is your party?", sub: "Three Halloween packages. From the first fog to the final track.",
     featured: "Made for house parties", book: "Book package", details: "See what’s included", currency: "DKK", period: "/ up to 5 days",
-    note: "Illustrations based on our equipment. Fog fluid and cables included. Decorations and pumpkins are not included. Check with your venue before using fog — it can trigger smoke alarms.",
+    note: "Illustrations based on our equipment. Fog fluid and cables included. Decorations and pumpkins are not included. Check with your venue before using fog, it can trigger smoke alarms.",
     imageNote: "Atmosphere illustration", tipTitle: "Bring the costumes. We’ll bring the sound.",
     tip: "Choose your package, select your dates and book online. Speaker packages connect to your own playlist via Bluetooth.",
   },
@@ -73,7 +73,7 @@ export default function HalloweenHome({ locale = "da" }: { locale?: Locale }) {
               <article key={p.id} className={`${styles.card} ${featured ? styles.featured : ""}`}>
                 <div className={styles.cardTop}>{featured ? c.featured : p.bundle![locale === "en" ? "usecase_en" : "usecase_da"]}</div>
                 <Link href={localizedHref(p.page!, locale)} className={styles.equipment} aria-label={`${c.details}: ${name}`}>
-                  <img src={p.image} srcSet={thumbSrcSet(p.image)} sizes="(min-width: 1024px) 370px, (min-width: 641px) 33vw, 95vw" alt={`${name} — ${locale === "en" ? "package equipment in a Halloween setting" : "pakkens udstyr i Halloween-stemning"}`} width={1200} height={800} loading="lazy" />
+                  <img src={p.image} srcSet={thumbSrcSet(p.image)} sizes="(min-width: 1024px) 370px, (min-width: 641px) 33vw, 95vw" alt={`${name}, ${locale === "en" ? "package equipment in a Halloween setting" : "pakkens udstyr i Halloween-stemning"}`} width={1200} height={800} loading="lazy" />
                 </Link>
                 <div className={styles.cardBody}>
                   <h3>{name}</h3>

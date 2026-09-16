@@ -10,7 +10,7 @@ import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
 /**
- * /en/lysshow — de færdige lyspakker på engelsk.
+ * /en/lysshow, de færdige lyspakker på engelsk.
  *
  * /en/festlys sælger enkeltdelene; den her sælger pakkerne. Det er samme
  * arbejdsdeling som på dansk, og den er værd at holde: den, der søger
@@ -92,11 +92,11 @@ export default function Page() {
             ids={LYSSHOW_PAKKER}
             eyebrow="Lighting packages"
             title="Three ready-made light shows"
-            subtitle="Put together so the parts match — and cheaper than renting them one by one."
+            subtitle="Put together so the parts match, and cheaper than renting them one by one."
           />
         </div>
 
-        {/* Hvorfor røg — det spørgsmål der afgør om lysshowet virker */}
+        {/* Hvorfor røg, det spørgsmål der afgør om lysshowet virker */}
         <section className="mx-auto max-w-3xl px-4 pb-16">
           <div className="glass rounded-2xl p-8">
             <h2 className="mb-3 text-2xl font-bold text-white">The fog is not decoration</h2>
@@ -104,7 +104,7 @@ export default function Page() {
               A beam of light can only be seen if there is something in the air for it
               to hit. Without fog you get coloured dots on the wall. With it the beam
               itself becomes visible, and that is what looks like a show. If you are
-              unsure about one single add-on, this is the one — and if the smoke alarm
+              unsure about one single add-on, this is the one, and if the smoke alarm
               has to stay quiet, low fog is the answer, because it lays the fog along
               the floor instead of sending it up into the air.
             </p>
@@ -138,7 +138,7 @@ export default function Page() {
             <h2 className="mb-4 text-2xl font-bold text-white">Do you need sound as well?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
               Light without music is a well-lit living room. We have speaker packages
-              for everything from a courtyard to a rented venue — and the party
+              for everything from a courtyard to a rented venue, and the party
               packages come with the lights included.
             </p>
             <a

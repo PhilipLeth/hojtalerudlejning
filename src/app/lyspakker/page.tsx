@@ -10,7 +10,7 @@ import { thumbSrcSet } from "@/lib/imageSrcSet";
 import { localeAlternates } from "@/lib/hreflang";
 
 /**
- * Landingssiden for lyspakkerne — det for lys, som /lydanlaeg er for lyd.
+ * Landingssiden for lyspakkerne, det for lys, som /lydanlaeg er for lyd.
  *
  * Siden rendrer fra KATEGORI_PAKKER["/lyspakker"] og kataloget, så priser,
  * navne og "spar"-beløb aldrig kan drive fra bookingen. Kortene er skrevet
@@ -19,9 +19,9 @@ import { localeAlternates } from "@/lib/hreflang";
  */
 
 export const metadata: Metadata = {
-  title: "Lej lys til festen — færdige lyspakker fra 645 kr | Lejhøjtaler.dk",
+  title: "Lej lys til festen, færdige lyspakker fra 645 kr | Lejhøjtaler.dk",
   description:
-    "Lysudlejning i København: færdige lyspakker til teenagefest, festtelt, bryllup og dansegulv fra 645 kr. Alt er plug and play — hent selv, eller få det leveret.",
+    "Lysudlejning i København: færdige lyspakker til teenagefest, festtelt, bryllup og dansegulv fra 645 kr. Alt er plug and play, hent selv, eller få det leveret.",
   keywords: [
     "lysudlejning",
     "lej festlys",
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lyspakker"),
   },
   openGraph: {
-    title: "Lej lys til festen — færdige lyspakker fra 645 kr",
+    title: "Lej lys til festen, færdige lyspakker fra 645 kr",
     description:
-      "Færdige lyspakker efter anledning: teenagefest, festtelt, bryllup, dansegulv — eller hele lokalet. Plug and play, uden tekniker.",
+      "Færdige lyspakker efter anledning: teenagefest, festtelt, bryllup, dansegulv, eller hele lokalet. Plug and play, uden tekniker.",
     url: "https://lejhojtaler.dk/lyspakker",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
 };
 
-/** Anledningen øverst på kortet — det er den, folk søger på, ikke grejet. */
+/** Anledningen øverst på kortet, det er den, folk søger på, ikke grejet. */
 const KICKER: Record<string, string> = {
   "halloween_lys": "Halloween",
   "pakke_festtelt": "Festtelt & have",
@@ -76,7 +76,7 @@ function Kort({ p, fremhaevet }: { p: RentalProduct; fremhaevet: boolean }) {
         src={p.image}
         srcSet={thumbSrcSet(p.image)}
         sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 90vw"
-        alt={`${p.name_da} — ${(p.contents ?? []).join(", ")}`}
+        alt={`${p.name_da}, ${(p.contents ?? []).join(", ")}`}
         className="mb-4 h-44 w-full rounded-xl object-contain"
       />
       <p className="text-xs font-semibold uppercase tracking-widest text-brand-400">{KICKER[p.id]}</p>
@@ -137,11 +137,11 @@ export default function LyspakkerPage() {
           København · Lysudlejning
         </p>
         <h1 className="mx-auto max-w-3xl text-4xl font-bold sm:text-5xl">
-          Lys til festen — pakket efter anledningen
+          Lys til festen, pakket efter anledningen
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
-          Du skal ikke vide hvad en uplight er. Sig hvad du holder — teenagefest, telt i haven, bryllup eller bare et
-          dansegulv — så er lyset sat sammen på forhånd. Alt er plug and play på almindelig strøm.
+          Du skal ikke vide hvad en uplight er. Sig hvad du holder, teenagefest, telt i haven, bryllup eller bare et
+          dansegulv, så er lyset sat sammen på forhånd. Alt er plug and play på almindelig strøm.
         </p>
       </section>
 
@@ -158,7 +158,7 @@ export default function LyspakkerPage() {
           <h2 className="mb-3 text-2xl font-bold">Må der bruges røg?</h2>
           <p className="mb-6 text-white/50">
             Så bliver lyset en anden liga: strålerne bliver synlige i luften, og effekterne ligner et show. Lysshow-pakkerne
-            har røgmaskinen med — men tjek lokalets røgalarm først. Er røg forbudt, er Diskotek-pakken bygget til netop det.
+            har røgmaskinen med, men tjek lokalets røgalarm først. Er røg forbudt, er Diskotek-pakken bygget til netop det.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link

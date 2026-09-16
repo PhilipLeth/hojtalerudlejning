@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Shure BLX Wireless Microphone Rental Copenhagen | 595 DKK",
     description:
-      "Shure BLX wireless microphone — stage quality for events and conferences. Book online.",
+      "Shure BLX wireless microphone, stage quality for events and conferences. Book online.",
     url: "https://lejhojtaler.dk/en/traadloes-mikrofon-pro",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",

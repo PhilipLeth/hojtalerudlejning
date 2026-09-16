@@ -9,7 +9,7 @@ import { formatSentence } from "@/lib/openingHours";
 
 /**
  * Hvor og hvornår kunden henter. Adressen og tiderne kommer fra
- * /admin/indstillinger — kvitteringssiden er det sidste kunden ser, så den må
+ * /admin/indstillinger, kvitteringssiden er det sidste kunden ser, så den må
  * ikke stå med en gammel adresse.
  */
 function PickupLine() {
@@ -43,7 +43,7 @@ export default function PaymentResult() {
       .then((d) => {
         if (d.status === "complete" && d.paymentStatus === "paid") {
           setState({ kind: "paid", amount: typeof d.amount === "number" ? d.amount : null });
-          // Konvertering sendes FØRST her — når Stripe har bekræftet betalingen.
+          // Konvertering sendes FØRST her, når Stripe har bekræftet betalingen.
           // transactionId = booking-id, så GA4 deduplikerer ved genindlæsning.
           trackPurchase({
             transactionId: d.bookingId ?? sessionId,
@@ -95,7 +95,7 @@ export default function PaymentResult() {
       <div className="text-center">
         <h1 className="text-3xl font-bold">Betalingen blev ikke gennemført</h1>
         <p className="mt-3 text-white/60">
-          Din booking er stadig registreret — du kan betale ved afhentning, eller ringe til os på{" "}
+          Din booking er stadig registreret, du kan betale ved afhentning, eller ringe til os på{" "}
           <PhoneLink className="text-brand-400" />.
         </p>
         <Link href="/" className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-3 font-semibold text-black transition hover:bg-brand-400">
@@ -110,7 +110,7 @@ export default function PaymentResult() {
       <h1 className="text-3xl font-bold">Kunne ikke bekræfte betalingen</h1>
       <p className="mt-3 text-white/60">
         Tjek din e-mail for en kvittering, eller ring til os på{" "}
-        <PhoneLink className="text-brand-400" /> — så finder vi ud af det.
+        <PhoneLink className="text-brand-400" />, så finder vi ud af det.
       </p>
     </div>
   );

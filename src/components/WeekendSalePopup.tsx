@@ -7,7 +7,7 @@ import Link from "next/link";
 /**
  * Weekendudsalget, som kunden ser det.
  *
- * Vises kun når /api/udsalg-aktiv siger ja — og det gør den kun, hvis admin
+ * Vises kun når /api/udsalg-aktiv siger ja, og det gør den kun, hvis admin
  * har tændt kontakten i /admin/udsalg OG der faktisk står udstyr tilbage hele
  * den kommende weekend. Ingen kontakt at glemme her: slukker Frederik
  * udsalget, eller bliver det sidste udstyr lejet ud, forsvinder popup'en af
@@ -29,7 +29,7 @@ interface SaleStatus {
   products?: SaleProduct[];
 }
 
-/** Afvisning gemmes pr. weekend, så den kan komme igen næste fredag — men
+/** Afvisning gemmes pr. weekend, så den kan komme igen næste fredag, men
  *  ikke plage den samme besøgende to gange i samme weekend. */
 function dismissKey(from: string): string {
   return `weekend_sale_dismissed_${from}`;
@@ -49,7 +49,7 @@ export default function WeekendSalePopup() {
   const [sale, setSale] = useState<SaleStatus | null>(null);
   const [show, setShow] = useState(false);
 
-  // Ikke i admin, og ikke midt i en booking — der er kunden allerede i gang
+  // Ikke i admin, og ikke midt i en booking, der er kunden allerede i gang
   const suppressed = pathname?.startsWith("/admin") || pathname?.startsWith("/book");
 
   useEffect(() => {

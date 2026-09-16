@@ -38,7 +38,7 @@ export default function MackieThumpGoEn() {
       name="Mackie Thump GO"
       price={395}
       headline="Rent Mackie Thump GO in Copenhagen"
-      sub='Battery-powered 8" speaker — park, beach, courtyard. No power needed.'
+      sub='Battery-powered 8" speaker, park, beach, courtyard. No power needed.'
       image="/images/product-thumpgo-v2-white.webp"
       imageAlt="Mackie Thump GO battery speaker for rent in Copenhagen"
       productId="thumpgo"
@@ -46,7 +46,7 @@ export default function MackieThumpGoEn() {
       bullets={[
         '8" battery speaker with Bluetooth',
         "Up to 12 hours of battery",
-        "Only 10 kg — fits on a bike",
+        "Only 10 kg, fits on a bike",
         "Charger and AUX cable included",
         "Collect Friday, return Monday",
       ]}

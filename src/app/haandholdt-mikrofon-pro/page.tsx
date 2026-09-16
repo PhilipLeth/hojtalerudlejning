@@ -4,7 +4,7 @@ import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Håndholdt mikrofon PRO (kabel) København | 395 kr | Lejhøjtaler.dk",
-  description: "Shure Beta 58A med kabel — klassikeren til sang og taler. 395 kr/weekend. Betal ved afhentning. Book online.",
+  description: "Shure Beta 58A med kabel, klassikeren til sang og taler. 395 kr/weekend. Betal ved afhentning. Book online.",
   keywords: ["lej shure beta 58", "sangmikrofon leje", "mikrofon til sang københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/haandholdt-mikrofon-pro",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Lej Håndholdt mikrofon PRO (kabel) København | 395 kr",
-    description: "Shure Beta 58A med kabel — klassikeren til sang og taler. 395 kr/weekend. Betal ved afhentning. Book online.",
+    description: "Shure Beta 58A med kabel, klassikeren til sang og taler. 395 kr/weekend. Betal ved afhentning. Book online.",
     url: "https://lejhojtaler.dk/haandholdt-mikrofon-pro",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,12 +27,12 @@ export default function Page() {
       name="Håndholdt mikrofon PRO (kabel)"
       price={395}
       headline="Lej Shure Beta 58A"
-      sub={'Shure Beta 58A med kabel — klassikeren til sang og taler.'}
+      sub={'Shure Beta 58A med kabel, klassikeren til sang og taler.'}
       image="/images/product-mikrofon-kabel-pro-v2-white.webp"
       imageAlt="Shure Beta 58A mikrofon til leje"
       productId="haandholdt_mikrofon_pro"
       faqPhrase="en håndholdt PRO-mikrofon med kabel"
-      bullets={["Shure Beta 58A — industristandarden", "XLR-kabel inkluderet", "Perfekt til sang og taler", "Tilslut direkte til vores højtalere", "395 kr/weekend"]}
+      bullets={["Shure Beta 58A, industristandarden", "XLR-kabel inkluderet", "Perfekt til sang og taler", "Tilslut direkte til vores højtalere", "395 kr/weekend"]}
     />
   );
 }

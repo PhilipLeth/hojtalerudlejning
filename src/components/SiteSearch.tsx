@@ -4,7 +4,7 @@
  * Søgefelt i headeren.
  *
  * Menuen er bevidst en vej ind og ikke et katalog, så den viser et udvalg.
- * Det er rigtigt for den, der ikke ved hvad han skal have — men den, der ved
+ * Det er rigtigt for den, der ikke ved hvad han skal have, men den, der ved
  * præcis hvad han leder efter ("lærred", "røgmaskine", "Soundboks"), skulle
  * gætte sig til hvilken kategori det lå under. Søgningen er genvejen udenom.
  *
@@ -13,7 +13,7 @@
  * den vigtigste knap på sitet. Feltet må ikke fortrænge den.
  *
  * Indekset bygges af kataloget via useProducts, så priser og navne følger det,
- * admin har rettet — se searchIndex.ts.
+ * admin har rettet, se searchIndex.ts.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -135,7 +135,7 @@ export default function SiteSearch({ locale = "da" }: { locale?: Locale }) {
         <div
           className="fixed inset-0 z-[60] flex items-start justify-center bg-black/70 px-4 pt-20 backdrop-blur-sm sm:pt-28"
           onMouseDown={(e) => {
-            // Kun klik på selve baggrunden lukker — ikke et klik der startede
+            // Kun klik på selve baggrunden lukker, ikke et klik der startede
             // inde i feltet og slap uden for
             if (e.target === e.currentTarget) luk();
           }}

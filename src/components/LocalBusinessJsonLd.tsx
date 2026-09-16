@@ -3,17 +3,17 @@
 /**
  * LocalBusiness-markup til Google, bygget af indstillingerne.
  *
- * Stod før som tre håndskrevne blokke — forsiden, /en og /kobenhavn — der ikke
+ * Stod før som tre håndskrevne blokke, forsiden, /en og /kobenhavn, der ikke
  * var enige: to forskellige fredags-åbningstider og hver sin adresse-stavning.
  * Nu kommer navn, CVR, adresse, telefon, mail og åbningstider fra samme sted
  * som resten af sitet.
  *
  * Den statiske HTML indeholder standarden fra koden, og markup'en opdateres når
  * indstillingerne er hentet. Retter Frederik fx åbningstiderne, ser Google det
- * først, når siden er renderet — eller ved næste deploy. Google Business
+ * først, når siden er renderet, eller ved næste deploy. Google Business
  * Profile skal stadig rettes i hånden.
  *
- * Markup'en hører til på de sider, der handler om VIRKSOMHEDEN — forsiden,
+ * Markup'en hører til på de sider, der handler om VIRKSOMHEDEN, forsiden,
  * /en, /kobenhavn, /kontakt og /om. Ikke på de 30 produktsider: en produktside
  * handler om et produkt, og LocalBusiness på hver af dem er markup for
  * markup'ens skyld.
@@ -27,7 +27,7 @@ import { socialEntries } from "@/lib/socials";
  * Google Business Profile-profilen for Lejhøjtaler.dk.
  *
  * Uden den her kobling er hjemmesiden og virksomhedsprofilen to ting, Google
- * selv skal gætte hører sammen. sameAs og hasMap fortæller det direkte — det er
+ * selv skal gætte hører sammen. sameAs og hasMap fortæller det direkte, det er
  * den billigste ting, man kan gøre for lokal synlighed.
  */
 const PLACE_ID = "ChIJ9UxZq-xTUkYRsiSY3hvy-MY";

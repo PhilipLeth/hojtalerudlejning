@@ -8,7 +8,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: 'Lej 32" Skærm på Stativ København | 395 kr | Lejhøjtaler.dk',
   description:
-    "Lej en 32\" LED-skærm på stativ i København for 395 kr. Kompakt og nem at flytte — perfekt til karaoke og det lille mødelokale. Book online.",
+    "Lej en 32\" LED-skærm på stativ i København for 395 kr. Kompakt og nem at flytte, perfekt til karaoke og det lille mødelokale. Book online.",
   keywords: [
     "lej skærm",
     "32 tommer skærm leje",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Lej 32" Skærm på Stativ | 395 kr',
     description:
-      "Lej en 32\" LED-skærm på stativ i København for 395 kr. Kompakt og nem at flytte — perfekt til karaoke og det lille mødelokale. Book online.",
+      "Lej en 32\" LED-skærm på stativ i København for 395 kr. Kompakt og nem at flytte, perfekt til karaoke og det lille mødelokale. Book online.",
     url: "https://lejhojtaler.dk/skaerm-32",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -38,7 +38,7 @@ export default function Page() {
       name={'32" Skærm'}
       price={395}
       headline={'Lej 32" skærm på stativ'}
-      sub={'32" LED-skærm på 3-fod stativ — kompakt, nem at flytte og klar på 5 minutter.'}
+      sub={'32" LED-skærm på 3-fod stativ, kompakt, nem at flytte og klar på 5 minutter.'}
       image="/images/product-skaerm-32-white.webp"
       imageAlt={'32" LED-skærm på 3-fod stativ til leje i København'}
       productId="skaerm_32"
@@ -47,7 +47,7 @@ export default function Page() {
         '32" LED-skærm i Full HD',
         "3-fod stativ med justerbar højde",
         "HDMI-kabel og strømkabel medfølger",
-        "Fylder lidt — kan være i en almindelig bil",
+        "Fylder lidt, kan være i en almindelig bil",
         "Perfekt til karaoketekster, slides og billedshow",
       ]}
     >
@@ -55,7 +55,7 @@ export default function Page() {
         <div className="glass rounded-2xl p-8 text-center">
           <h2 className="mb-3 text-2xl font-bold">Skal den bruges til karaoke?</h2>
           <p className="mx-auto mb-6 max-w-md text-white/50">
-            Så får du den billigere i Karaokepakken sammen med maskine og højtalere —{" "}
+            Så får du den billigere i Karaokepakken sammen med maskine og højtalere {" "}
             <LivePrice productId="pakke_karaoke" prefix="" suffix=" kr" /> i stedet for{" "}
             {prisTekst(catalogPartsPrice("pakke_karaoke"))} kr.
           </p>

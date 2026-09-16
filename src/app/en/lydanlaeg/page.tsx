@@ -9,9 +9,9 @@ import { localizedHref } from "@/lib/enPages";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "PA System Rental Copenhagen — packages by guest count | Lejhøjtaler.dk",
+  title: "PA System Rental Copenhagen, packages by guest count | Lejhøjtaler.dk",
   description:
-    "Rent a PA system in Copenhagen by how many guests are coming: 50, 100, 150 or 250 people. Ready-made packages with speakers, sub, lights and fog — delivery and setup available.",
+    "Rent a PA system in Copenhagen by how many guests are coming: 50, 100, 150 or 250 people. Ready-made packages with speakers, sub, lights and fog, delivery and setup available.",
   keywords: [
     "pa system rental copenhagen",
     "sound system rental copenhagen",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lydanlaeg"),
   },
   openGraph: {
-    title: "PA System Rental Copenhagen — packages by guest count",
+    title: "PA System Rental Copenhagen, packages by guest count",
     description:
       "Choose a system by how many are coming: 50, 100, 150 or 250 guests. Ready-made packages, ready to set up.",
     url: "https://lejhojtaler.dk/en/lydanlaeg",
@@ -69,7 +69,7 @@ function Step({ step, highlighted }: { step: LadderStep; highlighted: boolean })
       </p>
       <p className="mt-1 text-xs text-white/40">
         {step.koersel === "tilvalg" && "Collect it yourself, or add delivery + setup"}
-        {step.koersel === "anbefalet" && "Delivery + setup recommended — 795 kr both ways"}
+        {step.koersel === "anbefalet" && "Delivery + setup recommended, 795 kr both ways"}
         {step.koersel === "tilbud" && "Delivery, setup and a technician are part of the quote"}
       </p>
 
@@ -118,7 +118,7 @@ export default function Page() {
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
           You should not have to guess at inches and watts. Tell us how many guests are coming and the package is
-          already put together — speakers, bass, stands, lights and cables in one.
+          already put together, speakers, bass, stands, lights and cables in one.
         </p>
       </section>
 
@@ -131,13 +131,13 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Konference-stigen er væk sammen med pausen på projektor og skærm —
+      {/* Konference-stigen er væk sammen med pausen på projektor og skærm
           samme afgrænsning som på den danske side. */}
       <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="mb-2 text-2xl font-bold">For speeches and meetings</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">
           If something has to be said, the microphone matters more than the bass. We rent out the sound and the
-          microphone — projectors, screens and projector screens are paused, so those you will need elsewhere.
+          microphone, projectors, screens and projector screens are paused, so those you will need elsewhere.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link
@@ -165,13 +165,13 @@ export default function Page() {
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
           <h2 className="mb-3 text-lg font-bold">The guest numbers are for indoors</h2>
           <p className="text-sm text-white/60">
-            Four walls and a ceiling send the sound back to your guests. Outdoors, with no walls, it disappears — count
+            Four walls and a ceiling send the sound back to your guests. Outdoors, with no walls, it disappears, count
             on roughly half the guests per package out there, or go one step up. If you are unsure, call us: we have
             probably seen the venue before, or we can tell from a photo.
           </p>
           <p className="mt-4 text-sm text-white/60">
             Every package can be booked with delivery, setup and collection. From Party package 150 and up we recommend
-            it — four speakers and a subwoofer do not come home on a cargo bike.
+            it, four speakers and a subwoofer do not come home on a cargo bike.
           </p>
         </div>
       </section>

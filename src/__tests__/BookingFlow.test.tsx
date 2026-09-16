@@ -272,7 +272,7 @@ describe("BookingFlow - Sold out handling", () => {
       clickDay(returnDay);
       await waitFor(() => {
         expect(
-          screen.getByText("Desværre udsolgt i denne periode — prøv andre datoer")
+          screen.getByText("Desværre udsolgt i denne periode, prøv andre datoer")
         ).toBeInTheDocument();
       });
     }

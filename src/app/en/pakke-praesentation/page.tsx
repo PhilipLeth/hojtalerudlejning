@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Presentation Bundle Rental Copenhagen | 695 DKK | Lejhøjtaler.dk",
   description:
-    "Presentation bundle with projector, 160 cm screen and wired handheld microphone — everything for the presentation for 695 DKK. Save 90 DKK. Book online in Copenhagen.",
+    "Presentation bundle with projector, 160 cm screen and wired handheld microphone, everything for the presentation for 695 DKK. Save 90 DKK. Book online in Copenhagen.",
   keywords: ["presentation equipment rental copenhagen", "projector and screen hire", "av package for meeting denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/pakke-praesentation",
@@ -28,7 +28,7 @@ export default function Page() {
       slug="en/pakke-praesentation"
       name="Presentation bundle"
       price={695}
-      headline="The presentation bundle — everything for the meeting"
+      headline="The presentation bundle, everything for the meeting"
       sub="Projector + 160 cm screen + handheld microphone. Save 90 DKK compared to single prices."
       image="/images/product-projektor-white.webp"
       imageAlt="Presentation bundle with projector, screen and microphone"

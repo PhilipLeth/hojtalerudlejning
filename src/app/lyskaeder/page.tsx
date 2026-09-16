@@ -12,7 +12,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lej Lyskæder København | Fra 195 kr | Lejhøjtaler.dk",
   description:
-    "Lej lyskæde i København fra 195 kr/weekend. 10m lyskæde — vælg mellem varm hvid eller farvet. Perfekt til havefest, bryllup og fødselsdag. Betal ved afhentning.",
+    "Lej lyskæde i København fra 195 kr/weekend. 10m lyskæde, vælg mellem varm hvid eller farvet. Perfekt til havefest, bryllup og fødselsdag. Betal ved afhentning.",
   keywords: [
     "lej lyskæder",
     "lyskæder udlejning",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Lyskæder København | Fra 195 kr",
     description:
-      "Lej lyskæde i København fra 195 kr. 10m lyskæde — varm hvid eller farvet. Book online.",
+      "Lej lyskæde i København fra 195 kr. 10m lyskæde, varm hvid eller farvet. Book online.",
     url: "https://lejhojtaler.dk/lyskaeder",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -83,7 +83,7 @@ export default function LyskaederPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            10m lyskæde — vælg mellem almindelig varm hvid eller farvet. Perfekt til enhver fest.
+            10m lyskæde, vælg mellem almindelig varm hvid eller farvet. Perfekt til enhver fest.
           </p>
           <a
             href="/?product=lyskaeder#book"
@@ -95,11 +95,11 @@ export default function LyskaederPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        {/* Produkter — vælg varm hvid eller farvet */}
+        {/* Produkter, vælg varm hvid eller farvet */}
         <section id="produkter" className="mx-auto max-w-4xl px-4 py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Vælg din lyskæde</h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            To varianter — begge 10m med strømforsyning og kabelstrips til ophæng.
+            To varianter, begge 10m med strømforsyning og kabelstrips til ophæng.
             Perfekte til havefest, bryllup og fødselsdag.
           </p>
           <CategoryProductGrid items={[{ id: "lyskaeder" }, { id: "lyskaeder_farvet" }]} />

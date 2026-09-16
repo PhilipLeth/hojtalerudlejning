@@ -35,7 +35,7 @@ export default function BookingDrawer({ locale: localeProp }: { locale?: Locale 
     const url = new URL(window.location.href);
     url.hash = "";
     url.searchParams.delete("product");
-    // /book er kun en alias — luk → forsiden uden product-param
+    // /book er kun en alias, luk → forsiden uden product-param
     const path =
       url.pathname === "/book" || url.pathname === "/en/book"
         ? url.pathname.startsWith("/en")
@@ -78,7 +78,7 @@ export default function BookingDrawer({ locale: localeProp }: { locale?: Locale 
     };
   }, []);
 
-  // Soft-nav mellem sider (fx / → /soundboks-4) — synk hvis URL stadig beder om book
+  // Soft-nav mellem sider (fx / → /soundboks-4), synk hvis URL stadig beder om book
   useEffect(() => {
     if (shouldOpenFromUrl()) {
       setOpen(true);

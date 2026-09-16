@@ -40,13 +40,13 @@ export default function Page() {
       primaryWhy={"There is rarely a socket in the garden. The Soundboks 4 runs on battery, the spare battery keeps the party going past midnight, and the fairy lights give you light once the sun is down."}
       gridItems={[{ id: "pakke_udendors", tag: "Recommended" }, { id: "pakke_fest_lille" }, { id: "thumpgo" }, { id: "lyskaeder" }, { id: "lyskaeder_farvet" }]}
       tips={[
-        { title: "Two speakers beat one big one", text: "Outdoors there are no walls to bounce the sound back. Two speakers spread across the garden give even sound at a lower volume — and therefore fewer complaints." },
+        { title: "Two speakers beat one big one", text: "Outdoors there are no walls to bounce the sound back. Two speakers spread across the garden give even sound at a lower volume, and therefore fewer complaints." },
         { title: "Point the sound away from the neighbour", text: "Aim the speakers in towards your own house rather than out towards the fence. Same experience for your guests, markedly less noise next door." },
         { title: "No power in the garden?", text: "The Mackie Thump GO at " + prisDkk("thumpgo") + " runs on battery for up to 12 hours. No extension lead through the kitchen window." },
-        { title: "Fairy lights make the evening", text: "10 metres of fairy lights at " + prisDkk("lyskaeder") + " — warm white or coloured. It is the cheapest way to turn a garden into a venue once it gets dark." },
+        { title: "Fairy lights make the evening", text: "10 metres of fairy lights at " + prisDkk("lyskaeder") + ", warm white or coloured. It is the cheapest way to turn a garden into a venue once it gets dark." },
       ]}
       faq={[
-        { q: "How late can I play music in the garden?", a: "There is no fixed law, but ordinary consideration for neighbours applies in Copenhagen — turn it down around 10-11 PM on weekdays. Tell the neighbours in advance and they are far more tolerant." },
+        { q: "How late can I play music in the garden?", a: "There is no fixed law, but ordinary consideration for neighbours applies in Copenhagen, turn it down around 10-11 PM on weekdays. Tell the neighbours in advance and they are far more tolerant." },
         { q: "Can the speakers cope with being outdoors?", a: "Yes, in dry weather. They must not stand in rain or directly on wet grass. Put them on a table or a stand, and bring them in if the weather turns." },
         { q: "What if there is no power in the garden?", a: "Then choose a battery-powered speaker. The Mackie Thump GO plays for up to 12 hours and the Soundboks 4 up to 40 hours on one charge." },
         { q: "How many guests does the small party package cover?", a: "Up to about 40 people. If you are more, or the garden is large, take the large party package with 12\" speakers and the full light package at " + prisDkk("pakke_fest_stor") + "." },

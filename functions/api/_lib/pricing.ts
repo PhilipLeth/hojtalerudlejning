@@ -1,4 +1,4 @@
-import { DJ_ID, priceDj, djLabel, type DjHours } from "../../../src/lib/dj";
+import { DJ_ID, requireDjGear, priceDj, djLabel, type DjHours } from "../../../src/lib/dj";
 /** Server-side prisopslag til Stripe — beløb beregnes ALTID her, aldrig fra klienten. */
 import {
   speakers as defaultSpeakers,
@@ -88,6 +88,7 @@ export function buildLineItems(
   if (!Array.isArray(items) || items.length === 0 || items.length > 25) {
     throw new Error("Invalid items");
   }
+  requireDjGear(items.map(item=>String(item?.id ?? "")));
   const lineItems: BuiltLineItem[] = [];
   let totalOre = 0;
   for (const item of items) {

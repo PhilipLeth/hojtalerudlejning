@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Bryllupspakke | Lyd, mikrofon, lys og low fog | 2.695 kr | Lejhøjtaler.dk",
   description:
-    "Bryllupspakke: 2× EV 12\" højtalere på stativer, trådløs mikrofon til talerne, lys-pakke, lyskæde og low fog-maskine for 2.695 kr — spar 180 kr. Levering og opsætning kan tilvælges i København.",
+    "Bryllupspakke: 2× EV 12\" højtalere på stativer, trådløs mikrofon til talerne, lys-pakke, lyskæde og low fog-maskine for 2.695 kr, spar 180 kr. Levering og opsætning kan tilvælges i København.",
   keywords: ["lyd til bryllup", "bryllupspakke leje", "mikrofon til bryllup", "low fog bryllup", "lys til bryllup"],
   alternates: {
     canonical: "https://lejhojtaler.dk/bryllupspakke",
@@ -28,7 +28,7 @@ export default function BryllupspakkePage() {
       slug="bryllupspakke"
       name="Bryllupspakke"
       price={2695}
-      headline="Bryllupspakken — talerne og dansegulvet i ét"
+      headline="Bryllupspakken, talerne og dansegulvet i ét"
       sub="Højtalere på stativer, trådløs mikrofon, lys, lyskæde og low fog til første dans. Spar 180 kr."
       image="/images/product-pakke-bryllup-taendt-white.webp"
       imageAlt="Bryllupspakken: to EV-højtalere på stativer, trådløs mikrofon, varm hvid lyskæde og low fog-maskinen med røggulv"
@@ -36,11 +36,11 @@ export default function BryllupspakkePage() {
       faqPhrase="bryllupspakken"
       capacity={{ level: 3, label: "op til 100 pers." }}
       bullets={[
-        '2× EV 12" højtalere på stativer — taler under middagen, fest bagefter',
+        '2× EV 12" højtalere på stativer, taler under middagen, fest bagefter',
         "Trådløs mikrofon, så talerne kan høres helt bagest",
         "Lys-pakke: 2 farvede lamper + centereffekt",
         "10 m lyskæde til teltet eller loftet",
-        "Low fog-maskine — \"dansen på skyer\" til første dans",
+        "Low fog-maskine, \"dansen på skyer\" til første dans",
         "Spar 180 kr vs. at leje delene enkeltvis",
       ]}
     >
@@ -48,7 +48,7 @@ export default function BryllupspakkePage() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Skal vi sætte op inden gæsterne kommer?</h2>
           <p className="mb-6 text-white/50">
-            På en bryllupsdag er der ikke tid til at rigge et anlæg til. Vi kører ud om formiddagen, sætter op klar til brug og henter igen efter festen — 795 kr begge veje. Vælges i bookingen.
+            På en bryllupsdag er der ikke tid til at rigge et anlæg til. Vi kører ud om formiddagen, sætter op klar til brug og henter igen efter festen, 795 kr begge veje. Vælges i bookingen.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link

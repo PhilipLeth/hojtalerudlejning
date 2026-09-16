@@ -12,7 +12,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lej Uplights København | Fra 125 kr | Lejhøjtaler.dk",
   description:
-    "Lej uplights i København fra 125 kr/stk eller 395 kr for 4-pak. Simple LED uplights på gulv — plug and play til bryllup, konfirmation og fest. Betal ved afhentning.",
+    "Lej uplights i København fra 125 kr/stk eller 395 kr for 4-pak. Simple LED uplights på gulv, plug and play til bryllup, konfirmation og fest. Betal ved afhentning.",
   keywords: [
     "lej uplights københavn",
     "uplight udlejning",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Uplights København | Fra 125 kr",
     description:
-      "Simple LED uplights på gulv — 125 kr/stk eller 395 kr for 4-pak. Book online.",
+      "Simple LED uplights på gulv, 125 kr/stk eller 395 kr for 4-pak. Book online.",
     url: "https://lejhojtaler.dk/uplights",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -72,7 +72,7 @@ export default function UplightsPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Simple LED uplights på gulv — sæt dem i hjørnerne og få farvet lys op ad væggene. Plug and play.
+            Simple LED uplights på gulv, sæt dem i hjørnerne og få farvet lys op ad væggene. Plug and play.
           </p>
           <a
             href="/?product=uplight_4#book"
@@ -87,7 +87,7 @@ export default function UplightsPage() {
         <section id="produkter" className="mx-auto max-w-4xl px-4 py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Vælg antal uplights</h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Enkelt uplight til små rum — eller 4-pak til festlokale, bryllup og konfirmation.
+            Enkelt uplight til små rum, eller 4-pak til festlokale, bryllup og konfirmation.
             Sluk loftlyset og lad uplights klare stemningen.
           </p>
           <CategoryProductGrid
@@ -102,7 +102,7 @@ export default function UplightsPage() {
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Kombiner med lyd og røg</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
-              Uplights giver stemning — højtalere og røgmaskine giver festen. Book det hele samlet.
+              Uplights giver stemning, højtalere og røgmaskine giver festen. Book det hele samlet.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Link

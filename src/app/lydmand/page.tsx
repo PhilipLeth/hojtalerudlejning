@@ -7,7 +7,7 @@ import { LYDMAND_PAKKER } from "@/lib/products";
 export const metadata: Metadata = {
   title: "Lej Lydmand København | AV-tekniker 1.000 kr/time | Lejhøjtaler.dk",
   description:
-    "Lej en lydmand til festen eller firmaeventet i København — 1.000 kr pr. time inkl. moms. AV-teknikeren sætter op, laver lydprøve og styrer lyd og mikrofoner, mens I holder fest.",
+    "Lej en lydmand til festen eller firmaeventet i København, 1.000 kr pr. time inkl. moms. AV-teknikeren sætter op, laver lydprøve og styrer lyd og mikrofoner, mens I holder fest.",
   keywords: [
     "lej lydmand københavn",
     "lydmand til fest",
@@ -40,7 +40,7 @@ export default function LydmandPage() {
       price={1000}
       priceUnit="/time"
       headline="Lej en lydmand til festen"
-      sub="En AV-tekniker, der sætter op, laver lydprøve og styrer lyden — så I kan holde fest i stedet for at stå ved mixeren."
+      sub="En AV-tekniker, der sætter op, laver lydprøve og styrer lyden, så I kan holde fest i stedet for at stå ved mixeren."
       image="/images/product-lydmand-white.webp"
       imageAlt="Lydmand: mixer, hovedtelefoner og mikrofon"
       productId="lydmand"
@@ -48,24 +48,24 @@ export default function LydmandPage() {
       ctaText="Vælg lydmanden som tilvalg til dit anlæg, eller tag en af pakkerne hvor han er med. Prisen er"
       faqMode="extraOnly"
       bullets={[
-        "AV-tekniker på stedet — sætter op og laver lydprøve før gæsterne kommer",
+        "AV-tekniker på stedet, sætter op og laver lydprøve før gæsterne kommer",
         "Styrer lyd, mikrofoner og musik under festen: taler, playlister, DJ eller band",
         "Passer også lys og røg, hvis det er med",
-        "Afregnes pr. time — vælg 4 timer som én vare, når han skal være der hele aftenen",
+        "Afregnes pr. time, vælg 4 timer som én vare, når han skal være der hele aftenen",
         "I pakkerne med lydmand er levering, opsætning og afhentning med",
       ]}
       faqExtra={[
         {
           q: "Hvad laver lydmanden på dagen?",
-          a: "Han sætter anlægget op, tester det og laver lydprøve med jer, før gæsterne kommer. Under festen styrer han lyd, mikrofoner og musik — taler, playlister, DJ eller band — og han pakker ned igen, når I er færdige.",
+          a: "Han sætter anlægget op, tester det og laver lydprøve med jer, før gæsterne kommer. Under festen styrer han lyd, mikrofoner og musik, taler, playlister, DJ eller band, og han pakker ned igen, når I er færdige.",
         },
         {
           q: "Hvad koster en lydmand?",
-          a: "1.000 kr pr. time inkl. moms. Vælger du lydmanden i bookingen, sætter du selv antallet af timer — og vil du, kan du skrive hvornår festen starter og slutter, så regner vi timerne ud. I pakkerne herunder er 4 timer med i prisen.",
+          a: "1.000 kr pr. time inkl. moms. Vælger du lydmanden i bookingen, sætter du selv antallet af timer, og vil du, kan du skrive hvornår festen starter og slutter, så regner vi timerne ud. I pakkerne herunder er 4 timer med i prisen.",
         },
         {
           q: "Skal jeg selv hente udstyret, når jeg har en lydmand med?",
-          a: "Nej. I pakkerne med lydmand er levering, opsætning og afhentning altid med i prisen — lydmanden kommer med grejet, sætter op og tager det med hjem igen. Vælger du lydmanden som tilvalg til et anlæg, du selv henter, sætter han op hos jer, men kører ikke udstyret.",
+          a: "Nej. I pakkerne med lydmand er levering, opsætning og afhentning altid med i prisen, lydmanden kommer med grejet, sætter op og tager det med hjem igen. Vælger du lydmanden som tilvalg til et anlæg, du selv henter, sætter han op hos jer, men kører ikke udstyret.",
         },
         {
           q: "Kan lydmanden også styre lys og røg?",

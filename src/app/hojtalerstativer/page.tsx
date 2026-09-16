@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Lej Højtalerstativer | 100 kr",
-    description: "2 professionelle stativer — løfter lyden op i øjenhøjde. Passer til alle vores højtalere.",
+    description: "2 professionelle stativer, løfter lyden op i øjenhøjde. Passer til alle vores højtalere.",
     url: "https://lejhojtaler.dk/hojtalerstativer",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,7 +29,7 @@ export default function Page() {
       name="Højtalerstativer"
       price={100}
       headline="Lej højtalerstativer"
-      sub="2 professionelle stativer, der løfter højtalerne op i øjenhøjde — så lyden går over hovederne i stedet for ind i ryggen på første række."
+      sub="2 professionelle stativer, der løfter højtalerne op i øjenhøjde, så lyden går over hovederne i stedet for ind i ryggen på første række."
       image="/images/product-stativer-white.webp"
       imageAlt="To professionelle højtalerstativer til leje"
       productId="stativer"
@@ -37,7 +37,7 @@ export default function Page() {
       faqPhrase="højtalerstativer"
       bullets={[
         "2 stativer med justerbar højde (op til ca. 2 m)",
-        "Passer til Alto 10\" og EV 12\" — alle vores højtalerpakker",
+        "Passer til Alto 10\" og EV 12\", alle vores højtalerpakker",
         "Trefod med sikring, står stabilt på gulv og græs",
         "Vælges som tilvalg i bookingen sammen med højtalerne",
         "Inkluderet i Højtalerpakke 100 og festpakkerne fra 150 gæster",

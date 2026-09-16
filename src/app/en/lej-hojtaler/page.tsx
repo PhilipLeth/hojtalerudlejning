@@ -12,7 +12,7 @@ import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
 /**
- * /en/lej-hojtaler — højtalerkategorien på engelsk.
+ * /en/lej-hojtaler, højtalerkategorien på engelsk.
  *
  * Den vigtigste af de manglende sider: /en solgte pakkerne, men der fandtes
  * ingen engelsk side, der samlede HELE højtalerudvalget, og menuens "All
@@ -83,7 +83,7 @@ export default function Page() {
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             Battery speakers and PA packages{" "}
-            <LiveStartPrice prefix="from " suffix=" DKK" /> — book online, pay when you collect.
+            <LiveStartPrice prefix="from " suffix=" DKK" />, book online, pay when you collect.
           </p>
           <a
             href="/en#book"
@@ -99,7 +99,7 @@ export default function Page() {
           locale="en"
           ids={FEST_LADDER_IDS}
           title="Choose a system by number of guests"
-          subtitle="Tell us how many are coming and the package is already put together — speakers, bass, stands, lights and cables in one."
+          subtitle="Tell us how many are coming and the package is already put together, speakers, bass, stands, lights and cables in one."
         />
         <BundleGrid
           locale="en"
@@ -129,7 +129,7 @@ export default function Page() {
               </div>
               <h3 className="font-semibold text-white">Pay on pickup</h3>
               <p className="mt-2 text-sm text-white/50">
-                You pay the rental and nothing else. No hidden fees — settle when you collect.
+                You pay the rental and nothing else. No hidden fees, settle when you collect.
               </p>
             </div>
             <div className="glass rounded-2xl p-6 text-center">

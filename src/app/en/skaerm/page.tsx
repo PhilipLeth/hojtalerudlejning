@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Large Screen Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a 55\" LED display on a stand in Copenhagen for 595 DKK. Adjustable height, HDMI cable included — for meetings, conferences and karaoke. Book online.",
+    "Rent a 55\" LED display on a stand in Copenhagen for 595 DKK. Adjustable height, HDMI cable included, for meetings, conferences and karaoke. Book online.",
   keywords: ["large screen rental copenhagen", "tv screen hire event", "55 inch display rental", "screen for conference copenhagen", "presentation screen rental"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/skaerm",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Large screen rental Copenhagen | 595 DKK",
-    description: "55\" LED display on a stand. Works in daylight — sharper than a projector.",
+    description: "55\" LED display on a stand. Works in daylight, sharper than a projector.",
     url: "https://lejhojtaler.dk/en/skaerm",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -30,7 +30,7 @@ export default function Page() {
       name="Large screen"
       price={595}
       headline="Rent a large screen in Copenhagen"
-      sub={"55\" LED display on a tripod stand. Works in daylight — sharper than a projector."}
+      sub={"55\" LED display on a tripod stand. Works in daylight, sharper than a projector."}
       image="/images/product-skaerm-white.webp"
       imageAlt="Large screen for rent in Copenhagen"
       productId="skaerm_55"

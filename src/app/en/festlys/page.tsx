@@ -10,7 +10,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
-/** Højtaler + lysbar + røgmaskine hver for sig — tallet i "complete party package from …". */
+/** Højtaler + lysbar + røgmaskine hver for sig, tallet i "complete party package from …". */
 const KOMPLET_FEST = prisTekst(catalogPrice("party") + catalogPrice("lys") + catalogPrice("rog"));
 
 /**
@@ -18,12 +18,12 @@ const KOMPLET_FEST = prisTekst(catalogPrice("party") + catalogPrice("lys") + cat
  *
  * Beløbet slås op i kataloget i stedet for at stå i hånden ved siden af linket
  * til pakken. Den danske side skriver "Spar 140,-" som tekst, og præcis den
- * slags tal er dem, der bliver stående, når en pris ændrer sig — se
+ * slags tal er dem, der bliver stående, når en pris ændrer sig, se
  * priser-i-tekst.test.ts.
  */
 const spar = (id: string) => `Save ${prisTekst(catalogDiscount(id))} DKK`;
 
-/** Uplight 4-pakken er ikke et bundle — rabatten er fire enkelte minus pakken. */
+/** Uplight 4-pakken er ikke et bundle, rabatten er fire enkelte minus pakken. */
 const SPAR_UPLIGHT_4 = `Save ${prisTekst(4 * catalogPrice("uplight") - catalogPrice("uplight_4"))} DKK`;
 
 export const metadata: Metadata = {
@@ -140,7 +140,7 @@ export default function Page() {
         <section className="mx-auto max-w-3xl px-4 pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">
-              Add sound — a complete party package from {KOMPLET_FEST} DKK
+              Add sound, a complete party package from {KOMPLET_FEST} DKK
             </h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
               Rent speakers, lights and a fog machine together. Everything you need

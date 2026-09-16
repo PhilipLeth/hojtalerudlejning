@@ -32,7 +32,7 @@ interface CatalogResponse {
 }
 
 function visible<T extends { hidden?: boolean }>(list: T[]): T[] {
-  return list.filter((p) => !p.hidden).map(p => ({...p,
+  return list.filter((p) => !p.hidden).map(p => JSON.parse(JSON.stringify(p).replace(/ — /g, ", ").replace(/—/g, "")) as T).map(p => ({...p,
     ...("image" in p && typeof p.image === "string" ? {image:whiteProductImage(p.image)} : {}),
     ...("product" in p && typeof p.product === "string" ? {product:whiteProductImage(p.product)} : {}),
   }));
@@ -57,7 +57,7 @@ function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
   return missing.length ? [...missing, ...merged] : merged;
 }
 
-/** Eksporteret til test — se mergeAddons */
+/** Eksporteret til test, se mergeAddons */
 export const mergeAddonsForTest = (fromKv: Addon[]): Addon[] => mergeAddons(fromKv);
 
 /** Strip de gamle kørsels-tilvalg, sync priser/tekster på de nuværende,
@@ -67,7 +67,7 @@ export const mergeAddonsForTest = (fromKv: Addon[]): Addon[] => mergeAddons(from
 function mergeAddons(fromKv: Addon[]): Addon[] {
   const merged = fromKv
     .filter((a) => !LEGACY_DELIVERY_IDS.includes(a.id)) // erstattet af levering_ud / afhentning_retur / levering_begge
-    .filter((a) => !RETIRED_ADDON_IDS.includes(a.id)) // fx lydmand_4t — timerne er antal nu
+    .filter((a) => !RETIRED_ADDON_IDS.includes(a.id)) // fx lydmand_4t, timerne er antal nu
     .map((a) => {
       const d = defaultAddons.find((x) => x.id === a.id);
       if (DELIVERY_ADDON_IDS.includes(a.id as DeliveryAddonId) && d) {
@@ -77,7 +77,7 @@ function mergeAddons(fromKv: Addon[]): Addon[] {
       if (!next.contents?.length && d?.contents?.length) {
         next = { ...next, contents: d.contents };
       }
-      // Intern-flaget styres fra koden — et gammelt KV-katalog må ikke
+      // Intern-flaget styres fra koden, et gammelt KV-katalog må ikke
       // sende faktureringsgebyret ud i kundens bookingflow.
       if (d?.intern && !next.intern) {
         next = { ...next, intern: true };
@@ -86,19 +86,19 @@ function mergeAddons(fromKv: Addon[]): Addon[] {
       // Beskrivelsen ændrede sig, da timerne blev til antal, og et KV-katalog
       // gemt før det må ikke bede kunden skrive timer i kommentaren.
       if (d?.ydelse) {
-        next = { ...next, ...(d.id === "dj_musikafvikler" ? {price:d.price} : {}), ydelse: true, priceUnit: d.priceUnit, page: d.page, da: d.da, en: d.en };
+        next = { ...next, ...(d.id === "dj_musikafvikler" ? {price:d.price,image:d.image,contents:d.contents} : {}), ydelse: true, priceUnit: d.priceUnit, page: d.page, da: d.da, en: d.en };
       }
       return next;
     });
   // Nye tilvalg tilføjet i koden (fx subwoofer) skal også dukke op selvom
-  // kataloget i KV blev gemt før — samme princip som mergeRentals.
+  // kataloget i KV blev gemt før, samme princip som mergeRentals.
   const ids = new Set(merged.map((a) => a.id));
   const missing = defaultAddons.filter((d) => !ids.has(d.id));
   return missing.length ? [...merged, ...missing] : merged;
 }
 
 function mergeSpeakers(fromKv: Speaker[]): Speaker[] {
-  // festival_bas var en opfundet combo-SKU — kun subwoofer + festival findes fysisk
+  // festival_bas var en opfundet combo-SKU, kun subwoofer + festival findes fysisk
   return fromKv
     .filter((s) => s.id !== "festival_bas")
     .map((s) => {

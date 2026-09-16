@@ -76,7 +76,7 @@ export default function RoegPage() {
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             Klassisk røgmaskine der fylder rummet og gør lysshowet 10x federe.
-            Inkl. røgvæske og fjernbetjening — klar på 5 minutter.
+            Inkl. røgvæske og fjernbetjening, klar på 5 minutter.
           </p>
           <a
             href="#produkter"
@@ -94,7 +94,7 @@ export default function RoegPage() {
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
             Den klassiske røgmaskine fylder rummet og gør lysshowet 10x federe.
-            Low fog-maskinen laver et flot røggulv — &quot;dansen på skyer&quot;-effekten
+            Low fog-maskinen laver et flot røggulv, &quot;dansen på skyer&quot;-effekten
             fra bryllupper og musikvideoer.
           </p>
 

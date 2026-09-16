@@ -21,22 +21,24 @@ const COPY = {
 } as const;
 
 /**
- * Sammensatte pakker vist som tilbudskort — samme kort som på forsiden.
+ * Sammensatte pakker vist som tilbudskort, samme kort som på forsiden.
  * Uden props: alle lyd-pakker (forsiden). Med `ids`: netop de pakker,
  * i den rækkefølge de er angivet (fx karaokepakkerne på /karaoke).
  */
 export default function BundleGrid({
   ids,
+  sectionId = "pakker",
   note,
   locale = "da",
   eyebrow = locale === "en" ? "Packages" : "Pakker",
   title = locale === "en" ? "Ready for the party" : "Klar til festen",
   subtitle = locale === "en"
-    ? "Sound and lights that work together — booked as one package, cheaper than renting the parts separately. Delivery and setup available."
-    : "Lyd og lys der passer perfekt sammen — booket som én pakke med rabat vs. at leje delene enkeltvis. Levering og opsætning kan tilvælges.",
+    ? "Sound and lights that work together, booked as one package, cheaper than renting the parts separately. Delivery and setup available."
+    : "Lyd og lys der passer perfekt sammen, booket som én pakke med rabat vs. at leje delene enkeltvis. Levering og opsætning kan tilvælges.",
 }: {
   ids?: string[];
-  /** Linje under kortene — fx videre til de pakker gitteret ikke viser */
+  sectionId?: string;
+  /** Linje under kortene, fx videre til de pakker gitteret ikke viser */
   note?: React.ReactNode;
   locale?: Locale;
   eyebrow?: string;
@@ -53,7 +55,7 @@ export default function BundleGrid({
   if (bundles.length === 0) return null;
 
   return (
-    <section id="pakker" className="relative z-20 mx-auto max-w-6xl px-4 py-14 sm:py-20">
+    <section id={sectionId} className="relative z-20 mx-auto max-w-6xl px-4 py-14 sm:py-20">
       <p className="mb-2 text-center text-xs font-semibold uppercase tracking-[0.2em] text-brand-400">
         {eyebrow}
       </p>

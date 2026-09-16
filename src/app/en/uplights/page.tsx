@@ -10,13 +10,13 @@ import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 import { catalogPrice, prisTekst } from "@/lib/products";
 
-/** Rabatten på 4-pakken er fire enkelte minus pakken — slås op, skrives ikke. */
+/** Rabatten på 4-pakken er fire enkelte minus pakken, slås op, skrives ikke. */
 const SPAR_UPLIGHT_4 = `Save ${prisTekst(4 * catalogPrice("uplight") - catalogPrice("uplight_4"))} DKK`;
 
 export const metadata: Metadata = {
   title: "Uplighting Rental Copenhagen | From 125 DKK | Lejhøjtaler.dk",
   description:
-    "Rent uplights in Copenhagen from 125 DKK each, or 395 DKK for a 4-pack. Simple LED floor uplights — plug and play for weddings, confirmations and parties. Pay on pickup.",
+    "Rent uplights in Copenhagen from 125 DKK each, or 395 DKK for a 4-pack. Simple LED floor uplights, plug and play for weddings, confirmations and parties. Pay on pickup.",
   keywords: [
     "uplighting rental copenhagen",
     "uplight rental copenhagen",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Uplighting Rental Copenhagen | From 125 DKK",
     description:
-      "Simple LED floor uplights — 125 DKK each or 395 DKK for a 4-pack. Book online.",
+      "Simple LED floor uplights, 125 DKK each or 395 DKK for a 4-pack. Book online.",
     url: "https://lejhojtaler.dk/en/uplights",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -75,7 +75,7 @@ export default function Page() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Simple LED uplights that stand on the floor — put them in the corners and
+            Simple LED uplights that stand on the floor, put them in the corners and
             wash the walls in colour. Plug and play.
           </p>
           <a
@@ -91,7 +91,7 @@ export default function Page() {
         <section id="products" className="mx-auto max-w-4xl px-4 py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Choose how many</h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            A single uplight for a small room — or the 4-pack for a venue, a wedding
+            A single uplight for a small room, or the 4-pack for a venue, a wedding
             or a confirmation. Turn off the ceiling light and let the uplights do the work.
           </p>
           <CategoryProductGrid
@@ -107,7 +107,7 @@ export default function Page() {
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Add sound and fog</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
-              Uplights set the mood — speakers and a fog machine make it a party.
+              Uplights set the mood, speakers and a fog machine make it a party.
               Book it all in one go.
             </p>
             <div className="flex flex-wrap justify-center gap-3">

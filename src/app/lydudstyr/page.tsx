@@ -9,7 +9,7 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 export const metadata: Metadata = {
   title: "Lej PA-anlæg og Lydudstyr København | Lejhøjtaler.dk",
   description:
-    "Lej PA-anlæg og professionelt lydudstyr i København fra 395 kr/weekend. Festival-pakke med 2 højtalere — stativer og mikrofon kan tilkøbes. Betal ved afhentning.",
+    "Lej PA-anlæg og professionelt lydudstyr i København fra 395 kr/weekend. Festival-pakke med 2 højtalere, stativer og mikrofon kan tilkøbes. Betal ved afhentning.",
   keywords: [
     "lej PA-anlæg københavn",
     "PA anlæg udlejning",

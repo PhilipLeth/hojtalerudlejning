@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Wedding light package Copenhagen | 1.245 DKK | Lejhøjtaler.dk",
-  description: "Fairy lights, uplights and low fog for the wedding waltz — dancing on clouds for 1,245 DKK. Save 140 DKK. Rental in Copenhagen.",
+  description: "Fairy lights, uplights and low fog for the wedding waltz, dancing on clouds for 1,245 DKK. Save 140 DKK. Rental in Copenhagen.",
   keywords: ["wedding lights rental copenhagen", "low fog wedding first dance", "wedding party lights"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/bryllupslys",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Wedding light package Copenhagen | 1.245 DKK | Lejhøjtaler.dk",
-    description: "Warm light above the tables, uplights on the walls and low fog for the first dance — save 140 DKK.",
+    description: "Warm light above the tables, uplights on the walls and low fog for the first dance, save 140 DKK.",
     url: "https://lejhojtaler.dk/en/bryllupslys",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -28,8 +28,8 @@ export default function Page() {
       slug="en/bryllupslys"
       name="Wedding light package"
       price={1245}
-      headline="Wedding light package — waltz on clouds"
-      sub="Warm light above the tables, uplights on the walls and low fog for the first dance — save 140 DKK."
+      headline="Wedding light package, waltz on clouds"
+      sub="Warm light above the tables, uplights on the walls and low fog for the first dance, save 140 DKK."
       image="/images/product-pakke-bryllupslys-taendt-white.webp"
       imageAlt="Wedding light package switched on: warm white string lights, four LED uplights and the low fog machine"
       productId="pakke_bryllupslys"
@@ -38,7 +38,7 @@ export default function Page() {
       bullets={[
         "The low fog machine makes the 'dancing on clouds' effect from wedding videos",
         "10 m warm white fairy lights above the tables",
-        "4 LED uplights — pick one colour and the hall follows",
+        "4 LED uplights, pick one colour and the hall follows",
         "Everything runs on normal power, no technician",
         "Save 140 DKK vs renting the parts separately",
       ]}
@@ -47,7 +47,7 @@ export default function Page() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Need sound as well?</h2>
           <p className="mb-6 text-white/50">
-            Our wedding package has it all: speakers, a wireless microphone for the speeches, lights and low fog — in one booking.
+            Our wedding package has it all: speakers, a wireless microphone for the speeches, lights and low fog, in one booking.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/en/festlys" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">

@@ -7,7 +7,7 @@ import PhoneLink from "@/components/PhoneLink";
 import type { Locale } from "@/lib/i18n";
 
 /**
- * Forespørgsel i en drawer — modstykket til BookingDrawer.
+ * Forespørgsel i en drawer, modstykket til BookingDrawer.
  *
  * Bookingdraweren er til den der ved hvad han vil have. Den her er til den der
  * har et arrangement og ikke ved hvilke varenumre det består af. Den skal kunne
@@ -17,7 +17,7 @@ import type { Locale } from "@/lib/i18n";
  * Åbner på #foresp (virker på enhver side), på #tilbud (så alle de eksisterende
  * "Få et tilbud"-links åbner den i stedet for at hoppe til /erhverv) og på
  * ?forespoergsel=1. Links beholder deres rigtige href, så de stadig virker uden
- * JavaScript — der ligger den samme formular som en sektion på /erhverv.
+ * JavaScript, der ligger den samme formular som en sektion på /erhverv.
  */
 
 const HASHES = ["#foresp", "#tilbud"];
@@ -26,7 +26,7 @@ const HASHES = ["#foresp", "#tilbud"];
  * Fanens og drawerens tekster.
  *
  * Draweren kommer fra root-layoutet og fulgte derfor med på hver /en-side med
- * "Spørg om et event" ned ad højre kant — den sidste danske flig af sidens
+ * "Spørg om et event" ned ad højre kant, den sidste danske flig af sidens
  * faste inventar, efter menuen og båndet blev tosprogede.
  */
 const COPY = {
@@ -38,7 +38,7 @@ const COPY = {
     close: "Luk",
     intro:
       "Skal du bare bruge en højttaler, er det hurtigere at booke direkte. Skal der sørges for lyd, mikrofoner og " +
-      "lys til et helt arrangement, så fortæl hvad der skal ske — du får en pris med levering og opsætning.",
+      "lys til et helt arrangement, så fortæl hvad der skal ske, du får en pris med levering og opsætning.",
   },
   en: {
     tab: "Ask about an event",
@@ -48,7 +48,7 @@ const COPY = {
     close: "Close",
     intro:
       "If you just need a speaker, booking directly is quicker. If sound, microphones and lighting have to be " +
-      "sorted for a whole event, tell us what is happening — you get one price including delivery and setup.",
+      "sorted for a whole event, tell us what is happening, you get one price including delivery and setup.",
   },
 } as const satisfies Record<Locale, unknown>;
 
@@ -147,7 +147,7 @@ export default function InquiryDrawer() {
   return (
     <>
       {/* Fanen sidder under kurv-fanen, så de to ikke ligger oven i hinanden */}
-      <button
+      {!(["/", "/en", "/eventloesninger", "/en/eventloesninger", "/dj", "/en/dj", "/dj-pult", "/en/dj-pult"].includes(pathname ?? "") || pathname?.includes("/events/")) && <button
         onClick={() => setOpen(true)}
         data-testid="foresp-fane"
         aria-label={c.title}
@@ -161,7 +161,7 @@ export default function InquiryDrawer() {
           </svg>
           <span className="text-[11px] font-semibold [writing-mode:vertical-rl]">{c.tab}</span>
         </span>
-      </button>
+      </button>}
 
       <div
         className={`fixed inset-0 z-50 duration-300 ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}

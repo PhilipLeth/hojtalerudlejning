@@ -12,8 +12,8 @@ import type { Locale } from "@/lib/i18n";
 /**
  * Sidens faste tekster på begge sprog.
  *
- * Komponenten var dansk hele vejen, så de seks lejlighedssider — bryllup,
- * konfirmation, fødselsdag, julefrokost, havefest og studenterkørsel — kunne
+ * Komponenten var dansk hele vejen, så de seks lejlighedssider, bryllup,
+ * konfirmation, fødselsdag, julefrokost, havefest og studenterkørsel, kunne
  * ikke laves på engelsk uden at kopiere filen seks gange. Det er samme greb
  * som i ProductLanding og BundleGrid.
  */
@@ -29,7 +29,7 @@ const COPY = {
     bookNow: "Book nu",
     ourPick: "Vores anbefaling",
     popular: (hvad: string) => `Populært til ${hvad}`,
-    allBookable: "Alt kan bookes online — én pris for op til 5 dages leje.",
+    allBookable: "Alt kan bookes online, én pris for op til 5 dages leje.",
     goodToKnow: "Godt at vide",
     faqTitle: "Ofte stillede spørgsmål",
     ctaTitle: "Klar til at booke?",
@@ -49,7 +49,7 @@ const COPY = {
     bookNow: "Book now",
     ourPick: "Our recommendation",
     popular: (hvad: string) => `Popular for ${hvad}`,
-    allBookable: "Everything can be booked online — one price for up to 5 days.",
+    allBookable: "Everything can be booked online, one price for up to 5 days.",
     goodToKnow: "Good to know",
     faqTitle: "Frequently asked questions",
     ctaTitle: "Ready to book?",
@@ -65,16 +65,16 @@ export interface OccasionTip {
   text: string;
 }
 
-/** Samme form som FaqSections FaqItem — beholdt som navn, siderne bruger den. */
+/** Samme form som FaqSections FaqItem, beholdt som navn, siderne bruger den. */
 export type OccasionFaq = FaqItem;
 
 export interface OccasionLandingProps {
   /** URL-slug uden skråstreg, fx "konfirmation" */
   slug: string;
-  /** H1 — skal bære søgeordet, fx "Lyd til konfirmation" */
+  /** H1, skal bære søgeordet, fx "Lyd til konfirmation" */
   headline: string;
   /**
-   * Produktet, sidens "fra"-pris i H1 handler om — typisk den billigste
+   * Produktet, sidens "fra"-pris i H1 handler om, typisk den billigste
    * løsning, siden sælger. Prisen slås op i kataloget; da den stod som tekst,
    * lovede /bryllup "fra 895 kr." et halvt år efter at den store festpakke var
    * steget til 1.290.
@@ -97,7 +97,7 @@ export interface OccasionLandingProps {
   locale?: Locale;
   /**
    * Ordet efter "Populært til …". Den danske udgave klipper det ud af H1'en
-   * ("Lyd til bryllup" → "bryllup"), men engelsk bøjer ikke ens — "Sound for a
+   * ("Lyd til bryllup" → "bryllup"), men engelsk bøjer ikke ens, "Sound for a
    * wedding" skal blive til "Popular for weddings", ikke "for a wedding".
    * Derfor kan siden sende ordet med selv.
    */
@@ -163,7 +163,7 @@ export default function OccasionLanding({
             href={book}
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            {c.book(primaryName)} — <LivePrice productId={primaryProductId} prefix="" suffix={c.kr} />
+            {c.book(primaryName)}, <LivePrice productId={primaryProductId} prefix="" suffix={c.kr} />
           </a>
         </div>
       </section>
@@ -221,7 +221,7 @@ export default function OccasionLanding({
             href={book}
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            {c.book(primaryName)} — <LivePrice productId={primaryProductId} prefix="" suffix={c.kr} />
+            {c.book(primaryName)}, <LivePrice productId={primaryProductId} prefix="" suffix={c.kr} />
           </a>
           {related.length > 0 && (
             <p className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-white/40">

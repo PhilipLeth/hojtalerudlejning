@@ -8,7 +8,7 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { LocationKicker } from "@/components/PhoneLink";
 
 /**
- * /karaoke — kategorisiden for karaoke.
+ * /karaoke, kategorisiden for karaoke.
  *
  * Karaoke var på pause fra august til 8. september 2026, hvor siden stod som
  * en ren beskedside uden priser eller bookingknap. Den sælger igen: maskinen,
@@ -17,7 +17,7 @@ import { LocationKicker } from "@/components/PhoneLink";
 export const metadata: Metadata = {
   title: "Lej karaoke i København | Maskine og pakker fra 695 kr | Lejhøjtaler.dk",
   description:
-    "Lej karaoke i København. Karaokemaskine med to trådløse mikrofoner fra 695 kr, eller en pakke med skærm og højtalere fra 1.300 kr. Intet depositum — book online.",
+    "Lej karaoke i København. Karaokemaskine med to trådløse mikrofoner fra 695 kr, eller en pakke med skærm og højtalere fra 1.300 kr. Intet depositum, book online.",
   keywords: [
     "lej karaoke",
     "karaoke udlejning københavn",
@@ -68,7 +68,7 @@ export default function KaraokePage() {
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             Maskinen har to trådløse mikrofoner og skærm indbygget. Skal teksterne
-            kunne læses fra sofaen, lejer du en skærm med — eller tager hele pakken.
+            kunne læses fra sofaen, lejer du en skærm med, eller tager hele pakken.
           </p>
           <a
             href="#pakker"
@@ -85,7 +85,7 @@ export default function KaraokePage() {
             ids={["pakke_karaoke", "pakke_karaoke_fest"]}
             eyebrow="Karaokepakke"
             title="Alt til aftenen i én pakke"
-            subtitle="Maskine, skærm og højtalere sat sammen — billigere end delene hver for sig."
+            subtitle="Maskine, skærm og højtalere sat sammen, billigere end delene hver for sig."
           />
         </div>
 
@@ -108,7 +108,7 @@ export default function KaraokePage() {
           <h2 className="mb-2 text-center text-3xl font-bold">Lyd nok til at synge over</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
             Maskinens egen højtaler rækker til stuen. Skal der synges til fest,
-            skal stemmen kunne høres over snakken — så lejer du højtalere med.
+            skal stemmen kunne høres over snakken, så lejer du højtalere med.
           </p>
           <CategoryProductGrid
             items={[

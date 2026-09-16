@@ -9,9 +9,10 @@ import type { Locale } from "@/lib/i18n";
  *
  * Listen holdes i snor af en-sider.test.ts, som sammenligner den med de mapper,
  * der faktisk ligger i src/app/en. Bygger man en ny engelsk side uden at skrive
- * den her, fejler testen — og omvendt.
+ * den her, fejler testen, og omvendt.
  */
 export const EN_PAGES = [
+  "/dj-pult",
   "/dj",
   "/events/konference",
   "/events/moede",
@@ -129,8 +130,8 @@ export function hasEnglish(daPath: string): boolean {
  * Den danske sti bag en hvilken som helst sti på sitet.
  *
  * EN_PAGES og localizedHref regner begge i danske stier, fordi det er dem,
- * kataloget og sidernes hreflang bruger som nøgle. Skal man den anden vej —
- * fra den side, brugeren står på, tilbage til parret — er det her vejen:
+ * kataloget og sidernes hreflang bruger som nøgle. Skal man den anden vej
+ * fra den side, brugeren står på, tilbage til parret, er det her vejen:
  * "/en/festlys" → "/festlys", "/en" → "/", og en dansk sti bliver stående.
  *
  * Bruges af sprogskifteren i menuen, så den bliver på samme side i stedet for
@@ -146,7 +147,7 @@ export function danskSti(sti: string): string {
 /**
  * Samme side på det ønskede sprog.
  *
- * Findes den ikke på engelsk, returneres den danske sti uændret — et link til
+ * Findes den ikke på engelsk, returneres den danske sti uændret, et link til
  * en side, der findes på det forkerte sprog, er stadig bedre end et link til
  * en side, der ikke findes.
  */

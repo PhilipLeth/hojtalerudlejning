@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Party tent lights Copenhagen | 695 DKK | Lejhøjtaler.dk",
-  description: "Two strings of fairy lights and four uplights — tent and garden lit for 695 DKK. Save 90 DKK. Rental in Copenhagen.",
+  description: "Two strings of fairy lights and four uplights, tent and garden lit for 695 DKK. Save 90 DKK. Rental in Copenhagen.",
   keywords: ["party tent lighting rental", "fairy lights rental copenhagen", "garden party lights"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/festtelt-lys",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Party tent lights Copenhagen | 695 DKK | Lejhøjtaler.dk",
-    description: "20 m of fairy lights (warm white + coloured) and 4 LED uplights. From canteen tent to garden party — save 90 DKK.",
+    description: "20 m of fairy lights (warm white + coloured) and 4 LED uplights. From canteen tent to garden party, save 90 DKK.",
     url: "https://lejhojtaler.dk/en/festtelt-lys",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -28,8 +28,8 @@ export default function Page() {
       slug="en/festtelt-lys"
       name="Party tent lights"
       price={695}
-      headline="Party tent lights — tent and garden lit up"
-      sub="20 m of fairy lights (warm white + coloured) and 4 LED uplights. From canteen tent to garden party — save 90 DKK."
+      headline="Party tent lights, tent and garden lit up"
+      sub="20 m of fairy lights (warm white + coloured) and 4 LED uplights. From canteen tent to garden party, save 90 DKK."
       image="/images/product-pakke-festtelt-taendt-white.webp"
       imageAlt="Party tent lights switched on: a warm white string above a coloured string and four LED uplights"
       productId="pakke_festtelt"
@@ -47,7 +47,7 @@ export default function Page() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Does the party continue after dark?</h2>
           <p className="mb-6 text-white/50">
-            A disco ball in the tent does more than you expect — it gathers the dancefloor once the fairy lights have done the rest.
+            A disco ball in the tent does more than you expect, it gathers the dancefloor once the fairy lights have done the rest.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/en/festlys" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">

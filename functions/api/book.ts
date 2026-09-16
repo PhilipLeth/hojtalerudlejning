@@ -1,4 +1,4 @@
-import { DJ_ID, priceDj, djLabel, type DjHours } from "../../src/lib/dj";
+import { DJ_ID, requireDjGear, priceDj, djLabel, type DjHours } from "../../src/lib/dj";
 import { resolveDiscountFor } from "./_lib/discounts";
 import { sendPush } from "../../src/lib/webpush";
 import { KV_PUSH_SUBS, loadSubscriptions } from "./push";
@@ -292,6 +292,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   // DJ er en konfigureret ydelse: mindst tre timer og priser fra serverens regler.
   try {
+    requireDjGear([...(data.speakerId?[data.speakerId]:[]),...(data.addonIds??[]),...(data.cartItems??[]).map(item=>item.productId??"")]);
     if (data.speakerId === DJ_ID || data.addonIds?.includes(DJ_ID)) throw new Error("DJ kræver valg af timer");
     for (const item of data.cartItems ?? []) {
       if (item.productId !== DJ_ID) continue;

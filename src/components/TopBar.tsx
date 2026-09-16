@@ -7,7 +7,7 @@ import { formaterRating, GOOGLE_PROFIL_URL } from "@/lib/googleReviews";
 import { useGoogleReviews } from "@/lib/useGoogleReviews";
 import type { Locale } from "@/lib/i18n";
 
-/* Løfterne i båndet — hver med sit eget ikon */
+/* Løfterne i båndet, hver med sit eget ikon */
 const ICONS = {
   truck: (
     <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
@@ -36,7 +36,7 @@ const ICONS = {
 } as const;
 
 /**
- * Båndet øverst — løfterne roterer på mobil og står side om side på desktop.
+ * Båndet øverst, løfterne roterer på mobil og står side om side på desktop.
  *
  * Sidste plads er Google-ratingen: fem små stjerner og "5,0 på Google", der
  * linker til profilen. Den kommer fra /api/anmeldelser ligesom sektionen på
@@ -53,12 +53,12 @@ const USPS: Record<
   da: [
     { icon: "truck", text: "AV til events i København" },
     { icon: "calendar", text: "Levering og opsætning efter aftale" },
-    { icon: "wallet", text: "Ring og vend jeres arrangement med os" },
+    { icon: "wallet", text: "Book online med priser inklusive moms" },
   ],
   en: [
     { icon: "truck", text: "Event AV in Copenhagen" },
     { icon: "calendar", text: "Delivery and setup by agreement" },
-    { icon: "wallet", text: "Call us to discuss your event" },
+    { icon: "wallet", text: "Book online with VAT-inclusive prices" },
   ],
 };
 
@@ -68,7 +68,7 @@ export default function TopBar() {
   const [visible, setVisible] = useState(true);
   const isAdmin = pathname?.startsWith("/admin");
   const locale: Locale = pathname?.startsWith("/en") ? "en" : "da";
-  // Samme kald som anmeldelsessektionen — hooken deler svaret mellem dem
+  // Samme kald som anmeldelsessektionen, hooken deler svaret mellem dem
   const { data } = useGoogleReviews(locale, !isAdmin);
 
   // Ratingen står kun i båndet, når Google faktisk har givet os en. Vi skriver

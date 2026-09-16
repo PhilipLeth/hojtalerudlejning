@@ -5,14 +5,14 @@ import type { Locale } from "@/lib/i18n";
 /**
  * "Kombiner med…"-boksen nederst på en produktside.
  *
- * Ni produktsider havde hver sin håndbyggede udgave af nøjagtig samme boks —
+ * Ni produktsider havde hver sin håndbyggede udgave af nøjagtig samme boks
  * samme glass-kort, samme knapper, forskellig tekst. Da de blev lagt om til
  * ProductLanding, var det den eneste del, der ikke passede ind i komponenten,
  * så den fik sin egen i stedet for at blive kopieret ind som rå JSX ni gange.
  *
  * Sendes til ProductLanding som children.
  *
- * Prisen på knappen skrives ikke ind i `label` — den slås op i kataloget via
+ * Prisen på knappen skrives ikke ind i `label`, den slås op i kataloget via
  * `priceId`. Ellers står "Se røgmaskine – 245 kr" tilbage, når røgmaskinen er
  * steget til 595, og knappen lover en pris, bookingen ikke kender.
  */
@@ -24,14 +24,14 @@ export default function UpsellBox({
 }: {
   title: string;
   text: string;
-  /** Sprog — kun "fra"/"from" foran prisen; resten skriver siden selv. */
+  /** Sprog, kun "fra"/"from" foran prisen; resten skriver siden selv. */
   locale?: Locale;
   links: Array<{
     href: string;
     label: string;
-    /** Produkt-id — prisen hentes fra kataloget og skrives efter label'en. */
+    /** Produkt-id, prisen hentes fra kataloget og skrives efter label'en. */
     priceId?: string;
-    /** "fra 295 kr" i stedet for "295 kr" — når produktet har flere varianter. */
+    /** "fra 295 kr" i stedet for "295 kr", når produktet har flere varianter. */
     fra?: boolean;
     /** Knap til en kategoriside: "fra X kr" hvor X er billigste højtaler. */
     startpris?: boolean;

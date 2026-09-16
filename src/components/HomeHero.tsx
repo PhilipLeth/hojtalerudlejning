@@ -19,7 +19,7 @@ export default function HomeHero() {
       <div className="pointer-events-none absolute left-1/2 top-1/4 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-brand-500/10 blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-3xl text-center">
-        {/* H1 bærer hovedkeywordet — brandnavnet er sekundært (folk søger ikke på brandet) */}
+        {/* H1 bærer hovedkeywordet, brandnavnet er sekundært (folk søger ikke på brandet) */}
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
           <span className="bg-gradient-to-r from-brand-400 to-brand-500 bg-clip-text text-transparent">
             Lej højtalere
@@ -30,7 +30,7 @@ export default function HomeHero() {
           Lejhøjtaler.dk · Betal ved afhentning
         </p>
         <p className="mx-auto mt-4 max-w-md text-lg text-white/55">
-          Højtalere, festlys og røg til leje — book online på 2 minutter.
+          Højtalere, festlys og røg til leje, book online på 2 minutter.
           Hent i København S eller få det leveret.
         </p>
 

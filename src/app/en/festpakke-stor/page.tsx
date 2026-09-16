@@ -36,8 +36,8 @@ export default function LargePartyPackageEn() {
       slug="en/festpakke-stor"
       name="Large Party Package"
       price={1290}
-      headline="Large party package — sound and lights for 100 guests"
-      sub='2× EV 12" speakers + the full light package. A proper party — save 200 DKK.'
+      headline="Large party package, sound and lights for 100 guests"
+      sub='2× EV 12" speakers + the full light package. A proper party, save 200 DKK.'
       image="/images/product-pakke-fest-stor-white.webp"
       imageAlt="Large party package with EV speakers and light package"
       productId="pakke_fest_stor"

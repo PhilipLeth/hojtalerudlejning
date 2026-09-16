@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Projector Screen 160 cm Rental Copenhagen | 195 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a 160 cm projector screen on a stand in Copenhagen for 195 DKK. Fits all our projectors — set up in a minute. Book online.",
+    "Rent a 160 cm projector screen on a stand in Copenhagen for 195 DKK. Fits all our projectors, set up in a minute. Book online.",
   keywords: ["projector screen rental copenhagen", "projection screen hire", "screen for projector denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/laerred-160",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Projector screen 160 cm rental | 195 DKK",
-    description: "160 cm projector screen on a stand — the perfect partner for the projector.",
+    description: "160 cm projector screen on a stand, the perfect partner for the projector.",
     url: "https://lejhojtaler.dk/en/laerred-160",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,7 +29,7 @@ export default function Page() {
       name="Projector screen 160 cm"
       price={195}
       headline="Rent a 160 cm projector screen"
-      sub="160 cm screen on a stand — the perfect partner for the projector."
+      sub="160 cm screen on a stand, the perfect partner for the projector."
       image="/images/product-laerred-v2-white.webp"
       imageAlt="160 cm projector screen on a stand for rent"
       productId="laerred_160"

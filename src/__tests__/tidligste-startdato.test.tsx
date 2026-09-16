@@ -124,7 +124,7 @@ function mockStorage() {
 /** Dagknappen for en dato — bladrer frem til måneden den ligger i */
 function findDag(dato: Date): HTMLElement | undefined {
   const måned = t.da.booking.monthNames[dato.getMonth()];
-  const forventet = `${dato.getDate()}. ${måned} —`;
+  const forventet = `${dato.getDate()}. ${måned},`;
   const find = () =>
     screen.getAllByRole("button").find((b) => (b.getAttribute("aria-label") ?? "").startsWith(forventet));
   for (let i = 0; i < 4 && !find(); i++) {

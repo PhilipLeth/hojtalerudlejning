@@ -38,7 +38,7 @@ export default function SmallSpeakerPackageEn() {
       name="Small Speaker Package"
       price={595}
       headline="Rent a small speaker package in Copenhagen"
-      sub='Two compact 10" Alto speakers with Bluetooth — light enough for a bike.'
+      sub='Two compact 10" Alto speakers with Bluetooth, light enough for a bike.'
       image="/images/product-party-v2-white.webp"
       imageAlt="Small speaker package for rent in Copenhagen"
       productId="party"
@@ -46,7 +46,7 @@ export default function SmallSpeakerPackageEn() {
       capacity={{ level: 1, label: "0-30 people" }}
       bullets={[
         '2× 10" Alto speakers with Bluetooth',
-        "All cables included — carry bag and stands available as add-ons",
+        "All cables included, carry bag and stands available as add-ons",
         "Only 12 kg",
         "Collect Friday, return Monday",
       ]}

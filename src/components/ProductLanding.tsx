@@ -22,7 +22,7 @@ import type { Locale } from "@/lib/i18n";
 const COPY = {
   da: {
     kicker: "Betal ved afhentning · Ring",
-    genereretBillede: "Illustration — genereret ud fra fotos af vores eget udstyr",
+    genereretBillede: "Illustration, genereret ud fra fotos af vores eget udstyr",
     perWeekend: "/weekend",
     book: (navn: string) => `Book ${navn} nu`,
     faqTitle: (navn: string) => `Ofte stillede spørgsmål om ${navn}`,
@@ -39,7 +39,7 @@ const COPY = {
   },
   en: {
     kicker: "Pay on pickup · Call",
-    genereretBillede: "Illustration — generated from photos of our own equipment",
+    genereretBillede: "Illustration, generated from photos of our own equipment",
     perWeekend: "/weekend",
     book: (navn: string) => `Book ${navn} now`,
     faqTitle: (navn: string) => `Frequently asked questions about ${navn}`,
@@ -71,7 +71,7 @@ export interface ProductLandingProps {
   /**
    * Stjerner i Product-schema. **Ingen side sætter den i dag, og det er med
    * vilje.** De opdigtede testimonials er væk, og sitets anmeldelser kommer nu
-   * fra vores Google-profil — men netop derfor må de ikke markeres op: Google
+   * fra vores Google-profil, men netop derfor må de ikke markeres op: Google
    * tillader ikke structured data bygget på anmeldelser, man selv har hentet
    * fra Google. structured-data.test.tsx fejler, hvis proppen tages i brug.
    *
@@ -82,8 +82,8 @@ export interface ProductLandingProps {
   /** Kapacitets-ikon: personfigurer + interval (fx 30-50 pers.) */
   capacity?: { level: 1 | 2 | 3; label: string };
   /**
-   * Spørgsmål der kun giver mening på netop denne side. Resten — pris, hvad
-   * der er med, kapacitet, afhentning og lejeperiode — bygges automatisk af
+   * Spørgsmål der kun giver mening på netop denne side. Resten, pris, hvad
+   * der er med, kapacitet, afhentning og lejeperiode, bygges automatisk af
    * produktets egne tal i buildProductFaq, så de ikke kan drive fra prisen
    * øverst på siden.
    */
@@ -95,20 +95,20 @@ export interface ProductLandingProps {
    */
   faqPhrase?: string;
   /**
-   * Vis "Ledig den kommende weekend" under prisen — kun på sider hvor
+   * Vis "Ledig den kommende weekend" under prisen, kun på sider hvor
    * spørgsmålet er det første, kunden stiller (fx Soundboks). Kræver at
    * produktet har et lagertal; ellers vises ingenting.
    */
   weekendAvailability?: boolean;
   /**
-   * Prisenhed i stedet for "/weekend" — fx "/time" for lydmanden, eller "" for
+   * Prisenhed i stedet for "/weekend", fx "/time" for lydmanden, eller "" for
    * en pakke hvor kørslen er med og prisen derfor ikke er en weekendleje.
    */
   priceUnit?: string;
   /** Sætningen i bunden, når "hent fredag, aflever mandag" ikke passer (ydelser, pakker med levering) */
   ctaText?: string;
   /**
-   * "extraOnly": kun faqExtra — de automatiske svar handler om weekendleje,
+   * "extraOnly": kun faqExtra, de automatiske svar handler om weekendleje,
    * afhentning og lejeperiode og passer ikke på en ydelse afregnet pr. time.
    */
   faqMode?: "auto" | "extraOnly";
@@ -119,11 +119,11 @@ export interface ProductLandingProps {
 }
 
 /*
- * VIDEOER_SLAAET_FRA — 26. august 2026
+ * VIDEOER_SLAAET_FRA, 26. august 2026
  *
  * Producentens YouTube-video og vores egen ProductVideo vises ikke længere på
  * produktsiderne. YouTube-videoen lå på 42 produkter og kostede en iframe pr.
- * side — netop den slags tredjepartsindlejring, hastighedsarbejdet i august
+ * side, netop den slags tredjepartsindlejring, hastighedsarbejdet i august
  * handlede om at komme af med. Den sendte samtidig kunden videre til YouTube
  * midt i et køb, med producentens branding og forslag til andre videoer.
  *
@@ -133,7 +133,7 @@ export interface ProductLandingProps {
  * render-træet, hvor kommentaren står.
  *
  * Forklaringen ligger HER og ikke nede i JSX, fordi den første udgave var en
- * lang {/* … *\/}-blok midt i render-træet — og en anden session indsatte
+ * lang {/* … *\/}-blok midt i render-træet, og en anden session indsatte
  * ProductGallery inde i den. Deres kommentar lukkede min for tidligt, og
  * build'et brød. En kommentar i render-træet skal være én linje.
  */
@@ -164,7 +164,7 @@ export default function ProductLanding({
   const c = COPY[locale];
   /**
    * Produktet er sat på pause i kataloget (se PAUSEDE_PRODUKTER). Siden bliver
-   * liggende — den har sin plads i Google, og pausen kan rulles tilbage — men
+   * liggende, den har sin plads i Google, og pausen kan rulles tilbage, men
    * den må ikke stå med en bookingknap til noget, vi ikke udlejer. Knapperne
    * bliver til en henvisning, og prisen forsvinder: en pris er et tilbud.
    */
@@ -306,7 +306,7 @@ export default function ProductLanding({
               {erGenereretBillede(image) && (
                 <p className="px-6 pb-4 text-center text-xs text-white/35">{c.genereretBillede}</p>
               )}
-              {/* Videoerne er slået fra 26. august 2026 — se kommentaren ved
+              {/* Videoerne er slået fra 26. august 2026, se kommentaren ved
                   ProductYouTube nedenfor. Play-knappen kommer igen ved at
                   sætte linjen herunder ind:
                   <ProductVideo productId={productId} name={name} /> */}
@@ -345,14 +345,14 @@ export default function ProductLanding({
         </section>
 
         {/* Produktet i brug. Viser ingenting, før der er genereret billeder for
-            netop dette produkt — se scripts/product-images/generate.mjs. */}
+            netop dette produkt, se scripts/product-images/generate.mjs. */}
         <ProductGallery productId={productId} name={name} locale={locale} />
 
-        {/* Videoerne er slået fra — se VIDEOER_SLAAET_FRA øverst i filen. */}
+        {/* Videoerne er slået fra, se VIDEOER_SLAAET_FRA øverst i filen. */}
 
         {children}
 
-        {/* FAQ'en er bygget af prisen, lejeperioden og afhentningen — svar på
+        {/* FAQ'en er bygget af prisen, lejeperioden og afhentningen, svar på
             spørgsmål om noget, der ikke kan lejes. Den udgår på pausede sider. */}
         {!paused && faq.length > 0 && <FaqSection items={faq} title={c.faqTitle(name)} />}
 
@@ -393,7 +393,7 @@ export default function ProductLanding({
 
 /**
  * Vejen videre fra en pauset side. Ikke en undskyldning, men de to kategorier
- * vi rent faktisk udlejer — plus telefonnummeret, fordi den, der ledte efter
+ * vi rent faktisk udlejer, plus telefonnummeret, fordi den, der ledte efter
  * en projektor til en firmafest, ofte også mangler lyd.
  */
 function PauseBoks({

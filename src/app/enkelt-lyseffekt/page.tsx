@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lej Enkelt Lyseffekt København | 195 kr | Lejhøjtaler.dk",
   description:
-    "Lej enkelt LED-festlys i København fra 195 kr/weekend. Plug and play farveeffekt på fod — perfekt til fødselsdag, konfirmation og hjemmefest. Book online på 2 min.",
+    "Lej enkelt LED-festlys i København fra 195 kr/weekend. Plug and play farveeffekt på fod, perfekt til fødselsdag, konfirmation og hjemmefest. Book online på 2 min.",
   keywords: [
     "lej lyseffekt københavn",
     "enkelt lyseffekt leje",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Enkelt Lyseffekt København | 195 kr",
     description:
-      "1 LED-par-lys (uden stativ) — plug and play farveeffekt til din fest. Book online, betal ved afhentning.",
+      "1 LED-par-lys (uden stativ), plug and play farveeffekt til din fest. Book online, betal ved afhentning.",
     url: "https://lejhojtaler.dk/enkelt-lyseffekt",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -35,14 +35,14 @@ export default function Page() {
       name="Enkelt lyseffekt"
       price={195}
       headline="Lej enkelt lyseffekt i København"
-      sub="1 LED-par-lys (uden stativ) — plug and play farveeffekt der sætter stemning på få minutter."
+      sub="1 LED-par-lys (uden stativ), plug and play farveeffekt der sætter stemning på få minutter."
       image="/images/product-lyseffekt-live-white.webp"
       imageAlt="Enkelt LED-festlys til leje i København"
       productId="lyseffekt"
       faqPhrase="en enkelt lyseffekt"
       bullets={[
         "1 LED-par-lys (uden stativ) med automatiske farveeffekter",
-        "Plug and play — tilslut strøm og den kører",
+        "Plug and play, tilslut strøm og den kører",
         "Perfekt til stuer, festlokaler og havefest op til ca. 40 personer",
         "Kombiner med højtalerpakke eller vælg den i lille festpakke",
         "Tilvælg røgmaskine for endnu mere effekt i lyset",
@@ -61,7 +61,7 @@ export default function Page() {
             det rigtige valg.
           </p>
           <p className="text-white/50">
-            Tilvælg lyseffekten direkte i bookingen sammen med højtalere — eller vælg{" "}
+            Tilvælg lyseffekten direkte i bookingen sammen med højtalere, eller vælg{" "}
             <a href="/festpakke-lille" className="text-brand-400 underline-offset-2 hover:underline">
               lille festpakke
             </a>{" "}

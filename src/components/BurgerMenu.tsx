@@ -12,16 +12,16 @@ import { danskSti, hasEnglish, localizedHref } from "@/lib/enPages";
  *
  * Menuen var hårdkodet på dansk og lå i root-layoutet, så den fulgte med på
  * hver eneste /en-side: 26 danske links på en engelsk side. Sproget udledes af
- * stien som i SiteHeader — menuen er ét træ, der renderes begge steder, og et
+ * stien som i SiteHeader, menuen er ét træ, der renderes begge steder, og et
  * prop kunne ikke nå den gennem layoutet.
  */
 const COPY = {
   da: {
     open: "Åben menu",
     close: "Luk menu",
-    proTitle: "Større arrangement?",
-    proText: "Firmafest, bryllup eller event — skriv til os, så får I et samlet tilbud.",
-    proCta: "Send forespørgsel →",
+    proTitle: "Find pakken til festen",
+    proText: "Vælg anledning, sammenlign indhold og priser, og book online.",
+    proCta: "Se pakker og priser →",
     contact: "Kontakt",
     about: "Om os",
     blog: "Blog",
@@ -33,9 +33,9 @@ const COPY = {
   en: {
     open: "Open menu",
     close: "Close menu",
-    proTitle: "A larger event?",
-    proText: "Company party, wedding or event — write to us and we will put together one quote.",
-    proCta: "Send an enquiry →",
+    proTitle: "Find your event package",
+    proText: "Choose your occasion, compare equipment and prices, and book online.",
+    proCta: "Shop packages →",
     contact: "Contact",
     about: "About us",
     blog: "Blog",
@@ -55,10 +55,10 @@ export default function BurgerMenu() {
    * Sprogskifteren bliver på den side, man står på.
    *
    * Før pegede den altid på /en, så en engelsk kunde på /en/festlys blev sendt
-   * til forsiden i stedet for til /festlys — og vejen tilbage til dansk fandtes
+   * til forsiden i stedet for til /festlys, og vejen tilbage til dansk fandtes
    * slet ikke.
    *
-   * Findes parret ikke, går knappen til den anden udgaves FORSIDE — begge veje.
+   * Findes parret ikke, går knappen til den anden udgaves FORSIDE, begge veje.
    * Ikke gennem localizedHref: den falder tilbage til den danske sti, og så ville
    * "English" på /mixer pege på /mixer, et link til den side man står på. Og
    * ikke blindt til danskSti() den anden vej: /en/blog/<slug> har ikke en dansk
@@ -130,7 +130,7 @@ export default function BurgerMenu() {
           {/* Pro-request øverst: firmafest, bryllup og større events skal kunne
               komme direkte til os uden at gå gennem det almindelige bookingflow */}
           <Link
-            href={`${nav("/kontakt")}?emne=erhverv`}
+            href={nav("/eventloesninger")}
             onClick={() => setOpen(false)}
             className="mb-7 block rounded-2xl border border-brand-500/30 bg-brand-500/[0.07] p-4 transition hover:border-brand-500/60 hover:bg-brand-500/[0.12]"
           >
@@ -145,6 +145,8 @@ export default function BurgerMenu() {
           </Link>
 
           <div className="mb-5 flex flex-col gap-3 text-lg font-semibold text-brand-500">
+            <Link href={localizedHref("/dj-pult", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "DJ equipment" : "DJ-pult & pakker"}</Link>
+            <Link href={localizedHref("/dj", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "Hire a DJ" : "Lej en DJ"}</Link>
             <Link href={localizedHref("/eventloesninger", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "Event solutions" : "Eventløsninger"}</Link>
             <Link href={localizedHref("/cases", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "Setups & cases" : "Opstillinger & cases"}</Link>
           </div>

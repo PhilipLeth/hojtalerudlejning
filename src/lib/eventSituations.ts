@@ -155,7 +155,7 @@ export const eventSituations = [
     "da": {
       "title": "Messer & stande",
       "lead": "Et tydeligt budskab på få kvadratmeter.",
-      "body": "Til produktvideoer, demoer og korte oplæg på standen. Vi afklarer placering, strøm og adgang med jer — også ved arrangementer i Bella Center.",
+      "body": "Til produktvideoer, demoer og korte oplæg på standen. Vi afklarer placering, strøm og adgang med jer, også ved arrangementer i Bella Center.",
       "check": [
         "Standmål og publikumsretning",
         "Arrangørens adgangstider og regler",
@@ -242,7 +242,7 @@ export const eventSituations = [
     "da": {
       "title": "Fredagsbarer",
       "lead": "Fra arbejdsdag til en god aften sammen.",
-      "body": "Start med musik, mens kollegerne ankommer, og skru op, når baren bliver til dansegulv. Tilvælg DJ/musikafvikler med DJ-pult og mindst tre timers musik.",
+      "body": "Start med musik, mens kollegerne ankommer, og skru op, når baren bliver til dansegulv. Tilvælg DJ/musikafvikler fra tre timer, og vælg DJ-pult og lydpakke separat.",
       "check": [
         "Start og sluttid",
         "Samtaleområde og dansegulv",
@@ -252,7 +252,7 @@ export const eventSituations = [
     "en": {
       "title": "Friday bars",
       "lead": "From the working day to a good evening together.",
-      "body": "Start with music as colleagues arrive, then build the energy as the bar turns into a dance floor. Add a DJ/music host with a DJ booth for at least three hours.",
+      "body": "Start with music as colleagues arrive, then build the energy as the bar turns into a dance floor. Add a DJ/music host for at least three hours, with a DJ controller and sound package selected separately.",
       "check": [
         "Start and finish time",
         "Conversation area and dance floor",

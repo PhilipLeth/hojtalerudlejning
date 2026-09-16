@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lej Bæretaske til Højtalere | 95 kr | Lejhøjtaler.dk",
   description:
-    "Lej en polstret bæretaske til den lille højtalerpakke for 95 kr. Sikker transport på cykel, i bus eller bil — højtalere og kabler samlet ét sted. Lejes i København.",
+    "Lej en polstret bæretaske til den lille højtalerpakke for 95 kr. Sikker transport på cykel, i bus eller bil, højtalere og kabler samlet ét sted. Lejes i København.",
   keywords: ["bæretaske højtaler leje", "taske til højtalere", "højtaler på cykel", "transport af højtalere"],
   alternates: {
     canonical: "https://lejhojtaler.dk/baeretaske",
@@ -29,14 +29,14 @@ export default function Page() {
       name="Bæretaske"
       price={95}
       headline="Lej bæretaske til højtalerne"
-      sub="Polstret sportstaske, hvor den lille højtalerpakke og alle kablerne er samlet — så du kan hente på cykel."
+      sub="Polstret sportstaske, hvor den lille højtalerpakke og alle kablerne er samlet, så du kan hente på cykel."
       image="/images/product-taske-v2-white.webp"
       imageAlt="Polstret bæretaske til højtalere"
       productId="taske"
       bookLabel="Book bæretaske nu"
       faqPhrase="en bæretaske"
       bullets={[
-        "Polstret — højtalerne får ikke stød på cykelstien",
+        "Polstret, højtalerne får ikke stød på cykelstien",
         "Plads til 2× Alto 10\" højtalere og alle kabler",
         "Skulderrem og håndtag",
         "Passer i en cykelkurv, en ladcykel eller på bagsædet",

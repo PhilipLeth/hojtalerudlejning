@@ -6,12 +6,12 @@ import type { Locale } from "@/lib/i18n";
 /**
  * Adressefelt med autofuldførelse fra DAWA (Danmarks Adressers Web API).
  *
- * Kunden skal ikke stave sig igennem "Vermlandsgade" — tre bogstaver og et
+ * Kunden skal ikke stave sig igennem "Vermlandsgade", tre bogstaver og et
  * klik giver en rigtig, eksisterende adresse, som chaufføren kan finde. API'et
  * er Dataforsyningens officielle adresseregister: gratis, uden nøgle, og det
  * kender kun adresser der findes.
  *
- * Fejler opslaget (offline, API nede), er feltet et almindeligt tekstfelt —
+ * Fejler opslaget (offline, API nede), er feltet et almindeligt tekstfelt
  * autofuldførelsen er en hjælp, aldrig en betingelse for at kunne bestille.
  */
 
@@ -31,7 +31,7 @@ export default function AdresseInput({
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
-  /** Rød kant når adressen mangler — samme udtryk som resten af formularen */
+  /** Rød kant når adressen mangler, samme udtryk som resten af formularen */
   invalid?: boolean;
   locale?: Locale;
   className?: string;
@@ -39,7 +39,7 @@ export default function AdresseInput({
   const [forslag, setForslag] = useState<Forslag[]>([]);
   const [åben, setÅben] = useState(false);
   const [markeret, setMarkeret] = useState(-1);
-  /** Sat når kunden lige har valgt fra listen — det valg skal ikke straks slås op igen */
+  /** Sat når kunden lige har valgt fra listen, det valg skal ikke straks slås op igen */
   const valgtNu = useRef(false);
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rod = useRef<HTMLDivElement>(null);

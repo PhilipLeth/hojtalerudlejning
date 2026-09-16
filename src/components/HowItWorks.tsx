@@ -71,7 +71,7 @@ export default function HowItWorks({ locale = "da" }: { locale?: Locale }) {
         ))}
       </div>
 
-      {/* Åbningstider — tiderne kommer fra /admin/indstillinger, ikke fra koden */}
+      {/* Åbningstider, tiderne kommer fra /admin/indstillinger, ikke fra koden */}
       <OpeningHours locale={locale} title={s.openingHoursTitle} />
     </section>
   );

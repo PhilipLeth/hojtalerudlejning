@@ -3,7 +3,7 @@
 /**
  * Én menu for hele admin.
  *
- * Hver admin-side havde før sin egen håndplukkede stribe links — Rabatkoder
+ * Hver admin-side havde før sin egen håndplukkede stribe links, Rabatkoder
  * pegede på Ads og Regler, Lejeseddel på Lager og Nyhedsbrev, og ingen af dem
  * på resten. Man kunne ikke komme fra A til B uden at gå om forsiden.
  *
@@ -18,7 +18,7 @@ import { useIsMobile } from "@/lib/useIsMobile";
 export interface AdminMenuItem {
   href: string;
   label: string;
-  /** Kort forklaring — vises som tooltip på skærm */
+  /** Kort forklaring, vises som tooltip på skærm */
   hint?: string;
 }
 
@@ -76,7 +76,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
 
 const ALL_ITEMS = ADMIN_MENU.flatMap((g) => g.items);
 
-/** Sidens eget navn ud fra stien — så ingen side skal fortælle hvad den hedder */
+/** Sidens eget navn ud fra stien, så ingen side skal fortælle hvad den hedder */
 export function adminPageTitle(pathname: string): string {
   const hit = ALL_ITEMS.find((i) => i.href === pathname) ?? ALL_ITEMS.find((i) => i.href !== "/admin" && pathname.startsWith(i.href));
   return hit?.label ?? "Admin";
@@ -92,7 +92,7 @@ export default function AdminNav({ title, actions }: { title?: string; actions?:
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const navRef = useRef<HTMLElement | null>(null);
 
-  // Luk når man klikker ved siden af eller trykker Escape — ellers står
+  // Luk når man klikker ved siden af eller trykker Escape, ellers står
   // menuen åben oven på det man prøver at arbejde med
   useEffect(() => {
     if (!openGroup) return;
@@ -129,7 +129,7 @@ export default function AdminNav({ title, actions }: { title?: string; actions?:
       <strong style={{ fontSize: "17px", marginRight: "auto" }}>{title ?? adminPageTitle(current)}</strong>
 
       {isMobile ? (
-        // Én dropdown med grupperne som overskrifter — hele menuen på ét tryk
+        // Én dropdown med grupperne som overskrifter, hele menuen på ét tryk
         <select
           value={current}
           onChange={(e) => { window.location.href = e.target.value; }}
@@ -145,7 +145,7 @@ export default function AdminNav({ title, actions }: { title?: string; actions?:
           ))}
         </select>
       ) : (
-        // Én knap pr. gruppe der folder sine sider ud — fjorten links på
+        // Én knap pr. gruppe der folder sine sider ud, fjorten links på
         // række gjorde bjælken bredere end indholdet nedenunder
         <nav ref={navRef} style={{ display: "flex", alignItems: "center", gap: "6px", position: "relative" }}>
           {ADMIN_MENU.map((g) => {

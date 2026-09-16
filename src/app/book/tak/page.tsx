@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/** Return-side efter Stripe Checkout — verificerer betalingen server-side. */
+/** Return-side efter Stripe Checkout, verificerer betalingen server-side. */
 export default function TakPage() {
   return (
     <main className="min-h-screen bg-[#07060b]">

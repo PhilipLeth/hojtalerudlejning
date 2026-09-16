@@ -33,7 +33,7 @@ export default function HojtalerpakkeBasPage() {
       name="Højtalerpakke 100"
       price={1495}
       headline="Lej højtalerpakke til 50-100 gæster"
-      sub={'De store 12" EV-højtalere på stativer med en 12" subwoofer under — trinnet over den store højtalerpakke.'}
+      sub={'De store 12" EV-højtalere på stativer med en 12" subwoofer under, trinnet over den store højtalerpakke.'}
       image="/images/product-festival-bas-v2-white.webp"
       imageAlt="Højtalerpakke med to 12 tommer EV-højtalere på stativer og subwoofer til leje i København"
       productId="hojtaler_100"
@@ -44,7 +44,7 @@ export default function HojtalerpakkeBasPage() {
         "Højtalerstativer inkluderet",
         '12" subwoofer til bunden i musikken',
         "Bluetooth + alle kabler",
-        "Uden lys — Festpakke 150 er samme lyd plus lys og røg",
+        "Uden lys, Festpakke 150 er samme lyd plus lys og røg",
       ]}
     />
   );

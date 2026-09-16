@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import AdminShell from "@/components/AdminShell";
 
 /**
- * /accounting er reelt en admin-side — den bruger AdminNav og viser omsætning,
- * ubetalte ordrer og kundenavne — men ligger uden for /admin og arvede derfor
+ * /accounting er reelt en admin-side, den bruger AdminNav og viser omsætning,
+ * ubetalte ordrer og kundenavne, men ligger uden for /admin og arvede derfor
  * ikke dens noindex. Siden er en klientkomponent og kan ikke selv eksportere
  * metadata, så det ligger her.
  */

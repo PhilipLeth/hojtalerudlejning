@@ -73,7 +73,7 @@ export default function PrivatlivspolitikPage() {
             <Section title="Hvorfor og på hvilket grundlag?">
               <ul className="ml-5 list-disc space-y-2">
                 <li>
-                  <strong className="text-white/80">For at gennemføre din booking</strong> — navn,
+                  <strong className="text-white/80">For at gennemføre din booking</strong>, navn,
                   kontaktoplysninger og bestilling. Grundlag: opfyldelse af aftalen med dig
                   (databeskyttelsesforordningens art. 6, stk. 1, litra b).
                 </li>
@@ -86,7 +86,7 @@ export default function PrivatlivspolitikPage() {
                   retlig forpligtelse efter bogføringsloven (art. 6, stk. 1, litra c).
                 </li>
                 <li>
-                  <strong className="text-white/80">For at sende nyhedsbrev og tilbud</strong> —
+                  <strong className="text-white/80">For at sende nyhedsbrev og tilbud</strong>
                   kun hvis du aktivt har sat flueben. Grundlag: dit samtykke (art. 6, stk. 1,
                   litra a). Du kan altid trække samtykket tilbage.
                 </li>
@@ -112,10 +112,10 @@ export default function PrivatlivspolitikPage() {
                 må behandle data efter vores instruks:
               </p>
               <ul className="ml-5 list-disc space-y-1">
-                <li>Cloudflare — hosting og drift af sitet</li>
-                <li>Resend — udsendelse af bekræftelses- og servicemails</li>
-                <li>Stripe — betalingsafvikling, hvis du betaler online</li>
-                <li>Google — statistik om brugen af sitet</li>
+                <li>Cloudflare, hosting og drift af sitet</li>
+                <li>Resend, udsendelse af bekræftelses- og servicemails</li>
+                <li>Stripe, betalingsafvikling, hvis du betaler online</li>
+                <li>Google, statistik om brugen af sitet</li>
               </ul>
             </Section>
 
@@ -127,7 +127,7 @@ export default function PrivatlivspolitikPage() {
                 <li>Få slettet dine oplysninger, når vi ikke længere har pligt til at gemme dem</li>
                 <li>Gøre indsigelse mod behandlingen</li>
                 <li>Få dine oplysninger udleveret i et almindeligt format (dataportabilitet)</li>
-                <li>Trække et samtykke tilbage — det påvirker ikke behandlingen frem til da</li>
+                <li>Trække et samtykke tilbage, det påvirker ikke behandlingen frem til da</li>
               </ul>
               <p>
                 Skriv til{" "}
@@ -139,7 +139,7 @@ export default function PrivatlivspolitikPage() {
             <Section title="Klage">
               <p>
                 Er du utilfreds med vores behandling af dine oplysninger, kan du klage til
-                Datatilsynet, Carl Jacobsens Vej 35, 2500 Valby —{" "}
+                Datatilsynet, Carl Jacobsens Vej 35, 2500 Valby {" "}
                 <a
                   href="https://www.datatilsynet.dk"
                   target="_blank"

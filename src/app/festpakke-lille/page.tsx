@@ -7,7 +7,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lille festpakke | Højtalere + lys | 690 kr | Lejhøjtaler.dk",
   description:
-    "Lille festpakke: 2× Alto 10\" højtalere + enkelt lyseffekt for 690 kr — spar 100 kr. Lyd og lys til op til 40 personer. Levering og opsætning kan tilvælges. Book online.",
+    "Lille festpakke: 2× Alto 10\" højtalere + enkelt lyseffekt for 690 kr, spar 100 kr. Lyd og lys til op til 40 personer. Levering og opsætning kan tilvælges. Book online.",
   keywords: ["festpakke", "lej festpakke", "højtaler og lys leje", "lille festpakke københavn", "fest lyd og lys"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festpakke-lille",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Lille festpakke | Højtalere + lys | 690 kr",
-    description: "2× Alto 10\" højtalere + enkelt lyseffekt — lyd og lys til op til 40 pers. Spar 100 kr.",
+    description: "2× Alto 10\" højtalere + enkelt lyseffekt, lyd og lys til op til 40 pers. Spar 100 kr.",
     url: "https://lejhojtaler.dk/festpakke-lille",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,8 +29,8 @@ export default function FestpakkeLillePage() {
       slug="festpakke-lille"
       name="Lille festpakke"
       price={690}
-      headline="Lille festpakke — lyd og lys"
-      sub="2× Alto 10&quot; højtalere + enkelt lyseffekt. Alt til den lille fest — spar 100 kr."
+      headline="Lille festpakke, lyd og lys"
+      sub="2× Alto 10&quot; højtalere + enkelt lyseffekt. Alt til den lille fest, spar 100 kr."
       image="/images/product-pakke-fest-lille-white.webp"
       imageAlt="Lille festpakke med Alto højtalere og lyseffekt"
       productId="pakke_fest_lille"
@@ -47,7 +47,7 @@ export default function FestpakkeLillePage() {
         <div className="glass rounded-2xl p-8 text-center">
           <h2 className="mb-3 text-2xl font-bold">Større fest?</h2>
           <p className="mx-auto mb-6 max-w-md text-white/50">
-            Stor festpakke: de store 12&quot; højtalere + fuld lys-pakke — til op til 100 personer.
+            Stor festpakke: de store 12&quot; højtalere + fuld lys-pakke, til op til 100 personer.
           </p>
           <Link
             href="/festpakke-stor"

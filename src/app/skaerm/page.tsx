@@ -6,7 +6,7 @@ import UpsellBox from "@/components/UpsellBox";
 export const metadata: Metadata = {
   title: "Lej Storskærm København | 595 kr | Lejhøjtaler.dk",
   description:
-    "Lej en 55\" LED-storskærm på stativ i København for 595 kr. Justerbar højde, HDMI-kabel med — til møder, konferencer og karaoke. Book online.",
+    "Lej en 55\" LED-storskærm på stativ i København for 595 kr. Justerbar højde, HDMI-kabel med, til møder, konferencer og karaoke. Book online.",
   keywords: [
     "lej storskærm",
     "skærm udlejning",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Storskærm København | 595 kr",
     description:
-      "Lej en 55\" LED-storskærm på stativ i København for 595 kr. Justerbar højde, HDMI-kabel med — til møder, konferencer og karaoke. Book online.",
+      "Lej en 55\" LED-storskærm på stativ i København for 595 kr. Justerbar højde, HDMI-kabel med, til møder, konferencer og karaoke. Book online.",
     url: "https://lejhojtaler.dk/skaerm",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -37,7 +37,7 @@ export default function SkaermPage() {
       name="Storskærm"
       price={595}
       headline="Lej storskærm i København"
-      sub='55" LED-skærm på 3-fod stativ. Fungerer i dagslys — skarpere end projektor.'
+      sub='55" LED-skærm på 3-fod stativ. Fungerer i dagslys, skarpere end projektor.'
       image="/images/product-skaerm-white.webp"
       imageAlt="Storskærm til leje i København"
       productId="skaerm_55"

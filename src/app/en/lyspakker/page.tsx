@@ -8,9 +8,9 @@ import { thumbSrcSet } from "@/lib/imageSrcSet";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Party Light Rental Copenhagen — packages from 645 DKK | Lejhøjtaler.dk",
+  title: "Party Light Rental Copenhagen, packages from 645 DKK | Lejhøjtaler.dk",
   description:
-    "Light rental in Copenhagen: ready-made light packages for teen parties, party tents, weddings and dancefloors from 645 DKK. Everything is plug and play — pick up for free or have it delivered.",
+    "Light rental in Copenhagen: ready-made light packages for teen parties, party tents, weddings and dancefloors from 645 DKK. Everything is plug and play, pick up for free or have it delivered.",
   keywords: [
     "party light rental copenhagen",
     "disco light rental",
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lyspakker"),
   },
   openGraph: {
-    title: "Party Light Rental Copenhagen — packages from 645 DKK",
+    title: "Party Light Rental Copenhagen, packages from 645 DKK",
     description:
-      "Ready-made light packages by occasion: teen party, party tent, wedding, dancefloor — or the whole venue. Plug and play, no technician.",
+      "Ready-made light packages by occasion: teen party, party tent, wedding, dancefloor, or the whole venue. Plug and play, no technician.",
     url: "https://lejhojtaler.dk/en/lyspakker",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -109,11 +109,11 @@ export default function LightPackagesPage() {
           Copenhagen · Light rental
         </p>
         <h1 className="mx-auto max-w-3xl text-4xl font-bold sm:text-5xl">
-          Party lights — packaged by occasion
+          Party lights, packaged by occasion
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
-          You don&apos;t need to know what an uplight is. Tell us what you&apos;re hosting — a teen party, a tent in the
-          garden, a wedding or just a dancefloor — and the light is already put together. Everything is plug and play on
+          You don&apos;t need to know what an uplight is. Tell us what you&apos;re hosting, a teen party, a tent in the
+          garden, a wedding or just a dancefloor, and the light is already put together. Everything is plug and play on
           normal power.
         </p>
       </section>

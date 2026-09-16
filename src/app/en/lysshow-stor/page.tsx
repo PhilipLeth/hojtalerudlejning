@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Large Light Show Rental Copenhagen | Lights, uplights, disco ball and low fog | 1,995 DKK | Lejhøjtaler.dk",
   description:
-    "Large light show: light package, four uplights, disco ball and low fog machine for 1,995 DKK — save 285 DKK. Uplights paint the walls, low fog lays a carpet of fog without triggering the smoke alarm. Rent in Copenhagen.",
+    "Large light show: light package, four uplights, disco ball and low fog machine for 1,995 DKK, save 285 DKK. Uplights paint the walls, low fog lays a carpet of fog without triggering the smoke alarm. Rent in Copenhagen.",
   keywords: ["large light show rental copenhagen", "uplights and low fog hire", "party lighting for large venue copenhagen", "low fog machine rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/lysshow-stor",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Large light show | Lights, uplights, disco ball and low fog | 1,995 DKK",
-    description: "Light package, four uplights, disco ball and low fog. The whole room changes — save 285 DKK.",
+    description: "Light package, four uplights, disco ball and low fog. The whole room changes, save 285 DKK.",
     url: "https://lejhojtaler.dk/en/lysshow-stor",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,8 +29,8 @@ export default function Page() {
       slug="en/lysshow-stor"
       name="Light show large"
       price={1995}
-      headline="Large light show — the whole room changes"
-      sub="Light package, four uplights, 40 cm disco ball and low fog machine. For the big party or the rented venue with fluorescent ceiling lights — save 285 DKK."
+      headline="Large light show, the whole room changes"
+      sub="Light package, four uplights, 40 cm disco ball and low fog machine. For the big party or the rented venue with fluorescent ceiling lights, save 285 DKK."
       image="/images/product-uplight-4-v2-white.webp"
       imageAlt="Large light show with uplights, light package, disco ball and low fog"
       productId="pakke_lysshow_stor"
@@ -38,9 +38,9 @@ export default function Page() {
       capacity={{ level: 3, label: "up to 150 people" }}
       bullets={[
         "Light package: 2 coloured LED lamps + centre effect for the dancefloor",
-        "4× LED uplights — paint walls and corners in the colour you choose",
+        "4× LED uplights, paint walls and corners in the colour you choose",
         "40 cm disco ball with motor and spotlight",
-        "Low fog machine: a carpet of fog instead of fog in the whole room — the smoke alarm stays quiet",
+        "Low fog machine: a carpet of fog instead of fog in the whole room, the smoke alarm stays quiet",
         "All stands and cables included",
         "Save 285 DKK compared to renting the parts separately",
       ]}

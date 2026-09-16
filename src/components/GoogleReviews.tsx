@@ -4,7 +4,7 @@
  * Anmeldelserne fra vores Google-profil, som de ser ud på sitet.
  *
  * Data kommer fra /api/anmeldelser (Places API + KV-cache). Er der ingen
- * anmeldelser endnu — eller er nøglen ikke sat — vises sektionen slet ikke.
+ * anmeldelser endnu, eller er nøglen ikke sat, vises sektionen slet ikke.
  * Det er med vilje: sitet havde tidligere fire opdigtede citater i stedet, og
  * hellere ingen sektion end en, vi har fundet på. Alt herunder står i Googles
  * egne felter.
@@ -22,7 +22,7 @@ import {
 } from "@/lib/googleReviews";
 import { useGoogleReviews } from "@/lib/useGoogleReviews";
 
-/** Længere tekster foldes sammen — hele teksten står stadig i DOM'en */
+/** Længere tekster foldes sammen, hele teksten står stadig i DOM'en */
 const KLIP_VED_TEGN = 240;
 
 function StjerneSvg({ className }: { className?: string }) {
@@ -58,7 +58,7 @@ function Stjerner({ value, size = "h-4 w-4" }: { value: number; size?: string })
   );
 }
 
-/** Googles egen G — den skal se ud som Google, ellers er det ikke troværdigt */
+/** Googles egen G, den skal se ud som Google, ellers er det ikke troværdigt */
 function GoogleLogo({ className = "h-4 w-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 48 48" aria-hidden="true">
@@ -87,7 +87,7 @@ function Avatar({ review }: { review: GoogleReview }) {
   if (review.photo && !fejlet) {
     return (
       // Googles profilbilleder ligger på lh3.googleusercontent.com og må vises
-      // direkte derfra — de må ikke kopieres til vores egen R2.
+      // direkte derfra, de må ikke kopieres til vores egen R2.
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={review.photo}
@@ -118,7 +118,7 @@ function Kort({ review, locale }: { review: GoogleReview; locale: Locale }) {
 
   return (
     <article className="group relative flex min-w-[85%] snap-center flex-col overflow-hidden rounded-2xl glass p-6 transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/[0.07] sm:min-w-0">
-      {/* Citattegn som vandmærke — giver kortet dybde uden at stjæle plads */}
+      {/* Citattegn som vandmærke, giver kortet dybde uden at stjæle plads */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute -right-2 -top-8 select-none font-serif text-[7rem] leading-none text-white/[0.04] transition group-hover:text-brand-400/10"

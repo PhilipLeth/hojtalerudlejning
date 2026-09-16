@@ -7,7 +7,7 @@ import { useGallery } from "@/lib/useGallery";
 import type { Locale } from "@/lib/i18n";
 
 /**
- * Produktet i brug — galleriet på produktsiden.
+ * Produktet i brug, galleriet på produktsiden.
  *
  * Billederne er genererede (se scripts/product-images/generate.mjs) med vores
  * egne produktfotos som reference, så det er vores grej der står i rummet. Men
@@ -16,7 +16,7 @@ import type { Locale } from "@/lib/i18n";
  * "Illustration"-mærkat, og alt-teksten siger det samme til dem, der ikke kan
  * se mærkaten. produktgalleri.test.tsx fejler, hvis mærkaten forsvinder.
  *
- * Findes der ingen billeder for produktet, viser komponenten ingenting — et
+ * Findes der ingen billeder for produktet, viser komponenten ingenting, et
  * galleri kan bygges op ét produkt ad gangen uden at siderne knækker imens.
  */
 
@@ -26,7 +26,7 @@ const COPY = {
     titel: (navn: string) => `${navn} i brug`,
     intro: "Sådan står det, når det er sat op. Billederne er illustrationer, lavet ud fra fotos af vores eget udstyr.",
     label: "Illustration",
-    labelLang: "Illustration — genereret ud fra fotos af vores eget udstyr",
+    labelLang: "Illustration, genereret ud fra fotos af vores eget udstyr",
     luk: "Luk",
     forrige: "Forrige billede",
     naeste: "Næste billede",
@@ -37,7 +37,7 @@ const COPY = {
     titel: (navn: string) => `${navn} in use`,
     intro: "This is how it looks once it is set up. The images are illustrations, made from photos of our own equipment.",
     label: "Illustration",
-    labelLang: "Illustration — generated from photos of our own equipment",
+    labelLang: "Illustration, generated from photos of our own equipment",
     luk: "Close",
     forrige: "Previous image",
     naeste: "Next image",
@@ -57,11 +57,11 @@ export default function ProductGallery({
   locale = "da",
 }: {
   productId: string;
-  /** Produktnavnet på sidens sprog — bruges i overskriften */
+  /** Produktnavnet på sidens sprog, bruges i overskriften */
   name: string;
   locale?: Locale;
 }) {
-  // Både de committede billeder og dem, admin har lavet med knappen —
+  // Både de committede billeder og dem, admin har lavet med knappen
   // det brede først, de små sammen nedenunder (se galleryLayout.ts)
   const billeder = ordnTilGitter(useGallery(productId));
   const c = COPY[locale];

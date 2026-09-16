@@ -8,7 +8,7 @@ import type { Locale } from "@/lib/i18n";
  * Formularens faste tekster.
  *
  * Feltnavnene lå kun på dansk, så /en/kontakt ville have bedt en engelsk kunde
- * om "Navn" og "Din besked — fx hvad du skal bruge". Emnet (?emne=erhverv)
+ * om "Navn" og "Din besked, fx hvad du skal bruge". Emnet (?emne=erhverv)
  * mærkes stadig på dansk i mailen: den læses af Frederik, ikke af kunden.
  */
 const COPY = {
@@ -17,26 +17,26 @@ const COPY = {
     name: "Navn",
     email: "Email",
     phone: "Telefon (valgfrit)",
-    message: "Din besked — fx hvad du skal bruge, hvornår og til hvor mange",
+    message: "Din besked, fx hvad du skal bruge, hvornår og til hvor mange",
     send: "Send besked",
     sending: "Sender…",
     thanks: "Tak for din besked!",
-    thanksBody: "Vi svarer hurtigst muligt — som regel samme dag. Haster det, så ring",
-    failed: "Noget gik galt — prøv igen",
-    network: "Netværksfejl — prøv igen eller ring til os",
+    thanksBody: "Vi svarer hurtigst muligt, som regel samme dag. Haster det, så ring",
+    failed: "Noget gik galt, prøv igen",
+    network: "Netværksfejl, prøv igen eller ring til os",
   },
   en: {
     aria: "Contact form",
     name: "Name",
     email: "Email",
     phone: "Phone (optional)",
-    message: "Your message — for example what you need, when, and for how many",
+    message: "Your message, for example what you need, when, and for how many",
     send: "Send message",
     sending: "Sending…",
     thanks: "Thanks for your message!",
-    thanksBody: "We reply as soon as we can — usually the same day. If it is urgent, call",
-    failed: "Something went wrong — please try again",
-    network: "Network error — try again or give us a call",
+    thanksBody: "We reply as soon as we can, usually the same day. If it is urgent, call",
+    failed: "Something went wrong, please try again",
+    network: "Network error, try again or give us a call",
   },
 } as const;
 
@@ -44,23 +44,23 @@ const COPY = {
 const TOPIC_HINT_EN: Record<string, { label: string; hint: string }> = {
   erhverv: {
     label: "Business enquiry",
-    hint: "Tell us about the event — date, number of guests, location and what you need. We will come back with one quote for all of it.",
+    hint: "Tell us about the event, date, number of guests, location and what you need. We will come back with one quote for all of it.",
   },
   event: {
     label: "Event enquiry",
-    hint: "Tell us about the event — date, number of guests, location and what you need.",
+    hint: "Tell us about the event, date, number of guests, location and what you need.",
   },
 };
 
-/** Kendte emner fra ?emne= — styrer overskrift på mailen og hjælpetekst i formularen */
+/** Kendte emner fra ?emne=, styrer overskrift på mailen og hjælpetekst i formularen */
 const TOPICS: Record<string, { label: string; hint: string }> = {
   erhverv: {
     label: "Erhvervsforespørgsel",
-    hint: "Fortæl om arrangementet — dato, antal gæster, lokation og hvad I skal bruge. Så vender vi tilbage med et samlet tilbud.",
+    hint: "Fortæl om arrangementet, dato, antal gæster, lokation og hvad I skal bruge. Så vender vi tilbage med et samlet tilbud.",
   },
   event: {
     label: "Eventforespørgsel",
-    hint: "Fortæl om eventet — dato, antal gæster, lokation og hvad I skal bruge.",
+    hint: "Fortæl om eventet, dato, antal gæster, lokation og hvad I skal bruge.",
   },
 };
 
@@ -71,7 +71,7 @@ export default function ContactForm({ locale = "da" }: { locale?: Locale } = {})
   const [error, setError] = useState("");
   const [topic, setTopic] = useState<{ key: string; label: string; hint: string } | null>(null);
 
-  // Emne kommer fra URL'en (fx /kontakt?emne=erhverv) — så et pro-request
+  // Emne kommer fra URL'en (fx /kontakt?emne=erhverv), så et pro-request
   // lander mærket i indbakken frem for som "endnu en kontaktformular"
   useEffect(() => {
     const key = new URLSearchParams(window.location.search).get("emne");
@@ -157,7 +157,7 @@ export default function ContactForm({ locale = "da" }: { locale?: Locale } = {})
         onChange={(e) => setForm({ ...form, phone: e.target.value })}
         className={inputCls}
       />
-      {/* Honeypot — skjult for mennesker, bots udfylder den */}
+      {/* Honeypot, skjult for mennesker, bots udfylder den */}
       <input
         type="text"
         name="website"

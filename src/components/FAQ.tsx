@@ -24,17 +24,17 @@ const faqs = [
   {
     question: "Kan I levere udstyret?",
     answer:
-      `Ja — vi kører ud i hele København. Levering + opsætning koster ${prisKr("levering_ud")}, hvor vi sætter op klar til brug og du selv afleverer bagefter. Skal vi også hente igen efter festen, koster begge veje ${prisKr("levering_begge")}. Skriv din adresse i bookingflowet, så klarer vi resten.`,
+      `Ja, vi kører ud i hele København. Levering + opsætning koster ${prisKr("levering_ud")}, hvor vi sætter op klar til brug og du selv afleverer bagefter. Skal vi også hente igen efter festen, koster begge veje ${prisKr("levering_begge")}. Skriv din adresse i bookingflowet, så klarer vi resten.`,
   },
   {
     question: "Kan jeg leje en højtaler uden strøm?",
     answer:
-      "Ja! Vores Mackie Thump GO og Soundboks er batteridrevne med op til 12 timers spilletid — perfekte til parken, stranden eller baggården, hvor der ikke er en stikkontakt.",
+      "Ja! Vores Mackie Thump GO og Soundboks er batteridrevne med op til 12 timers spilletid, perfekte til parken, stranden eller baggården, hvor der ikke er en stikkontakt.",
   },
   {
     question: "Kan jeg ringe og høre mere?",
     answer:
-      "Selvfølgelig! Ring til os på PHONE — vi svarer gerne på spørgsmål om udstyr, levering eller din booking. Du kan betale sikkert online med kort, eller vælge at betale ved afhentning.",
+      "Selvfølgelig! Ring til os på PHONE, vi svarer gerne på spørgsmål om udstyr, levering eller din booking. Du kan betale sikkert online med kort, eller vælge at betale ved afhentning.",
   },
   {
     question: "Hvad hvis noget går i stykker?",
@@ -46,7 +46,7 @@ const faqs = [
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { display, hours, pickupAddress } = useSiteSettings();
-  // Tiderne må ikke stå som tekst her — så ville de modsige footeren dagen efter
+  // Tiderne må ikke stå som tekst her, så ville de modsige footeren dagen efter
   // Frederik retter dem i /admin/indstillinger
   const fill = (answer: string) =>
     answer

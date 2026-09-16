@@ -1,4 +1,4 @@
-/** DJ-timer afregnes inklusive moms. DJ-pult er med, lyd/lys er separate varer. */
+/** DJ-timer afregnes inklusive moms. DJ-pult og lyd/lys vælges som separate lejeprodukter. */
 export const DJ_DAY_RATE = 1000;
 export const DJ_NIGHT_RATE = 1500;
 export const DJ_ID = "dj_musikafvikler";
@@ -11,5 +11,9 @@ export function priceDj(value: unknown): { hours: number; total: number; before2
 }
 export function djLabel(v:DjHours,locale:"da"|"en"="da") {
  const p=priceDj(v);
- return locale==="en"?`DJ with booth, ${p.hours} hours (${p.before23} before 23:00, ${p.after23} after 23:00)`:`DJ med pult, ${p.hours} timer (${p.before23} før kl. 23, ${p.after23} efter kl. 23)`;
+ return locale==="en"?`DJ/music host, ${p.hours} hours (${p.before23} before 23:00, ${p.after23} after 23:00)`:`DJ/musikafvikler, ${p.hours} timer (${p.before23} før kl. 23, ${p.after23} efter kl. 23)`;
 }
+
+export const DJ_GEAR_IDS = ["dj_pult", "dj_pakke_lille", "dj_pakke_mellem", "dj_pakke_stor"] as const;
+export function isDjGear(id: string | null | undefined): boolean { return !!id && (DJ_GEAR_IDS as readonly string[]).includes(id); }
+export function requireDjGear(ids: string[]) { if(ids.includes(DJ_ID) && !ids.some(isDjGear)) throw new Error("Vælg en DJ-pult eller DJ-udstyrspakke til DJ-timerne"); }

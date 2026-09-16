@@ -38,7 +38,7 @@ export default function LargeSpeakerPackageEn() {
       name="Large Speaker Package"
       price={995}
       headline="Rent a large speaker package in Copenhagen"
-      sub='Two powerful 12" EV active speakers — clear sound for larger rooms and outdoors.'
+      sub='Two powerful 12" EV active speakers, clear sound for larger rooms and outdoors.'
       image="/images/product-festival-v2-white.webp"
       imageAlt="Large speaker package for rent in Copenhagen"
       productId="festival"
@@ -46,7 +46,7 @@ export default function LargeSpeakerPackageEn() {
       capacity={{ level: 2, label: "30-50 people" }}
       bullets={[
         '2× 12" EV active speakers',
-        "All cables included — stands available as an add-on (100 DKK)",
+        "All cables included, stands available as an add-on (100 DKK)",
         "Bluetooth",
         "Collect Friday, return Monday",
       ]}

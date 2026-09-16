@@ -10,12 +10,12 @@ import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
 /**
- * /lysshow — kategorisiden for lys som helhed.
+ * /lysshow, kategorisiden for lys som helhed.
  *
  * Adressen fandtes i en tændt annoncegruppe, længe før siden gjorde: AG 6
  * pegede på /lysshow, som gav 404, og blev derfor flyttet til /festlys i
  * ads-export/rebuild_lys_lyd_ads.py. Nu hvor siden findes, kan den flyttes
- * tilbage — /festlys handler om enkeltdelene, det her om pakkerne.
+ * tilbage, /festlys handler om enkeltdelene, det her om pakkerne.
  */
 export const metadata: Metadata = {
   title: "Lej Lysshow København | Lys, discokugle og røg fra 1.045 kr | Lejhøjtaler.dk",
@@ -92,11 +92,11 @@ export default function LysshowPage() {
             ids={LYSSHOW_PAKKER}
             eyebrow="Lyspakker"
             title="Tre færdige lysshows"
-            subtitle="Sat sammen så delene passer til hinanden — og billigere end at leje dem hver for sig."
+            subtitle="Sat sammen så delene passer til hinanden, og billigere end at leje dem hver for sig."
           />
         </div>
 
-        {/* Hvorfor røg — det spørgsmål der afgør om lysshowet virker */}
+        {/* Hvorfor røg, det spørgsmål der afgør om lysshowet virker */}
         <section className="mx-auto max-w-3xl px-4 pb-16">
           <div className="glass rounded-2xl p-8">
             <h2 className="mb-3 text-2xl font-bold text-white">Røgen er ikke pynt</h2>
@@ -104,7 +104,7 @@ export default function LysshowPage() {
               En lysstråle kan kun ses, hvis der er noget i luften at ramme. Uden røg
               får du farvede pletter på væggen. Med røg bliver selve strålen synlig, og
               det er dét, der ligner et show. Er du i tvivl om ét tilvalg, er det den
-              her — og skal røgalarmen have fred, er low fog svaret, for den lægger
+              her, og skal røgalarmen have fred, er low fog svaret, for den lægger
               røgen som et tæppe på gulvet i stedet for op i luften.
             </p>
           </div>
@@ -136,7 +136,7 @@ export default function LysshowPage() {
             <h2 className="mb-4 text-2xl font-bold text-white">Skal der også være lyd?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
               Lys uden musik er en oplyst stue. Vi har højtalerpakker til alt fra
-              gårdhaven til festlokalet — og festpakkerne har lyset med.
+              gårdhaven til festlokalet, og festpakkerne har lyset med.
             </p>
             <a
               href="/lej-hojtaler"

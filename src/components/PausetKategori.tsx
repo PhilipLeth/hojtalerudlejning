@@ -4,8 +4,8 @@ import { PhoneText } from "@/components/PhoneLink";
 /**
  * Beskeden på en kategoriside, hvis produkter er sat på pause.
  *
- * Siderne bliver liggende — de har deres plads i Google, og pausen kan rulles
- * tilbage — men de skal sige det højt frem for at vise et tomt grid og lade
+ * Siderne bliver liggende, de har deres plads i Google, og pausen kan rulles
+ * tilbage, men de skal sige det højt frem for at vise et tomt grid og lade
  * kunden gætte. Beskeden peger videre til det, vi rent faktisk udlejer:
  * højtalere, lys og røg. Se PAUSEDE_PRODUKTER i src/lib/products.ts.
  */

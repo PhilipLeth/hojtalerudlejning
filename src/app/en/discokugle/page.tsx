@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Disco Ball Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a disco ball in Copenhagen for 595 DKK per weekend. 40 cm rotating mirror ball with motor, LED spotlight and stand — plug and play. Pay on pickup.",
+    "Rent a disco ball in Copenhagen for 595 DKK per weekend. 40 cm rotating mirror ball with motor, LED spotlight and stand, plug and play. Pay on pickup.",
   keywords: [
     "disco ball rental copenhagen",
     "mirror ball hire copenhagen",
@@ -53,7 +53,7 @@ export default function Page() {
       <UpsellBox
         locale="en"
         title="Add fog and lights"
-        text="The disco ball works best next to a fog machine and party lights — the fog is what makes the beams visible in the air."
+        text="The disco ball works best next to a fog machine and party lights, the fog is what makes the beams visible in the air."
         links={[
           { href: "/en/roegmaskine", label: "See the fog machine", priceId: "rog" },
           { href: "/en/festlys", label: "See party lights", priceId: "lys", fra: true },

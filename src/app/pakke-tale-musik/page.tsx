@@ -4,7 +4,7 @@ import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Lej Tale & musik-pakken København | 1.195 kr | Lejhøjtaler.dk",
-  description: "Stor højtalerpakke + trådløs mikrofon — taler og musik til events. Spar 95 kr. 1.195 kr/weekend. Betal ved afhentning. Book online.",
+  description: "Stor højtalerpakke + trådløs mikrofon, taler og musik til events. Spar 95 kr. 1.195 kr/weekend. Betal ved afhentning. Book online.",
   keywords: ["lej lyd til tale og musik", "højtaler og mikrofon pakke", "event lyd pakke københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/pakke-tale-musik",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Lej Tale & musik-pakken København | 1.195 kr",
-    description: "Stor højtalerpakke + trådløs mikrofon — taler og musik til events. Spar 95 kr. 1.195 kr/weekend. Betal ved afhentning. Book online.",
+    description: "Stor højtalerpakke + trådløs mikrofon, taler og musik til events. Spar 95 kr. 1.195 kr/weekend. Betal ved afhentning. Book online.",
     url: "https://lejhojtaler.dk/pakke-tale-musik",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,7 +27,7 @@ export default function Page() {
       name="Tale & musik-pakken"
       price={1195}
       headline="Tale & musik-pakken"
-      sub={'Stor højtalerpakke + trådløs mikrofon — taler og musik til events. Spar 95 kr.'}
+      sub={'Stor højtalerpakke + trådløs mikrofon, taler og musik til events. Spar 95 kr.'}
       image="/images/product-festival-v2-white.webp"
       imageAlt="Tale og musik pakke med store højtalere og trådløs mikrofon"
       productId="pakke_tale_musik"

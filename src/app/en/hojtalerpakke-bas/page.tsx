@@ -29,7 +29,7 @@ export default function Page() {
       name="Speaker package 100"
       price={1495}
       headline="Rent a speaker package for 50-100 guests"
-      sub={"The large 12\" EV speakers on stands with a 12\" subwoofer underneath — the step above the large speaker package."}
+      sub={"The large 12\" EV speakers on stands with a 12\" subwoofer underneath, the step above the large speaker package."}
       image="/images/product-festival-bas-v2-white.webp"
       imageAlt="Speaker package with two 12 inch EV speakers on stands and a subwoofer for rent in Copenhagen"
       productId="hojtaler_100"
@@ -40,7 +40,7 @@ export default function Page() {
         "Speaker stands included",
         "12\" subwoofer for the bottom end of the music",
         "Bluetooth + all cables",
-        "No lights — Party package 150 is the same sound plus lights and fog",
+        "No lights, Party package 150 is the same sound plus lights and fog",
       ]}
     />
   );

@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Diskotek-pakken | 1.095 kr | Lejhøjtaler.dk",
-  description: "Lys-pakke, diskolyseffekt og discokugle — fuldt dansegulv uden røg for 1.095 kr. Spar 190 kr. Lejes i København.",
+  description: "Lys-pakke, diskolyseffekt og discokugle, fuldt dansegulv uden røg for 1.095 kr. Spar 190 kr. Lejes i København.",
   keywords: ["diskotekslys leje", "dj lys leje", "diskolys uden røg", "lys til fest i forsamlingshus"],
   alternates: {
     canonical: "https://lejhojtaler.dk/diskotek-pakke",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Diskotek-pakken | 1.095 kr | Lejhøjtaler.dk",
-    description: "Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm — spar 190 kr.",
+    description: "Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar 190 kr.",
     url: "https://lejhojtaler.dk/diskotek-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,8 +27,8 @@ export default function Side() {
       slug="diskotek-pakke"
       name="Diskotek-pakken"
       price={1095}
-      headline="Diskotek-pakken — fuldt dansegulv uden røg"
-      sub="Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm — spar 190 kr."
+      headline="Diskotek-pakken, fuldt dansegulv uden røg"
+      sub="Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar 190 kr."
       image="/images/product-pakke-diskotek-taendt-v2-white.webp"
       imageAlt="Diskotek-pakken tændt: lys-pakke på stativ, discokugle og en ekstra LED-lyseffekt"
       productId="pakke_diskotek"
@@ -38,7 +38,7 @@ export default function Side() {
         "Lys-pakke: 2 farvede lamper + centereffekt på stativ",
         "Ekstra LED-par-lys til at krydse gulvet",
         "Discokugle 40 cm med motor og spot",
-        "Ingen røg — må bruges i lokaler med røgalarm",
+        "Ingen røg, må bruges i lokaler med røgalarm",
         "Spar 190 kr vs. at leje delene enkeltvis",
       ]}
     >
@@ -46,7 +46,7 @@ export default function Side() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Må der gerne bruges røg?</h2>
           <p className="mb-6 text-white/50">
-            Så tag Lysshow i stedet — samme kugle, men med røgmaskine, der gør strålerne synlige i luften.
+            Så tag Lysshow i stedet, samme kugle, men med røgmaskine, der gør strålerne synlige i luften.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/lysshow" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">

@@ -10,12 +10,12 @@ import { localeAlternates } from "@/lib/hreflang";
 import { localizedHref } from "@/lib/enPages";
 
 /**
- * /en/lej-mikrofon — den engelske udgave af mikrofon-kategorisiden.
+ * /en/lej-mikrofon, den engelske udgave af mikrofon-kategorisiden.
  *
  * Slug'en er den danske, fordi EN_PAGES parrer sider på præcis den sti; det er
  * hreflang-parret og ikke ordet i URL'en, Google bruger til at forstå, at de to
  * sider er hinandens oversættelse. Titel, brødtekst og keywords er derimod
- * skrevet på engelsk — søgningen er "microphone rental copenhagen".
+ * skrevet på engelsk, søgningen er "microphone rental copenhagen".
  */
 export const metadata: Metadata = {
   title: "Microphone Rental Copenhagen | Wireless, Headset & Shure from 95 DKK | Lejhøjtaler.dk",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Microphone Rental Copenhagen | From 95 DKK | Lejhøjtaler.dk",
     description:
-      "Wireless, headset and wired. Plugs straight into our speakers — no mixer needed.",
+      "Wireless, headset and wired. Plugs straight into our speakers, no mixer needed.",
     url: "https://lejhojtaler.dk/en/lej-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -59,22 +59,22 @@ export default function Page() {
     {
       titel: "For speeches at the dinner",
       svar: "A wireless handheld. It gets passed between the speakers, and you can lower it when you are not talking.",
-      grej: "Wireless microphone — 295 DKK, or Shure BLX 595 DKK",
+      grej: "Wireless microphone, 295 DKK, or Shure BLX 595 DKK",
     },
     {
       titel: "For the person who talks for a long time",
       svar: "A headset. The teacher or the toastmaster needs both hands and has to move around without the sound rising and falling.",
-      grej: "Wireless headset — 345 DKK, PRO 595 DKK",
+      grej: "Wireless headset, 345 DKK, PRO 595 DKK",
     },
     {
       titel: "For karaoke and parties",
       svar: "Two wireless ones. Someone always wants to sing along, and one microphone has to move on to the next song.",
-      grej: "Two wireless microphones — 295 DKK each",
+      grej: "Two wireless microphones, 295 DKK each",
     },
     {
       titel: "When it stays in one place",
       svar: "Wired. If the microphone is going to stay at the lectern anyway, there is no reason to pay for wireless.",
-      grej: "Wired handheld — 95 DKK, Shure 395 DKK",
+      grej: "Wired handheld, 95 DKK, Shure 395 DKK",
     },
   ];
 
@@ -111,7 +111,7 @@ export default function Page() {
 
       <main className="relative z-20 bg-[#07060b]">
         <MicrophonePackages locale="en" />
-        {/* Valget står sjældent mellem modeller — det står mellem situationer */}
+        {/* Valget står sjældent mellem modeller, det står mellem situationer */}
         <section className="mx-auto max-w-5xl px-4 pt-16 pb-4">
           <h2 className="mb-2 text-center text-3xl font-bold">Which one do you need?</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
@@ -131,7 +131,7 @@ export default function Page() {
         <section id="microphones" className="mx-auto max-w-6xl px-4 py-16">
           <h2 className="mb-2 text-center text-3xl font-bold">All microphones</h2>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Prices are for the whole rental period — 1 to 5 days costs the same.
+            Prices are for the whole rental period, 1 to 5 days costs the same.
           </p>
           <CategoryProductGrid
             locale="en"
@@ -172,7 +172,7 @@ export default function Page() {
             <h2 className="mb-4 text-2xl font-bold text-white">Nothing to play it through?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
               A microphone needs a speaker. Our speaker packages cover everything
-              from a courtyard to a rented venue — and they all take a microphone.
+              from a courtyard to a rented venue, and they all take a microphone.
             </p>
             <a
               href="/en"

@@ -7,8 +7,8 @@ import type { Locale } from "@/lib/i18n";
  * "Ledig den kommende weekend" på produktsiden.
  *
  * Kunden står med det samme spørgsmål hver gang: kan jeg overhovedet få den
- * på fredag? Svaret ligger allerede i /api/availability — det er samme tal,
- * bookingflowet validerer mod i trin 2 — så her stilles spørgsmålet for den
+ * på fredag? Svaret ligger allerede i /api/availability, det er samme tal,
+ * bookingflowet validerer mod i trin 2, så her stilles spørgsmålet for den
  * kommende fredag→mandag og besvares med én linje.
  *
  * Fejler opslaget, eller har produktet intet lagertal, vises ingenting:
@@ -31,7 +31,7 @@ export default function WeekendLedighed({
 
   useEffect(() => {
     const iDag = new Date();
-    // 0 hvis i dag ER fredag; lørdag/søndag peger på NÆSTE weekend — den
+    // 0 hvis i dag ER fredag; lørdag/søndag peger på NÆSTE weekend, den
     // igangværende kan alligevel ikke bookes fra fredag
     const tilFredag = (5 - iDag.getDay() + 7) % 7;
     const fredag = new Date(iDag);
@@ -92,8 +92,8 @@ export default function WeekendLedighed({
     <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-orange-400/10 px-4 py-1.5 text-sm font-medium text-orange-300">
       <span className="h-2 w-2 rounded-full bg-orange-300" />
       {locale === "en"
-        ? "Booked out this coming weekend — other dates are open in the booking"
-        : "Optaget den kommende weekend — andre datoer er ledige i bookingen"}
+        ? "Booked out this coming weekend, other dates are open in the booking"
+        : "Optaget den kommende weekend, andre datoer er ledige i bookingen"}
     </p>
   );
 }

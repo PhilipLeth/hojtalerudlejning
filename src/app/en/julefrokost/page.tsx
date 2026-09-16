@@ -3,7 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { catalogDiscount, prisDkk } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
-/** "Save 200 DKK" på et pakkekort — beløbet slås op, så det ikke kan drive. */
+/** "Save 200 DKK" på et pakkekort, beløbet slås op, så det ikke kan drive. */
 const spar = (id: string) => `Save ${catalogDiscount(id)} DKK`;
 
 export const metadata: Metadata = {
@@ -37,10 +37,10 @@ export default function Page() {
       popularFor="company parties"
       headline={"Sound for the company party"}
       headlinePriceId="pakke_fest_lille"
-      intro={"A Christmas party is two parties in one: the speech has to reach the whole room, and afterwards people have to dance. Speakers, microphone, lights and fog — in one package at one price."}
+      intro={"A Christmas party is two parties in one: the speech has to reach the whole room, and afterwards people have to dance. Speakers, microphone, lights and fog, in one package at one price."}
       primaryProductId="pakke_firmafest"
       primaryName={"company party package"}
-      primaryWhy={"The evening starts with a speech and ends on the dancefloor. The microphone handles the first half and the subwoofer the second — and the lights and fog are what stop the canteen from looking like a canteen."}
+      primaryWhy={"The evening starts with a speech and ends on the dancefloor. The microphone handles the first half and the subwoofer the second, and the lights and fog are what stop the canteen from looking like a canteen."}
       gridItems={[
         { id: "pakke_firmafest", tag: "Recommended" },
         { id: "pakke_fest_stor", tag: spar("pakke_fest_stor") },
@@ -56,9 +56,9 @@ export default function Page() {
       ]}
       faq={[
         { q: "What does sound for a company party cost?", a: "The small party package is " + prisDkk("pakke_fest_lille") + " and covers the office's own Christmas lunch. The company party package at " + prisDkk("pakke_firmafest") + " is the one we recommend: speakers on stands, a wireless microphone, a subwoofer, lights and a fog machine in one price." },
-        { q: "Can everyone hear the speech?", a: "Yes. The wireless microphone comes with the company party package and goes straight into the speaker — no mixer in between, and no cable to trip over." },
+        { q: "Can everyone hear the speech?", a: "Yes. The wireless microphone comes with the company party package and goes straight into the speaker, no mixer in between, and no cable to trip over." },
         { q: "How many guests do the packages cover?", a: "The small party package takes up to 50 guests, the large one at " + prisDkk("pakke_fest_stor") + " up to 100, and Party package 150 at " + prisDkk("pakke_fest_150") + " covers a party of 100-150. The numbers are for indoor use." },
-        { q: "Can we rent it to the company address?", a: "Yes. Delivery and setup in Copenhagen is " + prisDkk("levering_ud") + ", and " + prisDkk("levering_begge") + " if we collect it again after the party — however late that turns out to be." },
+        { q: "Can we rent it to the company address?", a: "Yes. Delivery and setup in Copenhagen is " + prisDkk("levering_ud") + ", and " + prisDkk("levering_begge") + " if we collect it again after the party, however late that turns out to be." },
       ]}
       related={[
         { href: "/firmafestpakke", label: "The company party package", priceId: "pakke_firmafest" },

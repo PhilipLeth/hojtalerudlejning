@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lysshow stort | Lys, uplights, discokugle og low fog | 1.995 kr | Lejhøjtaler.dk",
   description:
-    "Lysshow stort: lys-pakke, fire uplights, discokugle og low fog-maskine for 1.995 kr — spar 285 kr. Uplights maler væggene, low fog lægger et røggulv uden at vække røgalarmen. Lejes i København.",
+    "Lysshow stort: lys-pakke, fire uplights, discokugle og low fog-maskine for 1.995 kr, spar 285 kr. Uplights maler væggene, low fog lægger et røggulv uden at vække røgalarmen. Lejes i København.",
   keywords: ["stort lysshow leje", "uplights og low fog leje", "lys til stor fest københavn", "low fog maskine leje", "lys til lejet lokale"],
   alternates: {
     canonical: "https://lejhojtaler.dk/lysshow-stor",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Lysshow stort | Lys, uplights, discokugle og low fog | 1.995 kr",
-    description: "Lys-pakke, fire uplights, discokugle og low fog. Hele rummet skifter karakter — spar 285 kr.",
+    description: "Lys-pakke, fire uplights, discokugle og low fog. Hele rummet skifter karakter, spar 285 kr.",
     url: "https://lejhojtaler.dk/lysshow-stor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,8 +28,8 @@ export default function Page() {
       slug="lysshow-stor"
       name="Lysshow stort"
       price={1995}
-      headline="Lysshow stort — hele rummet skifter karakter"
-      sub="Lys-pakke, fire uplights, discokugle 40 cm og low fog-maskine. Til den store fest eller det lejede lokale med lysstofrør i loftet — spar 285 kr."
+      headline="Lysshow stort, hele rummet skifter karakter"
+      sub="Lys-pakke, fire uplights, discokugle 40 cm og low fog-maskine. Til den store fest eller det lejede lokale med lysstofrør i loftet, spar 285 kr."
       image="/images/product-uplight-4-v2-white.webp"
       imageAlt="Lysshow stort med uplights, lys-pakke, discokugle og low fog"
       productId="pakke_lysshow_stor"
@@ -37,9 +37,9 @@ export default function Page() {
       capacity={{ level: 3, label: "op til 150 pers." }}
       bullets={[
         "Lys-pakke: 2 farvede LED-lamper + centereffekt til dansegulvet",
-        "4× LED uplights — maler vægge og hjørner i den farve I vælger",
+        "4× LED uplights, maler vægge og hjørner i den farve I vælger",
         "Discokugle 40 cm med motor og spot",
-        "Low fog-maskine: røggulv i stedet for røg i hele rummet — røgalarmen får fred",
+        "Low fog-maskine: røggulv i stedet for røg i hele rummet, røgalarmen får fred",
         "Alle stativer og kabler med",
         "Spar 285 kr vs. at leje delene enkeltvis",
       ]}

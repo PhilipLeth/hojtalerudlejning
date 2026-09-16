@@ -13,7 +13,7 @@ import type { Locale } from "@/lib/i18n";
  * i kataloget; kun kortets egne ord stod hårdkodet på dansk, og det var det,
  * der spærrede for en engelsk kategoriside.
  *
- * `contents` findes kun på dansk — pakkelisten er tekniske ord ("2× farvede
+ * `contents` findes kun på dansk, pakkelisten er tekniske ord ("2× farvede
  * LED-lamper"), som er læsbare på begge sprog. Samme afvejning som i
  * productFaq.ts, hvor de engelske svar også citerer den danske pakkeliste.
  */
@@ -25,13 +25,13 @@ const COPY = {
 export interface CategoryItem {
   /** Produkt-id i kataloget (speaker, addon eller rentalProduct) */
   id: string;
-  /** Link — produktside hvis den findes, ellers /?product=ID#book */
+  /** Link, produktside hvis den findes, ellers /?product=ID#book */
   href?: string;
   tag?: string;
 }
 
 /**
- * Produktsiden på det rigtige sprog — eller ingen "Info"-knap.
+ * Produktsiden på det rigtige sprog, eller ingen "Info"-knap.
  *
  * Katalogets `page` er altid den danske sti. Uden localizedHref sendte et
  * engelsk kort kunden ind i dansk tekst; findes siden ikke på engelsk, beholdes
@@ -43,7 +43,7 @@ function enSti(sti: string | undefined, locale: Locale): string | undefined {
   return localizedHref(sti, locale);
 }
 
-/** Kort-grid til kategorisider — navn/pris/billede/beskrivelse læses live fra kataloget. */
+/** Kort-grid til kategorisider, navn/pris/billede/beskrivelse læses live fra kataloget. */
 export default function CategoryProductGrid({
   items,
   category,
@@ -52,7 +52,7 @@ export default function CategoryProductGrid({
   items?: CategoryItem[];
   /** Alternativ: vis alle rentalProducts i en kategori */
   category?: string;
-  /** Sprog — styrer kortets tekster og hvor "Info" fører hen. */
+  /** Sprog, styrer kortets tekster og hvor "Info" fører hen. */
   locale?: Locale;
 }) {
   const { speakers, addons, rentalProducts } = useProducts();
@@ -122,7 +122,7 @@ export default function CategoryProductGrid({
               )}
               {/* Nogle varer har endnu ikke et produktfoto. Før faldt de
                   tilbage på lys-pakkens billede, så en mixer blev vist som en
-                  lyseffekt — et forkert billede er værre end intet. Nu står
+                  lyseffekt, et forkert billede er værre end intet. Nu står
                   navnet i stedet, indtil fotoet findes. */}
               {p.image ? (
                 <img loading="lazy" decoding="async"

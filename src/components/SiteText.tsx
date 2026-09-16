@@ -6,7 +6,7 @@
  * Brødtekst i lejevilkår, privatlivspolitik og landingssider nævnte firmaets
  * adresse, CVR, mail og åbningstider som ren tekst. I stedet skriver siderne nu
  * {{firmaadresse}} eller {{aabningstider}}, og teksten hentes fra
- * indstillingerne — så en flytning slår igennem alle steder på én gang.
+ * indstillingerne, så en flytning slår igennem alle steder på én gang.
  *
  * Dobbelt-tuborg er valgt frem for ord som PHONE, fordi "CVR" og "ADRESSE" også
  * optræder som almindelige ord i de samme tekster.

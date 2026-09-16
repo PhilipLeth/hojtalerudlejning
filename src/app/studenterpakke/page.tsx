@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Studenterpakken | Soundboks, ekstra batteri og taske | 945 kr | Lejhøjtaler.dk",
   description:
-    "Studenterpakken: Soundboks 4, ekstra batteri og polstret bæretaske for 945 kr — spar 90 kr. Spiller hele studenterkørslen uden strøm. Lejes i København.",
+    "Studenterpakken: Soundboks 4, ekstra batteri og polstret bæretaske for 945 kr, spar 90 kr. Spiller hele studenterkørslen uden strøm. Lejes i København.",
   keywords: ["studenterkørsel højtaler", "soundboks til studenterkørsel", "lej højtaler studenter", "musik til studentervogn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/studenterpakke",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Studenterpakken | Soundboks, ekstra batteri og taske | 945 kr | Lejhøjtaler.dk",
-    description: "Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet — spar 90 kr.",
+    description: "Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet, spar 90 kr.",
     url: "https://lejhojtaler.dk/studenterpakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,18 +28,18 @@ export default function StudenterpakkePage() {
       slug="studenterpakke"
       name="Studenterpakken"
       price={945}
-      headline="Studenterpakken — spiller hele vognturen"
-      sub="Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet — spar 90 kr."
+      headline="Studenterpakken, spiller hele vognturen"
+      sub="Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet, spar 90 kr."
       image="/images/product-soundboks-v2-white.webp"
       imageAlt="Studenterpakken med Soundboks 4, ekstra batteri og bæretaske"
       productId="pakke_student"
       faqPhrase="studenterpakken"
       capacity={{ level: 2, label: "op til 50 pers." }}
       bullets={[
-        "Soundboks 4 — den der kan høres over motoren",
+        "Soundboks 4, den der kan høres over motoren",
         "Ekstra batteri, så den holder fra morgen til sidste adresse",
         "Polstret bæretaske: anlægget løftes op og ned hele dagen",
-        "Bluetooth — alle kan skifte nummer fra deres telefon",
+        "Bluetooth, alle kan skifte nummer fra deres telefon",
         "Spar 90 kr vs. at leje delene enkeltvis",
       ]}
     >

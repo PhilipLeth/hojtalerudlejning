@@ -5,11 +5,11 @@ import { AUTHOR, authorLd } from "@/lib/author";
 import { startPrisDkk } from "@/lib/products";
 
 /**
- * /en/blog/[slug] — de engelske blogindlæg.
+ * /en/blog/[slug], de engelske blogindlæg.
  *
  * Indholdet kommer fra docs/en/. Et indlæg findes kun på de sprog, det er
  * skrevet på, så listen her er kortere end den danske indtil resten er
- * oversat — det er med vilje: et engelsk indeks, der linker til dansk
+ * oversat, det er med vilje: et engelsk indeks, der linker til dansk
  * brødtekst, var netop den fejl siden havde.
  */
 interface Props {
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${post.title} | Lejhøjtaler.dk`,
     description: post.description,
     keywords: post.keywords,
-    // Kun når der FINDES et dansk modstykke — slug'ene er forskellige, fordi
+    // Kun når der FINDES et dansk modstykke, slug'ene er forskellige, fordi
     // hver URL bærer sit sprogs søgeord, så hreflang kan ikke udledes af stien.
     alternates: {
       canonical: `https://lejhojtaler.dk/en/blog/${post.slug}`,

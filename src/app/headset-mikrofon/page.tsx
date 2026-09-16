@@ -47,13 +47,13 @@ export default function HeadsetMikrofonPage() {
         "Bodypack-sender inkluderet",
         "Modtager og batterier medfølger",
         "Kabel til højtaler/mixer inkl.",
-        "Hands-free — perfekt til præsentationer",
+        "Hands-free, perfekt til præsentationer",
         "Hent fredag aflever mandag",
       ]}
     >
       <UpsellBox
         title="Kombiner med mikrofon og højtalere"
-        text="Headsettet holder hænderne fri, mens en trådløs mikrofon går rundt i salen til spørgsmål. Højtaleren skal med — headsettet forstærker ingenting selv."
+        text="Headsettet holder hænderne fri, mens en trådløs mikrofon går rundt i salen til spørgsmål. Højtaleren skal med, headsettet forstærker ingenting selv."
         links={[
           { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "traadloes_mikrofon", fra: true },
         ]}

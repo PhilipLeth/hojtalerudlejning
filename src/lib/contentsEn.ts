@@ -6,7 +6,7 @@ import type { Locale } from "@/lib/i18n";
  * `contents` findes kun på dansk i kataloget, og listen bruges to steder på
  * de engelske sider: hover-panelet på produktkortene (CategoryProductGrid) og
  * svaret på "What is included when I rent …" (productFaq.ts). Begge steder
- * stod der dansk midt i en engelsk sætning — "Wireless microphone comes with
+ * stod der dansk midt i en engelsk sætning, "Wireless microphone comes with
  * Trådløs håndholdt mic, Modtager og Kabelforbindelse til højtaler".
  *
  * Løsningen er en ORDBOG og ikke et `contents_en`-felt på hvert produkt, af
@@ -14,18 +14,23 @@ import type { Locale } from "@/lib/i18n";
  *
  *  1. Kataloget kan overskrives fra /admin og bor i KV. Et nyt felt i
  *     products.ts ville aldrig nå frem på en installation, hvor KV allerede
- *     har et katalog — se mergeRentals i useProducts.ts, der netop findes
+ *     har et katalog, se mergeRentals i useProducts.ts, der netop findes
  *     for at lappe den slags huller.
  *  2. Ordforrådet er lille og gentager sig selv: "Strømkabel" står i tolv
  *     pakker. Oversat ét sted kan de tolv ikke drive fra hinanden.
  *
- * Ord, der ikke står her, falder tilbage til dansk. Det er med vilje — en
- * teknisk delnavn på dansk er bedre end ingen linje — men
+ * Ord, der ikke står her, falder tilbage til dansk. Det er med vilje, en
+ * teknisk delnavn på dansk er bedre end ingen linje, men
  * pakkeliste-engelsk.test.ts fejler, hvis et produkt i products.ts bruger et
  * ord, ordbogen ikke kender, så nye produkter ikke stille og roligt gør
  * listen dansk igen.
  */
 export const CONTENTS_EN: Record<string, string> = {
+  "Pioneer DDJ-FLX4": "Pioneer DDJ-FLX4",
+  "iPad i flightcase": "iPad in flight case",
+  "Tilslutningskabler": "Connection cables",
+  "DJ-pult · Pioneer DDJ-FLX4": "DJ controller · Pioneer DDJ-FLX4",
+  "Subwoofer 12”": "Subwoofer 12 inch",
   "DJ/musikafvikler": "DJ/music host",
   "DJ-pult": "DJ booth",
   "Minimum 3 timer": "Minimum 3 hours",
@@ -250,7 +255,7 @@ export const CONTENTS_EN: Record<string, string> = {
 /**
  * Pakkelisten på sidens sprog.
  *
- * Ukendte linjer beholder deres danske ordlyd — en teknisk delbetegnelse er
+ * Ukendte linjer beholder deres danske ordlyd, en teknisk delbetegnelse er
  * stadig oplysning, og et tomt punkt er ikke.
  */
 export function contentsFor(contents: string[] | undefined, locale: Locale): string[] {

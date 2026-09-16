@@ -55,7 +55,7 @@ export default function ProductGrid() {
   /**
    * GRID er en håndholdt rækkefølge, ikke en sandhed om sortimentet: et
    * produkt kan stå her og være sat på pause i kataloget. Forsiden viser
-   * derfor kun de kort, der findes i det filtrerede katalog — ellers ville
+   * derfor kun de kort, der findes i det filtrerede katalog, ellers ville
    * en pause i /admin/produkter være usynlig netop dér, hvor flest kigger.
    */
   const iKataloget = (id: string) =>
@@ -115,7 +115,7 @@ export default function ProductGrid() {
     <section id="produkter" className="relative z-20 mx-auto max-w-6xl px-4 py-16 sm:py-24">
       <h2 className="mb-2 text-center text-3xl font-bold sm:text-4xl">Produkter</h2>
       <p className="mx-auto mb-10 max-w-lg text-center text-white/50">
-        Vælg produkt og book online — én pris for op til 5 dages leje.
+        Vælg produkt og book online, én pris for op til 5 dages leje.
       </p>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">

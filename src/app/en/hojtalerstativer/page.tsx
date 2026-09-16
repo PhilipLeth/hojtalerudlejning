@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Speaker stands rental | 100 DKK",
-    description: "2 professional stands — lifts the sound to ear level. Fits all our speakers.",
+    description: "2 professional stands, lifts the sound to ear level. Fits all our speakers.",
     url: "https://lejhojtaler.dk/en/hojtalerstativer",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -30,7 +30,7 @@ export default function Page() {
       name="Speaker stands"
       price={100}
       headline="Rent speaker stands"
-      sub="2 professional stands that lift the speakers to ear level — so the sound travels over heads instead of into the backs of the front row."
+      sub="2 professional stands that lift the speakers to ear level, so the sound travels over heads instead of into the backs of the front row."
       image="/images/product-stativer-white.webp"
       imageAlt="Two professional speaker stands for rent"
       productId="stativer"
@@ -38,7 +38,7 @@ export default function Page() {
       faqPhrase="speaker stands"
       bullets={[
         "2 stands with adjustable height (up to about 2 m)",
-        "Fit Alto 10\" and EV 12\" — all our speaker packages",
+        "Fit Alto 10\" and EV 12\", all our speaker packages",
         "Tripod with safety pin, stable on floors and grass",
         "Add them in the booking together with the speakers",
         "Included in Speaker package 100 and the party packages from 150 guests",

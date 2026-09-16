@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Udendørspakke | Soundboks, ekstra batteri og lyskæde | 995 kr | Lejhøjtaler.dk",
   description:
-    "Udendørspakke: Soundboks 4, ekstra batteri og 10 m lyskæde for 995 kr — spar 140 kr. Fest i baggård, park eller på stranden helt uden strøm. Lejes i København.",
+    "Udendørspakke: Soundboks 4, ekstra batteri og 10 m lyskæde for 995 kr, spar 140 kr. Fest i baggård, park eller på stranden helt uden strøm. Lejes i København.",
   keywords: ["fest uden strøm", "soundboks leje", "havefest lyd", "polterabend højtaler", "batteri højtaler leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/udendorspakke",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Udendørspakke | Soundboks, ekstra batteri og lyskæde | 995 kr | Lejhøjtaler.dk",
-    description: "Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park — spar 140 kr.",
+    description: "Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park, spar 140 kr.",
     url: "https://lejhojtaler.dk/udendorspakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,15 +28,15 @@ export default function UdendorspakkePage() {
       slug="udendorspakke"
       name="Udendørspakke"
       price={995}
-      headline="Udendørspakken — hele festen uden en stikkontakt"
-      sub="Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park — spar 140 kr."
+      headline="Udendørspakken, hele festen uden en stikkontakt"
+      sub="Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park, spar 140 kr."
       image="/images/product-soundboks-v2-white.webp"
       imageAlt="Udendørspakke med Soundboks 4, ekstra batteri og lyskæde"
       productId="pakke_udendors"
       faqPhrase="udendørspakken"
       capacity={{ level: 2, label: "op til 50 pers." }}
       bullets={[
-        "Soundboks 4 — kraftig bas, batteridrevet, Bluetooth",
+        "Soundboks 4, kraftig bas, batteridrevet, Bluetooth",
         "Ekstra batteri: to batterier holder til en hel aften og nat",
         "10 m lyskæde, så der også er lys når solen går ned",
         "Ingen strøm, ingen forlængerledninger, ingen kabler over græsset",

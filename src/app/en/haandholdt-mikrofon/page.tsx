@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Wired Handheld Microphone Rental Copenhagen | 95 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a wired handheld microphone in Copenhagen for 95 DKK per weekend. XLR cable included — plugs straight into our speakers. For speeches and vocals. Pay on pickup.",
+    "Rent a wired handheld microphone in Copenhagen for 95 DKK per weekend. XLR cable included, plugs straight into our speakers. For speeches and vocals. Pay on pickup.",
   keywords: [
     "microphone rental copenhagen",
     "cheap microphone rental copenhagen",
@@ -35,7 +35,7 @@ export default function Page() {
       name="Handheld microphone (wired)"
       price={95}
       headline="Rent a handheld microphone"
-      sub="Standard wired handheld microphone — for speeches and vocals."
+      sub="Standard wired handheld microphone, for speeches and vocals."
       image="/images/product-mikrofon-kabel-v2-white.webp"
       imageAlt="Wired handheld microphone for rent in Copenhagen"
       productId="haandholdt_mikrofon"

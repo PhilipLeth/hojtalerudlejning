@@ -10,7 +10,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
-/** Højtaler + lysbar + røgmaskine hver for sig — tallet i "komplet festpakke fra …". */
+/** Højtaler + lysbar + røgmaskine hver for sig, tallet i "komplet festpakke fra …". */
 const KOMPLET_FEST = prisTekst(catalogPrice("party") + catalogPrice("lys") + catalogPrice("rog"));
 
 export const metadata: Metadata = {
@@ -136,7 +136,7 @@ export default function FestlysPage() {
               href="/lyspakker"
               className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
             >
-              Se alle lyspakker — vælg efter festen
+              Se alle lyspakker, vælg efter festen
             </Link>
           </div>
         </section>

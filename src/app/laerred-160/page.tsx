@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lej Lærred 160 cm København | 195 kr | Lejhøjtaler.dk",
   description:
-    "Lej et 160 cm lærred på stativ i København for 195 kr. Passer til alle vores projektorer — stilles op på et minut. Book online.",
+    "Lej et 160 cm lærred på stativ i København for 195 kr. Passer til alle vores projektorer, stilles op på et minut. Book online.",
   keywords: ["lej lærred", "projektor lærred leje", "lærred til projektor københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/laerred-160",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Lærred 160 cm København | 195 kr",
     description:
-      "Lej et 160 cm lærred på stativ i København for 195 kr. Passer til alle vores projektorer — stilles op på et minut. Book online.",
+      "Lej et 160 cm lærred på stativ i København for 195 kr. Passer til alle vores projektorer, stilles op på et minut. Book online.",
     url: "https://lejhojtaler.dk/laerred-160",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,7 +29,7 @@ export default function Page() {
       name="Lærred 160 cm"
       price={195}
       headline="Lej lærred 160 cm"
-      sub={'160 cm lærred på stativ — perfekt makker til projektoren.'}
+      sub={'160 cm lærred på stativ, perfekt makker til projektoren.'}
       image="/images/product-laerred-v2-white.webp"
       imageAlt="Projektorlærred 160 cm på stativ til leje"
       productId="laerred_160"

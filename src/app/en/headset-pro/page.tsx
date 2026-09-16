@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "PRO Wireless Headset Rental Copenhagen | 595 DKK",
     description:
-      "Broadcast-quality wireless headset — for conferences and stages. Book online.",
+      "Broadcast-quality wireless headset, for conferences and stages. Book online.",
     url: "https://lejhojtaler.dk/en/headset-pro",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -35,7 +35,7 @@ export default function Page() {
       name="Wireless headset PRO"
       price={595}
       headline="Rent a PRO wireless headset"
-      sub="Broadcast-quality headset microphone — for conferences and stages."
+      sub="Broadcast-quality headset microphone, for conferences and stages."
       image="/images/product-headset-pro-v2-white.webp"
       imageAlt="Professional wireless headset microphone for rent in Copenhagen"
       productId="headset_pro"

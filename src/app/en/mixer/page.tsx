@@ -63,7 +63,7 @@ export default function Page() {
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             For when more than one thing has to go into the speaker at the same
-            time — two microphones and music, or a whole band.
+            time, two microphones and music, or a whole band.
           </p>
           <a
             href="#mixere"
@@ -75,14 +75,14 @@ export default function Page() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        {/* Valget står ikke på kanaler — det står på om der bliver sunget */}
+        {/* Valget står ikke på kanaler, det står på om der bliver sunget */}
         <MixerRange locale="en" />
 
         <section className="mx-auto max-w-3xl px-4 pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Missing microphones or speakers?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
-              A mixer is the middle link — it needs something to gather and
+              A mixer is the middle link, it needs something to gather and
               something to send on to. A single microphone has no use for one.
             </p>
             <div className="flex flex-wrap justify-center gap-3">

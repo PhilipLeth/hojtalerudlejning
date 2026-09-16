@@ -8,7 +8,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "32\" Screen on Stand Rental Copenhagen | 395 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a 32\" LED screen on a stand in Copenhagen for 395 DKK. Compact and easy to move — perfect for karaoke and the small meeting room. Book online.",
+    "Rent a 32\" LED screen on a stand in Copenhagen for 395 DKK. Compact and easy to move, perfect for karaoke and the small meeting room. Book online.",
   keywords: ["32 inch screen rental copenhagen", "screen on stand hire", "small screen for event rental", "karaoke screen rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/skaerm-32",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "32\" screen on stand rental | 395 DKK",
-    description: "32\" LED screen on a tripod stand — compact, easy to move and ready in 5 minutes.",
+    description: "32\" LED screen on a tripod stand, compact, easy to move and ready in 5 minutes.",
     url: "https://lejhojtaler.dk/en/skaerm-32",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -32,7 +32,7 @@ export default function Page() {
       name={"32\" Screen"}
       price={395}
       headline={"Rent a 32\" screen on a stand"}
-      sub={"32\" LED screen on a tripod stand — compact, easy to move and ready in 5 minutes."}
+      sub={"32\" LED screen on a tripod stand, compact, easy to move and ready in 5 minutes."}
       image="/images/product-skaerm-32-white.webp"
       imageAlt={"32\" LED screen on a tripod stand for rent in Copenhagen"}
       productId="skaerm_32"
@@ -49,7 +49,7 @@ export default function Page() {
         <div className="glass rounded-2xl p-8 text-center">
           <h2 className="mb-3 text-2xl font-bold">Using it for karaoke?</h2>
           <p className="mx-auto mb-6 max-w-md text-white/50">
-            Then it is cheaper in the Karaoke bundle together with the machine and speakers —{" "}
+            Then it is cheaper in the Karaoke bundle together with the machine and speakers {" "}
             <LivePrice productId="pakke_karaoke" prefix="" suffix=" DKK" /> instead of{" "}
             {prisTekst(catalogPartsPrice("pakke_karaoke"))} DKK.
           </p>

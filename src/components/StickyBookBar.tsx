@@ -12,7 +12,7 @@ export default function StickyBookBar() {
   const price = summer ? applyDiscount(startPrice) : startPrice;
 
   useEffect(() => {
-    // Booking ligger i en drawer nu — vis baren når man er scrollet forbi hero
+    // Booking ligger i en drawer nu, vis baren når man er scrollet forbi hero
     // (eller efter 400px hvis der ikke findes en hero-sektion på siden)
     const hero = document.querySelector<HTMLElement>("section.hero-section");
     const book = document.getElementById("book");

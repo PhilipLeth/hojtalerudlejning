@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Conference Bundle Rental Copenhagen | 1,395 DKK | Lejhøjtaler.dk",
   description:
-    "Conference bundle with 55\" display, wireless headset and two speakers — ready for the meeting room for 1,395 DKK. Save 140 DKK. Book online in Copenhagen.",
+    "Conference bundle with 55\" display, wireless headset and two speakers, ready for the meeting room for 1,395 DKK. Save 140 DKK. Book online in Copenhagen.",
   keywords: ["conference equipment rental copenhagen", "screen and sound for conference hire", "av equipment conference denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/pakke-konference",
@@ -28,7 +28,7 @@ export default function Page() {
       slug="en/pakke-konference"
       name="Conference bundle"
       price={1395}
-      headline="The conference bundle — ready for the meeting"
+      headline="The conference bundle, ready for the meeting"
       sub={"55\" display + wireless headset + small speaker package. Save 140 DKK."}
       image="/images/product-skaerm-white.webp"
       imageAlt="Conference bundle with large screen, headset and speakers"

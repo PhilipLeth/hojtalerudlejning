@@ -7,7 +7,7 @@ import { LYDMAND_PAKKER } from "@/lib/products";
 export const metadata: Metadata = {
   title: "Sound Engineer Hire Copenhagen | 1,000 DKK/hour | Lejhøjtaler.dk",
   description:
-    "Hire a sound engineer for your party or corporate event in Copenhagen — 1,000 DKK per hour incl. VAT. The AV technician sets up, runs the sound check and controls sound and microphones while you enjoy the event.",
+    "Hire a sound engineer for your party or corporate event in Copenhagen, 1,000 DKK per hour incl. VAT. The AV technician sets up, runs the sound check and controls sound and microphones while you enjoy the event.",
   keywords: [
     "sound engineer hire copenhagen",
     "av technician copenhagen",
@@ -39,7 +39,7 @@ export default function SoundEngineerPage() {
       price={1000}
       priceUnit="/hour"
       headline="Hire a sound engineer for your event"
-      sub="An AV technician who sets up, runs the sound check and controls the sound — so you can enjoy the party instead of standing at the mixer."
+      sub="An AV technician who sets up, runs the sound check and controls the sound, so you can enjoy the party instead of standing at the mixer."
       image="/images/product-lydmand-white.webp"
       imageAlt="Sound engineer: mixer, headphones and microphone"
       productId="lydmand"
@@ -47,24 +47,24 @@ export default function SoundEngineerPage() {
       ctaText="Add the sound engineer to your speaker rental, or pick one of the packages that include him. The price is"
       faqMode="extraOnly"
       bullets={[
-        "AV technician on site — sets up and runs the sound check before the guests arrive",
+        "AV technician on site, sets up and runs the sound check before the guests arrive",
         "Controls sound, microphones and music during the event: speeches, playlists, DJ or band",
         "Handles lights and fog too, if they are part of the setup",
-        "Charged per hour — pick the 4-hour block when you need him for the whole evening",
+        "Charged per hour, pick the 4-hour block when you need him for the whole evening",
         "Delivery, setup and collection are included in the packages with a sound engineer",
       ]}
       faqExtra={[
         {
           q: "What does the sound engineer do on the day?",
-          a: "He sets up the system, tests it and runs a sound check with you before the guests arrive. During the event he controls sound, microphones and music — speeches, playlists, DJ or band — and packs down again when you are done.",
+          a: "He sets up the system, tests it and runs a sound check with you before the guests arrive. During the event he controls sound, microphones and music, speeches, playlists, DJ or band, and packs down again when you are done.",
         },
         {
           q: "How much does a sound engineer cost?",
-          a: "1,000 DKK per hour incl. VAT. When you add the sound engineer in the booking, you set the number of hours yourself — and if you like, enter when the party starts and ends and we work out the hours. The packages below include 4 hours.",
+          a: "1,000 DKK per hour incl. VAT. When you add the sound engineer in the booking, you set the number of hours yourself, and if you like, enter when the party starts and ends and we work out the hours. The packages below include 4 hours.",
         },
         {
           q: "Do I still have to collect the equipment myself?",
-          a: "No. In the packages with a sound engineer, delivery, setup and collection are always included — the engineer arrives with the gear, sets up and takes it home again. If you add him as an extra to a system you collect yourself, he sets up at your venue but does not transport the equipment.",
+          a: "No. In the packages with a sound engineer, delivery, setup and collection are always included, the engineer arrives with the gear, sets up and takes it home again. If you add him as an extra to a system you collect yourself, he sets up at your venue but does not transport the equipment.",
         },
         {
           q: "Can the sound engineer also run lights and fog?",

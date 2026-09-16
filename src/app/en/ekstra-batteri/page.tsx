@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Extra Battery for Battery Speaker Rental | 145 DKK | Lejhøjtaler.dk",
   description:
-    "Rent an extra battery for the Mackie Thump GO or Soundboks for 145 DKK. Double the playtime without power — for garden parties, beaches and graduation rides. Rent in Copenhagen.",
+    "Rent an extra battery for the Mackie Thump GO or Soundboks for 145 DKK. Double the playtime without power, for garden parties, beaches and graduation rides. Rent in Copenhagen.",
   keywords: ["extra battery speaker rental", "soundboks extra battery hire", "thump go battery rental copenhagen", "battery speaker all night"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/ekstra-batteri",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Extra battery rental | 145 DKK",
-    description: "Extra battery for battery speakers — double the playtime without power.",
+    description: "Extra battery for battery speakers, double the playtime without power.",
     url: "https://lejhojtaler.dk/en/ekstra-batteri",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -30,7 +30,7 @@ export default function Page() {
       name="Extra battery"
       price={145}
       headline="Rent an extra battery"
-      sub="An extra battery for the Mackie Thump GO or Soundboks 4 — so the party does not end when the first one runs dry."
+      sub="An extra battery for the Mackie Thump GO or Soundboks 4, so the party does not end when the first one runs dry."
       image="/images/product-thumpgo-v2-white.webp"
       imageAlt="Extra battery for a battery-powered speaker"
       productId="batteri"
@@ -38,7 +38,7 @@ export default function Page() {
       faqPhrase="an extra battery"
       bullets={[
         "Fits the Mackie Thump GO and Soundboks 4",
-        "Double the playtime — typically 20+ hours in total at party volume",
+        "Double the playtime, typically 20+ hours in total at party volume",
         "Swapped in half a minute without tools",
         "Delivered fully charged together with the speaker",
         "Included in the Outdoor package and the Graduation package",

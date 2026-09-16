@@ -7,7 +7,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Stor festpakke | Højtalere + lys til 100 pers. | 1.290 kr | Lejhøjtaler.dk",
   description:
-    "Stor festpakke: 2× EV 12\" højtalere + lys-pakke for 1.290 kr — spar 200 kr. Lyd og lys til op til 100 personer. Levering og opsætning kan tilvælges. Book online.",
+    "Stor festpakke: 2× EV 12\" højtalere + lys-pakke for 1.290 kr, spar 200 kr. Lyd og lys til op til 100 personer. Levering og opsætning kan tilvælges. Book online.",
   keywords: ["stor festpakke", "lej festpakke", "højtaler og lys leje", "fest 100 personer lyd", "festpakke københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festpakke-stor",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Stor festpakke | Højtalere + lys til 100 pers. | 1.290 kr",
-    description: "2× EV 12\" højtalere + lys-pakke — lyd og lys til op til 100 pers. Spar 200 kr.",
+    description: "2× EV 12\" højtalere + lys-pakke, lyd og lys til op til 100 pers. Spar 200 kr.",
     url: "https://lejhojtaler.dk/festpakke-stor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,15 +29,15 @@ export default function FestpakkeStorPage() {
       slug="festpakke-stor"
       name="Stor festpakke"
       price={1290}
-      headline="Stor festpakke — lyd og lys til 100 pers."
-      sub="2× EV 12&quot; højtalere + lys-pakke. Fuld fest — spar 200 kr."
+      headline="Stor festpakke, lyd og lys til 100 pers."
+      sub="2× EV 12&quot; højtalere + lys-pakke. Fuld fest, spar 200 kr."
       image="/images/product-pakke-fest-stor-white.webp"
       imageAlt="Stor festpakke med store EV højtalere og lys-pakke"
       productId="pakke_fest_stor"
       faqPhrase="den store festpakke"
       bullets={[
         "2× EV 12\" aktive højtalere med Bluetooth (op til 100 pers.)",
-        "Stativer kan tilkøbes (100 kr) — lyden op i øjenhøjde",
+        "Stativer kan tilkøbes (100 kr), lyden op i øjenhøjde",
         "Lys-pakke: 2 farvede lamper + centereffekt",
         "Spar 200 kr vs. at leje delene enkeltvis",
         "Levering og opsætning kan tilvælges i booking",
@@ -47,7 +47,7 @@ export default function FestpakkeStorPage() {
         <div className="glass rounded-2xl p-8 text-center">
           <h2 className="mb-3 text-2xl font-bold">Mindre fest?</h2>
           <p className="mx-auto mb-6 max-w-md text-white/50">
-            Lille festpakke: kompakt Alto-sæt + enkelt lyseffekt — til op til 40 personer for{" "}
+            Lille festpakke: kompakt Alto-sæt + enkelt lyseffekt, til op til 40 personer for{" "}
             <LivePrice productId="pakke_fest_lille" prefix="" suffix=" kr" />.
           </p>
           <Link

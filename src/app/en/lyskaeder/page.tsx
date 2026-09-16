@@ -12,7 +12,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Fairy Light Rental Copenhagen | From 195 DKK | Lejhøjtaler.dk",
   description:
-    "Rent fairy lights in Copenhagen from 195 DKK per weekend. 10 m string lights in warm white or colour — for garden parties, weddings and birthdays. Pay on pickup.",
+    "Rent fairy lights in Copenhagen from 195 DKK per weekend. 10 m string lights in warm white or colour, for garden parties, weddings and birthdays. Pay on pickup.",
   keywords: [
     "fairy lights rental copenhagen",
     "string lights hire copenhagen",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Fairy Light Rental Copenhagen | From 195 DKK",
     description:
-      "10 m of fairy lights — warm white or coloured. From 195 DKK per weekend. Book online.",
+      "10 m of fairy lights, warm white or coloured. From 195 DKK per weekend. Book online.",
     url: "https://lejhojtaler.dk/en/lyskaeder",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -71,7 +71,7 @@ export default function Page() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            10 m string lights — choose warm white or coloured bulbs. Right for any party.
+            10 m string lights, choose warm white or coloured bulbs. Right for any party.
           </p>
           <a
             href="/en?product=lyskaeder#book"
@@ -86,7 +86,7 @@ export default function Page() {
         <section id="products" className="mx-auto max-w-4xl px-4 py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Choose your string</h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Two versions — both 10 m, with a power supply and cable ties for hanging.
+            Two versions, both 10 m, with a power supply and cable ties for hanging.
             Made for garden parties, weddings and birthdays.
           </p>
           <CategoryProductGrid locale="en" items={[{ id: "lyskaeder" }, { id: "lyskaeder_farvet" }]} />

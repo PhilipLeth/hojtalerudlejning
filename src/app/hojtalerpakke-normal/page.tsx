@@ -36,7 +36,7 @@ export default function HojtalerpakkeNormalPage() {
       capacity={{ level: 2, label: "30-50 pers." }}
       bullets={[
         '2× 12" EV aktive højtalere',
-        "Alle kabler inkl. — stativer kan tilkøbes (100 kr)",
+        "Alle kabler inkl., stativer kan tilkøbes (100 kr)",
         "Bluetooth",
         "Hent fredag, aflever mandag",
       ]}

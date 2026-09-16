@@ -64,7 +64,7 @@ export default function MixerPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Når mere end én ting skal i højtaleren på samme tid — to mikrofoner
+            Når mere end én ting skal i højtaleren på samme tid, to mikrofoner
             og musik, eller et helt band.
           </p>
           <a
@@ -83,7 +83,7 @@ export default function MixerPage() {
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Mangler du mikrofoner eller højtalere?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
-              En mixer er mellemleddet — den skal have noget at samle og noget at
+              En mixer er mellemleddet, den skal have noget at samle og noget at
               sende videre til. Én mikrofon alene har ikke brug for den.
             </p>
             <div className="flex flex-wrap justify-center gap-3">

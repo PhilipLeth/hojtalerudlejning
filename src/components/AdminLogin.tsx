@@ -26,7 +26,7 @@ const inputStyle: React.CSSProperties = {
 interface AdminLoginProps {
   title?: string;
   subtitle?: string;
-  /** Efter login — fx redirect til /admin */
+  /** Efter login, fx redirect til /admin */
   onSuccess?: () => void;
 }
 

@@ -11,12 +11,12 @@ import { socialEntries } from "@/lib/socials";
 
 /**
  * Åbningstiderne i footeren. Tiderne kommer fra /admin/indstillinger, så de kan
- * rettes uden deploy — fx når julen ligger skævt.
+ * rettes uden deploy, fx når julen ligger skævt.
  */
 function OpeningHoursLine({ locale }: { locale: Locale }) {
   const { hours } = useSiteSettings();
   const iDag = new Date().toISOString().slice(0, 10);
-  // Kun de kommende — en særlig åbning i marts hjælper ingen i august
+  // Kun de kommende, en særlig åbning i marts hjælper ingen i august
   const særlige = upcomingExceptions(hours, iDag, 60);
   if (openDays(hours).length === 0 && særlige.length === 0) return null;
 
@@ -44,7 +44,7 @@ function OpeningHoursLine({ locale }: { locale: Locale }) {
 }
 
 /**
- * Sociale profiler — sat i /admin/indstillinger, vises kun når de findes.
+ * Sociale profiler, sat i /admin/indstillinger, vises kun når de findes.
  * Samme links står som sameAs i LocalBusiness-markup'en, så Google kan koble
  * profilerne og sitet sammen.
  */
@@ -170,13 +170,13 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
       {/*
         Indgange der ellers står forældreløse. /festlyd, /lydudstyr og
         /kobenhavn er landingssider for Google Ads, men ingen side på sitet
-        linkede til dem — de blev crawlet som blindgyder uden intern linkværdi.
+        linkede til dem, de blev crawlet som blindgyder uden intern linkværdi.
         De hører ikke hjemme i menuen, som bevidst er en vej ind og ikke et
         katalog; footeren er stedet, hvor de kan stå uden at støje.
         De engelske kategorisider har samme problem: /en/festlys, /en/lysshow og
         /en/lej-mikrofon står uden ét eneste indgående link, fordi menuen og
         forsiden kun kender pakkerne. Listen er ikke en oversættelse af den
-        danske — de tre danske annoncelandingssider findes ikke på engelsk, og
+        danske, de tre danske annoncelandingssider findes ikke på engelsk, og
         de engelske kategorisider er dem, der skal findes på "party light
         rental copenhagen" og "microphone rental copenhagen". /en/lyspakker kom
         til i samme omgang som /lyspakker og har samme problem.

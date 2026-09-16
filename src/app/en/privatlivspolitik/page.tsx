@@ -7,12 +7,12 @@ import { CompanyEmailLink } from "@/components/CompanyInfo";
 import { localeAlternates } from "@/lib/hreflang";
 
 /**
- * /en/privatlivspolitik — privatlivspolitikken på engelsk.
+ * /en/privatlivspolitik, privatlivspolitikken på engelsk.
  *
  * Juridisk tekst oversættes ikke løst: paragrafhenvisningerne peger stadig på
  * databeskyttelsesforordningen (GDPR) med samme artikler, og Datatilsynet står
  * med sit danske navn, fordi det er den myndighed, man rent faktisk klager til.
- * Den danske udgave er den bindende — det står nederst på siden.
+ * Den danske udgave er den bindende, det står nederst på siden.
  */
 export const metadata: Metadata = {
   title: "Privacy Policy | Lejhøjtaler.dk",
@@ -81,7 +81,7 @@ export default function Page() {
             <Section title="Why, and on what legal basis?">
               <ul className="ml-5 list-disc space-y-2">
                 <li>
-                  <strong className="text-white/80">To carry out your booking</strong> — name,
+                  <strong className="text-white/80">To carry out your booking</strong>, name,
                   contact details and order. Basis: performance of the contract with you
                   (GDPR art. 6(1)(b)).
                 </li>
@@ -95,7 +95,7 @@ export default function Page() {
                   (art. 6(1)(c)).
                 </li>
                 <li>
-                  <strong className="text-white/80">To send newsletters and offers</strong> — only
+                  <strong className="text-white/80">To send newsletters and offers</strong>, only
                   if you actively ticked the box. Basis: your consent (art. 6(1)(a)). You can
                   withdraw your consent at any time.
                 </li>
@@ -121,10 +121,10 @@ export default function Page() {
                 data on our instructions:
               </p>
               <ul className="ml-5 list-disc space-y-1">
-                <li>Cloudflare — hosting and operation of the site</li>
-                <li>Resend — sending confirmation and service emails</li>
-                <li>Stripe — payment processing, if you pay online</li>
-                <li>Google — statistics about how the site is used</li>
+                <li>Cloudflare, hosting and operation of the site</li>
+                <li>Resend, sending confirmation and service emails</li>
+                <li>Stripe, payment processing, if you pay online</li>
+                <li>Google, statistics about how the site is used</li>
               </ul>
             </Section>
 
@@ -136,7 +136,7 @@ export default function Page() {
                 <li>Have your data erased once we are no longer required to keep it</li>
                 <li>Object to the processing</li>
                 <li>Receive your data in a common format (data portability)</li>
-                <li>Withdraw a consent — which does not affect processing up to that point</li>
+                <li>Withdraw a consent, which does not affect processing up to that point</li>
               </ul>
               <p>
                 Write to{" "}
@@ -148,7 +148,7 @@ export default function Page() {
             <Section title="Complaints">
               <p>
                 If you are unhappy with how we handle your data, you can complain to the Danish
-                Data Protection Agency (Datatilsynet), Carl Jacobsens Vej 35, 2500 Valby —{" "}
+                Data Protection Agency (Datatilsynet), Carl Jacobsens Vej 35, 2500 Valby {" "}
                 <a
                   href="https://www.datatilsynet.dk"
                   target="_blank"

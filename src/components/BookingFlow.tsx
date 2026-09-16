@@ -1,5 +1,6 @@
 "use client";
-import { DJ_ID, DJ_DEFAULT, priceDj, djLabel, type DjHours } from "@/lib/dj";
+import { DJ_ID, DJ_DEFAULT, priceDj, djLabel, isDjGear, requireDjGear, type DjHours } from "@/lib/dj";
+import DjGearPicker from "./DjGearPicker";
 import DjHoursPicker from "./DjHoursPicker";
 
 import { useState, useMemo, useEffect, useCallback, useRef, FormEvent } from "react";
@@ -68,7 +69,7 @@ function isBlockedForProduct(avail: AvailabilityData | null, product: string): b
 
 /**
  * − antal + : lej flere enheder af samme produkt på én ordre.
- * Uden onPlus er + slået fra — der er ikke flere ledige i perioden.
+ * Uden onPlus er + slået fra, der er ikke flere ledige i perioden.
  */
 function AntalVælger({ antal, onMinus, onPlus, locale }: {
   antal: number;
@@ -126,7 +127,7 @@ function MiniCalendar({
   returnDate: Date | null;
   onSelectDate: (d: Date) => void;
   locale?: Locale;
-  /** Åbningstider fra /admin/indstillinger — styrer hvad man kan vælge */
+  /** Åbningstider fra /admin/indstillinger, styrer hvad man kan vælge */
   hours: OpeningHours;
 }) {
   const s = t[locale].booking;
@@ -134,7 +135,7 @@ function MiniCalendar({
     const now = new Date();
     const denneMåned = new Date(now.getFullYear(), now.getMonth(), 1);
     // Spærrer vi frem til en dato i næste måned, er det den måned kunden skal
-    // se — ellers åbner kalenderen på en måned hvor alt er gråt
+    // se, ellers åbner kalenderen på en måned hvor alt er gråt
     if (hours.earliestPickup) {
       const første = new Date(`${hours.earliestPickup}T12:00:00Z`);
       const førsteMåned = new Date(første.getUTCFullYear(), første.getUTCMonth(), 1);
@@ -186,7 +187,7 @@ function MiniCalendar({
           const iso = dateKey(date);
           const isPast = date < today;
           // Startdatoen kan ikke ligge før den dato admin har åbnet fra. Er
-          // afhentningen valgt, er næste klik en returdato — den ligger altid
+          // afhentningen valgt, er næste klik en returdato, den ligger altid
           // efter afhentningen og rammes derfor ikke.
           const vælgerAfhentning = !pickupDate || !!returnDate;
           const isTooEarly = vælgerAfhentning && isBeforeEarliestPickup(hours, iso);
@@ -195,13 +196,13 @@ function MiniCalendar({
           const isInRange = pickupDate && returnDate && date > pickupDate && date < returnDate;
           const isTooFar = pickupDate && !returnDate && diffDays(pickupDate, date) > 5;
           const isHotFriday = hotFridays.has(iso);
-          // Åbningstiderne for netop denne dato — en særlig dato slår ugedagen ud
+          // Åbningstiderne for netop denne dato, en særlig dato slår ugedagen ud
           const resolved = hoursForDate(hours, iso);
           const isSpecial = !!resolved.exception && !resolved.closed;
           // Kun når admin har slået "kun åbne dage" til, spærrer en lukket dag
           const isClosed = hours.onlyOpenDays && resolved.closed;
           const label = formatDateLine(hours, iso, locale);
-          const title = resolved.exception?.note ? `${label} — ${resolved.exception.note}` : label;
+          const title = resolved.exception?.note ? `${label}, ${resolved.exception.note}` : label;
 
           return (
             <button
@@ -210,7 +211,7 @@ function MiniCalendar({
               disabled={isPast || isTooEarly || !!isTooFar || isClosed}
               onClick={() => onSelectDate(date)}
               title={title}
-              aria-label={`${date.getDate()}. ${s.monthNames[date.getMonth()]} — ${title}`}
+              aria-label={`${date.getDate()}. ${s.monthNames[date.getMonth()]}, ${title}`}
               className={`
                 relative h-10 rounded-lg text-sm font-medium transition
                 ${isPast || isTooEarly || isTooFar || isClosed ? "text-white/15 cursor-not-allowed" : "hover:bg-white/10 cursor-pointer"}
@@ -236,10 +237,10 @@ function MiniCalendar({
         })}
       </div>
 
-      {/* Hvad gælder på de valgte datoer — inkl. særlige åbninger som 30. dec */}
+      {/* Hvad gælder på de valgte datoer, inkl. særlige åbninger som 30. dec */}
       <SelectedDayHours hours={hours} pickupDate={pickupDate} returnDate={returnDate} locale={locale} />
 
-      {/* Hvorfor de første dage er grå — ellers ligner det en fejl i kalenderen */}
+      {/* Hvorfor de første dage er grå, ellers ligner det en fejl i kalenderen */}
       {hours.earliestPickup && (
         <div className="mt-3 flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-xs text-white/60">
           <svg className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 8v5l3 2" /></svg>
@@ -269,7 +270,7 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da", whenEm
   returnDate: Date | null;
   locale?: Locale;
   /**
-   * Hvad der sker uden valgte datoer. Under kalenderen: ingenting — man er ved
+   * Hvad der sker uden valgte datoer. Under kalenderen: ingenting, man er ved
    * at vælge dem. I kørselsfeltet: de almindelige åbningstider, så feltet
    * aldrig står tomt om hvornår man kan hente.
    */
@@ -302,7 +303,7 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da", whenEm
             </span>
             {resolved.closed && (
               <span className="text-white/40">
-                {locale === "en" ? "— we will call you to agree on a time" : "— vi ringer og aftaler tidspunktet"}
+                {locale === "en" ? " we will call you to agree on a time" : " vi ringer og aftaler tidspunktet"}
               </span>
             )}
             {note && <span className="text-brand-400">· {note}</span>}
@@ -322,8 +323,8 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da", whenEm
  * forhånd: intet af det koster noget, så vi lægger ikke kunden et svar i munden
  * og bruger ikke et klik på det. Vælger han selv, ved vi hvornår han kommer.
  *
- * Er der intet at spørge om — en lukket dag, eller en åbningstid der er for
- * kort til to halvdele — er der ingen knapper.
+ * Er der intet at spørge om, en lukket dag, eller en åbningstid der er for
+ * kort til to halvdele, er der ingen knapper.
  */
 function TimeSlotPicker({
   hours,
@@ -404,7 +405,7 @@ function PickupInfo({ locale = "da" }: { locale?: Locale }) {
               <span className="text-white/40">{locale === "en" ? "Opening hours" : "Åbningstider"}:</span> {linje}
             </p>
           )}
-          {/* Ekstra åbninger — fx 30. december op til nytår */}
+          {/* Ekstra åbninger, fx 30. december op til nytår */}
           {særlige.length > 0 && (
             <ul className="mt-1 space-y-0.5 text-brand-300">
               {særlige.map((e) => (
@@ -441,12 +442,12 @@ function DeliveryPicker({
   options: Array<{ id: string; label: string; desc: string; price: number }>;
   value: string | null;
   onSelect: (id: string | null) => void;
-  /** Kørslen er en del af pakken — vis den som låst i stedet for som et valg */
+  /** Kørslen er en del af pakken, vis den som låst i stedet for som et valg */
   included?: boolean;
   address: string;
   onAddressChange: (v: string) => void;
   addressMissing: boolean;
-  /** Datoerne fra trin 2 — henter kunden selv, skal åbningstiderne for netop
+  /** Datoerne fra trin 2, henter kunden selv, skal åbningstiderne for netop
       de dage stå her, ikke kun ovre ved kalenderen */
   pickupDate: Date | null;
   returnDate: Date | null;
@@ -457,7 +458,7 @@ function DeliveryPicker({
 
   const { hours, pickupAddress } = useSiteSettings();
   const selfLabel = locale === "en" ? "I pick up and return it myself" : "Jeg henter og afleverer selv";
-  const selfDesc = `${pickupAddress} — ${locale === "en" ? "free" : "gratis"}`;
+  const selfDesc = `${pickupAddress}, ${locale === "en" ? "free" : "gratis"}`;
 
   const rows: Array<{ id: string | null; label: string; desc: string; price: number }> = included
     ? [{ id: value, label: s.deliveryIncludedLabel, desc: s.deliveryIncludedDesc, price: 0 }]
@@ -502,7 +503,7 @@ function DeliveryPicker({
                   {included ? s.deliveryIncluded : o.price ? `+${o.price},-` : s.deliveryFree}
                 </p>
               </button>
-              {/* Henter kunden selv, skal det stå her hvornår døren er åben —
+              {/* Henter kunden selv, skal det stå her hvornår døren er åben
                   for netop de datoer der er valgt, ikke som en generel liste */}
               {o.id === null && selected && (
                 <SelectedDayHours
@@ -563,7 +564,7 @@ interface KvitteringData {
 const KVITTERING_NØGLE = "booking_kvittering_";
 
 /**
- * Rækkefølgen tilvalgene vises i — de fem første er dem, folk faktisk tilføjer
+ * Rækkefølgen tilvalgene vises i, de fem første er dem, folk faktisk tilføjer
  * til en fest. Resten er ikke væk, men foldet sammen: en liste på otte plus
  * seks krydssalg bliver ikke læst, den bliver scrollet forbi.
  */
@@ -579,7 +580,7 @@ const ANTAL_SYNLIGE_TILVALG = 5;
 export const TIDSVALG_AKTIVT = false;
 
 /**
- * Lydmand: antallet i bookingen ER timerne. Start og slut er valgfrit — er
+ * Lydmand: antallet i bookingen ER timerne. Start og slut er valgfrit, er
  * begge sat, regnes timerne ud af dem, så kunden ikke skal gøre det selv.
  */
 const LYDMAND_ID = "lydmand";
@@ -631,7 +632,7 @@ const PRINT_CSS = `
 `;
 
 /**
- * Kvitteringen genskabt fra det, der blev gemt i browseren — det man ser, hvis
+ * Kvitteringen genskabt fra det, der blev gemt i browseren, det man ser, hvis
  * man opdaterer siden eller vender tilbage til bogmærket.
  */
 function Kvitteringsside({
@@ -641,7 +642,7 @@ function Kvitteringsside({
 }: {
   data: KvitteringData;
   locale: "da" | "en";
-  /** Oversættelserne, som resten af flowet bruger dem — dansk eller engelsk */
+  /** Oversættelserne, som resten af flowet bruger dem, dansk eller engelsk */
   s: (typeof t)["da"]["booking"] | (typeof t)["en"]["booking"];
 }) {
   const dato = new Date(data.oprettet).toLocaleString(locale === "en" ? "en-GB" : "da-DK", {
@@ -727,8 +728,8 @@ export default function BookingFlow({
   const inDrawer = variant === "drawer";
   const s = t[locale].booking;
 
-  // Åbningstider fra /admin/indstillinger: hvad kalenderen viser, og — hvis
-  // admin har slået det til — hvilke datoer der kan vælges
+  // Åbningstider fra /admin/indstillinger: hvad kalenderen viser, og, hvis
+  // admin har slået det til, hvilke datoer der kan vælges
   const { hours } = useSiteSettings();
 
   // Live catalog (admin-editable) localized for the current locale
@@ -737,7 +738,7 @@ export default function BookingFlow({
     () => catalog.speakers.map((sd) => ({ ...sd, ...sd[locale] })),
     [catalog.speakers, locale]
   );
-  // Interne varer (lydmand, faktureringsgebyr) lægges på fra admin — ikke her
+  // Interne varer (lydmand, faktureringsgebyr) lægges på fra admin, ikke her
   const addons = useMemo(
     () => catalog.addons.filter((ad) => !isInternalAddon(ad)).map((ad) => ({ ...ad, ...ad[locale] })),
     [catalog.addons, locale]
@@ -767,8 +768,8 @@ export default function BookingFlow({
   const [pickupDate, setPickupDate] = useState<Date | null>(null);
   const [returnDate, setReturnDate] = useState<Date | null>(null);
   /*
-   * Hvornår på dagen kunden vil mødes. Altid inden for åbningstiden — vi møder
-   * ikke uden for den — så valget koster ingenting og er ikke påkrævet.
+   * Hvornår på dagen kunden vil mødes. Altid inden for åbningstiden, vi møder
+   * ikke uden for den, så valget koster ingenting og er ikke påkrævet.
    */
   const [pickupSlot, setPickupSlot] = useState<TimeSlotId>("unknown");
   const [returnSlot, setReturnSlot] = useState<TimeSlotId>("unknown");
@@ -784,6 +785,20 @@ export default function BookingFlow({
     try { const parsed = priceDj({before23:Number(q.get("djBefore")),after23:Number(q.get("djAfter"))}); setDjHours({before23:parsed.before23,after23:parsed.after23}); } catch { /* Standardvalget beholdes ved ugyldig URL. */ }
   }, [urlTick]);
   const harDj = selectedAddons.includes(DJ_ID);
+  const orderHasDj = harDj || cartItems.some(c=>c.productId===DJ_ID);
+  const selectedDjGear = isDjGear(speaker) ? speaker! : cartItems.find(c=>isDjGear(c.productId))?.productId;
+  function chooseDjGear(id: string) {
+    const gear=rentalProducts.find(p=>p.id===id && isDjGear(p.id));
+    if(!gear) return;
+    if(isDjGear(speaker)){setSpeaker(id);return;}
+    setCartItems(prev=>[...prev.filter(c=>!isDjGear(c.productId)),{productId:gear.id,name:locale==='en'?gear.name_en:gear.name_da,price:isSummerSale()?applyDiscount(gear.price):gear.price}]);
+  }
+  function ensureDjGear(id?:string|null) {
+    if(selectedDjGear) return;
+    const gear=rentalProducts.find(p=>p.id===(isDjGear(id)?id:'dj_pult'));
+    if(!gear)return;
+    setCartItems(prev=>prev.some(c=>isDjGear(c.productId))?prev:[...prev,{productId:gear.id,name:locale==='en'?gear.name_en:gear.name_da,price:isSummerSale()?applyDiscount(gear.price):gear.price}]);
+  }
   const djPris = priceDj(djHours).total;
   const djNavn = djLabel(djHours, locale);
   const harLydmand = selectedAddons.includes(LYDMAND_ID);
@@ -797,7 +812,7 @@ export default function BookingFlow({
     const base = `${lydmandAddon?.label ?? "Lydmand"}, ${lydmandAntal} ${enhed}`;
     return lydmandFraTil ? `${base} (${tidsrumTekst(lydmandFra, lydmandTil, locale)})` : base;
   })();
-  /** Tilvalgets linje og pris som de vises — lydmanden ganges op med timerne */
+  /** Tilvalgets linje og pris som de vises, lydmanden ganges op med timerne */
   const addonLabel = (a: { id: string; label: string }) => (a.id === DJ_ID ? djNavn : a.id === LYDMAND_ID ? lydmandLabel : a.label);
   const addonPris = (a: { id: string; price: number }) => (a.id === DJ_ID ? djPris : a.id === LYDMAND_ID ? lydmandPris : a.price);
   const [deliveryAddress, setDeliveryAddress] = useState("");
@@ -807,7 +822,7 @@ export default function BookingFlow({
 
   /*
    * Kunden skal ikke skrive navn, mail og telefon igen, hver gang han lejer.
-   * Oplysningerne bliver i HANS egen browser — de sendes ingen steder hen, og
+   * Oplysningerne bliver i HANS egen browser, de sendes ingen steder hen, og
    * kommentaren gemmes ikke, fordi den hører til den enkelte fest.
    */
   useEffect(() => {
@@ -826,7 +841,7 @@ export default function BookingFlow({
       /* ugyldigt indhold ignoreres */
     }
   }, []);
-  // GDPR: markedsføringssamtykke skal være aktivt tilvalg — må ikke være forudkrydset
+  // GDPR: markedsføringssamtykke skal være aktivt tilvalg, må ikke være forudkrydset
   const [newsletter, setNewsletter] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [payMethod, setPayMethod] = useState<"pickup" | "online">("online");
@@ -874,18 +889,18 @@ export default function BookingFlow({
   }
   const [checkoutSecret, setCheckoutSecret] = useState<string | null>(null);
   const [done, setDone] = useState(false);
-  /** Ordrenummeret fra serveren — vises på kvitteringen, så kunden har noget at henvise til */
+  /** Ordrenummeret fra serveren, vises på kvitteringen, så kunden har noget at henvise til */
   const [ordreNr, setOrdreNr] = useState<string>("");
   /**
    * Kvitteringen som data. Gemmes i kundens egen browser og lægges i URL'en,
-   * så han kan opdatere siden, gemme et bogmærke og printe den — i stedet for
+   * så han kan opdatere siden, gemme et bogmærke og printe den, i stedet for
    * at stå på /?product=thumpgo#book, hvor et enkelt tryk på Opdater sender
    * ham tilbage i bookingflowet.
    */
   const [kvittering, setKvittering] = useState<KvitteringData | null>(null);
   const [error, setError] = useState("");
 
-  // Availability state — only checked for the selected dates (step 2).
+  // Availability state, only checked for the selected dates (step 2).
   // No overview check in step 1: a single booking somewhere in the coming
   // weeks must not mark a product as sold out before dates are chosen.
   const [availSelected, setAvailSelected] = useState<AvailabilityData | null>(null);
@@ -906,7 +921,7 @@ export default function BookingFlow({
 
   /**
    * Læg det aktuelle valg (produkt + tilvalg) i kurven i stedet for at smide
-   * det væk — bruges når kunden vælger endnu et produkt. Levering beholdes
+   * det væk, bruges når kunden vælger endnu et produkt. Levering beholdes
    * som valgt tilvalg (gælder hele ordren).
    */
   const stashSelectionToCart = useCallback(() => {
@@ -920,7 +935,7 @@ export default function BookingFlow({
         const name = sp?.name ?? (rp ? (locale === "en" ? rp.name_en : rp.name_da) : speaker);
         items.push({ productId: speaker, name, price: priceOf(sp?.price ?? rp?.price ?? 0) });
       }
-      // Valgte tilvalg følger med i kurven (undtagen levering — den gælder ordren)
+      // Valgte tilvalg følger med i kurven (undtagen levering, den gælder ordren)
       for (const a of addons) {
         if (selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id)) {
           items.push({ productId: a.id, name: addonLabel(a), price: a.id === DJ_ID ? djPris : priceOf(addonPris(a)), ...(a.id === DJ_ID ? {dj: djHours} : {}) });
@@ -937,7 +952,7 @@ export default function BookingFlow({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [speaker, selectedAddons, addons, speakers, rentalProducts, locale, lydmandLabel, lydmandPris, djHours, djNavn, djPris]);
 
-  // Preselect product from ?product=ID — re-runs on soft-nav (urlTick).
+  // Preselect product from ?product=ID, re-runs on soft-nav (urlTick).
   // Er der allerede et produkt i gang, lægges det i kurven først, så
   // "book endnu en ting" aldrig smider det første valg væk.
   useEffect(() => {
@@ -953,12 +968,16 @@ export default function BookingFlow({
       console.log("[booking] Preselect addon:", product);
       preselected.current = true;
       if (speaker === "effects-only" && selectedAddons.includes(product)) {
+        if(product===DJ_ID){const gear=new URLSearchParams(window.location.search).get("djGear");if(isDjGear(gear))chooseDjGear(gear!);else ensureDjGear();}
         setStep(2);
         return;
       }
       if (hasCurrent) stashSelectionToCart();
       if(product === DJ_ID) {
         const q=new URLSearchParams(window.location.search);
+        const requestedGear=q.get("djGear");
+        if(isDjGear(requestedGear)){const gear=rentalProducts.find(p=>p.id===requestedGear);if(gear)setCartItems(prev=>[...prev.filter(c=>!isDjGear(c.productId)),{productId:gear.id,name:locale==="en"?gear.name_en:gear.name_da,price:isSummerSale()?applyDiscount(gear.price):gear.price}]);}
+        else ensureDjGear();
         try {const v=priceDj({before23:Number(q.get("djBefore") ?? 3),after23:Number(q.get("djAfter") ?? 0)});setDjHours({before23:v.before23,after23:v.after23});} catch {setDjHours(DJ_DEFAULT);}
       }
       setSpeaker("effects-only");
@@ -986,8 +1005,8 @@ export default function BookingFlow({
   }, [speakers, rentalProducts, addons, urlTick, speaker, selectedAddons, stashSelectionToCart]);
 
   /**
-   * Kommer man tilbage til /?kvittering=NR — opdatering, bogmærke, en mail til
-   * sig selv — så skal kvitteringen stå der igen, ikke et tomt bookingflow.
+   * Kommer man tilbage til /?kvittering=NR, opdatering, bogmærke, en mail til
+   * sig selv, så skal kvitteringen stå der igen, ikke et tomt bookingflow.
    */
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -1012,7 +1031,7 @@ export default function BookingFlow({
       const to = dateKey(ret);
       const r = await fetch(`/api/availability?from=${from}&to=${to}`);
       const rå = (await r.json()) as Partial<AvailabilityData> | null;
-      // Serveren kan svare uden tallene — fx når den kører på nødsvar. Så skal
+      // Serveren kan svare uden tallene, fx når den kører på nødsvar. Så skal
       // kalenderen vise ukendt belægning, ikke kaste midt i kundens datovalg.
       const data: AvailabilityData = {
         inventory: rå?.inventory ?? {},
@@ -1033,11 +1052,11 @@ export default function BookingFlow({
       } else if (speaker) {
         const remaining = getRemaining(data, speaker);
         const blocked = isBlockedForProduct(data, speaker);
-        // Rental products may have no inventory entry yet — don't block
+        // Rental products may have no inventory entry yet, don't block
         const isKnownInventory = data.inventory[speaker] !== undefined;
         if (isKnownInventory && (remaining <= 0 || blocked)) {
           setSoldOutMsg(s.soldOutPeriod);
-          // Ikke en fejl — men en mistet booking. Tælles, så vi kan se om vi
+          // Ikke en fejl, men en mistet booking. Tælles, så vi kan se om vi
           // afviser kunder på datoer, hvor vi burde have haft mere udstyr.
           rapporterFejl("udsolgt", `${speaker} er optaget i den valgte periode`, {
             trin: 1,
@@ -1055,7 +1074,7 @@ export default function BookingFlow({
         }
       }
     } catch (e) {
-      // Bookingen blokeres ikke af et fejlet opslag — men vi skal vide det:
+      // Bookingen blokeres ikke af et fejlet opslag, men vi skal vide det:
       // kunden vælger så datoer uden at vide, om udstyret er ledigt
       rapporterFejl("ledighed_fejlede", e instanceof Error ? e.message : "ukendt", {
         trin: 1,
@@ -1073,7 +1092,7 @@ export default function BookingFlow({
 
   // Filter addons by the product's allowedAddons list (undefined = show all)
   const allowedAddonIds = selectedSpeaker?.allowedAddons ?? selectedRental?.allowedAddons;
-  // Ydelser (lydmand) kan tilvælges på alt — en whitelist handler om grej, der passer sammen
+  // Ydelser (lydmand) kan tilvælges på alt, en whitelist handler om grej, der passer sammen
   const visibleAddons = allowedAddonIds
     ? addons.filter((a) => allowedAddonIds.includes(a.id) || isServiceAddon(a))
     : addons;
@@ -1089,7 +1108,7 @@ export default function BookingFlow({
   const includedDelivery = bundleIncludesDelivery(selectedRental);
   const hasDelivery = !!includedDelivery || selectedAddons.some((id) => DELIVERY_IDS.includes(id));
   const deliveryChoice = includedDelivery ?? selectedAddons.find((id) => DELIVERY_IDS.includes(id)) ?? null;
-  // Kørsel uden adresse er ubrugelig — så ved vi ikke hvor vi skal hen
+  // Kørsel uden adresse er ubrugelig, så ved vi ikke hvor vi skal hen
   const deliveryAddressMissing = hasDelivery && deliveryAddress.trim().length < 5;
 
   // Bookes ét enkelt tilvalg uden højtaler (fx subwoofer eller røgmaskine),
@@ -1104,7 +1123,7 @@ export default function BookingFlow({
         : "/images/product-rog-v2-white.webp";
 
   /*
-   * Skifter datoen, skal tidsrummet passe til den nye dag — en fredag har
+   * Skifter datoen, skal tidsrummet passe til den nye dag, en fredag har
    * åbningstid, en lørdag har ikke. Findes det valgte tidsrum ikke på den nye
    * dato, falder vi tilbage på det gratis valg.
    */
@@ -1124,7 +1143,7 @@ export default function BookingFlow({
     setReturnSlot((prev) => (slots.some((sl) => sl.id === prev) ? prev : defaultTimeSlot()));
   }, [returnDate, hours]);
 
-  // Kører vi selv ud med anlægget, er der ikke noget møde at lægge tid på —
+  // Kører vi selv ud med anlægget, er der ikke noget møde at lægge tid på
   // så aftaler vi tidspunktet i telefonen i stedet
   const kørselsveje = deliveryDirections(deliveryChoice ?? "");
 
@@ -1144,14 +1163,14 @@ export default function BookingFlow({
   const addonsPrice = summer ? applyDiscount(addonsBasePrice - (harDj ? djPris : 0)) + (harDj ? djPris : 0) : addonsBasePrice;
   const cartTotal = cartItems.reduce((sum, item) => sum + item.price, 0);
   const subtotal = speakerPrice + addonsPrice + cartTotal;
-  // Rabatkode: procenten kommer fra /api/discount og er kun til visning —
+  // Rabatkode: procenten kommer fra /api/discount og er kun til visning
   // ved onlinebetaling genberegner serveren alt og lægger Stripe-kuponen på.
   const total = coupon ? Math.round(subtotal * (1 - coupon.pct / 100)) : subtotal;
   const totalBeforeDiscount = summer ? speakerBasePrice + addonsBasePrice + cartTotal : subtotal;
 
   /*
-   * Flere enheder af samme produkt: hver enhed er sin egen kurvlinje — payload,
-   * serverens lagertælling og Stripe regner pr. linje — men kurven VISES som én
+   * Flere enheder af samme produkt: hver enhed er sin egen kurvlinje, payload,
+   * serverens lagertælling og Stripe regner pr. linje, men kurven VISES som én
    * linje pr. produkt med − antal +. Hovedproduktets ekstra enheder ligger også
    * som kurvlinjer.
    */
@@ -1160,7 +1179,7 @@ export default function BookingFlow({
     (selectedAddons.includes(id) && !DELIVERY_IDS.includes(id) ? 1 : 0) +
     cartItems.filter((c) => c.productId === id).length;
 
-  /** Ledige enheder i den valgte periode — uden lagertal er der intet loft */
+  /** Ledige enheder i den valgte periode, uden lagertal er der intet loft */
   const ledigeAf = (id: string) =>
     availSelected && availSelected.inventory[id] !== undefined
       ? getRemaining(availSelected, id)
@@ -1195,10 +1214,10 @@ export default function BookingFlow({
   const qtyShortageMsg = qtyShortage
     ? locale === "en"
       ? qtyShortage.rest > 0
-        ? `Only ${qtyShortage.rest} × ${qtyShortage.navn} available in the selected period — adjust the quantity`
+        ? `Only ${qtyShortage.rest} × ${qtyShortage.navn} available in the selected period, adjust the quantity`
         : `${qtyShortage.navn} is booked out in the selected period`
       : qtyShortage.rest > 0
-        ? `Der er kun ${qtyShortage.rest} stk. ${qtyShortage.navn} ledig${qtyShortage.rest === 1 ? "" : "e"} i den valgte periode — sæt antallet ned`
+        ? `Der er kun ${qtyShortage.rest} stk. ${qtyShortage.navn} ledig${qtyShortage.rest === 1 ? "" : "e"} i den valgte periode, sæt antallet ned`
         : `${qtyShortage.navn} er optaget i den valgte periode`
     : "";
 
@@ -1208,7 +1227,7 @@ export default function BookingFlow({
     onSummaryChange?.({ count: cartCount, total });
   }, [cartCount, total, onSummaryChange]);
 
-  // GA4 form_start — booking step 4 (kontaktoplysninger), ikke kontakt/nyhedsbrev
+  // GA4 form_start, booking step 4 (kontaktoplysninger), ikke kontakt/nyhedsbrev
   useEffect(() => {
     if (step === 4 && !checkoutSecret && !done) {
       trackBookingFormStart({ value: total, itemCount: cartCount });
@@ -1251,13 +1270,14 @@ export default function BookingFlow({
   }
 
   // Er kørslen med i pakken, må et tidligere valgt kørsels-tilvalg ikke blive
-  // hængende fra et andet produkt — det ville lægge 495-795 kr oveni.
+  // hængende fra et andet produkt, det ville lægge 495-795 kr oveni.
   useEffect(() => {
     if (!includedDelivery) return;
     setSelectedAddons((prev) => (prev.some((id) => DELIVERY_IDS.includes(id)) ? prev.filter((id) => !DELIVERY_IDS.includes(id)) : prev));
   }, [includedDelivery, DELIVERY_IDS]);
 
   function toggleAddon(id: string) {
+    if(id===DJ_ID && !selectedAddons.includes(id)) ensureDjGear();
     setSelectedAddons((prev) => {
       if (prev.includes(id)) return prev.filter((a) => a !== id);
       // De to leveringsvarianter udelukker hinanden
@@ -1272,6 +1292,7 @@ export default function BookingFlow({
   }
 
   function nextStep() {
+    if(step===3 && orderHasDj && !selectedDjGear)return;
     setStep((st) => Math.min(st + 1, 4));
   }
 
@@ -1279,7 +1300,7 @@ export default function BookingFlow({
     setStep((st) => Math.max(st - 1, 1));
   }
 
-  /** Læg endnu en enhed af et produkt i kurven — "4 stk. af samme højtaler" */
+  /** Læg endnu en enhed af et produkt i kurven, "4 stk. af samme højtaler" */
   function lægEnhedTil(productId: string) {
     const priceOf = (base: number) => (isSummerSale() ? applyDiscount(base) : base);
     const sp = speakers.find((x) => x.id === productId);
@@ -1291,7 +1312,7 @@ export default function BookingFlow({
     setCartItems((prev) => [...prev, { productId, name: navn, price: priceOf(pris) }]);
   }
 
-  /** Fjern én enhed igen — den senest tilføjede kurvlinje med det id */
+  /** Fjern én enhed igen, den senest tilføjede kurvlinje med det id */
   function fjernEnhed(productId: string) {
     setCartItems((prev) => {
       const idx = prev.map((c) => c.productId).lastIndexOf(productId);
@@ -1303,20 +1324,21 @@ export default function BookingFlow({
    * Fjern det produkt, man er i gang med.
    *
    * Kurven viste kun de EKSTRA varer, så havde man ét produkt, var der intet
-   * kryds — og ingen vej ud af et forkert valg uden at genindlæse siden.
+   * kryds, og ingen vej ud af et forkert valg uden at genindlæse siden.
    * Er kurven tom bagefter, ryger man tilbage til produktvalget; ellers
    * fortsætter man med resten af kurven.
    */
   function fjernHovedprodukt() {
     setSpeaker(null);
-    // Tilvalg hører til produktet — kørsel gælder hele ordren og bliver
+    // Tilvalg hører til produktet, kørsel gælder hele ordren og bliver
     setSelectedAddons((prev) => prev.filter((id) => (DELIVERY_ADDON_IDS as readonly string[]).includes(id)));
     if (cartItems.length === 0) setStep(1);
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    // Har kunden valgt kørsel, skal vi vide hvorhen — ellers bliver leveringen
+    try {requireDjGear([...(speaker?[speaker]:[]),...selectedAddons,...cartItems.map(c=>c.productId)]);} catch {setError(locale==="en"?"Choose DJ equipment before booking.":"Vælg gear til DJ’en før booking.");setStep(3);return;}
+    // Har kunden valgt kørsel, skal vi vide hvorhen, ellers bliver leveringen
     // aldrig sat på ordren
     if (deliveryAddressMissing) {
       setShowDeliveryError(true);
@@ -1324,7 +1346,7 @@ export default function BookingFlow({
       return;
     }
     // Kræver ordren flere enheder end der er ledige, skal antallet rettes i
-    // kurven — ikke sendes som en ordre vi ikke kan levere
+    // kurven, ikke sendes som en ordre vi ikke kan levere
     if (qtyShortageMsg) {
       setStep(3);
       return;
@@ -1343,7 +1365,7 @@ export default function BookingFlow({
               : "Kun effekter"
             : selectedSpeaker?.name ?? rentalName,
           speakerId: isEffectsOnly ? "effects-only" : speaker,
-          speakerSize: isEffectsOnly || isRentalOnly ? "—" : selectedSpeaker?.size,
+          speakerSize: isEffectsOnly || isRentalOnly ? "" : selectedSpeaker?.size,
           period: periodLabel,
           pickup: pickupDate?.toISOString(),
           returnDate: returnDate?.toISOString(),
@@ -1351,7 +1373,7 @@ export default function BookingFlow({
           // .slice(0,10) på det ville ramme dagen før i dansk sommertid
           pickupDay: pickupDate ? dateKey(pickupDate) : undefined,
           returnDay: returnDate ? dateKey(returnDate) : undefined,
-          // Hvornår kunden vil mødes — serveren slår gebyret op selv
+          // Hvornår kunden vil mødes, serveren slår gebyret op selv
           pickupSlot,
           returnSlot,
           days: rentalDays,
@@ -1361,7 +1383,7 @@ export default function BookingFlow({
           addonIds: addons
             .filter((a) => selectedAddons.includes(a.id) && a.id !== LYDMAND_ID && a.id !== DJ_ID)
             .map((a) => a.id),
-          // Lydmanden er én linje med timerne i navnet og hele beløbet — så
+          // Lydmanden er én linje med timerne i navnet og hele beløbet, så
           // står "Lydmand, 4 timer (kl. 18–22)" i mail, admin og på lejesedlen
           cartItems: [
             ...cartItems.map((item) => ({ name: item.name, price: item.price, productId: item.productId, ...(item.dj ? {dj:item.dj} : {}) })),
@@ -1392,13 +1414,13 @@ export default function BookingFlow({
           svar: svar.slice(0, 300),
         });
         // Afviser serveren datoen (fx fordi vi har lukket for nye lejeperioder
-        // frem til en dato), skal kunden læse HVORFOR — ikke "booking fejlede"
+        // frem til en dato), skal kunden læse HVORFOR, ikke "booking fejlede"
         if (res.status === 400) {
           let besked = "";
           try {
             besked = String((JSON.parse(svar) as { error?: unknown })?.error ?? "").trim();
           } catch {
-            // ikke JSON — så falder vi tilbage på den generelle besked
+            // ikke JSON, så falder vi tilbage på den generelle besked
           }
           if (besked) throw new Error(besked);
         }
@@ -1440,7 +1462,7 @@ export default function BookingFlow({
         }
       }
       try {
-        // Først når bookingen er gået igennem — en halv udfyldt formular skal
+        // Først når bookingen er gået igennem, en halv udfyldt formular skal
         // ikke kunne lægge sig til rette i browseren
         localStorage.setItem(
           "booking_kontakt",
@@ -1459,7 +1481,7 @@ export default function BookingFlow({
       }
       // Konvertering: ved afhentningsbetaling er bookingen gennemført her.
       // Ved online betaling sporer vi først på kvitteringssiden, når Stripe
-      // har bekræftet betalingen — ellers tælles afbrudte betalinger med.
+      // har bekræftet betalingen, ellers tælles afbrudte betalinger med.
       const purchaseItems = [
         ...(selectedSpeaker ? [{ id: selectedSpeaker.id, name: selectedSpeaker.name, price: speakerPrice }] : []),
         ...(selectedRental ? [{ id: selectedRental.id, name: rentalName ?? selectedRental.id, price: speakerPrice }] : []),
@@ -1476,7 +1498,7 @@ export default function BookingFlow({
       }
       if (payMethod === "online") {
         // Online-betaling: opret Checkout Session (beløb beregnes server-side)
-        // Stripe regner pr. id — lydmanden sendes én gang pr. time
+        // Stripe regner pr. id, lydmanden sendes én gang pr. time
         const itemIds: string[] = [
           ...(!isEffectsOnly && speaker ? [speaker] : []),
           ...selectedAddons.filter((id) => id !== LYDMAND_ID && id !== DJ_ID),
@@ -1584,7 +1606,7 @@ export default function BookingFlow({
               <span>{addonLabel(a)}</span>
               <span>
                 {summer && <span className="line-through text-white/30 mr-2">{addonPris(a)} kr</span>}
-                {summer ? applyDiscount(addonPris(a)) : addonPris(a)} kr
+                {summer && a.id !== DJ_ID ? applyDiscount(addonPris(a)) : addonPris(a)} kr
               </span>
             </div>
           ))}
@@ -1609,7 +1631,7 @@ export default function BookingFlow({
   /*
    * Er siden hentet forfra på /?kvittering=NR, findes der ingen levende
    * tilstand at bygge den rige visning af. Så viser vi kvitteringen fra det,
-   * der blev gemt — samme oplysninger, og den der kan printes.
+   * der blev gemt, samme oplysninger, og den der kan printes.
    */
   if (done && kvittering && !speaker) {
     return <Kvitteringsside data={kvittering} locale={locale} s={s} />;
@@ -1694,7 +1716,7 @@ export default function BookingFlow({
               <img loading="lazy" decoding="async" src={isEffectsOnly ? effectsImage : selectedRental?.image ?? selectedSpeaker?.product} srcSet={thumbSrcSet(isEffectsOnly ? effectsImage : selectedRental?.image ?? selectedSpeaker?.product)} sizes={THUMB_IMAGE_SIZES} alt={isEffectsOnly ? effectsLabel : rentalName ?? `${selectedSpeaker?.name ?? "Højtalerpakke"}`} className="h-16 w-16 object-contain rounded-lg" />
               <div>
                 <p className="font-semibold">{isEffectsOnly ? effectsLabel : isRentalOnly ? rentalName : `${selectedSpeaker?.name}${s.speakerSuffix}`}</p>
-                <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id)).map((a) => a.label).join(" + ") : isRentalOnly ? "" : `${selectedSpeaker?.size} — ${selectedSpeaker?.capacity}`}</p>
+                <p className="text-sm text-white/40">{isEffectsOnly ? addons.filter((a) => selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id)).map((a) => a.label).join(" + ") : isRentalOnly ? "" : `${selectedSpeaker?.size}, ${selectedSpeaker?.capacity}`}</p>
               </div>
             </div>
 
@@ -1904,7 +1926,7 @@ export default function BookingFlow({
               <p className="text-center text-xs text-white/30">{s.effectsOnlyDesc}</p>
             </div>
 
-            {/* Andet udstyr (lys, AV m.m.) — så alle produkter kan vælges direkte */}
+            {/* Andet udstyr (lys, AV m.m.), så alle produkter kan vælges direkte */}
             {rentalProducts.length > 0 && (
               <div className="space-y-2 pt-2">
                 <p className="text-center text-sm text-white/40">{s.otherEquipmentTitle}</p>
@@ -1961,7 +1983,7 @@ export default function BookingFlow({
               </div>
             )}
 
-            {/* Produktinfo: beskrivelse + indhold — især vigtigt for pakker */}
+            {/* Produktinfo: beskrivelse + indhold, især vigtigt for pakker */}
             {(selectedRental || selectedSpeaker) && (
               <div className="glass rounded-2xl p-4">
                 <div className="flex items-start gap-4">
@@ -2073,7 +2095,7 @@ export default function BookingFlow({
                 ))}
               {pickupDate && returnDate && !isEffectsOnly && (
                 <div className="flex justify-between mt-3 pt-3 border-t border-white/10">
-                  <span className="text-white/50">{s.price} — {locale === "en" ? "whole rental" : "hele lejeperioden"} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
+                  <span className="text-white/50">{s.price}, {locale === "en" ? "whole rental" : "hele lejeperioden"} ({rentalDays} {rentalDays === 1 ? s.day : s.days})</span>
                   <span className="text-brand-400 font-bold">{speakerPrice} kr</span>
                 </div>
               )}
@@ -2127,7 +2149,9 @@ export default function BookingFlow({
               returnDate={returnDate}
             />
 
-            {/* Tilvalgene. Kun de fem mest relevante vises — resten kan foldes
+            {orderHasDj && <DjGearPicker locale={locale} value={selectedDjGear ?? ""} onChange={chooseDjGear}/>}
+            {orderHasDj && !selectedDjGear && <p role="alert" className="text-sm text-red-600">{locale==="en"?"Choose equipment for the DJ before continuing.":"Vælg gear til DJ’en før du fortsætter."}</p>}
+            {/* Tilvalgene. Kun de fem mest relevante vises, resten kan foldes
                 ud. Før stod otte tilvalg og seks krydssalg åbne på én gang, og
                 så holder man op med at læse. Kørsel står ovenfor, fordi det er
                 det spørgsmål kunden faktisk skal tage stilling til. */}
@@ -2181,7 +2205,7 @@ export default function BookingFlow({
                         </p>
                       </button>
                       {a.id === DJ_ID && selected && <DjHoursPicker value={djHours} onChange={setDjHours} locale={locale}/>}
-                      {/* Lydmanden: timerne er antallet, og start/slut er en hjælp — ikke et krav */}
+                      {/* Lydmanden: timerne er antallet, og start/slut er en hjælp, ikke et krav */}
                       {a.id === LYDMAND_ID && selected && (
                         <div className="mt-2 rounded-xl border border-brand-500/30 bg-brand-500/5 p-3">
                           <div className="flex items-center justify-between gap-3">
@@ -2230,7 +2254,7 @@ export default function BookingFlow({
                   );
                 })}
 
-              {/* Resten er ét tryk væk — ikke skjult, bare ikke i vejen */}
+              {/* Resten er ét tryk væk, ikke skjult, bare ikke i vejen */}
               {(() => {
                 const antalSkjulte =
                   visibleAddons.filter((a) => !DELIVERY_IDS.includes(a.id)).length - ANTAL_SYNLIGE_TILVALG;
@@ -2247,7 +2271,7 @@ export default function BookingFlow({
               })()}
             </div>
 
-            {/* Søgningen finder resten af sortimentet — den hører hjemme
+            {/* Søgningen finder resten af sortimentet, den hører hjemme
                 efter de relevante tilvalg, ikke før dem */}
             <div className="relative">
               <svg className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -2262,7 +2286,7 @@ export default function BookingFlow({
               />
             </div>
 
-            {/* Resten af sortimentet — vises ALTID, ikke kun når man søger.
+            {/* Resten af sortimentet, vises ALTID, ikke kun når man søger.
                 Tidligere skulle man gætte sig til at skrive i søgefeltet for at
                 finde fx uplights, så kunder bookede kun ét produkt. */}
             {(() => {
@@ -2286,7 +2310,7 @@ export default function BookingFlow({
 
               const matches = q
                 ? pool.filter((p) => p.name.toLowerCase().includes(q))
-                : // Uden søgning: samme kategori først — det er dér krydssalget ligger
+                : // Uden søgning: samme kategori først, det er dér krydssalget ligger
                   [...pool].sort((a, b) => {
                     const rank = (x: typeof a) => (x.category === currentCategory ? 0 : 1);
                     return rank(a) - rank(b);
@@ -2325,11 +2349,11 @@ export default function BookingFlow({
               );
             })()}
 
-            {/* Kurven — hovedproduktet står øverst og kan fjernes som resten */}
+            {/* Kurven, hovedproduktet står øverst og kan fjernes som resten */}
             {(cartItems.length > 0 || !!speaker) && (
               <div className="glass rounded-xl p-4">
                 <p className="text-xs text-white/40 mb-2">{locale === "en" ? "In your cart:" : "I din kurv:"}</p>
-                {/* Hovedproduktet — ekstra enheder af samme produkt er kurvlinjer og vises her som ét antal */}
+                {/* Hovedproduktet, ekstra enheder af samme produkt er kurvlinjer og vises her som ét antal */}
                 {!!speaker && (() => {
                   const ekstra = cartItems.filter((c) => c.productId === speaker);
                   const antal = 1 + ekstra.length;
@@ -2364,7 +2388,7 @@ export default function BookingFlow({
                     </div>
                   );
                 })()}
-                {/* Resten af kurven — én linje pr. produkt med antal */}
+                {/* Resten af kurven, én linje pr. produkt med antal */}
                 {(() => {
                   const grupper = new Map<string, { navn: string; antal: number; pris: number }>();
                   for (const c of cartItems) {
@@ -2448,7 +2472,7 @@ export default function BookingFlow({
           <div className="space-y-4">
             <h2 className="text-center text-2xl font-bold">{locale === "en" ? "Payment" : "Betaling"}</h2>
             <p className="text-center text-sm text-white/50">
-              {locale === "en" ? "Pay securely with card — powered by Stripe" : "Betal sikkert med kort — sikret af Stripe"}
+              {locale === "en" ? "Pay securely with card, powered by Stripe" : "Betal sikkert med kort, sikret af Stripe"}
             </p>
             <div id="stripe-checkout" className="overflow-hidden rounded-2xl bg-white" />
             <button
@@ -2625,7 +2649,7 @@ export default function BookingFlow({
                     <span>{addonLabel(a)}</span>
                     <span>
                       {summer && <span className="line-through text-white/30 mr-2">{addonPris(a)} kr</span>}
-                      {summer ? applyDiscount(addonPris(a)) : addonPris(a)} kr
+                      {summer && a.id !== DJ_ID ? applyDiscount(addonPris(a)) : addonPris(a)} kr
                     </span>
                   </div>
                 ))}
@@ -2653,7 +2677,7 @@ export default function BookingFlow({
                 ) : !visRabat ? (
                   /*
                    * Et åbent rabatfelt sender folk ud at lede efter en kode, de
-                   * ikke har — og nogle vender ikke tilbage. Derfor en lille
+                   * ikke har, og nogle vender ikke tilbage. Derfor en lille
                    * linje, der kun betyder noget for dem, der HAR en kode.
                    */
                   <button

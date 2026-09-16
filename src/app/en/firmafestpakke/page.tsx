@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Company Party Package | Microphone, sub, lights and fog | 2,645 DKK | Lejhøjtaler.dk",
   description:
-    "Company party package: 2× EV 12\" speakers on stands, wireless microphone, 12\" subwoofer, light package and fog machine for 2,645 DKK — save 130 DKK. For Christmas parties and company events in Copenhagen.",
+    "Company party package: 2× EV 12\" speakers on stands, wireless microphone, 12\" subwoofer, light package and fog machine for 2,645 DKK, save 130 DKK. For Christmas parties and company events in Copenhagen.",
   keywords: ["company party sound system rental copenhagen", "christmas party sound hire", "corporate event speakers rental", "microphone for speeches rental copenhagen"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/firmafestpakke",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Company party package | Microphone, sub, lights and fog | 2,645 DKK",
-    description: "Speakers on stands, wireless microphone, subwoofer, lights and fog. For Christmas parties and company events — save 130 DKK.",
+    description: "Speakers on stands, wireless microphone, subwoofer, lights and fog. For Christmas parties and company events, save 130 DKK.",
     url: "https://lejhojtaler.dk/en/firmafestpakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,8 +29,8 @@ export default function Page() {
       slug="en/firmafestpakke"
       name="Company party package"
       price={2645}
-      headline="The company party package — the speech first, the dancefloor after"
-      sub="Speakers on stands, wireless microphone, subwoofer, lights and fog. For Christmas parties and company events — save 130 DKK."
+      headline="The company party package, the speech first, the dancefloor after"
+      sub="Speakers on stands, wireless microphone, subwoofer, lights and fog. For Christmas parties and company events, save 130 DKK."
       image="/images/product-pakke-fest-stor-white.webp"
       imageAlt="Company party package with speakers, subwoofer, lights and fog machine"
       productId="pakke_firmafest"
@@ -39,7 +39,7 @@ export default function Page() {
       bullets={[
         "2× EV 12\" speakers on stands",
         "Wireless microphone for the welcome and the thank-you speech",
-        "12\" subwoofer — the bass that gets people up from the tables",
+        "12\" subwoofer, the bass that gets people up from the tables",
         "Light package and fog machine, so the room is more than just lit",
         "All cables and Bluetooth included",
         "Save 130 DKK compared to renting the parts separately",

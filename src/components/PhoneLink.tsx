@@ -5,7 +5,7 @@ import { useSiteSettings } from "@/lib/useSiteSettings";
 import type { Locale } from "@/lib/i18n";
 import { DEFAULT_PICKUP_ADDRESS } from "@/lib/pickup";
 
-/** Klikbart telefonnummer — følger admin /indstillinger. */
+/** Klikbart telefonnummer, følger admin /indstillinger. */
 export default function PhoneLink({
   className,
   prefix,
@@ -54,8 +54,8 @@ export function LocationKicker({ extra, locale = "da" }: { extra: string; locale
 }
 
 /**
- * Erstatter de to oplysninger der står som tekst i brødteksten — telefonnummer
- * og afhentningsadresse — med det Frederik har sat i /admin/indstillinger.
+ * Erstatter de to oplysninger der står som tekst i brødteksten, telefonnummer
+ * og afhentningsadresse, med det Frederik har sat i /admin/indstillinger.
  *
  * Teksten skal blive ved med at indeholde de RIGTIGE værdier som standard, ikke
  * en pladsholder: den statiske HTML er det crawlere og svarmaskiner læser, og de

@@ -87,7 +87,7 @@ export default function LejHojtalerPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Batterihøjtalere og PA-pakker <LiveStartPrice /> — book online, betal først ved afhentning.
+            Batterihøjtalere og PA-pakker <LiveStartPrice />, book online, betal først ved afhentning.
           </p>
           <a
             href="/#book"
@@ -102,7 +102,7 @@ export default function LejHojtalerPage() {
         <BundleGrid
           ids={FEST_LADDER_IDS}
           title="Vælg anlæg efter antal gæster"
-          subtitle="Sig hvor mange der kommer, så er pakken sat sammen på forhånd — højtalere, bas, stativer, lys og kabler i ét."
+          subtitle="Sig hvor mange der kommer, så er pakken sat sammen på forhånd, højtalere, bas, stativer, lys og kabler i ét."
         />
         <BundleGrid
           ids={LYD_LEJLIGHEDSPAKKER}
@@ -133,7 +133,7 @@ export default function LejHojtalerPage() {
               </div>
               <h3 className="font-semibold text-white">Betal ved afhentning</h3>
               <p className="mt-2 text-sm text-white/50">
-                Du betaler kun lejen. Ingen skjulte gebyrer — betal først ved afhentning.
+                Du betaler kun lejen. Ingen skjulte gebyrer, betal først ved afhentning.
               </p>
             </div>
             <div className="glass rounded-2xl p-6 text-center">

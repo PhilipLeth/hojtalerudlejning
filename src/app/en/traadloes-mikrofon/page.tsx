@@ -6,7 +6,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Wireless Microphone Rental Copenhagen | 295 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a wireless handheld microphone in Copenhagen for 295 DKK per weekend. Receiver, batteries and cable included — plugs straight into our speakers. Pay on pickup.",
+    "Rent a wireless handheld microphone in Copenhagen for 295 DKK per weekend. Receiver, batteries and cable included, plugs straight into our speakers. Pay on pickup.",
   keywords: [
     "wireless microphone rental copenhagen",
     "microphone rental copenhagen",
@@ -48,14 +48,14 @@ export default function Page() {
         "Receiver included",
         "Batteries included",
         "Cable to speaker or mixer included",
-        "Pay on pickup — you only pay the rental",
+        "Pay on pickup, you only pay the rental",
         "Collect Friday, return Monday",
       ]}
     >
       <UpsellBox
         locale="en"
         title="Add a headset and speakers"
-        text="A headset keeps the speaker's hands free while a wireless mic goes round the room for questions. The speaker has to come too — a microphone amplifies nothing on its own."
+        text="A headset keeps the speaker's hands free while a wireless mic goes round the room for questions. The speaker has to come too, a microphone amplifies nothing on its own."
         links={[
           { href: "/en/headset-mikrofon", label: "See the headset", priceId: "headset" },
           { href: "/en", label: "See speakers", startpris: true },
