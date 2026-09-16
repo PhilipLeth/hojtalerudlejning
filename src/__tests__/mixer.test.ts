@@ -1,19 +1,4 @@
-/**
- * Mixerne — og hvad der sker med et produkt uden foto.
- *
- * De kom i kataloget som prisliste-punkter uden andet indhold. Frederik
- * fortalte hvad de faktisk er: den store er en Yamaha med effekter, den lille
- * en simpel 4-kanals. Fotos mangler stadig.
- *
- * Fotoene er siden genereret efter husstilen. Første forsøg brugte
- * røgmaskinen som stilreference, og den styrede formen så meget, at den lille
- * mixer kom ud som en røgmaskine med knapper — med "VF1300 EP" trykt på siden.
- *
- * Fallbacken bag det hele står stadig: CategoryProductGrid faldt tilbage på
- * lys-pakkens billede for produkter uden foto, så en mixer blev vist som en
- * lyseffekt. Et forkert billede er værre end intet, og den regel gælder alt
- * fremtidigt uden foto — ikke kun mixerne.
- */
+/** Korrekte modelbilleder og tydelig forskel på lagerført mixer og forespørgsler. */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -22,28 +7,18 @@ import { addons } from "@/lib/products";
 const mixere = addons.filter((a) => a.id.startsWith("mixer_"));
 
 describe("Mixerne", () => {
-  it("findes i begge størrelser til 295 og 395 kr", () => {
-    expect(mixere.map((m) => m.id).sort()).toEqual(["mixer_lille", "mixer_stor"]);
-    expect(addons.find((a) => a.id === "mixer_lille")!.price).toBe(295);
-    expect(addons.find((a) => a.id === "mixer_stor")!.price).toBe(395);
+  it("har tre klasser, men kun den bekræftede model kan bookes direkte", () => {
+    expect(mixere.map((m) => m.price)).toEqual([295, 395, 495]);
+    expect(mixere.filter((m) => !m.hidden).map((m) => m.id)).toEqual(["mixer_stor"]);
+    expect(mixere.find((m) => m.id === "mixer_stor")!.contents).toContain("the t.mix xmix 1202 FX USB");
   });
-
-  it("beskriver hvad de er — ikke bare at de er mixere", () => {
-    const lille = addons.find((a) => a.id === "mixer_lille")!;
-    const stor = addons.find((a) => a.id === "mixer_stor")!;
-    expect(lille.da.desc).toMatch(/4-kanals/);
-    expect(stor.da.desc).toMatch(/Yamaha/);
-    // Effekterne er grunden til at vælge den store — de skal stå der
-    expect(stor.da.desc).toMatch(/effekt/i);
-    for (const m of mixere) expect(m.contents?.length).toBeGreaterThan(0);
-  });
-
-  it("har en side at pege på", () => {
-    for (const m of mixere) expect(m.page).toBe("/mixer");
-  });
-
-  it("viser neutral flade indtil de faktiske modeller er bekræftet", () => {
-    for (const m of mixere) expect(m.image).toBeNull();
+  it("bruger et eksisterende, forskelligt produktfoto til hver model", () => {
+    for (const m of mixere) {
+      expect(m.page).toBe("/mixer");
+      expect(m.image).toMatch(/^\/images\/product-mixer-.*\.jpg$/);
+      expect(readFileSync(join(process.cwd(), "public", m.image!)).length).toBeGreaterThan(1000);
+    }
+    expect(new Set(mixere.map((m) => m.image)).size).toBe(3);
   });
 });
 

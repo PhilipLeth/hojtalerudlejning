@@ -151,7 +151,7 @@ export default function Page() {
           <div className="mb-2 flex flex-wrap items-baseline justify-center gap-3">
             <h2 className="text-center text-3xl font-bold">More than one microphone at a time?</h2>
             <a href={localizedHref("/mixer", "en")} className="text-sm text-brand-400 hover:underline">
-              Small or large mixer? →
+              Compare three mixer sizes →
             </a>
           </div>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
@@ -161,8 +161,8 @@ export default function Page() {
           <CategoryProductGrid
             locale="en"
             items={[
-              { id: "mixer_stor", tag: "With effects" },
-              { id: "mixer_lille" },
+              { id: "mixer_stor", tag: "6 microphone inputs" },
+
             ]}
           />
         </section>

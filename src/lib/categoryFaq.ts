@@ -55,8 +55,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje en mixer i København?",
       a:
-        "Den lille 4-kanals minimixer koster 295 kr for hele lejeperioden. Den store Yamaha-mixer med " +
-        "indbyggede effekter koster 395 kr. Begge priser gælder 1 til 5 dage — der er ingen dagstillæg.",
+        "Mackie Mix12FX tilbydes på forespørgsel fra 295 kr. Vores t.mix 1202 FX USB med " +
+        "6 mikrofonindgange koster 395 kr. t.mix 1402 FXMP USB med 8 mikrofonindgange tilbydes på forespørgsel fra 495 kr. Priserne gælder 1–5 dage.",
     },
     {
       q: "Hvornår har jeg brug for en mixer?",
@@ -68,9 +68,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er forskellen på den lille og den store?",
       a:
-        "Vælg efter antallet af mikrofoner og musikkilder, der skal bruges samtidig. Den lille samler to " +
-        "mikrofoner og musik. Den store er til flere kilder, panel, band og kor og har indbyggede effekter. " +
-        "Oplys dine kilder ved booking; et oplyst kanalantal er ikke nødvendigvis antallet af mikrofonindgange.",
+        "Lille: Mackie Mix12FX med 4 mikrofonindgange. Mellem: t.mix 1202 FX USB med 6. Stor: t.mix 1402 FXMP USB med 8. " +
+        "Stereoindgange tælles særskilt. Mellemklassen kan bookes direkte; lille og stor aftales på forespørgsel.",
     },
     {
       q: "Følger kablerne med?",
@@ -561,8 +560,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How much does it cost to rent a mixer in Copenhagen?",
       a:
-        "The small 4-channel mini mixer is 295 kr for the whole rental period. The large Yamaha mixer with built-in " +
-        "effects is 395 kr. Both prices cover 1 to 5 days — there is no daily surcharge.",
+        "Mackie Mix12FX is available on request from 295 DKK. Our t.mix 1202 FX USB with " +
+        "6 microphone inputs is 395 DKK. The t.mix 1402 FXMP USB with 8 microphone inputs is on request from 495 DKK. Prices cover 1–5 days.",
     },
     {
       q: "When do I actually need a mixer?",
@@ -574,9 +573,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "What is the difference between the small and the large one?",
       a:
-        "Choose by the number of microphones and music sources you need at the same time. The small mixer " +
-        "combines two microphones and music. The large mixer handles more sources for panels, bands and choirs " +
-        "and includes effects. Tell us your sources when booking; channel counts do not necessarily mean microphone inputs.",
+        "Small: Mackie Mix12FX with 4 microphone inputs. Medium: t.mix 1202 FX USB with 6. Large: t.mix 1402 FXMP USB with 8. " +
+        "Stereo inputs are separate. Book the medium mixer online; small and large models are on request.",
     },
     {
       q: "Are the cables included?",

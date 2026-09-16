@@ -246,15 +246,15 @@ describe("Addons data", () => {
   });
 
   it("visible equipment addons have an image", () => {
-    // Mixerfotos afventer bekræftede modeller; opdigtede fotos er fjernet.
-    const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge", "mixer_lille", "mixer_stor"];
+    // Kun ydelser behøver ikke et produktfoto.
+    const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge"];
     for (const a of addons) {
       if (a.hidden) continue; // skjulte kladder kan afvente model og foto
       if (a.ydelse) continue; // en ydelse må have et foto (lydmand har), men skal ikke
       if (udenFoto.includes(a.id) || a.intern) {
         expect(a.image).toBeNull();
       } else {
-        expect(a.image).toMatch(/^\/images\/product-.+\.(webp|svg)$/);
+        expect(a.image).toMatch(/^\/images\/product-.+\.(webp|svg|jpg)$/);
       }
     }
   });

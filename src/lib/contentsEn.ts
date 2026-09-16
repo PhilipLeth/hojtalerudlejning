@@ -26,6 +26,9 @@ import type { Locale } from "@/lib/i18n";
  * listen dansk igen.
  */
 export const CONTENTS_EN: Record<string, string> = {
+  "Mackie Mix12FX": "Mackie Mix12FX",
+  "the t.mix xmix 1202 FX USB": "the t.mix xmix 1202 FX USB",
+  "the t.mix xmix 1402 FXMP USB": "the t.mix xmix 1402 FXMP USB",
   "1 LED-lyseffekt uden stativ": "1 LED light effect without stand",
   "Røgmaskine inkl. væske": "Fog machine with fluid",
   "Lys-pakke på stativ": "Light package on stand",

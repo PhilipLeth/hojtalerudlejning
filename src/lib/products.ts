@@ -1,3 +1,4 @@
+import { mixerModels } from "./mixerModels";
 import { microphonePackages } from "./microphonePackages";
 
 /* ───── Single source of truth for all product data (v2 — cache-rotation 4/8) ─────
@@ -424,38 +425,7 @@ export const addons: Addon[] = [
       desc: "We deliver, set up and collect again — save 195 DKK",
     },
   },
-  // Fotoene er genereret med scripts/product-images/generate_product_photo.py
-  // De gamle genererede fotos var misvisende. Vis neutral flade indtil modeller er bekræftet.
-  {
-    id: "mixer_lille",
-    page: "/mixer",
-    price: 295,
-    image: null,
-    contents: ["4-kanals minimixer", "Strømforsyning", "Kabel til højtaler"],
-    da: {
-      label: "Mixer lille",
-      desc: "Simpel 4-kanals minimixer — to mikrofoner og en musikkilde i samme højtaler",
-    },
-    en: {
-      label: "Small mixer",
-      desc: "Simple 4-channel mini mixer — two microphones and a music source into one speaker",
-    },
-  },
-  {
-    id: "mixer_stor",
-    page: "/mixer",
-    price: 395,
-    image: null,
-    contents: ["Yamaha-mixer med indbyggede effekter", "Strømforsyning", "Kabler til højtaler"],
-    da: {
-      label: "Mixer stor",
-      desc: "Yamaha-mixer med indbyggede effekter — til band, kor og flere mikrofoner",
-    },
-    en: {
-      label: "Large mixer",
-      desc: "Yamaha mixer with built-in effects — for bands, choirs and several microphones",
-    },
-  },
+  ...mixerModels,
   // ── Lydmand (11. sept 2026): en ydelse kunden selv kan vælge til. Prisen er
   // pr. time inkl. moms. Antallet i bookingen ER timerne (13. sept 2026) — før
   // lå der en "4 timer"-udgave ved siden af, og det var én vare for meget.
@@ -669,7 +639,7 @@ export const rentalProducts: RentalProduct[] = [
     name_en: "Corporate event with sound engineer",
     desc_da: "Stor højtalerpakke + mixer + trådløs mikrofon + lydmand i 4 timer. Taler, musik og en tekniker der styrer det hele — spar 285 kr.",
     desc_en: "Large speaker package + mixer + wireless mic + sound engineer for 4 hours. Speeches, music and a technician running it all — save 285 DKK.",
-    contents: ['2× EV 12" højtalere', "Yamaha-mixer med effekter", "Trådløs mikrofon", "Lydmand i 4 timer", "Levering, opsætning og afhentning"],
+    contents: ['2× EV 12" højtalere', "the t.mix xmix 1202 FX USB", "Trådløs mikrofon", "Lydmand i 4 timer", "Levering, opsætning og afhentning"],
     allowedAddons: ["subwoofer", "mikrofon", "lys", "lydmand"],
     bundle: {
       discount: 285,
@@ -677,7 +647,7 @@ export const rentalProducts: RentalProduct[] = [
       usecase_en: "Company party, reception or anniversary with speeches — up to 100 people. The mic works when the boss stands up, because someone is there to make sure.",
       parts: [
         { productId: "festival", label_da: "Stor højtalerpakke", label_en: "Large speaker package", price: 995 },
-        { productId: "mixer_stor", label_da: "Mixer stor", label_en: "Large mixer", price: 395 },
+        { productId: "mixer_stor", label_da: "Mixer mellem · 6 mikrofonindgange", label_en: "Medium mixer · 6 microphone inputs", price: 395 },
         { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 295 },
         { productId: "lydmand", qty: 4, label_da: "Lydmand, 4 timer", label_en: "Sound engineer, 4 hours", price: 4000 },
         { productId: "levering_begge", label_da: "Levering, opsætning + afhentning", label_en: "Delivery, setup + collection", price: 795 },
@@ -1328,7 +1298,7 @@ export const rentalProducts: RentalProduct[] = [
  * for de sider og tests, der skal kunne sige pausen højt.
  * Sandheden om hvad kunden kan booke er `hidden` i kataloget ovenfor.
  */
-export const PAUSEDE_PRODUKTER: string[] = ["stroboskop"];
+export const PAUSEDE_PRODUKTER: string[] = ["stroboskop", "mixer_lille", "mixer_xl"];
 
 /** Er produktet sat på pause? Bruges af produktsiderne, der ellers ville stå
  *  med en bookingknap til noget, vi ikke udlejer. */

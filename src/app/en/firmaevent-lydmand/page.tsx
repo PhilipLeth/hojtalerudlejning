@@ -7,7 +7,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Corporate Event with Sound Engineer | Sound + mixer + mic + tech | 6,195 DKK | Lejhøjtaler.dk",
   description:
-    "Corporate event with a sound engineer: large speaker package + Yamaha mixer + wireless mic + AV technician for 4 hours. Delivered, set up and collected for 6,195 DKK — save 285 DKK. Speeches and music for up to 100 people.",
+    "Corporate event with a sound engineer: large speaker package + t.mix 1202 FX USB mixer + wireless mic + AV technician for 4 hours. Delivered, set up and collected for 6,195 DKK — save 285 DKK. Speeches and music for up to 100 people.",
   keywords: ["corporate event sound engineer copenhagen", "company party sound system with technician", "microphone and technician for reception", "av technician corporate event denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/firmaevent-lydmand",
@@ -59,7 +59,7 @@ export default function Page() {
       ]}
       bullets={[
         "2× EV 12\" speakers (up to 100 guests)",
-        "Yamaha mixer with effects — reverb on the speeches",
+        "t.mix 1202 FX USB mixer with effects — reverb on the speeches",
         "Wireless handheld microphone for speeches and presentations",
         "Sound engineer for 4 hours — the mic works when the boss stands up",
         "Delivery, setup and collection included",

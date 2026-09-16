@@ -105,14 +105,14 @@ export const microphonePackages: RentalProduct[] = [
           "qty": 2
         },
         {
-          "productId": "mixer_lille",
-          "label_da": "Lille mixer",
-          "label_en": "Small mixer",
-          "price": 295,
+          "productId": "mixer_stor",
+          "label_da": "t.mix mixer · 6 mikrofonindgange",
+          "label_en": "t.mix mixer · 6 microphone inputs",
+          "price": 395,
           "qty": 1
         }
       ],
-      "discount": 85,
+      "discount": 185,
       "usecase_da": "Til panel, møde og duet: to trådløse mikrofoner, to højtalere og mixer til mikrofoner og musik. Kræver strøm.",
       "usecase_en": "For panels, meetings and duets: two wireless microphones, two speakers and a mixer for microphones and music. Mains power required."
     }
@@ -148,10 +148,10 @@ export const microphonePackages: RentalProduct[] = [
           "qty": 2
         },
         {
-          "productId": "mixer_lille",
-          "label_da": "Lille mixer",
-          "label_en": "Small mixer",
-          "price": 295,
+          "productId": "mixer_stor",
+          "label_da": "t.mix mixer · 6 mikrofonindgange",
+          "label_en": "t.mix mixer · 6 microphone inputs",
+          "price": 395,
           "qty": 1
         },
         {
@@ -169,7 +169,7 @@ export const microphonePackages: RentalProduct[] = [
           "qty": 1
         }
       ],
-      "discount": 175,
+      "discount": 275,
       "usecase_da": "Til præsentation og møde: projektor, lærred, to højtalere, mixer og to trådløse mikrofoner. Kræver strøm. Computer medbringes.",
       "usecase_en": "For presentations and meetings: projector, screen, two speakers, mixer and two wireless microphones. Mains power required. Bring your laptop."
     }

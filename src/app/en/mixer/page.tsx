@@ -3,14 +3,14 @@ import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
-import CategoryProductGrid from "@/components/CategoryProductGrid";
+import MixerRange from "@/components/MixerRange";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Mixer Rental Copenhagen | From 295 DKK | Lejhøjtaler.dk",
   description:
-    "Rent an audio mixer in Copenhagen from 295 DKK. A 4-channel mini mixer for two microphones and music, or a Yamaha with built-in effects for bands and choirs. Cables included.",
+    "Rent an audio mixer in Copenhagen from 295 DKK. Choose 4, 6 or 8 microphone inputs. Our t.mix 1202 FX USB is 395 DKK; small and large models are on request.",
   keywords: [
     "mixer rental copenhagen",
     "audio mixer hire copenhagen",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mixer Rental Copenhagen | From 295 DKK | Lejhøjtaler.dk",
     description:
-      "A 4-channel mini mixer, or a Yamaha with built-in effects. For when more than one thing has to go into the speaker at once.",
+      "Three mixer sizes: 4, 6 or 8 microphone inputs. t.mix 1202 FX USB with effects and stereo USB for meetings, panels and bands.",
     url: "https://lejhojtaler.dk/en/mixer",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -66,57 +66,17 @@ export default function Page() {
             time — two microphones and music, or a whole band.
           </p>
           <a
-            href="#mixers"
+            href="#mixere"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            See the two mixers
+            Compare three mixer sizes
           </a>
         </div>
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
         {/* Valget står ikke på kanaler — det står på om der bliver sunget */}
-        <section className="mx-auto max-w-4xl px-4 pt-16 pb-4">
-          <h2 className="mb-2 text-center text-3xl font-bold">Small or large?</h2>
-          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Count the microphones and music sources that need to work at the same time.
-          </p>
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div className="glass rounded-2xl p-6">
-              <h3 className="mb-1 text-lg font-semibold text-white">Small mixer</h3>
-              <p className="mb-3 text-2xl font-bold text-brand-400">295 DKK</p>
-              <p className="text-sm text-white/50">
-                A simple 4-channel mini mixer. It gathers two microphones and one
-                music source so you can set each one separately. For the speech
-                with background music, the reception and the annual meeting —
-                where it just has to work.
-              </p>
-            </div>
-            <div className="glass rounded-2xl p-6">
-              <h3 className="mb-1 text-lg font-semibold text-white">Large mixer</h3>
-              <p className="mb-3 text-2xl font-bold text-brand-400">395 DKK</p>
-              <p className="text-sm text-white/50">
-                A mixer with effects for several microphones and instruments.
-                Choose it for panels, bands and choirs. Tell us how many microphones
-                and stereo sources you need so we can match the inputs.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section id="mixers" className="mx-auto max-w-6xl px-4 py-16">
-          <h2 className="mb-2 text-center text-3xl font-bold">Book a mixer</h2>
-          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            The price covers the whole rental period — 1 to 5 days costs the same.
-          </p>
-          <CategoryProductGrid
-            locale="en"
-            items={[
-              { id: "mixer_stor", tag: "With effects" },
-              { id: "mixer_lille" },
-            ]}
-          />
-        </section>
+        <MixerRange locale="en" />
 
         <section className="mx-auto max-w-3xl px-4 pb-24">
           <div className="glass rounded-2xl p-8 text-center">

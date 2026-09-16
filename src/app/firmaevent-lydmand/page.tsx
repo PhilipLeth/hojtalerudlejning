@@ -7,7 +7,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Firmaevent med lydmand | Anlæg + mixer + mikrofon + tekniker | 6.195 kr | Lejhøjtaler.dk",
   description:
-    "Firmaevent med lydmand: stor højtalerpakke + Yamaha-mixer + trådløs mikrofon + AV-tekniker i 4 timer. Leveret, sat op og hentet igen for 6.195 kr — spar 285 kr. Taler og musik til op til 100 personer.",
+    "Firmaevent med lydmand: stor højtalerpakke + t.mix 1202 FX USB-mixer + trådløs mikrofon + AV-tekniker i 4 timer. Leveret, sat op og hentet igen for 6.195 kr — spar 285 kr. Taler og musik til op til 100 personer.",
   keywords: ["lydmand firmafest", "lydanlæg med tekniker erhverv", "firmaevent lyd københavn", "mikrofon og tekniker til reception", "av-tekniker firmaevent"],
   alternates: {
     canonical: "https://lejhojtaler.dk/firmaevent-lydmand",
@@ -58,7 +58,7 @@ export default function Page() {
       ]}
       bullets={[
         "2× EV 12\" højtalere (op til 100 pers.)",
-        "Yamaha-mixer med effekter — rumklang på talerne",
+        "t.mix 1202 FX USB-mixer med effekter — rumklang på talerne",
         "Trådløs håndholdt mikrofon til taler og præsentationer",
         "Lydmand i 4 timer — mikrofonen virker, når direktøren rejser sig",
         "Levering, opsætning og afhentning er med",

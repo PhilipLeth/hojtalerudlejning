@@ -3948,5 +3948,56 @@
       "status": "113 øvrige AAG-grupper sænket til 6,50 kr. Verificeret efter skrivning: 124 grupper, heraf 9 til 4 kr og 115 til 6,50 kr. Ingen keywords havde højere individuelle bud.",
       "princip": "Forsigtigt manuelt startbud; ingen forhøjelser, statusskift eller kampagnebudgetændringer. Generatorens øvrige bud og gemte kladder har højst 6,50 kr."
     }
+  },
+  "lokalt_bud_og_mixerklasser_2026_09_16": {
+    "lokalt_bud": {
+      "status": "Oprettet og verificeret i Google Ads 2026-09-16",
+      "kampagne": "23973439325 — Højtaler Udlejning - Search",
+      "criterion": "customers/4410207627/campaignCriteria/23973439325~2499783350389",
+      "adresse": "Vermlandsgade 66, 2300 København S",
+      "radius_km": 2,
+      "bid_modifier": 1.5,
+      "google_geokodning": {
+        "latitude": 55.667213,
+        "longitude": 12.609924
+      },
+      "grundlag": "Brugeren oplyser markant højere konvertering tæt på lageret. +50% er et afgrænset forsøg; effekten skal vurderes på pris pr. booking og bookingværdi, ikke konverteringsrate alene.",
+      "indstillinger": "MANUAL_CPC og PRESENCE var allerede aktive. Eksisterende geografisk målretning og ekskludering bevaret. Ingen radius var oprettet før.",
+      "bud": "Soundboks: 4 kr × 1,5 = 6 kr i området. Øvrige AAG: 6,50 kr × 1,5 = 9,75 kr, før eventuelle andre justeringer. Kampagnebudget uændret.",
+      "dokumentation": "https://support.google.com/google-ads/answer/2732132?hl=en"
+    },
+    "mixere": {
+      "brugerbekraeftet": "Vi ejer the t.mix xmix 1202 FX USB. Den erstatter den forkerte Yamaha-beskrivelse og er mellemklassen. Antal er ikke oplyst.",
+      "klasser": [
+        {
+          "id": "mixer_lille",
+          "model": "Mackie Mix12FX",
+          "mikrofonindgange": 4,
+          "leje": 295,
+          "status": "På forespørgsel; skjult for direkte booking indtil tilgængelighed er bekræftet"
+        },
+        {
+          "id": "mixer_stor",
+          "model": "the t.mix xmix 1202 FX USB",
+          "mikrofonindgange": 6,
+          "leje": 395,
+          "status": "Bekræftet ejet. Legacy-id mixer_stor bevares af hensyn til eksisterende pakker og bookinger; vises som Mixer mellem."
+        },
+        {
+          "id": "mixer_xl",
+          "model": "the t.mix xmix 1402 FXMP USB",
+          "mikrofonindgange": 8,
+          "leje": 495,
+          "status": "På forespørgsel; skjult for direkte booking indtil tilgængelighed er bekræftet"
+        }
+      ],
+      "pakker": "Duo- og AV-mikrofonpakker bruger nu den bekræftede t.mix 1202. Priser 1395/1995 kr bevares, rabatter øges til 185/275 kr. Firmaevent-pakkens Yamaha-tekst rettes på begge sprog.",
+      "billeder": "Uændrede fotos af de korrekte modeller fra Thomanns produktvisning (350835.jpg, 422794.jpg, 422796.jpg), gemt under public/images/product-mixer-*.jpg. Ingen AI-genererede mixerfotos.",
+      "kilder": [
+        "https://www.thomann.dk/mackie_mix12fx.htm",
+        "https://www.thomann.dk/the_t.mix_xmix_1202_fx_usb.htm",
+        "https://www.thomann.dk/the_t.mix_xmix_1402_fxmp_usb.htm"
+      ]
+    }
   }
 }

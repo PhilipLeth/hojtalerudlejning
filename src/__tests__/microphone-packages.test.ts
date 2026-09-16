@@ -24,7 +24,7 @@ describe("Mikrofonpakker som kan bookes og reserverer de rigtige antal", () => {
     for (const catalog of [null, { rentalProducts: microphonePackages }]) {
       const parts = bundlePartsFromCatalog(catalog).pakke_mikrofon_duo;
       expect(parts.filter((id) => id === "traadloes_mikrofon")).toHaveLength(2);
-      expect(bundleSlots(parts, { party: 4, traadloes_mikrofon: 3, mixer_lille: 4 }, { traadloes_mikrofon: 2 })).toEqual({ total: 1, used: 1 });
+      expect(bundleSlots(parts, { party: 4, traadloes_mikrofon: 3, mixer_stor: 4 }, { traadloes_mikrofon: 2 })).toEqual({ total: 1, used: 1 });
     }
     expect(expandProductIds(["pakke_mikrofon_duo"]).filter((id) => id === "traadloes_mikrofon")).toHaveLength(2);
   });
