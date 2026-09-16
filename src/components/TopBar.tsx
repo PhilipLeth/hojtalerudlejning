@@ -51,14 +51,14 @@ const USPS: Record<
   Array<{ icon: keyof typeof ICONS; text: string; href?: string; ekstern?: boolean }>
 > = {
   da: [
-    { icon: "truck", text: `Levering i hele København fra ${DELIVERY_ONE_WAY} kr` },
-    { icon: "calendar", text: `Op til ${MAX_RENTAL_DAYS} dage, samme pris` },
-    { icon: "wallet", text: "Sikker onlinebetaling" },
+    { icon: "truck", text: "AV til events i København" },
+    { icon: "calendar", text: "Levering og opsætning efter aftale" },
+    { icon: "wallet", text: "Ring og vend jeres arrangement med os" },
   ],
   en: [
-    { icon: "truck", text: `Delivery across Copenhagen from ${DELIVERY_ONE_WAY} DKK` },
-    { icon: "calendar", text: `Up to ${MAX_RENTAL_DAYS} days, same price` },
-    { icon: "wallet", text: "Secure online payment" },
+    { icon: "truck", text: "Event AV in Copenhagen" },
+    { icon: "calendar", text: "Delivery and setup by agreement" },
+    { icon: "wallet", text: "Call us to discuss your event" },
   ],
 };
 

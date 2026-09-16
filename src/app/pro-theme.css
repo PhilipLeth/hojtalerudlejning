@@ -1,0 +1,69 @@
+/* Lys AV-profil for eksisterende offentlige sider. Admin beholder sit eget tema. */
+body:not(:has(.admin-shell)) .bg-\[\#07060b\]{background-color: #fff;}
+body:not(:has(.admin-shell)) .bg-\[\#0b0a10\]{background-color: #fff;}
+body:not(:has(.admin-shell)) .bg-\[\#0d0c12\]{background-color: #fff;}
+body:not(:has(.admin-shell)) .bg-\[\#0d0c12\]\/75{background-color: #fff;}
+body:not(:has(.admin-shell)) .bg-\[\#0d0d14\]\/95{background-color: #fff;}
+body:not(:has(.admin-shell)) .bg-\[\#141220\]\/95{background-color: #fff;}
+body:not(:has(.admin-shell)) .bg-\[\#16141b\]{background-color: #fff;}
+body:not(:has(.admin-shell)) .bg-white{background-color: #fff;}
+body:not(:has(.admin-shell)) .bg-white\/10{background-color: rgba(18,73,207,.045);}
+body:not(:has(.admin-shell)) .bg-white\/5{background-color: rgba(18,73,207,.045);}
+body:not(:has(.admin-shell)) .bg-white\/\[0\.02\]{background-color: rgba(18,73,207,.045);}
+body:not(:has(.admin-shell)) .bg-white\/\[0\.03\]{background-color: rgba(18,73,207,.045);}
+body:not(:has(.admin-shell)) .bg-white\/\[0\.04\]{background-color: rgba(18,73,207,.045);}
+body:not(:has(.admin-shell)) .border-white\/10{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .border-white\/15{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .border-white\/20{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .border-white\/25{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .border-white\/5{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .from-\[\#07060b\]\/40{--tw-gradient-from: #f4f7fc; --tw-gradient-to: rgba(244,247,252,0);}
+body:not(:has(.admin-shell)) .from-\[\#07060b\]\/50{--tw-gradient-from: #f4f7fc; --tw-gradient-to: rgba(244,247,252,0);}
+body:not(:has(.admin-shell)) .from-\[\#07060b\]\/70{--tw-gradient-from: #f4f7fc; --tw-gradient-to: rgba(244,247,252,0);}
+body:not(:has(.admin-shell)) .from-\[\#0d0c12\]{--tw-gradient-from: #f4f7fc; --tw-gradient-to: rgba(244,247,252,0);}
+body:not(:has(.admin-shell)) .hover\:bg-white\/10:hover{background-color: rgba(18,73,207,.045);}
+body:not(:has(.admin-shell)) .hover\:bg-white\/5:hover{background-color: rgba(18,73,207,.045);}
+body:not(:has(.admin-shell)) .hover\:bg-white\/\[0\.02\]:hover{background-color: rgba(18,73,207,.045);}
+body:not(:has(.admin-shell)) .hover\:bg-white\/\[0\.07\]:hover{background-color: rgba(18,73,207,.045);}
+body:not(:has(.admin-shell)) .hover\:border-white\/20:hover{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .hover\:border-white\/25:hover{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .hover\:border-white\/30:hover{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .hover\:border-white\/35:hover{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .hover\:border-white\/40:hover{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .hover\:text-white:hover{color: #12284a;}
+body:not(:has(.admin-shell)) .hover\:text-white\/60:hover{color: #53657d;}
+body:not(:has(.admin-shell)) .hover\:text-white\/70:hover{color: #53657d;}
+body:not(:has(.admin-shell)) .placeholder\:text-white\/30::placeholder{color: #53657d;}
+body:not(:has(.admin-shell)) .sm\:border-white\/10{border-color: #d7e1ee;}
+body:not(:has(.admin-shell)) .text-white{color: #12284a;}
+body:not(:has(.admin-shell)) .text-white\/15{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/20{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/25{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/30{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/35{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/40{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/45{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/50{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/55{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/60{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/65{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/70{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/80{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/85{color: #53657d;}
+body:not(:has(.admin-shell)) .text-white\/90{color: #53657d;}
+body:not(:has(.admin-shell)) .to-\[\#07060b\]{--tw-gradient-to: #fff;}
+body:not(:has(.admin-shell)) .to-\[\#07060b\]\/80{--tw-gradient-to: #fff;}
+body:not(:has(.admin-shell)) .to-\[\#07060b\]\/90{--tw-gradient-to: #fff;}
+body:not(:has(.admin-shell)) .via-\[\#07060b\]\/50{--tw-gradient-stops: var(--tw-gradient-from), #f4f7fc, var(--tw-gradient-to);}
+body:not(:has(.admin-shell)) .via-\[\#07060b\]\/60{--tw-gradient-stops: var(--tw-gradient-from), #f4f7fc, var(--tw-gradient-to);}
+body:not(:has(.admin-shell)) .via-\[\#0d0c12\]\/70{--tw-gradient-stops: var(--tw-gradient-from), #f4f7fc, var(--tw-gradient-to);}
+body:not(:has(.admin-shell)) .glass{background:#f5f8fd;border-color:#d7e1ee;} 
+body:not(:has(.admin-shell)) .glass-selected{background:#eaf1ff;border-color:#1249cf;}
+body:not(:has(.admin-shell)) .bg-brand-500.text-white,body:not(:has(.admin-shell)) .bg-brand-500.text-black,body:not(:has(.admin-shell)) .bg-brand-400.text-black{color:#fff;}
+body:not(:has(.admin-shell)) .bg-brand-500 .text-black{color:#fff;}
+body:not(:has(.admin-shell)) .prose-blog{color:#53657d;}
+body:not(:has(.admin-shell)) .prose-blog :is(h1,h2,h3,h4,strong){color:#12284a;}
+body:not(:has(.admin-shell)) .fixed[style*="hero.webp"]{display:none;}
+body:not(:has(.admin-shell)) input,body:not(:has(.admin-shell)) textarea,body:not(:has(.admin-shell)) select{color:#12284a;color-scheme:light;}
+body:not(:has(.admin-shell))  :focus-visible{outline:2px solid #1249cf;outline-offset:3px;}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}

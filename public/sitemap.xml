@@ -86,6 +86,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/cases</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/discokugle</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -107,6 +112,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/av-udstyr</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -191,6 +201,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/en/cases</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en/discokugle</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -212,6 +227,16 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en/enkelt-lyseffekt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/erhverv</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/eventloesninger</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -577,6 +602,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/erhverv</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/eventloesninger</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

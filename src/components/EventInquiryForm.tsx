@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useEffect, useId, FormEvent } from "react";
+import type { Locale } from "@/lib/i18n";
+import { eventSolutions } from "@/lib/eventSolutions";
 import PhoneLink from "@/components/PhoneLink";
 
 /**
@@ -24,6 +26,7 @@ export const ARRANGEMENTSTYPER = [
   "Reception",
   "Firmafest / julefrokost",
   "Konference / møde",
+  "Messe / stand",
   "Bryllup",
   "Koncert / DJ",
   "Andet",
@@ -80,7 +83,48 @@ const inputCls =
   "w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500";
 const labelCls = "mb-1 block text-xs font-medium text-white/50";
 
-export default function EventInquiryForm() {
+const EN: Record<string, string> = {
+  "Forespørgsel på arrangement": "Event enquiry",
+  "Hvornår? *": "Event date *",
+  "Hvor mange gæster? *": "How many guests? *",
+  "Hvor foregår det? *": "Venue or address *",
+  "Adresse eller stedets navn — og om det er inde eller ude": "Address or venue name — indoors or outdoors",
+  "Hvad er det for et arrangement? *": "What kind of event? *",
+  "Vælg …": "Choose …",
+  "Hvad skal vi sørge for?": "What do you need?",
+  "Noget vi skal vide?": "Anything else we should know?",
+  "Fx: der skal holdes tre taler, og musikken skal kunne køre videre bagefter": "For example: three speeches, followed by background music",
+  "Navn *": "Name *",
+  "Email *": "Email *",
+  "Telefon": "Phone",
+  "Firma og EAN-nummer (hvis I skal have faktura)": "Company and EAN number (for invoicing)",
+  "Tak — vi er i gang": "Thank you — we have your enquiry",
+  "Du får et tilbud med udstyr, levering og opsætning, som regel samme dag. Haster det, så ring": "We will get back to you with a quote for equipment, delivery and setup. If it is urgent, call",
+  "Du får et tilbud med udstyr, levering og opsætning — som regel samme dag.": "We will get back to you with a quote for equipment, delivery and setup.",
+  "Sender …": "Sending …",
+  "Send forespørgsel": "Send enquiry",
+  "Noget gik galt — prøv igen": "Something went wrong — please try again",
+  "Netværksfejl — prøv igen eller ring til os": "Network error — please try again or call us",
+  "Reception": "Reception",
+  "Firmafest / julefrokost": "Company party",
+  "Konference / møde": "Conference / meeting",
+  "Messe / stand": "Exhibition / stand",
+  "Bryllup": "Wedding",
+  "Koncert / DJ": "Concert / DJ",
+  "Andet": "Other",
+  "Lyd og højtalere": "Sound and speakers",
+  "Mikrofoner til taler": "Microphones for speeches",
+  "Lys": "Lighting",
+  "Skærm eller projektor": "Display or projector",
+  "Røg / low fog": "Fog / low fog",
+  "Levering + opsætning": "Delivery and setup",
+  "Tekniker på stedet": "On-site technician"
+};
+
+export default function EventInquiryForm({ locale = "da", initialSolution }: { locale?: Locale; initialSolution?: string }) {
+  const formId = useId();
+  const en = locale === "en";
+  const tr = (da: string) => en ? (EN[da] ?? da) : da;
   const [f, setF] = useState<Forespoergsel>({
     dato: "",
     gaester: "",
@@ -93,6 +137,12 @@ export default function EventInquiryForm() {
   const [kontakt, setKontakt] = useState({ navn: "", email: "", telefon: "", website: "" });
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const id = initialSolution || new URLSearchParams(window.location.search).get("loesning");
+    const solution = eventSolutions.find(s => s.id === id);
+    if (solution) setF(prev => ({ ...prev, type: id === "messe" ? "Messe / stand" : id === "moeder" ? "Konference / møde" : id === "koncert" ? "Koncert / DJ" : "Reception", besked: `${solution[locale].title}: ${solution[locale].equipment.join(", ")}.` }));
+  }, [locale, initialSolution]);
 
   function toggleBehov(b: string) {
     setF((prev) => ({
@@ -120,13 +170,13 @@ export default function EventInquiryForm() {
       });
       const json = (await res.json()) as { ok?: boolean; error?: string };
       if (!res.ok) {
-        setError(json.error || "Noget gik galt — prøv igen");
+        setError(en ? tr("Noget gik galt — prøv igen") : (json.error || "Noget gik galt — prøv igen"));
         setState("error");
         return;
       }
       setState("sent");
     } catch {
-      setError("Netværksfejl — prøv igen eller ring til os");
+      setError(tr("Netværksfejl — prøv igen eller ring til os"));
       setState("error");
     }
   }
@@ -135,9 +185,9 @@ export default function EventInquiryForm() {
     return (
       <div className="glass rounded-2xl p-8 text-center" data-testid="forespoergsel-sendt">
         <p className="text-2xl">✅</p>
-        <h2 className="mt-2 text-xl font-bold">Tak — vi er i gang</h2>
+        <h2 className="mt-2 text-xl font-bold">{tr("Tak — vi er i gang")}</h2>
         <p className="mt-2 text-white/60">
-          Du får et tilbud med udstyr, levering og opsætning, som regel samme dag. Haster det, så ring{" "}
+          {tr("Du får et tilbud med udstyr, levering og opsætning, som regel samme dag. Haster det, så ring")}{" "}
           <PhoneLink className="text-brand-400 hover:underline" />.
         </p>
       </div>
@@ -145,14 +195,14 @@ export default function EventInquiryForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4" aria-label="Forespørgsel på arrangement">
+    <form onSubmit={handleSubmit} className="space-y-4" aria-label={tr("Forespørgsel på arrangement")}>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className={labelCls} htmlFor="fq-dato">
-            Hvornår? *
+          <label className={labelCls} htmlFor={`${formId}-dato`}>
+            {tr("Hvornår? *")}
           </label>
           <input
-            id="fq-dato"
+            id={`${formId}-dato`}
             required
             type="date"
             value={f.dato}
@@ -161,11 +211,11 @@ export default function EventInquiryForm() {
           />
         </div>
         <div>
-          <label className={labelCls} htmlFor="fq-gaester">
-            Hvor mange gæster? *
+          <label className={labelCls} htmlFor={`${formId}-gaester`}>
+            {tr("Hvor mange gæster? *")}
           </label>
           <input
-            id="fq-gaester"
+            id={`${formId}-gaester`}
             required
             type="number"
             min="1"
@@ -179,14 +229,14 @@ export default function EventInquiryForm() {
       </div>
 
       <div>
-        <label className={labelCls} htmlFor="fq-sted">
-          Hvor foregår det? *
+        <label className={labelCls} htmlFor={`${formId}-sted`}>
+          {tr("Hvor foregår det? *")}
         </label>
         <input
-          id="fq-sted"
+          id={`${formId}-sted`}
           required
           type="text"
-          placeholder="Adresse eller stedets navn — og om det er inde eller ude"
+          placeholder={tr("Adresse eller stedets navn — og om det er inde eller ude")}
           value={f.sted}
           onChange={(e) => setF({ ...f, sted: e.target.value })}
           className={inputCls}
@@ -194,33 +244,33 @@ export default function EventInquiryForm() {
       </div>
 
       <div>
-        <label className={labelCls} htmlFor="fq-type">
-          Hvad er det for et arrangement? *
+        <label className={labelCls} htmlFor={`${formId}-type`}>
+          {tr("Hvad er det for et arrangement? *")}
         </label>
         <select
-          id="fq-type"
+          id={`${formId}-type`}
           required
           value={f.type}
           onChange={(e) => setF({ ...f, type: e.target.value })}
           className={inputCls}
         >
-          <option value="">Vælg …</option>
+          <option value="">{tr("Vælg …")}</option>
           {ARRANGEMENTSTYPER.map((t) => (
             <option key={t} value={t}>
-              {t}
+              {tr(t)}
             </option>
           ))}
         </select>
       </div>
 
       <fieldset>
-        <legend className={labelCls}>Hvad skal vi sørge for?</legend>
+        <legend className={labelCls}>{tr("Hvad skal vi sørge for?")}</legend>
         <div className="flex flex-wrap gap-2">
           {BEHOV.map((b) => {
             const valgt = f.behov.includes(b);
             return (
               <button
-                key={b}
+                key={tr(b)}
                 type="button"
                 aria-pressed={valgt}
                 onClick={() => toggleBehov(b)}
@@ -230,7 +280,7 @@ export default function EventInquiryForm() {
                     : "border-white/15 text-white/60 hover:border-white/35"
                 }`}
               >
-                {b}
+                {tr(b)}
               </button>
             );
           })}
@@ -238,13 +288,13 @@ export default function EventInquiryForm() {
       </fieldset>
 
       <div>
-        <label className={labelCls} htmlFor="fq-besked">
-          Noget vi skal vide?
+        <label className={labelCls} htmlFor={`${formId}-besked`}>
+          {tr("Noget vi skal vide?")}
         </label>
         <textarea
-          id="fq-besked"
+          id={`${formId}-besked`}
           rows={3}
-          placeholder="Fx: der skal holdes tre taler, og musikken skal kunne køre videre bagefter"
+          placeholder={tr("Fx: der skal holdes tre taler, og musikken skal kunne køre videre bagefter")}
           value={f.besked}
           onChange={(e) => setF({ ...f, besked: e.target.value })}
           className={inputCls}
@@ -253,11 +303,11 @@ export default function EventInquiryForm() {
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
-          <label className={labelCls} htmlFor="fq-navn">
-            Navn *
+          <label className={labelCls} htmlFor={`${formId}-navn`}>
+            {tr("Navn *")}
           </label>
           <input
-            id="fq-navn"
+            id={`${formId}-navn`}
             required
             type="text"
             value={kontakt.navn}
@@ -266,11 +316,11 @@ export default function EventInquiryForm() {
           />
         </div>
         <div>
-          <label className={labelCls} htmlFor="fq-email">
-            Email *
+          <label className={labelCls} htmlFor={`${formId}-email`}>
+            {tr("Email *")}
           </label>
           <input
-            id="fq-email"
+            id={`${formId}-email`}
             required
             type="email"
             value={kontakt.email}
@@ -279,11 +329,11 @@ export default function EventInquiryForm() {
           />
         </div>
         <div>
-          <label className={labelCls} htmlFor="fq-telefon">
-            Telefon
+          <label className={labelCls} htmlFor={`${formId}-telefon`}>
+            {tr("Telefon")}
           </label>
           <input
-            id="fq-telefon"
+            id={`${formId}-telefon`}
             type="tel"
             value={kontakt.telefon}
             onChange={(e) => setKontakt({ ...kontakt, telefon: e.target.value })}
@@ -293,11 +343,11 @@ export default function EventInquiryForm() {
       </div>
 
       <div>
-        <label className={labelCls} htmlFor="fq-firma">
-          Firma og EAN-nummer (hvis I skal have faktura)
+        <label className={labelCls} htmlFor={`${formId}-firma`}>
+          {tr("Firma og EAN-nummer (hvis I skal have faktura)")}
         </label>
         <input
-          id="fq-firma"
+          id={`${formId}-firma`}
           type="text"
           value={f.firma}
           onChange={(e) => setF({ ...f, firma: e.target.value })}
@@ -324,10 +374,10 @@ export default function EventInquiryForm() {
         disabled={state === "sending"}
         className="w-full rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-50"
       >
-        {state === "sending" ? "Sender …" : "Send forespørgsel"}
+        {state === "sending" ? tr("Sender …") : tr("Send forespørgsel")}
       </button>
       <p className="text-center text-xs text-white/40">
-        Du får et tilbud med udstyr, levering og opsætning — som regel samme dag.
+        {tr("Du får et tilbud med udstyr, levering og opsætning — som regel samme dag.")}
       </p>
     </form>
   );

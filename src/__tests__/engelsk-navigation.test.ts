@@ -68,10 +68,9 @@ describe("Engelsk navigation", () => {
 
   it("båndet øverst findes på begge sprog", () => {
     const src = læs("components/TopBar.tsx");
-    expect(src).toMatch(/Delivery across Copenhagen/);
-    expect(src).toMatch(/Levering i hele København/);
-    // Leveringsprisen slås op, så båndet ikke kan love noget andet end bookingen
-    expect(src).toContain("DELIVERY_ONE_WAY");
+    expect(src).toMatch(/Event AV in Copenhagen/);
+    expect(src).toMatch(/AV til events i København/);
+    expect(src).toContain("Delivery and setup by agreement");
   });
 });
 

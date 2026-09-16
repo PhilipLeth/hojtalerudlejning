@@ -86,6 +86,26 @@ describe("EventInquiryForm", () => {
     expect(body.message).toContain("Mikrofoner til taler");
   });
 
+  it("sender den valgte eventløsning fra den engelske formular", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ ok: true }), { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const user = userEvent.setup();
+    render(<EventInquiryForm locale="en" initialSolution="messe" />);
+    expect(screen.getByLabelText(/What kind of event/)).toHaveValue("Messe / stand");
+    expect((screen.getByLabelText(/Anything else/) as HTMLTextAreaElement).value).toContain("Exhibitions & launches");
+    await user.type(screen.getByLabelText(/Event date/), "2026-10-20");
+    await user.type(screen.getByLabelText(/How many guests/), "40");
+    await user.type(screen.getByLabelText(/Venue or address/), "Test venue");
+    await user.type(screen.getByLabelText(/^Name/), "Test Person");
+    await user.type(screen.getByLabelText(/^Email/), "test@example.com");
+    await user.click(screen.getByRole("button", { name: "Send enquiry" }));
+    await waitFor(() => expect(screen.getByTestId("forespoergsel-sendt")).toBeInTheDocument());
+    const body = JSON.parse(fetchMock.mock.calls[0][1].body);
+    expect(body.message).toContain("Exhibitions & launches");
+    expect(body.message).toContain("55″ display");
+    expect(screen.getByText("Thank you — we have your enquiry")).toBeInTheDocument();
+  });
+
   it("viser fejlen fra serveren i stedet for at kvittere", async () => {
     vi.stubGlobal(
       "fetch",
@@ -119,9 +139,11 @@ describe("Vejen til forespørgslen", () => {
   });
 
   it("/erhverv har formularen med det id de peger på", () => {
-    const kilde = fs.readFileSync("src/app/erhverv/page.tsx", "utf8");
+    const side = fs.readFileSync("src/app/erhverv/page.tsx", "utf8");
+    expect(side).toContain("EventHome");
+    const kilde = fs.readFileSync("src/components/EventHome.tsx", "utf8");
     expect(kilde).toContain('id="tilbud"');
-    expect(kilde).toContain("<EventInquiryForm />");
+    expect(kilde).toContain("<EventInquiryForm locale={locale}");
   });
 
   it("ingen af pakkesiderne sender tilbud til den gamle blinde vej", () => {

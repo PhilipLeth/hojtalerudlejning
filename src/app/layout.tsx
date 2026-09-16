@@ -6,11 +6,11 @@ import SiteHeader from "@/components/SiteHeader";
 import BookingDrawer from "@/components/BookingDrawer";
 import Fejlopsamling from "@/components/Fejlopsamling";
 import InquiryDrawer from "@/components/InquiryDrawer";
-import WeekendSalePopup from "@/components/WeekendSalePopup";
 import { localeAlternates } from "@/lib/hreflang";
 import { ADS_CONVERSION_ID } from "@/lib/analytics";
 import { startPrisKr } from "@/lib/products";
 import "./globals.css";
+import "./pro-theme.css";
 
 const GTM_ID = "GTM-M52R25VF";
 const GA_ID = "G-QDXW7S53GF";
@@ -75,7 +75,7 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/hero.webp"
+          href="/images/events/reception-detail.webp"
           type="image/webp"
           fetchPriority="high"
         />
@@ -119,7 +119,7 @@ export default function RootLayout({
         {children}
         <BookingDrawer />
         <InquiryDrawer />
-        <WeekendSalePopup />
+
       </body>
     </html>
   );

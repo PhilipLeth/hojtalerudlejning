@@ -3999,5 +3999,29 @@
         "https://www.thomann.dk/the_t.mix_xmix_1402_fxmp_usb.htm"
       ]
     }
+  },
+  "professionel_av_2026_09_16": {
+    "retning": "Tilbudsbaseret AV til møder, messestande, receptioner og mindre koncerter. Enkeltudlejning bevares. Halloween fjernet fra forsiden.",
+    "design": {
+      "farver": [
+        "#ffffff",
+        "#1249cf",
+        "#12284a",
+        "#edf3fb",
+        "#53657d"
+      ],
+      "typografi": "Helvetica/Arial, store venstrestillede overskrifter og rolig tekst",
+      "layout": "Delt forside med konkret foto, fire eventløsninger, dokumenteret opstilling, proces og forespørgsel"
+    },
+    "nye_sider": [
+      "/eventloesninger",
+      "/cases",
+      "/en/eventloesninger",
+      "/en/cases",
+      "/en/erhverv"
+    ],
+    "tilbud": "Fire scopes i eventSolutions.ts. Ingen opfundne faste totalpriser. Transport, opsætning, afhentning og teknikertid specificeres individuelt.",
+    "billeder": "IMG_3146 og IMG_3144 bruges som konkret opstilling uden kunde- eller venuenavn. Tre AI-visualiseringer mærkes Illustreret opstilling. Bella Center er potentiel venue, ikke påstået samarbejdspartner.",
+    "kontakt": "Eksisterende /api/contact bevares. Forespørgslen oversættes og forudfyldes efter valgt løsning."
   }
 }

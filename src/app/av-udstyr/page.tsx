@@ -1,3 +1,4 @@
+import { localeAlternates } from "@/lib/hreflang";
 import { Metadata } from "next";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     "lyd til møde leje",
     "av-udstyr til event",
   ],
-  alternates: { canonical: "https://lejhojtaler.dk/av-udstyr" },
+  alternates: { canonical: "https://lejhojtaler.dk/av-udstyr", languages: localeAlternates("/av-udstyr") },
   openGraph: {
     title: "Lej AV-udstyr København | Projektor, storskærm og mikrofon | Lejhøjtaler.dk",
     description:

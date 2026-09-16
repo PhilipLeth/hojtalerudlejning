@@ -182,7 +182,7 @@ describe("Strukturerede data til Google", () => {
 
   it("bygges af samme komponent på alle tre sider — de var uenige før", () => {
     const read = (p: string) => readFileSync(join(process.cwd(), p), "utf8");
-    for (const f of ["src/app/page.tsx", "src/app/en/page.tsx", "src/app/kobenhavn/page.tsx"]) {
+    for (const f of ["src/components/EventHome.tsx", "src/app/kobenhavn/page.tsx"]) {
       const src = read(f);
       // Markup'en bygges nu af indstillingerne — ingen egen adresse eller tider
       expect(src, f).toContain("LocalBusinessJsonLd");

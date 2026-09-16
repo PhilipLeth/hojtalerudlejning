@@ -72,8 +72,10 @@ function skalAabneFraUrl(): boolean {
 export default function InquiryDrawer() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [solutionId, setSolutionId] = useState<string>();
   const skjult = skjultPaa(pathname);
-  const c = COPY[pathname?.startsWith("/en") ? "en" : "da"];
+  const locale: Locale = pathname?.startsWith("/en") ? "en" : "da";
+  const c = COPY[locale];
 
   const close = useCallback(() => {
     setOpen(false);
@@ -113,13 +115,15 @@ export default function InquiryDrawer() {
       const a = (e.target as HTMLElement | null)?.closest?.("a");
       const href = a?.getAttribute("href");
       if (!href) return;
-      if (HASHES.some((h) => href.endsWith(h))) {
+      if (HASHES.some((h) => href.endsWith(h)) && new URL(href, window.location.href).origin === window.location.origin) {
         e.preventDefault();
+        const target = new URL(href, window.location.href);
+        setSolutionId(target.searchParams.get("loesning") || undefined);
         setOpen(true);
       }
     };
-    document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
   }, [skjult]);
 
   useEffect(() => {
@@ -200,7 +204,7 @@ export default function InquiryDrawer() {
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-5">
             <p className="mb-5 text-sm text-white/50">{c.intro}</p>
-            {open && <EventInquiryForm />}
+            {open && <EventInquiryForm locale={locale} initialSolution={solutionId} />}
           </div>
         </div>
       </div>

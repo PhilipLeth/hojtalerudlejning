@@ -144,6 +144,10 @@ export default function BurgerMenu() {
             <span className="mt-2 inline-block text-xs font-semibold text-white/70">{c.proCta}</span>
           </Link>
 
+          <div className="mb-5 flex flex-col gap-3 text-lg font-semibold text-brand-500">
+            <Link href={localizedHref("/eventloesninger", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "Event solutions" : "Eventløsninger"}</Link>
+            <Link href={localizedHref("/cases", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "Setups & cases" : "Opstillinger & cases"}</Link>
+          </div>
           {NAV_CATEGORIES.map((section) => (
             <div key={section.id} className="mb-6">
               <Link

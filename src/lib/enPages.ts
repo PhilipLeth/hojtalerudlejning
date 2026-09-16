@@ -12,6 +12,10 @@ import type { Locale } from "@/lib/i18n";
  * den her, fejler testen — og omvendt.
  */
 export const EN_PAGES = [
+  "/av-udstyr",
+  "/eventloesninger",
+  "/cases",
+  "/erhverv",
   "/",
   "/baeretaske",
   "/blog",
