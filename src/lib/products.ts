@@ -560,6 +560,18 @@ export const rentalProducts: RentalProduct[] = [
   ...djGearProducts,
   ...situationPackages,
   ...microphonePackages,
+  {
+    id: "dj_headphones",
+    page: "/hovedtelefoner",
+    category: "lyd",
+    price: 100,
+    image: "/images/product-hovedtelefoner.webp",
+    name_da: "DJ-hovedtelefoner · Fun Generation HP 5",
+    name_en: "DJ headphones · Fun Generation HP 5",
+    desc_da: "Lukkede DJ-hovedtelefoner med mini-jack og 6,3 mm-adapter. Følger med DJ-pulten, og kan lejes alene for 100 kr.",
+    desc_en: "Closed-back DJ headphones with mini-jack and 6.3 mm adapter. Included with the DJ controller, or hire them on their own for 100 DKK.",
+    contents: ["Fun Generation HP 5", "3 m kabel", "6,3 mm jack-adapter"],
+  },
   // Halloween: nye kombinationer af eksisterende udstyr. Lager følger delene.
   {
     id: "halloween_lys", page: "/halloween-lys", category: "lyd", price: 895,
@@ -1449,7 +1461,7 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
   ],
   "/lysshow": ["pakke_lysshow", "pakke_lysshow_stor"],
   "/karaoke": ["pakke_karaoke", "pakke_karaoke_fest"],
-  "/av-udstyr": ["pakke_tale_musik", "pakke_praesentation", "pakke_konference", "pakke_konference_150", "pakke_speaker_mik"],
+  "/av-udstyr": ["pakke_tale_musik", "pakke_praesentation", "pakke_konference", "pakke_konference_150", "pakke_speaker_mik", "pakke_mikrofon_panel", "pakke_hybrid_teams"],
   "/lej-projektor": ["pakke_filmaften"],
 };
 
@@ -1468,7 +1480,7 @@ export const LYD_EKSTRAPAKKER = ["pakke_speaker_mik", "pakke_soundboks_lys"];
 
 /** Det der er tilbage på /av-udstyr, når projektor, skærm og lærred er på
  *  pause: højtaler + mikrofon. Se PAUSEDE_PRODUKTER. */
-export const AV_PAKKER = ["pakke_tale_musik", "pakke_praesentation", "pakke_konference", "pakke_konference_150"];
+export const AV_PAKKER = ["pakke_tale_musik", "pakke_praesentation", "pakke_konference", "pakke_konference_150", "pakke_mikrofon_panel", "pakke_hybrid_teams"];
 
 /* ───── Pakkestigen ─────
  *

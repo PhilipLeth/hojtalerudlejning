@@ -48,16 +48,15 @@ export default function Konferencepakke150Page() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Panel, flere mikrofoner eller hybridmøde?</h2>
           <p className="mb-6 text-white/50">
-            To trådløse mikrofoner går direkte i højtalerne. Skal der være tre eller fire på scenen, eller skal salens
-            lyd sendes videre til Teams eller Zoom, sætter vi en mixer på. Det klarer vi som et tilbud, så vi ved præcis
-            hvad der skal med.
+            To trådløse mikrofoner går direkte i højtalerne. Skal der være fire på scenen, så book Panelpakken.
+            Skal salen med på Teams eller Zoom, så book Teams- og Zoom-pakken. Begge bookes online.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/erhverv#tilbud"
+              href="/lej-mikrofon"
               className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
             >
-              Få et tilbud
+              Book mikrofonpakker
             </Link>
             <Link
               href="/lydanlaeg"

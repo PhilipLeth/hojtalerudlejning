@@ -105,9 +105,9 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvor mange mikrofoner kan jeg bruge på samme tid?",
       a:
-        "To trådløse kan køre samtidig uden problemer. Skal I have flere — et band, en paneldebat — så ring " +
-        "på 31 13 28 52, så finder vi den rigtige opsætning. Til mange kilder på én gang er en mixer det, " +
-        "der binder det sammen.",
+        "To trådløse kan køre samtidig uden mixer. Skal I have fire mikrofoner til et panel, så book " +
+        "Panelpakken. Skal lyden også på Teams eller Zoom, så book Teams- og Zoom-pakken med USB-mixer. " +
+        "Begge pakker ligger på mikrofon-siden og bookes online.",
     },
     AFHENTNING,
     LEJEPERIODE,
@@ -223,8 +223,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Kan jeg tilslutte mikrofon til anlægget?",
       a:
         "Ja. En trådløs mikrofon (295 kr) eller en Shure BLX PRO (595 kr) forbindes direkte til højtaleren med det " +
-        "medfølgende kabel. Har I brug for mixer og flere mikrofoner til et panel, laver vi et tilbud — ring på " +
-        "31 13 28 52.",
+        "medfølgende kabel. Fire mikrofoner til et panel booker I som Panelpakken. Skal lyden også på Teams eller " +
+        "Zoom, så book Teams- og Zoom-pakken. Begge ligger på /av-udstyr og bookes online.",
     },
     {
       q: "Er anlægget kraftigt nok til udendørs brug?",
@@ -383,8 +383,9 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Skal der en mixer imellem mikrofonen og højtaleren?",
       a:
-        "Nej. Alle vores mikrofoner går direkte i højtaleren med det kabel, der følger med. Skal der være " +
-        "flere end to mikrofoner, eller lyd til Teams og Zoom, så ring — det sætter vi op efter aftale.",
+        "Nej. Én eller to mikrofoner går direkte i højtaleren med det kabel, der følger med. Skal I være " +
+        "flere på scenen, så book Panelpakken med fire trådløse mikrofoner og mixer. Skal salen med på " +
+        "Teams eller Zoom, så book Teams- og Zoom-pakken med USB-mixer — begge bookes online.",
     },
     {
       q: "Hvor mange deltagere rækker lyden til?",
@@ -466,8 +467,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       a:
         "Konferencepakken (1.395 kr) er 55\" storskærm, trådløst headset og to 10\" højtalere — klar til et " +
         "mødelokale. Til en sal med 100-150 deltagere tager Konferencepakke 150 (2.395 kr) over med to 12\" " +
-        "højtalere på stativer, Shure-mikrofon, headset og skærm. Skal der bruges flere end to mikrofoner, " +
-        "eller lyd til Teams og Zoom, sætter vi det op efter aftale — skriv til os.",
+        "højtalere på stativer, Shure-mikrofon, headset og skærm. Flere mikrofoner booker I som Panelpakken, " +
+        "og hybridmøder som Teams- og Zoom-pakken.",
     },
     {
       q: "Hvad gør vi, hvis vi er flere end 250 gæster?",
@@ -478,8 +479,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan vi få flere mikrofoner til et panel?",
       a:
-        "Ja. Ud over de trådløse mikrofoner (295 kr) og Shure BLX PRO (595 kr) sætter vi mixer og panelmikrofoner " +
-        "op efter behov, også hvis mødet skal sendes på Teams eller Zoom. Det aftales i et tilbud.",
+        "Ja. Book Panelpakken med fire trådløse mikrofoner, mixer og højtalere, eller læg flere mikrofoner " +
+        "i kurven sammen med mixeren. Skal mødet også på Teams eller Zoom, så book Teams- og Zoom-pakken.",
     },
     LEJEPERIODE,
     AFHENTNING,
@@ -639,9 +640,9 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How many microphones can I use at the same time?",
       a:
-        "Two wireless microphones run side by side without trouble. If you need more — a band, a panel " +
-        "discussion — call us on 31 13 28 52 and we will find the right setup. For many sources at once, a " +
-        "mixer is what holds it together.",
+        "Two wireless microphones run side by side without a mixer. For four microphones on a panel, book " +
+        "the panel package. If the room also needs to join Teams or Zoom, book the Teams and Zoom package " +
+        "with a USB mixer. Both are booked online on the microphone page.",
     },
     AFHENTNING_EN,
     LEJEPERIODE_EN,

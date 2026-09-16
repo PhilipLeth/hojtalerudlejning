@@ -70,7 +70,7 @@ describe("Engelsk navigation", () => {
     const src = læs("components/TopBar.tsx");
     expect(src).toMatch(/Event AV in Copenhagen/);
     expect(src).toMatch(/AV til events i København/);
-    expect(src).toContain("Delivery and setup by agreement");
+    expect(src).toContain("Add delivery and setup when you book");
   });
 });
 

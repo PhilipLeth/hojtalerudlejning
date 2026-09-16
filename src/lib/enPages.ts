@@ -13,6 +13,7 @@ import type { Locale } from "@/lib/i18n";
  */
 export const EN_PAGES = [
   "/dj-pult",
+  "/hovedtelefoner",
   "/dj",
   "/events/konference",
   "/events/moede",

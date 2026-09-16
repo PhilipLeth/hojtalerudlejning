@@ -97,7 +97,7 @@ export default function LejMikrofonPage() {
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             Vælg en mikrofon alene eller en færdig pakke med højtalere.
-            Batteridrevet tale, trådløse mikrofoner eller AV med to mikrofoner og mixer.
+            Batteridrevet tale, fire mikrofoner til panel, eller Teams/Zoom — book online.
           </p>
           <a
             href="#pakker"
@@ -153,8 +153,8 @@ export default function LejMikrofonPage() {
             </a>
           </div>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Én mikrofon går direkte i højtaleren. Skal to mikrofoner og musik køre
-            samtidig, er det mixeren, der samler det.
+            Én eller to mikrofoner går direkte i højtaleren. Fire mikrofoner og
+            Teams/Zoom booker I som pakke ovenfor. Mixeren kan også lejes alene.
           </p>
           <CategoryProductGrid
             items={[

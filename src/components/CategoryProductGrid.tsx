@@ -48,12 +48,15 @@ export default function CategoryProductGrid({
   items,
   category,
   locale = "da",
+  tone = "dark",
 }: {
   items?: CategoryItem[];
   /** Alternativ: vis alle rentalProducts i en kategori */
   category?: string;
   /** Sprog, styrer kortets tekster og hvor "Info" fører hen. */
   locale?: Locale;
+  /** Lys tone til det hvide AV-site, mørk til de ældre kategorisider. */
+  tone?: "dark" | "light";
 }) {
   const { speakers, addons, rentalProducts } = useProducts();
   const c = COPY[locale];
@@ -106,24 +109,22 @@ export default function CategoryProductGrid({
     return null;
   });
 
+  const light = tone === "light";
+
   return (
     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
       {resolved.map((p) =>
         p ? (
           <article
             key={p.id}
-            className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:border-brand-500/40"
+            className={`group flex flex-col overflow-hidden rounded-2xl border transition ${light ? "border-slate-200 bg-white hover:border-brand-500/50" : "border-white/10 bg-white/[0.03] hover:border-brand-500/40"}`}
           >
-            <Link href={p.page ?? p.href!} className="relative block overflow-hidden bg-[#0d0c12] p-6">
+            <Link href={p.page ?? p.href!} className={`relative block overflow-hidden p-6 ${light ? "bg-slate-50" : "bg-[#0d0c12]"}`}>
               {p.tag && (
                 <span className="absolute left-4 top-4 z-20 rounded-full bg-brand-500 px-2.5 py-0.5 text-[11px] font-bold text-black">
                   {p.tag}
                 </span>
               )}
-              {/* Nogle varer har endnu ikke et produktfoto. Før faldt de
-                  tilbage på lys-pakkens billede, så en mixer blev vist som en
-                  lyseffekt, et forkert billede er værre end intet. Nu står
-                  navnet i stedet, indtil fotoet findes. */}
               {p.image ? (
                 <img loading="lazy" decoding="async"
                   src={p.image}
@@ -133,19 +134,19 @@ export default function CategoryProductGrid({
                   className="mx-auto h-40 w-full object-contain transition duration-300 group-hover:scale-105 group-hover:opacity-20"
                 />
               ) : (
-                <div className="mx-auto flex h-40 w-full items-center justify-center rounded-xl border border-dashed border-white/10 bg-white/[0.02] px-4 transition duration-300 group-hover:opacity-20">
-                  <span className="text-center text-sm font-medium text-white/40">{p.name}</span>
+                <div className={`mx-auto flex h-40 w-full items-center justify-center rounded-xl border border-dashed px-4 transition duration-300 group-hover:opacity-20 ${light ? "border-slate-200 bg-white" : "border-white/10 bg-white/[0.02]"}`}>
+                  <span className={`text-center text-sm font-medium ${light ? "text-slate-400" : "text-white/40"}`}>{p.name}</span>
                 </div>
               )}
               {p.contents.length > 0 && (
-                <div className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-center bg-[#0d0c12]/75 px-5 opacity-0 transition duration-300 group-hover:opacity-100">
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-brand-400">
+                <div className={`pointer-events-none absolute inset-0 z-10 flex flex-col justify-center px-5 opacity-0 transition duration-300 group-hover:opacity-100 ${light ? "bg-white/95" : "bg-[#0d0c12]/75"}`}>
+                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-brand-500">
                     {c.included}
                   </p>
                   <ul className="space-y-1">
                     {p.contents.map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-sm text-white/90">
-                        <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-brand-400" />
+                      <li key={item} className={`flex items-start gap-2 text-sm ${light ? "text-slate-700" : "text-white/90"}`}>
+                        <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-brand-500" />
                         {item}
                       </li>
                     ))}
@@ -154,11 +155,11 @@ export default function CategoryProductGrid({
               )}
             </Link>
             <div className="flex flex-1 flex-col p-5">
-              <h3 className="text-xl font-semibold text-white">{p.name}</h3>
-              <p className="mt-1 flex-1 text-sm text-white/40">{p.desc}</p>
+              <h3 className={`text-xl font-semibold ${light ? "text-slate-900" : "text-white"}`}>{p.name}</h3>
+              <p className={`mt-1 flex-1 text-sm ${light ? "text-slate-500" : "text-white/40"}`}>{p.desc}</p>
               <div className="mt-4 flex items-center justify-between gap-3">
-                <p className="text-2xl font-bold text-brand-400">
-                  {p.price} {c.currency}<span className="ml-1 text-xs font-normal text-white/40">{c.perWeekend}</span>
+                <p className="text-2xl font-bold text-brand-600">
+                  {p.price} {c.currency}<span className={`ml-1 text-xs font-normal ${light ? "text-slate-400" : "text-white/40"}`}>{c.perWeekend}</span>
                 </p>
                 <div className="flex gap-2">
                   <Link
@@ -170,7 +171,7 @@ export default function CategoryProductGrid({
                   {p.page && (
                     <Link
                       href={p.page}
-                      className="rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white/70 transition hover:border-brand-500/40 hover:text-brand-400"
+                      className={`rounded-full border px-5 py-2.5 text-sm font-semibold transition ${light ? "border-slate-200 text-slate-600 hover:border-brand-500/40 hover:text-brand-600" : "border-white/15 text-white/70 hover:border-brand-500/40 hover:text-brand-400"}`}
                     >
                       {c.info}
                     </Link>

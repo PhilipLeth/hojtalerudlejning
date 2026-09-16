@@ -8,11 +8,12 @@ export const djGearProducts: RentalProduct[] = [
     "image": "/images/product-dj-flx4-white.webp",
     "name_da": "DJ-pult · Pioneer DDJ-FLX4",
     "name_en": "DJ controller · Pioneer DDJ-FLX4",
-    "desc_da": "Pioneer DDJ-FLX4 med iPad i flightcase og mulighed for Spotify via djay. Bemærk: Kræver internetforbindelse på din iPad under afspilning, og musikken er kun til privat brug. Spotify Premium kræves. DJ og højtalere vælges separat.",
-    "desc_en": "Pioneer DDJ-FLX4 with an iPad in a flight case and Spotify connectivity via djay. Note: Your iPad needs an internet connection during playback, and the music is for private use only. Spotify Premium required. DJ and speakers are hired separately.",
+    "desc_da": "Pioneer DDJ-FLX4 med iPad i flightcase, DJ-hovedtelefoner og mulighed for Spotify via djay. Bemærk: Kræver internetforbindelse på din iPad under afspilning, og musikken er kun til privat brug. Spotify Premium kræves. DJ og højtalere vælges separat.",
+    "desc_en": "Pioneer DDJ-FLX4 with an iPad in a flight case, DJ headphones and Spotify connectivity via djay. Note: Your iPad needs an internet connection during playback, and the music is for private use only. Spotify Premium required. DJ and speakers are hired separately.",
     "contents": [
       "Pioneer DDJ-FLX4",
       "iPad i flightcase",
+      "DJ-hovedtelefoner · Fun Generation HP 5",
       "Tilslutningskabler"
     ]
   },
@@ -29,6 +30,7 @@ export const djGearProducts: RentalProduct[] = [
     "desc_en": "Controller and two speakers for smaller parties and background music. Add a DJ/music host by the hour.",
     "contents": [
       "DJ-pult · Pioneer DDJ-FLX4",
+      "DJ-hovedtelefoner · Fun Generation HP 5",
       "Lille højtalerpakke",
       "Højtalerstativer"
     ],
@@ -71,6 +73,7 @@ export const djGearProducts: RentalProduct[] = [
     "desc_en": "Controller, two larger speakers and a subwoofer for the dance floor. Add a DJ/music host by the hour.",
     "contents": [
       "DJ-pult · Pioneer DDJ-FLX4",
+      "DJ-hovedtelefoner · Fun Generation HP 5",
       "Stor højtalerpakke",
       "Højtalerstativer",
       "Subwoofer 12”"
@@ -120,6 +123,7 @@ export const djGearProducts: RentalProduct[] = [
     "desc_en": "Controller, speakers, subwoofer, lights and a microphone for the whole evening. Add a DJ/music host by the hour.",
     "contents": [
       "DJ-pult · Pioneer DDJ-FLX4",
+      "DJ-hovedtelefoner · Fun Generation HP 5",
       "Stor højtalerpakke",
       "Højtalerstativer",
       "Subwoofer 12”",

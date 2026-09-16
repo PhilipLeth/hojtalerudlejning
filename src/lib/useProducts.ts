@@ -47,6 +47,12 @@ function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
     let next = p;
     if (!next.contents?.length && d?.contents?.length) {
       next = { ...next, contents: d.contents };
+    } else if (d?.contents?.length && next.contents?.length) {
+      // Hovedtelefoner kom med pulten efter kataloget blev gemt i KV.
+      const hp = "DJ-hovedtelefoner · Fun Generation HP 5";
+      if (d.contents.includes(hp) && !next.contents.includes(hp)) {
+        next = { ...next, contents: [...next.contents, hp] };
+      }
     }
     // Bundle-meta fra defaults hvis KV mangler dem (ældre katalog)
     if (!next.bundle?.parts?.length && d?.bundle?.parts?.length) {

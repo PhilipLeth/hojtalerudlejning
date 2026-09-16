@@ -53,6 +53,7 @@ export const PRODUCT_LABELS: Record<string, string> = {
   haandholdt_mikrofon_pro: "Håndholdt mikrofon PRO",
   headset: "Trådløst headset",
   headset_pro: "Trådløst headset PRO",
+  dj_headphones: "DJ-hovedtelefoner",
   mikrofon: "Trådløs mikrofon",
   batteri: "Ekstra batteri",
   low_fog: "Low fog-maskine",
@@ -89,6 +90,7 @@ export const PRODUCT_CATEGORY: Record<string, string> = {
   headset: "av",
   headset_pro: "av",
   mikrofon: "av",
+  dj_headphones: "lyd",
 };
 
 /** Skip levering m.m. — optager ikke fysisk lager. */

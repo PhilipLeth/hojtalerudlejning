@@ -7,195 +7,112 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import BundleGrid from "@/components/BundleGrid";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { AV_PAKKER } from "@/lib/products";
-import { LocationKicker } from "@/components/PhoneLink";
+import Link from "next/link";
 
-/**
- * /av-udstyr, hele mødet: billede, lyd og mikrofon.
- *
- * Projektor, skærm og lærred var på pause fra august til 8. september 2026 og
- * er i udlejning igen. Siden viser begge halvdele: billedet først, fordi det er
- * dét folk søger på ("lej storskærm" alene er ~350 visninger om måneden), og
- * lyden lige efter, et møde uden lyd er lige så ubrugeligt som et uden billede.
- */
 export const metadata: Metadata = {
-  title: "Lej AV-udstyr København | Projektor, storskærm og mikrofon | Lejhøjtaler.dk",
+  title: "Lej udstyr København | Skærm, lys, mikrofon og højtaler | Lejhøjtaler.dk",
   description:
-    "Lej AV-udstyr i København: projektor fra 495 kr, 55\" storskærm fra 595 kr, lærred fra 195 kr og trådløs mikrofon fra 295 kr. Alt til mødet, konferencen og filmaftenen.",
-  keywords: [
-    "lej av-udstyr",
-    "av udstyr udlejning",
-    "lej storskærm",
-    "lej projektor",
-    "lej mikrofon",
-    "mikrofon til konference",
-    "lyd til møde leje",
-    "av-udstyr til event",
-  ],
+    "Lej AV-udstyr i København: 55\" storskærm, projektor, lærred, lys, mikrofoner og højtalere. Book pakkerne online, også til panel og Teams/Zoom.",
+  keywords: ["lej av-udstyr", "lej storskærm", "lej lys", "lej mikrofon", "lej projektor"],
   alternates: { canonical: "https://lejhojtaler.dk/av-udstyr", languages: localeAlternates("/av-udstyr") },
-  openGraph: {
-    title: "Lej AV-udstyr København | Projektor, storskærm og mikrofon | Lejhøjtaler.dk",
-    description:
-      "Projektor fra 495 kr, 55\" storskærm fra 595 kr og trådløs mikrofon fra 295 kr. Book online.",
-    url: "https://lejhojtaler.dk/av-udstyr",
-    siteName: "Lejhøjtaler.dk",
-    locale: "da_DK",
-    type: "website",
-  },
 };
 
 export default function AVUdstyrPage() {
-  const breadcrumbLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Forside",
-        item: "https://lejhojtaler.dk",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "AV-udstyr",
-        item: "https://lejhojtaler.dk/av-udstyr",
-      },
-    ],
-  };
-
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
-
-      {/* Hero */}
-      <section className="relative flex min-h-[60vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
-        <div
-          className="fixed inset-0 bg-cover bg-center opacity-55"
-          style={{ backgroundImage: "url(/images/hero.webp)" }}
-        />
-        <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
-
-        <div className="relative z-10 max-w-2xl">
-          <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
-            <LocationKicker extra="Betal ved afhentning" />
-          </p>
-          <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Lej AV-udstyr
-            <br />
-            <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              til dit event
-            </span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            Projektor, storskærm og lærred til billedet, mikrofon og højtalere
-            til lyden. Alt til mødet, konferencen og filmaftenen.
-          </p>
-          <a
-            href="#billede"
-            className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
-          >
-            Se projektor og skærm
-          </a>
+    <main className="bg-white text-slate-900">
+      <section className="mx-auto max-w-6xl px-5 py-16">
+        <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">Lej udstyr · København</p>
+        <h1 className="mt-4 max-w-3xl text-4xl font-bold sm:text-6xl">Skærm, lys, mikrofon og højtaler. Book online.</h1>
+        <p className="mt-6 max-w-2xl text-lg text-slate-600">
+          Enkeltprodukter og færdige pakker. Panel og Teams/Zoom booker I som pakke, ikke via telefon.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-4">
+          <a href="#billede" className="rounded-lg bg-brand-600 px-6 py-3 font-semibold text-white">Se skærme og projektor</a>
+          <a href="#lys" className="font-semibold text-brand-600">Se lys →</a>
         </div>
       </section>
 
-      <main className="relative z-20 bg-[#07060b]">
-        {/* Pakkerne først. Siden havde før hverken pakker eller produktlinks
-            alt AV-udstyr kunne kun findes gennem menuen, og da menuen blev
-            kortet ned, ville det have været usynligt. */}
-        <BundleGrid
-          ids={AV_PAKKER}
-          eyebrow="AV-pakke"
-          title="Færdig opsætning"
-          subtitle="Højtalere og trådløs mikrofon sat sammen til talen, billigere end delene hver for sig."
+      <BundleGrid
+        ids={AV_PAKKER}
+        eyebrow="AV-pakke"
+        title="Færdig opsætning"
+        subtitle="Book pakken online. Panel og hybridmøde ligger her, ikke som et opkald."
+      />
+
+      <section id="billede" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-16">
+        <h2 className="mb-2 text-3xl font-bold">Billede</h2>
+        <p className="mb-10 max-w-xl text-slate-500">
+          55&quot; storskærm på stativ, 32&quot; skærm, projektor og lærred. Skærmen virker i dagslys. Projektor og lærred giver et større billede.
+        </p>
+        <CategoryProductGrid
+          tone="light"
+          items={[
+            { id: "skaerm_55", href: "/skaerm", tag: "Nemmest" },
+            { id: "skaerm_32", href: "/skaerm-32" },
+            { id: "projektor", href: "/projektor" },
+            { id: "projektor_pro", href: "/projektor-pro", tag: "Skarp i dagslys" },
+            { id: "laerred_160", href: "/laerred-160" },
+          ]}
         />
+      </section>
 
-        {/* Højtalere hørte ikke til her før, og det var forkert: et møde
-            uden lyd er lige så ubrugeligt som et uden billede, og
-            Speakerpakken har mikrofonen med. */}
-        <section className="mx-auto max-w-6xl px-4 pb-16">
-          <h2 className="mb-2 text-center text-3xl font-bold">Lyd til mødet</h2>
-          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Et lokale med mere end tyve mennesker kræver forstærkning, en stemme
-            rækker ikke bagest i salen. Speakerpakken er højtaler og mikrofon i ét.
-          </p>
-          <CategoryProductGrid
-            items={[
-              { id: "pakke_speaker_mik", tag: "Højtaler + mikrofon" },
-              { id: "party", href: "/hojtalerpakke-lille" },
-              { id: "festival", href: "/hojtalerpakke-normal" },
-              { id: "soundboks", href: "/soundboks-4" },
-            ]}
-          />
-        </section>
+      <section id="lys" className="mx-auto max-w-6xl scroll-mt-24 px-5 pb-16">
+        <div className="mb-2 flex flex-wrap items-baseline gap-3">
+          <h2 className="text-3xl font-bold">Lys</h2>
+          <Link href="/festlys" className="text-sm font-semibold text-brand-600">Se alt lys →</Link>
+        </div>
+        <p className="mb-10 max-w-xl text-slate-500">
+          Fra en enkelt effekt til færdige lyspakker. Book online, og tilvælg levering hvis I vil have det sat op.
+        </p>
+        <CategoryProductGrid
+          tone="light"
+          items={[
+            { id: "lys", href: "/lys-pakke", tag: "Dansegulv" },
+            { id: "pakke_stemningslys", href: "/stemningslys" },
+            { id: "uplight_4", href: "/uplights" },
+            { id: "discokugle", href: "/discokugle" },
+            { id: "lyskaeder", href: "/lyskaeder" },
+            { id: "lyseffekt", href: "/enkelt-lyseffekt" },
+          ]}
+        />
+      </section>
 
-        <section id="mikrofoner" className="mx-auto max-w-6xl px-4 pb-16">
-          <div className="mb-2 flex flex-wrap items-baseline justify-center gap-3">
-            <h2 className="text-center text-3xl font-bold">Mikrofoner</h2>
-            <a href="/lej-mikrofon" className="text-sm text-brand-400 hover:underline">
-              Se alle mikrofoner →
-            </a>
-          </div>
-          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Alle går direkte i højtaleren, der skal ikke en mixer imellem.
-          </p>
-          <CategoryProductGrid
-            items={[
-              { id: "traadloes_mikrofon_pro", href: "/traadloes-mikrofon-pro", tag: "Bedst til tale" },
-              { id: "traadloes_mikrofon", href: "/traadloes-mikrofon" },
-              { id: "headset_pro", href: "/headset-pro" },
-              { id: "headset", href: "/headset-mikrofon" },
-              { id: "haandholdt_mikrofon_pro", href: "/haandholdt-mikrofon-pro" },
-              { id: "haandholdt_mikrofon", href: "/haandholdt-mikrofon" },
-            ]}
-          />
-        </section>
+      <section className="mx-auto max-w-6xl px-5 pb-16">
+        <h2 className="mb-2 text-3xl font-bold">Lyd</h2>
+        <p className="mb-10 max-w-xl text-slate-500">Højtalere til mødet og festen. Speakerpakken er højtaler og mikrofon i ét.</p>
+        <CategoryProductGrid
+          tone="light"
+          items={[
+            { id: "pakke_speaker_mik", tag: "Højtaler + mikrofon" },
+            { id: "party", href: "/hojtalerpakke-lille" },
+            { id: "festival", href: "/hojtalerpakke-normal" },
+            { id: "soundboks", href: "/soundboks-4" },
+          ]}
+        />
+      </section>
 
-        <section id="billede" className="mx-auto max-w-6xl px-4 pb-16">
-          <h2 className="mb-2 text-center text-3xl font-bold">Billede</h2>
-          <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            Skærmen er den nemme løsning, den skal bare have strøm og et HDMI-kabel,
-            og den virker i fuldt dagslys. Projektor og lærred giver et større
-            billede, men vil helst have mørke.
-          </p>
-          <CategoryProductGrid
-            items={[
-              { id: "skaerm_55", href: "/skaerm", tag: "Nemmest" },
-              { id: "skaerm_32", href: "/skaerm-32" },
-              { id: "projektor", href: "/projektor" },
-              { id: "projektor_pro", href: "/projektor-pro", tag: "Skarp i dagslys" },
-              { id: "laerred_160", href: "/laerred-160" },
-            ]}
-          />
-        </section>
+      <section id="mikrofoner" className="mx-auto max-w-6xl px-5 pb-16">
+        <div className="mb-2 flex flex-wrap items-baseline gap-3">
+          <h2 className="text-3xl font-bold">Mikrofoner</h2>
+          <Link href="/lej-mikrofon" className="text-sm font-semibold text-brand-600">Se alle mikrofoner →</Link>
+        </div>
+        <p className="mb-10 max-w-xl text-slate-500">
+          Én eller to går direkte i højtaleren. Fire mikrofoner og Teams/Zoom booker I som pakke.
+        </p>
+        <CategoryProductGrid
+          tone="light"
+          items={[
+            { id: "traadloes_mikrofon_pro", href: "/traadloes-mikrofon-pro", tag: "Bedst til tale" },
+            { id: "traadloes_mikrofon", href: "/traadloes-mikrofon" },
+            { id: "headset", href: "/headset-mikrofon" },
+            { id: "haandholdt_mikrofon", href: "/haandholdt-mikrofon" },
+          ]}
+        />
+      </section>
 
-        {/* Upsell */}
-        <section className="mx-auto max-w-3xl px-4 pb-24">
-          <div className="glass rounded-2xl p-8 text-center">
-            <h2 className="mb-4 text-2xl font-bold text-white">
-              Brug for højtalere til festen?
-            </h2>
-            <p className="mx-auto mb-6 max-w-md text-white/50">
-              Vi har også professionelle højtalere og festudstyr til leje.
-              Kombiner med AV-udstyr for det komplette setup.
-            </p>
-            <a
-              href="/lydanlaeg"
-              className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
-            >
-              Se højtalerpakker
-            </a>
-          </div>
-        </section>
-
-        <FaqSection items={CATEGORY_FAQ["av-udstyr"]} />
-
-        <GoogleReviews />
-        <Footer />
-      </main>
-    </>
+      <FaqSection items={CATEGORY_FAQ["av-udstyr"]} />
+      <GoogleReviews />
+      <Footer />
+    </main>
   );
 }

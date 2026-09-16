@@ -4057,7 +4057,7 @@
     "pult": {
       "id": "dj_pult",
       "pris_inkl_moms": 1995,
-      "indhold": "Pioneer DDJ-FLX4 med iPad i flightcase og tilslutningskabler",
+      "indhold": "Pioneer DDJ-FLX4 med iPad i flightcase, Fun Generation HP 5-hovedtelefoner og tilslutningskabler",
       "spotify": "Via djay med Spotify Premium. Internet under afspilning, kun privat brug.",
       "pakker": [
         "dj_pakke_lille",
@@ -4066,5 +4066,22 @@
       ]
     },
     "tekst": "Em dash fjernet fra egne offentlige tekster. Historiske ordredata og kundeanmeldelser bevares."
+  },
+  "site_feedback_2026_09_16": {
+    "fokus": "Kunder booker online. Telefon og tilbud er undtagelsen, ikke vejen ind.",
+    "dj_headphones": {
+      "id": "dj_headphones",
+      "model": "Fun Generation HP 5",
+      "kilde": "https://www.thomann.dk/fun_generation_hp_5.htm",
+      "pris_inkl_moms": 100,
+      "folge_med": "dj_pult og DJ-pakkerne. Kan også bookes alene."
+    },
+    "sider": {
+      "/": "Shop: pakkevælger og enkeltprodukter.",
+      "/eventloesninger": "Anledningshub. Pakker bookes online. Tilbud kun ved særlig opstilling.",
+      "/cases": "Egne fotos af opstillinger, med link til booking. Ikke en kopi af forsiden."
+    },
+    "udlejning": " /av-udstyr viser skærme, lys, lyd og mikrofoner. 55\" vises som skærmfoto på hvid baggrund, ligesom projektor og lærred.",
+    "ikke_ring": "Panelpakke (4 mikrofoner) og Teams/Zoom-pakke bookes online. FAQ og konferencepakke-150 peger derhen i stedet for telefon."
   }
 }

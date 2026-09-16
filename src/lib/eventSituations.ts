@@ -1,7 +1,7 @@
 export const eventSituations = [
   {
     "slug": "konference",
-    "image": "meeting",
+    "image": "/images/product-skaerm-white.webp",
     "packageIds": [
       "event_konference_1",
       "event_konference_2"
@@ -30,7 +30,7 @@ export const eventSituations = [
   },
   {
     "slug": "moede",
-    "image": "meeting",
+    "image": "/images/product-skaerm-32-white.webp",
     "packageIds": [
       "event_moede_1",
       "event_moede_2"
@@ -59,7 +59,7 @@ export const eventSituations = [
   },
   {
     "slug": "praesentation",
-    "image": "meeting",
+    "image": "/images/product-projektor-white.webp",
     "packageIds": [
       "event_praesentation_1",
       "event_praesentation_2"
@@ -88,7 +88,7 @@ export const eventSituations = [
   },
   {
     "slug": "generalforsamling",
-    "image": "meeting",
+    "image": "/images/product-mikrofon-pro-v2-white.webp",
     "packageIds": [
       "event_generalforsamling_1",
       "event_generalforsamling_2"
@@ -117,7 +117,7 @@ export const eventSituations = [
   },
   {
     "slug": "foredrag",
-    "image": "meeting",
+    "image": "/images/product-headset-v2-white.webp",
     "packageIds": [
       "event_foredrag_1",
       "event_foredrag_2"
@@ -175,7 +175,7 @@ export const eventSituations = [
   },
   {
     "slug": "produktlancering",
-    "image": "expo",
+    "image": "/images/product-uplight-v2-white.webp",
     "packageIds": [
       "event_produktlancering_1",
       "event_produktlancering_2"
@@ -233,7 +233,7 @@ export const eventSituations = [
   },
   {
     "slug": "fredagsbar",
-    "image": "concert",
+    "image": "/images/product-lys-v4-white.webp",
     "packageIds": [
       "event_fredagsbar_1",
       "event_fredagsbar_2"
@@ -262,7 +262,7 @@ export const eventSituations = [
   },
   {
     "slug": "firmafest",
-    "image": "concert",
+    "image": "/images/product-festival-v2-white.webp",
     "packageIds": [
       "event_firmafest_1",
       "event_firmafest_2"
@@ -320,7 +320,7 @@ export const eventSituations = [
   },
   {
     "slug": "bryllup",
-    "image": "reception-front",
+    "image": "/images/product-pakke-bryllup-taendt-white.webp",
     "packageIds": [
       "event_bryllup_1",
       "event_bryllup_2"
@@ -349,7 +349,7 @@ export const eventSituations = [
   },
   {
     "slug": "privatfest",
-    "image": "concert",
+    "image": "/images/product-party-v2-white.webp",
     "packageIds": [
       "event_privatfest_1",
       "event_privatfest_2"
@@ -378,7 +378,7 @@ export const eventSituations = [
   },
   {
     "slug": "filmaften",
-    "image": "meeting",
+    "image": "/images/product-laerred-v2-white.webp",
     "packageIds": [
       "event_filmaften_1",
       "event_filmaften_2"
@@ -407,7 +407,7 @@ export const eventSituations = [
   },
   {
     "slug": "udendoers",
-    "image": "reception-front",
+    "image": "/images/product-soundboks-v2-white.webp",
     "packageIds": [
       "event_udendoers_1",
       "event_udendoers_2"
@@ -436,7 +436,7 @@ export const eventSituations = [
   },
   {
     "slug": "forening",
-    "image": "reception-front",
+    "image": "/images/product-thumpgo-v2-white.webp",
     "packageIds": [
       "event_forening_1",
       "event_forening_2"
@@ -464,3 +464,12 @@ export const eventSituations = [
     }
   }
 ] as const;
+
+/** Eventfoto eller produktfoto. Produktfotos vises med contain, så skærm og projektor ikke beskæres. */
+export function situationImageSrc(image: string) {
+  return image.startsWith("/") ? image : `/images/events/${image}.webp`;
+}
+export function situationImageIsProduct(image: string) {
+  return image.startsWith("/images/product");
+}
+

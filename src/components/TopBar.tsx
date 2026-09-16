@@ -52,12 +52,12 @@ const USPS: Record<
 > = {
   da: [
     { icon: "truck", text: "AV til events i København" },
-    { icon: "calendar", text: "Levering og opsætning efter aftale" },
+    { icon: "calendar", text: "Levering og opsætning som tilvalg i bookingen" },
     { icon: "wallet", text: "Book online med priser inklusive moms" },
   ],
   en: [
     { icon: "truck", text: "Event AV in Copenhagen" },
-    { icon: "calendar", text: "Delivery and setup by agreement" },
+    { icon: "calendar", text: "Add delivery and setup when you book" },
     { icon: "wallet", text: "Book online with VAT-inclusive prices" },
   ],
 };

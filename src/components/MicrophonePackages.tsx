@@ -11,10 +11,10 @@ export default function MicrophonePackages({ locale }: { locale: Locale }) {
     eyebrow={en ? "Microphone packages" : "Mikrofonpakker"}
     title={en ? "Choose a setup for your event" : "Vælg en løsning til dit arrangement"}
     subtitle={en
-      ? "From a speech without mains power to a presentation with two wireless microphones. Speakers and connecting cables are included."
-      : "Fra en tale uden stikkontakt til en præsentation med to trådløse mikrofoner. Højtalere og forbindelseskabler er med."}
+      ? "From a speech without mains power to a four-microphone panel or a Teams/Zoom hybrid. Speakers and cables included."
+      : "Fra en tale uden stikkontakt til fire mikrofoner på et panel eller Teams/Zoom. Højtalere og kabler er med."}
     note={en
-      ? "The battery package uses a wired microphone. Wireless receivers, mixers and projectors need mains power. Tell us which laptop or music source you are bringing so we can match the connections."
-      : "Batteripakken bruger mikrofon med kabel. Trådløse modtagere, mixere og projektorer kræver strøm. Oplys hvilken computer eller musikkilde du medbringer, så tilslutningerne passer."}
+      ? "The battery package uses a wired microphone. Wireless receivers, mixers and projectors need mains power. Add a note when booking if you are bringing a laptop, so the connections match."
+      : "Batteripakken bruger mikrofon med kabel. Trådløse modtagere, mixere og projektorer kræver strøm. Skriv i kommentaren ved booking, hvilken computer du medbringer, så tilslutningerne passer."}
   />;
 }

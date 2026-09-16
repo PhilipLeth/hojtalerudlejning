@@ -107,7 +107,7 @@ function BundleCard({ product: p, locale }: { product: RentalProduct; locale: Lo
             const image = speaker?.product ?? addon?.image ?? rental?.image;
             const label = locale === "en" ? part.label_en : part.label_da;
             return <div key={part.productId} className="min-w-0 flex-1 text-center">
-              {image ? <img src={image} alt={label} loading="lazy" decoding="async" className="mx-auto h-20 w-full object-contain sm:h-24" />
+              {image ? <span className="mx-auto flex h-20 items-center justify-center rounded-md bg-white px-1 sm:h-24"><img src={image} alt={label} loading="lazy" decoding="async" className="h-full w-full object-contain" /></span>
                 : <span className="flex h-20 items-center justify-center text-xs text-white/60 sm:h-24">{label}</span>}
               {(part.qty ?? 1) > 1 && <span className="text-xs text-brand-400">× {part.qty}</span>}
             </div>;

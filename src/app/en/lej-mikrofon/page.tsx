@@ -98,7 +98,7 @@ export default function Page() {
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             Choose a microphone on its own or a complete package with speakers.
-            Battery speech setup, wireless microphones or AV with two microphones and a mixer.
+            Battery speech, a four-mic panel or Teams/Zoom — book online.
           </p>
           <a
             href="#pakker"
@@ -155,8 +155,8 @@ export default function Page() {
             </a>
           </div>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">
-            One microphone goes straight into the speaker. If two microphones and
-            music have to run at the same time, the mixer is what ties it together.
+            One or two microphones go straight into the speaker. Four microphones
+            and Teams/Zoom are booked as packages above. The mixer can also be hired on its own.
           </p>
           <CategoryProductGrid
             locale="en"

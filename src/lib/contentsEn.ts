@@ -28,6 +28,10 @@ import type { Locale } from "@/lib/i18n";
 export const CONTENTS_EN: Record<string, string> = {
   "Pioneer DDJ-FLX4": "Pioneer DDJ-FLX4",
   "iPad i flightcase": "iPad in flight case",
+  "DJ-hovedtelefoner · Fun Generation HP 5": "DJ headphones · Fun Generation HP 5",
+  "Fun Generation HP 5": "Fun Generation HP 5",
+  "3 m kabel": "3 m cable",
+  "6,3 mm jack-adapter": "6.3 mm jack adapter",
   "Tilslutningskabler": "Connection cables",
   "DJ-pult · Pioneer DDJ-FLX4": "DJ controller · Pioneer DDJ-FLX4",
   "Subwoofer 12”": "Subwoofer 12 inch",

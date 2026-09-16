@@ -245,6 +245,14 @@ describe("Addons data", () => {
     }
   });
 
+  it("DJ-hovedtelefoner koster 100 kr og følger med pulten", () => {
+    const hp = rentalProducts.find((p) => p.id === "dj_headphones")!;
+    const pult = rentalProducts.find((p) => p.id === "dj_pult")!;
+    expect(hp.price).toBe(100);
+    expect(hp.image).toBe("/images/product-hovedtelefoner.webp");
+    expect(pult.contents).toContain("DJ-hovedtelefoner · Fun Generation HP 5");
+  });
+
   it("visible equipment addons have an image", () => {
     // Kun ydelser behøver ikke et produktfoto.
     const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge"];

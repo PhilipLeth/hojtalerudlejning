@@ -48,13 +48,12 @@ export default function Page() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Panel, several microphones or a hybrid meeting?</h2>
           <p className="mb-6 text-white/50">
-            Two wireless microphones plug straight into the speakers. For three or four on stage, or if the sound from the
-            hall has to go on to Teams or Zoom, we add a mixer. We handle that as a quote, so we know exactly what has to
-            come along.
+            Two wireless microphones plug straight into the speakers. For four on stage, book the panel package.
+            If the room also needs to join Teams or Zoom, book the Teams and Zoom package. Both are booked online.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link href="/erhverv#tilbud" className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400">
-              Get a quote
+            <Link href="/en/lej-mikrofon" className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400">
+              Book microphone packages
             </Link>
             <Link href="/en/lydanlaeg" className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/70 transition hover:border-white/35">
               See the whole ladder

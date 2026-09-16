@@ -173,5 +173,49 @@ export const microphonePackages: RentalProduct[] = [
       "usecase_da": "Til præsentation og møde: projektor, lærred, to højtalere, mixer og to trådløse mikrofoner. Kræver strøm. Computer medbringes.",
       "usecase_en": "For presentations and meetings: projector, screen, two speakers, mixer and two wireless microphones. Mains power required. Bring your laptop."
     }
+  },
+  {
+    "id": "pakke_mikrofon_panel",
+    "category": "av",
+    "price": 1995,
+    "image": "/images/product-party-v2-white.webp",
+    "showPartImages": true,
+    "name_da": "Panelpakke med fire mikrofoner",
+    "name_en": "Panel package with four microphones",
+    "desc_da": "Fire trådløse mikrofoner, to højtalere og USB-mixer. Book online til panel, generalforsamling og debat. Kræver strøm.",
+    "desc_en": "Four wireless microphones, two speakers and a USB mixer. Book online for panels, assemblies and debates. Mains power required.",
+    "allowedAddons": ["stativer", "lydmand"],
+    "bundle": {
+      "parts": [
+        { "productId": "party", "label_da": "2× Alto 10″ højtalere", "label_en": "2× Alto 10″ speakers", "price": 595, "qty": 1 },
+        { "productId": "traadloes_mikrofon", "label_da": "4× Trådløs mikrofon", "label_en": "4× Wireless microphone", "price": 1180, "qty": 4 },
+        { "productId": "mixer_stor", "label_da": "t.mix mixer · 6 mikrofonindgange", "label_en": "t.mix mixer · 6 microphone inputs", "price": 395, "qty": 1 }
+      ],
+      "discount": 175,
+      "usecase_da": "Fire trådløse mikrofoner, to højtalere og USB-mixer. Book online til panel, generalforsamling og debat. Kræver strøm.",
+      "usecase_en": "Four wireless microphones, two speakers and a USB mixer. Book online for panels, assemblies and debates. Mains power required."
+    }
+  },
+  {
+    "id": "pakke_hybrid_teams",
+    "category": "av",
+    "price": 1195,
+    "image": "/images/product-mixer-tmix-1202-fx-usb.jpg",
+    "showPartImages": true,
+    "name_da": "Teams- og Zoom-pakken",
+    "name_en": "Teams and Zoom package",
+    "desc_da": "USB-mixer sender salens tale til mødet og mødets lyd i højtalerne. En trådløs mikrofon og to højtalere. Book online. Kræver strøm og jeres computer.",
+    "desc_en": "A USB mixer sends the room to the call and the call to the speakers. One wireless microphone and two speakers. Book online. Mains power and your laptop required.",
+    "allowedAddons": ["stativer", "lydmand"],
+    "bundle": {
+      "parts": [
+        { "productId": "party", "label_da": "2× Alto 10″ højtalere", "label_en": "2× Alto 10″ speakers", "price": 595, "qty": 1 },
+        { "productId": "mixer_stor", "label_da": "t.mix mixer · USB til Teams/Zoom", "label_en": "t.mix mixer · USB for Teams/Zoom", "price": 395, "qty": 1 },
+        { "productId": "traadloes_mikrofon", "label_da": "Trådløs mikrofon", "label_en": "Wireless microphone", "price": 295, "qty": 1 }
+      ],
+      "discount": 90,
+      "usecase_da": "USB-mixer sender salens tale til mødet og mødets lyd i højtalerne. En trådløs mikrofon og to højtalere. Book online. Kræver strøm og jeres computer.",
+      "usecase_en": "A USB mixer sends the room to the call and the call to the speakers. One wireless microphone and two speakers. Book online. Mains power and your laptop required."
+    }
   }
 ];
