@@ -123,13 +123,13 @@ export default function EventHome({locale = "da", detail = false, cases = false}
       </div>
       <EventHeroGallery locale={locale} />
     </section>
+    <SeasonalStrip locale={locale} />
     <div className={styles.serviceLine}>
       <span>{en ? "Book online" : "Book online"}</span>
       <span>{en ? "Delivery & setup" : "Levering & opsætning"}</span>
       <span>{en ? "Soundcheck & handover" : "Lydprøve & gennemgang"}</span>
       <span>{en ? "Technician if you add it" : "Tekniker, hvis I tilvælger det"}</span>
     </div>
-    <SeasonalStrip locale={locale} />
     <GoogleReviews locale={locale} />
     <ShopPackagePicker locale={locale} />
     <section className={styles.equipment}>
