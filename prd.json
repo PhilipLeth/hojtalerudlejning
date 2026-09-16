@@ -3864,7 +3864,7 @@
     "enkeltprodukter": "Halloween-hubben viser røg, LED-effekt, discokugle og lys-pakke. Stroboskop er skjult kladde og sælges ikke. Julefrokost-hubben viser lyskæder, farvede lyskæder, uplight 4-pak, lyseffekt og trådløs mikrofon.",
     "favicon": "Blåt lh-mærke (#1249cf) som i ProHeader. icon.svg + icon-192/512 + apple-touch-icon + favicon.ico.",
     "forside": "SeasonalStrip ligger direkte under heroen som kant-til-kant desktop-plakater (78vh / min 560px, to kolonner). Overlay-tekst på billedet. Hero-scener, ikke produktfotos.",
-    "julefrokost_hero": "Firmajulefrokost i kantinen med vores lyskæder, PAR-uplights og EV-højtalere. Fil julefrokost-kantine.webp. Grøn/rød julestemning i HalloweenHome.module.css data-theme=jul.",
+    "julefrokost_hero": "Firmajulefrokost med synligt EV-anlæg på stativer, lyskæder og rød/grøn PAR-uplight. Fil julefrokost-kantine.webp. Overlay-tekst nederst, ikke midt i billedet.",
     "checkout": "Tom /book uden produkt viser 'Ingen produkter valgt' og CTA til udstyr, ikke højtalervælgeren. Flowet bor i layout, så kurven overlever navigation."
   },
   "pakkepris_gennemgang_2026_09_14": {

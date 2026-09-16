@@ -13,12 +13,13 @@
 .seasonStrip{width:100%;max-width:none;margin:0;padding:0 0 8px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
 .seasonCard{position:relative;display:block;overflow:hidden;isolation:isolate;border-radius:0;height:min(78vh,820px);min-height:560px;color:#fff}
 .seasonCard img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 46%;transition:transform .45s}
+.seasonCard[data-season="julefrokost"] img{object-position:left 48%}
 .seasonCard:hover img{transform:scale(1.03)}
-.seasonCard>div{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:flex-start;padding:40px 48px;background:linear-gradient(90deg,rgba(8,12,28,.88) 0%,rgba(8,12,28,.42) 42%,transparent 72%),linear-gradient(180deg,rgba(8,12,28,.4) 0%,transparent 42%);color:#fff}
-.seasonCard p{font-size:13px;color:var(--season-accent,#ffd7a8);font-weight:600;margin:0 0 10px;letter-spacing:.08em;text-transform:uppercase}
-.seasonCard h2{font-size:clamp(48px,4.8vw,72px)!important;line-height:1.02;margin:0 0 12px;letter-spacing:-.045em;color:#fff!important;max-width:9em}
-.seasonCard span{display:block;font-size:22px;line-height:1.35;color:#fff;max-width:14em}
-.seasonCard strong{display:inline-block;margin-top:24px;color:#fff;font-size:16px;border-bottom:2px solid var(--season-accent,#fff);padding-bottom:3px}
+.seasonCard>div{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;padding:28px 40px 32px;background:linear-gradient(90deg,rgba(8,12,28,.72) 0%,rgba(8,12,28,.22) 38%,transparent 62%),linear-gradient(180deg,transparent 48%,rgba(8,12,28,.92));color:#fff;pointer-events:none}
+.seasonCard p{font-size:13px;color:var(--season-accent,#ffd7a8);font-weight:600;margin:0 0 8px;letter-spacing:.08em;text-transform:uppercase}
+.seasonCard h2{font-size:clamp(36px,3.6vw,54px)!important;line-height:1.02;margin:0 0 8px;letter-spacing:-.045em;color:#fff!important;max-width:9em}
+.seasonCard span{display:block;font-size:18px;line-height:1.35;color:#fff;max-width:14em}
+.seasonCard strong{display:inline-block;margin-top:14px;color:#fff;font-size:15px;border-bottom:2px solid var(--season-accent,#fff);padding-bottom:3px}
 @media(max-width:1050px){.seasonCard{height:min(62vh,560px);min-height:420px}.seasonCard>div{padding:28px 24px}.seasonCard span{font-size:17px}}
 @media(max-width:800px){.seasonStrip{grid-template-columns:1fr;gap:0}.seasonCard{height:min(70vh,480px);min-height:380px}}
 @media(prefers-reduced-motion:reduce){.seasonCard img{transition:none}}

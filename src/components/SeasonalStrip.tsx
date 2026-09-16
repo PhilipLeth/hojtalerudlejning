@@ -15,6 +15,7 @@ export default function SeasonalStrip({ locale }: { locale: Locale }) {
           key={s.id}
           href={localizedHref(s.href, locale)}
           className={styles.seasonCard}
+          data-season={s.id}
           style={{ ["--season-accent" as string]: s.accent }}
         >
           <img src={s.hero} alt="" width="1280" height="720" />
