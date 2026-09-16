@@ -58,6 +58,11 @@ function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
     if (!next.bundle?.parts?.length && d?.bundle?.parts?.length) {
       next = { ...next, bundle: d.bundle, page: next.page ?? d.page };
     }
+    // Halloween-pakkerne har custom stemningsfotos — et KV-katalog med hvide
+    // studieversioner må ikke vinde over de billeder koden peger på.
+    if (d?.image && next.id.startsWith("halloween_")) {
+      next = { ...next, image: d.image };
+    }
     return next;
   });
   return missing.length ? [...missing, ...merged] : merged;

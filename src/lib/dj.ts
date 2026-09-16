@@ -1,12 +1,11 @@
 /** DJ-timer afregnes inklusive moms. Pult, lys og anlæg vælges som separate lejeprodukter. */
-import { isSeasonActive, seasonById } from "./seasons";
 
-export const DJ_DAY_RATE = 1000;
-export const DJ_NIGHT_RATE = 1500;
-/** Julefrokost-sæsonen, samme vindue som SEASONS.julefrokost. */
-export const DJ_PEAK_MULT = 1.2;
-/** Levering, opsætning og nedtagning er med i DJ-prisen (levering_begge). */
-export const DJ_DELIVERY_KR = 795;
+/** Fast timepris, uanset klokkeslæt og sæson. Levering, opsætning og nedtagning er med. */
+export const DJ_HOUR_RATE = 1800;
+export const DJ_DAY_RATE = DJ_HOUR_RATE;
+export const DJ_NIGHT_RATE = DJ_HOUR_RATE;
+/** Levering er med i timeprisen, ikke et tillæg. */
+export const DJ_DELIVERY_KR = 0;
 export const DJ_ID = "dj_musikafvikler";
 export const DJ_LIGHT_IDS = ["lyseffekt", "lys"] as const;
 
@@ -44,10 +43,8 @@ export function dateFromDay(day?: string | null, iso?: string | null): Date | nu
   return null;
 }
 
-export function isDjPeak(date?: Date | null): boolean {
-  if (!date || Number.isNaN(date.getTime())) return false;
-  const s = seasonById("julefrokost");
-  return !!s && isSeasonActive(s, date);
+export function isDjPeak(_date?: Date | null): boolean {
+  return false;
 }
 
 function clockFromMinutes(total: number): string {
@@ -68,10 +65,8 @@ export function rangeFromHours(h: DjHours): DjHours {
   return { ...h, from: clockFromMinutes(start), to: clockFromMinutes(end) };
 }
 
-export function djRates(date?: Date | null) {
-  const peak = isDjPeak(date);
-  const m = peak ? DJ_PEAK_MULT : 1;
-  return { peak, day: Math.round(DJ_DAY_RATE * m), night: Math.round(DJ_NIGHT_RATE * m) };
+export function djRates(_date?: Date | null) {
+  return { peak: isDjPeak(), day: DJ_HOUR_RATE, night: DJ_HOUR_RATE };
 }
 
 function clockMinutes(t: string): number | null {
@@ -123,7 +118,7 @@ export function priceDj(value: unknown, date?: Date | null): {
   }
   const r = djRates(date);
   const hours = v.before23 + v.after23;
-  const labour = v.before23 * r.day + v.after23 * r.night;
+  const labour = hours * DJ_HOUR_RATE;
   return {
     before23: v.before23,
     after23: v.after23,
@@ -145,8 +140,8 @@ export function djLabel(v: DjHours, locale: "da" | "en" = "da", date?: Date | nu
         ? `${v.from}–${v.to}`
         : `kl. ${v.from.replace(/:00$/, "").replace(":", ".")}–${v.to.replace(/:00$/, "").replace(":", ".")}`
       : locale === "en"
-        ? `${p.before23} before 23:00, ${p.after23} after 23:00`
-        : `${p.before23} før kl. 23, ${p.after23} efter kl. 23`;
+        ? `${p.hours} hours`
+        : `${p.hours} timer`;
   return locale === "en"
     ? `DJ/music host, ${p.hours} hours (${tid}). Delivery, setup and collection included`
     : `DJ/musikafvikler, ${p.hours} timer (${tid}). Inkl. levering, opsætning og nedtagning`;

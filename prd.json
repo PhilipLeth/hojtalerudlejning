@@ -3852,7 +3852,8 @@
     "halloween": {
       "hub": "/halloween",
       "pakker": ["halloween_lys Heksetimen 895", "halloween_lille Monsterfesten 1495", "halloween_stor Midnatsklubben 1995"],
-      "vindue": "09-01 til 11-02"
+      "vindue": "09-01 til 11-02",
+      "billeder": "Hub og pakkesider bruger de custom stemningsfotos (product-halloween-heksetimen/monsterfesten/midnatsklubben.webp), ikke de hvide katalogversioner. whiteProductImages mapper dem ikke, og KV-kataloget må ikke overskrive billedet."
     },
     "julefrokost": {
       "hub": "/julefrokost",
@@ -4066,7 +4067,7 @@
       "forening"
     ],
     "packages": "32 pakker fra eksisterende katalogdele, 5% rabat afrundet ned til nærmeste 5 kr. Enkeltproduktvalg har ingen rabat. Transport, opsætning og bemanding er separat.",
-    "dj": "DJ/musikafvikler med start/slut. 1.000 kr/time før kl. 23 og 1.500 kr/time efter, inkl. moms. Levering, opsætning og nedtagning med i DJ-prisen. 20 % højere i julefrokost-perioden. Anlæg efter gæsteantal og valgfrit lys. Servervalideret i booking og Stripe.",
+    "dj": "DJ/musikafvikler med start/slut. 1.800 kr/time, altid, inkl. moms. Levering, opsætning og nedtagning med i DJ-prisen. Ingen nat-tillæg, ingen julefrokost-tillæg. Anlæg efter gæsteantal og valgfrit lys. Servervalideret i booking og Stripe.",
     "images": "Alle aktive katalogfotos flyttes til hvide studiebaggrunde. Naturlige event- og casefotos bevares. Nye billed-URLer undgår månedlang browsercache.",
     "reviews": "GoogleReviews er genindsat under forsidens intro og på situationssiderne. Kun eksisterende autentiske Google-data."
   },
@@ -4074,7 +4075,7 @@
     "beslutning": "Shop og direkte booking prioriteres frem for forespørgsler. Begge sprog følges ad.",
     "forside": "16 anledninger vælges som filtre over produktpakker. Klik på hero skifter mellem fem billeder, uden autoplay. Google-anmeldelser bevares.",
     "situationer": "Pakker står før praktisk vejledning. DJ-anledninger viser også tre DJ-udstyrspakker.",
-    "dj": "Start og sluttid. Timepriser i teksten (1.000 før kl. 23 / 1.500 efter). Tilbuddet vises som sum. Levering, opsætning og nedtagning (795 kr, levering_begge) er med i DJ-prisen. 20 % højere timepris i julefrokost-sæsonen (15. sep–23. dec). Kunden vælger musikanlæg efter gæsteantal og kan tilføje lys (lyseffekt eller lys-pakke). Stor DJ-pakke har allerede lys. Serveren slår prisen op fra pickup-datoen, klienten stoler vi ikke på.",
+    "dj": "Start og sluttid. 1.800 kr/time, altid. Tilbuddet vises som timer × 1.800. Levering, opsætning og nedtagning er med i timeprisen (ikke +795). Ingen nat-tillæg, ingen julefrokost-tillæg. Kunden vælger musikanlæg efter gæsteantal og kan tilføje lys (lyseffekt eller lys-pakke). Stor DJ-pakke har allerede lys. Serveren slår prisen op, klienten stoler vi ikke på.",
     "pult": {
       "id": "dj_pult",
       "pris_inkl_moms": 1995,

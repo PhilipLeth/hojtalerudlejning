@@ -1,5 +1,5 @@
 "use client";
-import { djHoursFromRange, djRates, priceDj, type DjHours } from "@/lib/dj";
+import { DJ_HOUR_RATE, djHoursFromRange, priceDj, type DjHours } from "@/lib/dj";
 import type { Locale } from "@/lib/i18n";
 
 export default function DjHoursPicker({
@@ -18,7 +18,6 @@ export default function DjHoursPicker({
   const to = value.to ?? "21:00";
   const parsed = djHoursFromRange(from, to);
   const quote = parsed ? priceDj(parsed, date) : null;
-  const r = djRates(date);
 
   function setTime(key: "from" | "to", raw: string) {
     const nextFrom = key === "from" ? raw : from;
@@ -33,15 +32,8 @@ export default function DjHoursPicker({
       <legend className="px-2 font-semibold">{en ? "DJ/music host · start and finish" : "DJ/musikafvikler · start og slut"}</legend>
       <p className="mb-3 text-sm text-slate-600">
         {en
-          ? `${r.day.toLocaleString("en-GB")} DKK/hour before 23:00, ${r.night.toLocaleString("en-GB")} DKK/hour after. Delivery, setup and collection included.`
-          : `${r.day.toLocaleString("da-DK")} kr/time før kl. 23, ${r.night.toLocaleString("da-DK")} kr/time efter. Levering, opsætning og nedtagning er med i prisen.`}
-        {r.peak && (
-          <span className="mt-1 block text-xs">
-            {en
-              ? "Christmas party season: 20% higher DJ rate (15 Sep–23 Dec)."
-              : "Julefrokost-perioden: 20% højere DJ-pris (15. sep–23. dec)."}
-          </span>
-        )}
+          ? `${DJ_HOUR_RATE.toLocaleString("en-GB")} DKK/hour, always. Delivery, setup and collection included.`
+          : `${DJ_HOUR_RATE.toLocaleString("da-DK")} kr/time, altid. Levering, opsætning og nedtagning er med.`}
       </p>
       <div className="grid grid-cols-2 gap-3">
         <label className="text-sm">
@@ -60,8 +52,8 @@ export default function DjHoursPicker({
           </p>
           <p className="mt-1 text-sm text-slate-600">
             {en
-              ? `${quote.hours} hours · ${quote.labour.toLocaleString("en-GB")} DKK DJ + ${quote.delivery.toLocaleString("en-GB")} DKK delivery/setup`
-              : `${quote.hours} timer · ${quote.labour.toLocaleString("da-DK")} kr DJ + ${quote.delivery.toLocaleString("da-DK")} kr levering/opsætning`}
+              ? `${quote.hours} hours · ${DJ_HOUR_RATE.toLocaleString("en-GB")} DKK/hour`
+              : `${quote.hours} timer · ${DJ_HOUR_RATE.toLocaleString("da-DK")} kr/time`}
           </p>
         </>
       ) : (
