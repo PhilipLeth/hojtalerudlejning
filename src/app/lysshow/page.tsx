@@ -18,9 +18,9 @@ import { localeAlternates } from "@/lib/hreflang";
  * tilbage, /festlys handler om enkeltdelene, det her om pakkerne.
  */
 export const metadata: Metadata = {
-  title: "Lej Lysshow København | Lys, discokugle og røg fra 1.045 kr | Lejhøjtaler.dk",
+  title: "Lej Lysshow København | Lys, discokugle og røg fra 1.140 kr | Lejhøjtaler.dk",
   description:
-    "Lej et færdigt lysshow i København. Lyseffekter, discokugle, uplights og røgmaskine samlet i pakker fra 1.045 kr. Vi leverer og sætter op.",
+    "Lej et færdigt lysshow i København. Lyseffekter, discokugle, uplights og røgmaskine samlet i pakker fra 1.140 kr. Vi leverer og sætter op.",
   keywords: [
     "lej lysshow",
     "lysshow til fest",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lysshow"),
   },
   openGraph: {
-    title: "Lej Lysshow København | Fra 1.045 kr | Lejhøjtaler.dk",
+    title: "Lej Lysshow København | Fra 1.140 kr | Lejhøjtaler.dk",
     description:
       "Færdige lyspakker med effekter, discokugle, uplights og røg. Book online.",
     url: "https://lejhojtaler.dk/lysshow",

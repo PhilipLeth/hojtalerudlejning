@@ -35,7 +35,7 @@ export default function Page() {
       name="Wireless headset PRO"
       price={595}
       headline="Rent a PRO wireless headset"
-      sub="Broadcast-quality headset microphone, for conferences and stages."
+      sub="The wireless headset PRO is not available for rent right now as a separate product. Our regular wireless headset is now the Shure BLX14 at 445 DKK."
       image="/images/product-headset-pro-v2-white.webp"
       imageAlt="Professional wireless headset microphone for rent in Copenhagen"
       productId="headset_pro"

@@ -56,7 +56,7 @@ export default function Page() {
             nok til at skabe feststemning uden at fylde lokalet med udstyr. Vil I have
             lysbar til større dansegulv, er{" "}
             <a href="/lys-pakke" className="text-brand-400 underline-offset-2 hover:underline">
-              lys-pakken
+              lysbaren
             </a>{" "}
             det rigtige valg.
           </p>

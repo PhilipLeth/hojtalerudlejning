@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Wedding Package | Sound, microphone, lights and low fog | 2,695 DKK | Lejhøjtaler.dk",
+  title: "Wedding Package | Sound, microphone, lights and low fog | 2,315 DKK | Lejhøjtaler.dk",
   description:
-    "Wedding package: 2× EV 12\" speakers on stands, wireless microphone for the speeches, light package, string lights and low fog machine for 2,695 DKK, save 180 DKK. Delivery and setup available in Copenhagen.",
+    "Wedding package: 2× EV 12\" speakers on stands, wireless microphone for the speeches, light bar, string lights and low fog machine for 2,315 DKK, save 155 DKK. Delivery and setup available in Copenhagen.",
   keywords: ["wedding sound system rental copenhagen", "wedding package hire", "microphone for wedding speeches rental", "low fog first dance copenhagen", "wedding lighting rental"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/bryllupspakke",
     languages: localeAlternates("/bryllupspakke"),
   },
   openGraph: {
-    title: "Wedding package | Sound, microphone, lights and low fog | 2,695 DKK",
-    description: "Speakers on stands, wireless microphone, lights, string lights and low fog for the first dance. Save 180 DKK.",
+    title: "Wedding package | Sound, microphone, lights and low fog | 2,315 DKK",
+    description: "Speakers on stands, wireless microphone, lights, string lights and low fog for the first dance. Save 155 DKK.",
     url: "https://lejhojtaler.dk/en/bryllupspakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -28,9 +28,9 @@ export default function Page() {
       locale="en"
       slug="en/bryllupspakke"
       name="Wedding package"
-      price={2695}
+      price={2315}
       headline="The wedding package, speeches and dancefloor in one"
-      sub="Speakers on stands, wireless microphone, lights, string lights and low fog for the first dance. Save 180 DKK."
+      sub="Speakers on stands, wireless microphone, lights, string lights and low fog for the first dance. Save 155 DKK."
       image="/images/product-pakke-bryllup-taendt-white.webp"
       imageAlt="The wedding package: two EV speakers on stands, wireless microphone, warm white string lights and the low fog machine"
       productId="pakke_bryllup"
@@ -39,10 +39,10 @@ export default function Page() {
       bullets={[
         "2× EV 12\" speakers on stands, speeches during dinner, party afterwards",
         "Wireless microphone so the speeches are heard at the back",
-        "Light package: 2 coloured lamps + centre effect",
+        "Light bar: 2 coloured lamps + centre effect",
         "10 m string lights for the tent or ceiling",
         "Low fog machine, \"dancing on clouds\" for the first dance",
-        "Save 180 DKK compared to renting the parts separately",
+        "Save 155 DKK compared to renting the parts separately",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

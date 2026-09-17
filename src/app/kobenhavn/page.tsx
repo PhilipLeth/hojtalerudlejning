@@ -152,7 +152,7 @@ export default function KobenhavnPage() {
               <div className="mb-4 overflow-hidden rounded-xl">
                 <Image
                   src="/images/product-festival-v2-white.webp"
-                  alt="Stor højtalerpakke til fest i København"
+                  alt="Mellem højtalerpakke til fest i København"
                   width={600}
                   height={400}
                   className="w-full object-cover"

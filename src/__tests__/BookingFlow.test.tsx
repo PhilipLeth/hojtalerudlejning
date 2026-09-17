@@ -28,7 +28,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
     expect(screen.getByText("Vælg højtalere")).toBeInTheDocument();
     expect(screen.getByText("Lille højtalerpakke")).toBeInTheDocument();
     expect(screen.getAllByText("Soundboks 4").length).toBeGreaterThan(0);
-    expect(screen.getByText("Stor højtalerpakke")).toBeInTheDocument();
+    expect(screen.getByText("Mellem højtalerpakke")).toBeInTheDocument();
   });
 
   it("shows prices for all speakers", () => {
@@ -47,10 +47,11 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
   it("shows effects-only section with lys and røg", () => {
     render(<BookingFlow />);
     expect(screen.getByText("Uden højtalere?")).toBeInTheDocument();
-    expect(screen.getByText("Lys-pakke")).toBeInTheDocument();
+    expect(screen.getByText("Lysbar")).toBeInTheDocument();
     expect(screen.getByText("Røgmaskine")).toBeInTheDocument();
-    expect(screen.getByText("Fra 495,-")).toBeInTheDocument();
-    expect(screen.getByText("Fra 595,-")).toBeInTheDocument();
+    // produktarket 17. sept 2026: lysbar 395 kr, røgmaskine 245 kr
+    expect(screen.getByText("Fra 395,-")).toBeInTheDocument();
+    expect(screen.getByText("Fra 245,-")).toBeInTheDocument();
   });
 
   it("renders in English when locale=en", () => {
@@ -58,7 +59,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
     expect(screen.getByText("Choose speakers")).toBeInTheDocument();
     expect(screen.getByText("Small Speaker Package")).toBeInTheDocument();
     expect(screen.getAllByText("Soundboks 4").length).toBeGreaterThan(0);
-    expect(screen.getByText("Large Speaker Package")).toBeInTheDocument();
+    expect(screen.getByText("Medium Speaker Package")).toBeInTheDocument();
     expect(screen.getByText("Without speakers?")).toBeInTheDocument();
   });
 
@@ -73,7 +74,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
 
   it("advances to step 2 in effects-only mode when clicking lys", async () => {
     render(<BookingFlow />);
-    const lysButton = screen.getByText("Fra 495,-").closest("button")!;
+    const lysButton = screen.getByText("Fra 395,-").closest("button")!;
     fireEvent.click(lysButton);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
@@ -82,7 +83,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
 
   it("advances to step 2 in effects-only mode when clicking røg", async () => {
     render(<BookingFlow />);
-    const rogButton = screen.getByText("Fra 595,-").closest("button")!;
+    const rogButton = screen.getByText("Fra 245,-").closest("button")!;
     fireEvent.click(rogButton);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
@@ -181,14 +182,18 @@ describe("BookingFlow - Step 3: Addons", () => {
     // If we made it to step 3
     const step3 = screen.queryByText("Tilvalg");
     if (step3) {
-      expect(screen.getByText("Lys-pakke")).toBeInTheDocument();
+      expect(screen.getByText("Lysbar")).toBeInTheDocument();
       expect(screen.getByText("Røgmaskine")).toBeInTheDocument();
       expect(screen.getByText("Højtalerstativer")).toBeInTheDocument();
-      // Bæretasken ligger nederst i relevansrækkefølgen og er foldet væk, indtil
-      // man beder om hele listen — se tilvalgstrin.test.tsx
+      // Bæretasken er sat på pause (produktarket 17. sept 2026). Soundboks-batteriet
+      // ligger nu nederst i relevansrækkefølgen og er foldet væk, indtil man beder
+      // om hele listen — se tilvalgstrin.test.tsx
       expect(screen.queryByText("Bæretaske")).not.toBeInTheDocument();
+      expect(screen.queryByText("Soundboks batteri")).not.toBeInTheDocument();
       fireEvent.click(screen.getByText(/Vis alle tilvalg/));
-      expect(screen.getByText("Bæretaske")).toBeInTheDocument();
+      expect(screen.getByText("Soundboks batteri")).toBeInTheDocument();
+      // Pausede tilvalg kommer heller ikke frem, når listen foldes ud
+      expect(screen.queryByText("Bæretaske")).not.toBeInTheDocument();
       // Kørslen har sit eget felt med de tre valgmuligheder — ikke bare endnu
       // en tilvalgs-række
       expect(screen.getByText("Levering og afhentning")).toBeInTheDocument();
@@ -290,7 +295,8 @@ describe("BookingFlow - Preselect via ?product=", () => {
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
-    expect(screen.getByText("Tale & musik-pakken")).toBeInTheDocument();
+    // produktarket 17. sept 2026: pakken hedder nu "Speakerpakke trådløs 30-50"
+    expect(screen.getByText("Speakerpakke trådløs 30-50")).toBeInTheDocument();
     expect(screen.queryByText(/udsolgt/i)).not.toBeInTheDocument();
   });
 
@@ -328,7 +334,7 @@ describe("BookingFlow - Preselect via ?product=", () => {
 
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
-      // Soundboks ligger nu i kurven + lys-pakken er valgt
+      // Soundboks ligger nu i kurven + lysbaren er valgt
       expect(last?.count).toBe(2);
       expect(last?.total).toBe(catalogPrice("soundboks") + catalogPrice("lys"));
     });

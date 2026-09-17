@@ -21,13 +21,13 @@ The classic milestone birthday in a flat, a shared venue or a garden. It usually
 **What do you need?**
 
 - **Under 30 guests indoors:** the small speaker package is perfect. Bluetooth from your phone, and the sound fills the room.
-- **30-50 guests, or outdoors:** the large speaker package with two 12" tops. Especially if there are speeches — add a wireless microphone and it plugs straight into the speaker.
+- **30-50 guests, or outdoors:** the medium speaker package with two 12" tops. Especially if there are speeches — add a wireless microphone and it plugs straight into the speaker.
 
 **A tip for the speeches:** pause the phone, hand the birthday guest of honour the microphone, and let everyone hear every last embarrassing anecdote. A microphone makes speeches so much better.
 
 ## A teenager's party
 
-Teenagers have different expectations from the adults. They want **loud music, bass and party lights**. The large speaker package is the right choice here, together with our light package.
+Teenagers have different expectations from the adults. They want **loud music, bass and party lights**. The medium speaker package is the right choice here, together with our light bar.
 
 **Tips:**
 

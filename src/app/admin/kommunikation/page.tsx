@@ -49,7 +49,7 @@ const label: React.CSSProperties = {
 const PREVIEW = {
   fornavn: "Agnes",
   navn: "Agnes Dahle Stæhr",
-  produkter: "Stor højtalerpakke, Lys-pakke",
+  produkter: "Mellem højtalerpakke, Lysbar",
   periode: "fre 21. aug → man 24. aug",
   besked: "Fedt I fik gang i dansegulvet — kom endelig igen!",
   reviewUrl: "https://g.page/r/CbIkmN4b8vjGEBM/review",

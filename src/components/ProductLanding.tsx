@@ -90,8 +90,8 @@ export interface ProductLandingProps {
   faqExtra?: FaqItem[];
   /**
    * Navnet midt i en sætning, når produktnavnet er et fællesnavn:
-   * "Hvad koster det at leje Stor højtalerpakke?" er ikke dansk, men
-   * "…at leje den store højtalerpakke?" er. Se buildProductFaq.
+   * "Hvad koster det at leje Mellem højtalerpakke?" er ikke dansk, men
+   * "…at leje Mellem højtalerpakke?" er. Se buildProductFaq.
    */
   faqPhrase?: string;
   /**

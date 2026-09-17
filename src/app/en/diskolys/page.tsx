@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Disco light package Copenhagen | 645 DKK | Lejhøjtaler.dk",
-  description: "Disco light effect and disco ball, the dancefloor for 645 DKK. Save 145 DKK. Rental in Copenhagen.",
+  title: "Disco light package Copenhagen | 685 DKK | Lejhøjtaler.dk",
+  description: "Disco light effect and disco ball, the dancefloor for 685 DKK. Save 155 DKK. Rental in Copenhagen.",
   keywords: ["disco light rental copenhagen", "disco ball rental", "dancefloor lights rental", "party lights copenhagen"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/diskolys",
     languages: localeAlternates("/diskolys"),
   },
   openGraph: {
-    title: "Disco light package Copenhagen | 645 DKK | Lejhøjtaler.dk",
-    description: "Disco light effect and a motorised disco ball with spotlight. The cheapest way to a real dancefloor, save 145 DKK.",
+    title: "Disco light package Copenhagen | 685 DKK | Lejhøjtaler.dk",
+    description: "Disco light effect and a motorised disco ball with spotlight. The cheapest way to a real dancefloor, save 155 DKK.",
     url: "https://lejhojtaler.dk/en/diskolys",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -26,21 +26,21 @@ export default function Page() {
     <ProductLanding
       locale="en"
       slug="en/diskolys"
-      name="Disco light package"
-      price={645}
-      headline="Disco light package, the dancefloor in one box"
-      sub="Disco light effect and a motorised disco ball with spotlight. The cheapest way to a real dancefloor, save 145 DKK."
+      name="Disco light bar"
+      price={685}
+      headline="Disco light bar, the dancefloor in one box"
+      sub="Disco light effect and a motorised disco ball with spotlight. The cheapest way to a real dancefloor, save 155 DKK."
       image="/images/product-pakke-diskolys-taendt-v2-white.webp"
-      imageAlt="Disco light package switched on: a mirror ball on its stand with spotlight and an LED par light"
+      imageAlt="Disco light bar switched on: a mirror ball on its stand with spotlight and an LED par light"
       productId="pakke_diskolys"
-      faqPhrase="disco light package"
+      faqPhrase="disco light bar"
       capacity={{ level: 1, label: "the dancefloor" }}
       bullets={[
         "LED par light with automatic colour effects, no controller, just power",
         "40 cm disco ball with motor, spotlight and stand",
         "Fits in less than a moving box, easy to bring home by bike",
         "Optional fog machine makes the beams visible in the air",
-        "Save 145 DKK vs renting the parts separately",
+        "Save 155 DKK vs renting the parts separately",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

@@ -15,7 +15,7 @@
  *
  * Indtil 17. august 2026 nåede bookinger kun frem til Ads via GA4-importen, som
  * er langsom og taber attribution undervejs. Kontoen registrerede ét køb på 30
- * dage, mens Performance Max brugte 1000 kr/dag uden noget at optimere mod.
+ * dage, mens Performance Max brugte 1.000 kr/dag uden noget at optimere mod.
  * Dette event rapporterer direkte.
  *
  * Etiketten kommer fra konverteringshandlingens eget tag-snippet og hører

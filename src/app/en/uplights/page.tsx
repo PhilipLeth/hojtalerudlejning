@@ -14,9 +14,9 @@ import { catalogPrice, prisTekst } from "@/lib/products";
 const SPAR_UPLIGHT_4 = `Save ${prisTekst(4 * catalogPrice("uplight") - catalogPrice("uplight_4"))} DKK`;
 
 export const metadata: Metadata = {
-  title: "Uplighting Rental Copenhagen | From 125 DKK | Lejhøjtaler.dk",
+  title: "Uplighting Rental Copenhagen | From 195 DKK | Lejhøjtaler.dk",
   description:
-    "Rent uplights in Copenhagen from 125 DKK each, or 395 DKK for a 4-pack. Simple LED floor uplights, plug and play for weddings, confirmations and parties. Pay on pickup.",
+    "Rent uplights in Copenhagen from 195 DKK each, or 595 DKK for a 4-pack. Simple LED floor uplights, plug and play for weddings, confirmations and parties. Pay on pickup.",
   keywords: [
     "uplighting rental copenhagen",
     "uplight rental copenhagen",
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/uplights"),
   },
   openGraph: {
-    title: "Uplighting Rental Copenhagen | From 125 DKK",
+    title: "Uplighting Rental Copenhagen | From 195 DKK",
     description:
-      "Simple LED floor uplights, 125 DKK each or 395 DKK for a 4-pack. Book online.",
+      "Simple LED floor uplights, 195 DKK each or 595 DKK for a 4-pack. Book online.",
     url: "https://lejhojtaler.dk/en/uplights",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -71,7 +71,7 @@ export default function Page() {
             Uplighting rental in Copenhagen
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              from 125 DKK
+              from 195 DKK
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">

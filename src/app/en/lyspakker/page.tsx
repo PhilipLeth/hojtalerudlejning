@@ -10,7 +10,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Party Light Rental Copenhagen, packages from 645 DKK | Lejhøjtaler.dk",
   description:
-    "Light rental in Copenhagen: ready-made light packages for teen parties, party tents, weddings and dancefloors from 645 DKK. Everything is plug and play, pick up for free or have it delivered.",
+    "Light rental in Copenhagen: ready-made light bars for teen parties, party tents, weddings and dancefloors from 645 DKK. Everything is plug and play, pick up for free or have it delivered.",
   keywords: [
     "party light rental copenhagen",
     "disco light rental",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Party Light Rental Copenhagen, packages from 645 DKK",
     description:
-      "Ready-made light packages by occasion: teen party, party tent, wedding, dancefloor, or the whole venue. Plug and play, no technician.",
+      "Ready-made light bars by occasion: teen party, party tent, wedding, dancefloor, or the whole venue. Plug and play, no technician.",
     url: "https://lejhojtaler.dk/en/lyspakker",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -96,7 +96,7 @@ export default function LightPackagesPage() {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://lejhojtaler.dk/en" },
-      { "@type": "ListItem", position: 2, name: "Light packages", item: "https://lejhojtaler.dk/en/lyspakker" },
+      { "@type": "ListItem", position: 2, name: "Light bars", item: "https://lejhojtaler.dk/en/lyspakker" },
     ],
   };
 

@@ -15,6 +15,7 @@ import { describe, it, expect } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
+  AFVENTER_FOTO,
   NAV_CATEGORIES,
   PAUSEDE_PRODUKTER,
   PAUSEDE_SIDER,
@@ -68,11 +69,16 @@ describe("hidden virker hele vejen ud", () => {
       ...addons.filter((a) => a.hidden).map((a) => a.id),
       ...rentalProducts.filter((r) => r.hidden).map((r) => r.id),
     ];
-    expect(pausede.sort()).toEqual([...PAUSEDE_PRODUKTER].sort());
+    // To grunde til at være skjult (produktarket 17. sept 2026): reelt pauset, eller
+    // i kataloget med arkets pris, men uden et ærligt produktfoto endnu.
+    expect(pausede.sort()).toEqual([...PAUSEDE_PRODUKTER, ...AFVENTER_FOTO].sort());
+    for (const id of AFVENTER_FOTO) expect(PAUSEDE_PRODUKTER, `${id} står i begge lister`).not.toContain(id);
   });
 
   it("mikrofonerne er ikke på pause — de hører til lyden", () => {
-    const mikrofoner = ["traadloes_mikrofon", "traadloes_mikrofon_pro", "headset", "headset_pro", "haandholdt_mikrofon", "haandholdt_mikrofon_pro"];
+    // PRO-varianterne gik på pause med produktarket 17. sept 2026: arkets trådløse mikrofon
+    // og headset ER Shure-modellerne (445 kr), så der er ikke længere to af hver.
+    const mikrofoner = ["traadloes_mikrofon", "headset", "haandholdt_mikrofon", "haandholdt_mikrofon_pro"];
     for (const id of mikrofoner) {
       const p = rentalProducts.find((r) => r.id === id);
       expect(p, `${id} findes ikke i kataloget`).toBeTruthy();

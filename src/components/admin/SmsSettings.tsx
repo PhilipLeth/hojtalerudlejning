@@ -28,8 +28,8 @@ const PREVIEW_BOOKING = {
   period: "fre 21. aug → man 24. aug",
   pickup: "2026-08-21",
   returnDate: "2026-08-24",
-  speaker: "Stor højtalerpakke",
-  cartItems: [{ name: "Lys-pakke" }],
+  speaker: "Mellem højtalerpakke",
+  cartItems: [{ name: "Lysbar" }],
   total: 1995,
 };
 

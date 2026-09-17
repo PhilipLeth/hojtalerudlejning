@@ -5,7 +5,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_konference_1",
     "page": "/events/konference",
     "category": "av",
-    "price": 2545,
+    "price": 2160,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Konference med skærm",
@@ -13,37 +13,37 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Når programmet skal holde fra første oplæg til sidste spørgsmål.",
     "desc_en": "Keep the programme moving, from the first presentation to the final question.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Trådløs mikrofon PRO",
-      "Mixer mellem · t.mix 1202 FX USB",
+      "Trådløs mikrofon",
+      "Mixer med effekter · t.mix 1202 FXMP USB",
       "55\" Storskærm"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         },
         {
           "productId": "skaerm_55",
@@ -52,7 +52,7 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 135,
+      "discount": 115,
       "usecase_da": "Når programmet skal holde fra første oplæg til sidste spørgsmål.",
       "usecase_en": "Keep the programme moving, from the first presentation to the final question."
     }
@@ -61,7 +61,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_konference_2",
     "page": "/events/konference",
     "category": "av",
-    "price": 3485,
+    "price": 2960,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Konference med projektion",
@@ -69,11 +69,11 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Når programmet skal holde fra første oplæg til sidste spørgsmål.",
     "desc_en": "Keep the programme moving, from the first presentation to the final question.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Trådløs mikrofon PRO",
-      "Trådløst headset PRO",
-      "Mixer mellem · t.mix 1202 FX USB",
+      "Trådløs mikrofon",
+      "Trådløst headset",
+      "Mixer med effekter · t.mix 1202 FXMP USB",
       "Projektor Pro (5000 lumen)",
       "Lærred 160 cm"
     ],
@@ -81,33 +81,33 @@ export const situationPackages: RentalProduct[] = [
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         },
         {
-          "productId": "headset_pro",
-          "label_da": "Trådløst headset PRO",
-          "label_en": "Wireless headset PRO",
-          "price": 595
+          "productId": "headset",
+          "label_da": "Trådløst headset",
+          "label_en": "Wireless headset",
+          "price": 445
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         },
         {
           "productId": "projektor_pro",
@@ -122,7 +122,7 @@ export const situationPackages: RentalProduct[] = [
           "price": 195
         }
       ],
-      "discount": 185,
+      "discount": 155,
       "usecase_da": "Når programmet skal holde fra første oplæg til sidste spørgsmål.",
       "usecase_en": "Keep the programme moving, from the first presentation to the final question."
     }
@@ -159,7 +159,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_moede_2",
     "page": "/events/moede",
     "category": "av",
-    "price": 1505,
+    "price": 1460,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Møde med billede og tale",
@@ -169,7 +169,7 @@ export const situationPackages: RentalProduct[] = [
     "contents": [
       "55\" Storskærm",
       "Mackie Thump GO",
-      "Trådløs mikrofon PRO"
+      "Trådløs mikrofon"
     ],
     "bundle": {
       "parts": [
@@ -183,16 +183,16 @@ export const situationPackages: RentalProduct[] = [
           "productId": "thumpgo",
           "label_da": "Mackie Thump GO",
           "label_en": "Mackie Thump GO",
-          "price": 395
+          "price": 495
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         }
       ],
-      "discount": 80,
+      "discount": 75,
       "usecase_da": "Et møde, hvor alle kan høre og følge med.",
       "usecase_en": "A meeting everyone can hear and follow."
     }
@@ -229,7 +229,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_praesentation_2",
     "page": "/events/praesentation",
     "category": "av",
-    "price": 1405,
+    "price": 1500,
     "image": "/images/product-projektor-pro-v2-white.webp",
     "showPartImages": true,
     "name_da": "Præsentation med projektion",
@@ -260,7 +260,7 @@ export const situationPackages: RentalProduct[] = [
           "productId": "thumpgo",
           "label_da": "Mackie Thump GO",
           "label_en": "Mackie Thump GO",
-          "price": 395
+          "price": 495
         },
         {
           "productId": "haandholdt_mikrofon",
@@ -269,7 +269,7 @@ export const situationPackages: RentalProduct[] = [
           "price": 95
         }
       ],
-      "discount": 75,
+      "discount": 80,
       "usecase_da": "Gør plads til budskabet på skærmen.",
       "usecase_en": "Give your message the screen it needs."
     }
@@ -278,7 +278,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_generalforsamling_1",
     "page": "/events/generalforsamling",
     "category": "av",
-    "price": 1225,
+    "price": 1080,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Generalforsamling med tale",
@@ -288,7 +288,7 @@ export const situationPackages: RentalProduct[] = [
     "contents": [
       "Lille højtalerpakke",
       "Højtalerstativer",
-      "Trådløs mikrofon PRO"
+      "Trådløs mikrofon"
     ],
     "bundle": {
       "parts": [
@@ -302,16 +302,16 @@ export const situationPackages: RentalProduct[] = [
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         }
       ],
-      "discount": 65,
+      "discount": 55,
       "usecase_da": "Tydelig tale og plads til spørgsmål.",
       "usecase_en": "Clear speech with room for questions."
     }
@@ -320,7 +320,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_generalforsamling_2",
     "page": "/events/generalforsamling",
     "category": "av",
-    "price": 2635,
+    "price": 2250,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Generalforsamling med billede",
@@ -328,32 +328,32 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Tydelig tale og plads til spørgsmål.",
     "desc_en": "Clear speech with room for questions.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Trådløs mikrofon PRO",
+      "Trådløs mikrofon",
       "Håndholdt mikrofon (kabel)",
-      "Mixer mellem · t.mix 1202 FX USB",
+      "Mixer med effekter · t.mix 1202 FXMP USB",
       "55\" Storskærm"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         },
         {
           "productId": "haandholdt_mikrofon",
@@ -363,9 +363,9 @@ export const situationPackages: RentalProduct[] = [
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         },
         {
           "productId": "skaerm_55",
@@ -374,7 +374,7 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 140,
+      "discount": 120,
       "usecase_da": "Tydelig tale og plads til spørgsmål.",
       "usecase_en": "Clear speech with room for questions."
     }
@@ -383,7 +383,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_foredrag_1",
     "page": "/events/foredrag",
     "category": "av",
-    "price": 1225,
+    "price": 1080,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Foredrag med mikrofon",
@@ -393,7 +393,7 @@ export const situationPackages: RentalProduct[] = [
     "contents": [
       "Lille højtalerpakke",
       "Højtalerstativer",
-      "Trådløs mikrofon PRO"
+      "Trådløs mikrofon"
     ],
     "bundle": {
       "parts": [
@@ -407,16 +407,16 @@ export const situationPackages: RentalProduct[] = [
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         }
       ],
-      "discount": 65,
+      "discount": 55,
       "usecase_da": "Lad publikum koncentrere sig om indholdet.",
       "usecase_en": "Let your audience concentrate on the content."
     }
@@ -425,7 +425,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_foredrag_2",
     "page": "/events/foredrag",
     "category": "av",
-    "price": 2920,
+    "price": 2535,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Undervisning med headset og billede",
@@ -433,10 +433,10 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Lad publikum koncentrere sig om indholdet.",
     "desc_en": "Let your audience concentrate on the content.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Trådløst headset PRO",
-      "Mixer mellem · t.mix 1202 FX USB",
+      "Trådløst headset",
+      "Mixer med effekter · t.mix 1202 FXMP USB",
       "Projektor Pro (5000 lumen)",
       "Lærred 160 cm"
     ],
@@ -444,27 +444,27 @@ export const situationPackages: RentalProduct[] = [
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
-          "productId": "headset_pro",
-          "label_da": "Trådløst headset PRO",
-          "label_en": "Wireless headset PRO",
-          "price": 595
+          "productId": "headset",
+          "label_da": "Trådløst headset",
+          "label_en": "Wireless headset",
+          "price": 445
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         },
         {
           "productId": "projektor_pro",
@@ -479,7 +479,7 @@ export const situationPackages: RentalProduct[] = [
           "price": 195
         }
       ],
-      "discount": 155,
+      "discount": 135,
       "usecase_da": "Lad publikum koncentrere sig om indholdet.",
       "usecase_en": "Let your audience concentrate on the content."
     }
@@ -516,7 +516,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_messe_2",
     "page": "/events/messe",
     "category": "av",
-    "price": 1880,
+    "price": 2020,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Stand med præsentationslyd",
@@ -526,7 +526,7 @@ export const situationPackages: RentalProduct[] = [
     "contents": [
       "55\" Storskærm",
       "Mackie Thump GO",
-      "Trådløs mikrofon PRO",
+      "Trådløs mikrofon",
       "Uplight 4-pak"
     ],
     "bundle": {
@@ -541,22 +541,22 @@ export const situationPackages: RentalProduct[] = [
           "productId": "thumpgo",
           "label_da": "Mackie Thump GO",
           "label_en": "Mackie Thump GO",
-          "price": 395
+          "price": 495
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         },
         {
           "productId": "uplight_4",
           "label_da": "Uplight 4-pak",
           "label_en": "Uplight 4-pack",
-          "price": 395
+          "price": 595
         }
       ],
-      "discount": 100,
+      "discount": 110,
       "usecase_da": "Et tydeligt budskab på få kvadratmeter.",
       "usecase_en": "A clear message in a compact space."
     }
@@ -565,7 +565,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_produktlancering_1",
     "page": "/events/produktlancering",
     "category": "av",
-    "price": 1505,
+    "price": 1460,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Lancering med skærm",
@@ -575,7 +575,7 @@ export const situationPackages: RentalProduct[] = [
     "contents": [
       "55\" Storskærm",
       "Mackie Thump GO",
-      "Trådløs mikrofon PRO"
+      "Trådløs mikrofon"
     ],
     "bundle": {
       "parts": [
@@ -589,16 +589,16 @@ export const situationPackages: RentalProduct[] = [
           "productId": "thumpgo",
           "label_da": "Mackie Thump GO",
           "label_en": "Mackie Thump GO",
-          "price": 395
+          "price": 495
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         }
       ],
-      "discount": 80,
+      "discount": 75,
       "usecase_da": "Fra afsløring til præsentation.",
       "usecase_en": "From the reveal to the presentation."
     }
@@ -607,7 +607,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_produktlancering_2",
     "page": "/events/produktlancering",
     "category": "av",
-    "price": 2920,
+    "price": 2725,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Lancering med lys og stor lyd",
@@ -616,10 +616,10 @@ export const situationPackages: RentalProduct[] = [
     "desc_en": "From the reveal to the presentation.",
     "contents": [
       "55\" Storskærm",
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Trådløs mikrofon PRO",
-      "Mixer mellem · t.mix 1202 FX USB",
+      "Trådløs mikrofon",
+      "Mixer med effekter · t.mix 1202 FXMP USB",
       "Uplight 4-pak"
     ],
     "bundle": {
@@ -632,36 +632,36 @@ export const situationPackages: RentalProduct[] = [
         },
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         },
         {
           "productId": "uplight_4",
           "label_da": "Uplight 4-pak",
           "label_en": "Uplight 4-pack",
-          "price": 395
+          "price": 595
         }
       ],
-      "discount": 155,
+      "discount": 145,
       "usecase_da": "Fra afsløring til præsentation.",
       "usecase_en": "From the reveal to the presentation."
     }
@@ -670,7 +670,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_reception_1",
     "page": "/events/reception",
     "category": "lyd",
-    "price": 940,
+    "price": 1080,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Reception med tale og musik",
@@ -694,16 +694,16 @@ export const situationPackages: RentalProduct[] = [
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
           "productId": "traadloes_mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
-          "price": 295
+          "price": 445
         }
       ],
-      "discount": 50,
+      "discount": 55,
       "usecase_da": "Musik og taler med plads til samtalen.",
       "usecase_en": "Music and speeches with space for conversation."
     }
@@ -712,7 +712,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_reception_2",
     "page": "/events/reception",
     "category": "lyd",
-    "price": 2355,
+    "price": 2160,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Reception med stemningslys",
@@ -720,46 +720,46 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Musik og taler med plads til samtalen.",
     "desc_en": "Music and speeches with space for conversation.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Trådløs mikrofon PRO",
-      "Mixer mellem · t.mix 1202 FX USB",
+      "Trådløs mikrofon",
+      "Mixer med effekter · t.mix 1202 FXMP USB",
       "Uplight 4-pak"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         },
         {
           "productId": "uplight_4",
           "label_da": "Uplight 4-pak",
           "label_en": "Uplight 4-pack",
-          "price": 395
+          "price": 595
         }
       ],
-      "discount": 125,
+      "discount": 115,
       "usecase_da": "Musik og taler med plads til samtalen.",
       "usecase_en": "Music and speeches with space for conversation."
     }
@@ -768,7 +768,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_fredagsbar_1",
     "page": "/events/fredagsbar",
     "category": "lyd",
-    "price": 940,
+    "price": 1080,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Fredagsbar med musik",
@@ -792,16 +792,16 @@ export const situationPackages: RentalProduct[] = [
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
           "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
-          "price": 295
+          "price": 445
         }
       ],
-      "discount": 50,
+      "discount": 55,
       "usecase_da": "Fra arbejdsdag til en god aften sammen.",
       "usecase_en": "From the working day to a good evening together."
     }
@@ -810,7 +810,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_fredagsbar_2",
     "page": "/events/fredagsbar",
     "category": "lyd",
-    "price": 2070,
+    "price": 2115,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Fredagsbar med dansegulv",
@@ -818,43 +818,43 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Fra arbejdsdag til en god aften sammen.",
     "desc_en": "From the working day to a good evening together.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
       "Subwoofer 12\"",
-      "Lys-pakke",
+      "Lysbar",
       "Trådløs mikrofon"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
           "productId": "subwoofer",
           "label_da": "Subwoofer 12\"",
           "label_en": "Subwoofer 12\"",
-          "price": 295
+          "price": 495
         },
         {
           "productId": "lys",
-          "label_da": "Lys-pakke",
-          "label_en": "Light package",
-          "price": 495
+          "label_da": "Lysbar",
+          "label_en": "Light bar",
+          "price": 395
         },
         {
           "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
-          "price": 295
+          "price": 445
         }
       ],
       "discount": 110,
@@ -866,7 +866,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_firmafest_1",
     "page": "/events/firmafest",
     "category": "lyd",
-    "price": 1695,
+    "price": 1595,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Firmafest med tale og musik",
@@ -874,39 +874,39 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Taler ved bordene. Musik på dansegulvet.",
     "desc_en": "Dinner speeches. Music on the dance floor.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
       "Trådløs mikrofon",
-      "Mixer mellem · t.mix 1202 FX USB"
+      "Mixer med effekter · t.mix 1202 FXMP USB"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
           "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
-          "price": 295
+          "price": 445
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         }
       ],
-      "discount": 90,
+      "discount": 85,
       "usecase_da": "Taler ved bordene. Musik på dansegulvet.",
       "usecase_en": "Dinner speeches. Music on the dance floor."
     }
@@ -915,7 +915,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_firmafest_2",
     "page": "/events/firmafest",
     "category": "lyd",
-    "price": 2820,
+    "price": 3005,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Firmafest med bas og lys",
@@ -923,60 +923,60 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Taler ved bordene. Musik på dansegulvet.",
     "desc_en": "Dinner speeches. Music on the dance floor.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
       "Subwoofer 12\"",
       "Trådløs mikrofon",
-      "Mixer mellem · t.mix 1202 FX USB",
-      "Lys-pakke",
+      "Mixer med effekter · t.mix 1202 FXMP USB",
+      "Lysbar",
       "Uplight 4-pak"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
           "productId": "subwoofer",
           "label_da": "Subwoofer 12\"",
           "label_en": "Subwoofer 12\"",
-          "price": 295
+          "price": 495
         },
         {
           "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
-          "price": 295
+          "price": 445
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         },
         {
           "productId": "lys",
-          "label_da": "Lys-pakke",
-          "label_en": "Light package",
-          "price": 495
+          "label_da": "Lysbar",
+          "label_en": "Light bar",
+          "price": 395
         },
         {
           "productId": "uplight_4",
           "label_da": "Uplight 4-pak",
           "label_en": "Uplight 4-pack",
-          "price": 395
+          "price": 595
         }
       ],
-      "discount": 150,
+      "discount": 160,
       "usecase_da": "Taler ved bordene. Musik på dansegulvet.",
       "usecase_en": "Dinner speeches. Music on the dance floor."
     }
@@ -985,7 +985,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_koncert_1",
     "page": "/events/koncert",
     "category": "lyd",
-    "price": 1790,
+    "price": 1500,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Akustisk livesæt",
@@ -993,39 +993,39 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Et nærværende livesæt med styr på lyden.",
     "desc_en": "An intimate live set with sound taken care of.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Mixer mellem · t.mix 1202 FX USB",
+      "Mixer med effekter · t.mix 1202 FXMP USB",
       "Håndholdt mikrofon PRO (kabel)"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         },
         {
           "productId": "haandholdt_mikrofon_pro",
           "label_da": "Håndholdt mikrofon PRO (kabel)",
           "label_en": "Handheld microphone PRO (wired)",
-          "price": 395
+          "price": 345
         }
       ],
-      "discount": 95,
+      "discount": 80,
       "usecase_da": "Et nærværende livesæt med styr på lyden.",
       "usecase_en": "An intimate live set with sound taken care of."
     }
@@ -1034,7 +1034,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_koncert_2",
     "page": "/events/koncert",
     "category": "lyd",
-    "price": 2535,
+    "price": 2625,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Live med ekstra bas og lys",
@@ -1042,10 +1042,10 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Et nærværende livesæt med styr på lyden.",
     "desc_en": "An intimate live set with sound taken care of.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
       "Subwoofer 12\"",
-      "Mixer mellem · t.mix 1202 FX USB",
+      "Mixer med effekter · t.mix 1202 FXMP USB",
       "Håndholdt mikrofon PRO (kabel)",
       "Håndholdt mikrofon (kabel)",
       "Uplight 4-pak"
@@ -1054,33 +1054,33 @@ export const situationPackages: RentalProduct[] = [
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
           "productId": "subwoofer",
           "label_da": "Subwoofer 12\"",
           "label_en": "Subwoofer 12\"",
-          "price": 295
+          "price": 495
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         },
         {
           "productId": "haandholdt_mikrofon_pro",
           "label_da": "Håndholdt mikrofon PRO (kabel)",
           "label_en": "Handheld microphone PRO (wired)",
-          "price": 395
+          "price": 345
         },
         {
           "productId": "haandholdt_mikrofon",
@@ -1092,10 +1092,10 @@ export const situationPackages: RentalProduct[] = [
           "productId": "uplight_4",
           "label_da": "Uplight 4-pak",
           "label_en": "Uplight 4-pack",
-          "price": 395
+          "price": 595
         }
       ],
-      "discount": 135,
+      "discount": 140,
       "usecase_da": "Et nærværende livesæt med styr på lyden.",
       "usecase_en": "An intimate live set with sound taken care of."
     }
@@ -1104,7 +1104,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_bryllup_1",
     "page": "/events/bryllup",
     "category": "lyd",
-    "price": 1980,
+    "price": 1595,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Bryllup med taler og musik",
@@ -1112,39 +1112,39 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Fra den første tale til den sidste dans.",
     "desc_en": "From the first speech to the last dance.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Trådløs mikrofon PRO",
-      "Mixer mellem · t.mix 1202 FX USB"
+      "Trådløs mikrofon",
+      "Mixer med effekter · t.mix 1202 FXMP USB"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         }
       ],
-      "discount": 105,
+      "discount": 85,
       "usecase_da": "Fra den første tale til den sidste dans.",
       "usecase_en": "From the first speech to the last dance."
     }
@@ -1153,7 +1153,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_bryllup_2",
     "page": "/events/bryllup",
     "category": "lyd",
-    "price": 3105,
+    "price": 3005,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Bryllup med dansegulv og lys",
@@ -1161,60 +1161,60 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Fra den første tale til den sidste dans.",
     "desc_en": "From the first speech to the last dance.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
       "Subwoofer 12\"",
-      "Trådløs mikrofon PRO",
-      "Mixer mellem · t.mix 1202 FX USB",
-      "Lys-pakke",
+      "Trådløs mikrofon",
+      "Mixer med effekter · t.mix 1202 FXMP USB",
+      "Lysbar",
       "Uplight 4-pak"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
           "productId": "subwoofer",
           "label_da": "Subwoofer 12\"",
           "label_en": "Subwoofer 12\"",
-          "price": 295
+          "price": 495
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         },
         {
           "productId": "mixer_stor",
-          "label_da": "Mixer mellem · t.mix 1202 FX USB",
-          "label_en": "Medium mixer · t.mix 1202 FX USB",
-          "price": 395
+          "label_da": "Mixer med effekter · t.mix 1202 FXMP USB",
+          "label_en": "Mixer with effects · t.mix 1202 FXMP USB",
+          "price": 345
         },
         {
           "productId": "lys",
-          "label_da": "Lys-pakke",
-          "label_en": "Light package",
-          "price": 495
+          "label_da": "Lysbar",
+          "label_en": "Light bar",
+          "price": 395
         },
         {
           "productId": "uplight_4",
           "label_da": "Uplight 4-pak",
           "label_en": "Uplight 4-pack",
-          "price": 395
+          "price": 595
         }
       ],
-      "discount": 165,
+      "discount": 160,
       "usecase_da": "Fra den første tale til den sidste dans.",
       "usecase_en": "From the first speech to the last dance."
     }
@@ -1223,7 +1223,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_privatfest_1",
     "page": "/events/privatfest",
     "category": "lyd",
-    "price": 660,
+    "price": 655,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Privatfest med musik",
@@ -1246,7 +1246,7 @@ export const situationPackages: RentalProduct[] = [
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         }
       ],
       "discount": 35,
@@ -1258,7 +1258,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_privatfest_2",
     "page": "/events/privatfest",
     "category": "lyd",
-    "price": 1790,
+    "price": 1645,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Privatfest med lyd og lys",
@@ -1266,39 +1266,39 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Den rigtige lyd til jeres lokale og gæster.",
     "desc_en": "The right sound for your room and guests.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Lys-pakke",
+      "Lysbar",
       "Trådløs mikrofon"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
           "productId": "lys",
-          "label_da": "Lys-pakke",
-          "label_en": "Light package",
-          "price": 495
+          "label_da": "Lysbar",
+          "label_en": "Light bar",
+          "price": 395
         },
         {
           "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
-          "price": 295
+          "price": 445
         }
       ],
-      "discount": 95,
+      "discount": 85,
       "usecase_da": "Den rigtige lyd til jeres lokale og gæster.",
       "usecase_en": "The right sound for your room and guests."
     }
@@ -1307,7 +1307,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_filmaften_1",
     "page": "/events/filmaften",
     "category": "av",
-    "price": 940,
+    "price": 1035,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Fællesvisning på skærm",
@@ -1330,10 +1330,10 @@ export const situationPackages: RentalProduct[] = [
           "productId": "thumpgo",
           "label_da": "Mackie Thump GO",
           "label_en": "Mackie Thump GO",
-          "price": 395
+          "price": 495
         }
       ],
-      "discount": 50,
+      "discount": 55,
       "usecase_da": "Et stort billede og lyd, der følger med.",
       "usecase_en": "A big picture with sound to match."
     }
@@ -1342,7 +1342,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_filmaften_2",
     "page": "/events/filmaften",
     "category": "av",
-    "price": 1600,
+    "price": 1595,
     "image": "/images/product-projektor-pro-v2-white.webp",
     "showPartImages": true,
     "name_da": "Filmaften med projektor",
@@ -1379,7 +1379,7 @@ export const situationPackages: RentalProduct[] = [
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         }
       ],
       "discount": 85,
@@ -1391,7 +1391,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_udendoers_1",
     "page": "/events/udendoers",
     "category": "lyd",
-    "price": 465,
+    "price": 560,
     "image": "/images/product-thumpgo-v2-white.webp",
     "showPartImages": true,
     "name_da": "Udendørs tale",
@@ -1408,7 +1408,7 @@ export const situationPackages: RentalProduct[] = [
           "productId": "thumpgo",
           "label_da": "Mackie Thump GO",
           "label_en": "Mackie Thump GO",
-          "price": 395
+          "price": 495
         },
         {
           "productId": "haandholdt_mikrofon",
@@ -1417,7 +1417,7 @@ export const situationPackages: RentalProduct[] = [
           "price": 95
         }
       ],
-      "discount": 25,
+      "discount": 30,
       "usecase_da": "Musik og tale under åben himmel.",
       "usecase_en": "Music and speech in the open air."
     }
@@ -1426,7 +1426,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_udendoers_2",
     "page": "/events/udendoers",
     "category": "lyd",
-    "price": 845,
+    "price": 750,
     "image": "/images/product-soundboks-v2-white.webp",
     "showPartImages": true,
     "name_da": "Udendørs musik og tale",
@@ -1443,7 +1443,7 @@ export const situationPackages: RentalProduct[] = [
           "productId": "soundboks",
           "label_da": "Soundboks 4",
           "label_en": "Soundboks 4",
-          "price": 795
+          "price": 695
         },
         {
           "productId": "haandholdt_mikrofon",
@@ -1452,7 +1452,7 @@ export const situationPackages: RentalProduct[] = [
           "price": 95
         }
       ],
-      "discount": 45,
+      "discount": 40,
       "usecase_da": "Musik og tale under åben himmel.",
       "usecase_en": "Music and speech in the open air."
     }
@@ -1461,7 +1461,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_forening_1",
     "page": "/events/forening",
     "category": "lyd",
-    "price": 465,
+    "price": 560,
     "image": "/images/product-thumpgo-v2-white.webp",
     "showPartImages": true,
     "name_da": "Klubdag med mikrofon",
@@ -1478,7 +1478,7 @@ export const situationPackages: RentalProduct[] = [
           "productId": "thumpgo",
           "label_da": "Mackie Thump GO",
           "label_en": "Mackie Thump GO",
-          "price": 395
+          "price": 495
         },
         {
           "productId": "haandholdt_mikrofon",
@@ -1487,7 +1487,7 @@ export const situationPackages: RentalProduct[] = [
           "price": 95
         }
       ],
-      "discount": 25,
+      "discount": 30,
       "usecase_da": "Beskeder, præmier og musik til fællesskabet.",
       "usecase_en": "Announcements, awards and music for your community."
     }
@@ -1496,7 +1496,7 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_forening_2",
     "page": "/events/forening",
     "category": "lyd",
-    "price": 2170,
+    "price": 1835,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Klubhus med lyd og billede",
@@ -1504,30 +1504,30 @@ export const situationPackages: RentalProduct[] = [
     "desc_da": "Beskeder, præmier og musik til fællesskabet.",
     "desc_en": "Announcements, awards and music for your community.",
     "contents": [
-      "Stor højtalerpakke",
+      "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Trådløs mikrofon PRO",
+      "Trådløs mikrofon",
       "55\" Storskærm"
     ],
     "bundle": {
       "parts": [
         {
           "productId": "festival",
-          "label_da": "Stor højtalerpakke",
-          "label_en": "Large Speaker Package",
-          "price": 995
+          "label_da": "Mellem højtalerpakke",
+          "label_en": "Medium Speaker Package",
+          "price": 795
         },
         {
           "productId": "stativer",
           "label_da": "Højtalerstativer",
           "label_en": "Speaker stands",
-          "price": 100
+          "price": 95
         },
         {
-          "productId": "traadloes_mikrofon_pro",
-          "label_da": "Trådløs mikrofon PRO",
-          "label_en": "Wireless mic PRO",
-          "price": 595
+          "productId": "traadloes_mikrofon",
+          "label_da": "Trådløs mikrofon",
+          "label_en": "Wireless mic",
+          "price": 445
         },
         {
           "productId": "skaerm_55",
@@ -1536,7 +1536,7 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 115,
+      "discount": 95,
       "usecase_da": "Beskeder, præmier og musik til fællesskabet.",
       "usecase_en": "Announcements, awards and music for your community."
     }

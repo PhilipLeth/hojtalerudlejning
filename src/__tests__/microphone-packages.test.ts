@@ -37,6 +37,6 @@ describe("Mikrofonpakker som kan bookes og reserverer de rigtige antal", () => {
   it("beregner betaling på serveren fra pakkeprisen", async () => {
     const kv = { get: async () => JSON.stringify({ rentalProducts: microphonePackages }) } as unknown as KVNamespace;
     const table = await loadPriceTable(kv);
-    expect(buildLineItems(table, [{ id: "pakke_mikrofon_av" }]).totalOre).toBe(199500);
+    expect(buildLineItems(table, [{ id: "pakke_mikrofon_av" }]).totalOre).toBe(221500); // produktarket 17. sept 2026: AV-pakken 2215 kr (før 1995)
   });
 });

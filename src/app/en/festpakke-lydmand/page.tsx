@@ -5,17 +5,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Party Package with Sound Engineer | Sound + lights + tech | 5,995 DKK | Lejhøjtaler.dk",
+  title: "Party Package with Sound Engineer | Sound + lights + tech | 5,710 DKK | Lejhøjtaler.dk",
   description:
-    "Party package with a sound engineer: large speaker package + light package + AV technician for 4 hours. Delivered, set up and collected for 5,995 DKK, save 290 DKK. Sound and lights for up to 100 guests in Copenhagen.",
+    "Party package with a sound engineer: medium speaker package + light bar + AV technician for 4 hours. Delivered, set up and collected for 5,710 DKK, save 275 DKK. Sound and lights for up to 100 guests in Copenhagen.",
   keywords: ["party package with sound engineer", "sound system rental with technician copenhagen", "party sound and lights with setup", "event technician copenhagen"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/festpakke-lydmand",
     languages: localeAlternates("/festpakke-lydmand"),
   },
   openGraph: {
-    title: "Party package with sound engineer | 5,995 DKK",
-    description: "Large speaker package + light package + sound engineer for 4 hours. Delivered, set up and collected, save 290 DKK.",
+    title: "Party package with sound engineer | 5,710 DKK",
+    description: "Medium speaker package + light bar + sound engineer for 4 hours. Delivered, set up and collected, save 275 DKK.",
     url: "https://lejhojtaler.dk/en/festpakke-lydmand",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,10 +29,10 @@ export default function Page() {
       locale="en"
       slug="en/festpakke-lydmand"
       name="Party package with sound engineer"
-      price={5995}
+      price={5710}
       priceUnit="/event"
       headline="Party package with a sound engineer"
-      sub="Large speaker package + light package + AV technician for 4 hours. We arrive, set up, run the sound and pack down, save 290 DKK."
+      sub="Medium speaker package + light bar + AV technician for 4 hours. We arrive, set up, run the sound and pack down, save 275 DKK."
       image="/images/product-pakke-lydmand-fest-v2-white.webp"
       imageAlt="Party package with sound engineer: speakers, lights and the engineer's mixer"
       productId="pakke_lydmand_fest"
@@ -59,10 +59,10 @@ export default function Page() {
       ]}
       bullets={[
         "2× EV 12\" speakers with Bluetooth (up to 100 guests)",
-        "Light package: 2 coloured lamps + centre effect on a stand",
+        "Light bar: 2 coloured lamps + centre effect on a stand",
         "Sound engineer for 4 hours, sets up, runs the sound check and controls the sound",
         "Delivery, setup and collection included",
-        "Save 290 DKK compared to renting the parts separately",
+        "Save 275 DKK compared to renting the parts separately",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

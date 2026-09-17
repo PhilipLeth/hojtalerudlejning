@@ -22,7 +22,7 @@ Think of the difference between the ceiling light on, and the ceiling light off 
 - **The mood changes** — from a pleasant gathering to a party
 - **Photos and video look better** — your guests will want to share the evening
 
-## What is in our light package?
+## What is in our light bar?
 
 Our party light package is put together to be easy to set up and to give the most effect:
 
@@ -38,7 +38,7 @@ Our party light package is put together to be easy to set up and to give the mos
 
 3. **The fog machine behind the speaker.** Place it behind or beside your sound system so the fog drifts out across the dancefloor. Use it in short bursts — too much fog is also too much.
 
-4. **Combine it with sound.** Light and sound belong together. When the bass lands and the light dances in the fog, you have a party. Combine the light package with a [speaker package](/en#book) for the full effect.
+4. **Combine it with sound.** Light and sound belong together. When the bass lands and the light dances in the fog, you have a party. Combine the light bar with a [speaker package](/en#book) for the full effect.
 
 ## When are party lights worth it?
 
@@ -49,4 +49,4 @@ Our party light package is put together to be easy to set up and to give the mos
 
 ## Book lights for your party
 
-The light package can be added to any speaker package. [See prices and book here](/en#book).
+The light bar can be added to any speaker package. [See prices and book here](/en#book).

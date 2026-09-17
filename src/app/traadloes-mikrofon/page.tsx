@@ -4,9 +4,9 @@ import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Trådløs Mikrofon København | Fra 295 kr | Lejhøjtaler.dk",
+  title: "Lej Trådløs Mikrofon København | Fra 445 kr | Lejhøjtaler.dk",
   description:
-    "Lej trådløs mikrofon i København fra 295 kr/weekend. Professionel trådløs håndholdt mikrofon til taler og events. Betal ved afhentning.",
+    "Lej trådløs mikrofon i København fra 445 kr/weekend. Professionel trådløs håndholdt mikrofon til taler og events. Betal ved afhentning.",
   keywords: [
     "lej trådløs mikrofon",
     "mikrofon udlejning",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/traadloes-mikrofon"),
   },
   openGraph: {
-    title: "Lej Trådløs Mikrofon København | Fra 295 kr",
+    title: "Lej Trådløs Mikrofon København | Fra 445 kr",
     description:
-      "Lej trådløs mikrofon i København fra 295 kr. Professionel håndholdt mikrofon til taler og events. Book online.",
+      "Lej trådløs mikrofon i København fra 445 kr. Professionel håndholdt mikrofon til taler og events. Book online.",
     url: "https://lejhojtaler.dk/traadloes-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -35,7 +35,7 @@ export default function TraadloesMikrofonPage() {
     <ProductLanding
       slug="traadloes-mikrofon"
       name="Trådløs mikrofon"
-      price={295}
+      price={445}
       headline="Lej trådløs mikrofon"
       sub="Professionel trådløs håndholdt mikrofon til taler, bryllup og events."
       image="/images/product-mikrofon-v2-white.webp"

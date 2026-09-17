@@ -1,6 +1,6 @@
 ---
 title: "Festlys der gør din fest 10x federe"
-description: "Alt om festlys til leje. LED-lys, røgmaskine og lyseffekter gør din fest uforglemmelig. Lej lys-pakke til din næste fest."
+description: "Alt om festlys til leje. LED-lys, røgmaskine og lyseffekter gør din fest uforglemmelig. Lej lysbar til din næste fest."
 date: "2026-06-11"
 keywords:
   - festlys
@@ -22,7 +22,7 @@ Tænk på forskellen mellem loftlys tændt og loftlys slukket med et par farvede
 - **Stemningen skifter** – fra hyggeligt selskab til festmode
 - **Billeder og videoer ser federe ud** – dine gæster vil dele oplevelsen
 
-## Hvad inkluderer vores lys-pakke?
+## Hvad inkluderer vores lysbar?
 
 Vores festlys-pakke er sammensat, så den er nem at sette op og giver maksimal effekt:
 
@@ -38,7 +38,7 @@ Vores festlys-pakke er sammensat, så den er nem at sette op og giver maksimal e
 
 3. **Røgmaskinen bag højtaleren.** Sæt røgmaskinen bag eller ved siden af dit lydanlæg, så røgen spreder sig ud over dansegulvet. Brug den i korte pust – for meget røg er også for meget.
 
-4. **Kombiner med lyd.** Lys og lyd hænger sammen. Når bassen rammer, og lyset danser i røgen, er der fest. Kombiner vores lys-pakke med en [højtaler-pakke](/#book) for den fulde oplevelse.
+4. **Kombiner med lyd.** Lys og lyd hænger sammen. Når bassen rammer, og lyset danser i røgen, er der fest. Kombiner vores lysbar med en [højtaler-pakke](/#book) for den fulde oplevelse.
 
 ## Hvornår er festlys relevant?
 
@@ -49,4 +49,4 @@ Vores festlys-pakke er sammensat, så den er nem at sette op og giver maksimal e
 
 ## Book lys til din fest
 
-Lys-pakken kan bookes som tillæg til enhver højtaler-pakke. [Se priser og book her](/#book).
+Lysbaren kan bookes som tillæg til enhver højtaler-pakke. [Se priser og book her](/#book).

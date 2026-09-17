@@ -11,7 +11,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lej Mixer København | 4, 6 og 8 mikrofonindgange | Lejhøjtaler.dk",
   description:
-    "Lej mixer i København. t.mix 1202 FX USB med 6 mikrofonindgange til 395 kr. Lille og stor model på forespørgsel fra 295 kr.",
+    "Lej mixer i København. t.mix 1202 FXMP USB med 6 mikrofonindgange til 345 kr. Lille og stor model på forespørgsel fra 295 kr.",
   keywords: [
     "lej mixer",
     "mixer udlejning københavn",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lej Mixer København | Fra 295 kr | Lejhøjtaler.dk",
     description:
-      "Tre mixerklasser med 4, 6 eller 8 mikrofonindgange. t.mix 1202 FX USB med effekter og stereo-USB til møde, panel og band.",
+      "Tre mixerklasser med 4, 6 eller 8 mikrofonindgange. t.mix 1202 FXMP USB med effekter og stereo-USB til møde, panel og band.",
     url: "https://lejhojtaler.dk/mixer",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

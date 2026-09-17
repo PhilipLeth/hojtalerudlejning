@@ -4,9 +4,9 @@ import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Headset Microphone Rental Copenhagen | 345 DKK | Lejhøjtaler.dk",
+  title: "Headset Microphone Rental Copenhagen | 445 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a wireless headset microphone in Copenhagen for 345 DKK per weekend. Hands-free sound for presentations, conferences and teaching. Receiver and batteries included.",
+    "Rent a wireless headset microphone in Copenhagen for 445 DKK per weekend. Hands-free sound for presentations, conferences and teaching. Receiver and batteries included.",
   keywords: [
     "headset microphone rental copenhagen",
     "wireless headset rental copenhagen",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/headset-mikrofon"),
   },
   openGraph: {
-    title: "Headset Microphone Rental Copenhagen | 345 DKK",
+    title: "Headset Microphone Rental Copenhagen | 445 DKK",
     description:
       "Wireless headset microphone for presentations and conferences. Hands-free. Book online.",
     url: "https://lejhojtaler.dk/en/headset-mikrofon",
@@ -35,7 +35,7 @@ export default function Page() {
       locale="en"
       slug="en/headset-mikrofon"
       name="Wireless headset microphone"
-      price={345}
+      price={445}
       headline="Rent a headset microphone"
       sub="Wireless headset for presentations and conferences. Hands-free."
       image="/images/product-headset-v2-white.webp"

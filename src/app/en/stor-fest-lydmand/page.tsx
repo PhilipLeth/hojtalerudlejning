@@ -5,17 +5,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Big Party with Sound Engineer | Full rig + lights + fog + tech | 6,995 DKK | Lejhøjtaler.dk",
+  title: "Big Party with Sound Engineer | Full rig + lights + fog + tech | 6,560 DKK | Lejhøjtaler.dk",
   description:
-    "Big party with a sound engineer: large speaker package + subwoofer + stands + light package + fog machine + AV technician for 4 hours. Delivered, set up and collected for 6,995 DKK, save 280 DKK. For up to 150 guests.",
+    "Big party with a sound engineer: medium speaker package + subwoofer + stands + light bar + fog machine + AV technician for 4 hours. Delivered, set up and collected for 6,560 DKK, save 260 DKK. For up to 150 guests.",
   keywords: ["big party sound engineer copenhagen", "sound system rental with technician 150 people", "party sound lights fog with setup copenhagen", "dj rig with technician denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/stor-fest-lydmand",
     languages: localeAlternates("/stor-fest-lydmand"),
   },
   openGraph: {
-    title: "Big party with sound engineer | 6,995 DKK",
-    description: "Large speaker package + subwoofer + stands + lights + fog + sound engineer for 4 hours. Delivered, set up and collected, save 280 DKK.",
+    title: "Big party with sound engineer | 6,560 DKK",
+    description: "Medium speaker package + subwoofer + stands + lights + fog + sound engineer for 4 hours. Delivered, set up and collected, save 260 DKK.",
     url: "https://lejhojtaler.dk/en/stor-fest-lydmand",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,10 +29,10 @@ export default function Page() {
       locale="en"
       slug="en/stor-fest-lydmand"
       name="Big party with sound engineer"
-      price={6995}
+      price={6560}
       priceUnit="/event"
       headline="Big party with a sound engineer"
-      sub="Full rig with bass, lights and fog + AV technician for 4 hours. We set it all up and keep the dancefloor going, save 280 DKK."
+      sub="Full rig with bass, lights and fog + AV technician for 4 hours. We set it all up and keep the dancefloor going, save 260 DKK."
       image="/images/product-pakke-lydmand-stor-v2-white.webp"
       imageAlt="Big party with sound engineer: speakers, fog machine and the engineer's mixer"
       productId="pakke_lydmand_stor"
@@ -60,11 +60,11 @@ export default function Page() {
       bullets={[
         "2× EV 12\" speakers on stands (up to 150 guests)",
         "12\" subwoofer, the deep bass for the dancefloor",
-        "Light package: 2 coloured lamps + centre effect on a stand",
+        "Light bar: 2 coloured lamps + centre effect on a stand",
         "Fog machine incl. fluid, makes the light beams visible",
         "Sound engineer for 4 hours, sets up, runs the sound check and controls sound, lights and fog",
         "Delivery, setup and collection included",
-        "Save 280 DKK compared to renting the parts separately",
+        "Save 260 DKK compared to renting the parts separately",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

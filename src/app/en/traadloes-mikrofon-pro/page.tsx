@@ -35,7 +35,7 @@ export default function Page() {
       name="Wireless microphone PRO"
       price={595}
       headline="Rent a Shure BLX wireless microphone"
-      sub="Stage-quality wireless microphone for conferences, events and live performance."
+      sub="The wireless microphone PRO is not available for rent right now as a separate product. Our regular wireless microphone is now the Shure BLX24 with SM58 at 445 DKK."
       image="/images/product-mikrofon-pro-v2-white.webp"
       imageAlt="Shure BLX wireless microphone for rent in Copenhagen"
       productId="traadloes_mikrofon_pro"

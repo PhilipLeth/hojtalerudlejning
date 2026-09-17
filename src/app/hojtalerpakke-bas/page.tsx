@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Højtalerpakke 100 København | 1.495 kr | Lejhøjtaler.dk",
+  title: "Lej Stor højtalerpakke København | 1.295 kr | Lejhøjtaler.dk",
   description:
-    "Lej højtalerpakke til 50-100 gæster i København for 1.495 kr. 2× 12\" EV højtalere på stativer med 12\" subwoofer. Trinnet over den store højtalerpakke.",
+    "Lej højtalerpakke til 50-100 gæster i København for 1.295 kr. 2× 12\" EV højtalere på stativer med 12\" subwoofer. Trinnet over Mellem højtalerpakke.",
   keywords: [
     "højtalerpakke med subwoofer",
     "lej PA anlæg med bas",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/hojtalerpakke-bas"),
   },
   openGraph: {
-    title: "Lej Højtalerpakke 100 | 1.495 kr",
+    title: "Lej Stor højtalerpakke | 1.295 kr",
     description: '2× 12" EV højtalere på stativer + 12" subwoofer. Til 50-100 gæster.',
     url: "https://lejhojtaler.dk/hojtalerpakke-bas",
     siteName: "Lejhøjtaler.dk",
@@ -30,10 +30,10 @@ export default function HojtalerpakkeBasPage() {
   return (
     <ProductLanding
       slug="hojtalerpakke-bas"
-      name="Højtalerpakke 100"
-      price={1495}
+      name="Stor højtalerpakke"
+      price={1295}
       headline="Lej højtalerpakke til 50-100 gæster"
-      sub={'De store 12" EV-højtalere på stativer med en 12" subwoofer under, trinnet over den store højtalerpakke.'}
+      sub={'De store 12" EV-højtalere på stativer med en 12" subwoofer under, trinnet over Mellem højtalerpakke.'}
       image="/images/product-festival-bas-v2-white.webp"
       imageAlt="Højtalerpakke med to 12 tommer EV-højtalere på stativer og subwoofer til leje i København"
       productId="hojtaler_100"

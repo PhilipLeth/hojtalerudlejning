@@ -53,9 +53,9 @@ describe("Pakke med lydmand i bookingen", () => {
     fireEvent.change(screen.getByPlaceholderText("Leveringsadresse i København"), {
       target: { value: "Amagerbrogade 100, 2300 København S" },
     });
-    // Pakkens pris — ikke pakken plus 795 kr
-    expect(screen.getAllByText("5995 kr").length).toBeGreaterThan(0);
-    expect(screen.queryByText("6790 kr")).not.toBeInTheDocument();
+    // Pakkens pris — ikke pakken plus 795 kr. Produktarket 17. sept 2026: 5710 kr (før 5995)
+    expect(screen.getAllByText("5710 kr").length).toBeGreaterThan(0);
+    expect(screen.queryByText("6505 kr")).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByText("Videre"));
     await waitFor(() => expect(screen.getByText("Dine oplysninger")).toBeInTheDocument());
@@ -72,7 +72,7 @@ describe("Pakke med lydmand i bookingen", () => {
       expect(body.deliveryOptionId).toBe("levering_begge");
       expect(body.addonIds).not.toContain("levering_begge");
       expect(body.deliveryAddress).toBe("Amagerbrogade 100, 2300 København S");
-      expect(body.total).toBe(5995);
+      expect(body.total).toBe(5710);
     });
   });
 

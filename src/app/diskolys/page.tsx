@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej diskolys i København | Diskolys-pakken 645 kr | Lejhøjtaler.dk",
-  description: "Lej diskolys i København, pakken med lyseffekt og discokugle giver dansegulvet for 645 kr. Spar 145 kr vs. delene enkeltvis. Intet depositum.",
+  title: "Lej diskolys i København | Diskolys-pakken 685 kr | Lejhøjtaler.dk",
+  description: "Lej diskolys i København, pakken med lyseffekt og discokugle giver dansegulvet for 685 kr. Spar 155 kr vs. delene enkeltvis. Intet depositum.",
   keywords: ["lej diskolys", "diskolys til fest", "diskokugle leje", "lys til dansegulv", "diskolys sæt"],
   alternates: {
     canonical: "https://lejhojtaler.dk/diskolys",
     languages: localeAlternates("/diskolys"),
   },
   openGraph: {
-    title: "Lej diskolys i København | 645 kr",
-    description: "Diskolyseffekt og discokugle med motor og spot. Den billigste vej til et rigtigt dansegulv, spar 145 kr.",
+    title: "Lej diskolys i København | 685 kr",
+    description: "Diskolyseffekt og discokugle med motor og spot. Den billigste vej til et rigtigt dansegulv, spar 155 kr.",
     url: "https://lejhojtaler.dk/diskolys",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -26,9 +26,9 @@ export default function Side() {
     <ProductLanding
       slug="diskolys"
       name="Diskolys-pakken"
-      price={645}
+      price={685}
       headline="Lej diskolys i København"
-      sub="Diskolys-pakken: lyseffekt og discokugle med motor og spot, dansegulvet i én kasse. Spar 145 kr vs. delene enkeltvis."
+      sub="Diskolys-pakken: lyseffekt og discokugle med motor og spot, dansegulvet i én kasse. Spar 155 kr vs. delene enkeltvis."
       weekendAvailability
       image="/images/product-pakke-diskolys-taendt-v2-white.webp"
       imageAlt="Diskolys-pakken tændt: discokugle på stativ med spot og en LED-lyseffekt i farvet lys"
@@ -40,7 +40,7 @@ export default function Side() {
         "Discokugle 40 cm med motor, spot og stativ/ophæng",
         "Fylder mindre end en flyttekasse, cykler nemt hjem",
         "Tilvalg: røgmaskine, der gør strålerne synlige i luften",
-        "Spar 145 kr vs. at leje delene enkeltvis",
+        "Spar 155 kr vs. at leje delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

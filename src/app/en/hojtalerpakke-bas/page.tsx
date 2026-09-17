@@ -3,16 +3,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Speaker Package 100 Rental Copenhagen | 1,495 DKK | Lejhøjtaler.dk",
+  title: "Large speaker package Rental Copenhagen | 1,295 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a speaker package for 50-100 guests in Copenhagen for 1,495 DKK. 2× 12\" EV speakers on stands with a 12\" subwoofer. The step above the large speaker package.",
+    "Rent a speaker package for 50-100 guests in Copenhagen for 1,295 DKK. 2× 12\" EV speakers on stands with a 12\" subwoofer. The step above the medium speaker package.",
   keywords: ["speaker package with subwoofer rental", "pa system with bass hire copenhagen", "speakers for 100 people rental", "subwoofer rental copenhagen"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/hojtalerpakke-bas",
     languages: localeAlternates("/hojtalerpakke-bas"),
   },
   openGraph: {
-    title: "Speaker package 100 rental | 1,495 DKK",
+    title: "Large speaker package rental | 1,295 DKK",
     description: "2× 12\" EV speakers on stands + 12\" subwoofer. For 50-100 guests.",
     url: "https://lejhojtaler.dk/en/hojtalerpakke-bas",
     siteName: "Lejhøjtaler.dk",
@@ -26,10 +26,10 @@ export default function Page() {
     <ProductLanding
       locale="en"
       slug="en/hojtalerpakke-bas"
-      name="Speaker package 100"
-      price={1495}
+      name="Large speaker package"
+      price={1295}
       headline="Rent a speaker package for 50-100 guests"
-      sub={"The large 12\" EV speakers on stands with a 12\" subwoofer underneath, the step above the large speaker package."}
+      sub={"The large 12\" EV speakers on stands with a 12\" subwoofer underneath, the step above the medium speaker package."}
       image="/images/product-festival-bas-v2-white.webp"
       imageAlt="Speaker package with two 12 inch EV speakers on stands and a subwoofer for rent in Copenhagen"
       productId="hojtaler_100"

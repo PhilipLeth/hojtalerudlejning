@@ -265,7 +265,7 @@ describe("Produktsiden", () => {
 
 describe("Genererede produktbilleder oplyses", () => {
   /**
-   * De fem lys-pakker og Bryllupspakken har ikke et studiefoto — grejet er
+   * De fem lysbarer og Bryllupspakken har ikke et studiefoto — grejet er
    * lyst op af en model ud fra fotos af vores eget udstyr. Philip ville ikke
    * have en mærkat henover billedet, men oplysningen skal være der: en linje
    * UNDER billedet på produktsiden.

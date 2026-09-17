@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 
-/** Stor højtalerpakke + lys-pakke + røgmaskine hver for sig. */
+/** Mellem højtalerpakke + lysbar + røgmaskine hver for sig. */
 const ALT_INKLUDERET = prisTekst(catalogPrice("festival") + catalogPrice("lys") + catalogPrice("rog"));
 
 export const metadata: Metadata = {

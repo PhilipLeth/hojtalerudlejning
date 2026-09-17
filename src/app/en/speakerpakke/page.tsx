@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Speaker Package with Microphone | Large speaker package + handheld mic | 1,045 DKK | Lejhøjtaler.dk",
+  title: "Speaker Package with Microphone | Medium speaker package + handheld mic | 795 DKK | Lejhøjtaler.dk",
   description:
-    "Speaker package: large speaker package and wired handheld microphone for 1,045 DKK, save 45 DKK. Music and speeches for 30-50 guests, the mic plugs straight into the speaker. Rent in Copenhagen.",
+    "Speaker package: medium speaker package and wired handheld microphone for 795 DKK, save 95 DKK. Music and speeches for 30-50 guests, the mic plugs straight into the speaker. Rent in Copenhagen.",
   keywords: ["speaker and microphone rental copenhagen", "sound system with mic hire", "speakers for speeches and music copenhagen", "pa system with microphone denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/speakerpakke",
     languages: localeAlternates("/speakerpakke"),
   },
   openGraph: {
-    title: "Speaker package | Speakers + microphone | 1,045 DKK",
-    description: "Large speaker package + handheld microphone. Sound and speeches for 30-50 guests, save 45 DKK.",
+    title: "Speaker package | Speakers + microphone | 795 DKK",
+    description: "Medium speaker package + handheld microphone. Sound and speeches for 30-50 guests, save 95 DKK.",
     url: "https://lejhojtaler.dk/en/speakerpakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -28,9 +28,9 @@ export default function Page() {
       locale="en"
       slug="en/speakerpakke"
       name="Speaker package"
-      price={1045}
+      price={795}
       headline="Speaker package, music and speeches with no mixer in between"
-      sub="Large speaker package + wired handheld microphone. The mic plugs straight into the speaker, save 45 DKK."
+      sub="Medium speaker package + wired handheld microphone. The mic plugs straight into the speaker, save 95 DKK."
       image="/images/product-festival-v2-white.webp"
       imageAlt="Speaker package with two EV speakers and a handheld microphone"
       productId="pakke_speaker_mik"
@@ -41,7 +41,7 @@ export default function Page() {
         "Wired handheld microphone, straight into the speaker",
         "No mixer to learn, plug in and talk",
         "All cables included",
-        "Save 45 DKK compared to renting the parts separately",
+        "Save 95 DKK compared to renting the parts separately",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

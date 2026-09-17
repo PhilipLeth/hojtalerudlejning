@@ -1,7 +1,7 @@
 /**
  * FAQ-markup må ikke lyve, og der må kun være én FAQPage pr. side.
  *
- * Baggrund: forsidens FAQ påstod i lang tid 695 kr for den store højtalerpakke
+ * Baggrund: forsidens FAQ påstod i lang tid 695 kr for Mellem højtalerpakke
  * (den koster 495), at bæretasken var inkluderet (den er et tilkøb til 95 kr),
  * og at levering til 495 kr både var ud og hjem (begge veje koster 795). De tre
  * fejl stod i FAQPage-markup og var altså det, Google og svarmaskinerne fik

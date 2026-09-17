@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Teenagefest-lys | 745 kr | Lejhøjtaler.dk",
-  description: "Diskolyseffekt, discokugle og farvet lyskæde, kælderen bliver en klub for 745 kr. Spar 140 kr. Lejes i København.",
+  title: "Teenagefest-lys | 785 kr | Lejhøjtaler.dk",
+  description: "Diskolyseffekt, discokugle og farvet lyskæde, kælderen bliver en klub for 785 kr. Spar 150 kr. Lejes i København.",
   keywords: ["lys til teenagefest", "18 års fødselsdag fest lys", "diskolys til fødselsdag", "fest i kælderen lys"],
   alternates: {
     canonical: "https://lejhojtaler.dk/teenagefest-lys",
     languages: localeAlternates("/teenagefest-lys"),
   },
   openGraph: {
-    title: "Teenagefest-lys | 745 kr | Lejhøjtaler.dk",
-    description: "Diskolyseffekt, discokugle og 10 m farvet lyskæde. Sluk loftslyset, tænd pakken, spar 140 kr.",
+    title: "Teenagefest-lys | 785 kr | Lejhøjtaler.dk",
+    description: "Diskolyseffekt, discokugle og 10 m farvet lyskæde. Sluk loftslyset, tænd pakken, spar 150 kr.",
     url: "https://lejhojtaler.dk/teenagefest-lys",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -26,9 +26,9 @@ export default function Side() {
     <ProductLanding
       slug="teenagefest-lys"
       name="Teenagefest-lys"
-      price={745}
+      price={785}
       headline="Teenagefest-lys, kælderen bliver en klub"
-      sub="Diskolyseffekt, discokugle og 10 m farvet lyskæde. Sluk loftslyset, tænd pakken, spar 140 kr."
+      sub="Diskolyseffekt, discokugle og 10 m farvet lyskæde. Sluk loftslyset, tænd pakken, spar 150 kr."
       image="/images/product-pakke-teenagefest-taendt-v2-white.webp"
       imageAlt="Teenagefest-lys tændt: discokugle, LED-lyseffekt og farvet lyskæde i et mørkt rum"
       productId="pakke_teenagefest"
@@ -39,7 +39,7 @@ export default function Side() {
         "Discokugle 30 cm med motor og spot",
         "10 m farvet lyskæde til væg eller loft",
         "Alt kører på almindelige stikkontakter",
-        "Spar 140 kr vs. at leje delene enkeltvis",
+        "Spar 150 kr vs. at leje delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

@@ -37,7 +37,7 @@ export default function Page() {
       intro={"From a kids' party with disco lights to the milestone birthday with speeches. We have the packages, and every cable is included, you just connect your phone."}
       primaryProductId="pakke_fest_stor"
       primaryName={"large party package"}
-      primaryWhy={"Two 12\" EV speakers on stands fill a living room or a venue without turning shrill, and the light package puts a difference between the dinner and the party afterwards. Enough for up to 100 guests."}
+      primaryWhy={"Two 12\" EV speakers on stands fill a living room or a venue without turning shrill, and the light bar puts a difference between the dinner and the party afterwards. Enough for up to 100 guests."}
       gridItems={[{ id: "pakke_fest_stor", tag: "Recommended" }, { id: "pakke_fest_lille" }, { id: "traadloes_mikrofon" }, { id: "discokugle" }, { id: "pakke_fest_150", tag: "100-150 guests" }]}
       tips={[
         { title: "For the milestone ones: bring a microphone", text: "50th and 60th birthdays are speech parties. A wireless microphone makes sure every speech is heard, including the one where the voice goes thin." },
@@ -52,7 +52,7 @@ export default function Page() {
         { q: "Do you have anything for a kids' party?", a: "A disco ball at " + prisDkk("discokugle") + " and a single light effect at " + prisDkk("lyseffekt") + " are the most popular for children, the living room becomes a nightclub and the music comes from a phone. Both can be added directly in the booking." },
       ]}
       related={[
-        { href: "/festpakke-stor", label: "Large party package", priceId: "pakke_fest_stor" },
+        { href: "/festpakke-stor", label: "Party package 30-50", priceId: "pakke_fest_stor" },
         { href: "/ungdomsfest", label: "Sound and lights for a youth party", priceId: "pakke_ungdomsfest" },
         { href: "/havefest", label: "Sound for a garden party" },
         { href: "/konfirmation", label: "Sound for a confirmation party" },

@@ -18,9 +18,9 @@ import type { CatalogProduct } from "../../functions/api/_lib/catalog";
 const WEEKEND = upcomingWeekend("2026-08-21");
 
 const CATALOG: CatalogProduct[] = [
-  { id: "festival", name: "Stor højtalerpakke", price: 695 },
+  { id: "festival", name: "Mellem højtalerpakke", price: 695 },
   { id: "party", name: "Lille højtalerpakke", price: 395 },
-  { id: "lys", name: "Lys-pakke", price: 495 },
+  { id: "lys", name: "Lysbar", price: 495 },
 ];
 
 const INVENTORY = { festival: 2, party: 2, lys: 2 };
@@ -198,7 +198,7 @@ describe("campaignApplies", () => {
     ];
     const verdict = apply(AKTIV, {}, optaget);
     expect(verdict.ok).toBe(false);
-    if (!verdict.ok) expect(verdict.reason).toContain("Stor højtalerpakke");
+    if (!verdict.ok) expect(verdict.reason).toContain("Mellem højtalerpakke");
   });
 
   it("afviser hele ordren hvis bare én vare ikke er på udsalg", () => {

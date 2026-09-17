@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Shure Beta 58A Rental Copenhagen | 395 DKK | Lejhøjtaler.dk",
+  title: "Shure Beta 58A Rental Copenhagen | 345 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a Shure Beta 58A wired microphone in Copenhagen for 395 DKK per weekend. The industry standard for vocals and speeches. XLR cable included. Pay on pickup.",
+    "Rent a Shure Beta 58A wired microphone in Copenhagen for 345 DKK per weekend. The industry standard for vocals and speeches. XLR cable included. Pay on pickup.",
   keywords: [
     "shure beta 58a rental copenhagen",
     "vocal microphone rental copenhagen",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/haandholdt-mikrofon-pro"),
   },
   openGraph: {
-    title: "Shure Beta 58A Rental Copenhagen | 395 DKK",
+    title: "Shure Beta 58A Rental Copenhagen | 345 DKK",
     description:
       "Shure Beta 58A wired microphone, the classic for vocals and speeches. Book online.",
     url: "https://lejhojtaler.dk/en/haandholdt-mikrofon-pro",
@@ -33,7 +33,7 @@ export default function Page() {
       locale="en"
       slug="en/haandholdt-mikrofon-pro"
       name="Handheld microphone PRO (wired)"
-      price={395}
+      price={345}
       headline="Rent a Shure Beta 58A"
       sub="Shure Beta 58A with cable, the classic for vocals and speeches."
       image="/images/product-mikrofon-kabel-pro-v2-white.webp"

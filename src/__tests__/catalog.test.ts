@@ -15,7 +15,7 @@ import { addons, rentalProducts, speakers } from "@/lib/products";
 const KV = {
   speakers: [
     { id: "sb4", page: "/soundboks-4", price: 895, contents: ["Soundboks 4", "Oplader"], da: { name: "Soundboks 4" } },
-    { id: "festival", price: 495, da: { name: "Stor højtalerpakke" } },
+    { id: "festival", price: 495, da: { name: "Mellem højtalerpakke" } },
   ],
   addons: [
     { id: "levering_ud", price: 495, da: { label: "Levering + opsætning" } },
@@ -64,7 +64,7 @@ describe("productCatalog med katalog i KV", () => {
 
   it("læser navn fra da.name, da.label og name_da", () => {
     const navne = productCatalog(KV).map((p) => p.name);
-    expect(navne).toContain("Stor højtalerpakke"); // da.name
+    expect(navne).toContain("Mellem højtalerpakke"); // da.name
     expect(navne).toContain("Bæretaske"); // da.label
     expect(navne).toContain("Karaokemaskine"); // name_da
   });

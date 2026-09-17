@@ -8,9 +8,10 @@ const mixere = addons.filter((a) => a.id.startsWith("mixer_"));
 
 describe("Mixerne", () => {
   it("har tre klasser, men kun den bekræftede model kan bookes direkte", () => {
-    expect(mixere.map((m) => m.price)).toEqual([295, 395, 495]);
+    // produktarket 17. sept 2026: mixer med effekter 345 kr (før 395)
+    expect(mixere.map((m) => m.price)).toEqual([295, 345, 495]);
     expect(mixere.filter((m) => !m.hidden).map((m) => m.id)).toEqual(["mixer_stor"]);
-    expect(mixere.find((m) => m.id === "mixer_stor")!.contents).toContain("the t.mix xmix 1202 FX USB");
+    expect(mixere.find((m) => m.id === "mixer_stor")!.contents).toContain("the t.mix xmix 1202 FXMP USB");
   });
   it("bruger et eksisterende, forskelligt produktfoto til hver model", () => {
     for (const m of mixere) {

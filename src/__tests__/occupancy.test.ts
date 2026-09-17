@@ -12,7 +12,8 @@ import {
 
 describe("expandProductIds", () => {
   it("ekspanderer festpakke til dele", () => {
-    expect(expandProductIds(["pakke_fest_lille"])).toEqual(["party", "lyseffekt"]);
+    // produktarket 17. sept 2026: Festpakke 0-30 = party + lysbar (før enkelt lyseffekt)
+    expect(expandProductIds(["pakke_fest_lille"])).toEqual(["party", "lys"]);
     expect(expandProductIds(["pakke_fest_stor"])).toEqual(["festival", "lys"]);
   });
 
@@ -116,7 +117,7 @@ describe("buildOccupancy", () => {
           productIds: ["party"],
         },
       ],
-      { party: 2, lyseffekt: 1 },
+      { party: 2, lys: 1 },
       "2026-08-14",
       "2026-08-20",
     );
@@ -125,7 +126,8 @@ describe("buildOccupancy", () => {
     expect(party.bookings).toHaveLength(2);
     expect(party.bookings.map((b) => b.customerName).sort()).toEqual(["Anna", "Bo"]);
 
-    const lys = rows.find((r) => r.id === "lyseffekt")!;
+    // produktarket 17. sept 2026: pakken trækker en lysbar, ikke en enkelt lyseffekt
+    const lys = rows.find((r) => r.id === "lys")!;
     expect(lys.bookings).toHaveLength(1);
     expect(lys.bookings[0].customerName).toBe("Anna");
   });

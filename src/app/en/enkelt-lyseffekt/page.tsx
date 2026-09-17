@@ -57,7 +57,7 @@ export default function Page() {
             make it feel like a party without filling the room with equipment. If you
             want a light bar for a proper dancefloor, the{" "}
             <Link href="/en/lys-pakke" className="text-brand-400 underline-offset-2 hover:underline">
-              light package
+              light bar
             </Link>{" "}
             is the right choice.
           </p>

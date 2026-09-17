@@ -29,9 +29,9 @@ const LEGACY_COMBO: Record<string, string[]> = {
 export function speakerNameToId(name: string): string | null {
   const lower = name.toLowerCase();
   if (lower === "party" || lower.includes("lille højtalerpakke") || lower.includes("small speaker")) return "party";
-  // Gammel "Stor højtalerpakke + bas"-booking: map til legacy-id, ekspanderes nedenfor
+  // Gammel "Mellem højtalerpakke + bas"-booking: map til legacy-id, ekspanderes nedenfor
   if (lower.includes("+ bas") || lower.includes("+ bass") || lower.includes("med bas")) return "festival_bas";
-  if (lower === "festival" || lower.includes("stor højtalerpakke") || lower.includes("large speaker")) return "festival";
+  if (lower === "festival" || lower.includes("mellem højtalerpakke") || lower.includes("large speaker")) return "festival";
   if (lower.includes("thump")) return "thumpgo";
   if (lower.includes("soundboks")) return "soundboks";
   if (lower === "kun lys") return "lys-only";

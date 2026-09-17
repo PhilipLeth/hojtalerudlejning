@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lysshow-pakken | Lys, discokugle og røg | 1.495 kr | Lejhøjtaler.dk",
+  title: "Lysshow-pakken | Lys, discokugle og røg | 1.140 kr | Lejhøjtaler.dk",
   description:
-    "Lysshow-pakken: lys-pakke, discokugle 40 cm og røgmaskine for 1.495 kr, spar 190 kr. Røgen gør lysstrålerne synlige, så det ligner et show. Lejes i København.",
+    "Lysshow-pakken: lysbar, discokugle 40 cm og røgmaskine for 1.140 kr, spar 145 kr. Røgen gør lysstrålerne synlige, så det ligner et show. Lejes i København.",
   keywords: ["lysshow leje", "lej lys og røg til fest", "discokugle og røgmaskine leje", "festlys pakke københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/lysshow-pakke",
     languages: localeAlternates("/lysshow-pakke"),
   },
   openGraph: {
-    title: "Lysshow-pakken | Lys, discokugle og røg | 1.495 kr",
-    description: "Lys-pakke, discokugle og røgmaskine. Strålerne bliver synlige i luften, spar 190 kr.",
+    title: "Lysshow-pakken | Lys, discokugle og røg | 1.140 kr",
+    description: "Lysbar, discokugle og røgmaskine. Strålerne bliver synlige i luften, spar 145 kr.",
     url: "https://lejhojtaler.dk/lysshow-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,20 +27,20 @@ export default function Page() {
     <ProductLanding
       slug="lysshow-pakke"
       name="Lysshow"
-      price={1495}
+      price={1140}
       headline="Lysshow-pakken, lyset bliver synligt i luften"
-      sub="Lys-pakke, discokugle 40 cm og røgmaskine. Uden røg ser man farvede pletter på væggen; med røg bliver strålerne til et show, spar 190 kr."
+      sub="Lysbar, discokugle 40 cm og røgmaskine. Uden røg ser man farvede pletter på væggen; med røg bliver strålerne til et show, spar 145 kr."
       image="/images/product-lys-v4-white.webp"
-      imageAlt="Lysshow-pakken med lys-pakke, discokugle og røgmaskine"
+      imageAlt="Lysshow-pakken med lysbar, discokugle og røgmaskine"
       productId="pakke_lysshow"
       faqPhrase="lysshow-pakken"
       capacity={{ level: 2, label: "op til 60 pers." }}
       bullets={[
-        "Lys-pakke: 2 farvede LED-lamper + centereffekt på stativ",
+        "Lysbar: 2 farvede LED-lamper + centereffekt på stativ",
         "Discokugle 40 cm med motor og spot",
         "Røgmaskine inkl. røgvæske, strålerne bliver synlige",
         "Alle stativer og kabler med",
-        "Spar 190 kr vs. at leje delene enkeltvis",
+        "Spar 145 kr vs. at leje delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

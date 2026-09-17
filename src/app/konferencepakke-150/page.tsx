@@ -4,18 +4,18 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Konferencepakke 150 | Højtalere, mikrofon, headset og skærm | 2.395 kr | Lejhøjtaler.dk",
+  title: "Konferencepakke 150 | Højtalere, mikrofon, headset og skærm | 2.165 kr | Lejhøjtaler.dk",
   description:
-    "Konferencepakke 150 med to 12\" højtalere på stativer, Shure trådløs mikrofon, headset og 55\" skærm. Til sale med 100-150 deltagere, 2.395 kr.",
+    "Konferencepakke 150 med to 12\" højtalere på stativer, Shure trådløs mikrofon, headset og 55\" skærm. Til sale med 100-150 deltagere, 2.165 kr.",
   keywords: ["konferenceudstyr leje", "lej mikrofon og højtaler", "av udstyr til konference", "lydudstyr til generalforsamling", "skærm og mikrofon leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/konferencepakke-150",
     languages: localeAlternates("/konferencepakke-150"),
   },
   openGraph: {
-    title: "Konferencepakke 150 | Højtalere, mikrofon, headset og skærm | 2.395 kr",
+    title: "Konferencepakke 150 | Højtalere, mikrofon, headset og skærm | 2.165 kr",
     description:
-      "Konferencepakke 150 med to 12\" højtalere på stativer, Shure trådløs mikrofon, headset og 55\" skærm. Til sale med 100-150 deltagere, 2.395 kr.",
+      "Konferencepakke 150 med to 12\" højtalere på stativer, Shure trådløs mikrofon, headset og 55\" skærm. Til sale med 100-150 deltagere, 2.165 kr.",
     url: "https://lejhojtaler.dk/konferencepakke-150",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,9 +28,9 @@ export default function Konferencepakke150Page() {
     <ProductLanding
       slug="konferencepakke-150"
       name="Konferencepakke 150"
-      price={2395}
+      price={2165}
       headline="Konferencepakke 150, så både taleren og salen er med"
-      sub="2× EV 12&quot; på stativer, Shure trådløs mikrofon, trådløst headset og 55&quot; skærm. Til 100-150 deltagere, spar 235 kr."
+      sub="2× EV 12&quot; på stativer, Shure trådløs mikrofon, trådløst headset og 55&quot; skærm. Til 100-150 deltagere, spar 210 kr."
       image="/images/product-skaerm-white.webp"
       imageAlt="Konferencepakke med højtalere, mikrofon, headset og storskærm"
       productId="pakke_konference_150"
@@ -41,7 +41,7 @@ export default function Konferencepakke150Page() {
         "Trådløst headset, så oplægsholderen kan bevæge sig frit",
         "55\" skærm på stativ med HDMI, slides og video",
         "Alle kabler og strøm med",
-        "Spar 235 kr vs. at leje delene enkeltvis",
+        "Spar 210 kr vs. at leje delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

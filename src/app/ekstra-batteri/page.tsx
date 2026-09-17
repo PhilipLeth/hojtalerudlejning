@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Ekstra Batteri til Batterihøjtaler | 145 kr | Lejhøjtaler.dk",
+  title: "Lej Ekstra Batteri til Batterihøjtaler | 395 kr | Lejhøjtaler.dk",
   description:
-    "Lej et ekstra batteri til Mackie Thump GO eller Soundboks for 145 kr. Dobbelt spilletid uden strøm, til havefest, strand og studenterkørsel. Lejes i København.",
+    "Lej et ekstra batteri til Soundboks 4 for 395 kr. Dobbelt spilletid uden strøm, til havefest, strand og studenterkørsel. Lejes i København.",
   keywords: ["ekstra batteri højtaler leje", "soundboks ekstra batteri", "thump go batteri leje", "batterihøjtaler hele natten"],
   alternates: {
     canonical: "https://lejhojtaler.dk/ekstra-batteri",
     languages: localeAlternates("/ekstra-batteri"),
   },
   openGraph: {
-    title: "Lej Ekstra Batteri | 145 kr",
+    title: "Lej Ekstra Batteri | 395 kr",
     description: "Ekstra batteri til batterihøjtaler, dobbelt spilletid uden strøm.",
     url: "https://lejhojtaler.dk/ekstra-batteri",
     siteName: "Lejhøjtaler.dk",
@@ -27,7 +27,7 @@ export default function Page() {
     <ProductLanding
       slug="ekstra-batteri"
       name="Ekstra batteri"
-      price={145}
+      price={395}
       headline="Lej ekstra batteri"
       sub="Et ekstra batteri til Mackie Thump GO eller Soundboks 4, så festen ikke slutter, når det første løber tørt."
       image="/images/product-thumpgo-v2-white.webp"

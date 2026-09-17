@@ -27,7 +27,7 @@ export default function Page() {
       name="Trådløst headset PRO"
       price={595}
       headline="Lej trådløst headset PRO"
-      sub={'Professionelt headset i broadcast-kvalitet, til konferencer og scener.'}
+      sub={'Trådløst headset PRO udlejes ikke lige nu som selvstændigt produkt. Vores almindelige trådløse headset er nu Shure BLX14 til 445 kr.'}
       image="/images/product-headset-pro-v2-white.webp"
       imageAlt="Professionelt trådløst headset til leje"
       productId="headset_pro"

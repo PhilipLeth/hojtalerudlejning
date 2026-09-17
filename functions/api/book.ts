@@ -161,7 +161,7 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
     ids.has("lyskaeder_farvet") ||
     ids.has("uplight") ||
     ids.has("uplight_4") ||
-    // Lille festpakke = lyseffekt; stor festpakke = lys-pakke
+    // Lille festpakke = lyseffekt; stor festpakke = lysbar
     ids.has("pakke_fest_lille") ||
     ids.has("pakke_fest_stor") ||
     labels.some((l) => l.includes("lys") || l.includes("disco"));
@@ -192,8 +192,8 @@ function pickUpsell(data: BookingData): UpsellOffer | null {
     const list = 495;
     return {
       id: "lys",
-      title: "Lys-pakke",
-      blurb: "Gør festen komplet — vores lys-pakke passer til din højtaler.",
+      title: "Lysbar",
+      blurb: "Gør festen komplet — vores lysbar passer til din højtaler.",
       listPrice: list,
       offerPrice: offerPrice(list),
     };

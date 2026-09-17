@@ -3851,12 +3851,20 @@
     "beslutning": "Sæsoner er et lille register i src/lib/seasons.ts, ikke en erstatning af forsiden. Aktivt interval MM-DD styrer topmenu, burgermenu og SeasonalStrip. Siderne ligger året rundt, så gamle bookinger og links virker.",
     "halloween": {
       "hub": "/halloween",
-      "pakker": ["halloween_lys Heksetimen 895", "halloween_lille Monsterfesten 1495", "halloween_stor Midnatsklubben 1995"],
+      "pakker": [
+        "halloween_lys Heksetimen 895",
+        "halloween_lille Monsterfesten 1495",
+        "halloween_stor Midnatsklubben 1995"
+      ],
       "vindue": "09-01 til 11-02"
     },
     "julefrokost": {
       "hub": "/julefrokost",
-      "pakker": ["jul_hygge Julehyggen 695 (kontor, ingen røg)", "pakke_firmafest Firmafestpakke 2645 (tale + dansegulv)", "event_fredagsbar_2 Fredagsbar med dansegulv 2070"],
+      "pakker": [
+        "jul_hygge Julehyggen 695 (kontor, ingen røg)",
+        "pakke_firmafest Firmafestpakke 2645 (tale + dansegulv)",
+        "event_fredagsbar_2 Fredagsbar med dansegulv 2070"
+      ],
       "vindue": "09-15 til 12-23",
       "ny_pakke": "Julehyggen: thumpgo + lyskaeder + lyseffekt, page /julehyggen. Kun på /lej-hojtaler i KATEGORI_PAKKER."
     },
@@ -4100,5 +4108,15 @@
     },
     "udlejning": " /av-udstyr viser skærme, lys, lyd og mikrofoner. 55\" vises som skærmfoto på hvid baggrund, ligesom projektor og lærred.",
     "ikke_ring": "Panelpakke (4 mikrofoner) og Teams/Zoom-pakke bookes online. FAQ og konferencepakke-150 peger derhen i stedet for telefon."
+  },
+  "produktark_2026_09_17": {
+    "hvad": "Philip sendte produktarket (kategori, produkt, model, indkøbslink, add-ons, pris) og bad om at kataloget følger det. Hans princip: 'pakkerne er essentielt det vi bundler enkeltprodukter til' — enkeltprodukterne er fundamentet, og ALLE pakker (også event-, sæson-, lydmand- og lejlighedspakkerne) er en følge af dem.",
+    "reglen": "Hver dels listepris i en pakke = enkeltproduktets pris × antal. En pakke uden for arket beholder sin rabatPROCENT: ny pris = ny delsum × (gammel pris / gammel delsum), afrundet til 5 kr, aldrig over delsummen. Arkets egne pakker får arkets pris. scripts/katalog/ har hele forløbet som scripts (stage1–stage5) plus katalog-foer.json og katalog-efter.json.",
+    "ark_afvigelser": "Fire pakkepriser i arket lå OVER delenes sum og ville være blevet vist som dyrere end at leje delene selv. Arkets eget mønster er 'delene minus ca. 95 kr' (Lille soundboks pakke 495+395−95, Festlys 0-50 395+245−95, Speakerpakke trådløs 0-30 595+445−95), så de fire er regnet efter samme regel: Festpakke 0-30 895 (arket: 1.149), Festpakke 30-50 1.095 (arket: 1.395), Speakerpakke trådløs 30-50 1.145 (arket: 1.395), DJ Pakke 30-50 2.995 (arket: 3.295). Lysbaren står til 395 overalt (arket sagde 445 som tilvalg til Soundboks/Thump Go). AFVENTER Philips bekræftelse.",
+    "navne": "Stor højtalerpakke (2× EV) → Mellem højtalerpakke; Højtalerpakke 100 (2× EV + sub) → Stor højtalerpakke; Lys-pakke → Lysbar; Mixer mellem → Mixer med effekter · t.mix 1202 FXMP USB. Kun visningsnavne — id'er, URL'er og billedstier er uændrede (/hojtalerpakke-normal, /hojtalerpakke-bas, /lys-pakke).",
+    "to_slags_skjult": "PAUSEDE_PRODUKTER = udlejes ikke (mixer_lille, mixer_xl, traadloes_mikrofon_pro, headset_pro, taske — arkets trådløse mikrofon og headset ER Shure-modellerne til 445 kr). AFVENTER_FOTO = står i kataloget med arkets pris, men er skjult fordi der ikke findes et ærligt produktfoto: monitor, discokugle_guld, scenelys, foelgespot, uv_lampe, laser, snemaskine, saebeboblemaskine, stroboskop, mikrofonstativ, lysstativ, x_stativ, dj_stativ, roegvaeske, snevaeske, boblevaeske. De må gerne være del af en pakke (X-stativet i DJ-pakkerne). Reglen om at synlige tilvalg har et billede er bevaret.",
+    "ikke_roert": "Skærme, projektor, lærred og karaoke står ikke i arket, men kom bevidst i udlejning igen 8. sept 2026 og er ladt urørt. DJ-pulten har fået arkets pris (1.695), men side, foto og tekst beskriver stadig Pioneer DDJ-FLX4 med iPad — arket siger AlphaTheta XDJ-AZ/XDJ-RR. Enkelt lyseffekt beskriver stadig et LED-par-lys — arket siger Eurolite Mini Z-20 beam. Batterisiden siger stadig at batteriet passer til Thump GO. Arkets 'pop up med billigere alternativ' på Soundboks er ikke bygget.",
+    "kv": "products_catalog i KV skygger stadig for koden. Intet af dette er live for eksisterende produkter, før nøglen nulstilles ('Nulstil til standard' i /admin/produkter). Indtil da vises nye pakker ved siden af gamle priser.",
+    "ads": "scripts/ads/aag/generate.py har de nye priser, men annoncerne i Google Ads er IKKE opdateret — de skal genskabes, når de nye priser er live, ellers lover annoncen en anden pris end siden."
   }
 }

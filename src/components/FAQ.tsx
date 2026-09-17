@@ -9,7 +9,7 @@ const faqs = [
   {
     question: "Hvad koster det at leje en højtaler?",
     answer:
-      `Vores batteridrevne Mackie Thump GO koster ${prisKr("thumpgo")}/weekend, den lille højtalerpakke ${prisKr("party")}, den store højtalerpakke ${prisKr("festival")} og Soundboks 4 ${prisKr("soundboks")}. Prisen er den samme uanset antal dage (1-5), og alle kabler er inkluderet.`,
+      `Vores batteridrevne Mackie Thump GO koster ${prisKr("thumpgo")}/weekend, den lille højtalerpakke ${prisKr("party")}, Mellem højtalerpakke ${prisKr("festival")} og Soundboks 4 ${prisKr("soundboks")}. Prisen er den samme uanset antal dage (1-5), og alle kabler er inkluderet.`,
   },
   {
     question: "Hvordan fungerer afhentning?",

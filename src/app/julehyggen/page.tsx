@@ -7,11 +7,11 @@ import { rentalProducts } from "@/lib/products";
 const product = rentalProducts.find((p) => p.id === "jul_hygge")!;
 
 export const metadata: Metadata = {
-  title: "Julehyggen | Lyd og lys til den lille julefrokost | 695 kr",
+  title: "Julehyggen | Lyd og lys til den lille julefrokost | 785 kr",
   description: product.desc_da,
   alternates: { canonical: "https://lejhojtaler.dk/julehyggen", languages: localeAlternates("/julehyggen") },
   openGraph: {
-    title: "Julehyggen | 695 kr",
+    title: "Julehyggen | 785 kr",
     description: product.desc_da,
     url: "https://lejhojtaler.dk/julehyggen",
     images: [product.image],
@@ -27,7 +27,7 @@ export default function Page() {
       productId="jul_hygge"
       name={product.name_da}
       headline="Julehyggen, din lille julefrokost-pakke"
-      price={695}
+      price={785}
       sub={product.desc_da}
       image={product.image}
       imageAlt="Mackie Thump GO, varm lyskæde og LED-lyseffekt til julehygge"

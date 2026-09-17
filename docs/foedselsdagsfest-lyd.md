@@ -26,7 +26,7 @@ Den klassiske runde fødselsdag i lejlighed, fælleslokale eller have. Typisk fo
 
 ## Konfirmation og ungdomsfest
 
-Teenagere har andre forventninger end de voksne. De vil have **højt musik, bas og festlys**. Her er Festival-pakken det rigtige valg, suppleret med vores lys-pakke.
+Teenagere har andre forventninger end de voksne. De vil have **højt musik, bas og festlys**. Her er Festival-pakken det rigtige valg, suppleret med vores lysbar.
 
 **Tips til konfirmation:**
 

@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Firmafestpakke | Mikrofon, sub, lys og røg | 2.645 kr | Lejhøjtaler.dk",
+  title: "Firmafestpakke | Mikrofon, sub, lys og røg | 2.355 kr | Lejhøjtaler.dk",
   description:
-    "Firmafestpakke: 2× EV 12\" højtalere på stativer, trådløs mikrofon, 12\" subwoofer, lys-pakke og røgmaskine for 2.645 kr, spar 130 kr. Til julefrokost og firmafest i København.",
+    "Firmafestpakke: 2× EV 12\" højtalere på stativer, trådløs mikrofon, 12\" subwoofer, lysbar og røgmaskine for 2.355 kr, spar 115 kr. Til julefrokost og firmafest i København.",
   keywords: ["firmafest lyd", "julefrokost anlæg leje", "lyd til firmafest københavn", "mikrofon til tale", "anlæg til julefrokost"],
   alternates: {
     canonical: "https://lejhojtaler.dk/firmafestpakke",
     languages: localeAlternates("/firmafestpakke"),
   },
   openGraph: {
-    title: "Firmafestpakke | Mikrofon, sub, lys og røg | 2.645 kr | Lejhøjtaler.dk",
-    description: "Højtalere på stativer, trådløs mikrofon, subwoofer, lys og røg. Til julefrokost og firmafest, spar 130 kr.",
+    title: "Firmafestpakke | Mikrofon, sub, lys og røg | 2.355 kr | Lejhøjtaler.dk",
+    description: "Højtalere på stativer, trådløs mikrofon, subwoofer, lys og røg. Til julefrokost og firmafest, spar 115 kr.",
     url: "https://lejhojtaler.dk/firmafestpakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,9 +27,9 @@ export default function FirmafestpakkePage() {
     <ProductLanding
       slug="firmafestpakke"
       name="Firmafestpakke"
-      price={2645}
+      price={2355}
       headline="Firmafestpakken, talen først, dansegulvet bagefter"
-      sub="Højtalere på stativer, trådløs mikrofon, subwoofer, lys og røg. Til julefrokost og firmafest, spar 130 kr."
+      sub="Højtalere på stativer, trådløs mikrofon, subwoofer, lys og røg. Til julefrokost og firmafest, spar 115 kr."
       image="/images/product-pakke-fest-stor-white.webp"
       imageAlt="Firmafestpakke med højtalere, subwoofer, lys og røgmaskine"
       productId="pakke_firmafest"
@@ -39,9 +39,9 @@ export default function FirmafestpakkePage() {
         '2× EV 12" højtalere på stativer',
         "Trådløs mikrofon til velkomst og takketale",
         '12" subwoofer, bassen der får folk op fra bordene',
-        "Lys-pakke og røgmaskine, så lokalet ikke bare er oplyst",
+        "Lysbar og røgmaskine, så lokalet ikke bare er oplyst",
         "Alle kabler og Bluetooth med",
-        "Spar 130 kr vs. at leje delene enkeltvis",
+        "Spar 115 kr vs. at leje delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

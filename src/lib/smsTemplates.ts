@@ -87,7 +87,7 @@ export function smsTypeLabel(id: string): string {
 export const SMS_SHORTCODES: Shortcode[] = [
   { key: "fornavn", label: "Kundens fornavn", example: "Agnes" },
   { key: "navn", label: "Kundens fulde navn", example: "Agnes Dahle Stæhr" },
-  { key: "produkter", label: "Hvad de lejer", example: "Stor højtalerpakke, Lys-pakke" },
+  { key: "produkter", label: "Hvad de lejer", example: "Mellem højtalerpakke, Lysbar" },
   { key: "periode", label: "Lejeperioden", example: "fre 21. aug → man 24. aug" },
   { key: "dato", label: "Afhentningsdagen", example: "fre 21. aug" },
   { key: "returdato", label: "Afleveringsdagen", example: "man 24. aug" },

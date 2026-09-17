@@ -25,7 +25,7 @@ import {
 
 const KATALOG: CatalogEntry[] = [
   { id: "party", name: "Lille højtalerpakke", price: 595, kind: "speaker", size: '2× 10" Alto' },
-  { id: "festival", name: "Stor højtalerpakke", price: 995, kind: "speaker", size: '2× 12" EV' },
+  { id: "festival", name: "Mellem højtalerpakke", price: 995, kind: "speaker", size: '2× 12" EV' },
   { id: "mikrofon", name: "Trådløs mikrofon", price: 295, kind: "addon" },
   { id: "rog", name: "Røgmaskine", price: 595, kind: "addon" },
   { id: "levering_begge", name: "Levering og afhentning", price: 795, kind: "addon" },
@@ -256,8 +256,9 @@ describe("Ret ordre i admin", () => {
     const traef = await screen.findAllByRole("button", { name: /Trådløs mikrofon/ });
     fireEvent.click(traef.find((b) => b.textContent?.includes("tilvalg"))!);
 
-    // Modalen viser hvad ordren lander på, før der gemmes
-    await waitFor(() => expect(screen.getAllByText("890 kr").length).toBeGreaterThan(0));
+    // Modalen viser hvad ordren lander på, før der gemmes: party 595 + trådløs
+    // mikrofon 445 (produktarket 17. sept 2026, før 295) = 1040
+    await waitFor(() => expect(screen.getAllByText("1040 kr").length).toBeGreaterThan(0));
 
     fireEvent.click(screen.getByText("Gem ændringer"));
     await waitFor(() => {
