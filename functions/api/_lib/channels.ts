@@ -4,7 +4,15 @@ import { INVENTORY_KEY, loadInventoryPair } from "./inventory";
 import { DEFAULT_PICKUP_ADDRESS } from "../../../src/lib/pickup";
 
 export const SITE = "https://lejhojtaler.dk";
-export const CATALOG_KEY = "products_catalog";
+/**
+ * Katalogets KV-nøgle. Skiftet fra "products_catalog" til "_v2" med produktarket
+ * 17. sept 2026: et katalog gemt fra /admin/produkter vinder over koden for de
+ * produkter det indeholder, så det gamle gemte katalog ville have holdt de gamle
+ * priser i live efter deploy. Med en ny nøgle gælder kodens katalog fra det
+ * øjeblik der deployes, admin gemmer videre i den nye, og det gamle ligger
+ * urørt tilbage som backup. Skift nøglen igen, næste gang kataloget lægges om.
+ */
+export const CATALOG_KEY = "products_catalog_v2";
 export { INVENTORY_KEY };
 export const CHANNELS_KEY = "marketing_channels";
 

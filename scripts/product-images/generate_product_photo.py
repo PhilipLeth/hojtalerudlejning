@@ -88,6 +88,61 @@ MOTIVER = {
             "else in the frame, no people, no hands, no cables. " + STIL
         ),
     },
+    # ── Produktarket 17. sept 2026: nye enkeltprodukter. Generiske motiver uden mærker,
+    # samme hvide studiestil. Filnavnet ender på -white, så produktsiden selv oplyser,
+    # at billedet er genereret (erGenereretBillede i products.ts).
+    "monitor": {"fil": "product-monitor-white.png", "prompt": (
+        "A single black active PA loudspeaker standing upright on the floor, moulded plastic cabinet with a "
+        "black perforated steel front grille covering a twelve inch woofer and a horn above it, a carrying "
+        "handle recess on the side. One speaker only, no stand, no cables. " + STIL)},
+    "discokugle_guld": {"fil": "product-discokugle-guld-white.png", "prompt": (
+        "Isolated product cut-out: a gold mirror disco ball about forty centimetres across, covered in small "
+        "square gold mirror tiles, hanging from a small black motor with a short black cable above it, "
+        "nothing else in the picture, no stand, no lamp, no room, no cloth, no curtain, no floor line, only "
+        "the ball on a flat seamless pure white background like a webshop cut-out. " + STIL)},
+    "scenelys": {"fil": "product-scenelys-white.png", "prompt": (
+        "Webshop product cut-out, the object photographed completely alone on a flat seamless pure white background, nothing else in the picture: "
+        "a black lighting tripod stand with a horizontal bar on top, and on the bar four small black round LED par lights standing in a straight row, evenly spaced, drawn like o o o o: the first, the second, the third and the fourth, all identical, no barn doors, no other lights. Lights switched off. " + STIL)},
+    "foelgespot": {"fil": "product-foelgespot-white.png", "prompt": (
+        "A black LED follow spot stage light, a long cylindrical lamp body with a large front lens and a "
+        "rear handle, mounted on a yoke on top of a black tripod stand, pointing slightly to the right. " + STIL)},
+    "uv_lampe": {"fil": "product-uv-lampe-white.png", "prompt": (
+        "Isolated product cut-out on a flat seamless pure white background like a webshop photo, nothing else in the picture, no room, no cloth, no curtain, no floor line, no other equipment: "
+        "a flat thin rectangular black LED wash light the size of a laptop resting on a simple U-shaped bracket, its flat front holding nine round lenses in a three by three grid with a faint violet tint. Not a moving head. " + STIL)},
+    "laser": {"fil": "product-laser-white.png", "prompt": (
+        "A small black rectangular show laser projector, metal housing with cooling fins on the sides, a "
+        "small round glass aperture on the front panel, a U-shaped mounting bracket, sitting on the floor. "
+        "No visible beams. " + STIL)},
+    "snemaskine": {"fil": "product-snemaskine-white.png", "prompt": (
+        "A compact black snow machine for events, a rectangular black metal box with a round nozzle outlet "
+        "covered by a fabric sock on the front, a translucent fluid tank on top at the rear, a U-shaped "
+        "mounting bracket. No snow in the air. " + STIL)},
+    "saebeboblemaskine": {"fil": "product-saebeboblemaskine-white.png", "prompt": (
+        "A black professional bubble machine, a rectangular black metal housing with a large round opening "
+        "on the front showing a rotating wheel of plastic bubble wands and a fan behind it, a carrying "
+        "handle on top. No bubbles in the air. " + STIL)},
+    "stroboskop": {"fil": "product-stroboskop-white.png", "prompt": (
+        "A black strobe light, a wide shallow rectangular housing with a polished reflector and one long "
+        "horizontal xenon tube behind clear glass, a U-shaped mounting bracket, sitting on the floor, and "
+        "next to it a small black remote controller box with two knobs. Lamp switched off. " + STIL)},
+    "mikrofonstativ": {"fil": "product-mikrofonstativ-white.png", "prompt": (
+        "Webshop product cut-out, the object photographed completely alone on a flat seamless pure white background, nothing else in the picture: "
+        "an EMPTY black microphone boom stand, sold without a microphone. Folding tripod base, telescopic pole, angled boom arm with a small black counterweight at its short end and a small empty plastic clip at its long end. There is NO microphone, NO windscreen, NO cable anywhere in the image. " + STIL)},
+    "lysstativ": {"fil": "product-lysstativ-white.png", "prompt": (
+        "Webshop product cut-out, the object photographed completely alone on a flat seamless pure white background, nothing else in the picture: "
+        "an EMPTY black lighting tripod stand, sold without any lamp. A wide three-leg base, a telescopic pole, and on top a short horizontal T-bar with two bare bolts. There is NO light, NO lamp, NO fixture mounted; the T-bar is bare. " + STIL)},
+    "x_stativ": {"fil": "product-x-stativ-white.png", "prompt": (
+        "Webshop product cut-out, the object photographed completely alone on a flat seamless pure white background, nothing else in the picture: "
+        "an EMPTY black X-frame folding keyboard stand seen from the front: two steel tube frames crossed like the letter X, two short padded arms on top, rubber feet. Nothing is placed on it, no keyboard, no bench cushion, no tabletop, no pedal, no cable. " + STIL)},
+    "dj_stativ": {"fil": "product-dj-stativ-white.png", "prompt": (
+        "A black X-frame keyboard stand used as a DJ table, its front and sides covered by a tight matte "
+        "black stretch fabric cover that hides the legs, forming a clean black trapezoid front. Nothing "
+        "placed on top. " + STIL)},
+    "vaeske": {"fil": "product-vaeske-5l-white.png", "prompt": (
+        "A five litre translucent white plastic jerrycan canister with a moulded handle and a black screw "
+        "cap, filled almost to the top with a completely clear, colourless liquid, standing upright on a "
+        "flat seamless pure white background. The canister surface is completely blank and smooth: no "
+        "printing, no embossed words, no label, no sticker, no numbers. " + STIL)},
 }
 
 logger = logging.getLogger("produktfoto")

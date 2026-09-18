@@ -5,7 +5,7 @@ interface Env {
   ADMIN_SECRET: string;
 }
 
-const KV_KEY = "products_catalog";
+const KV_KEY = "products_catalog_v2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",

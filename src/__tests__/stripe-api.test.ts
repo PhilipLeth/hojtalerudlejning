@@ -62,7 +62,7 @@ describe("Server-side prisberegning (pricing)", () => {
 
   it("KV-katalog (admin-priser) overskriver defaults", async () => {
     const kv = fakeKv({
-      products_catalog: JSON.stringify({
+      products_catalog_v2: JSON.stringify({
         speakers: [{ id: "party", price: 444, da: { name: "Lille højtalerpakke" } }],
       }),
     });

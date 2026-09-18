@@ -1,6 +1,6 @@
 /** Produktkataloget fladt: id, navn, pris, side og indhold.
  *
- * Kilde: KV `products_catalog` (gemt fra /admin/produkter), med koden i
+ * Kilde: KV `products_catalog_v2` (gemt fra /admin/produkter), med koden i
  * `src/lib/products.ts` som fallback — samme regel som `pricing.ts`,
  * `bundlePartsFromCatalog()` og klientens `useProducts()` allerede følger.
  *

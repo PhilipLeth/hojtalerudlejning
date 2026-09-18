@@ -51,7 +51,7 @@ interface Env extends GoogleAdsEnv {
   ADMIN_SECRET: string;
 }
 
-const KV_CATALOG = "products_catalog";
+const KV_CATALOG = "products_catalog_v2";
 const KV_MAPPING = "ads_mapping";
 const KV_TERMS = "ads_terms";
 const KV_MANUAL = "ads_manual_keywords";

@@ -80,7 +80,7 @@ export async function resolveDiscountFor(
     if (!ctx) return null;
     try {
       const [catalogRaw, inventoryRaw, bookings] = await Promise.all([
-        readJson(kv, "products_catalog"),
+        readJson(kv, "products_catalog_v2"),
         readJson(kv, "inventory"),
         loadBookings(kv),
       ]);

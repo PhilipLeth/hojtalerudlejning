@@ -106,7 +106,7 @@ export function findOverbooking(
 export async function overbookingAhead(kv: KVNamespace, today: string, days = 120): Promise<OverbookHit[]> {
   const [{ owned }, catalogRaw, bookings] = await Promise.all([
     loadInventoryPair(kv),
-    kv.get("products_catalog"),
+    kv.get("products_catalog_v2"),
     loadBookings(kv),
   ]);
   const parts = bundlePartsFromCatalog(catalogRaw);
@@ -155,7 +155,7 @@ export async function notifyOverbooking(
 
   const [{ owned }, catalogRaw, bookings] = await Promise.all([
     loadInventoryPair(kv),
-    kv.get("products_catalog"),
+    kv.get("products_catalog_v2"),
     loadBookings(kv),
   ]);
   const parts = bundlePartsFromCatalog(catalogRaw);

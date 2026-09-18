@@ -72,7 +72,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
       kv.get(KV_RULES),
       kv.get(KV_MAPPING),
       loadInventoryPair(kv),
-      kv.get("products_catalog"),
+      kv.get("products_catalog_v2"),
       loadBookings(kv),
     ]);
 

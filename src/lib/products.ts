@@ -8,7 +8,7 @@ import { microphonePackages } from "./microphonePackages";
  *
  * These arrays are the DEFAULT catalog (fallback/seed).
  * The live catalog can be overridden from /admin/produkter and is stored in
- * Cloudflare KV under "products_catalog", served by GET /api/products.
+ * Cloudflare KV under "products_catalog_v2", served by GET /api/products.
  * Client components should read products via the useProducts() hook so
  * admin edits apply everywhere without a deploy.
  */
@@ -314,8 +314,7 @@ export const addons: Addon[] = [
   {
     id: "stroboskop",
     price: 395,
-    image: null,
-    hidden: true,
+    image: "/images/product-stroboskop-white.webp",
     contents: ["Botex SP-1500 DMX stroboskop", "Controller", "Strømkabel"],
     da: { label: "Stroboskop med styring", desc: "Kraftigt stroboskop med controller, så hastighed og styrke kan skrues op og ned" },
     en: { label: "Strobe light with controller", desc: "Powerful strobe with a controller for speed and intensity" },
@@ -437,7 +436,7 @@ export const addons: Addon[] = [
     },
   },
   // ── Produktarket 17. sept 2026: stativer, væsker og den kablede mikrofon som tilvalg.
-  // Tilbehør uden foto er skjult, til fotoet findes — se AFVENTER_FOTO.
+  // Produktfotos genereret i husstilen (scripts/product-images/generate_product_photo.py).
   {
     id: "mikrofon_kabel",
     // Samme mikrofon som rental-varen haandholdt_mikrofon, én side til begge
@@ -457,58 +456,50 @@ export const addons: Addon[] = [
   },
   {
     id: "mikrofonstativ",
-    hidden: true,
     price: 95,
-    image: null,
-    da: { label: "Mikrofonstativ", desc: "Gulvstativ med galge, til taler og sang" },
-    en: { label: "Microphone stand", desc: "Floor stand with boom arm, for speeches and vocals" },
+    image: "/images/product-mikrofonstativ-white.webp",
+    da: { label: "Mikrofonstativ", desc: "Gulvstativ med galge, til taler og sang. Mikrofon er ikke med, den vælges for sig" },
+    en: { label: "Microphone stand", desc: "Floor stand with boom arm, for speeches and vocals. Microphone not included, choose it separately" },
   },
   {
     id: "lysstativ",
-    hidden: true,
     price: 145,
-    image: null,
-    da: { label: "Lysstativ", desc: "Stativ med T-bar til lyseffekter" },
-    en: { label: "Lighting stand", desc: "Stand with T-bar for light effects" },
+    image: "/images/product-lysstativ-white.webp",
+    da: { label: "Lysstativ", desc: "Stativ med T-bar til lyseffekter. Lampen er ikke med, den vælges for sig" },
+    en: { label: "Lighting stand", desc: "Stand with T-bar for light effects. The light is not included, choose it separately" },
   },
   {
     id: "x_stativ",
-    hidden: true,
     price: 95,
-    image: null,
+    image: "/images/product-x-stativ-white.webp",
     da: { label: "X-stativ", desc: "Sammenklappeligt X-stativ til DJ-pult eller keyboard" },
     en: { label: "X-stand", desc: "Folding X-stand for a DJ controller or keyboard" },
   },
   {
     id: "dj_stativ",
-    hidden: true,
     price: 495,
-    image: null,
+    image: "/images/product-dj-stativ-white.webp",
     da: { label: "DJ-stativ med klæde", desc: "X-stativ med sort klæde foran, skjuler kabler og giver en pæn DJ-front" },
     en: { label: "DJ stand with cloth", desc: "X-stand with a black front cloth, hides cables and gives a tidy DJ booth" },
   },
   {
     id: "roegvaeske",
-    hidden: true,
     price: 295,
-    image: null,
+    image: "/images/product-vaeske-5l-white.webp",
     da: { label: "Ekstra røgvæske 5 liter", desc: "Til lange fester, en normal aften klares af væsken der følger med maskinen" },
     en: { label: "Extra fog fluid 5 litres", desc: "For long parties, a normal evening is covered by the fluid that comes with the machine" },
   },
-  // Væske til maskiner der endnu venter på foto — pauset sammen med dem.
   {
     id: "snevaeske",
     price: 295,
-    image: null,
-    hidden: true,
+    image: "/images/product-vaeske-5l-white.webp",
     da: { label: "Ekstra snevæske 5 liter", desc: "Ekstra væske til snemaskinen" },
     en: { label: "Extra snow fluid 5 litres", desc: "Extra fluid for the snow machine" },
   },
   {
     id: "boblevaeske",
     price: 295,
-    image: null,
-    hidden: true,
+    image: "/images/product-vaeske-5l-white.webp",
     da: { label: "Ekstra boblevæske 5 liter", desc: "Ekstra væske til sæbeboblemaskinen" },
     en: { label: "Extra bubble fluid 5 litres", desc: "Extra fluid for the bubble machine" },
   },
@@ -792,15 +783,15 @@ export const rentalProducts: RentalProduct[] = [
       ],
     },
   },
-  // ── Nye enkeltprodukter fra arket. Pauset indtil der er et ærligt produktfoto, billedet her er en pladsholder.
-  { id: "monitor", hidden: true, category: "lyd", price: 495, image: "/images/product-festival-v2-white.webp", name_da: "Monitor · EV ZLX 12P", name_en: "Monitor · EV ZLX 12P", desc_da: "Én aktiv 12\" EV-højtaler, som monitor til scenen eller ekstra højtaler.", desc_en: "A single active 12\" EV speaker, as a stage monitor or an extra speaker.", contents: ["1× EV ZLX 12P aktiv højtaler", "Strømkabel"] },
-  { id: "discokugle_guld", hidden: true, category: "lys", price: 645, image: "/images/product-discokugle-v2-white.webp", name_da: "Discokugle 40 cm guld", name_en: "Disco ball 40 cm gold", desc_da: "Komplet pakke: 40 cm guldfarvet discokugle med motor, spot og stativ.", desc_en: "Complete package: 40 cm gold disco ball with motor, spotlight and stand.", contents: ["Discokugle 40 cm guld", "Motor", "LED-spot", "Stativ", "Strømkabel"] },
-  { id: "scenelys", hidden: true, category: "lys", price: 695, image: "/images/product-uplight-4-v2-white.webp", name_da: "Scenelys (4 LED på stativ)", name_en: "Stage lights (4 LEDs on a stand)", desc_da: "4 LED-lamper på stativ med tværbom og fjernbetjening, lys til scene, taler og band.", desc_en: "4 LED lights on a stand with cross bar and remote, light for a stage, speeches and bands.", contents: ["4× LED PAR", "Stativ med tværbom", "Fjernbetjening", "Strømkabler"] },
-  { id: "foelgespot", hidden: true, category: "lys", price: 1995, image: "/images/product-lyseffekt-live-white.webp", name_da: "Følgespot", name_en: "Follow spot", desc_da: "LED-følgespot 120 W på stativ, til at følge taleren eller brudeparret.", desc_en: "120 W LED follow spot on a stand, to follow the speaker or the couple.", contents: ["LED-følgespot 120 W", "Stativ", "Strømkabel"] },
-  { id: "uv_lampe", hidden: true, category: "lys", price: 245, image: "/images/product-lyseffekt-live-white.webp", name_da: "UV-lampe", name_en: "UV light", desc_da: "UV-lampe der får hvidt og neon til at lyse, til UV- og neonfester.", desc_en: "UV light that makes white and neon glow, for UV and neon parties.", contents: ["LED UV-lampe", "Strømkabel"] },
-  { id: "laser", hidden: true, category: "lys", price: 595, image: "/images/product-lyseffekt-live-white.webp", name_da: "RGB-laser", name_en: "RGB laser", desc_da: "Farvet laser med mønstre, bedst sammen med røg.", desc_en: "Colour laser with patterns, best together with fog.", contents: ["RGB-laser", "Strømkabel"] },
-  { id: "snemaskine", hidden: true, category: "roeg", price: 445, image: "/images/product-rog-v2-white.webp", name_da: "Snemaskine", name_en: "Snow machine", desc_da: "Snemaskine der laver fin kunstig sne, inkl. snevæske.", desc_en: "Snow machine that makes fine artificial snow, incl. snow fluid.", contents: ["Snemaskine", "Snevæske", "Strømkabel"] },
-  { id: "saebeboblemaskine", hidden: true, category: "roeg", price: 995, image: "/images/product-rog-v2-white.webp", name_da: "Sæbeboblemaskine", name_en: "Bubble machine", desc_da: "Stor sæbeboblemaskine, fylder rummet med bobler, inkl. boblevæske.", desc_en: "Large bubble machine that fills the room with bubbles, incl. bubble fluid.", contents: ["Sæbeboblemaskine", "Boblevæske", "Strømkabel"] },
+  // ── Nye enkeltprodukter fra arket (17. sept 2026), fotos genereret i husstilen.
+  { id: "monitor", category: "lyd", price: 495, image: "/images/product-monitor-white.webp", name_da: "Monitor · EV ZLX 12P", name_en: "Monitor · EV ZLX 12P", desc_da: "Én aktiv 12\" EV-højtaler, som monitor til scenen eller ekstra højtaler.", desc_en: "A single active 12\" EV speaker, as a stage monitor or an extra speaker.", contents: ["1× EV ZLX 12P aktiv højtaler", "Strømkabel"] },
+  { id: "discokugle_guld", category: "lys", price: 645, image: "/images/product-discokugle-guld-white.webp", name_da: "Discokugle 40 cm guld", name_en: "Disco ball 40 cm gold", desc_da: "Komplet pakke: 40 cm guldfarvet discokugle med motor, spot og stativ.", desc_en: "Complete package: 40 cm gold disco ball with motor, spotlight and stand.", contents: ["Discokugle 40 cm guld", "Motor", "LED-spot", "Stativ", "Strømkabel"] },
+  { id: "scenelys", category: "lys", price: 695, image: "/images/product-scenelys-white.webp", name_da: "Scenelys (4 LED på stativ)", name_en: "Stage lights (4 LEDs on a stand)", desc_da: "4 LED-lamper på stativ med tværbom og fjernbetjening, lys til scene, taler og band.", desc_en: "4 LED lights on a stand with cross bar and remote, light for a stage, speeches and bands.", contents: ["4× LED PAR", "Stativ med tværbom", "Fjernbetjening", "Strømkabler"] },
+  { id: "foelgespot", category: "lys", price: 1995, image: "/images/product-foelgespot-white.webp", name_da: "Følgespot", name_en: "Follow spot", desc_da: "LED-følgespot 120 W på stativ, til at følge taleren eller brudeparret.", desc_en: "120 W LED follow spot on a stand, to follow the speaker or the couple.", contents: ["LED-følgespot 120 W", "Stativ", "Strømkabel"] },
+  { id: "uv_lampe", category: "lys", price: 245, image: "/images/product-uv-lampe-white.webp", name_da: "UV-lampe", name_en: "UV light", desc_da: "UV-lampe der får hvidt og neon til at lyse, til UV- og neonfester.", desc_en: "UV light that makes white and neon glow, for UV and neon parties.", contents: ["LED UV-lampe", "Strømkabel"] },
+  { id: "laser", category: "lys", price: 595, image: "/images/product-laser-white.webp", name_da: "RGB-laser", name_en: "RGB laser", desc_da: "Farvet laser med mønstre, bedst sammen med røg.", desc_en: "Colour laser with patterns, best together with fog.", contents: ["RGB-laser", "Strømkabel"] },
+  { id: "snemaskine", category: "roeg", price: 445, image: "/images/product-snemaskine-white.webp", name_da: "Snemaskine", name_en: "Snow machine", desc_da: "Snemaskine der laver fin kunstig sne, inkl. snevæske.", desc_en: "Snow machine that makes fine artificial snow, incl. snow fluid.", contents: ["Snemaskine", "Snevæske", "Strømkabel"] },
+  { id: "saebeboblemaskine", category: "roeg", price: 995, image: "/images/product-saebeboblemaskine-white.webp", name_da: "Sæbeboblemaskine", name_en: "Bubble machine", desc_da: "Stor sæbeboblemaskine, fylder rummet med bobler, inkl. boblevæske.", desc_en: "Large bubble machine that fills the room with bubbles, incl. bubble fluid.", contents: ["Sæbeboblemaskine", "Boblevæske", "Strømkabel"] },
   ...situationPackages,
   ...microphonePackages,
   {
@@ -1613,16 +1604,13 @@ export const PAUSEDE_PRODUKTER: string[] = [
 ];
 
 /**
- * Produkter fra arket 17. sept 2026, der ligger i kataloget med arkets pris, men er
- * skjult for kunden, fordi der ikke findes et ærligt produktfoto endnu. Det er en
- * anden grund end pause: udstyret kan godt lejes ud, og det må gerne indgå som del
- * i en pakke (X-stativet i DJ-pakkerne). Tag id'et ud af listen og fjern `hidden`,
- * når fotoet ligger i public/images.
+ * Produkter der er i kataloget, men skjult alene fordi der endnu ikke findes et
+ * ærligt produktfoto. En anden grund end pause: udstyret kan lejes ud, og det må
+ * gerne indgå som del i en pakke. Tom siden 18. sept 2026, hvor arkets nye
+ * produkter fik genererede fotos i husstilen. Reglen står: står Frederiks ark på
+ * et produkt, er det ikke på pause.
  */
-export const AFVENTER_FOTO: string[] = [
-  "monitor", "discokugle_guld", "scenelys", "foelgespot", "uv_lampe", "laser", "snemaskine", "saebeboblemaskine",
-  "stroboskop", "mikrofonstativ", "lysstativ", "x_stativ", "dj_stativ", "roegvaeske", "snevaeske", "boblevaeske",
-];
+export const AFVENTER_FOTO: string[] = [];
 
 /** Er produktet sat på pause? Bruges af produktsiderne, der ellers ville stå
  *  med en bookingknap til noget, vi ikke udlejer. */

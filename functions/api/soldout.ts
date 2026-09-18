@@ -50,7 +50,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     // grundlaget for at slukke annoncer, og vi slukker ikke for noget vi kan skaffe.
     const [pair, catalogRaw] = await Promise.all([
       loadInventoryPair(context.env.BOOKINGS),
-      context.env.BOOKINGS.get("products_catalog"),
+      context.env.BOOKINGS.get("products_catalog_v2"),
     ]);
     const inventory = pair.bookable;
     const bundleParts = bundlePartsFromCatalog(catalogRaw);

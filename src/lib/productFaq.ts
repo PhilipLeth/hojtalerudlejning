@@ -59,7 +59,7 @@ export interface ProductFaqInput {
  * `contents` er den faktiske pakkeliste.
  *
  * Standardkataloget, ikke KV: siden er statisk, og admin-ændringer i
- * products_catalog slår først igennem ved næste deploy. Samme afvejning som
+ * products_catalog_v2 slår først igennem ved næste deploy. Samme afvejning som
  * LocalBusinessJsonLd.
  */
 function catalogFacts(productId: string, locale: Locale): { contents?: string[]; capacity?: string } {
