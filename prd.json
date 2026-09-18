@@ -4117,8 +4117,9 @@
       "site": "lejhojtaler.dk 200, ingen noindex, bookingflow virker (testbooking 16. sep sendte mail). Sitet er ikke årsagen."
     },
     "beslutning": "Middelvej, ikke tilbage til 19–34 kr pr. klik: Soundboks-grupper 8 kr; øvrige aktive AAG-grupper Googles første-side-estimat rundet op til 0,50, mindst 9 og højst 12 kr, ingen estimat = 9 kr. Kampagnebudget 100 → 350 kr/dag. AG 1–15 (phrase-grupper) urørt. 91 aktive AAG-grupper, 92 ændringer, preflight OK.",
-    "script": "scripts/ads/middelvej.mjs — tørløb som standard, --udfoer skriver. Kørslen med --udfoer skal startes manuelt af Philip (blokeret for agenten, fordi den bruger penge).",
+    "script": "scripts/ads/middelvej.mjs — tørløb som standard, --udfoer skriver.",
     "evaluering": "Mål efter 7 dage (25. sep): pris pr. booking og bookingværdi, ikke klik. Forventning ved 350 kr/dag og ~10 kr CPC: 30–35 klik/dag; ved konverteringsrate 3–4 % ~1 booking/dag. Er pris pr. booking over ~400 kr, sænkes MAX_KR; er tabt på budget over 20 %, hæves budgettet før buddene.",
-    "sidefund": "KV-namespacet i wrangler.toml (c46378bf…) indeholder ingen booking_-nøgler, kun 5 testnøgler. Produktionen bruger tilsyneladende et andet namespace end konfigurationen. Ikke årsag til ordrestoppet, men skal afklares."
+    "sidefund": "KV-namespacet i wrangler.toml (c46378bf…) indeholder ingen booking_-nøgler, kun 5 testnøgler. Produktionen bruger tilsyneladende et andet namespace end konfigurationen. Ikke årsag til ordrestoppet, men skal afklares.",
+    "status": "LIVE 18. sep 2026: Philip kørte --udfoer, 92 ændringer gemt. Verificeret via GAQL: budget 350 kr/dag, ingen aktive AAG-grupper under 8 kr."
   }
 }
