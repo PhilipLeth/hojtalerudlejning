@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.295 kr | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/stemningslys"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-stemningslys-taendt-v3.webp"),
     title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.295 kr | Lejhøjtaler.dk",
     description: "4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet, spar 140 kr.",
     url: "https://lejhojtaler.dk/stemningslys",

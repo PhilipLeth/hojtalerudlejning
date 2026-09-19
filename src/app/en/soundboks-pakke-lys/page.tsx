@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Soundboks Package with Lights | Soundboks 4 + light bar | 995 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/soundboks-pakke-lys"),
   },
   openGraph: {
+    images: ogImages("/images/product-soundboks-v2.webp"),
     title: "Soundboks package with lights | 995 DKK",
     description: "Soundboks 4 + light bar. Battery-powered sound and lights, save 95 DKK.",
     url: "https://lejhojtaler.dk/en/soundboks-pakke-lys",

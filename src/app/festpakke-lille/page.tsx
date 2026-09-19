@@ -4,6 +4,7 @@ import LivePrice from "@/components/LivePrice";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Festpakke 0-30 | Højtalere + lysbar | 895 kr | Lejhøjtaler.dk",
   description:
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festpakke-lille"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-fest-lille.webp"),
     title: "Festpakke 0-30 | Højtalere + lysbar | 895 kr",
     description: "2× Alto 10\" højtalere + lysbar, lyd og lys til op til 30 gæster. Spar 95 kr.",
     url: "https://lejhojtaler.dk/festpakke-lille",

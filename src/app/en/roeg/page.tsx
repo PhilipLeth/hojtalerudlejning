@@ -10,6 +10,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Fog & Low Fog Machine Rental Copenhagen | Fog floor with ice | Lejhøjtaler.dk",
   description:
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/roeg"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Fog & Low Fog Machine Rental Copenhagen | Lejhøjtaler.dk",
     description: `Classic fog machine from ${prisDkk("rog")} including fluid. Book online.`,
     url: "https://lejhojtaler.dk/en/roeg",

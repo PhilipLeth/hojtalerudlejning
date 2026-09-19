@@ -9,6 +9,7 @@ import { LYSSHOW_PAKKER } from "@/lib/products";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 /**
  * /en/lysshow, de færdige lyspakker på engelsk.
  *
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lysshow"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Light Show Rental Copenhagen | From 1.140 DKK | Lejhøjtaler.dk",
     description:
       "Ready-made lighting packages with effects, disco ball, uplights and fog. Book online.",

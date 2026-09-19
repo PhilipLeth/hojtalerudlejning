@@ -10,6 +10,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Røgmaskine & Low Fog København | Røggulv med is | Lejhøjtaler.dk",
   description:
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/roeg"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Lej Røgmaskine & Low Fog København | Lejhøjtaler.dk",
     description:
       `Klassisk røgmaskine fra ${prisKr("rog")} inkl. røgvæske. Book online.`,

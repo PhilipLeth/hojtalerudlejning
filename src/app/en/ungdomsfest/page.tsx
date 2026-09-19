@@ -3,6 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisDkk } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Youth Party Sound and Lights Rental Copenhagen | From ${prisDkk("pakke_ungdomsfest")} | Lejhøjtaler.dk`,
   description: `Rent sound and disco lights for a youth party in Copenhagen from ${prisDkk("pakke_ungdomsfest")}. Soundboks, mirror ball, light effects and fog in ready-made packages, for 18th birthdays, after-parties and school parties. Book online in 2 minutes.`,
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/ungdomsfest"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Youth Party Sound and Lights Rental Copenhagen | From ${prisDkk("pakke_ungdomsfest")} | Lejhøjtaler.dk`,
     description: `Soundboks, mirror ball, light effects and fog in ready-made packages. Book online.`,
     url: "https://lejhojtaler.dk/en/ungdomsfest",

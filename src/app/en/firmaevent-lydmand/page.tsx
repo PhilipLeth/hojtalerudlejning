@@ -4,6 +4,7 @@ import LivePrice from "@/components/LivePrice";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Corporate Event with Sound Engineer | Sound + mixer + mic + tech | 6,100 DKK | Lejhøjtaler.dk",
   description:
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/firmaevent-lydmand"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-lydmand-firma-v2.webp"),
     title: "Corporate event with sound engineer | 6,100 DKK",
     description: "Medium speaker package + mixer + wireless mic + sound engineer for 4 hours. Delivered, set up and collected, save 280 DKK.",
     url: "https://lejhojtaler.dk/en/firmaevent-lydmand",

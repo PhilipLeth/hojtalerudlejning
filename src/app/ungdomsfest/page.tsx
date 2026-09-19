@@ -3,6 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Lyd og lys til ungdomsfest København | Fra ${prisKr("pakke_ungdomsfest")} | Lejhøjtaler.dk`,
   description: `Lej lyd og diskolys til ungdomsfesten i København fra ${prisKr("pakke_ungdomsfest")}. Soundboks, discokugle, lyseffekter og røg i færdige pakker, til 18-årsfødselsdagen, efterfesten og gymnasiefesten. Book online på 2 minutter.`,
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/ungdomsfest"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Lyd og lys til ungdomsfest København | Fra ${prisKr("pakke_ungdomsfest")} | Lejhøjtaler.dk`,
     description: `Lej lyd og diskolys til ungdomsfesten i København fra ${prisKr("pakke_ungdomsfest")}. Soundboks, discokugle, lyseffekter og røg i færdige pakker. Book online på 2 minutter.`,
     url: "https://lejhojtaler.dk/ungdomsfest",

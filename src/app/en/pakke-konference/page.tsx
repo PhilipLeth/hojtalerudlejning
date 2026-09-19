@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Conference Bundle Rental Copenhagen | 1,485 DKK | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/pakke-konference"),
   },
   openGraph: {
+    images: ogImages("/images/product-skaerm.webp"),
     title: "Conference bundle rental | 1,485 DKK",
     description: "55\" display + wireless headset + small speaker package. Save 150 DKK.",
     url: "https://lejhojtaler.dk/en/pakke-konference",

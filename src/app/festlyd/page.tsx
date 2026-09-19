@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 
+import { ogImages } from "@/lib/og";
 /** Mellem højtalerpakke + lysbar + røgmaskine hver for sig. */
 const ALT_INKLUDERET = prisTekst(catalogPrice("festival") + catalogPrice("lys") + catalogPrice("rog"));
 
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/festlyd" },
   openGraph: {
+    images: ogImages(),
     title: `Lyd til Fest København | Fra ${startPrisKr()}`,
     description:
       `Lyd til din fest i København fra ${startPrisKr()}. Havefest, fødselsdag eller firmaevent. Book online.`,

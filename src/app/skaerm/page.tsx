@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 import UpsellBox from "@/components/UpsellBox";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Storskærm København | 595 kr | Lejhøjtaler.dk",
   description:
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/skaerm"),
   },
   openGraph: {
+    images: ogImages("/images/product-skaerm.webp"),
     title: "Lej Storskærm København | 595 kr",
     description:
       "Lej en 55\" LED-storskærm på stativ i København for 595 kr. Justerbar højde, HDMI-kabel med, til møder, konferencer og karaoke. Book online.",

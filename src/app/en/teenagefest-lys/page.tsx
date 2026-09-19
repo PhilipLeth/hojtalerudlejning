@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Teen party lights Copenhagen | 785 DKK | Lejhøjtaler.dk",
   description: "Disco effect, disco ball and coloured fairy lights, the basement becomes a club for 785 DKK. Save 150 DKK. Rental in Copenhagen.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/teenagefest-lys"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-teenagefest-taendt-v2.webp"),
     title: "Teen party lights Copenhagen | 785 DKK | Lejhøjtaler.dk",
     description: "Disco effect, disco ball and 10 m of coloured fairy lights. Kill the ceiling light, switch this on, save 150 DKK.",
     url: "https://lejhojtaler.dk/en/teenagefest-lys",

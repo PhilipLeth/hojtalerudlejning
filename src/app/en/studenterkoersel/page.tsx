@@ -4,6 +4,7 @@ import { prisDkk } from "@/lib/products";
 import { PHONE_DISPLAY } from "@/lib/phone";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 /**
  * /en/studenterkoersel, studenterkørsel på engelsk.
  *
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/studenterkoersel"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Graduation Truck Speaker Rental Copenhagen | From ${prisDkk("soundboks")} | Lejhøjtaler.dk`,
     description: `Battery-powered and loud enough over the engine. Spare battery and padded bag included.`,
     url: "https://lejhojtaler.dk/en/studenterkoersel",

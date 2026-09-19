@@ -5,6 +5,7 @@ import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej en Soundboks i København | Soundboks 4 fra 695 kr | Lejhøjtaler.dk",
   description:
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/soundboks-4"),
   },
   openGraph: {
+    images: ogImages("/images/product-soundboks-v2.webp"),
     title: "Lej en Soundboks i København | Fra 695 kr",
     description: "Lej en Soundboks i København fra 695 kr/weekend. Intet depositum. Book online.",
     url: "https://lejhojtaler.dk/soundboks-4",

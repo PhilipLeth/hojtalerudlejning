@@ -10,6 +10,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 /** Højtaler + lysbar + røgmaskine hver for sig, tallet i "komplet festpakke fra …". */
 const KOMPLET_FEST = prisTekst(catalogPrice("party") + catalogPrice("lys") + catalogPrice("rog"));
 
@@ -33,6 +34,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festlys"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Lej Festlys, Diskolys og Diskokugle København | Lejhøjtaler.dk",
     description:
       `Lysbar fra ${prisKr("lys")}, røgmaskine fra ${prisKr("rog")}, discokugle og lyskæder. Book online.`,

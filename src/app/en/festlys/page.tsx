@@ -9,6 +9,7 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
+import { ogImages } from "@/lib/og";
 
 /** Højtaler + lysbar + røgmaskine hver for sig, tallet i "complete party package from …". */
 const KOMPLET_FEST = prisTekst(catalogPrice("party") + catalogPrice("lys") + catalogPrice("rog"));
@@ -44,6 +45,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festlys"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Party Light Rental Copenhagen | Disco Ball & Fog Machine | Lejhøjtaler.dk",
     description:
       `Light bar from ${prisDkk("lys")}, fog machine from ${prisDkk("rog")}, disco ball and fairy lights. Book online.`,

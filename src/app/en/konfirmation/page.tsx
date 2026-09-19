@@ -3,6 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisDkk } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Confirmation Party Sound Rental Copenhagen | From ${prisDkk("pakke_fest_lille")} | Lejhøjtaler.dk`,
   description: `Rent speakers and lighting for a confirmation party in Copenhagen from ${prisDkk("pakke_fest_lille")}. Speeches that carry and music that keeps the party going. All cables included.`,
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/konfirmation"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Confirmation Party Sound Rental Copenhagen | From ${prisDkk("pakke_fest_lille")} | Lejhøjtaler.dk`,
     description: `Speeches that carry and music that keeps the party going. Book online.`,
     url: "https://lejhojtaler.dk/en/konfirmation",

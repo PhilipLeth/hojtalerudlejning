@@ -10,6 +10,7 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import SiteText from "@/components/SiteText";
 import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title:
     `Billigste Højtalerudlejning København | Fra ${startPrisKr()} | Lejhøjtaler.dk`,
@@ -29,6 +30,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/kobenhavn" },
   openGraph: {
+    images: ogImages("/images/product-party-v2.webp"),
     title: `Billigste Højtalerudlejning København | Fra ${startPrisKr()}`,
     description:
       `Københavns billigste højtalerudlejning fra ${startPrisKr()}/weekend. PA-anlæg, lys og røgmaskine til leje. Book online.`,

@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Conference Package 150 | Speakers, microphone, headset and screen | 2,165 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/konferencepakke-150"),
   },
   openGraph: {
+    images: ogImages("/images/product-skaerm.webp"),
     title: "Conference package 150 | Speakers, microphone, headset and screen | 2,165 DKK",
     description: "Two 12\" speakers on stands, Shure wireless microphone, headset and 55\" display. For 100-150 participants, 2,165 DKK.",
     url: "https://lejhojtaler.dk/en/konferencepakke-150",

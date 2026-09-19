@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: 'Lej Subwoofer 12" København | 495 kr | Lejhøjtaler.dk',
   description:
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/subwoofer"),
   },
   openGraph: {
+    images: ogImages("/images/product-subwoofer-v2.webp"),
     title: 'Lej Subwoofer 12" København | 495 kr',
     description:
       'Behringer 12" aktiv subwoofer, den dybe bas til festen. Passer til alle vores højtalerpakker. Book online.',

@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Light Show Package Rental Copenhagen | Lights, disco ball and fog | 1,140 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lysshow-pakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-lys-v4.webp"),
     title: "Light show package | Lights, disco ball and fog | 1,140 DKK",
     description: "Light bar, disco ball and fog machine. The beams become visible in the air, save 145 DKK.",
     url: "https://lejhojtaler.dk/en/lysshow-pakke",

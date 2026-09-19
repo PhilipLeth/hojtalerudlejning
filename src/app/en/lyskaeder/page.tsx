@@ -9,6 +9,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Fairy Light Rental Copenhagen | From 195 DKK | Lejhøjtaler.dk",
   description:
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lyskaeder"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Fairy Light Rental Copenhagen | From 195 DKK",
     description:
       "10 m of fairy lights, warm white or coloured. From 195 DKK per weekend. Book online.",

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Medium Speaker Package Rental Copenhagen | 795 DKK | Lejhøjtaler.dk",
   description:
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/hojtalerpakke-normal"),
   },
   openGraph: {
+    images: ogImages("/images/product-festival-v2.webp"),
     title: "Medium Speaker Package Rental Copenhagen | 795 DKK | Lejhøjtaler.dk",
     description:
       'Rent two 12" EV active speakers in Copenhagen from 795 DKK/weekend. Clear, powerful sound for 30-50 guests. All cables included, stands available. Book online.',

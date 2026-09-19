@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Club light package Copenhagen | 1.050 DKK | Lejhøjtaler.dk",
   description: "Light bar, disco effect and disco ball, a full dancefloor without fog for 1,050 DKK. Save 185 DKK. Rental in Copenhagen.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/diskotek-pakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-diskotek-taendt-v2.webp"),
     title: "Club light package Copenhagen | 1.050 DKK | Lejhøjtaler.dk",
     description: "Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms, save 185 DKK.",
     url: "https://lejhojtaler.dk/en/diskotek-pakke",

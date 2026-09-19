@@ -8,6 +8,7 @@ import { KATEGORI_PAKKER, rentalProducts, type RentalProduct } from "@/lib/produ
 import { bookHref } from "@/lib/bookUrl";
 import { thumbSrcSet } from "@/lib/imageSrcSet";
 import { localeAlternates } from "@/lib/hreflang";
+import { ogImages } from "@/lib/og";
 
 /**
  * Landingssiden for lyspakkerne, det for lys, som /lydanlaeg er for lyd.
@@ -35,6 +36,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lyspakker"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Lej lys til festen, færdige lyspakker fra 645 kr",
     description:
       "Færdige lyspakker efter anledning: teenagefest, festtelt, bryllup, dansegulv, eller hele lokalet. Plug and play, uden tekniker.",

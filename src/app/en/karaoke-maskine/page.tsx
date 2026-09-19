@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Karaoke Machine Rental Copenhagen | 695 DKK | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/karaoke-maskine"),
   },
   openGraph: {
+    images: ogImages("/images/product-karaoke-v2.webp"),
     title: "Karaoke machine rental Copenhagen | 695 DKK",
     description: "Singing Machine with built-in screen, 2 wireless microphones and party lights, connect a TV via HDMI.",
     url: "https://lejhojtaler.dk/en/karaoke-maskine",

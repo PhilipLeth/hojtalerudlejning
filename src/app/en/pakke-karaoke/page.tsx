@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Karaoke Bundle Rental Copenhagen | 1,300 DKK | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/pakke-karaoke"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-karaoke-v2.webp"),
     title: "Karaoke bundle rental | 1,300 DKK",
     description: "Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke, save 385 DKK.",
     url: "https://lejhojtaler.dk/en/pakke-karaoke",

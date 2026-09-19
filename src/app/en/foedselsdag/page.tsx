@@ -3,6 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisDkk } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Birthday Party Speaker Rental Copenhagen | From ${prisDkk("pakke_fest_lille")} | Lejhøjtaler.dk`,
   description: `Rent speakers and lights for a birthday party in Copenhagen from ${prisDkk("pakke_fest_lille")}. From a kids' party with disco lights to a milestone birthday with speeches. All cables included.`,
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/foedselsdag"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Birthday Party Speaker Rental Copenhagen | From ${prisDkk("pakke_fest_lille")} | Lejhøjtaler.dk`,
     description: `From a kids' party with disco lights to a milestone birthday with speeches. Book online.`,
     url: "https://lejhojtaler.dk/en/foedselsdag",

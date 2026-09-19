@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Wedding Package | Sound, microphone, lights and low fog | 2,315 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/bryllupspakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-bryllup-taendt.webp"),
     title: "Wedding package | Sound, microphone, lights and low fog | 2,315 DKK",
     description: "Speakers on stands, wireless microphone, lights, string lights and low fog for the first dance. Save 155 DKK.",
     url: "https://lejhojtaler.dk/en/bryllupspakke",

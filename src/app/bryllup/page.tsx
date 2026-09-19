@@ -3,6 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Lyd til bryllup København | Fra ${prisKr("pakke_fest_stor")} | Lejhøjtaler.dk`,
   description: `Lej lyd og lys til bryllup i København fra ${prisKr("pakke_fest_stor")}. Højtalere til taler og fest, trådløs mikrofon og stemningslys. Levering og opsætning kan tilvælges.`,
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/bryllup"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Lyd til bryllup København | Fra ${prisKr("pakke_fest_stor")} | Lejhøjtaler.dk`,
     description: `Lej lyd og lys til bryllup i København fra ${prisKr("pakke_fest_stor")}. Højtalere til taler og fest, trådløs mikrofon og stemningslys. Levering og opsætning kan tilvælges.`,
     url: "https://lejhojtaler.dk/bryllup",

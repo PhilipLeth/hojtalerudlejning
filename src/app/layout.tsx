@@ -12,6 +12,7 @@ import { startPrisKr } from "@/lib/products";
 import "./globals.css";
 import "./pro-theme.css";
 
+import { ogImages } from "@/lib/og";
 const GTM_ID = "GTM-M52R25VF";
 const GA_ID = "G-QDXW7S53GF";
 
@@ -46,6 +47,7 @@ export const metadata: Metadata = {
     "lejhojtaler",
   ],
   openGraph: {
+    images: ogImages(),
     title: `Lej Højtaler København | Fra ${startPrisKr()}/weekend | Lejhøjtaler.dk`,
     description:
       `Lej højtaler og PA-anlæg til din fest i København. Lydudstyr udlejning fra ${startPrisKr()}/weekend. Festudstyr til leje, book online på 2 minutter.`,

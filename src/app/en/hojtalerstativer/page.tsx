@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
+import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Speaker Stands Rental Copenhagen | 95 DKK | Lejhøjtaler.dk",
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/hojtalerstativer"),
   },
   openGraph: {
+    images: ogImages("/images/product-stativer.webp"),
     title: "Speaker stands rental | 95 DKK",
     description: "2 professional stands, lifts the sound to ear level. Fits all our speakers.",
     url: "https://lejhojtaler.dk/en/hojtalerstativer",

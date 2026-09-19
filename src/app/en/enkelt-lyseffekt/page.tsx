@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Single Light Effect Rental Copenhagen | 195 DKK | Lejhøjtaler.dk",
   description:
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/enkelt-lyseffekt"),
   },
   openGraph: {
+    images: ogImages("/images/product-lyseffekt-v2.webp"),
     title: "Single Light Effect Rental Copenhagen | 195 DKK",
     description:
       "One LED par light (no stand), a plug-and-play colour effect for your party. Book online, pay on pickup.",

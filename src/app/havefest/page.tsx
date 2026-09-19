@@ -3,6 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Lyd til havefest København | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
   description: `Lej lyd til havefesten i København fra ${prisKr("pakke_fest_lille")}. Højtalere til udendørs brug, lyskæder og batteriløsninger uden strøm. Book online, betal ved afhentning.`,
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/havefest"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Lyd til havefest København | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
     description: `Lej lyd til havefesten i København fra ${prisKr("pakke_fest_lille")}. Højtalere til udendørs brug, lyskæder og batteriløsninger uden strøm. Book online, betal ved afhentning.`,
     url: "https://lejhojtaler.dk/havefest",

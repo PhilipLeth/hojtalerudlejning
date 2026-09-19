@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Bryllupslys-pakken | 1.200 kr | Lejhøjtaler.dk",
   description: "Lyskæde, uplights og low fog til brudevalsen, dans på skyer for 1.200 kr. Spar 135 kr. Lejes i København.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/bryllupslys"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-bryllupslys-taendt.webp"),
     title: "Bryllupslys-pakken | 1.200 kr | Lejhøjtaler.dk",
     description: "Varmt lys over bordene, uplights på væggene og low fog til brudevalsen, spar 135 kr.",
     url: "https://lejhojtaler.dk/bryllupslys",

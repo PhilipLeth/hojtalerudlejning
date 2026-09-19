@@ -7,6 +7,7 @@ import MixerRange from "@/components/MixerRange";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Mixer Rental Copenhagen | From 295 DKK | Lejhøjtaler.dk",
   description:
@@ -23,6 +24,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/mixer"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Mixer Rental Copenhagen | From 295 DKK | Lejhøjtaler.dk",
     description:
       "t.mix xmix 1202 FXMP USB with effects and USB for meetings, panels and bands. Small and large models on request.",

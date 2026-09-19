@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Headset-Mikrofon København | Fra 445 kr | Lejhøjtaler.dk",
   description:
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/headset-mikrofon"),
   },
   openGraph: {
+    images: ogImages("/images/product-headset-v2.webp"),
     title: "Lej Headset-Mikrofon København | Fra 445 kr",
     description:
       "Lej trådløst headset-mikrofon i København fra 445 kr/weekend. Hands-free mikrofon til præsentationer og konferencer. Betal ved afhentning.",

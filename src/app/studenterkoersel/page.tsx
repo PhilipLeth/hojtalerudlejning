@@ -4,6 +4,7 @@ import { prisKr } from "@/lib/products";
 import { PHONE_DISPLAY } from "@/lib/phone";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Højtaler til studenterkørsel | Lej Soundboks fra ${prisKr("soundboks")} | Lejhøjtaler.dk`,
   description: `Lej højtaler til studenterkørsel i København fra ${prisKr("soundboks")}. Batteridreven Soundboks med kraftig bas, holder hele turen uden strøm. Book online på 2 minutter.`,
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/studenterkoersel"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Højtaler til studenterkørsel | Lej Soundboks fra ${prisKr("soundboks")} | Lejhøjtaler.dk`,
     description: `Lej højtaler til studenterkørsel i København fra ${prisKr("soundboks")}. Batteridreven Soundboks med kraftig bas, holder hele turen uden strøm. Book online på 2 minutter.`,
     url: "https://lejhojtaler.dk/studenterkoersel",

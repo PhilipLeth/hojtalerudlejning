@@ -5,6 +5,7 @@ import { catalogDiscount, catalogPartsPrice, prisTekst } from "@/lib/products";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "32\" Screen on Stand Rental Copenhagen | 395 DKK | Lejhøjtaler.dk",
   description:
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/skaerm-32"),
   },
   openGraph: {
+    images: ogImages("/images/product-skaerm-32.webp"),
     title: "32\" screen on stand rental | 395 DKK",
     description: "32\" LED screen on a tripod stand, compact, easy to move and ready in 5 minutes.",
     url: "https://lejhojtaler.dk/en/skaerm-32",

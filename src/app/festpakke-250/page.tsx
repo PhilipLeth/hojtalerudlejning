@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Festpakke 250 | Dobbelt anlæg til 250 gæster | 3.210 kr | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festpakke-250"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-fest-250-v2.webp"),
     title: "Festpakke 250 | Dobbelt anlæg til 250 gæster | 3.210 kr",
     description: "4× EV 12\" + 2 subwoofere + lys + røg. Til sal, gård eller hal, spar 200 kr.",
     url: "https://lejhojtaler.dk/festpakke-250",

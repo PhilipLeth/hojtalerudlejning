@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Rent Mackie Thump GO Copenhagen | 495 DKK/weekend | Lejhøjtaler.dk",
   description:
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/mackie-thump-go"),
   },
   openGraph: {
+    images: ogImages("/images/product-thumpgo-v2.webp"),
     title: "Rent Mackie Thump GO Copenhagen | 495 DKK/weekend | Lejhøjtaler.dk",
     description:
       "Rent a battery-powered Mackie Thump GO speaker in Copenhagen from 495 DKK/weekend. Up to 12 hours of battery, Bluetooth, no power outlet needed. Pick up Friday, return Monday.",

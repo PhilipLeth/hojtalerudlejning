@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Studenterpakken | Soundboks, ekstra batteri og taske | 995 kr | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/studenterpakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-soundboks-v2.webp"),
     title: "Studenterpakken | Soundboks, ekstra batteri og taske | 995 kr | Lejhøjtaler.dk",
     description: "Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet, spar 95 kr.",
     url: "https://lejhojtaler.dk/studenterpakke",

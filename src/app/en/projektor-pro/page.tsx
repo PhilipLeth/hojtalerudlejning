@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Projector Pro (5000 lumen) Rental Copenhagen | 795 DKK | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/projektor-pro"),
   },
   openGraph: {
+    images: ogImages("/images/product-projektor-pro-v2.webp"),
     title: "Projector Pro (5000 lumen) rental | 795 DKK",
     description: "Powerful 5000 lumen projector, sharp even in daylight.",
     url: "https://lejhojtaler.dk/en/projektor-pro",

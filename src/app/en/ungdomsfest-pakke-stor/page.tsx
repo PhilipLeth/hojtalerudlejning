@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Large Youth Party Package Copenhagen | Disco for 100 Guests | 1,860 DKK | Lejhøjtaler.dk",
   description: "2× 12\" speakers, light bar, 40 cm mirror ball and fog machine, a proper disco for a youth party at 1,860 DKK. Save 220 DKK. Rental in Copenhagen.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/ungdomsfest-pakke-stor"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-ungdomsfest-stor-taendt.webp"),
     title: "Large Youth Party Package Copenhagen | Disco for 100 Guests | 1,860 DKK | Lejhøjtaler.dk",
     description: "2× 12\" speakers, light bar on a stand, 40 cm mirror ball and fog machine. A proper disco, save 220 DKK.",
     url: "https://lejhojtaler.dk/en/ungdomsfest-pakke-stor",

@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Discokugle København | Fra 645 kr | Lejhøjtaler.dk",
   description:
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/discokugle"),
   },
   openGraph: {
+    images: ogImages("/images/product-discokugle-v2.webp"),
     title: "Lej Discokugle København | Fra 645 kr",
     description:
       "Lej discokugle i København fra 645 kr/weekend. Roterende discokugle med LED-lys og farver. Book online.",

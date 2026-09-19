@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Firmafestpakke | Mikrofon, sub, lys og røg | 2.355 kr | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/firmafestpakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-fest-stor.webp"),
     title: "Firmafestpakke | Mikrofon, sub, lys og røg | 2.355 kr | Lejhøjtaler.dk",
     description: "Højtalere på stativer, trådløs mikrofon, subwoofer, lys og røg. Til julefrokost og firmafest, spar 115 kr.",
     url: "https://lejhojtaler.dk/firmafestpakke",

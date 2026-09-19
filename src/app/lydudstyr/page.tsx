@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej PA-anlæg og Lydudstyr København | Lejhøjtaler.dk",
   description:
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/lydudstyr" },
   openGraph: {
+    images: ogImages("/images/product-festival-v2.webp"),
     title: "Lej PA-anlæg og Lydudstyr København | Lejhøjtaler.dk",
     description:
       "Professionelt lydudstyr fra 395 kr/weekend. Betal ved afhentning. Book online.",

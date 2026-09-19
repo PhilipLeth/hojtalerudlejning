@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Lysbar København | Fra 395 kr | Lejhøjtaler.dk",
   description:
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lys-pakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-lys-v4.webp"),
     title: "Lej Lysbar København | Fra 395 kr",
     description:
       "2 farvede LED-lamper + centereffekt på stativ. Fra 395 kr/weekend. Book online.",

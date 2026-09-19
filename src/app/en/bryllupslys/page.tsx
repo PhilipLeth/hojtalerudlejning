@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Wedding light package Copenhagen | 1.200 DKK | Lejhøjtaler.dk",
   description: "Fairy lights, uplights and low fog for the wedding waltz, dancing on clouds for 1,200 DKK. Save 135 DKK. Rental in Copenhagen.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/bryllupslys"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-bryllupslys-taendt.webp"),
     title: "Wedding light package Copenhagen | 1.200 DKK | Lejhøjtaler.dk",
     description: "Warm light above the tables, uplights on the walls and low fog for the first dance, save 135 DKK.",
     url: "https://lejhojtaler.dk/en/bryllupslys",

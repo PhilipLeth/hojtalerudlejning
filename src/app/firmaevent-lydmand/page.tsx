@@ -4,6 +4,7 @@ import LivePrice from "@/components/LivePrice";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Firmaevent med lydmand | Anlæg + mixer + mikrofon + tekniker | 6.100 kr | Lejhøjtaler.dk",
   description:
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/firmaevent-lydmand"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-lydmand-firma-v2.webp"),
     title: "Firmaevent med lydmand | 6.100 kr",
     description: "Mellem højtalerpakke + mixer + trådløs mikrofon + lydmand i 4 timer. Leveret, sat op og hentet igen, spar 280 kr.",
     url: "https://lejhojtaler.dk/firmaevent-lydmand",

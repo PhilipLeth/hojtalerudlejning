@@ -54,7 +54,7 @@ Her er en simpel tommelfingerregel:
 1. **Placering:** Stil højtaleren i øjenhøjde på et stativ eller et bord. Lyd der skyder ned i gulvet, går tabt.
 2. **Afstand til væg:** Hold mindst 30 cm fra væggen for at undgå mudret bas.
 3. **Test før gæsterne kommer:** Tilslut din telefon, spænd et nummer, og gå rundt i lokalet for at høre, om lyden når ud i alle hjorner.
-4. **Ekstra lys:** Kombiner med vores [lysbar](/#book) for den fulde festoplevelse.
+4. **Ekstra lys:** Kombiner med vores [lysbar](/lys-pakke) for den fulde festoplevelse.
 
 ## Klar til at booke?
 

@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Fog Machine Rental Copenhagen | 245 DKK | Lejhøjtaler.dk",
   description:
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/roegmaskine"),
   },
   openGraph: {
+    images: ogImages("/images/product-rog-v2.webp"),
     title: "Fog Machine Rental Copenhagen | 245 DKK",
     description:
       "Smoke machine incl. fog fluid and remote control. 245 DKK per weekend. Book online.",

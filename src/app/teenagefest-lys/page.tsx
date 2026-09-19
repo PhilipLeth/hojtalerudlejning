@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Teenagefest-lys | 785 kr | Lejhøjtaler.dk",
   description: "Diskolyseffekt, discokugle og farvet lyskæde, kælderen bliver en klub for 785 kr. Spar 150 kr. Lejes i København.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/teenagefest-lys"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-teenagefest-taendt-v2.webp"),
     title: "Teenagefest-lys | 785 kr | Lejhøjtaler.dk",
     description: "Diskolyseffekt, discokugle og 10 m farvet lyskæde. Sluk loftslyset, tænd pakken, spar 150 kr.",
     url: "https://lejhojtaler.dk/teenagefest-lys",

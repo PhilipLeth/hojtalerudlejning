@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Party Package 0-30 Copenhagen | 895 DKK | Sound & Lights | Lejhøjtaler.dk",
   description:
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festpakke-lille"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-fest-lille.webp"),
     title: "Party Package 0-30 Copenhagen | 895 DKK | Sound & Lights | Lejhøjtaler.dk",
     description:
       'Rent sound and lights for your party in Copenhagen from 895 DKK. Two 10" speakers with Bluetooth plus a light bar, for up to 30 guests. Save 95 DKK on the bundle.',

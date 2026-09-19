@@ -4,6 +4,7 @@ import LivePrice from "@/components/LivePrice";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Party Package with Sound Engineer | Sound + lights + tech | 5,710 DKK | Lejhøjtaler.dk",
   description:
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festpakke-lydmand"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-lydmand-fest-v2.webp"),
     title: "Party package with sound engineer | 5,710 DKK",
     description: "Medium speaker package + light bar + sound engineer for 4 hours. Delivered, set up and collected, save 275 DKK.",
     url: "https://lejhojtaler.dk/en/festpakke-lydmand",

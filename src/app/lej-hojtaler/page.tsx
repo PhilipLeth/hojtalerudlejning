@@ -11,6 +11,7 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Lej Højtalere København | Fra ${startPrisKr()}/weekend | Lejhøjtaler.dk`,
   description:
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lej-hojtaler"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Lej Højtalere København | Fra ${startPrisKr()}/weekend`,
     description:
       `Lej højtalere i København fra ${startPrisKr()}/weekend. Batterihøjtalere og PA-pakker. Betal ved afhentning. Book online.`,

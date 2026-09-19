@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Wireless Microphone Rental Copenhagen | 445 DKK | Lejhøjtaler.dk",
   description:
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/traadloes-mikrofon"),
   },
   openGraph: {
+    images: ogImages("/images/product-mikrofon-v2.webp"),
     title: "Wireless Microphone Rental Copenhagen | 445 DKK",
     description:
       "Wireless handheld microphone for speeches, weddings and events. Receiver and cables included. Book online.",

@@ -3,12 +3,14 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
 import { PHONE_DISPLAY } from "@/lib/phone";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Lyd til nytårsfest København | Fra ${prisKr("pakke_fest_stor")} | Lejhøjtaler.dk`,
   description: `Lej lyd og lys til nytårsfesten i København fra ${prisKr("pakke_fest_stor")}. Højtalere, festlys og røgmaskine, book online og hent inden nytår. Betal ved afhentning.`,
   keywords: ["lyd til nytårsfest", "højtaler nytår leje", "musikanlæg nytårsfest", "festlys nytår", "lej anlæg nytårsaften"],
   alternates: { canonical: "https://lejhojtaler.dk/nytaar" },
   openGraph: {
+    images: ogImages(),
     title: `Lyd til nytårsfest København | Fra ${prisKr("pakke_fest_stor")} | Lejhøjtaler.dk`,
     description: `Lej lyd og lys til nytårsfesten i København fra ${prisKr("pakke_fest_stor")}. Højtalere, festlys og røgmaskine, book online og hent inden nytår. Betal ved afhentning.`,
     url: "https://lejhojtaler.dk/nytaar",

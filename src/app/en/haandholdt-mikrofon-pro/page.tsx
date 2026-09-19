@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Shure Beta 58A Rental Copenhagen | 345 DKK | Lejhøjtaler.dk",
   description:
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/haandholdt-mikrofon-pro"),
   },
   openGraph: {
+    images: ogImages("/images/product-mikrofon-kabel-pro-v2.webp"),
     title: "Shure Beta 58A Rental Copenhagen | 345 DKK",
     description:
       "Shure Beta 58A wired microphone, the classic for vocals and speeches. Book online.",

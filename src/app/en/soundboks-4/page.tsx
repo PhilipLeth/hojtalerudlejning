@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Rent a Soundboks in Copenhagen | Soundboks 4, 695 DKK/weekend | Lejhøjtaler.dk",
   description:
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/soundboks-4"),
   },
   openGraph: {
+    images: ogImages("/images/product-soundboks-v2.webp"),
     title: "Rent a Soundboks in Copenhagen | 695 DKK/weekend",
     description:
       "Rent a Soundboks in Copenhagen from 695 DKK/weekend. Battery-powered, heavy bass, no deposit. Pick up Friday, return Monday.",

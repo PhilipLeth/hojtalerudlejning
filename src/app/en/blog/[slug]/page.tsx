@@ -4,6 +4,7 @@ import { daBlogPath, getAllPosts, getPostBySlug } from "@/lib/blog";
 import { AUTHOR, authorLd } from "@/lib/author";
 import { startPrisDkk } from "@/lib/products";
 
+import { ogImages } from "@/lib/og";
 /**
  * /en/blog/[slug], de engelske blogindlæg.
  *
@@ -42,6 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : {}),
     },
     openGraph: {
+      images: ogImages(post.image),
       title: post.title,
       description: post.description,
       url: `https://lejhojtaler.dk/en/blog/${post.slug}`,

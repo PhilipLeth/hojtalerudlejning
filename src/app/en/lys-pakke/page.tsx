@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Party Light Package Rental Copenhagen | 395 DKK | Lejhøjtaler.dk",
   description:
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lys-pakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-lys-v4.webp"),
     title: "Party Light Package Rental Copenhagen | 395 DKK",
     description:
       "2 coloured LED lamps + centre effect on a stand. 395 DKK per weekend. Book online.",

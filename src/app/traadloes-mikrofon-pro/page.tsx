@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Trådløs mikrofon PRO København | 595 kr | Lejhøjtaler.dk",
   description: "Shure BLX trådløs mikrofon, scenekvalitet til events og konferencer. 595 kr/weekend. Betal ved afhentning. Book online.",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/traadloes-mikrofon-pro"),
   },
   openGraph: {
+    images: ogImages("/images/product-mikrofon-pro-v2.webp"),
     title: "Lej Trådløs mikrofon PRO København | 595 kr",
     description: "Shure BLX trådløs mikrofon, scenekvalitet til events og konferencer. 595 kr/weekend. Betal ved afhentning. Book online.",
     url: "https://lejhojtaler.dk/traadloes-mikrofon-pro",

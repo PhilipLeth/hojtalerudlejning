@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 import UpsellBox from "@/components/UpsellBox";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Projektor København | 495 kr | Lejhøjtaler.dk",
   description:
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/projektor"),
   },
   openGraph: {
+    images: ogImages("/images/product-projektor.webp"),
     title: "Lej Projektor København | 495 kr",
     description:
       "Lej en Full HD-projektor i København for 495 kr. Til præsentationer, møder og filmaften, HDMI-kabel og fjernbetjening følger med. Book online.",

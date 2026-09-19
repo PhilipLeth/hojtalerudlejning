@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Wired Handheld Microphone Rental Copenhagen | 95 DKK | Lejhøjtaler.dk",
   description:
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/haandholdt-mikrofon"),
   },
   openGraph: {
+    images: ogImages("/images/product-mikrofon-kabel-v2.webp"),
     title: "Wired Handheld Microphone Rental Copenhagen | 95 DKK",
     description:
       "Standard wired handheld microphone for speeches and vocals. XLR cable included. Book online.",

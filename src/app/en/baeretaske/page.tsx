@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Speaker Carry Bag Rental | 95 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/baeretaske"),
   },
   openGraph: {
+    images: ogImages("/images/product-taske-v2.webp"),
     title: "Carry bag rental | 95 DKK",
     description: "Padded sports bag for safe transport by bike or car.",
     url: "https://lejhojtaler.dk/en/baeretaske",

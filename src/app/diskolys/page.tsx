@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej diskolys i København | Diskolys-pakken 685 kr | Lejhøjtaler.dk",
   description: "Lej diskolys i København, pakken med lyseffekt og discokugle giver dansegulvet for 685 kr. Spar 155 kr vs. delene enkeltvis. Intet depositum.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/diskolys"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-diskolys-taendt-v2.webp"),
     title: "Lej diskolys i København | 685 kr",
     description: "Diskolyseffekt og discokugle med motor og spot. Den billigste vej til et rigtigt dansegulv, spar 155 kr.",
     url: "https://lejhojtaler.dk/diskolys",

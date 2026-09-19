@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Disco Ball Rental Copenhagen | 645 DKK | Lejhøjtaler.dk",
   description:
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/discokugle"),
   },
   openGraph: {
+    images: ogImages("/images/product-discokugle-v2.webp"),
     title: "Disco Ball Rental Copenhagen | 645 DKK",
     description:
       "40 cm rotating disco ball with motor, LED spotlight and stand. Book online.",

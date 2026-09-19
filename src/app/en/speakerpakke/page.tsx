@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Speaker Package with Microphone | Medium speaker package + handheld mic | 795 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/speakerpakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-festival-v2.webp"),
     title: "Speaker package | Speakers + microphone | 795 DKK",
     description: "Medium speaker package + handheld microphone. Sound and speeches for 30-50 guests, save 95 DKK.",
     url: "https://lejhojtaler.dk/en/speakerpakke",

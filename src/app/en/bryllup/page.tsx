@@ -3,6 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisDkk } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Wedding Sound & Light Rental Copenhagen | From ${prisDkk("pakke_fest_stor")} | Lejhøjtaler.dk`,
   description: `Rent sound and lighting for a wedding in Copenhagen from ${prisDkk("pakke_fest_stor")}. Speakers for the speeches and the dancefloor, a wireless microphone and ambient light. Delivery and setup available.`,
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/bryllup"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Wedding Sound & Light Rental Copenhagen | From ${prisDkk("pakke_fest_stor")} | Lejhøjtaler.dk`,
     description: `Speakers for the speeches and the dancefloor, a wireless microphone and ambient light. Delivery and setup available.`,
     url: "https://lejhojtaler.dk/en/bryllup",

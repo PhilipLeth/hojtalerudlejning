@@ -6,6 +6,7 @@ import { KATEGORI_PAKKER, rentalProducts, type RentalProduct } from "@/lib/produ
 import { bookHref } from "@/lib/bookUrl";
 import { thumbSrcSet } from "@/lib/imageSrcSet";
 import { localeAlternates } from "@/lib/hreflang";
+import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Party Light Rental Copenhagen, packages from 645 DKK | Lejhøjtaler.dk",
@@ -22,9 +23,10 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lyspakker"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Party Light Rental Copenhagen, packages from 645 DKK",
     description:
-      "Ready-made light bars by occasion: teen party, party tent, wedding, dancefloor, or the whole venue. Plug and play, no technician.",
+      "Ready-made light packages by occasion: teen party, party tent, wedding, dancefloor, or the whole venue. Plug and play, no technician.",
     url: "https://lejhojtaler.dk/en/lyspakker",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",

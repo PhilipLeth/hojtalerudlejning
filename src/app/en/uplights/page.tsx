@@ -10,6 +10,7 @@ import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 import { catalogPrice, prisTekst } from "@/lib/products";
 
+import { ogImages } from "@/lib/og";
 /** Rabatten på 4-pakken er fire enkelte minus pakken, slås op, skrives ikke. */
 const SPAR_UPLIGHT_4 = `Save ${prisTekst(4 * catalogPrice("uplight") - catalogPrice("uplight_4"))} DKK`;
 
@@ -29,6 +30,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/uplights"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Uplighting Rental Copenhagen | From 195 DKK",
     description:
       "Simple LED floor uplights, 195 DKK each or 595 DKK for a 4-pack. Book online.",

@@ -4,6 +4,7 @@ import LivePrice from "@/components/LivePrice";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Big Party with Sound Engineer | Full rig + lights + fog + tech | 6,560 DKK | Lejhøjtaler.dk",
   description:
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/stor-fest-lydmand"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-lydmand-stor-v2.webp"),
     title: "Big party with sound engineer | 6,560 DKK",
     description: "Medium speaker package + subwoofer + stands + lights + fog + sound engineer for 4 hours. Delivered, set up and collected, save 260 DKK.",
     url: "https://lejhojtaler.dk/en/stor-fest-lydmand",

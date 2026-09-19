@@ -4,6 +4,7 @@ import LivePrice from "@/components/LivePrice";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Festpakke 30-50 | Højtalere + lysbar til 30-50 gæster | 1.095 kr | Lejhøjtaler.dk",
   description:
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festpakke-stor"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-fest-stor.webp"),
     title: "Festpakke 30-50 | Højtalere + lysbar til 30-50 gæster | 1.095 kr",
     description: "2× EV 12\" højtalere + lysbar, lyd og lys til 30-50 gæster. Spar 95 kr.",
     url: "https://lejhojtaler.dk/festpakke-stor",

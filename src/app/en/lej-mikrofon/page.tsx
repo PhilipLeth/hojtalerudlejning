@@ -9,6 +9,7 @@ import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 import { localizedHref } from "@/lib/enPages";
 
+import { ogImages } from "@/lib/og";
 /**
  * /en/lej-mikrofon, den engelske udgave af mikrofon-kategorisiden.
  *
@@ -35,6 +36,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lej-mikrofon"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Microphone Rental Copenhagen | From 95 DKK | Lejhøjtaler.dk",
     description:
       "Wireless, headset and wired. Plugs straight into our speakers, no mixer needed.",

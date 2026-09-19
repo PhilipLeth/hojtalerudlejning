@@ -3,6 +3,7 @@ import UpsellBox from "@/components/UpsellBox";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Projector Rental Copenhagen | 495 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/projektor"),
   },
   openGraph: {
+    images: ogImages("/images/product-projektor.webp"),
     title: "Projector rental Copenhagen | 495 DKK",
     description: "Full HD projector for presentations and film. HDMI cable and remote control included. Book online.",
     url: "https://lejhojtaler.dk/en/projektor",

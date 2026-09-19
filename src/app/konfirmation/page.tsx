@@ -3,6 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Lyd til konfirmation København | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
   description: `Lej lyd til konfirmationen i København fra ${prisKr("pakke_fest_lille")}. Højtalere til tale, musik og fest, nemt at betjene, alle kabler med. Book online på 2 minutter.`,
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/konfirmation"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Lyd til konfirmation København | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
     description: `Lej lyd til konfirmationen i København fra ${prisKr("pakke_fest_lille")}. Højtalere til tale, musik og fest, nemt at betjene, alle kabler med. Book online på 2 minutter.`,
     url: "https://lejhojtaler.dk/konfirmation",

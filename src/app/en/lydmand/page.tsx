@@ -4,6 +4,7 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 import { LYDMAND_PAKKER } from "@/lib/products";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Sound Engineer Hire Copenhagen | 1,000 DKK/hour | Lejhøjtaler.dk",
   description:
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lydmand"),
   },
   openGraph: {
+    images: ogImages("/images/product-lydmand.webp"),
     title: "Sound Engineer Hire Copenhagen | 1,000 DKK/hour",
     description:
       "AV technician on site: setup, sound check and running the sound during your event. 1,000 DKK per hour. Book online.",

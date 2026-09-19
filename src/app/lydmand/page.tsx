@@ -4,6 +4,7 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 import { LYDMAND_PAKKER } from "@/lib/products";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Lydmand København | AV-tekniker 1.000 kr/time | Lejhøjtaler.dk",
   description:
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lydmand"),
   },
   openGraph: {
+    images: ogImages("/images/product-lydmand.webp"),
     title: "Lej Lydmand København | 1.000 kr/time",
     description:
       "AV-tekniker på stedet: sætter op, laver lydprøve og styrer lyden under festen. 1.000 kr pr. time. Book online.",
