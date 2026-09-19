@@ -5,32 +5,32 @@ export const djGearProducts: RentalProduct[] = [
     "page": "/dj-pult",
     "category": "lyd",
     "price": 1695,
-    "image": "/images/product-dj-flx4-white.webp",
-    "name_da": "DJ-pult · Pioneer DDJ-FLX4",
-    "name_en": "DJ controller · Pioneer DDJ-FLX4",
-    "desc_da": "Pioneer DDJ-FLX4 med iPad i flightcase, DJ-hovedtelefoner og mulighed for Spotify via djay. Bemærk: Kræver internetforbindelse på din iPad under afspilning, og musikken er kun til privat brug. Spotify Premium kræves. DJ og højtalere vælges separat.",
-    "desc_en": "Pioneer DDJ-FLX4 with an iPad in a flight case, DJ headphones and Spotify connectivity via djay. Note: Your iPad needs an internet connection during playback, and the music is for private use only. Spotify Premium required. DJ and speakers are hired separately.",
+    "image": "/images/product-dj-pult-white.webp",
+    "name_da": "DJ-pult · AlphaTheta XDJ-AZ",
+    "name_en": "DJ system · AlphaTheta XDJ-AZ",
+    "desc_da": "AlphaTheta XDJ-AZ, et komplet standalone DJ-system med touchskærm og fire kanaler. Spil fra USB-stik eller stream direkte, ingen computer nødvendig. DJ og højtalere vælges separat.",
+    "desc_en": "AlphaTheta XDJ-AZ, a complete standalone DJ system with a touchscreen and four channels. Play from USB sticks or stream directly, no laptop needed. DJ and speakers are hired separately.",
+    "allowedAddons": ["x_stativ", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
     "contents": [
-      "Pioneer DDJ-FLX4",
-      "iPad i flightcase",
-      "DJ-hovedtelefoner · Fun Generation HP 5",
-      "Tilslutningskabler"
+      "AlphaTheta XDJ-AZ (eller XDJ-RR)",
+      "Standalone, ingen computer",
+      "Tilslutningskabler til højtalere"
     ]
   },
   {
     "id": "dj_pakke_lille",
     "page": "/dj-pult",
     "category": "lyd",
-    "price": 2795,
-    "image": "/images/product-dj-flx4-white.webp",
+    "price": 2695,
+    "image": "/images/product-dj-pult-white.webp",
     "showPartImages": true,
     "name_da": "DJ Pakke 0-30",
     "name_en": "DJ package 0-30",
     "desc_da": "Pult og to højtalere til mindre fester og baggrundsmusik. DJ/musikafvikler tilvælges pr. time.",
     "desc_en": "Controller and two speakers for smaller parties and background music. Add a DJ/music host by the hour.",
+    "allowedAddons": ["rog", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
     "contents": [
-      "DJ-pult · Pioneer DDJ-FLX4",
-      "DJ-hovedtelefoner · Fun Generation HP 5",
+      "DJ-pult · AlphaTheta XDJ-AZ",
       "Lille højtalerpakke",
       "Højtalerstativer",
       "Lysbar",
@@ -41,8 +41,8 @@ export const djGearProducts: RentalProduct[] = [
         {
           "productId": "dj_pult",
           "price": 1695,
-          "label_da": "DJ-pult · Pioneer DDJ-FLX4",
-          "label_en": "DJ controller · Pioneer DDJ-FLX4"
+          "label_da": "DJ-pult · AlphaTheta XDJ-AZ",
+          "label_en": "DJ system · AlphaTheta XDJ-AZ"
         },
         {
           "productId": "party",
@@ -69,7 +69,7 @@ export const djGearProducts: RentalProduct[] = [
           "label_en": "X-stand"
         }
       ],
-      "discount": 80,
+      "discount": 180,
       "usecase_da": "Pult og to højtalere til mindre fester og baggrundsmusik.",
       "usecase_en": "Controller and two speakers for smaller parties and background music."
     }
@@ -79,15 +79,15 @@ export const djGearProducts: RentalProduct[] = [
     "page": "/dj-pult",
     "category": "lyd",
     "price": 2995,
-    "image": "/images/product-dj-flx4-white.webp",
+    "image": "/images/product-dj-pult-white.webp",
     "showPartImages": true,
     "name_da": "DJ Pakke 30-50",
     "name_en": "DJ package 30-50",
     "desc_da": "Pult, to større højtalere og subwoofer til dansegulvet. DJ/musikafvikler tilvælges pr. time.",
     "desc_en": "Controller, two larger speakers and a subwoofer for the dance floor. Add a DJ/music host by the hour.",
+    "allowedAddons": ["rog", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
     "contents": [
-      "DJ-pult · Pioneer DDJ-FLX4",
-      "DJ-hovedtelefoner · Fun Generation HP 5",
+      "DJ-pult · AlphaTheta XDJ-AZ",
       "Mellem højtalerpakke",
       "Højtalerstativer",
       "Lysbar",
@@ -98,8 +98,8 @@ export const djGearProducts: RentalProduct[] = [
         {
           "productId": "dj_pult",
           "price": 1695,
-          "label_da": "DJ-pult · Pioneer DDJ-FLX4",
-          "label_en": "DJ controller · Pioneer DDJ-FLX4"
+          "label_da": "DJ-pult · AlphaTheta XDJ-AZ",
+          "label_en": "DJ system · AlphaTheta XDJ-AZ"
         },
         {
           "productId": "festival",
@@ -136,15 +136,14 @@ export const djGearProducts: RentalProduct[] = [
     "page": "/dj-pult",
     "category": "lyd",
     "price": 3725,
-    "image": "/images/product-dj-flx4-white.webp",
+    "image": "/images/product-dj-pult-white.webp",
     "showPartImages": true,
     "name_da": "Stor DJ-pakke",
     "name_en": "Large DJ package",
     "desc_da": "Pult, lyd, subwoofer, lys og mikrofon til en hel aften. DJ/musikafvikler tilvælges pr. time.",
     "desc_en": "Controller, speakers, subwoofer, lights and a microphone for the whole evening. Add a DJ/music host by the hour.",
     "contents": [
-      "DJ-pult · Pioneer DDJ-FLX4",
-      "DJ-hovedtelefoner · Fun Generation HP 5",
+      "DJ-pult · AlphaTheta XDJ-AZ",
       "Mellem højtalerpakke",
       "Højtalerstativer",
       "Subwoofer 12”",
@@ -156,8 +155,8 @@ export const djGearProducts: RentalProduct[] = [
         {
           "productId": "dj_pult",
           "price": 1695,
-          "label_da": "DJ-pult · Pioneer DDJ-FLX4",
-          "label_en": "DJ controller · Pioneer DDJ-FLX4"
+          "label_da": "DJ-pult · AlphaTheta XDJ-AZ",
+          "label_en": "DJ system · AlphaTheta XDJ-AZ"
         },
         {
           "productId": "festival",

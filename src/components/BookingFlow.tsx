@@ -568,7 +568,7 @@ const KVITTERING_NØGLE = "booking_kvittering_";
  * til en fest. Resten er ikke væk, men foldet sammen: en liste på otte plus
  * seks krydssalg bliver ikke læst, den bliver scrollet forbi.
  */
-const TILVALG_RELEVANS = ["lys", "rog", "stativer", "subwoofer", "mikrofon", "lyseffekt", "batteri", "taske"];
+const TILVALG_RELEVANS = ["lys", "rog", "stativer", "stativ_enkelt", "subwoofer", "mikrofon", "mikrofon_kabel", "batteri", "lyseffekt", "mixer_stor", "mikrofonstativ"];
 const ANTAL_SYNLIGE_TILVALG = 5;
 
 /**

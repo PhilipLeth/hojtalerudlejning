@@ -182,17 +182,20 @@ describe("BookingFlow - Step 3: Addons", () => {
     // If we made it to step 3
     const step3 = screen.queryByText("Tilvalg");
     if (step3) {
+      // Lille højtalerpakkes tilvalg efter produktarket 19. sept 2026: lysbar,
+      // stativer, trådløs mikrofon, mikrofon med ledning og enkelt lyseffekt.
+      // Røgmaskine og Soundboks-batteri hører ikke til den, og bæretasken er på pause.
       expect(screen.getByText("Lysbar")).toBeInTheDocument();
-      expect(screen.getByText("Røgmaskine")).toBeInTheDocument();
       expect(screen.getByText("Højtalerstativer")).toBeInTheDocument();
-      // Bæretasken er sat på pause (produktarket 17. sept 2026). Soundboks-batteriet
-      // ligger nu nederst i relevansrækkefølgen og er foldet væk, indtil man beder
-      // om hele listen — se tilvalgstrin.test.tsx
+      expect(screen.getByText("Trådløs mikrofon")).toBeInTheDocument();
+      expect(screen.getByText("Mikrofon med ledning")).toBeInTheDocument();
+      expect(screen.getByText("Enkelt lyseffekt")).toBeInTheDocument();
+      expect(screen.queryByText("Røgmaskine")).not.toBeInTheDocument();
       expect(screen.queryByText("Bæretaske")).not.toBeInTheDocument();
       expect(screen.queryByText("Soundboks batteri")).not.toBeInTheDocument();
+      // Lydmanden (en ydelse) ligger bag "Vis alle tilvalg" sammen med kørslen
       fireEvent.click(screen.getByText(/Vis alle tilvalg/));
-      expect(screen.getByText("Soundboks batteri")).toBeInTheDocument();
-      // Pausede tilvalg kommer heller ikke frem, når listen foldes ud
+      expect(screen.queryByText("Røgmaskine")).not.toBeInTheDocument();
       expect(screen.queryByText("Bæretaske")).not.toBeInTheDocument();
       // Kørslen har sit eget felt med de tre valgmuligheder — ikke bare endnu
       // en tilvalgs-række
