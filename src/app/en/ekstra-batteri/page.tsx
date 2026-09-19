@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Extra Battery for Battery Speaker Rental | 395 DKK | Lejhøjtaler.dk",
+  title: "Soundboks Battery Rental | 395 DKK | Lejhøjtaler.dk",
   description:
     "Rent an extra battery for the Soundboks 4 for 395 DKK. Double the playtime without power, for garden parties, beaches and graduation rides. Rent in Copenhagen.",
-  keywords: ["extra battery speaker rental", "soundboks extra battery hire", "thump go battery rental copenhagen", "battery speaker all night"],
+  keywords: ["extra battery speaker rental", "soundboks extra battery hire", "battery speaker all night"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/ekstra-batteri",
     languages: localeAlternates("/ekstra-batteri"),
   },
   openGraph: {
-    title: "Extra battery rental | 395 DKK",
-    description: "Extra battery for battery speakers, double the playtime without power.",
+    title: "Soundboks battery rental | 395 DKK",
+    description: "Extra battery for the Soundboks 4, double the playtime without power.",
     url: "https://lejhojtaler.dk/en/ekstra-batteri",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -27,17 +27,17 @@ export default function Page() {
     <ProductLanding
       locale="en"
       slug="en/ekstra-batteri"
-      name="Extra battery"
+      name="Soundboks battery"
       price={395}
-      headline="Rent an extra battery"
-      sub="An extra battery for the Mackie Thump GO or Soundboks 4, so the party does not end when the first one runs dry."
-      image="/images/product-thumpgo-v2-white.webp"
-      imageAlt="Extra battery for a battery-powered speaker"
+      headline="Rent an extra battery for the Soundboks 4"
+      sub="An extra battery for the Soundboks 4, so the party does not end when the first one runs dry."
+      image="/images/product-soundboks-batteri-white.webp"
+      imageAlt="Soundboks battery for rent"
       productId="batteri"
       bookLabel="Book an extra battery"
       faqPhrase="an extra battery"
       bullets={[
-        "Fits the Mackie Thump GO and Soundboks 4",
+        "Original Soundboks battery, fits the Soundboks 4",
         "Double the playtime, typically 20+ hours in total at party volume",
         "Swapped in half a minute without tools",
         "Delivered fully charged together with the speaker",
@@ -48,7 +48,7 @@ export default function Page() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">How long does one battery last?</h2>
           <p className="mb-6 text-white/50">
-            At normal party volume the Soundboks 4 lasts about 40 hours on low and 10-12 hours on high; the Thump GO about 12 hours. If you play loud from afternoon to night, the extra battery is what saves the evening.
+            At normal party volume the Soundboks 4 lasts about 40 hours on low and 10-12 hours on high. If you play loud from afternoon to night, the extra battery is what saves the evening.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/en/udendorspakke" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">

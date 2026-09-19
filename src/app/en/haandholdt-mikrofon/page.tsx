@@ -35,7 +35,7 @@ export default function Page() {
       name="Handheld microphone (wired)"
       price={95}
       headline="Rent a handheld microphone"
-      sub="Standard wired handheld microphone, for speeches and vocals."
+      sub="the t.bone MB 60, wired dynamic handheld microphone, for speeches and vocals."
       image="/images/product-mikrofon-kabel-v2-white.webp"
       imageAlt="Wired handheld microphone for rent in Copenhagen"
       productId="haandholdt_mikrofon"

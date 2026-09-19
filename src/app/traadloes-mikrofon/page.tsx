@@ -37,9 +37,9 @@ export default function TraadloesMikrofonPage() {
       name="Trådløs mikrofon"
       price={445}
       headline="Lej trådløs mikrofon"
-      sub="Professionel trådløs håndholdt mikrofon til taler, bryllup og events."
-      image="/images/product-mikrofon-v2-white.webp"
-      imageAlt="Trådløs mikrofon til leje i København"
+      sub="Shure BLX24 med SM58, trådløs håndholdt mikrofon i scenekvalitet til taler, bryllup og events."
+      image="/images/product-mikrofon-pro-v2-white.webp"
+      imageAlt="Shure BLX24 trådløs mikrofon til leje i København"
       productId="traadloes_mikrofon"
       bookLabel="Book mikrofon nu"
       faqPhrase="en trådløs mikrofon"

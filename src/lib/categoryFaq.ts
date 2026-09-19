@@ -55,8 +55,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje en mixer i København?",
       a:
-        "Mackie Mix12FX tilbydes på forespørgsel fra 295 kr. Vores t.mix 1202 FXMP USB med " +
-        "6 mikrofonindgange koster 395 kr. t.mix 1402 FXMP USB med 8 mikrofonindgange tilbydes på forespørgsel fra 495 kr. Priserne gælder 1–5 dage.",
+        "Vores mixer med effekter, t.mix xmix 1202 FXMP USB, koster 345 kr. En mindre (Mackie Mix12FX) og en større (t.mix 1402 FXMP USB) " +
+        "tilbydes på forespørgsel fra 295 kr. Priserne gælder 1–5 dage.",
     },
     {
       q: "Hvornår har jeg brug for en mixer?",
@@ -68,8 +68,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er forskellen på den lille og den store?",
       a:
-        "Lille: Mackie Mix12FX med 4 mikrofonindgange. Mellem: t.mix 1202 FXMP USB med 6. Stor: t.mix 1402 FXMP USB med 8. " +
-        "Stereoindgange tælles særskilt. Mellemklassen kan bookes direkte; lille og stor aftales på forespørgsel.",
+        "Mixeren med effekter (t.mix xmix 1202 FXMP USB) kan bookes direkte og dækker de fleste taler, paneler og mindre bands. " +
+        "En mindre og en større model aftales på forespørgsel.",
     },
     {
       q: "Følger kablerne med?",
@@ -561,8 +561,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How much does it cost to rent a mixer in Copenhagen?",
       a:
-        "Mackie Mix12FX is available on request from 295 DKK. Our t.mix 1202 FXMP USB with " +
-        "6 microphone inputs is 395 DKK. The t.mix 1402 FXMP USB with 8 microphone inputs is on request from 495 DKK. Prices cover 1–5 days.",
+        "Our mixer with effects, the t.mix xmix 1202 FXMP USB, is 345 DKK. A smaller (Mackie Mix12FX) and a larger (t.mix 1402 FXMP USB) model " +
+        "are on request from 295 DKK. Prices cover 1–5 days.",
     },
     {
       q: "When do I actually need a mixer?",
@@ -574,8 +574,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "What is the difference between the small and the large one?",
       a:
-        "Small: Mackie Mix12FX with 4 microphone inputs. Medium: t.mix 1202 FXMP USB with 6. Large: t.mix 1402 FXMP USB with 8. " +
-        "Stereo inputs are separate. Book the medium mixer online; small and large models are on request.",
+        "The mixer with effects (t.mix xmix 1202 FXMP USB) can be booked online and covers most speeches, panels and small bands. " +
+        "A smaller and a larger model are on request.",
     },
     {
       q: "Are the cables included?",

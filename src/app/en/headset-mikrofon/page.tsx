@@ -37,8 +37,8 @@ export default function Page() {
       name="Wireless headset microphone"
       price={445}
       headline="Rent a headset microphone"
-      sub="Wireless headset for presentations and conferences. Hands-free."
-      image="/images/product-headset-v2-white.webp"
+      sub="Shure BLX14 wireless headset for presentations and conferences. Hands-free."
+      image="/images/product-headset-pro-v2-white.webp"
       imageAlt="Wireless headset microphone for rent in Copenhagen"
       productId="headset"
       bookLabel="Book the headset now"

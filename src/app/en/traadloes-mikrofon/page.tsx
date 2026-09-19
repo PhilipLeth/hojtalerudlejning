@@ -37,9 +37,9 @@ export default function Page() {
       name="Wireless microphone"
       price={445}
       headline="Rent a wireless microphone in Copenhagen"
-      sub="Wireless handheld microphone for speeches, weddings and events."
-      image="/images/product-mikrofon-v2-white.webp"
-      imageAlt="Wireless microphone for rent in Copenhagen"
+      sub="Shure BLX24 with SM58, a stage-quality wireless handheld microphone for speeches, weddings and events."
+      image="/images/product-mikrofon-pro-v2-white.webp"
+      imageAlt="Shure BLX24 wireless microphone for rent in Copenhagen"
       productId="traadloes_mikrofon"
       bookLabel="Book the microphone now"
       faqPhrase="a wireless microphone"

@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Large speaker package Rental Copenhagen | 1,295 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a speaker package for 50-100 guests in Copenhagen for 1,295 DKK. 2× 12\" EV speakers on stands with a 12\" subwoofer. The step above the medium speaker package.",
+    "Rent a speaker package for 50-100 guests in Copenhagen for 1,295 DKK. 2× 12\" EV ZLX 12P G2 with a Behringer 12\" subwoofer. The step above the medium speaker package.",
   keywords: ["speaker package with subwoofer rental", "pa system with bass hire copenhagen", "speakers for 100 people rental", "subwoofer rental copenhagen"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/hojtalerpakke-bas",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Large speaker package rental | 1,295 DKK",
-    description: "2× 12\" EV speakers on stands + 12\" subwoofer. For 50-100 guests.",
+    description: "2× 12\" EV ZLX 12P G2 + Behringer 12\" subwoofer. For 50-100 guests.",
     url: "https://lejhojtaler.dk/en/hojtalerpakke-bas",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,9 +29,9 @@ export default function Page() {
       name="Large speaker package"
       price={1295}
       headline="Rent a speaker package for 50-100 guests"
-      sub={"The large 12\" EV speakers on stands with a 12\" subwoofer underneath, the step above the medium speaker package."}
-      image="/images/product-festival-bas-v2-white.webp"
-      imageAlt="Speaker package with two 12 inch EV speakers on stands and a subwoofer for rent in Copenhagen"
+      sub={"The large 12\" EV ZLX 12P G2 with a Behringer 12\" subwoofer, the step above the medium speaker package. Stands are an add-on."}
+      image="/images/product-hojtalerpakke-stor-white.webp"
+      imageAlt="Large speaker package with two 12 inch EV speakers and a subwoofer for rent in Copenhagen"
       productId="hojtaler_100"
       faqPhrase="the speaker package with subwoofer"
       capacity={{ level: 3, label: "50-100 people" }}
