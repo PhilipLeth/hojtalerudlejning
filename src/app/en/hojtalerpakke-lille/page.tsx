@@ -46,7 +46,7 @@ export default function SmallSpeakerPackageEn() {
       capacity={{ level: 1, label: "0-30 people" }}
       bullets={[
         '2× 10" Alto speakers with Bluetooth',
-        "All cables included, carry bag and stands available as add-ons",
+        "All cables included, stands and microphone available as add-ons",
         "Only 12 kg",
         "Collect Friday, return Monday",
       ]}

@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lej Stor højtalerpakke København | 1.295 kr | Lejhøjtaler.dk",
   description:
-    "Lej højtalerpakke til 50-100 gæster i København for 1.295 kr. 2× 12\" EV højtalere på stativer med 12\" subwoofer. Trinnet over Mellem højtalerpakke.",
+    "Lej højtalerpakke til 50-100 gæster i København for 1.295 kr. 2× 12\" EV ZLX 12P G2 med Behringer 12\" subwoofer. Trinnet over Mellem højtalerpakke.",
   keywords: [
     "højtalerpakke med subwoofer",
     "lej PA anlæg med bas",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Lej Stor højtalerpakke | 1.295 kr",
-    description: '2× 12" EV højtalere på stativer + 12" subwoofer. Til 50-100 gæster.',
+    description: '2× 12" EV ZLX 12P G2 + Behringer 12" subwoofer. Til 50-100 gæster.',
     url: "https://lejhojtaler.dk/hojtalerpakke-bas",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -33,9 +33,9 @@ export default function HojtalerpakkeBasPage() {
       name="Stor højtalerpakke"
       price={1295}
       headline="Lej højtalerpakke til 50-100 gæster"
-      sub={'De store 12" EV-højtalere på stativer med en 12" subwoofer under, trinnet over Mellem højtalerpakke.'}
-      image="/images/product-festival-bas-v2-white.webp"
-      imageAlt="Højtalerpakke med to 12 tommer EV-højtalere på stativer og subwoofer til leje i København"
+      sub={'De store 12" EV ZLX 12P G2 med en Behringer 12" subwoofer, trinnet over Mellem højtalerpakke. Stativer kan tilkøbes.'}
+      image="/images/product-hojtalerpakke-stor-white.webp"
+      imageAlt="Stor højtalerpakke med to 12 tommer EV-højtalere og subwoofer til leje i København"
       productId="hojtaler_100"
       faqPhrase="højtalerpakken med subwoofer"
       capacity={{ level: 3, label: "50-100 pers." }}

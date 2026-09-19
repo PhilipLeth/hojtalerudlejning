@@ -13,8 +13,8 @@ export const mixerModels: Addon[] = [
     id: "mixer_stor", page: "/mixer", price: 345,
     image: "/images/product-mixer-tmix-1202-fx-usb.jpg",
     contents: ["the t.mix xmix 1202 FXMP USB", "Strømforsyning", "Kabler til højtaler"],
-    da: { label: "Mixer med effekter · t.mix 1202 FXMP USB", desc: "6 mikrofonindgange, 2 stereoindgange, effekter og stereo-USB. Til panel, møde og mindre band. Kræver strøm." },
-    en: { label: "Mixer with effects · t.mix 1202 FXMP USB", desc: "6 microphone inputs, 2 stereo inputs, effects and stereo USB. For panels, meetings and small bands. Mains power required." },
+    da: { label: "Mixer med effekter · t.mix 1202 FXMP USB", desc: "Kompakt mixer med effekter og USB, til flere mikrofoner, tale og musik. Kræver strøm." },
+    en: { label: "Mixer with effects · t.mix 1202 FXMP USB", desc: "Compact mixer with effects and USB, for several microphones, speech and music. Mains power required." },
   },
   {
     id: "mixer_xl", page: "/mixer", price: 495, hidden: true,

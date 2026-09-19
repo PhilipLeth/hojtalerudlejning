@@ -5,7 +5,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lej Højtalerpakke Lille København | Fra 595 kr | Lejhøjtaler.dk",
   description:
-    "Lej lille højtalerpakke i København fra 595 kr/weekend. 2× 10\" Alto med Bluetooth. Kabler og taske inkluderet. Book online.",
+    "Lej lille højtalerpakke i København fra 595 kr/weekend. 2× 10\" Alto TX 410 med Bluetooth. Alle kabler inkluderet. Book online.",
   keywords: ["lille højtalerpakke", "lej højtaler pakke", "alto højtaler leje", "højtalerudlejning københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/hojtalerpakke-lille",
@@ -28,7 +28,7 @@ export default function HojtalerpakkeLillePage() {
       name="Højtalerpakke lille"
       price={595}
       headline="Lej højtalerpakke lille i København"
-      sub={'To kompakte 10" Alto højtalere med Bluetooth - klar til cyklen.'}
+      sub={'To kompakte 10" Alto TX 410 med Bluetooth, klar til cyklen.'}
       image="/images/product-party-v2-white.webp"
       imageAlt="Lille højtalerpakke til leje i København"
       productId="party"
@@ -36,7 +36,7 @@ export default function HojtalerpakkeLillePage() {
       capacity={{ level: 1, label: "0-30 pers." }}
       bullets={[
         '2× 10" Alto med Bluetooth',
-        "Alle kabler inkl., bæretaske og stativ kan tilkøbes",
+        "Alle kabler inkl., stativer og mikrofon kan tilkøbes",
         "Kun 12 kg",
         "Hent fredag, aflever mandag",
       ]}

@@ -10,7 +10,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Mixer Rental Copenhagen | From 295 DKK | Lejhøjtaler.dk",
   description:
-    "Rent an audio mixer in Copenhagen from 295 DKK. Choose 4, 6 or 8 microphone inputs. Our t.mix 1202 FXMP USB is 345 DKK; small and large models are on request.",
+    "Rent an audio mixer in Copenhagen from 295 DKK. Our t.mix xmix 1202 FXMP USB with effects and USB is 345 DKK; small and large models are on request.",
   keywords: [
     "mixer rental copenhagen",
     "audio mixer hire copenhagen",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mixer Rental Copenhagen | From 295 DKK | Lejhøjtaler.dk",
     description:
-      "Three mixer sizes: 4, 6 or 8 microphone inputs. t.mix 1202 FXMP USB with effects and stereo USB for meetings, panels and bands.",
+      "t.mix xmix 1202 FXMP USB with effects and USB for meetings, panels and bands. Small and large models on request.",
     url: "https://lejhojtaler.dk/en/mixer",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",

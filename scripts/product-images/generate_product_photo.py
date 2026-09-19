@@ -94,6 +94,13 @@ MOTIVER = {
         "touchscreen in the top centre, two large jog wheels left and right, a four-channel mixer section "
         "with faders and knobs in the middle, performance pads under each jog wheel, seen from a slight "
         "three-quarter angle from above. No laptop, no tablet, no headphones, no cables. " + STIL)},
+    "batteri": {"fil": "product-soundboks-batteri-white.png", "prompt": (
+        "Webshop product cut-out, the object photographed completely alone on a flat seamless pure white background, nothing else in the picture: "
+        "a large removable battery pack for a portable party speaker, a chunky matte black rectangular box about the size of a thick hardback book, with a moulded carrying handle on top, a wide flat connector plate on one side, and a small row of four charge indicator LEDs, standing upright. Not a phone power bank, no cable, no speaker. " + STIL)},
+    "lyseffekt": {"fil": "product-lyseffekt-z20-white.png", "prompt": (
+        "Cut-out on seamless white, nothing else, no text or logos: a small round black party light effect, a squat black cylinder about ten centimetres across with a clear domed lens on the front full of tiny colour LEDs, on a short black bracket, switched off, seen from a three-quarter angle. " + STIL)},
+    "hojtaler_100": {"fil": "product-hojtalerpakke-stor-white.png", "prompt": (
+        "Cut-out on seamless white, nothing else, no text or logos: three black PA speaker cabinets on the floor. Left and right: two identical two-way tops, each with one twelve inch woofer below and one horn above behind a black grille. Middle front: one wider, lower subwoofer with a single large woofer. No stands, no cables. " + STIL)},
 }
 
 logger = logging.getLogger("produktfoto")

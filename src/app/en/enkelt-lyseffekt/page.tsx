@@ -36,9 +36,9 @@ export default function Page() {
       name="Single light effect"
       price={195}
       headline="Rent a single light effect in Copenhagen"
-      sub="One LED par light (no stand), a plug-and-play colour effect that sets the mood in minutes."
-      image="/images/product-lyseffekt-live-white.webp"
-      imageAlt="Single LED party light for rent in Copenhagen"
+      sub="Eurolite LED Mini Z-20, a small USB-powered beam effect with rotating coloured beams. Plug and play in minutes."
+      image="/images/product-lyseffekt-z20-white.webp"
+      imageAlt="Eurolite LED Mini Z-20 beam effect for rent in Copenhagen"
       productId="lyseffekt"
       faqPhrase="a single light effect"
       bullets={[
