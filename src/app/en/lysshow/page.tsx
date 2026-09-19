@@ -18,9 +18,9 @@ import { localeAlternates } from "@/lib/hreflang";
  * "lighting package for wedding", vil se en færdig løsning.
  */
 export const metadata: Metadata = {
-  title: "Light Show Rental Copenhagen | Lights, Disco Ball & Fog from 1.045 DKK | Lejhøjtaler.dk",
+  title: "Light Show Rental Copenhagen | Lights, Disco Ball & Fog from 1.140 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a complete light show in Copenhagen. Light effects, disco ball, uplights and a fog machine in ready-made packages from 1.045 DKK. We deliver and set it up.",
+    "Rent a complete light show in Copenhagen. Light effects, disco ball, uplights and a fog machine in ready-made packages from 1.140 DKK. We deliver and set it up.",
   keywords: [
     "light show rental copenhagen",
     "lighting package rental copenhagen",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lysshow"),
   },
   openGraph: {
-    title: "Light Show Rental Copenhagen | From 1.045 DKK | Lejhøjtaler.dk",
+    title: "Light Show Rental Copenhagen | From 1.140 DKK | Lejhøjtaler.dk",
     description:
       "Ready-made lighting packages with effects, disco ball, uplights and fog. Book online.",
     url: "https://lejhojtaler.dk/en/lysshow",

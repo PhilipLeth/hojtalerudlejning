@@ -113,10 +113,10 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "4:3",
       "titel_da": "Alt det du får",
       "titel_en": "Everything included",
-      "alt_da": "Stor højtalerpakke med alt hvad der følger med",
-      "alt_en": "Large Speaker Package with everything that comes with it",
-      "caption_da": "Det her får du med, når du lejer Stor højtalerpakke.",
-      "caption_en": "This is what comes along when you rent Large Speaker Package."
+      "alt_da": "Mellem højtalerpakke med alt hvad der følger med",
+      "alt_en": "Medium Speaker Package with everything that comes with it",
+      "caption_da": "Det her får du med, når du lejer Mellem højtalerpakke.",
+      "caption_en": "This is what comes along when you rent Medium Speaker Package."
     },
     {
       "src": "/images/gallery/festival/i_brug.webp?v=a80b4384",
@@ -125,8 +125,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "16:9",
       "titel_da": "Sådan ser det ud til festen",
       "titel_en": "How it looks at the party",
-      "alt_da": "Stor højtalerpakke sat op og i brug",
-      "alt_en": "Large Speaker Package set up and in use",
+      "alt_da": "Mellem højtalerpakke sat op og i brug",
+      "alt_en": "Medium Speaker Package set up and in use",
       "caption_da": "30-50 personer indendørs, udendørs uden vægge, regn med det halve.",
       "caption_en": "30-50 people indoors, outdoors without walls, expect half that."
     },
@@ -137,8 +137,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "4:3",
       "titel_da": "Tæt på",
       "titel_en": "Close up",
-      "alt_da": "Stor højtalerpakke tæt på",
-      "alt_en": "Large Speaker Package up close",
+      "alt_da": "Mellem højtalerpakke tæt på",
+      "alt_en": "Medium Speaker Package up close",
       "caption_da": "Sådan ser det ud, når det står klar.",
       "caption_en": "This is what it looks like standing ready."
     }
@@ -151,10 +151,10 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "4:3",
       "titel_da": "Alt det du får",
       "titel_en": "Everything included",
-      "alt_da": "Højtalerpakke 100 med alt hvad der følger med",
-      "alt_en": "Speaker package 100 with everything that comes with it",
-      "caption_da": "Det her får du med, når du lejer Højtalerpakke 100.",
-      "caption_en": "This is what comes along when you rent Speaker package 100."
+      "alt_da": "Stor højtalerpakke med alt hvad der følger med",
+      "alt_en": "Large speaker package with everything that comes with it",
+      "caption_da": "Det her får du med, når du lejer Stor højtalerpakke.",
+      "caption_en": "This is what comes along when you rent Large speaker package."
     },
     {
       "src": "/images/gallery/hojtaler_100/i_brug.webp?v=a02d57b0",
@@ -163,8 +163,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "16:9",
       "titel_da": "Sådan ser det ud til festen",
       "titel_en": "How it looks at the party",
-      "alt_da": "Højtalerpakke 100 sat op og i brug",
-      "alt_en": "Speaker package 100 set up and in use",
+      "alt_da": "Stor højtalerpakke sat op og i brug",
+      "alt_en": "Large speaker package set up and in use",
       "caption_da": "50-100 personer indendørs, udendørs uden vægge, regn med det halve.",
       "caption_en": "50-100 people indoors, outdoors without walls, expect half that."
     },
@@ -175,8 +175,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "4:3",
       "titel_da": "Tæt på",
       "titel_en": "Close up",
-      "alt_da": "Højtalerpakke 100 tæt på",
-      "alt_en": "Speaker package 100 up close",
+      "alt_da": "Stor højtalerpakke tæt på",
+      "alt_en": "Large speaker package up close",
       "caption_da": "Sådan ser det ud, når det står klar.",
       "caption_en": "This is what it looks like standing ready."
     }
@@ -189,10 +189,10 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "4:3",
       "titel_da": "Alt det du får",
       "titel_en": "Everything included",
-      "alt_da": "Lys-pakke med alt hvad der følger med",
-      "alt_en": "Light package with everything that comes with it",
-      "caption_da": "Det her får du med, når du lejer Lys-pakke.",
-      "caption_en": "This is what comes along when you rent Light package."
+      "alt_da": "Lysbar med alt hvad der følger med",
+      "alt_en": "Light bar with everything that comes with it",
+      "caption_da": "Det her får du med, når du lejer Lysbar.",
+      "caption_en": "This is what comes along when you rent Light bar."
     },
     {
       "src": "/images/gallery/lys/i_brug.webp?v=3a15a325",
@@ -201,8 +201,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "16:9",
       "titel_da": "Sådan ser det ud til festen",
       "titel_en": "How it looks at the party",
-      "alt_da": "Lys-pakke sat op og i brug",
-      "alt_en": "Light package set up and in use",
+      "alt_da": "Lysbar sat op og i brug",
+      "alt_en": "Light bar set up and in use",
       "caption_da": "Et eksempel på en opstilling, du sætter det op, som det passer til din fest.",
       "caption_en": "One example of a setup, arrange it however suits your party."
     },
@@ -213,8 +213,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "4:3",
       "titel_da": "Tæt på",
       "titel_en": "Close up",
-      "alt_da": "Lys-pakke tæt på",
-      "alt_en": "Light package up close",
+      "alt_da": "Lysbar tæt på",
+      "alt_en": "Light bar up close",
       "caption_da": "Sådan ser det ud, når det står klar.",
       "caption_en": "This is what it looks like standing ready."
     }
@@ -557,10 +557,10 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "4:3",
       "titel_da": "Alt det du får",
       "titel_en": "Everything included",
-      "alt_da": "Lille festpakke, alle dele stillet op sammen",
-      "alt_en": "Small party package, every part laid out together",
-      "caption_da": "Det her er hvad der står i bilen, når du henter Lille festpakke.",
-      "caption_en": "This is what goes in the car when you pick up Small party package."
+      "alt_da": "Festpakke 0-30, alle dele stillet op sammen",
+      "alt_en": "Party package 0-30, every part laid out together",
+      "caption_da": "Det her er hvad der står i bilen, når du henter Festpakke 0-30.",
+      "caption_en": "This is what goes in the car when you pick up Party package 0-30."
     },
     {
       "src": "/images/gallery/pakke_fest_lille/i_brug.webp?v=2a45565a",
@@ -569,8 +569,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "16:9",
       "titel_da": "Sådan ser det ud til festen",
       "titel_en": "How it looks at the party",
-      "alt_da": "Lille festpakke sat op og i brug",
-      "alt_en": "Small party package set up and in use",
+      "alt_da": "Festpakke 0-30 sat op og i brug",
+      "alt_en": "Party package 0-30 set up and in use",
       "caption_da": "Op til 50 gæster indendørs, udendørs uden vægge, regn med det halve.",
       "caption_en": "Up to 50 guests indoors, outdoors without walls, expect half that."
     },
@@ -581,8 +581,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "4:3",
       "titel_da": "Tæt på",
       "titel_en": "Close up",
-      "alt_da": "Lille festpakke tæt på",
-      "alt_en": "Small party package up close",
+      "alt_da": "Festpakke 0-30 tæt på",
+      "alt_en": "Party package 0-30 up close",
       "caption_da": "Sådan ser det ud, når det står klar.",
       "caption_en": "This is what it looks like standing ready."
     }
@@ -595,10 +595,10 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "4:3",
       "titel_da": "Alt det du får",
       "titel_en": "Everything included",
-      "alt_da": "Stor festpakke, alle dele stillet op sammen",
-      "alt_en": "Large party package, every part laid out together",
-      "caption_da": "Det her er hvad der står i bilen, når du henter Stor festpakke.",
-      "caption_en": "This is what goes in the car when you pick up Large party package."
+      "alt_da": "Festpakke 30-50, alle dele stillet op sammen",
+      "alt_en": "Party package 30-50, every part laid out together",
+      "caption_da": "Det her er hvad der står i bilen, når du henter Festpakke 30-50.",
+      "caption_en": "This is what goes in the car when you pick up Party package 30-50."
     },
     {
       "src": "/images/gallery/pakke_fest_stor/i_brug.webp?v=5d9f7776",
@@ -607,8 +607,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "16:9",
       "titel_da": "Sådan ser det ud til festen",
       "titel_en": "How it looks at the party",
-      "alt_da": "Stor festpakke sat op og i brug",
-      "alt_en": "Large party package set up and in use",
+      "alt_da": "Festpakke 30-50 sat op og i brug",
+      "alt_en": "Party package 30-50 set up and in use",
       "caption_da": "50-100 gæster indendørs, udendørs uden vægge, regn med det halve.",
       "caption_en": "50-100 guests indoors, outdoors without walls, expect half that."
     },
@@ -619,8 +619,8 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "ratio": "4:3",
       "titel_da": "Tæt på",
       "titel_en": "Close up",
-      "alt_da": "Stor festpakke tæt på",
-      "alt_en": "Large party package up close",
+      "alt_da": "Festpakke 30-50 tæt på",
+      "alt_en": "Party package 30-50 up close",
       "caption_da": "Sådan ser det ud, når det står klar.",
       "caption_en": "This is what it looks like standing ready."
     }

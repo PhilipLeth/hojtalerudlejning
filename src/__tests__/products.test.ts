@@ -9,31 +9,31 @@ describe("Products data", () => {
     expect(speakers.filter((s) => s.hidden)).toHaveLength(0);
     // Trinnet til 50-100 kom til 25. august 2026 og har sin egen side
     const stor = speakers.find((s) => s.id === "hojtaler_100")!;
-    expect(stor.price).toBe(1495);
+    expect(stor.price).toBe(1295); // produktarket 17. sept 2026 (før 1495)
     expect(stor.da.capacity).toBe("50-100 pers.");
     expect(stor.page).toBe("/hojtalerpakke-bas");
   });
 
-  it("thump go is 395 kr", () => {
-    expect(speakers.find((s) => s.id === "thumpgo")!.price).toBe(395);
+  it("thump go is 495 kr (produktarket 17. sept 2026)", () => {
+    expect(speakers.find((s) => s.id === "thumpgo")!.price).toBe(495);
   });
 
   it("party speaker is 595 kr", () => {
     expect(speakers.find((s) => s.id === "party")!.price).toBe(595);
   });
 
-  it("soundboks følger adminprisen på 795 kr", () => {
-    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(795);
+  it("soundboks koster 695 kr (produktarket 17. sept 2026)", () => {
+    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(695);
   });
 
-  it("festival speaker is 995 kr (højtaler 30-50, prisstigning 25. aug 2026)", () => {
-    expect(speakers.find((s) => s.id === "festival")!.price).toBe(995);
+  it("festival speaker is 795 kr (højtaler 30-50, produktarket 17. sept 2026)", () => {
+    expect(speakers.find((s) => s.id === "festival")!.price).toBe(795);
   });
 
   it("startPrice matches cheapest speaker", () => {
     const cheapest = Math.min(...speakers.map((s) => s.price));
     expect(startPrice).toBe(cheapest);
-    expect(startPrice).toBe(395);
+    expect(startPrice).toBe(495); // produktarket 17. sept 2026
   });
 
   it("cheapestSpeakerPrice ignores hidden speakers", () => {
@@ -92,12 +92,12 @@ describe("Addons data", () => {
     expect(ids).not.toContain("levering_opsaetning");
   });
 
-  it("lys is 495 kr", () => {
-    expect(addons.find((a) => a.id === "lys")!.price).toBe(495);
+  it("lys is 395 kr (produktarket 17. sept 2026)", () => {
+    expect(addons.find((a) => a.id === "lys")!.price).toBe(395);
   });
 
-  it("rog is 595 kr", () => {
-    expect(addons.find((a) => a.id === "rog")!.price).toBe(595);
+  it("rog is 245 kr (produktarket 17. sept 2026)", () => {
+    expect(addons.find((a) => a.id === "rog")!.price).toBe(245);
   });
 
   it("kørsel: én vej 495 kr, begge veje 795 kr", () => {
@@ -118,15 +118,15 @@ describe("Addons data", () => {
     expect(deliveryDirections("levering_opsaetning")).toEqual({ out: true, back: true });
   });
 
-  it("festpakker: 690 og 1290 kr med korrekt rabat", () => {
+  it("festpakker: 895 og 1095 kr med korrekt rabat (produktarket 17. sept 2026)", () => {
     const lille = rentalProducts.find((p) => p.id === "pakke_fest_lille")!;
     const stor = rentalProducts.find((p) => p.id === "pakke_fest_stor")!;
-    expect(lille.bundle?.parts.map((x) => x.productId)).toEqual(["party", "lyseffekt"]);
-    expect(lille.price).toBe(690); // 595 + 195 - 100
-    expect(lille.bundle?.discount).toBe(100);
+    expect(lille.bundle?.parts.map((x) => x.productId)).toEqual(["party", "lys"]);
+    expect(lille.price).toBe(895); // 595 + 395 - 95
+    expect(lille.bundle?.discount).toBe(95);
     expect(stor.bundle?.parts.map((x) => x.productId)).toEqual(["festival", "lys"]);
-    expect(stor.price).toBe(1290); // 995 + 495 - 200
-    expect(stor.bundle?.discount).toBe(200);
+    expect(stor.price).toBe(1095); // 795 + 395 - 95
+    expect(stor.bundle?.discount).toBe(95);
     // Levering/opsætning er tilvalg — ikke en del af pakken
     for (const p of [lille, stor]) {
       expect(p.bundle!.parts.map((x) => x.productId)).not.toContain("levering_begge");
@@ -146,11 +146,11 @@ describe("Addons data", () => {
     expect(farvet.price).toBe(195);
   });
 
-  it("uplights: enkelt 125 kr og 4-pak 395 kr", () => {
+  it("uplights: enkelt 195 kr og 4-pak 595 kr (produktarket 17. sept 2026)", () => {
     const single = rentalProducts.find((p) => p.id === "uplight")!;
     const pack = rentalProducts.find((p) => p.id === "uplight_4")!;
-    expect(single.price).toBe(125);
-    expect(pack.price).toBe(395);
+    expect(single.price).toBe(195);
+    expect(pack.price).toBe(595);
     expect(single.page).toBe("/uplights");
     expect(pack.page).toBe("/uplights");
     expect(pack.contents?.join(" ")).toContain("4×");
@@ -162,13 +162,13 @@ describe("Addons data", () => {
     expect(traadloesPro.image).toBe("/images/product-mikrofon-pro-v2-white.webp");
     expect(traadloesPro.price).toBe(595);
     expect(haandholdtPro.image).toBe("/images/product-mikrofon-kabel-pro-v2-white.webp");
-    expect(haandholdtPro.price).toBe(395);
+    expect(haandholdtPro.price).toBe(345); // produktarket 17. sept 2026
   });
 
   it("subwoofer findes som tilvalg med Behringer 12\" og egen produktside", () => {
     const sub = addons.find((a) => a.id === "subwoofer")!;
     expect(sub).toBeDefined();
-    expect(sub.price).toBe(295);
+    expect(sub.price).toBe(495); // produktarket 17. sept 2026
     expect(sub.page).toBe("/subwoofer");
     expect(sub.image).toBe("/images/product-subwoofer-v2-white.webp");
     expect(sub.da.label).toContain("Subwoofer");
@@ -211,12 +211,12 @@ describe("Addons data", () => {
     expect(lille.bundle!.discount).toBe(385);
     expect(lilleSum - lille.price).toBe(lille.bundle!.discount);
 
-    // Festpakken: 695 + 595 + 995 = 2285 → 2000 (spar 285) — festival = 995 fra 25. aug
+    // Festpakken: 695 + 595 + 795 = 2085 → 1825 (spar 260) — festival = 795, produktarket 17. sept 2026
     expect(fest.bundle!.parts.map((x) => x.productId)).toEqual(["karaoke", "skaerm_55", "festival"]);
     const festSum = fest.bundle!.parts.reduce((s, x) => s + x.price, 0);
-    expect(festSum).toBe(2285);
-    expect(fest.price).toBe(2000);
-    expect(fest.bundle!.discount).toBe(285);
+    expect(festSum).toBe(2085);
+    expect(fest.price).toBe(1825);
+    expect(fest.bundle!.discount).toBe(260);
     expect(festSum - fest.price).toBe(fest.bundle!.discount);
   });
 
@@ -245,9 +245,9 @@ describe("Addons data", () => {
     }
   });
 
-  it("Julehyggen koster 695 kr med Thump GO, lyskæde og lyseffekt", () => {
+  it("Julehyggen koster 785 kr med Thump GO, lyskæde og lyseffekt", () => {
     const p = rentalProducts.find((x) => x.id === "jul_hygge")!;
-    expect(p.price).toBe(695);
+    expect(p.price).toBe(785); // produktarket 17. sept 2026: 495 + 195 + 195 - 100
     expect(p.page).toBe("/julehyggen");
     expect(p.bundle!.parts.map((x) => x.productId)).toEqual(["thumpgo", "lyskaeder", "lyseffekt"]);
   });
@@ -376,6 +376,6 @@ describe("Katalog-merge: nye tilvalg overlever et gammelt KV-katalog", () => {
     const { mergeAddonsForTest } = await import("@/lib/useProducts");
     const merged = mergeAddonsForTest(kvCatalog);
     expect(merged.some((a) => a.id === "subwoofer")).toBe(true);
-    expect(merged.find((a) => a.id === "subwoofer")!.price).toBe(295);
+    expect(merged.find((a) => a.id === "subwoofer")!.price).toBe(495); // produktarket 17. sept 2026
   });
 });

@@ -33,7 +33,7 @@ const bookKald = () =>
 const stripeKald = () =>
   (global.fetch as any).mock.calls.find((c: any[]) => c[0] === "/api/stripe/create-checkout-session");
 
-/** Stor højtalerpakke (995 kr), datoer valgt, frem til tilvalgene — og lydmanden valgt til */
+/** Mellem højtalerpakke (795 kr, produktarket 17. sept 2026), datoer valgt, frem til tilvalgene — og lydmanden valgt til */
 async function medLydmand() {
   window.history.pushState({}, "", "/?product=festival#book");
   render(<BookingFlow />);
@@ -123,7 +123,7 @@ describe("Lydmand i bookingen", () => {
     // Ikke også som tilvalg — så stod den to gange på ordren
     expect(body.addonIds).not.toContain("lydmand");
     expect(body.addons).not.toContain("Lydmand");
-    expect(body.total).toBe(995 + 5000);
+    expect(body.total).toBe(795 + 5000);
   });
 
   it("betaler pr. time hos Stripe — id'et sendes én gang pr. time", async () => {

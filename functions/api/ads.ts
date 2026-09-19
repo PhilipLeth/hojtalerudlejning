@@ -100,7 +100,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
   try {
     const [catalogRaw, pair, mapping, economics, loaded] = await Promise.all([
-      readJson<unknown>(kv, "products_catalog", null),
+      readJson<unknown>(kv, "products_catalog_v2", null),
       loadInventoryPair(kv),
       readJson<Record<string, string[]>>(kv, KV_MAPPING, {}),
       readJson<Record<string, Economics>>(kv, KV_ECONOMICS, {}),

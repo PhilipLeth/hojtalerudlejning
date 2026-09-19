@@ -54,7 +54,7 @@ Det her er vigtigt. Gode nabo-regler:
 
 ## Kombiner med festlys
 
-Udendørs lyd og lys sammen lofter enhver havefest. Vores lys-pakke med LED-spots og rogmaskine giver den rigtige stemning, når solen går ned. [Se vores lys-pakke](/#book).
+Udendørs lyd og lys sammen lofter enhver havefest. Vores lysbar med LED-spots og rogmaskine giver den rigtige stemning, når solen går ned. [Se vores lysbar](/#book).
 
 ## Book din havefest-lyd
 

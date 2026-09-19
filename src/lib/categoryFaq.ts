@@ -55,7 +55,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje en mixer i København?",
       a:
-        "Mackie Mix12FX tilbydes på forespørgsel fra 295 kr. Vores t.mix 1202 FX USB med " +
+        "Mackie Mix12FX tilbydes på forespørgsel fra 295 kr. Vores t.mix 1202 FXMP USB med " +
         "6 mikrofonindgange koster 395 kr. t.mix 1402 FXMP USB med 8 mikrofonindgange tilbydes på forespørgsel fra 495 kr. Priserne gælder 1–5 dage.",
     },
     {
@@ -68,7 +68,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er forskellen på den lille og den store?",
       a:
-        "Lille: Mackie Mix12FX med 4 mikrofonindgange. Mellem: t.mix 1202 FX USB med 6. Stor: t.mix 1402 FXMP USB med 8. " +
+        "Lille: Mackie Mix12FX med 4 mikrofonindgange. Mellem: t.mix 1202 FXMP USB med 6. Stor: t.mix 1402 FXMP USB med 8. " +
         "Stereoindgange tælles særskilt. Mellemklassen kan bookes direkte; lille og stor aftales på forespørgsel.",
     },
     {
@@ -85,8 +85,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvad koster det at leje en mikrofon i København?",
       a:
         "En håndholdt mikrofon med kabel koster 95 kr for hele lejeperioden, og Shure-udgaven 395 kr. " +
-        "Skal du kunne bevæge dig, koster en trådløs mikrofon 295 kr og Shure BLX i scenekvalitet 595 kr. " +
-        "Et trådløst headset koster 345 kr, og PRO-udgaven 595 kr.",
+        "Skal du kunne bevæge dig, koster en trådløs mikrofon 445 kr og Shure BLX i scenekvalitet 595 kr. " +
+        "Et trådløst headset koster 445 kr, og PRO-udgaven 595 kr.",
     },
     {
       q: "Hvilken mikrofon skal jeg vælge til taler?",
@@ -116,8 +116,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster et lysshow?",
       a:
-        "Lysshow med lys-pakke, discokugle og røgmaskine koster 1.495 kr. Det store lysshow med fire uplights " +
-        "og low fog i stedet koster 1.995 kr. Vil du have lys uden røg, er Stemningslys-pakken 1.045 kr. " +
+        "Lysshow med lysbar, discokugle og røgmaskine koster 1.140 kr. Det store lysshow med fire uplights " +
+        "og low fog i stedet koster 1.910 kr. Vil du have lys uden røg, er Stemningslys-pakken 1.295 kr. " +
         "Alle priser er for hele lejeperioden, ikke pr. dag.",
     },
     {
@@ -130,8 +130,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er forskellen på røgmaskine og low fog?",
       a:
-        "En almindelig røgmaskine (595 kr) fylder rummet med røg, der driver op i luften og gør lyset synligt. " +
-        "Low fog-maskinen (795 kr) bruger is og lægger røgen som et tæppe på gulvet — den er til første dans " +
+        "En almindelig røgmaskine (245 kr) fylder rummet med røg, der driver op i luften og gør lyset synligt. " +
+        "Low fog-maskinen (545 kr) bruger is og lægger røgen som et tæppe på gulvet — den er til første dans " +
         "og til lokaler, hvor en røgalarm ikke må gå i gang.",
     },
     {
@@ -156,20 +156,20 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvor kraftige højtalere skal jeg bruge til min fest?",
       a:
         "Op til 30 gæster rækker Mackie Thump GO eller den lille højtalerpakke. Til 30-50 gæster tager du Soundboks 4 " +
-        "eller den store højtalerpakke. Er I flere, giver Festpakke 150 (2.345 kr) og Festpakke 250 (3.645 kr) " +
+        "eller Mellem højtalerpakke. Er I flere, giver Festpakke 150 (1.915 kr) og Festpakke 250 (3.210 kr) " +
         "subwoofer og stativer med. Gæstetallene gælder indendørs — udendørs bærer lyden kortere.",
     },
     {
       q: "Kan jeg leje en højtaler uden strøm?",
       a:
-        "Ja. Mackie Thump GO (395 kr) og Soundboks 4 (795 kr) er batteridrevne med op til 12 timers spilletid, så de " +
+        "Ja. Mackie Thump GO (495 kr) og Soundboks 4 (695 kr) er batteridrevne med op til 12 timers spilletid, så de " +
         "kan bruges i parken, på stranden eller i baggården, hvor der ikke er en stikkontakt.",
     },
     {
       q: "Kan jeg have højtalerne med på cyklen?",
       a:
         "Ja. Mackie Thump GO vejer 10 kg og den lille højtalerpakke 12 kg — begge kan være bag på cyklen. En polstret " +
-        "bæretaske kan tilkøbes for 95 kr. Den store højtalerpakke vejer 2× 16 kg og er nemmere i bil.",
+        "bæretaske kan tilkøbes for 95 kr. Mellem højtalerpakke vejer 2× 16 kg og er nemmere i bil.",
     },
     AFHENTNING,
   ],
@@ -178,20 +178,20 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvilket lydanlæg passer til antallet af gæster?",
       a:
-        "Festpakke 50 (690 kr) til op til 50 gæster, Festpakke 100 (1.290 kr) til 50-100, Festpakke 150 (2.345 kr) til " +
-        "100-150 med subwoofer og stativer, og Festpakke 250 (3.645 kr) til 150-250 med fire højtalere og to " +
+        "Festpakke 0-30 (895 kr) til op til 30 gæster, Festpakke 30-50 (1.095 kr) til 30-50, Festpakke 150 (1.915 kr) til " +
+        "50-150 med subwoofer og stativer, og Festpakke 250 (3.210 kr) til 150-250 med fire højtalere og to " +
         "subwoofere. Er I over 250, skaffer vi større tops og subs og sender en tekniker med på dagen — skriv til os.",
     },
     {
       q: "Gælder gæstetallene også udendørs?",
       a:
         "Nej. Tallene er indendørs, hvor væggene holder på lyden. Udendørs forsvinder lyden opad og udad, så vælg " +
-        "gerne ét trin op — eller læg en subwoofer til for 295 kr.",
+        "gerne ét trin op — eller læg en subwoofer til for 495 kr.",
     },
     {
       q: "Kan jeg få mikrofon med til taler?",
       a:
-        "Ja. En trådløs mikrofon koster 295 kr, en Shure BLX i scenekvalitet 595 kr og et trådløst headset 345 kr. " +
+        "Ja. En trådløs mikrofon koster 445 kr, en Shure BLX i scenekvalitet 595 kr og et trådløst headset 445 kr. " +
         "Skal der både være tale og musik, findes Tale & musik-pakken til 1.195 kr med to 12\" højtalere og " +
         "trådløs mikrofon. Projektor og skærm udlejer vi ikke lige nu.",
     },
@@ -210,26 +210,26 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje et PA-anlæg i København?",
       a:
-        "Den store højtalerpakke med to aktive 12\" EV-højtalere koster 995 kr for en weekend. Skal der mere tryk på, " +
-        "giver Festpakke 150 (2.345 kr) dig samme højtalere plus subwoofer, stativer, lys og røg.",
+        "Mellem højtalerpakke med to aktive 12\" EV-højtalere koster 995 kr for en weekend. Skal der mere tryk på, " +
+        "giver Festpakke 150 (1.915 kr) dig samme højtalere plus subwoofer, stativer, lys og røg.",
     },
     {
       q: "Hvad er inkluderet i PA-anlægget?",
       a:
         "To 12\" EV aktive højtalere med Bluetooth, AUX- og strømkabler samt USB-C/iPhone-adapter. Højtalerstativer " +
-        "kan tilkøbes for 100 kr og en 12\" subwoofer for 295 kr.",
+        "kan tilkøbes for 95 kr og en 12\" subwoofer for 495 kr.",
     },
     {
       q: "Kan jeg tilslutte mikrofon til anlægget?",
       a:
-        "Ja. En trådløs mikrofon (295 kr) eller en Shure BLX PRO (595 kr) forbindes direkte til højtaleren med det " +
+        "Ja. En trådløs mikrofon (445 kr) eller en Shure BLX PRO (595 kr) forbindes direkte til højtaleren med det " +
         "medfølgende kabel. Fire mikrofoner til et panel booker I som Panelpakken. Skal lyden også på Teams eller " +
         "Zoom, så book Teams- og Zoom-pakken. Begge ligger på /av-udstyr og bookes online.",
     },
     {
       q: "Er anlægget kraftigt nok til udendørs brug?",
       a:
-        "Den store højtalerpakke dækker 30-50 gæster indendørs. Udendørs bærer lyden kortere, så regn med færre — " +
+        "Mellem højtalerpakke dækker 30-50 gæster indendørs. Udendørs bærer lyden kortere, så regn med færre — " +
         "eller læg en subwoofer til, som giver bassen den vægt, der ellers forsvinder under åben himmel.",
     },
     AFHENTNING,
@@ -239,8 +239,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster lyd til en fest?",
       a:
-        "Den lille højtalerpakke koster 595 kr for en weekend. Vil du have lys med, koster Festpakke 50 med to " +
-        "højtalere og en lyseffekt 690 kr, og Festpakke 100 med større højtalere og hele lys-pakken 1.290 kr.",
+        "Den lille højtalerpakke koster 595 kr for en weekend. Vil du have lys med, koster Festpakke 0-30 med to " +
+        "højtalere og en lysbar 895 kr, og Festpakke 30-50 med større højtalere og lysbar 1.095 kr.",
     },
     {
       q: "Hvordan spiller jeg musik gennem højtalerne?",
@@ -251,13 +251,13 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan vi holde festen udenfor, hvor der ikke er strøm?",
       a:
-        "Ja. Mackie Thump GO (395 kr) og Soundboks 4 (795 kr) kører på batteri i op til 12 timer. De resterende " +
+        "Ja. Mackie Thump GO (495 kr) og Soundboks 4 (695 kr) kører på batteri i op til 12 timer. De resterende " +
         "pakker kræver en stikkontakt.",
     },
     {
       q: "Hvor mange gæster rækker de forskellige pakker til?",
       a:
-        "Op til 50 gæster: Festpakke 50. 50-100: Festpakke 100. 100-150: Festpakke 150 med subwoofer. 150-250: " +
+        "Op til 30 gæster: Festpakke 0-30. 30-50: Festpakke 30-50. 50-150: Festpakke 150 med subwoofer. 150-250: " +
         "Festpakke 250 med fire højtalere. Tallene gælder indendørs.",
     },
     LEJEPERIODE,
@@ -269,8 +269,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvad koster det at leje en lyspakke?",
       a:
         "Fra 645 kr for en weekend. Festtelt-lys med to lyskæder og fire uplights koster 695 kr, Diskolys-pakken med " +
-        "lyseffekt og discokugle 645 kr, Teenagefest-lys 745 kr og Stemningslys-pakken 1.045 kr. Bryllupslys med low fog " +
-        "til brudevalsen koster 1.245 kr, og Diskotek-pakken — det fulde dansegulv uden røg — 1.095 kr.",
+        "lyseffekt og discokugle 645 kr, Teenagefest-lys 785 kr og Stemningslys-pakken 1.295 kr. Bryllupslys med low fog " +
+        "til brudevalsen koster 1.200 kr, og Diskotek-pakken — det fulde dansegulv uden røg — 1.095 kr.",
     },
     {
       q: "Hvilken lyspakke skal jeg vælge?",
@@ -296,27 +296,27 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje festlys?",
       a:
-        "En enkelt lyseffekt koster 195 kr, en uplight 125 kr (fire stk. 395 kr), en discokugle 495 kr (30 cm) eller 595 kr (40 cm) og en 10 m " +
-        "lyskæde 195 kr. Lys-pakken med to farvede LED-lamper, centereffekt og stativ koster 495 kr. Røgmaskine " +
-        "koster 595 kr og low fog-maskinen, der laver et røggulv, 795 kr.",
+        "En enkelt lyseffekt koster 195 kr, en uplight 195 kr (fire stk. 595 kr), en discokugle 495 kr (30 cm) eller 595 kr (40 cm) og en 10 m " +
+        "lyskæde 195 kr. Lysbaren med to farvede LED-lamper, centereffekt og stativ koster 495 kr. Røgmaskine " +
+        "koster 245 kr og low fog-maskinen, der laver et røggulv, 545 kr.",
     },
     {
       q: "Skal jeg bruge røg for at lyset virker?",
       a:
         "Ikke nødvendigvis, men det gør en stor forskel. Lysstrålerne bliver først synlige i luften, når der er " +
         "lidt røg eller dis i rummet — uden røg ser du kun de farvede pletter, lyset rammer. En røgmaskine koster " +
-        "595 kr og har røgvæske med.",
+        "245 kr og har røgvæske med.",
     },
     {
       q: "Er festlys svært at sætte op?",
       a:
         "Nej. Uplights og lyseffekter er plug and play: sæt i stikkontakten, og de kører automatiske farver i takt " +
-        "til musikken. Lys-pakken kommer på stativ med alle kabler, så der ikke skal rigges noget til.",
+        "til musikken. Lysbaren kommer på stativ med alle kabler, så der ikke skal rigges noget til.",
     },
     {
       q: "Hvad er forskellen på en røgmaskine og low fog?",
       a:
-        "En almindelig røgmaskine (595 kr) fylder rummet med røg, der gør lyset synligt. Low fog-maskinen (795 kr) " +
+        "En almindelig røgmaskine (245 kr) fylder rummet med røg, der gør lyset synligt. Low fog-maskinen (545 kr) " +
         "køler røgen med is, så den bliver liggende som et tæppe langs gulvet — 'dansen på skyer'-effekten fra " +
         "bryllupper og musikvideoer.",
     },
@@ -328,8 +328,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er forskellen på en røgmaskine og en low fog-maskine?",
       a:
-        "En almindelig røgmaskine (595 kr) sender røgen op i luften, hvor den gør lysstrålerne synlige og får " +
-        "festen til at se ud som en klub. En low fog-maskine (795 kr) køler røgen med is, så den lægger sig som et " +
+        "En almindelig røgmaskine (245 kr) sender røgen op i luften, hvor den gør lysstrålerne synlige og får " +
+        "festen til at se ud som en klub. En low fog-maskine (545 kr) køler røgen med is, så den lægger sig som et " +
         "tæppe langs gulvet og bliver liggende — effekten man kender fra første dans til bryllupper.",
     },
     {
@@ -363,7 +363,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvad koster det at leje mikrofon til et møde i København?",
       a:
         "En trådløs håndholdt mikrofon koster 295 kr for hele lejeperioden, en Shure BLX i scenekvalitet " +
-        "595 kr, et trådløst headset 345 kr og et PRO-headset 595 kr. Skal der også være lyd, koster Tale & " +
+        "595 kr, et trådløst headset 445 kr og et PRO-headset 595 kr. Skal der også være lyd, koster Tale & " +
         "musik-pakken med to 12\" højtalere og trådløs mikrofon 1.195 kr.",
     },
     {
@@ -403,7 +403,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       a:
         "Karaokemaskinen alene koster 695 kr for hele lejeperioden — den har indbygget skærm, to trådløse " +
         "mikrofoner og festlys. Karaokepakken med 32\" skærm og to højtalere koster 1.300 kr, og " +
-        "Karaoke-festpakken med 55\" storskærm og de store højtalere 2.000 kr. Priserne gælder 1 til 5 dage.",
+        "Karaoke-festpakken med 55\" storskærm og de store højtalere 1.825 kr. Priserne gælder 1 til 5 dage.",
     },
     {
       q: "Skal jeg leje en skærm til, eller er maskinens egen nok?",
@@ -466,7 +466,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvilken pakke passer til en konference?",
       a:
         "Konferencepakken (1.395 kr) er 55\" storskærm, trådløst headset og to 10\" højtalere — klar til et " +
-        "mødelokale. Til en sal med 100-150 deltagere tager Konferencepakke 150 (2.395 kr) over med to 12\" " +
+        "mødelokale. Til en sal med 100-150 deltagere tager Konferencepakke 150 (2.165 kr) over med to 12\" " +
         "højtalere på stativer, Shure-mikrofon, headset og skærm. Flere mikrofoner booker I som Panelpakken, " +
         "og hybridmøder som Teams- og Zoom-pakken.",
     },
@@ -507,21 +507,21 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "How powerful a speaker do I need for my party?",
       a:
         "Up to 30 guests, the Mackie Thump GO or the small speaker package is enough. For 30-50 guests take the " +
-        "Soundboks 4 or the large speaker package. If you are more, Party package 150 (2.345 kr) and Party package 250 " +
-        "(3.645 kr) bring a subwoofer and stands with them. The guest numbers are for indoor use — outdoors the sound " +
+        "Soundboks 4 or the medium speaker package. If you are more, Party package 150 (1.915 kr) and Party package 250 " +
+        "(3.210 kr) bring a subwoofer and stands with them. The guest numbers are for indoor use — outdoors the sound " +
         "carries less far.",
     },
     {
       q: "Can I rent a speaker that works without power?",
       a:
-        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (795 kr) run on battery for up to 12 hours, so they work " +
+        "Yes. The Mackie Thump GO (495 kr) and Soundboks 4 (695 kr) run on battery for up to 12 hours, so they work " +
         "in the park, on the beach or in a courtyard with no socket.",
     },
     {
       q: "Can I carry the speakers on a bike?",
       a:
         "Yes. The Mackie Thump GO weighs 10 kg and the small speaker package 12 kg — both fit on the back of a bike. " +
-        "A padded carry bag can be added for 95 kr. The large speaker package is 2× 16 kg and is easier in a car.",
+        "A padded carry bag can be added for 95 kr. The medium speaker package is 2× 16 kg and is easier in a car.",
     },
     AFHENTNING_EN,
   ],
@@ -529,8 +529,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Which PA system fits the number of guests?",
       a:
-        "Party package 50 (690 kr) for up to 50 guests, Party package 100 (1.290 kr) for 50-100, Party package 150 " +
-        "(2.345 kr) for 100-150 with a subwoofer and stands, and Party package 250 (3.645 kr) for 150-250 with four " +
+        "Party package 0-30 (895 kr) for up to 30 guests, Party package 30-50 (1.095 kr) for 30-50, Party package 150 " +
+        "(1.915 kr) for 50-150 with a subwoofer and stands, and Party package 250 (3.210 kr) for 150-250 with four " +
         "speakers and two subwoofers. If you are over 250, we source larger tops and subs and send a technician on the " +
         "day — write to us.",
     },
@@ -538,12 +538,12 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Do the guest numbers apply outdoors too?",
       a:
         "No. The numbers are for indoors, where the walls hold on to the sound. Outdoors it escapes upwards and " +
-        "outwards, so go one step up — or add a subwoofer for 295 kr.",
+        "outwards, so go one step up — or add a subwoofer for 495 kr.",
     },
     {
       q: "Can I get a microphone for speeches?",
       a:
-        "Yes. A wireless microphone is 295 kr, a stage-quality Shure BLX 595 kr and a wireless headset 345 kr. If you " +
+        "Yes. A wireless microphone is 445 kr, a stage-quality Shure BLX 595 kr and a wireless headset 445 kr. If you " +
         "need both speech and music, the speech & music package at 1.195 kr has two 12\" speakers and a wireless " +
         "microphone. We do not rent out projectors and screens at the moment.",
     },
@@ -561,7 +561,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How much does it cost to rent a mixer in Copenhagen?",
       a:
-        "Mackie Mix12FX is available on request from 295 DKK. Our t.mix 1202 FX USB with " +
+        "Mackie Mix12FX is available on request from 295 DKK. Our t.mix 1202 FXMP USB with " +
         "6 microphone inputs is 395 DKK. The t.mix 1402 FXMP USB with 8 microphone inputs is on request from 495 DKK. Prices cover 1–5 days.",
     },
     {
@@ -574,7 +574,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "What is the difference between the small and the large one?",
       a:
-        "Small: Mackie Mix12FX with 4 microphone inputs. Medium: t.mix 1202 FX USB with 6. Large: t.mix 1402 FXMP USB with 8. " +
+        "Small: Mackie Mix12FX with 4 microphone inputs. Medium: t.mix 1202 FXMP USB with 6. Large: t.mix 1402 FXMP USB with 8. " +
         "Stereo inputs are separate. Book the medium mixer online; small and large models are on request.",
     },
     {
@@ -590,8 +590,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "What is the difference between a fog machine and a low fog machine?",
       a:
-        "An ordinary fog machine (595 kr) sends the fog up into the air, where it makes the light beams visible and " +
-        "the party look like a club. A low fog machine (795 kr) cools the fog with ice so it settles as a carpet along " +
+        "An ordinary fog machine (245 kr) sends the fog up into the air, where it makes the light beams visible and " +
+        "the party look like a club. A low fog machine (545 kr) cools the fog with ice so it settles as a carpet along " +
         "the floor and stays there — the effect you know from a wedding's first dance.",
     },
     {
@@ -621,7 +621,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       a:
         "A wired handheld microphone is 95 DKK for the whole rental period, and the Shure version 395 DKK. " +
         "If you need to move around, a wireless handheld is 295 DKK and the stage-quality Shure BLX 595 DKK. " +
-        "A wireless headset is 345 DKK, and the PRO version 595 DKK.",
+        "A wireless headset is 445 DKK, and the PRO version 595 DKK.",
     },
     {
       q: "Which microphone should I choose for speeches at a dinner?",
@@ -651,9 +651,9 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How much does it cost to rent party lights in Copenhagen?",
       a:
-        "A single light effect is 195 DKK, one uplight 125 DKK (four of them 395 DKK), a disco ball 495 DKK " +
-        "(30 cm) or 595 DKK (40 cm) and 10 m of fairy lights 195 DKK. The light package with two coloured LED " +
-        "lamps, a centre effect and a stand is 495 DKK. A fog machine is 595 DKK, and the low fog machine that " +
+        "A single light effect is 195 DKK, one uplight 195 DKK (four of them 595 DKK), a disco ball 495 DKK " +
+        "(30 cm) or 595 DKK (40 cm) and 10 m of fairy lights 195 DKK. The light bar with two coloured LED " +
+        "lamps, a centre effect and a stand is 495 DKK. A fog machine is 245 DKK, and the low fog machine that " +
         "lays fog along the floor 795 DKK.",
     },
     {
@@ -661,20 +661,20 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       a:
         "Not strictly, but it makes a big difference. A light beam only becomes visible when there is " +
         "something in the air to catch it — without fog you just see the coloured dots the light lands on. " +
-        "A fog machine is 595 DKK and comes with fluid.",
+        "A fog machine is 245 DKK and comes with fluid.",
     },
     {
       q: "Are party lights hard to set up?",
       a:
         "No. Uplights and light effects are plug and play: put them in a socket and they run automatic " +
-        "colours in time with the music. The light package comes on a stand with every cable, so there is " +
+        "colours in time with the music. The light bar comes on a stand with every cable, so there is " +
         "nothing to rig.",
     },
     {
       q: "What is the difference between a fog machine and low fog?",
       a:
-        "An ordinary fog machine (595 DKK) fills the room with fog that drifts upwards and makes the light " +
-        "visible. The low fog machine (795 DKK) cools the fog with ice so it stays as a carpet along the " +
+        "An ordinary fog machine (245 DKK) fills the room with fog that drifts upwards and makes the light " +
+        "visible. The low fog machine (545 DKK) cools the fog with ice so it stays as a carpet along the " +
         "floor — the 'dancing on clouds' effect from weddings and music videos.",
     },
     AFHENTNING_EN,
@@ -683,9 +683,9 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How much does a light show cost to rent?",
       a:
-        "The light show with the light package, a disco ball and a fog machine is 1.495 DKK. The large light " +
-        "show, with four uplights and low fog instead, is 1.995 DKK. If you want light without fog, the " +
-        "ambient light package is 1.045 DKK. All prices are for the whole rental period, not per day.",
+        "The light show with the light bar, a disco ball and a fog machine is 1.140 DKK. The large light " +
+        "show, with four uplights and low fog instead, is 1.910 DKK. If you want light without fog, the " +
+        "ambient light package is 1.295 DKK. All prices are for the whole rental period, not per day.",
     },
     {
       q: "Why is fog part of a light show?",
@@ -697,8 +697,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "What is the difference between a fog machine and low fog?",
       a:
-        "An ordinary fog machine (595 DKK) fills the room with fog that makes the light visible. The low fog " +
-        "machine (795 DKK) uses ice to cool the fog so it lies like a carpet on the floor — for the first " +
+        "An ordinary fog machine (245 DKK) fills the room with fog that makes the light visible. The low fog " +
+        "machine (545 DKK) uses ice to cool the fog so it lies like a carpet on the floor — for the first " +
         "dance, and for venues where the smoke alarm must stay quiet.",
     },
     {
@@ -733,7 +733,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Can I rent a speaker that works without power?",
       a:
-        "Yes. The Mackie Thump GO (395 kr) and Soundboks 4 (795 kr) run on battery for up to 12 hours, so they " +
+        "Yes. The Mackie Thump GO (495 kr) and Soundboks 4 (695 kr) run on battery for up to 12 hours, so they " +
         "work in the park, on the beach or in a courtyard with no power outlet.",
     },
     {

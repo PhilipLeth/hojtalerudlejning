@@ -102,7 +102,7 @@ describe("encryptPayload", () => {
 
   it("tåler æøå og lange beskeder", async () => {
     const sub = await makeSubscriber();
-    const besked = "Stor højtalerpakke — fre 21. aug → man 24. aug. ".repeat(20);
+    const besked = "Mellem højtalerpakke — fre 21. aug → man 24. aug. ".repeat(20);
     const body = await encryptPayload(besked, sub.keys);
     expect(await decrypt(body, sub)).toBe(besked);
   });

@@ -4,9 +4,9 @@ import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Wireless Microphone Rental Copenhagen | 295 DKK | Lejhøjtaler.dk",
+  title: "Wireless Microphone Rental Copenhagen | 445 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a wireless handheld microphone in Copenhagen for 295 DKK per weekend. Receiver, batteries and cable included, plugs straight into our speakers. Pay on pickup.",
+    "Rent a wireless handheld microphone in Copenhagen for 445 DKK per weekend. Receiver, batteries and cable included, plugs straight into our speakers. Pay on pickup.",
   keywords: [
     "wireless microphone rental copenhagen",
     "microphone rental copenhagen",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/traadloes-mikrofon"),
   },
   openGraph: {
-    title: "Wireless Microphone Rental Copenhagen | 295 DKK",
+    title: "Wireless Microphone Rental Copenhagen | 445 DKK",
     description:
       "Wireless handheld microphone for speeches, weddings and events. Receiver and cables included. Book online.",
     url: "https://lejhojtaler.dk/en/traadloes-mikrofon",
@@ -35,7 +35,7 @@ export default function Page() {
       locale="en"
       slug="en/traadloes-mikrofon"
       name="Wireless microphone"
-      price={295}
+      price={445}
       headline="Rent a wireless microphone in Copenhagen"
       sub="Wireless handheld microphone for speeches, weddings and events."
       image="/images/product-mikrofon-v2-white.webp"

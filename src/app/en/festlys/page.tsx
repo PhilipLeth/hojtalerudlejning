@@ -29,7 +29,7 @@ const SPAR_UPLIGHT_4 = `Save ${prisTekst(4 * catalogPrice("uplight") - catalogPr
 export const metadata: Metadata = {
   title: "Party Light Rental Copenhagen | Disco Ball & Fog Machine | Lejhøjtaler.dk",
   description:
-    `Rent party lights in Copenhagen: light package from ${prisDkk("lys")}, fog machine from ${prisDkk("rog")}, disco ball and fairy lights. Add sound for a complete party package from ${KOMPLET_FEST} DKK. Pay on pickup.`,
+    `Rent party lights in Copenhagen: light bar from ${prisDkk("lys")}, fog machine from ${prisDkk("rog")}, disco ball and fairy lights. Add sound for a complete party package from ${KOMPLET_FEST} DKK. Pay on pickup.`,
   keywords: [
     "party light rental copenhagen",
     "disco light rental copenhagen",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Party Light Rental Copenhagen | Disco Ball & Fog Machine | Lejhøjtaler.dk",
     description:
-      `Light package from ${prisDkk("lys")}, fog machine from ${prisDkk("rog")}, disco ball and fairy lights. Book online.`,
+      `Light bar from ${prisDkk("lys")}, fog machine from ${prisDkk("rog")}, disco ball and fairy lights. Book online.`,
     url: "https://lejhojtaler.dk/en/festlys",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -93,7 +93,7 @@ export default function Page() {
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             Single light effect <LivePrice productId="lyseffekt" prefix="from " suffix=" DKK" />{" · "}
             Uplights <LivePrice productId="uplight" prefix="from " suffix=" DKK" />{" · "}
-            Light package <LivePrice productId="lys" prefix="from " suffix=" DKK" />{" · "}
+            Light bar <LivePrice productId="lys" prefix="from " suffix=" DKK" />{" · "}
             Fog machine <LivePrice productId="rog" prefix="from " suffix=" DKK" />
           </p>
           <a
@@ -112,7 +112,7 @@ export default function Page() {
             Lights and fog for your party
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Set the mood with a single light effect, uplights, the light package, a
+            Set the mood with a single light effect, uplights, the light bar, a
             fog machine, a disco ball or fairy lights.
           </p>
 
@@ -152,7 +152,7 @@ export default function Page() {
                 <p className="text-xl font-bold text-brand-400"><LivePrice productId="party" prefix="" suffix=" DKK" /></p>
               </div>
               <div className="glass rounded-xl p-4 text-center">
-                <p className="text-lg font-bold text-white">Light package</p>
+                <p className="text-lg font-bold text-white">Light bar</p>
                 <p className="text-xl font-bold text-brand-400"><LivePrice productId="lys" prefix="" suffix=" DKK" /></p>
               </div>
               <div className="glass rounded-xl p-4 text-center">

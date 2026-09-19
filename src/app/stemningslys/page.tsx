@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.045 kr | Lejhøjtaler.dk",
+  title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.295 kr | Lejhøjtaler.dk",
   description:
-    "Stemningslys-pakken: 4 LED uplights, 10 m lyskæde og discokugle for 1.045 kr, spar 140 kr. Lys der laver et lejet lokale om. Lejes i København.",
+    "Stemningslys-pakken: 4 LED uplights, 10 m lyskæde og discokugle for 1.295 kr, spar 140 kr. Lys der laver et lejet lokale om. Lejes i København.",
   keywords: ["lej festlys", "uplights leje", "diskolys til fest", "lys til lokale leje", "lyskæder og discokugle"],
   alternates: {
     canonical: "https://lejhojtaler.dk/stemningslys",
     languages: localeAlternates("/stemningslys"),
   },
   openGraph: {
-    title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.045 kr | Lejhøjtaler.dk",
+    title: "Stemningslys-pakken | Uplights, lyskæde og discokugle | 1.295 kr | Lejhøjtaler.dk",
     description: "4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet, spar 140 kr.",
     url: "https://lejhojtaler.dk/stemningslys",
     siteName: "Lejhøjtaler.dk",
@@ -27,7 +27,7 @@ export default function StemningslysPage() {
     <ProductLanding
       slug="stemningslys"
       name="Stemningslys-pakken"
-      price={1045}
+      price={1295}
       headline="Stemningslys-pakken, lys uden lyd"
       sub="4 LED uplights, 10 m lyskæde og discokugle. Til lokalet med lysstofrør i loftet, spar 140 kr."
       image="/images/product-pakke-stemningslys-taendt-v3-white.webp"

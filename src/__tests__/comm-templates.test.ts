@@ -57,7 +57,7 @@ describe("buildFollowUpMail", () => {
   const ctx = {
     fornavn: "Agnes",
     navn: "Agnes Dahle Stæhr",
-    produkter: "Stor højtalerpakke",
+    produkter: "Mellem højtalerpakke",
     periode: "fre 21. aug → man 24. aug",
     ansvarlig: "Frederik",
     hilsen: "Frederik fra Lejhøjtaler.dk",

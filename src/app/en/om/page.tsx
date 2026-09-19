@@ -163,7 +163,7 @@ export default function AboutPageEn() {
                   bike.
                 </p>
                 <p>
-                  Our large speaker package with two 12&quot; active speakers
+                  Our medium speaker package with two 12&quot; active speakers
                   delivers powerful, clear sound for larger rooms and outdoor
                   events.
                 </p>

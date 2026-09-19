@@ -36,10 +36,10 @@ Perfect for the park, the beach or a courtyard where there is nowhere to plug in
 
 Perfect for apartment parties, birthday dinners and small gatherings.
 
-### Large Speaker Package (30-50 guests)
+### Medium Speaker Package (30-50 guests)
 
 - 2× 12" EV active speakers with Bluetooth
-- All cables included; stands available for 100 DKK
+- All cables included; stands available for 95 DKK
 - **Price: 995 DKK/weekend**
 
 The right choice for garden parties, corporate events and confirmations.
@@ -48,12 +48,12 @@ The right choice for garden parties, corporate events and confirmations.
 
 - 2× 12" EV speakers on stands
 - 12" subwoofer for the low end
-- Light package and fog machine included
-- **Price: 2,345 DKK/weekend**
+- Light bar and fog machine included
+- **Price: 1,915 DKK/weekend**
 
 For the events where the sound has to carry a full room. Delivery and setup recommended at this size.
 
-### Light Package (add-on)
+### Light Bar (add-on)
 
 - 2 colour-changing LED lamps and a centre effect on a stand
 - All cables included

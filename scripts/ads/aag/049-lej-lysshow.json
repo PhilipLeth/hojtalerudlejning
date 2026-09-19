@@ -1,0 +1,46 @@
+{
+  "name": "AAG: Lysshow — lej lysshow",
+  "status": "ENABLED",
+  "cpcBidMicros": 6500000,
+  "matchType": "EXACT",
+  "primary": "lej lysshow",
+  "keywords": [
+    {
+      "text": "lej lysshow",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej et lysshow",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej lysshow københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lysshow",
+  "path1": "lysshow",
+  "headlines": [
+    "Lej Lysshow",
+    "Lej Et Lysshow",
+    "Lej Lysshow København",
+    "Lej Lysshow Fra 1.140 kr.",
+    "Lej Et Lysshow Fra 1.140 kr.",
+    "Lys, Discokugle Og Røg",
+    "Klar Til Dansegulvet",
+    "Plug And Play, Ingen Teknik",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Lej lysshow i København fra 1.140 kr. Lys, discokugle og røg i én pakke, klar til fest.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lej et lysshow til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej lysshow som pakke med diskolys, diskokugle og røgmaskine. Alle kabler med."
+  ]
+}

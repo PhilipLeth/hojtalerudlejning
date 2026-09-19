@@ -4,11 +4,11 @@ import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Lys-pakke København | Fra 495 kr | Lejhøjtaler.dk",
+  title: "Lej Lysbar København | Fra 395 kr | Lejhøjtaler.dk",
   description:
-    "Lej lys-pakke i København fra 495 kr/weekend. 2 farvede LED-lamper + centereffekt på stativ. Plug-and-play festlys. Betal ved afhentning.",
+    "Lej lysbar i København fra 395 kr/weekend. 2 farvede LED-lamper + centereffekt på stativ. Plug-and-play festlys. Betal ved afhentning.",
   keywords: [
-    "lej lys-pakke",
+    "lej lysbar",
     "lysbar udlejning",
     "festlys leje københavn",
     "LED lysbar leje",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lys-pakke"),
   },
   openGraph: {
-    title: "Lej Lys-pakke København | Fra 495 kr",
+    title: "Lej Lysbar København | Fra 395 kr",
     description:
-      "2 farvede LED-lamper + centereffekt på stativ. Fra 495 kr/weekend. Book online.",
+      "2 farvede LED-lamper + centereffekt på stativ. Fra 395 kr/weekend. Book online.",
     url: "https://lejhojtaler.dk/lys-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -33,16 +33,16 @@ export const metadata: Metadata = {
 export default function LysPakkePage() {
   return (
     <ProductLanding
-      slug="lys-pakke"
-      name="Lys-pakke"
-      price={495}
-      headline="Lej lys-pakke i København"
+      slug="lysbar"
+      name="Lysbar"
+      price={395}
+      headline="Lej lysbar i København"
       sub="2 farvede LED-lamper + centereffekt på stativ. Klar på få minutter."
       image="/images/product-lys-v4-white.webp"
-      imageAlt="Lys-pakke til leje i København"
+      imageAlt="Lysbar til leje i København"
       productId="lys"
-      bookLabel="Book lys-pakke nu"
-      faqPhrase="lys-pakken"
+      bookLabel="Book lysbar nu"
+      faqPhrase="lysbaren"
       bullets={[
         "2× farvede LED-lamper",
         "Centereffekt inkluderet",

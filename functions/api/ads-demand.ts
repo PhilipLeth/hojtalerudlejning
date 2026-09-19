@@ -50,7 +50,7 @@ interface Env extends GoogleAdsEnv {
   ADMIN_SECRET: string;
 }
 
-const KV_CATALOG = "products_catalog";
+const KV_CATALOG = "products_catalog_v2";
 const KV_SEEDS = "ads_demand_seeds";
 
 /** Googles loft pr. opslag er 20 frø; to opslag er nok til kortet. */

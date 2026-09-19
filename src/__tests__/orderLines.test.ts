@@ -40,12 +40,12 @@ describe("orderLines", () => {
 
   it("tager højtalerstørrelsen med når den findes", () => {
     const lines = orderLines({
-      speaker: "Stor højtalerpakke",
+      speaker: "Mellem højtalerpakke",
       speakerId: "festival",
       speakerSize: '2× 12" EV',
       addons: [],
     });
-    expect(lines[0].label).toBe('Stor højtalerpakke (2× 12" EV)');
+    expect(lines[0].label).toBe('Mellem højtalerpakke (2× 12" EV)');
   });
 
   it("springer hovedproduktet over ved 'kun effekter'", () => {
@@ -53,10 +53,10 @@ describe("orderLines", () => {
       speaker: "Kun effekter",
       speakerId: "effects-only",
       speakerSize: "—",
-      addons: ["Lys-pakke"],
+      addons: ["Lysbar"],
       addonIds: ["lys"],
     });
-    expect(lines.map((l) => l.label)).toEqual(["Lys-pakke"]);
+    expect(lines.map((l) => l.label)).toEqual(["Lysbar"]);
   });
 });
 
@@ -82,7 +82,7 @@ describe("Samme vare flere gange", () => {
     const lines = orderLines({
       speaker: "Soundboks 4",
       speakerId: "soundboks",
-      addons: ["Lys-pakke"],
+      addons: ["Lysbar"],
       addonIds: ["lys"],
       cartItems: [{ name: "Lyskæde varm hvid", price: 195, productId: "lyskaeder" }],
     });

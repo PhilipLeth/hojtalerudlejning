@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Studenterpakken | Soundboks, ekstra batteri og taske | 945 kr | Lejhøjtaler.dk",
+  title: "Studenterpakken | Soundboks, ekstra batteri og taske | 995 kr | Lejhøjtaler.dk",
   description:
-    "Studenterpakken: Soundboks 4, ekstra batteri og polstret bæretaske for 945 kr, spar 90 kr. Spiller hele studenterkørslen uden strøm. Lejes i København.",
+    "Studenterpakken: Soundboks 4, ekstra batteri og polstret bæretaske for 995 kr, spar 95 kr. Spiller hele studenterkørslen uden strøm. Lejes i København.",
   keywords: ["studenterkørsel højtaler", "soundboks til studenterkørsel", "lej højtaler studenter", "musik til studentervogn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/studenterpakke",
     languages: localeAlternates("/studenterpakke"),
   },
   openGraph: {
-    title: "Studenterpakken | Soundboks, ekstra batteri og taske | 945 kr | Lejhøjtaler.dk",
-    description: "Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet, spar 90 kr.",
+    title: "Studenterpakken | Soundboks, ekstra batteri og taske | 995 kr | Lejhøjtaler.dk",
+    description: "Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet, spar 95 kr.",
     url: "https://lejhojtaler.dk/studenterpakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,9 +27,9 @@ export default function StudenterpakkePage() {
     <ProductLanding
       slug="studenterpakke"
       name="Studenterpakken"
-      price={945}
+      price={995}
       headline="Studenterpakken, spiller hele vognturen"
-      sub="Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet, spar 90 kr."
+      sub="Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet, spar 95 kr."
       image="/images/product-soundboks-v2-white.webp"
       imageAlt="Studenterpakken med Soundboks 4, ekstra batteri og bæretaske"
       productId="pakke_student"
@@ -40,7 +40,7 @@ export default function StudenterpakkePage() {
         "Ekstra batteri, så den holder fra morgen til sidste adresse",
         "Polstret bæretaske: anlægget løftes op og ned hele dagen",
         "Bluetooth, alle kan skifte nummer fra deres telefon",
-        "Spar 90 kr vs. at leje delene enkeltvis",
+        "Spar 95 kr vs. at leje delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

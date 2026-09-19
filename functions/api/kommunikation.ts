@@ -65,7 +65,7 @@ async function previewContext(kv: KVNamespace) {
   return {
     fornavn: "Agnes",
     navn: "Agnes Dahle Stæhr",
-    produkter: produkter || "Stor højtalerpakke, Lys-pakke",
+    produkter: produkter || "Mellem højtalerpakke, Lysbar",
     periode: latest ? `${latest.pickup} → ${latest.returnDate}` : "fre 21. aug → man 24. aug",
   };
 }

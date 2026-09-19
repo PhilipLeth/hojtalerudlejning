@@ -113,7 +113,7 @@ describe("bookedProductIds", () => {
   });
 
   it("mapper legacy festival_bas til festival + subwoofer", () => {
-    const ids = bookedProductIds({ speakerId: "festival_bas", speaker: "Stor højtalerpakke + bas" });
+    const ids = bookedProductIds({ speakerId: "festival_bas", speaker: "Mellem højtalerpakke + bas" });
     expect(ids).toEqual(expect.arrayContaining(["festival", "subwoofer"]));
     expect(ids).not.toContain("festival_bas");
   });

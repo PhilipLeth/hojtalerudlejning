@@ -26,7 +26,7 @@ import {
 const PREVIEW = {
   fornavn: "Agnes",
   navn: "Agnes Dahle Stæhr",
-  produkter: "Stor højtalerpakke, Lys-pakke",
+  produkter: "Mellem højtalerpakke, Lysbar",
   periode: "fre 21. aug → man 24. aug",
   sted: "Du henter hos os: Halvtolv 9, 1. th, 1436 København K",
   betaling: "I alt 1.995 kr — betales ved afhentning med MobilePay.",

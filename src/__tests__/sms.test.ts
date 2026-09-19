@@ -289,15 +289,15 @@ describe("skabeloner", () => {
     period: "fre 21. aug → man 24. aug",
     pickup: "2026-08-21",
     returnDate: "2026-08-24",
-    speaker: "Stor højtalerpakke",
-    cartItems: [{ name: "Lys-pakke" }],
+    speaker: "Mellem højtalerpakke",
+    cartItems: [{ name: "Lysbar" }],
     total: 1995,
   };
 
   it("udfylder shortcodes fra ordren", () => {
     const vars = smsVarsFor(booking, { telefon: "31 13 28 52" });
     expect(vars.fornavn).toBe("Agnes");
-    expect(vars.produkter).toBe("Stor højtalerpakke, Lys-pakke");
+    expect(vars.produkter).toBe("Mellem højtalerpakke, Lysbar");
     expect(vars.dato).toContain("21. aug");
     expect(vars.returdato).toContain("24. aug");
     expect(vars.total).toBe("1.995 kr");

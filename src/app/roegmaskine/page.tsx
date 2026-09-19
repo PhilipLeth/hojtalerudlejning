@@ -4,9 +4,9 @@ import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Røgmaskine København | Fra 595 kr | Lejhøjtaler.dk",
+  title: "Lej Røgmaskine København | Fra 245 kr | Lejhøjtaler.dk",
   description:
-    "Lej røgmaskine i København fra 595 kr/weekend. Inkl. røgvæske og fjernbetjening. Betal ved afhentning. Kombiner med lyd og lys til komplet festpakke.",
+    "Lej røgmaskine i København fra 245 kr/weekend. Inkl. røgvæske og fjernbetjening. Betal ved afhentning. Kombiner med lyd og lys til komplet festpakke.",
   keywords: [
     "lej røgmaskine københavn",
     "røgmaskine udlejning",
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/roegmaskine"),
   },
   openGraph: {
-    title: "Lej Røgmaskine København | Fra 595 kr",
+    title: "Lej Røgmaskine København | Fra 245 kr",
     description:
-      "Lej røgmaskine i København fra 595 kr. Inkl. røgvæske og fjernbetjening. Book online.",
+      "Lej røgmaskine i København fra 245 kr. Inkl. røgvæske og fjernbetjening. Book online.",
     url: "https://lejhojtaler.dk/roegmaskine",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -36,7 +36,7 @@ export default function RoegmaskinePage() {
     <ProductLanding
       slug="roegmaskine"
       name="Røgmaskine"
-      price={595}
+      price={245}
       headline="Lej røgmaskine i København"
       sub="Inkl. røgvæske, fjernbetjening og nem opsætning."
       image="/images/product-rog-v2-white.webp"

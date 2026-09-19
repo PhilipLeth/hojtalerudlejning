@@ -159,7 +159,7 @@ export function bundlePartsFromCatalog(catalog: unknown): Record<string, string[
 }
 
 /**
- * Pakkens pladser: den snævreste del bestemmer. Har vi to lys-pakker og én stor
+ * Pakkens pladser: den snævreste del bestemmer. Har vi to lysbarer og én stor
  * højtalerpakke, kan vi udleje én stor festpakke — ikke to.
  *
  * Returnerer null hvis bare én del mangler lagertal: så ved vi ikke nok til at

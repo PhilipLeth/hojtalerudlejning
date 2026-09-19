@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Teen party lights Copenhagen | 745 DKK | Lejhøjtaler.dk",
-  description: "Disco effect, disco ball and coloured fairy lights, the basement becomes a club for 745 DKK. Save 140 DKK. Rental in Copenhagen.",
+  title: "Teen party lights Copenhagen | 785 DKK | Lejhøjtaler.dk",
+  description: "Disco effect, disco ball and coloured fairy lights, the basement becomes a club for 785 DKK. Save 150 DKK. Rental in Copenhagen.",
   keywords: ["teen party lights rental", "18th birthday party lights", "disco lights for birthday party"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/teenagefest-lys",
     languages: localeAlternates("/teenagefest-lys"),
   },
   openGraph: {
-    title: "Teen party lights Copenhagen | 745 DKK | Lejhøjtaler.dk",
-    description: "Disco effect, disco ball and 10 m of coloured fairy lights. Kill the ceiling light, switch this on, save 140 DKK.",
+    title: "Teen party lights Copenhagen | 785 DKK | Lejhøjtaler.dk",
+    description: "Disco effect, disco ball and 10 m of coloured fairy lights. Kill the ceiling light, switch this on, save 150 DKK.",
     url: "https://lejhojtaler.dk/en/teenagefest-lys",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -27,9 +27,9 @@ export default function Page() {
       locale="en"
       slug="en/teenagefest-lys"
       name="Teen party lights"
-      price={745}
+      price={785}
       headline="Teen party lights, the basement becomes a club"
-      sub="Disco effect, disco ball and 10 m of coloured fairy lights. Kill the ceiling light, switch this on, save 140 DKK."
+      sub="Disco effect, disco ball and 10 m of coloured fairy lights. Kill the ceiling light, switch this on, save 150 DKK."
       image="/images/product-pakke-teenagefest-taendt-v2-white.webp"
       imageAlt="Teen party lights switched on: mirror ball, LED par light and a coloured festoon string"
       productId="pakke_teenagefest"
@@ -40,7 +40,7 @@ export default function Page() {
         "30 cm disco ball with motor and spotlight",
         "10 m coloured fairy lights for wall or ceiling",
         "Everything runs on normal sockets",
-        "Save 140 DKK vs renting the parts separately",
+        "Save 150 DKK vs renting the parts separately",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

@@ -1,0 +1,54 @@
+{
+  "name": "AAG: Discokugle — diskokugle leje",
+  "status": "ENABLED",
+  "cpcBidMicros": 6500000,
+  "matchType": "EXACT",
+  "primary": "diskokugle leje",
+  "keywords": [
+    {
+      "text": "diskokugle leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "diskokugle til leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "diskokugler leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "discokugle leje",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "diskokugle leje københavn",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/discokugle",
+  "path1": "discokugle",
+  "headlines": [
+    "Diskokugle Leje",
+    "Diskokugle Til Leje",
+    "Diskokugler Leje",
+    "Discokugle Leje",
+    "Diskokugle Leje København",
+    "Diskokugle Leje Fra 545 kr.",
+    "Diskokugler Leje Fra 545 kr.",
+    "Discokugle Leje Fra 545 kr.",
+    "Roterende Diskokugle 40 cm",
+    "Motor, Spot Og Stativ Med",
+    "Klar Til Dansegulvet",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr."
+  ],
+  "descriptions": [
+    "Diskokugle leje i København fra 545 kr. 30 eller 40 cm roterende kugle med motor og spot.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Diskokugle til leje til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Komplet diskokugle-pakke: kugle, motor, LED-spot og ophæng. Sæt op på 5 minutter."
+  ]
+}

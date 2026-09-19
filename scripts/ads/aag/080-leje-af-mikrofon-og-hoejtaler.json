@@ -1,0 +1,44 @@
+{
+  "name": "AAG: Speakerpakke trådløs 30-50 — leje af mikrofon og højtaler",
+  "status": "ENABLED",
+  "cpcBidMicros": 6500000,
+  "matchType": "EXACT",
+  "primary": "leje af mikrofon og højtaler",
+  "keywords": [
+    {
+      "text": "leje af mikrofon og højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "lej mikrofon og højtaler",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "mikrofon og højtaler leje",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/pakke-tale-musik",
+  "path1": "tale-musik",
+  "headlines": [
+    "Leje Af Mikrofon Og Højtaler",
+    "Lej Mikrofon Og Højtaler",
+    "Mikrofon Og Højtaler Leje",
+    "2× 12\" Højtalere + Trådløs Mic",
+    "Til Taler Og Musik",
+    "Alle Kabler Med",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Leje af mikrofon og højtaler 1.145 kr. 2× 12\" højtalere og trådløs mikrofon i én pakke.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Lej mikrofon og højtaler. Hent i København S eller få leveret for 495 kr.",
+    "Leje af mikrofon og højtaler som pakke: taler og musik til events, alle kabler med."
+  ]
+}

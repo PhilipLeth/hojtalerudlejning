@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Højtalerstativer København | 100 kr | Lejhøjtaler.dk",
+  title: "Lej Højtalerstativer København | 95 kr | Lejhøjtaler.dk",
   description:
-    "Lej 2 professionelle højtalerstativer i København for 100 kr. Løfter højtalerne op i øjenhøjde, så lyden når hele rummet. Passer til alle vores højtalerpakker.",
+    "Lej 2 professionelle højtalerstativer i København for 95 kr. Løfter højtalerne op i øjenhøjde, så lyden når hele rummet. Passer til alle vores højtalerpakker.",
   keywords: ["lej højtalerstativer", "højtalerstativ leje københavn", "stativ til højtaler", "pa stativer leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/hojtalerstativer",
     languages: localeAlternates("/hojtalerstativer"),
   },
   openGraph: {
-    title: "Lej Højtalerstativer | 100 kr",
+    title: "Lej Højtalerstativer | 95 kr",
     description: "2 professionelle stativer, løfter lyden op i øjenhøjde. Passer til alle vores højtalere.",
     url: "https://lejhojtaler.dk/hojtalerstativer",
     siteName: "Lejhøjtaler.dk",
@@ -27,7 +27,7 @@ export default function Page() {
     <ProductLanding
       slug="hojtalerstativer"
       name="Højtalerstativer"
-      price={100}
+      price={95}
       headline="Lej højtalerstativer"
       sub="2 professionelle stativer, der løfter højtalerne op i øjenhøjde, så lyden går over hovederne i stedet for ind i ryggen på første række."
       image="/images/product-stativer-white.webp"
@@ -40,7 +40,7 @@ export default function Page() {
         "Passer til Alto 10\" og EV 12\", alle vores højtalerpakker",
         "Trefod med sikring, står stabilt på gulv og græs",
         "Vælges som tilvalg i bookingen sammen med højtalerne",
-        "Inkluderet i Højtalerpakke 100 og festpakkerne fra 150 gæster",
+        "Inkluderet i Stor højtalerpakke og festpakkerne fra 150 gæster",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

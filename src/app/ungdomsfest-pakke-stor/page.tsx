@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Stor ungdomsfest-pakke | Diskotek til 100 gæster | 2.395 kr | Lejhøjtaler.dk",
-  description: "2× 12\" højtalere, lys-pakke, discokugle 40 cm og røgmaskine, et rigtigt diskotek til ungdomsfesten for 2.395 kr. Spar 285 kr. Lejes i København.",
+  title: "Stor ungdomsfest-pakke | Diskotek til 100 gæster | 1.860 kr | Lejhøjtaler.dk",
+  description: "2× 12\" højtalere, lysbar, discokugle 40 cm og røgmaskine, et rigtigt diskotek til ungdomsfesten for 1.860 kr. Spar 220 kr. Lejes i København.",
   keywords: ["stor ungdomsfest pakke", "diskotek til fest leje", "lyd og lys til gymnasiefest", "18 års fødselsdag fest udstyr leje", "røgmaskine og discokugle leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/ungdomsfest-pakke-stor",
     languages: localeAlternates("/ungdomsfest-pakke-stor"),
   },
   openGraph: {
-    title: "Stor ungdomsfest-pakke | Diskotek til 100 gæster | 2.395 kr | Lejhøjtaler.dk",
-    description: "2× 12\" højtalere, lys-pakke på stativ, discokugle 40 cm og røgmaskine. Et rigtigt diskotek, spar 285 kr.",
+    title: "Stor ungdomsfest-pakke | Diskotek til 100 gæster | 1.860 kr | Lejhøjtaler.dk",
+    description: "2× 12\" højtalere, lysbar på stativ, discokugle 40 cm og røgmaskine. Et rigtigt diskotek, spar 220 kr.",
     url: "https://lejhojtaler.dk/ungdomsfest-pakke-stor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -26,20 +26,20 @@ export default function Side() {
     <ProductLanding
       slug="ungdomsfest-pakke-stor"
       name="Stor ungdomsfest-pakke"
-      price={2395}
+      price={1860}
       headline="Stor ungdomsfest-pakke, et rigtigt diskotek"
-      sub="To 12&quot; højtalere, lys-pakke på stativ, discokugle 40 cm og røgmaskine. Forsamlingshuset bliver til en klub, spar 285 kr."
+      sub="To 12&quot; højtalere, lysbar på stativ, discokugle 40 cm og røgmaskine. Forsamlingshuset bliver til en klub, spar 220 kr."
       image="/images/product-pakke-ungdomsfest-stor-taendt-white.webp"
-      imageAlt="Stor ungdomsfest-pakke tændt: to 12-tommer højtalere, lys-pakke på stativ, discokugle med spot og røgmaskine"
+      imageAlt="Stor ungdomsfest-pakke tændt: to 12-tommer højtalere, lysbar på stativ, discokugle med spot og røgmaskine"
       productId="pakke_ungdomsfest_stor"
       faqPhrase="den store ungdomsfest-pakke"
       capacity={{ level: 3, label: "op til 100 gæster i forsamlingshus, hal eller lade" }}
       bullets={[
         "2× EV 12\" højtalere, fylder et forsamlingshus, Bluetooth fra telefonen",
-        "Lys-pakke: to farvede lamper og centereffekt på stativ",
+        "Lysbar: to farvede lamper og centereffekt på stativ",
         "Discokugle 40 cm med motor og spot, prikker over hele rummet",
         "Røgmaskine med væske, det er røgen, der gør lysstrålerne synlige",
-        "Subwoofer, stativer og mikrofon kan tilvælges, spar 285 kr vs. delene enkeltvis",
+        "Subwoofer, stativer og mikrofon kan tilvælges, spar 220 kr vs. delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

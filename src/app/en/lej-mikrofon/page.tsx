@@ -20,7 +20,7 @@ import { localizedHref } from "@/lib/enPages";
 export const metadata: Metadata = {
   title: "Microphone Rental Copenhagen | Wireless, Headset & Shure from 95 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a microphone in Copenhagen. Wireless microphone from 295 DKK, Shure BLX 595 DKK, wireless headset from 345 DKK and wired handheld from 95 DKK. Plugs straight into our speakers.",
+    "Rent a microphone in Copenhagen. Wireless microphone from 445 DKK, Shure BLX 595 DKK, wireless headset from 445 DKK and wired handheld from 95 DKK. Plugs straight into our speakers.",
   keywords: [
     "microphone rental copenhagen",
     "rent a microphone copenhagen",
@@ -59,17 +59,17 @@ export default function Page() {
     {
       titel: "For speeches at the dinner",
       svar: "A wireless handheld. It gets passed between the speakers, and you can lower it when you are not talking.",
-      grej: "Wireless microphone, 295 DKK, or Shure BLX 595 DKK",
+      grej: "Wireless microphone, 445 DKK, or Shure BLX 595 DKK",
     },
     {
       titel: "For the person who talks for a long time",
       svar: "A headset. The teacher or the toastmaster needs both hands and has to move around without the sound rising and falling.",
-      grej: "Wireless headset, 345 DKK, PRO 595 DKK",
+      grej: "Wireless headset, 445 DKK, PRO 595 DKK",
     },
     {
       titel: "For karaoke and parties",
       svar: "Two wireless ones. Someone always wants to sing along, and one microphone has to move on to the next song.",
-      grej: "Two wireless microphones, 295 DKK each",
+      grej: "Two wireless microphones, 445 DKK each",
     },
     {
       titel: "When it stays in one place",

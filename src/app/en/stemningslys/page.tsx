@@ -4,9 +4,9 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Ambient Light Package | Uplights, Fairy Lights & Disco Ball | 1.045 DKK | Lejhøjtaler.dk",
+  title: "Ambient Light Package | Uplights, Fairy Lights & Disco Ball | 1.295 DKK | Lejhøjtaler.dk",
   description:
-    "The ambient light package: 4 LED uplights, 10 m of fairy lights and a disco ball for 1.045 DKK, save 140 DKK. Lighting that transforms a rented venue. Rental in Copenhagen.",
+    "The ambient light package: 4 LED uplights, 10 m of fairy lights and a disco ball for 1.295 DKK, save 140 DKK. Lighting that transforms a rented venue. Rental in Copenhagen.",
   keywords: [
     "uplighting rental copenhagen",
     "wedding lighting rental copenhagen",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/stemningslys"),
   },
   openGraph: {
-    title: "Ambient Light Package | Uplights, Fairy Lights & Disco Ball | 1.045 DKK",
+    title: "Ambient Light Package | Uplights, Fairy Lights & Disco Ball | 1.295 DKK",
     description:
       "4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling, save 140 DKK.",
     url: "https://lejhojtaler.dk/en/stemningslys",
@@ -34,12 +34,12 @@ export default function Page() {
     <ProductLanding
       locale="en"
       slug="en/stemningslys"
-      name="Ambient light package"
-      price={1045}
-      headline="Ambient light package, light without sound"
+      name="Ambient light bar"
+      price={1295}
+      headline="Ambient light bar, light without sound"
       sub="4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling, save 140 DKK."
       image="/images/product-pakke-stemningslys-taendt-v3-white.webp"
-      imageAlt="Ambient light package with uplights, fairy lights and a disco ball"
+      imageAlt="Ambient light bar with uplights, fairy lights and a disco ball"
       productId="pakke_stemningslys"
       faqPhrase="the ambient light package"
       capacity={{ level: 2, label: "a whole venue" }}

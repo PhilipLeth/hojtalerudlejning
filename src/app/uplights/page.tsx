@@ -10,9 +10,9 @@ import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Uplights København | Fra 125 kr | Lejhøjtaler.dk",
+  title: "Lej Uplights København | Fra 195 kr | Lejhøjtaler.dk",
   description:
-    "Lej uplights i København fra 125 kr/stk eller 395 kr for 4-pak. Simple LED uplights på gulv, plug and play til bryllup, konfirmation og fest. Betal ved afhentning.",
+    "Lej uplights i København fra 195 kr/stk eller 595 kr for 4-pak. Simple LED uplights på gulv, plug and play til bryllup, konfirmation og fest. Betal ved afhentning.",
   keywords: [
     "lej uplights københavn",
     "uplight udlejning",
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/uplights"),
   },
   openGraph: {
-    title: "Lej Uplights København | Fra 125 kr",
+    title: "Lej Uplights København | Fra 195 kr",
     description:
-      "Simple LED uplights på gulv, 125 kr/stk eller 395 kr for 4-pak. Book online.",
+      "Simple LED uplights på gulv, 195 kr/stk eller 595 kr for 4-pak. Book online.",
     url: "https://lejhojtaler.dk/uplights",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -68,7 +68,7 @@ export default function UplightsPage() {
             Lej uplights i København
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 125 kr.
+              fra 195 kr.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">

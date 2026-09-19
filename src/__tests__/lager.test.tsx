@@ -62,7 +62,8 @@ describe("Lagerlisten kommer fra kataloget", () => {
 
   it("markerer pakker som sammensat af dele", () => {
     const pakke = items.find((i) => i.id === "pakke_fest_lille")!;
-    expect(pakke.parts).toEqual(["party", "lyseffekt"]);
+    // produktarket 17. sept 2026: Festpakke 0-30 = party + lysbar (før enkelt lyseffekt)
+    expect(pakke.parts).toEqual(["party", "lys"]);
     const enkelt = items.find((i) => i.id === "party")!;
     expect(enkelt.parts).toBeUndefined();
   });
@@ -83,8 +84,8 @@ describe("Pakkens lager følger delene", () => {
     const items = stockItems(catalog);
     const pakke = items.find((i) => i.id === "pakke_fest_lille")!;
     expect(missingStock([pakke], {})).toEqual([]);
-    expect(hasStock(pakke, { party: 1, lyseffekt: 1 })).toBe(true);
-    expect(effectiveStock(pakke, { party: 1, lyseffekt: 3 })).toBe(1);
+    expect(hasStock(pakke, { party: 1, lys: 1 })).toBe(true);
+    expect(effectiveStock(pakke, { party: 1, lys: 3 })).toBe(1);
   });
 
   it("viser hvilke produkter der slet ikke har lagertal", () => {
@@ -276,12 +277,13 @@ describe("/admin/lager", () => {
   });
 
   it("viser pakkens lager som delenes mindste, uden felt at rette i", async () => {
-    mockApi({ party: 2, lyseffekt: 1 });
+    mockApi({ party: 2, lys: 1 });
     renderAdmin(<LagerPage />);
     await waitFor(() => expect(screen.getByLabelText("Lagerliste")).toBeInTheDocument());
 
-    const række = rækkeFor("Lille festpakke");
-    expect(række.textContent).toMatch(/følger delene: party \+ lyseffekt/);
+    // produktarket 17. sept 2026: "Lille festpakke" hedder nu "Festpakke 0-30" og består af party + lys
+    const række = rækkeFor("Festpakke 0-30");
+    expect(række.textContent).toMatch(/følger delene: party \+ lys(?!effekt)/);
     expect(række.textContent).toMatch(/1 stk\./);
     expect(række.querySelector('input[type="number"]')).toBeNull();
   });

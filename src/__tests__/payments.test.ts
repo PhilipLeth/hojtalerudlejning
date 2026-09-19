@@ -135,8 +135,8 @@ describe("Betalingsmetoder på tværs af ordrer", () => {
 
 const priceOf = (id: string) =>
   ({
-    festival: { name: "Stor højtalerpakke", price: 495 },
-    lys: { name: "Lys-pakke", price: 495 },
+    festival: { name: "Mellem højtalerpakke", price: 495 },
+    lys: { name: "Lysbar", price: 495 },
     rog: { name: "Røgmaskine", price: 245 },
     lyskaeder: { name: "Lyskæde varm hvid", price: 195 },
   })[id];
@@ -145,7 +145,7 @@ describe("Regnskab", () => {
   const bookings = [
     {
       id: "booking_1", name: "Julie", total: 1235, pickup: "2026-08-21", period: "fre → man",
-      speakerId: "festival", addonIds: ["lys", "rog"], addons: ["Lys-pakke", "Røgmaskine"],
+      speakerId: "festival", addonIds: ["lys", "rog"], addons: ["Lysbar", "Røgmaskine"],
       payments: [pay(500, "kontant"), pay(735, "mobilepay")],
     },
     {
@@ -212,7 +212,7 @@ describe("Fordeling af rabat", () => {
   it("skalerer linjerne ned så de rammer ordrens faktiske total", () => {
     // Listepris 990, men ordren blev solgt til 890 (rabatkode)
     const lines = allocateRevenue(
-      { id: "x", total: 890, speakerId: "festival", addonIds: ["lys"], addons: ["Lys-pakke"] },
+      { id: "x", total: 890, speakerId: "festival", addonIds: ["lys"], addons: ["Lysbar"] },
       priceOf,
     );
     expect(lines.reduce((s, l) => s + l.amount, 0)).toBe(890);

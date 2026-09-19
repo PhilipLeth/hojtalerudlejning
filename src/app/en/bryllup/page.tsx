@@ -48,13 +48,13 @@ export default function Page() {
       ]}
       faq={[
         { q: "Can you deliver and set up on the day itself?", a: "Yes. Delivery and setup in Copenhagen is " + prisDkk("levering_ud") + ". We agree a window in the morning and collect the equipment again after the party." },
-        { q: "How many guests can the system handle?", a: "The large party package covers 40-100 guests. If you are under 40, the small party package at " + prisDkk("pakke_fest_lille") + " is plenty." },
+        { q: "How many guests can the system handle?", a: "The large party package covers 40-100 guests. If you are under 40, the party package 0-30 at " + prisDkk("pakke_fest_lille") + " is plenty." },
         { q: "Can we connect a DJ or a band?", a: "Yes. The speakers have ordinary XLR and jack inputs, so a DJ can plug straight in. Tell us when you book and we will send the right cables with you." },
         { q: "What about music for an outdoor ceremony?", a: "For an outdoor ceremony with no power we recommend a battery-powered Soundboks 4, it can stand discreetly to the side and plays through the whole ceremony." },
       ]}
       related={[
         { href: "/bryllupspakke", label: "The wedding package", priceId: "pakke_bryllup" },
-        { href: "/festpakke-stor", label: "Large party package" },
+        { href: "/festpakke-stor", label: "Party package 30-50" },
         { href: "/traadloes-mikrofon-pro", label: "Wireless microphone PRO" },
         { href: "/bryllupslys", label: "Wedding lighting" },
       ]}

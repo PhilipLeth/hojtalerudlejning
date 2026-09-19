@@ -32,8 +32,10 @@ async function tilTilvalg() {
 describe("Tilvalgstrinnet", () => {
   it("viser fem tilvalg, ikke hele sortimentet", async () => {
     await tilTilvalg();
-    // De fem der faktisk tilføjes til en fest
-    for (const navn of ["Lys-pakke", "Røgmaskine", "Højtalerstativer"]) {
+    // De fem der faktisk tilføjes til en Soundboks. Produktarket 17. sept 2026:
+    // Soundboks 4 har nu sin egen liste af tilvalg (lysbar, batteri, mikrofon med
+    // ledning, ét stativ), røgmaskine og stativ-sættet hører ikke til den længere
+    for (const navn of ["Lysbar", "Soundboks batteri", "Mikrofon med ledning"]) {
       expect(screen.getAllByText(new RegExp(navn, "i")).length, navn).toBeGreaterThan(0);
     }
     // Og resten er foldet væk bag én knap
@@ -43,17 +45,20 @@ describe("Tilvalgstrinnet", () => {
   it("folder resten ud, når man beder om det", async () => {
     await tilTilvalg();
     const knap = screen.getByText(/Vis alle tilvalg/);
+    // Bæretasken er sat på pause (produktarket 17. sept 2026). Lydmanden er nu
+    // nederst i rækkefølgen for en Soundboks og kommer først frem, når man folder ud
+    expect(screen.queryByText("Lydmand")).not.toBeInTheDocument();
     fireEvent.click(knap);
     await waitFor(() => expect(screen.queryByText(/Vis alle tilvalg/)).not.toBeInTheDocument());
-    // Bæretasken er nederst i relevansrækkefølgen og kommer først frem nu
-    expect(screen.getAllByText(/taske/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Lydmand").length).toBeGreaterThan(0);
+    expect(screen.queryByText(/taske/i)).not.toBeInTheDocument();
   }, 20000);
 
   it("sætter kørsel før tilvalgene — det er dét, kunden skal svare på", async () => {
     await tilTilvalg();
     const tekst = document.body.textContent ?? "";
     const iKørsel = tekst.search(/levering|Kørsel|henter selv/i);
-    const iTilvalg = tekst.indexOf("Lys-pakke");
+    const iTilvalg = tekst.indexOf("Lysbar");
     expect(iKørsel).toBeGreaterThan(-1);
     expect(iKørsel, "kørsel skal stå før tilvalgene").toBeLessThan(iTilvalg);
   }, 20000);

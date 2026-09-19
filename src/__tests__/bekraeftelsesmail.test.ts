@@ -46,7 +46,7 @@ describe("bekræftelsesmailen", () => {
   const ctx = {
     fornavn: "Agnes",
     navn: "Agnes Dahle Stæhr",
-    produkter: "Stor højtalerpakke, Lys-pakke",
+    produkter: "Mellem højtalerpakke, Lysbar",
     periode: "fre 21. aug → man 24. aug",
     sted: "Du henter hos os: Halvtolv 9, 1. th, 1436 København K",
     betaling: "I alt 1.995 kr — betales ved afhentning med MobilePay.",
@@ -58,7 +58,7 @@ describe("bekræftelsesmailen", () => {
   it("indeholder det kunden skal bruge fredag eftermiddag", () => {
     const mail = buildConfirmationMail(DEFAULT_SETTINGS, ctx);
     expect(mail.subject).toBe("Din booking er bekræftet, Agnes 🔊");
-    for (const skal of ["Stor højtalerpakke", "fre 21. aug", "Halvtolv 9", "1.995 kr", "31 13 28 52", "Frederik"]) {
+    for (const skal of ["Mellem højtalerpakke", "fre 21. aug", "Halvtolv 9", "1.995 kr", "31 13 28 52", "Frederik"]) {
       expect(mail.html, skal).toContain(skal);
     }
     expect(mail.html).not.toContain("{{");
@@ -75,7 +75,7 @@ describe("bekræftelsesmailen", () => {
     });
     const mail = buildConfirmationMail(egen, ctx);
     expect(mail.subject).toBe("Vi ses Agnes");
-    expect(mail.html).toContain("Hej Agnes - Stor højtalerpakke".replace(" - ", " — "));
+    expect(mail.html).toContain("Hej Agnes - Mellem højtalerpakke".replace(" - ", " — "));
   });
 
   it("tom skabelon falder tilbage på standarden i stedet for at sende ingenting", () => {

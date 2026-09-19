@@ -59,7 +59,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     const kv = context.env.BOOKINGS;
     const [campaignRaw, catalogRaw, inventoryRaw, bookings] = await Promise.all([
       readJson<unknown>(kv, KV_SALE_CAMPAIGN, null),
-      readJson<unknown>(kv, "products_catalog", null),
+      readJson<unknown>(kv, "products_catalog_v2", null),
       readJson<Record<string, number>>(kv, "inventory", {}),
       loadBookings(kv),
     ]);

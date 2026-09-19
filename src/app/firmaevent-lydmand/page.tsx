@@ -5,17 +5,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Firmaevent med lydmand | Anlæg + mixer + mikrofon + tekniker | 6.195 kr | Lejhøjtaler.dk",
+  title: "Firmaevent med lydmand | Anlæg + mixer + mikrofon + tekniker | 6.100 kr | Lejhøjtaler.dk",
   description:
-    "Firmaevent med lydmand: stor højtalerpakke + t.mix 1202 FX USB-mixer + trådløs mikrofon + AV-tekniker i 4 timer. Leveret, sat op og hentet igen for 6.195 kr, spar 285 kr. Taler og musik til op til 100 personer.",
+    "Firmaevent med lydmand: mellem højtalerpakke + t.mix 1202 FXMP USB-mixer + trådløs mikrofon + AV-tekniker i 4 timer. Leveret, sat op og hentet igen for 6.100 kr, spar 280 kr. Taler og musik til op til 100 personer.",
   keywords: ["lydmand firmafest", "lydanlæg med tekniker erhverv", "firmaevent lyd københavn", "mikrofon og tekniker til reception", "av-tekniker firmaevent"],
   alternates: {
     canonical: "https://lejhojtaler.dk/firmaevent-lydmand",
     languages: localeAlternates("/firmaevent-lydmand"),
   },
   openGraph: {
-    title: "Firmaevent med lydmand | 6.195 kr",
-    description: "Stor højtalerpakke + mixer + trådløs mikrofon + lydmand i 4 timer. Leveret, sat op og hentet igen, spar 285 kr.",
+    title: "Firmaevent med lydmand | 6.100 kr",
+    description: "Mellem højtalerpakke + mixer + trådløs mikrofon + lydmand i 4 timer. Leveret, sat op og hentet igen, spar 280 kr.",
     url: "https://lejhojtaler.dk/firmaevent-lydmand",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,10 +28,10 @@ export default function Page() {
     <ProductLanding
       slug="firmaevent-lydmand"
       name="Firmaevent med lydmand"
-      price={6195}
+      price={6100}
       priceUnit="/event"
       headline="Firmaevent med lydmand"
-      sub="Stor højtalerpakke + mixer + trådløs mikrofon + AV-tekniker i 4 timer. Taler, musik og én der passer det hele, spar 285 kr."
+      sub="Mellem højtalerpakke + mixer + trådløs mikrofon + AV-tekniker i 4 timer. Taler, musik og én der passer det hele, spar 280 kr."
       image="/images/product-pakke-lydmand-firma-v2-white.webp"
       imageAlt="Firmaevent med lydmand: højtalere, mixer og mikrofon"
       productId="pakke_lydmand_firma"
@@ -58,11 +58,11 @@ export default function Page() {
       ]}
       bullets={[
         "2× EV 12\" højtalere (op til 100 pers.)",
-        "t.mix 1202 FX USB-mixer med effekter, rumklang på talerne",
+        "t.mix 1202 FXMP USB-mixer med effekter, rumklang på talerne",
         "Trådløs håndholdt mikrofon til taler og præsentationer",
         "Lydmand i 4 timer, mikrofonen virker, når direktøren rejser sig",
         "Levering, opsætning og afhentning er med",
-        "Spar 285 kr vs. at leje delene enkeltvis",
+        "Spar 280 kr vs. at leje delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

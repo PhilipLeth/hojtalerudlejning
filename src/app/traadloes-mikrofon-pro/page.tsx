@@ -27,7 +27,7 @@ export default function Page() {
       name="Trådløs mikrofon PRO"
       price={595}
       headline="Lej trådløs mikrofon PRO (Shure BLX)"
-      sub={'Shure BLX trådløs mikrofon, scenekvalitet til events og konferencer.'}
+      sub={'Trådløs mikrofon PRO udlejes ikke lige nu som selvstændigt produkt. Vores almindelige trådløse mikrofon er nu Shure BLX24 med SM58 til 445 kr.'}
       image="/images/product-mikrofon-pro-v2-white.webp"
       imageAlt="Shure BLX trådløs mikrofon til leje"
       productId="traadloes_mikrofon_pro"

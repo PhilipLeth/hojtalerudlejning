@@ -19,14 +19,14 @@ const booking = {
   name: "Agnes Dahle Stæhr",
   email: "agnes@example.com",
   phone: "31 13 28 52",
-  speaker: "Stor højtalerpakke",
+  speaker: "Mellem højtalerpakke",
   speakerId: "festival",
   speakerSize: "—",
   period: "fre 21. aug → man 24. aug",
   days: 3,
   addons: [],
   addonIds: ["lys"],
-  cartItems: [{ name: "Lys-pakke", price: 495, productId: "lys" }],
+  cartItems: [{ name: "Lysbar", price: 495, productId: "lys" }],
   total: 2000,
   payments: [{ amount: 500, method: "mobilepay" }],
   depositAmount: 500,
@@ -93,8 +93,8 @@ describe("Lejesedlen", () => {
     expect(screen.getByText("agnes@example.com")).toBeInTheDocument();
     expect(screen.getByText(/fre 21\. aug/)).toBeInTheDocument();
     // Pakkelisten er ordrens egne linjer — og kun dem
-    expect(screen.getByText("Stor højtalerpakke")).toBeInTheDocument();
-    expect(screen.getByText("Lys-pakke")).toBeInTheDocument();
+    expect(screen.getByText("Mellem højtalerpakke")).toBeInTheDocument();
+    expect(screen.getByText("Lysbar")).toBeInTheDocument();
   });
 
   it("siger hvad der MANGLER at blive betalt, ikke bare prisen", async () => {
@@ -167,7 +167,9 @@ describe("Lejeseddel — listen er ordren", () => {
 
   it("viser stadig det, der faktisk er bestilt", async () => {
     await openSeddel();
-    expect(screen.getByText(/Stor højtalerpakke/)).toBeInTheDocument();
-    expect(screen.getByText(/Lys-pakke/)).toBeInTheDocument();
+    expect(screen.getByText(/Mellem højtalerpakke/)).toBeInTheDocument();
+    // produktarket 17. sept 2026: "Lys-pakke" hedder nu "Lysbar"
+    expect(screen.getByText(/Lysbar/)).toBeInTheDocument();
+    expect(screen.queryByText(/Lys-pakke/)).not.toBeInTheDocument();
   });
 });

@@ -205,7 +205,7 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
             Microphone rental
           </Link>
           <Link href="/en/lyspakker" className="text-white/30 hover:text-brand-400 transition">
-            Light packages
+            Light bars
           </Link>
         </p>
       )}

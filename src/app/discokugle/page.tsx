@@ -4,9 +4,9 @@ import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Lej Discokugle København | Fra 595 kr | Lejhøjtaler.dk",
+  title: "Lej Discokugle København | Fra 645 kr | Lejhøjtaler.dk",
   description:
-    "Lej discokugle i København fra 595 kr/weekend. Roterende discokugle med LED-lys og farver. Plug-and-play. Betal ved afhentning. Book online.",
+    "Lej discokugle i København fra 645 kr/weekend. Roterende discokugle med LED-lys og farver. Plug-and-play. Betal ved afhentning. Book online.",
   keywords: [
     "lej discokugle",
     "discokugle udlejning",
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/discokugle"),
   },
   openGraph: {
-    title: "Lej Discokugle København | Fra 595 kr",
+    title: "Lej Discokugle København | Fra 645 kr",
     description:
-      "Lej discokugle i København fra 595 kr/weekend. Roterende discokugle med LED-lys og farver. Book online.",
+      "Lej discokugle i København fra 645 kr/weekend. Roterende discokugle med LED-lys og farver. Book online.",
     url: "https://lejhojtaler.dk/discokugle",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -34,7 +34,7 @@ export default function DiscokuglePage() {
     <ProductLanding
       slug="discokugle"
       name="Discokugle"
-      price={595}
+      price={645}
       headline="Lej discokugle i København"
       sub="Roterende discokugle med LED-lys og farver. Klar på 2 min."
       image="/images/product-discokugle-v2-white.webp"

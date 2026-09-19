@@ -4,12 +4,12 @@ import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Party Light Package Rental Copenhagen | 495 DKK | Lejhøjtaler.dk",
+  title: "Party Light Package Rental Copenhagen | 395 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a party light package in Copenhagen for 495 DKK per weekend. 2 coloured LED lamps and a centre effect on a stand, plug and play, ready in minutes. Pay on pickup.",
+    "Rent a party light package in Copenhagen for 395 DKK per weekend. 2 coloured LED lamps and a centre effect on a stand, plug and play, ready in minutes. Pay on pickup.",
   keywords: [
     "party light rental copenhagen",
-    "light package rental copenhagen",
+    "light bar rental copenhagen",
     "led light rental copenhagen",
     "disco light hire copenhagen",
     "event lighting rental copenhagen",
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lys-pakke"),
   },
   openGraph: {
-    title: "Party Light Package Rental Copenhagen | 495 DKK",
+    title: "Party Light Package Rental Copenhagen | 395 DKK",
     description:
-      "2 coloured LED lamps + centre effect on a stand. 495 DKK per weekend. Book online.",
+      "2 coloured LED lamps + centre effect on a stand. 395 DKK per weekend. Book online.",
     url: "https://lejhojtaler.dk/en/lys-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -34,15 +34,15 @@ export default function Page() {
     <ProductLanding
       locale="en"
       slug="en/lys-pakke"
-      name="Light package"
-      price={495}
+      name="Light bar"
+      price={395}
       headline="Rent a party light package in Copenhagen"
       sub="2 coloured LED lamps and a centre effect on a stand. Ready in a few minutes."
       image="/images/product-lys-v4-white.webp"
-      imageAlt="Party light package for rent in Copenhagen"
+      imageAlt="Party light bar for rent in Copenhagen"
       productId="lys"
-      bookLabel="Book the light package now"
-      faqPhrase="the light package"
+      bookLabel="Book the light bar now"
+      faqPhrase="the light bar"
       bullets={[
         "2× coloured LED lamps",
         "Centre effect included",

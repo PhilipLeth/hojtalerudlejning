@@ -1,0 +1,46 @@
+{
+  "name": "AAG: Festudlejning — festudlejning",
+  "status": "ENABLED",
+  "cpcBidMicros": 6500000,
+  "matchType": "EXACT",
+  "primary": "festudlejning",
+  "keywords": [
+    {
+      "text": "festudlejning",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "festudlejning københavn",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "fest udlejning",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/",
+  "path1": "festudlejning",
+  "headlines": [
+    "Festudlejning",
+    "Festudlejning København",
+    "Fest Udlejning",
+    "Festudlejning Fra 495 kr.",
+    "Fest Udlejning Fra 495 kr.",
+    "Lyd, Lys Og Røg Til Festen",
+    "Alt Klar Til Weekendens Fest",
+    "Højtalere Fra 495 kr.",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris",
+    "Lejhøjtaler.dk"
+  ],
+  "descriptions": [
+    "Festudlejning i København fra 495 kr. Højtalere, festlys, diskokugle og røgmaskine.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Festudlejning københavn. Hent i København S eller få leveret for 495 kr.",
+    "Lej alt til festen ét sted: lyd, lys og røg med alle kabler. Nem opsætning uden teknik."
+  ]
+}

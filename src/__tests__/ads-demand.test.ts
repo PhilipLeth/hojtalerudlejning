@@ -94,7 +94,7 @@ describe("findSide", () => {
 
 describe("kategorisiderne", () => {
   const kandidater = [
-    { id: "lys_pakke", name: "Lys-pakke", page: "/lys-pakke", terms: ["lys pakke", "lys"] },
+    { id: "lys_pakke", name: "Lysbar", page: "/lys-pakke", terms: ["lys pakke", "lys"] },
     ...KATEGORI_SIDER,
   ];
 

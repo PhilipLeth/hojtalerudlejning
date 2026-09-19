@@ -4,9 +4,9 @@ import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Fog Machine Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
+  title: "Fog Machine Rental Copenhagen | 245 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a smoke machine in Copenhagen for 595 DKK per weekend. Fog fluid and remote control included, warms up in 5 minutes. Makes your party lights visible. Pay on pickup.",
+    "Rent a smoke machine in Copenhagen for 245 DKK per weekend. Fog fluid and remote control included, warms up in 5 minutes. Makes your party lights visible. Pay on pickup.",
   keywords: [
     "fog machine rental copenhagen",
     "smoke machine rental copenhagen",
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/roegmaskine"),
   },
   openGraph: {
-    title: "Fog Machine Rental Copenhagen | 595 DKK",
+    title: "Fog Machine Rental Copenhagen | 245 DKK",
     description:
-      "Smoke machine incl. fog fluid and remote control. 595 DKK per weekend. Book online.",
+      "Smoke machine incl. fog fluid and remote control. 245 DKK per weekend. Book online.",
     url: "https://lejhojtaler.dk/en/roegmaskine",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -35,7 +35,7 @@ export default function Page() {
       locale="en"
       slug="en/roegmaskine"
       name="Fog machine"
-      price={595}
+      price={245}
       headline="Rent a fog machine in Copenhagen"
       sub="Fog fluid and remote control included, and it sets up in minutes."
       image="/images/product-rog-v2-white.webp"

@@ -92,7 +92,7 @@ export default function FestlysPage() {
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             Enkelt lyseffekt <LivePrice productId="lyseffekt" />{" · "}
             Uplights <LivePrice productId="uplight" />{" · "}
-            Lys-pakke <LivePrice productId="lys" />{" · "}
+            Lysbar <LivePrice productId="lys" />{" · "}
             Røgmaskine <LivePrice productId="rog" />
           </p>
           <a
@@ -111,7 +111,7 @@ export default function FestlysPage() {
             Lys og røg til din fest
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            Skab den perfekte stemning med enkelt lyseffekt, uplights, lys-pakke, røgmaskine, discokugle og lyskæder.
+            Skab den perfekte stemning med enkelt lyseffekt, uplights, lysbar, røgmaskine, discokugle og lyskæder.
           </p>
 
           <CategoryProductGrid

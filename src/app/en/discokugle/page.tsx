@@ -4,9 +4,9 @@ import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Disco Ball Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
+  title: "Disco Ball Rental Copenhagen | 645 DKK | Lejhøjtaler.dk",
   description:
-    "Rent a disco ball in Copenhagen for 595 DKK per weekend. 40 cm rotating mirror ball with motor, LED spotlight and stand, plug and play. Pay on pickup.",
+    "Rent a disco ball in Copenhagen for 645 DKK per weekend. 40 cm rotating mirror ball with motor, LED spotlight and stand, plug and play. Pay on pickup.",
   keywords: [
     "disco ball rental copenhagen",
     "mirror ball hire copenhagen",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/discokugle"),
   },
   openGraph: {
-    title: "Disco Ball Rental Copenhagen | 595 DKK",
+    title: "Disco Ball Rental Copenhagen | 645 DKK",
     description:
       "40 cm rotating disco ball with motor, LED spotlight and stand. Book online.",
     url: "https://lejhojtaler.dk/en/discokugle",
@@ -34,7 +34,7 @@ export default function Page() {
       locale="en"
       slug="en/discokugle"
       name="Disco ball"
-      price={595}
+      price={645}
       headline="Rent a disco ball in Copenhagen"
       sub="Rotating mirror ball with a motor and coloured LED spotlight. Ready in 2 minutes."
       image="/images/product-discokugle-v2-white.webp"

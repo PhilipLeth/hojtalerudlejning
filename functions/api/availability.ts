@@ -50,7 +50,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
     const [pair, catalogRaw] = await Promise.all([
       loadInventoryPair(context.env.BOOKINGS),
-      context.env.BOOKINGS.get("products_catalog"),
+      context.env.BOOKINGS.get("products_catalog_v2"),
     ]);
     // Kunden må booke op til det vi tager imod: det ejede plus den overbooking
     // vi selv har sat, fordi resten kan skaffes til dagen (JIT).

@@ -3,17 +3,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Speech & Music Package Rental Copenhagen | 1,195 DKK | Lejhøjtaler.dk",
+  title: "Speech & Music Package Rental Copenhagen | 1,145 DKK | Lejhøjtaler.dk",
   description:
-    "Large speaker package + wireless microphone, speeches and music for events. Save 95 DKK. 1,195 DKK per weekend. Pay on pickup. Book online.",
+    "Medium speaker package + wireless microphone, speeches and music for events. Save 95 DKK. 1,145 DKK per weekend. Pay on pickup. Book online.",
   keywords: ["sound for speeches and music rental", "speaker and microphone package copenhagen", "event sound package denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/pakke-tale-musik",
     languages: localeAlternates("/pakke-tale-musik"),
   },
   openGraph: {
-    title: "Speech & music package rental | 1,195 DKK",
-    description: "Large speaker package + wireless microphone, speeches and music for events. Save 95 DKK.",
+    title: "Speech & music package rental | 1,145 DKK",
+    description: "Medium speaker package + wireless microphone, speeches and music for events. Save 95 DKK.",
     url: "https://lejhojtaler.dk/en/pakke-tale-musik",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -27,9 +27,9 @@ export default function Page() {
       locale="en"
       slug="en/pakke-tale-musik"
       name="Speech & music package"
-      price={1195}
+      price={1145}
       headline="The speech & music package"
-      sub="Large speaker package + wireless microphone, speeches and music for events. Save 95 DKK."
+      sub="Medium speaker package + wireless microphone, speeches and music for events. Save 95 DKK."
       image="/images/product-festival-v2-white.webp"
       imageAlt="Speech and music package with large speakers and a wireless microphone"
       productId="pakke_tale_musik"

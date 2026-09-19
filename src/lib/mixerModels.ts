@@ -10,11 +10,11 @@ export const mixerModels: Addon[] = [
     en: { label: "Small mixer · Mackie Mix12FX", desc: "4 microphone inputs, stereo inputs and effects. For speeches and smaller events. On request." },
   },
   {
-    id: "mixer_stor", page: "/mixer", price: 395,
+    id: "mixer_stor", page: "/mixer", price: 345,
     image: "/images/product-mixer-tmix-1202-fx-usb.jpg",
-    contents: ["the t.mix xmix 1202 FX USB", "Strømforsyning", "Kabler til højtaler"],
-    da: { label: "Mixer mellem · t.mix 1202 FX USB", desc: "6 mikrofonindgange, 2 stereoindgange, effekter og stereo-USB. Til panel, møde og mindre band. Kræver strøm." },
-    en: { label: "Medium mixer · t.mix 1202 FX USB", desc: "6 microphone inputs, 2 stereo inputs, effects and stereo USB. For panels, meetings and small bands. Mains power required." },
+    contents: ["the t.mix xmix 1202 FXMP USB", "Strømforsyning", "Kabler til højtaler"],
+    da: { label: "Mixer med effekter · t.mix 1202 FXMP USB", desc: "6 mikrofonindgange, 2 stereoindgange, effekter og stereo-USB. Til panel, møde og mindre band. Kræver strøm." },
+    en: { label: "Mixer with effects · t.mix 1202 FXMP USB", desc: "6 microphone inputs, 2 stereo inputs, effects and stereo USB. For panels, meetings and small bands. Mains power required." },
   },
   {
     id: "mixer_xl", page: "/mixer", price: 495, hidden: true,

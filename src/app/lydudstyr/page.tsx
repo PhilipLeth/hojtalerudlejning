@@ -134,7 +134,7 @@ export default function LydudstyrPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">+</span>
-                  <span>Stativer kan tilkøbes (100 kr)</span>
+                  <span>Stativer kan tilkøbes (95 kr)</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>

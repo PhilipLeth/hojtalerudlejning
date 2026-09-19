@@ -4,7 +4,8 @@ import { speakers, addons, rentalProducts, refreshBundlePrices, bundleListPrice 
 import { loadPriceTable, buildLineItems } from "../../functions/api/_lib/pricing";
 import { bundlePartsFromCatalog } from "../../functions/api/_lib/inventory";
 
-const expected = { halloween_lys: 895, pakke_fest_lille: 690, pakke_diskolys: 645, pakke_teenagefest: 745, pakke_diskotek: 1095, pakke_ungdomsfest: 1295 };
+// produktarket 17. sept 2026: pakkerne følger delenes nye enkeltpriser med uændret rabatprocent
+const expected = { halloween_lys: 705, pakke_fest_lille: 895, pakke_diskolys: 685, pakke_teenagefest: 785, pakke_diskotek: 1050, pakke_ungdomsfest: 1250 };
 
 describe("Pakkepriser efter gennemgangen", () => {
   it("serveren opkræver de godkendte priser, og ingen pakker koster mere end delene", async () => {
@@ -20,12 +21,14 @@ describe("Pakkepriser efter gennemgangen", () => {
   });
   it("adminændringer opdaterer delpriser og rabat uden at ændre pakkeprisen", () => {
     const p = rentalProducts.find(p => p.id === "pakke_fest_lille")!;
-    const items = [...speakers, ...addons, ...rentalProducts].map(item => item.id === "lyseffekt" ? { ...item, price: 95 } : item);
+    // produktarket 17. sept 2026: Festpakke 0-30 = party 595 + lysbar 395 - 95 = 895.
+    // Sætter admin lysbaren ned til 300, er listeprisen 895 og rabatten væk
+    const items = [...speakers, ...addons, ...rentalProducts].map(item => item.id === "lys" ? { ...item, price: 300 } : item);
     const [next] = refreshBundlePrices([p], items);
-    expect(next.price).toBe(690);
-    expect(next.bundle!.parts.find(part => part.productId === "lyseffekt")!.price).toBe(95);
+    expect(next.price).toBe(895);
+    expect(next.bundle!.parts.find(part => part.productId === "lys")!.price).toBe(300);
     expect(next.bundle!.discount).toBe(0);
-    expect(p.bundle!.discount).toBe(100);
+    expect(p.bundle!.discount).toBe(95);
   });
   it("rabatten tager højde for antal, fx fire timer lydmand", () => {
     const p = rentalProducts.find(p => p.id === "pakke_lydmand_fest")!;

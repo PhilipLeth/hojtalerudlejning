@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Outdoor Package | Soundboks, extra battery and string lights | 995 DKK | Lejhøjtaler.dk",
+  title: "Outdoor Package | Soundboks, extra battery and string lights | 1,125 DKK | Lejhøjtaler.dk",
   description:
-    "Outdoor package: Soundboks 4, extra battery and 10 m string lights for 995 DKK, save 140 DKK. Party in the courtyard, park or on the beach with no power at all. Rent in Copenhagen.",
+    "Outdoor package: Soundboks 4, extra battery and 10 m string lights for 1,125 DKK, save 160 DKK. Party in the courtyard, park or on the beach with no power at all. Rent in Copenhagen.",
   keywords: ["party without power speaker rental", "soundboks rental copenhagen", "garden party sound hire", "bachelor party speaker rental", "battery speaker rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/udendorspakke",
     languages: localeAlternates("/udendorspakke"),
   },
   openGraph: {
-    title: "Outdoor package | Soundboks, extra battery and string lights | 995 DKK",
-    description: "Soundboks 4, extra battery and 10 m string lights. Courtyard, beach or park, save 140 DKK.",
+    title: "Outdoor package | Soundboks, extra battery and string lights | 1,125 DKK",
+    description: "Soundboks 4, extra battery and 10 m string lights. Courtyard, beach or park, save 160 DKK.",
     url: "https://lejhojtaler.dk/en/udendorspakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -28,9 +28,9 @@ export default function Page() {
       locale="en"
       slug="en/udendorspakke"
       name="Outdoor package"
-      price={995}
+      price={1125}
       headline="The outdoor package, the whole party without a socket"
-      sub="Soundboks 4, extra battery and 10 m string lights. Courtyard, beach or park, save 140 DKK."
+      sub="Soundboks 4, extra battery and 10 m string lights. Courtyard, beach or park, save 160 DKK."
       image="/images/product-soundboks-v2-white.webp"
       imageAlt="Outdoor package with Soundboks 4, extra battery and string lights"
       productId="pakke_udendors"
@@ -41,7 +41,7 @@ export default function Page() {
         "Extra battery: two batteries last a whole evening and night",
         "10 m string lights, so there is light when the sun goes down",
         "No power, no extension cords, no cables across the grass",
-        "Save 140 DKK compared to renting the parts separately",
+        "Save 160 DKK compared to renting the parts separately",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: 'Lej Subwoofer 12" København | 295 kr | Lejhøjtaler.dk',
+  title: 'Lej Subwoofer 12" København | 495 kr | Lejhøjtaler.dk',
   description:
-    'Lej en Behringer 12" aktiv subwoofer i København fra 295 kr/weekend. Giver festen den dybe bas, passer til alle vores højtalerpakker. Book online på 2 min.',
+    'Lej en Behringer 12" aktiv subwoofer i København fra 495 kr/weekend. Giver festen den dybe bas, passer til alle vores højtalerpakker. Book online på 2 min.',
   keywords: [
     "lej subwoofer",
     "subwoofer leje københavn",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/subwoofer"),
   },
   openGraph: {
-    title: 'Lej Subwoofer 12" København | 295 kr',
+    title: 'Lej Subwoofer 12" København | 495 kr',
     description:
       'Behringer 12" aktiv subwoofer, den dybe bas til festen. Passer til alle vores højtalerpakker. Book online.',
     url: "https://lejhojtaler.dk/subwoofer",
@@ -33,7 +33,7 @@ export default function Page() {
     <ProductLanding
       slug="subwoofer"
       name={'Subwoofer 12"'}
-      price={295}
+      price={495}
       headline="Lej subwoofer i København"
       sub={'Behringer 12" aktiv subwoofer, den dybe bas der får festen til at sidde i kroppen.'}
       image="/images/product-subwoofer-v2-white.webp"

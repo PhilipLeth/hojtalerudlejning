@@ -23,8 +23,8 @@ A Bluetooth speaker that fills a living room perfectly disappears completely in 
 ## Choose the right package
 
 - **A small garden, under 30 guests:** the small speaker package manages, especially if you place it well (see below).
-- **A large garden, 30+ guests:** the large package with two 12" tops. Add a subwoofer for 295 DKK and the bass survives the open air.
-- **No power in the garden?** The Mackie Thump GO (395 DKK) runs on battery for up to 12 hours, and the Soundboks 4 (795 DKK) even longer.
+- **A large garden, 30+ guests:** the large package with two 12" tops. Add a subwoofer for 495 DKK and the bass survives the open air.
+- **No power in the garden?** The Mackie Thump GO (495 DKK) runs on battery for up to 12 hours, and the Soundboks 4 (695 DKK) even longer.
 
 ## Five tips for good outdoor sound
 
@@ -55,7 +55,7 @@ This one matters. Good rules:
 
 ## Combine it with party lights
 
-Outdoor sound and light together lift any garden party. Our light package with LED spots and a fog machine sets the mood once the sun goes down, and 10 metres of fairy lights at 195 DKK is the cheapest transformation there is. [See the party lights](/en/festlys).
+Outdoor sound and light together lift any garden party. Our light bar with LED spots and a fog machine sets the mood once the sun goes down, and 10 metres of fairy lights at 195 DKK is the cheapest transformation there is. [See the party lights](/en/festlys).
 
 ## Book sound for your garden party
 

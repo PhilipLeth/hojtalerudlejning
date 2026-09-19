@@ -47,20 +47,22 @@ describe("Server-side prisberegning (pricing)", () => {
     expect(lineItems[0].price_data.currency).toBe("dkk");
   });
 
-  it("festpakke lille = præcis 690 kr", async () => {
+  // produktarket 17. sept 2026: Festpakke 0-30 = party 595 + lysbar 395 - 95 = 895 (før 690)
+  it("festpakke lille = præcis 895 kr", async () => {
     const table = await loadPriceTable(fakeKv());
-    expect(buildLineItems(table, [{ id: "pakke_fest_lille" } ]).totalOre).toBe(69000);
+    expect(buildLineItems(table, [{ id: "pakke_fest_lille" } ]).totalOre).toBe(89500);
   });
 
   it("flere varer summeres korrekt (party + lys + rog)", async () => {
     const table = await loadPriceTable(fakeKv());
     const { totalOre } = buildLineItems(table, [{ id: "party" }, { id: "lys" }, { id: "rog" }]);
-    expect(totalOre).toBe((595 + 495 + 595) * 100);
+    // produktarket 17. sept 2026: lysbar 395 (før 495), røgmaskine 245 (før 595)
+    expect(totalOre).toBe((595 + 395 + 245) * 100);
   });
 
   it("KV-katalog (admin-priser) overskriver defaults", async () => {
     const kv = fakeKv({
-      products_catalog: JSON.stringify({
+      products_catalog_v2: JSON.stringify({
         speakers: [{ id: "party", price: 444, da: { name: "Lille højtalerpakke" } }],
       }),
     });

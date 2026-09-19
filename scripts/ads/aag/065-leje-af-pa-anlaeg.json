@@ -1,0 +1,46 @@
+{
+  "name": "AAG: PA-anlæg — leje af pa anlæg",
+  "status": "ENABLED",
+  "cpcBidMicros": 6500000,
+  "matchType": "EXACT",
+  "primary": "leje af pa anlæg",
+  "keywords": [
+    {
+      "text": "leje af pa anlæg",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje pa anlæg",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af pa-anlæg",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/lydanlaeg",
+  "path1": "pa-anlaeg",
+  "headlines": [
+    "Leje Af Pa Anlæg",
+    "Leje Pa Anlæg",
+    "Leje Af Pa-anlæg",
+    "Leje Af Pa Anlæg Fra 795 kr.",
+    "Leje Pa Anlæg Fra 795 kr.",
+    "Leje Af Pa-anlæg Fra 795 kr.",
+    "2× 12\" Højtalere På Stativer",
+    "Til 100–250 Gæster",
+    "Mikrofon Og Mixer Fås Med",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris"
+  ],
+  "descriptions": [
+    "Leje af pa anlæg i København fra 795 kr. 2× 12\" højtalere, stativer og alle kabler med.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Leje pa anlæg til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Lej PA anlæg med subwoofer, mixer og trådløs mikrofon. Vælg størrelse efter antal gæster."
+  ]
+}

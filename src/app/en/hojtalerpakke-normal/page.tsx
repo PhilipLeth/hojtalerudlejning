@@ -3,9 +3,9 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Large Speaker Package Rental Copenhagen | 995 DKK | Lejhøjtaler.dk",
+  title: "Medium Speaker Package Rental Copenhagen | 795 DKK | Lejhøjtaler.dk",
   description:
-    'Rent two 12" EV active speakers in Copenhagen from 995 DKK/weekend. Clear, powerful sound for 30-50 guests. All cables included, stands available. Book online.',
+    'Rent two 12" EV active speakers in Copenhagen from 795 DKK/weekend. Clear, powerful sound for 30-50 guests. All cables included, stands available. Book online.',
   keywords: [
     "PA system rental copenhagen",
     "rent large speakers copenhagen",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     languages: localeAlternates("/hojtalerpakke-normal"),
   },
   openGraph: {
-    title: "Large Speaker Package Rental Copenhagen | 995 DKK | Lejhøjtaler.dk",
+    title: "Medium Speaker Package Rental Copenhagen | 795 DKK | Lejhøjtaler.dk",
     description:
-      'Rent two 12" EV active speakers in Copenhagen from 995 DKK/weekend. Clear, powerful sound for 30-50 guests. All cables included, stands available. Book online.',
+      'Rent two 12" EV active speakers in Copenhagen from 795 DKK/weekend. Clear, powerful sound for 30-50 guests. All cables included, stands available. Book online.',
     url: "https://lejhojtaler.dk/en/hojtalerpakke-normal",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -35,18 +35,18 @@ export default function LargeSpeakerPackageEn() {
     <ProductLanding
       locale="en"
       slug="en/hojtalerpakke-normal"
-      name="Large Speaker Package"
-      price={995}
-      headline="Rent a large speaker package in Copenhagen"
+      name="Medium Speaker Package"
+      price={795}
+      headline="Rent a medium speaker package in Copenhagen"
       sub='Two powerful 12" EV active speakers, clear sound for larger rooms and outdoors.'
       image="/images/product-festival-v2-white.webp"
-      imageAlt="Large speaker package for rent in Copenhagen"
+      imageAlt="Medium speaker package for rent in Copenhagen"
       productId="festival"
-      faqPhrase="the large speaker package"
+      faqPhrase="the medium speaker package"
       capacity={{ level: 2, label: "30-50 people" }}
       bullets={[
         '2× 12" EV active speakers',
-        "All cables included, stands available as an add-on (100 DKK)",
+        "All cables included, stands available as an add-on (95 DKK)",
         "Bluetooth",
         "Collect Friday, return Monday",
       ]}

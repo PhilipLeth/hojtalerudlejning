@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Soundboks Package with Lights | Soundboks 4 + light package | 1,190 DKK | Lejhøjtaler.dk",
+  title: "Soundboks Package with Lights | Soundboks 4 + light bar | 995 DKK | Lejhøjtaler.dk",
   description:
-    "Soundboks package with lights: Soundboks 4 and light package for 1,190 DKK, save 100 DKK. Battery-powered sound and party lights for up to 50 people. Rent in Copenhagen.",
+    "Soundboks package with lights: Soundboks 4 and light bar for 995 DKK, save 95 DKK. Battery-powered sound and party lights for up to 50 people. Rent in Copenhagen.",
   keywords: ["soundboks with lights rental copenhagen", "soundboks package hire", "battery speaker and party lights rental", "soundboks 4 rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/soundboks-pakke-lys",
     languages: localeAlternates("/soundboks-pakke-lys"),
   },
   openGraph: {
-    title: "Soundboks package with lights | 1,190 DKK",
-    description: "Soundboks 4 + light package. Battery-powered sound and lights, save 100 DKK.",
+    title: "Soundboks package with lights | 995 DKK",
+    description: "Soundboks 4 + light bar. Battery-powered sound and lights, save 95 DKK.",
     url: "https://lejhojtaler.dk/en/soundboks-pakke-lys",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -28,20 +28,20 @@ export default function Page() {
       locale="en"
       slug="en/soundboks-pakke-lys"
       name="Soundboks package with lights"
-      price={1190}
+      price={995}
       headline="Soundboks package with lights, sound without a socket, lights that make it a party"
-      sub="Soundboks 4 + light package with 2 coloured lamps and a centre effect. The bass runs on battery, the lights need a socket, save 100 DKK."
+      sub="Soundboks 4 + light bar with 2 coloured lamps and a centre effect. The bass runs on battery, the lights need a socket, save 95 DKK."
       image="/images/product-soundboks-v2-white.webp"
-      imageAlt="Soundboks package with lights: Soundboks 4 and light package"
+      imageAlt="Soundboks package with lights: Soundboks 4 and light bar"
       productId="pakke_soundboks_lys"
       faqPhrase="the Soundboks package with lights"
       capacity={{ level: 2, label: "up to 50 people" }}
       bullets={[
         "Soundboks 4, powerful bass, battery-powered, Bluetooth",
-        "Light package: 2 coloured LED lamps + centre effect on a stand",
+        "Light bar: 2 coloured LED lamps + centre effect on a stand",
         "The lights need power, plan for that if you are outdoors",
         "Charger, AUX cable and all light cables included",
-        "Save 100 DKK compared to renting the parts separately",
+        "Save 95 DKK compared to renting the parts separately",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

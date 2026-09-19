@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Bryllupspakke | Lyd, mikrofon, lys og low fog | 2.695 kr | Lejhøjtaler.dk",
+  title: "Bryllupspakke | Lyd, mikrofon, lys og low fog | 2.315 kr | Lejhøjtaler.dk",
   description:
-    "Bryllupspakke: 2× EV 12\" højtalere på stativer, trådløs mikrofon til talerne, lys-pakke, lyskæde og low fog-maskine for 2.695 kr, spar 180 kr. Levering og opsætning kan tilvælges i København.",
+    "Bryllupspakke: 2× EV 12\" højtalere på stativer, trådløs mikrofon til talerne, lysbar, lyskæde og low fog-maskine for 2.315 kr, spar 155 kr. Levering og opsætning kan tilvælges i København.",
   keywords: ["lyd til bryllup", "bryllupspakke leje", "mikrofon til bryllup", "low fog bryllup", "lys til bryllup"],
   alternates: {
     canonical: "https://lejhojtaler.dk/bryllupspakke",
     languages: localeAlternates("/bryllupspakke"),
   },
   openGraph: {
-    title: "Bryllupspakke | Lyd, mikrofon, lys og low fog | 2.695 kr | Lejhøjtaler.dk",
-    description: "Højtalere på stativer, trådløs mikrofon, lys, lyskæde og low fog til første dans. Spar 180 kr.",
+    title: "Bryllupspakke | Lyd, mikrofon, lys og low fog | 2.315 kr | Lejhøjtaler.dk",
+    description: "Højtalere på stativer, trådløs mikrofon, lys, lyskæde og low fog til første dans. Spar 155 kr.",
     url: "https://lejhojtaler.dk/bryllupspakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,9 +27,9 @@ export default function BryllupspakkePage() {
     <ProductLanding
       slug="bryllupspakke"
       name="Bryllupspakke"
-      price={2695}
+      price={2315}
       headline="Bryllupspakken, talerne og dansegulvet i ét"
-      sub="Højtalere på stativer, trådløs mikrofon, lys, lyskæde og low fog til første dans. Spar 180 kr."
+      sub="Højtalere på stativer, trådløs mikrofon, lys, lyskæde og low fog til første dans. Spar 155 kr."
       image="/images/product-pakke-bryllup-taendt-white.webp"
       imageAlt="Bryllupspakken: to EV-højtalere på stativer, trådløs mikrofon, varm hvid lyskæde og low fog-maskinen med røggulv"
       productId="pakke_bryllup"
@@ -38,10 +38,10 @@ export default function BryllupspakkePage() {
       bullets={[
         '2× EV 12" højtalere på stativer, taler under middagen, fest bagefter',
         "Trådløs mikrofon, så talerne kan høres helt bagest",
-        "Lys-pakke: 2 farvede lamper + centereffekt",
+        "Lysbar: 2 farvede lamper + centereffekt",
         "10 m lyskæde til teltet eller loftet",
         "Low fog-maskine, \"dansen på skyer\" til første dans",
-        "Spar 180 kr vs. at leje delene enkeltvis",
+        "Spar 155 kr vs. at leje delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Club light package Copenhagen | 1.095 DKK | Lejhøjtaler.dk",
-  description: "Light package, disco effect and disco ball, a full dancefloor without fog for 1,095 DKK. Save 190 DKK. Rental in Copenhagen.",
+  title: "Club light package Copenhagen | 1.050 DKK | Lejhøjtaler.dk",
+  description: "Light bar, disco effect and disco ball, a full dancefloor without fog for 1,050 DKK. Save 185 DKK. Rental in Copenhagen.",
   keywords: ["club lights rental copenhagen", "dj lights rental", "party lights no fog"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/diskotek-pakke",
     languages: localeAlternates("/diskotek-pakke"),
   },
   openGraph: {
-    title: "Club light package Copenhagen | 1.095 DKK | Lejhøjtaler.dk",
-    description: "Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms, save 190 DKK.",
+    title: "Club light package Copenhagen | 1.050 DKK | Lejhøjtaler.dk",
+    description: "Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms, save 185 DKK.",
     url: "https://lejhojtaler.dk/en/diskotek-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -26,21 +26,21 @@ export default function Page() {
     <ProductLanding
       locale="en"
       slug="en/diskotek-pakke"
-      name="Club light package"
-      price={1095}
-      headline="Club light package, a full dancefloor, no fog"
-      sub="Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms, save 190 DKK."
+      name="Club light bar"
+      price={1050}
+      headline="Club light bar, a full dancefloor, no fog"
+      sub="Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms, save 185 DKK."
       image="/images/product-pakke-diskotek-taendt-v2-white.webp"
-      imageAlt="Club light package switched on: light bar on a stand, mirror ball and an extra LED par light"
+      imageAlt="Club light bar switched on: light bar on a stand, mirror ball and an extra LED par light"
       productId="pakke_diskotek"
-      faqPhrase="club light package"
+      faqPhrase="club light bar"
       capacity={{ level: 2, label: "a full dancefloor" }}
       bullets={[
-        "Light package: 2 coloured lamps + centre effect on a stand",
+        "Light bar: 2 coloured lamps + centre effect on a stand",
         "Extra LED par light to cross the floor",
         "40 cm disco ball with motor and spotlight",
         "No fog, safe for venues with smoke alarms",
-        "Save 190 DKK vs renting the parts separately",
+        "Save 185 DKK vs renting the parts separately",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

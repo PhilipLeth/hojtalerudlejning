@@ -4,16 +4,16 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Diskotek-pakken | 1.095 kr | Lejhøjtaler.dk",
-  description: "Lys-pakke, diskolyseffekt og discokugle, fuldt dansegulv uden røg for 1.095 kr. Spar 190 kr. Lejes i København.",
+  title: "Diskotek-pakken | 1.050 kr | Lejhøjtaler.dk",
+  description: "Lysbar, diskolyseffekt og discokugle, fuldt dansegulv uden røg for 1.050 kr. Spar 185 kr. Lejes i København.",
   keywords: ["diskotekslys leje", "dj lys leje", "diskolys uden røg", "lys til fest i forsamlingshus"],
   alternates: {
     canonical: "https://lejhojtaler.dk/diskotek-pakke",
     languages: localeAlternates("/diskotek-pakke"),
   },
   openGraph: {
-    title: "Diskotek-pakken | 1.095 kr | Lejhøjtaler.dk",
-    description: "Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar 190 kr.",
+    title: "Diskotek-pakken | 1.050 kr | Lejhøjtaler.dk",
+    description: "Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar 185 kr.",
     url: "https://lejhojtaler.dk/diskotek-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -26,20 +26,20 @@ export default function Side() {
     <ProductLanding
       slug="diskotek-pakke"
       name="Diskotek-pakken"
-      price={1095}
+      price={1050}
       headline="Diskotek-pakken, fuldt dansegulv uden røg"
-      sub="Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar 190 kr."
+      sub="Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar 185 kr."
       image="/images/product-pakke-diskotek-taendt-v2-white.webp"
-      imageAlt="Diskotek-pakken tændt: lys-pakke på stativ, discokugle og en ekstra LED-lyseffekt"
+      imageAlt="Diskotek-pakken tændt: lysbar på stativ, discokugle og en ekstra LED-lyseffekt"
       productId="pakke_diskotek"
       faqPhrase="diskotek-pakken"
       capacity={{ level: 2, label: "et helt dansegulv" }}
       bullets={[
-        "Lys-pakke: 2 farvede lamper + centereffekt på stativ",
+        "Lysbar: 2 farvede lamper + centereffekt på stativ",
         "Ekstra LED-par-lys til at krydse gulvet",
         "Discokugle 40 cm med motor og spot",
         "Ingen røg, må bruges i lokaler med røgalarm",
-        "Spar 190 kr vs. at leje delene enkeltvis",
+        "Spar 185 kr vs. at leje delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

@@ -71,8 +71,8 @@ describe("Levering og afhentning i bookingen", () => {
     fireEvent.change(screen.getByPlaceholderText("Leveringsadresse i København"), {
       target: { value: "Nørrebrogade 1" },
     });
-    // Stor højtalerpakke 495 + afhentning 495
-    expect(screen.getAllByText("1490 kr").length).toBeGreaterThan(0);
+    // Mellem højtalerpakke 795 (produktarket 17. sept 2026) + afhentning 495
+    expect(screen.getAllByText("1290 kr").length).toBeGreaterThan(0);
 
     fireEvent.click(screen.getByText("Videre"));
     await waitFor(() => expect(screen.getByText("Dine oplysninger")).toBeInTheDocument());
@@ -91,7 +91,7 @@ describe("Levering og afhentning i bookingen", () => {
       expect(body.addonIds).toContain("afhentning_retur");
       expect(body.deliveryOptionId).toBe("afhentning_retur");
       expect(body.deliveryAddress).toBe("Nørrebrogade 1");
-      expect(body.total).toBe(1490);
+      expect(body.total).toBe(1290);
     });
   });
 });

@@ -69,7 +69,7 @@ export default function LydmandPage() {
         },
         {
           q: "Kan lydmanden også styre lys og røg?",
-          a: "Ja. Han er AV-tekniker, så lys-pakke, røgmaskine og mikrofoner passer han sammen med lyden. Skriv gerne i kommentaren, hvad der skal ske på dagen, så er han forberedt.",
+          a: "Ja. Han er AV-tekniker, så lysbar, røgmaskine og mikrofoner passer han sammen med lyden. Skriv gerne i kommentaren, hvad der skal ske på dagen, så er han forberedt.",
         },
         {
           q: "Hvor langt ud kører I?",

@@ -19,7 +19,7 @@ import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
   title: "Lej Mikrofon København | Trådløs, headset og Shure fra 95 kr | Lejhøjtaler.dk",
   description:
-    "Lej mikrofon i København. Trådløs mikrofon fra 295 kr, Shure BLX 595 kr, trådløst headset fra 345 kr og håndholdt med kabel fra 95 kr. Passer direkte i vores højtalere.",
+    "Lej mikrofon i København. Trådløs mikrofon fra 445 kr, Shure BLX 595 kr, trådløst headset fra 445 kr og håndholdt med kabel fra 95 kr. Passer direkte i vores højtalere.",
   keywords: [
     "lej mikrofon",
     "mikrofon udlejning københavn",
@@ -58,12 +58,12 @@ export default function LejMikrofonPage() {
     {
       titel: "Til taler ved middagen",
       svar: "Håndholdt trådløs. Den bliver sendt rundt mellem talerne, og man kan holde den ned, når man ikke taler.",
-      grej: "Trådløs mikrofon, 295 kr, eller Shure BLX 595 kr",
+      grej: "Trådløs mikrofon, 445 kr, eller Shure BLX 595 kr",
     },
     {
       titel: "Til den der taler længe",
       svar: "Headset. Underviseren eller toastmasteren skal kunne bruge hænderne og gå rundt, uden at lyden svinger.",
-      grej: "Trådløst headset, 345 kr, PRO 595 kr",
+      grej: "Trådløst headset, 445 kr, PRO 595 kr",
     },
     {
       titel: "Til karaoke og fest",
@@ -168,7 +168,7 @@ export default function LejMikrofonPage() {
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Mangler du noget at spille i?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
-              Mikrofonen skal have en højtaler. Speakerpakken er stor højtalerpakke
+              Mikrofonen skal have en højtaler. Speakerpakken er mellem højtalerpakke
               plus mikrofon i ét, til arrangementet hvor der både skal spilles og tales.
             </p>
             <a

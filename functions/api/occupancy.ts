@@ -63,7 +63,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
     // Labels: defaults + evt. katalog-navne
     const labels = { ...PRODUCT_LABELS };
-    const catalogRaw = await context.env.BOOKINGS.get("products_catalog");
+    const catalogRaw = await context.env.BOOKINGS.get("products_catalog_v2");
     if (catalogRaw) {
       try {
         const cat = JSON.parse(catalogRaw) as {

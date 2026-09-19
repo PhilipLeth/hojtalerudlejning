@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Light Show Package Rental Copenhagen | Lights, disco ball and fog | 1,495 DKK | Lejhøjtaler.dk",
+  title: "Light Show Package Rental Copenhagen | Lights, disco ball and fog | 1,140 DKK | Lejhøjtaler.dk",
   description:
-    "Light show package: light package, 40 cm disco ball and fog machine for 1,495 DKK, save 190 DKK. The fog makes the beams visible, so it looks like a show. Rent in Copenhagen.",
+    "Light show package: light bar, 40 cm disco ball and fog machine for 1,140 DKK, save 145 DKK. The fog makes the beams visible, so it looks like a show. Rent in Copenhagen.",
   keywords: ["light show rental copenhagen", "party lights and fog machine rental", "disco ball and fog hire copenhagen", "party lighting package denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/lysshow-pakke",
     languages: localeAlternates("/lysshow-pakke"),
   },
   openGraph: {
-    title: "Light show package | Lights, disco ball and fog | 1,495 DKK",
-    description: "Light package, disco ball and fog machine. The beams become visible in the air, save 190 DKK.",
+    title: "Light show package | Lights, disco ball and fog | 1,140 DKK",
+    description: "Light bar, disco ball and fog machine. The beams become visible in the air, save 145 DKK.",
     url: "https://lejhojtaler.dk/en/lysshow-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -28,20 +28,20 @@ export default function Page() {
       locale="en"
       slug="en/lysshow-pakke"
       name="Light show"
-      price={1495}
+      price={1140}
       headline="Light show package, the beams become visible"
-      sub="Light package, 40 cm disco ball and fog machine. Without fog you see coloured dots on the wall; with fog the beams turn into a show, save 190 DKK."
+      sub="Light bar, 40 cm disco ball and fog machine. Without fog you see coloured dots on the wall; with fog the beams turn into a show, save 145 DKK."
       image="/images/product-lys-v4-white.webp"
-      imageAlt="Light show package with light package, disco ball and fog machine"
+      imageAlt="Light show package with light bar, disco ball and fog machine"
       productId="pakke_lysshow"
       faqPhrase="the light show package"
       capacity={{ level: 2, label: "up to 60 people" }}
       bullets={[
-        "Light package: 2 coloured LED lamps + centre effect on a stand",
+        "Light bar: 2 coloured LED lamps + centre effect on a stand",
         "40 cm disco ball with motor and spotlight",
         "Fog machine incl. fluid, makes the beams visible",
         "All stands and cables included",
-        "Save 190 DKK compared to renting the parts separately",
+        "Save 145 DKK compared to renting the parts separately",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

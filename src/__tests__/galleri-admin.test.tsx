@@ -94,8 +94,9 @@ describe("Prompten", () => {
   it("skriver gæstetallet ind i billedteksten, hvor kataloget kender det", () => {
     const scene = GALLERY_SCENER.find((s) => s.id === "i_brug")!;
     const b = byggPrompt(flad.get("pakke_fest_150")!, scene, flad)!;
-    expect(b.caption_da).toMatch(/100-150 gæster/);
-    expect(b.caption_en).toMatch(/100-150 guests/);
+    // produktarket 17. sept 2026: Festpakke 150 dækker nu 50-150 gæster (før 100-150)
+    expect(b.caption_da).toMatch(/(^|[^0-9])50-150 gæster/);
+    expect(b.caption_en).toMatch(/(^|[^0-9])50-150 guests/);
   });
 });
 

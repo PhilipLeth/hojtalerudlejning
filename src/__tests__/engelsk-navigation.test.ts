@@ -106,13 +106,15 @@ describe("Pakkelisten på engelsk", () => {
     const faq = buildProductFaq({
       locale: "en",
       name: "Wireless microphone",
-      price: 295,
+      price: 445, // produktarket 17. sept 2026
       productId: "traadloes_mikrofon",
       phrase: "a wireless microphone",
     });
     const svar = faq.find((f) => f.q.startsWith("What is included"))!.a;
-    expect(svar).toContain("Wireless handheld mic");
-    expect(svar).not.toMatch(/Trådløs|Modtager|Kabelforbindelse/);
+    // produktarket 17. sept 2026: den trådløse mikrofon er nu Shure BLX24/SM58
+    expect(svar).toContain("Shure BLX24/SM58 wireless microphone");
+    expect(svar).toContain("Shure receiver");
+    expect(svar).not.toMatch(/Trådløs|trådløs|Modtager|Kabelforbindelse/);
     // Bindeordet skal være engelsk — funktionen var delt med den danske udgave
     expect(svar).toMatch(/ and /);
     expect(svar).not.toMatch(/ og /);

@@ -28,7 +28,7 @@ export interface Shortcode {
 export const SHORTCODES: Shortcode[] = [
   { key: "fornavn", label: "Kundens fornavn", example: "Agnes" },
   { key: "navn", label: "Kundens fulde navn", example: "Agnes Dahle Stæhr" },
-  { key: "produkter", label: "Hvad de lejede", example: "Stor højtalerpakke, Lys-pakke" },
+  { key: "produkter", label: "Hvad de lejede", example: "Mellem højtalerpakke, Lysbar" },
   { key: "periode", label: "Lejeperioden", example: "fre 21. aug → man 24. aug" },
   { key: "ansvarlig", label: "Hvem der stod for udlejningen", example: "Frederik" },
   { key: "hilsen", label: "Den ansvarliges egen underskrift", example: "Frederik fra Lejhøjtaler" },

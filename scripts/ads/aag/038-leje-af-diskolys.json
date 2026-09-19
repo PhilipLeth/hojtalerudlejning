@@ -1,0 +1,46 @@
+{
+  "name": "AAG: Diskolys — leje af diskolys",
+  "status": "ENABLED",
+  "cpcBidMicros": 6500000,
+  "matchType": "EXACT",
+  "primary": "leje af diskolys",
+  "keywords": [
+    {
+      "text": "leje af diskolys",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje diskolys",
+      "matchType": "EXACT"
+    },
+    {
+      "text": "leje af discolys",
+      "matchType": "EXACT"
+    }
+  ],
+  "finalUrl": "https://lejhojtaler.dk/diskolys",
+  "path1": "diskolys",
+  "headlines": [
+    "Leje Af Diskolys",
+    "Leje Diskolys",
+    "Leje Af Discolys",
+    "Leje Af Diskolys Fra 495 kr.",
+    "Leje Diskolys Fra 495 kr.",
+    "Leje Af Discolys Fra 495 kr.",
+    "Lys Der Kører Til Musikken",
+    "Diskolys-Pakken 685 kr.",
+    "Klar Til Dansegulvet",
+    "Book Online På 3 Minutter",
+    "Betal Først Ved Afhentning",
+    "Ingen Depositum",
+    "Levering I København 495 kr.",
+    "Hent I København S",
+    "5 Dages Leje Til Én Pris"
+  ],
+  "descriptions": [
+    "Leje af diskolys fra 495 kr. Effekter der kører selv til musikken, klar til fest.",
+    "Book online på 3 minutter. Betal først ved afhentning, intet depositum.",
+    "Leje diskolys til en hel weekend. Hent i København S eller få leveret for 495 kr.",
+    "Diskolys-pakken 685 kr: flere effekter, stativ og alle kabler. Plug and play uden teknik."
+  ]
+}

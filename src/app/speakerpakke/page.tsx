@@ -4,17 +4,17 @@ import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
-  title: "Speakerpakken | Stor højtalerpakke + håndholdt mikrofon | 1.045 kr | Lejhøjtaler.dk",
+  title: "Speakerpakken | Mellem højtalerpakke + håndholdt mikrofon | 795 kr | Lejhøjtaler.dk",
   description:
-    "Speakerpakken: stor højtalerpakke og håndholdt mikrofon med kabel for 1.045 kr, spar 45 kr. Musik og taler til 30-50 gæster, mikrofonen går direkte i højtaleren. Lejes i København.",
+    "Speakerpakken: mellem højtalerpakke og håndholdt mikrofon med kabel for 795 kr, spar 95 kr. Musik og taler til 30-50 gæster, mikrofonen går direkte i højtaleren. Lejes i København.",
   keywords: ["højtaler og mikrofon leje", "lyd til tale og musik", "speakerpakke", "lej anlæg med mikrofon københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/speakerpakke",
     languages: localeAlternates("/speakerpakke"),
   },
   openGraph: {
-    title: "Speakerpakken | Højtalere + mikrofon | 1.045 kr",
-    description: "Stor højtalerpakke + håndholdt mikrofon. Lyd og taler til 30-50 gæster, spar 45 kr.",
+    title: "Speakerpakken | Højtalere + mikrofon | 795 kr",
+    description: "Mellem højtalerpakke + håndholdt mikrofon. Lyd og taler til 30-50 gæster, spar 95 kr.",
     url: "https://lejhojtaler.dk/speakerpakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,9 +27,9 @@ export default function Page() {
     <ProductLanding
       slug="speakerpakke"
       name="Speakerpakken"
-      price={1045}
+      price={795}
       headline="Speakerpakken, musik og taler uden en mixer imellem"
-      sub="Stor højtalerpakke + håndholdt mikrofon med kabel. Mikrofonen går direkte i højtaleren, spar 45 kr."
+      sub="Mellem højtalerpakke + håndholdt mikrofon med kabel. Mikrofonen går direkte i højtaleren, spar 95 kr."
       image="/images/product-festival-v2-white.webp"
       imageAlt="Speakerpakken med to EV-højtalere og håndholdt mikrofon"
       productId="pakke_speaker_mik"
@@ -40,7 +40,7 @@ export default function Page() {
         "Håndholdt mikrofon med kabel, direkte i højtaleren",
         "Ingen mixer at lære, sæt i og tal",
         "Alle kabler med",
-        "Spar 45 kr vs. at leje delene enkeltvis",
+        "Spar 95 kr vs. at leje delene enkeltvis",
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">
