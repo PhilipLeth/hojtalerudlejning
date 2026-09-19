@@ -85,10 +85,10 @@ P = [
  dict(navn="Højtalere", s="højtaler", pl="højtalere", url="/lej-hojtaler", path="hojtaler", pris="fra 495 kr.",
       usp=["Fra Soundboks Til Stort Anlæg", "Bluetooth Og Alle Kabler Med", "Vælg Efter Antal Gæster"],
       d="Soundboks, festhøjtalere og PA-anlæg med alle kabler.", d2="Lej højtaler med Bluetooth og nem opsætning. Vælg størrelse efter antal gæster."),
- dict(navn="Soundboks 4", bud=4, s="soundboks", url="/soundboks-4", path="soundboks", pris="fra 695 kr.",
+ dict(navn="Soundboks 4", bud=8, s="soundboks", url="/soundboks-4", path="soundboks", pris="fra 695 kr.",
       usp=["Soundboks 4 Med Bluetooth", "Fuldt Opladet, Klar Til Fest", "Bluetooth — Bare Stream Løs"],
       d="Soundboks 4 med Bluetooth, opladet og klar til fest.", d2="Lej en Soundboks 4 til fest, havefest eller studentertur. Nem booking, klar til at hente."),
- dict(navn="Soundboks 4", bud=4, s="soundbox", url="/soundboks-4", path="soundboks", pris="fra 695 kr.",
+ dict(navn="Soundboks 4", bud=8, s="soundbox", url="/soundboks-4", path="soundboks", pris="fra 695 kr.",
       usp=["Soundboks 4 Til Leje", "Fuldt Opladet, Klar Til Fest", "Bluetooth — Bare Stream Løs"],
       d="Soundboks 4 med Bluetooth, opladet og klar til fest.", d2="Lej en Soundboks 4 til fest, havefest eller studentertur. Nem booking, klar til at hente."),
 

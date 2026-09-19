@@ -15,6 +15,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import { execFileSync } from "node:child_process";
 import { CAMPAIGN_ID, CUSTOMER_ID, connect, mutate, search } from "../lib.mjs";
 
@@ -25,7 +26,7 @@ const oensket = new Map(filer.map((f) => { const g = JSON.parse(fs.readFileSync(
 
 const { creds, token } = await connect();
 const grupper = await search(token, creds,
-  `SELECT ad_group.id, ad_group.name, ad_group.status FROM ad_group WHERE campaign.id = ${CAMPAIGN_ID} AND ad_group.status != 'REMOVED' AND ad_group.name LIKE 'AAG%'`);
+  `SELECT ad_group.id, ad_group.name, ad_group.status, ad_group.cpc_bid_micros FROM ad_group WHERE campaign.id = ${CAMPAIGN_ID} AND ad_group.status != 'REMOVED' AND ad_group.name LIKE 'AAG%'`);
 const ads = await search(token, creds,
   `SELECT ad_group.id, ad_group_ad.ad.responsive_search_ad.headlines, ad_group_ad.ad.responsive_search_ad.descriptions FROM ad_group_ad WHERE campaign.id = ${CAMPAIGN_ID} AND ad_group_ad.status != 'REMOVED' AND ad_group.name LIKE 'AAG%'`);
 const kws = await search(token, creds,
@@ -36,6 +37,9 @@ for (const r of kws) { const l = kwAf.get(r.adGroup.id) ?? []; l.push(r.adGroupC
 
 const live = new Map(grupper.map((r) => [r.adGroup.name.replace(/^AAG\d+:\s*/, ""), r.adGroup]));
 const opret = [], fjern = [];
+// Buddet er kontoens, ikke filens: middelvej.mjs (18. sep) satte buddene efter
+// Googles første-side-estimat, og en genskabt gruppe skal beholde det bud.
+const budAf = new Map();
 for (const [navn, { fil, g }] of oensket) {
   const l = live.get(navn);
   if (!l) { opret.push(fil); continue; }
@@ -43,7 +47,7 @@ for (const [navn, { fil, g }] of oensket) {
   const h = (rsa?.headlines ?? []).map((x) => x.text).sort().join("|"), d = (rsa?.descriptions ?? []).map((x) => x.text).sort().join("|");
   const k = (kwAf.get(l.id) ?? []).sort().join("|");
   const ens = h === [...g.headlines].sort().join("|") && d === [...g.descriptions].sort().join("|") && k === g.keywords.map((x) => x.text.toLowerCase()).sort().join("|");
-  if (!ens) { fjern.push(l); opret.push(fil); }
+  if (!ens) { fjern.push(l); opret.push(fil); budAf.set(fil, l.cpcBidMicros); }
 }
 // Grupper uden fil: er keywords præcis en fils keywords, er gruppen afløst af den
 // (omdøbt produkt) og fjernes; ellers bliver den stående — fx AAG1, der er håndlavet.
@@ -63,6 +67,11 @@ if (!udfoer) { console.log("Tørløb. Tilføj --udfoer."); process.exit(0); }
 const ops = fjern.map((l) => ({ adGroupOperation: { remove: `customers/${CUSTOMER_ID}/adGroups/${l.id}` } }));
 if (ops.length) { await mutate(token, creds, ops, true); await mutate(token, creds, ops, false); console.log(`fjernet ${fjern.length}`); }
 for (const fil of opret) {
-  const ud = execFileSync("node", [path.join(DIR, "..", "create-ad-group.mjs"), path.join(DIR, fil), "--opret"], { encoding: "utf8" });
+  let sti = path.join(DIR, fil);
+  if (budAf.has(fil)) {
+    const g = { ...oensket.get([...oensket.keys()].find((n) => oensket.get(n).fil === fil)).g, cpcBidMicros: Number(budAf.get(fil)) };
+    sti = path.join(os.tmpdir(), fil); fs.writeFileSync(sti, JSON.stringify(g));
+  }
+  const ud = execFileSync("node", [path.join(DIR, "..", "create-ad-group.mjs"), sti, "--opret"], { encoding: "utf8" });
   console.log("  " + (ud.match(/OPRETTET.*|FEJL.*/)?.[0] ?? ud.trim().split("\n").pop()));
 }
