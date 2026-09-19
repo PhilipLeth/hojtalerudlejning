@@ -4109,6 +4109,19 @@
     "udlejning": " /av-udstyr viser skærme, lys, lyd og mikrofoner. 55\" vises som skærmfoto på hvid baggrund, ligesom projektor og lærred.",
     "ikke_ring": "Panelpakke (4 mikrofoner) og Teams/Zoom-pakke bookes online. FAQ og konferencepakke-150 peger derhen i stedet for telefon."
   },
+  "middelvej_aag_bud_2026_09_18": {
+    "diagnose": "Ordrerne stoppede 25. aug 2026, fordi annoncerne reelt blev slukket. 24. aug 20:41 sænkede philip@openocean.dk kampagnebudget og 13 gruppebud i web-UI'et; 22:22 tilføjede Frederik 24 negative keywords; 25. aug pausede Frederik 4 grupper. 13.–15. sep blev alle AAG-grupper sat til 4 kr (Soundboks) / 6,50 kr. Googles første-side-estimat på kernetermerne er 8–22 kr, så næsten alle keywords stod 'below first page bid'.",
+    "maalt_18_09": {
+      "foer_15_24_aug": "270–470 visninger/dag, 33–59 klik/dag, CPC 12–34 kr, impression share 57–80 %, tabt på rank 20–43 %, 14 konverteringer til 11.460 kr",
+      "efter_25_aug_17_sep": "15–80 visninger/dag, 0–7 klik/dag, CPC 4–6 kr, impression share 10–30 %, tabt på rank 70–90 %, 0 konverteringer. Tabt på budget 0 % hele perioden.",
+      "site": "lejhojtaler.dk 200, ingen noindex, bookingflow virker (testbooking 16. sep sendte mail). Sitet er ikke årsagen."
+    },
+    "beslutning": "Middelvej, ikke tilbage til 19–34 kr pr. klik: Soundboks-grupper 8 kr; øvrige aktive AAG-grupper Googles første-side-estimat rundet op til 0,50, mindst 9 og højst 12 kr, ingen estimat = 9 kr. Kampagnebudget 100 → 350 kr/dag. AG 1–15 (phrase-grupper) urørt. 91 aktive AAG-grupper, 92 ændringer, preflight OK.",
+    "script": "scripts/ads/middelvej.mjs — tørløb som standard, --udfoer skriver.",
+    "evaluering": "Mål efter 7 dage (25. sep): pris pr. booking og bookingværdi, ikke klik. Forventning ved 350 kr/dag og ~10 kr CPC: 30–35 klik/dag; ved konverteringsrate 3–4 % ~1 booking/dag. Er pris pr. booking over ~400 kr, sænkes MAX_KR; er tabt på budget over 20 %, hæves budgettet før buddene.",
+    "sidefund": "KV-namespacet i wrangler.toml (c46378bf…) indeholder ingen booking_-nøgler, kun 5 testnøgler. Produktionen bruger tilsyneladende et andet namespace end konfigurationen. Ikke årsag til ordrestoppet, men skal afklares.",
+    "status": "LIVE 18. sep 2026: Philip kørte --udfoer, 92 ændringer gemt. Verificeret via GAQL: budget 350 kr/dag, ingen aktive AAG-grupper under 8 kr."
+  },
   "produktark_2026_09_17": {
     "hvad": "Philip sendte produktarket (kategori, produkt, model, indkøbslink, add-ons, pris) og bad om at kataloget følger det. Hans princip: 'pakkerne er essentielt det vi bundler enkeltprodukter til' — enkeltprodukterne er fundamentet, og ALLE pakker (også event-, sæson-, lydmand- og lejlighedspakkerne) er en følge af dem.",
     "reglen": "Hver dels listepris i en pakke = enkeltproduktets pris × antal. En pakke uden for arket beholder sin rabatPROCENT: ny pris = ny delsum × (gammel pris / gammel delsum), afrundet til 5 kr, aldrig over delsummen. Arkets egne pakker får arkets pris. scripts/katalog/ har hele forløbet som scripts (stage1–stage5) plus katalog-foer.json og katalog-efter.json.",
