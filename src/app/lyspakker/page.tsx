@@ -162,6 +162,12 @@ export default function LyspakkerPage() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
+              href="/lys-ai"
+              className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
+            >
+              Prøv lyset i jeres lokale
+            </Link>
+            <Link
               href="/lysshow"
               className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10"
             >
@@ -185,7 +191,7 @@ export default function LyspakkerPage() {
           Book online på 2 minutter. Hent gratis i København S, eller få det leveret og sat op.
         </p>
         <a
-          href="/?product=lys#book"
+          href="/book?product=lys"
           className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
         >
           Book lys nu

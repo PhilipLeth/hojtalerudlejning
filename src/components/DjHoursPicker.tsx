@@ -1,8 +1,64 @@
 "use client";
-import { priceDj, type DjHours } from "@/lib/dj";
+import { DJ_HOUR_RATE, djHoursFromRange, priceDj, type DjHours } from "@/lib/dj";
 import type { Locale } from "@/lib/i18n";
-export default function DjHoursPicker({value,onChange,locale="da"}:{value:DjHours;onChange:(v:DjHours)=>void;locale?:Locale}) {
- const en=locale==="en";
- function change(key:keyof DjHours,n:number){const next={...value,[key]:n};const other=key==='before23'?'after23':'before23';if(next.before23+next.after23<3)next[other]=3-n;if(next.before23+next.after23>24)next[other]=24-n;onChange(next);}
- return <fieldset className="my-4 rounded-xl border border-brand-500/30 bg-white p-4"><legend className="px-2 font-semibold">{en?"DJ/music host · hours":"DJ/musikafvikler · timer"}</legend><div className="grid grid-cols-2 gap-3">{(['before23','after23'] as const).map(key=><label key={key} className="text-sm">{key==='before23'?(en?'Hours before 23:00':'Timer før kl. 23'):(en?'Hours after 23:00':'Timer efter kl. 23')}<input type="number" inputMode="numeric" min={0} max={24} step={1} className="mt-2 block w-full rounded-lg border border-slate-300 bg-white p-3" value={value[key]} onChange={e=>{const n=Number(e.target.value);if(Number.isInteger(n)&&n>=0&&n<=24)change(key,n);}}/><span className="mt-1 block text-xs">{key==='before23'?'1.000':'1.500'} {en?'DKK/hour':'kr/time'}</span></label>)}</div><p className="mt-4 text-xl font-bold text-brand-600">{priceDj(value).total.toLocaleString(en?'en-GB':'da-DK')} {en?'DKK incl. VAT':'kr inkl. moms'}</p><p className="mt-2 text-sm text-slate-600">{en?'Minimum 3 hours in total. Reducing below 3 moves the remaining hours to the other rate. Include hours after midnight in “after 23:00”. Equipment is selected separately.':'Minimum 3 timer i alt. Vælger du færre, flyttes de resterende timer til det andet tidsrum. Timer efter midnat hører til “efter kl. 23”. Gear vælges separat.'}</p></fieldset>;
+
+export default function DjHoursPicker({
+  value,
+  onChange,
+  locale = "da",
+  date = null,
+}: {
+  value: DjHours;
+  onChange: (v: DjHours) => void;
+  locale?: Locale;
+  date?: Date | null;
+}) {
+  const en = locale === "en";
+  const from = value.from ?? "18:00";
+  const to = value.to ?? "21:00";
+  const parsed = djHoursFromRange(from, to);
+  const quote = parsed ? priceDj(parsed, date) : null;
+
+  function setTime(key: "from" | "to", raw: string) {
+    const nextFrom = key === "from" ? raw : from;
+    const nextTo = key === "to" ? raw : to;
+    const hours = djHoursFromRange(nextFrom, nextTo);
+    if (hours) onChange(hours);
+    else onChange({ ...value, from: nextFrom, to: nextTo });
+  }
+
+  return (
+    <fieldset className="my-4 rounded-xl border border-brand-500/30 bg-white p-4">
+      <legend className="px-2 font-semibold">{en ? "DJ/music host · start and finish" : "DJ/musikafvikler · start og slut"}</legend>
+      <p className="mb-3 text-sm text-slate-600">
+        {en
+          ? `${DJ_HOUR_RATE.toLocaleString("en-GB")} DKK/hour, always. Delivery, setup and collection included.`
+          : `${DJ_HOUR_RATE.toLocaleString("da-DK")} kr/time, altid. Levering, opsætning og nedtagning er med.`}
+      </p>
+      <div className="grid grid-cols-2 gap-3">
+        <label className="text-sm">
+          {en ? "Starts" : "Start"}
+          <input type="time" className="mt-2 block w-full rounded-lg border border-slate-300 bg-white p-3" value={from} onChange={(e) => setTime("from", e.target.value)} />
+        </label>
+        <label className="text-sm">
+          {en ? "Ends" : "Slut"}
+          <input type="time" className="mt-2 block w-full rounded-lg border border-slate-300 bg-white p-3" value={to} onChange={(e) => setTime("to", e.target.value)} />
+        </label>
+      </div>
+      {quote ? (
+        <>
+          <p className="mt-4 text-xl font-bold text-brand-600">
+            {quote.total.toLocaleString(en ? "en-GB" : "da-DK")} {en ? "DKK incl. VAT" : "kr inkl. moms"}
+          </p>
+          <p className="mt-1 text-sm text-slate-600">
+            {en
+              ? `${quote.hours} hours · ${DJ_HOUR_RATE.toLocaleString("en-GB")} DKK/hour`
+              : `${quote.hours} timer · ${DJ_HOUR_RATE.toLocaleString("da-DK")} kr/time`}
+          </p>
+        </>
+      ) : (
+        <p className="mt-4 text-sm text-red-700">{en ? "Choose at least 3 hours between start and finish." : "Vælg mindst 3 timer mellem start og slut."}</p>
+      )}
+    </fieldset>
+  );
 }

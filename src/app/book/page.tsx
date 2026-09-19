@@ -1,18 +1,14 @@
-"use client";
+import type { Metadata } from "next";
+import { localeAlternates } from "@/lib/hreflang";
 
-import { useEffect } from "react";
-import { bookHref } from "@/lib/bookUrl";
+export const metadata: Metadata = {
+  title: "Book udstyr | Lejhøjtaler.dk",
+  description: "Vælg udstyr, datoer og tilvalg. Book online på et par minutter.",
+  alternates: { canonical: "https://lejhojtaler.dk/book", languages: localeAlternates("/book") },
+  robots: { index: false, follow: true },
+};
 
-/** /book er alias, send til forsiden med kurv-drawer. */
+/** Checkout som fuld side. Selve flowet bor i layout, så kurven overlever navigation. */
 export default function BookPage() {
-  useEffect(() => {
-    const product = new URLSearchParams(window.location.search).get("product");
-    window.location.replace(bookHref(product, "da"));
-  }, []);
-
-  return (
-    <main className="flex min-h-screen items-center justify-center bg-[#07060b] text-white/50">
-      Åbner booking…
-    </main>
-  );
+  return <main id="book" className="sr-only">Book udstyr</main>;
 }

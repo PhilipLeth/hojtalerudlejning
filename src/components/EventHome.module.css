@@ -9,14 +9,20 @@
 .caseCard p{padding:0 16px;color:var(--muted);font-size:15px}
 .caseCard strong{display:block;padding:16px;color:var(--blue)}
 @media(max-width:800px){.caseGallery{grid-template-columns:1fr}}
-.seasonStrip{max-width:1216px;margin:8px auto 0;padding:0 24px 8px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.seasonCard{display:grid;grid-template-columns:140px 1fr;overflow:hidden;border-radius:8px;border:1px solid #dce4ef;background:#fff;color:var(--ink);min-height:120px}
-.seasonCard:hover{border-color:var(--season-accent,#1249cf)}
-.seasonCard img{width:140px;height:100%;object-fit:cover}
-.seasonCard>div{padding:16px 18px}
-.seasonCard p{font-size:12px;color:var(--season-accent,#1249cf);font-weight:600;margin-bottom:6px}
-.seasonCard h2{font-size:22px;margin:0 0 6px}
-.seasonCard span{display:block;font-size:14px;color:var(--muted)}
-.seasonCard strong{display:block;margin-top:10px;color:var(--season-accent,#1249cf);font-size:14px}
-@media(max-width:800px){.seasonStrip{grid-template-columns:1fr;padding:0 20px}}
+/* Desktop: kant-til-kant kampagneplakater, ikke indrammede kort under heroen. */
+.seasonStrip{width:100%;max-width:none;margin:0;padding:0 0 8px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.seasonCard{position:relative;display:block;overflow:hidden;isolation:isolate;border-radius:0;height:min(78vh,820px);min-height:560px;color:#fff}
+.seasonCard img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 46%;transition:transform .45s}
+.seasonCard[data-season="julefrokost"] img{object-position:left 48%}
+.seasonCard:hover img{transform:scale(1.03)}
+.seasonCard>div{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;padding:28px 40px 32px;background:linear-gradient(90deg,rgba(8,12,28,.72) 0%,rgba(8,12,28,.22) 38%,transparent 62%),linear-gradient(180deg,transparent 48%,rgba(8,12,28,.92));color:#fff;pointer-events:none}
+.seasonCard p{font-size:13px;color:var(--season-accent,#ffd7a8);font-weight:600;margin:0 0 8px;letter-spacing:.08em;text-transform:uppercase}
+.seasonCard h2{font-size:clamp(36px,3.6vw,54px)!important;line-height:1.02;margin:0 0 8px;letter-spacing:-.045em;color:#fff!important;max-width:9em}
+.seasonCard span{display:block;font-size:18px;line-height:1.35;color:#fff;max-width:14em}
+.seasonCard strong{display:inline-block;margin-top:14px;color:#fff;font-size:15px;border-bottom:2px solid var(--season-accent,#fff);padding-bottom:3px}
+@media(max-width:1050px){.seasonCard{height:min(62vh,560px);min-height:420px}.seasonCard>div{padding:28px 24px}.seasonCard span{font-size:17px}}
+@media(max-width:800px){.seasonStrip{grid-template-columns:1fr;gap:0}.seasonCard{height:min(70vh,480px);min-height:380px}}
+@media(prefers-reduced-motion:reduce){.seasonCard img{transition:none}}
+.soloHero{max-width:820px;margin:auto;padding:48px 42px 20px}
+@media(max-width:800px){.soloHero{padding:28px 20px 12px}}
 

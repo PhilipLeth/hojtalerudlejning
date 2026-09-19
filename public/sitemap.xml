@@ -71,6 +71,11 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/book</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/bryllup</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -192,6 +197,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en/blog/which-speaker-for-your-party</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/book</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -522,6 +532,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/en/lydmand</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/en/lys-ai</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1013,6 +1028,11 @@
   <url>
     <loc>https://lejhojtaler.dk/lydudstyr</loc>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/lys-ai</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>

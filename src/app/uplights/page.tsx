@@ -75,7 +75,7 @@ export default function UplightsPage() {
             Simple LED uplights på gulv, sæt dem i hjørnerne og få farvet lys op ad væggene. Plug and play.
           </p>
           <a
-            href="/?product=uplight_4#book"
+            href="/book?product=uplight_4"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book uplights nu
@@ -134,7 +134,7 @@ export default function UplightsPage() {
             Book online på 2 minutter. Hent fredag i København S, aflever mandag.
           </p>
           <a
-            href="/?product=uplight#book"
+            href="/book?product=uplight"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book uplights nu

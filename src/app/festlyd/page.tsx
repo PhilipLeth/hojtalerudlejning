@@ -87,7 +87,7 @@ export default function FestlydPage() {
             Havefest, fødselsdag eller firmaevent – <LiveStartPrice />.
           </p>
           <a
-            href="/#book"
+            href="/book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book festlyd nu
@@ -216,7 +216,7 @@ export default function FestlydPage() {
             <LiveStartPrice prefix="Fra " suffix=" kr/weekend." />
           </p>
           <a
-            href="/#book"
+            href="/book"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book festlyd nu

@@ -79,7 +79,7 @@ export default function Page() {
             wash the walls in colour. Plug and play.
           </p>
           <a
-            href="/en?product=uplight_4#book"
+            href="/en/book?product=uplight_4"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book uplights now
@@ -146,7 +146,7 @@ export default function Page() {
             Book online in 2 minutes. Collect on Friday in Copenhagen S, return Monday.
           </p>
           <a
-            href="/en?product=uplight#book"
+            href="/en/book?product=uplight"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book uplights now

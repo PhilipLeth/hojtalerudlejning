@@ -30,6 +30,18 @@ describe("AV-forsiden og eventløsningerne", () => {
   }
  });
  it("forsiden linker til aktive sæsoner i stedet for at erstatte EventHome", () => {
-  expect(fs.readFileSync("src/components/EventHome.tsx","utf8")).toContain("SeasonalStrip");
+  const home = fs.readFileSync("src/components/EventHome.tsx","utf8");
+  expect(home).toContain("SeasonalStrip");
+  const strip = home.indexOf("<SeasonalStrip");
+  const shop = home.indexOf("<ShopPackagePicker");
+  expect(strip).toBeGreaterThan(0);
+  expect(strip).toBeLessThan(shop);
+ });
+ it("sæsonkortene er store billedpaneler på desktop", () => {
+  const css = fs.readFileSync("src/components/EventHome.module.css","utf8");
+  expect(css).toMatch(/\.seasonCard\{[^}]*min-height:560px/);
+  expect(css).toMatch(/78vh/);
+  expect(css).toMatch(/\.seasonCard img\{[^}]*object-fit:cover/);
+  expect(css).toMatch(/\.seasonStrip\{[^}]*max-width:none/);
  });
 });

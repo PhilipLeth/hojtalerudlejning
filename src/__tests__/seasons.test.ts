@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { existsSync } from "node:fs";
 import { EN_PAGES } from "@/lib/enPages";
-import { rentalProducts } from "@/lib/products";
+import { addons, rentalProducts, speakers } from "@/lib/products";
 import { SEASONS, activeSeasons, isSeasonActive, seasonById } from "@/lib/seasons";
 
 describe("Sæsonkampagner", () => {
@@ -28,6 +28,18 @@ describe("Sæsonkampagner", () => {
     expect(isSeasonActive(seasonById("halloween")!, new Date(2026, 10, 3))).toBe(false);
     expect(isSeasonActive(seasonById("julefrokost")!, new Date(2026, 11, 24))).toBe(false);
     expect(isSeasonActive(seasonById("halloween")!, new Date(2026, 10, 2))).toBe(true);
+  });
+
+  it("hubben viser enkeltprodukter under pakkerne", () => {
+    const katalog = [...rentalProducts, ...addons, ...speakers];
+    for (const s of SEASONS) {
+      expect(s.extraIds?.length ?? 0).toBeGreaterThanOrEqual(2);
+      for (const id of s.extraIds ?? []) {
+        expect(katalog.find((p) => p.id === id), id).toBeTruthy();
+      }
+    }
+    expect(seasonById("halloween")!.extraIds).toEqual(expect.arrayContaining(["rog", "lyseffekt"]));
+    expect(seasonById("julefrokost")!.extraIds).toEqual(expect.arrayContaining(["lyskaeder", "uplight_4"]));
   });
 
   it("sæson over nytår virker når from er efter to", () => {

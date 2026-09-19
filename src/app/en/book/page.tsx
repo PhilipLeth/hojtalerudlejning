@@ -1,18 +1,13 @@
-"use client";
+import type { Metadata } from "next";
+import { localeAlternates } from "@/lib/hreflang";
 
-import { useEffect } from "react";
-import { bookHref } from "@/lib/bookUrl";
+export const metadata: Metadata = {
+  title: "Book equipment | Lejhøjtaler.dk",
+  description: "Choose equipment, dates and extras. Book online in a couple of minutes.",
+  alternates: { canonical: "https://lejhojtaler.dk/en/book", languages: localeAlternates("/book") },
+  robots: { index: false, follow: true },
+};
 
-/** /en/book er alias, send til /en med kurv-drawer. */
 export default function BookPageEn() {
-  useEffect(() => {
-    const product = new URLSearchParams(window.location.search).get("product");
-    window.location.replace(bookHref(product, "en"));
-  }, []);
-
-  return (
-    <main className="flex min-h-screen items-center justify-center bg-[#07060b] text-white/50">
-      Opening booking…
-    </main>
-  );
+  return <main id="book" className="sr-only">Book equipment</main>;
 }

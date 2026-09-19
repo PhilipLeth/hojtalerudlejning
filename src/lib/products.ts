@@ -309,11 +309,11 @@ export const speakers: Speaker[] = [
 ];
 
 export const addons: Addon[] = [
-  { id: "dj_musikafvikler", page: "/dj", price: 1000, image: null, ydelse: true,
-    priceUnit: { da: "kr/time før kl. 23", en: "DKK/hour before 23:00" },
+  { id: "dj_musikafvikler", page: "/dj", price: 1800, image: null, ydelse: true,
+    priceUnit: { da: "kr/time", en: "DKK/hour" },
     contents: ["DJ/musikafvikler", "Minimum 3 timer"],
-    da: { label: "DJ/musikafvikler", desc: "Minimum 3 timer. 1.000 kr/time før kl. 23, 1.500 kr/time efter. Inkl. moms. Vælg DJ-pult og udstyrspakke separat." },
-    en: { label: "DJ/music host", desc: "Minimum 3 hours. DKK 1,000/hour before 23:00, DKK 1,500/hour after. VAT included. Choose a DJ controller and equipment package separately." } },
+    da: { label: "DJ/musikafvikler", desc: "Minimum 3 timer. 1.800 kr/time, altid. Levering, opsætning og nedtagning er med. Vælg anlæg og evt. lys." },
+    en: { label: "DJ/music host", desc: "Minimum 3 hours. DKK 1,800/hour, always. Delivery, setup and collection included. Choose a sound system and optional lights." } },
   {
     id: "stroboskop",
     price: 395,
@@ -572,9 +572,9 @@ export const addons: Addon[] = [
  * forsvinder oplysningen af sig selv frem for at blive stående og lyve.
  */
 export const GENEREREDE_BILLEDER: ReadonlySet<string> = new Set([
-  "/images/product-halloween-heksetimen-white.webp",
-  "/images/product-halloween-monsterfesten-white.webp",
-  "/images/product-halloween-midnatsklubben-white.webp",
+  "/images/product-halloween-heksetimen.webp",
+  "/images/product-halloween-monsterfesten.webp",
+  "/images/product-halloween-midnatsklubben.webp",
   "/images/product-pakke-stemningslys-taendt-v3-white.webp",
   "/images/product-pakke-diskolys-taendt-v2-white.webp",
   "/images/product-pakke-teenagefest-taendt-v2-white.webp",
@@ -639,7 +639,7 @@ export function deliveryDirections(id: string): { out: boolean; back: boolean } 
   return { out: false, back: false };
 }
 
-/** Standalone rental products (lys, av), bookable via /?product=ID#book */
+/** Standalone rental products (lys, av), bookable via /?product=ID */
 export const rentalProducts: RentalProduct[] = [
   ...djGearProducts,
   // ── Produktarket 17. sept 2026: nye pakker (bundter af arkets enkeltprodukter)
@@ -824,7 +824,7 @@ export const rentalProducts: RentalProduct[] = [
   // Halloween: nye kombinationer af eksisterende udstyr. Lager følger delene.
   {
     id: "halloween_lys", page: "/halloween-lys", category: "lyd", price: 705,
-    image: "/images/product-halloween-heksetimen-white.webp",
+    image: "/images/product-halloween-heksetimen.webp",
     name_da: "Heksetimen", name_en: "The Witching Hour",
     desc_da: "Halloween-pakke med Mackie Thump GO, LED-lyseffekt og røgmaskine med væske. Kompakt lyd, lys og røg til den lille fest.",
     desc_en: "A compact Halloween party package with a Mackie Thump GO speaker, LED light effect and fog machine with fluid. Sound, lights and fog for a small party.",
@@ -840,7 +840,7 @@ export const rentalProducts: RentalProduct[] = [
   },
   {
     id: "halloween_lille", page: "/halloween-festpakke", category: "lyd", price: 1095,
-    image: "/images/product-halloween-monsterfesten-white.webp",
+    image: "/images/product-halloween-monsterfesten.webp",
     name_da: "Monsterfesten", name_en: "Monster Party",
     desc_da: "Halloween-festpakke til op til 30 gæster: to Alto-højtalere, lysbar og røgmaskine med væske. Tilslut din egen playliste via Bluetooth.",
     desc_en: "Halloween party rental for up to 30 guests: two Alto speakers, a light bar and a fog machine with fluid. Connect your playlist via Bluetooth.",
@@ -856,7 +856,7 @@ export const rentalProducts: RentalProduct[] = [
   },
   {
     id: "halloween_stor", page: "/halloween-festpakke-stor", category: "lyd", price: 1395,
-    image: "/images/product-halloween-midnatsklubben-white.webp",
+    image: "/images/product-halloween-midnatsklubben.webp",
     name_da: "Midnatsklubben", name_en: "The Midnight Club",
     desc_da: "Halloween-festpakke til 30–50 gæster: to EV-højtalere på stativer, lysbar og røgmaskine med væske. Klar til dansegulvet.",
     desc_en: "Halloween party equipment for 30–50 guests: two EV speakers on stands, a light bar and a fog machine with fluid. Ready for the dance floor.",

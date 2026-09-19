@@ -65,7 +65,7 @@ export interface ProductLandingProps {
   image: string;
   imageAlt: string;
   bullets: string[];
-  /** Booking product id for /?product=ID#book */
+  /** Booking product id for /?product=ID */
   productId: string;
   bookLabel?: string;
   /**

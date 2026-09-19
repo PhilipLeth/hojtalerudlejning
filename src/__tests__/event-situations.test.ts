@@ -17,9 +17,9 @@ describe("Situationspakker",()=>{
  });
 });
 describe("DJ-priser",()=>{
- it("beregner dag, nat og blandede timer inklusive moms",()=>{expect(priceDj({before23:3,after23:0}).total).toBe(3000);expect(priceDj({before23:0,after23:3}).total).toBe(4500);expect(priceDj({before23:2,after23:2}).total).toBe(5000);});
+ it("beregner hele timer til 1.800 kr, uanset klokkeslæt",()=>{expect(priceDj({before23:3,after23:0}).total).toBe(5400);expect(priceDj({before23:0,after23:3}).total).toBe(5400);expect(priceDj({before23:2,after23:2}).total).toBe(7200);});
  it("afviser under tre timer, brøker, negative og manglende timer",()=>{for(const v of [undefined,{}, {before23:2,after23:0},{before23:-1,after23:4},{before23:2.5,after23:1},{before23:25,after23:0}])expect(()=>priceDj(v)).toThrow();});
- it("Stripe beregner DJ på serveren og accepterer ikke en enkelt billig time",async()=>{const table=await loadPriceTable({get:async()=>null} as unknown as KVNamespace);expect(()=>buildLineItems(table,[{id:DJ_ID}])).toThrow();const priced=buildLineItems(table,[{id:DJ_ID,dj:{before23:2,after23:2}},{id:'dj_pult'}]);/* produktarket 17. sept 2026: DJ 5000 + dj_pult 1695 (før 1995) */expect(priced.totalOre).toBe(669500);expect(priced.lineItems[0].price_data.product_data.name).toContain('DJ/musikafvikler, 4 timer');});
+ it("Stripe beregner DJ på serveren og accepterer ikke en enkelt billig time",async()=>{const table=await loadPriceTable({get:async()=>null} as unknown as KVNamespace);expect(()=>buildLineItems(table,[{id:DJ_ID}])).toThrow();const priced=buildLineItems(table,[{id:DJ_ID,dj:{before23:2,after23:2}},{id:'dj_pult'}]);expect(priced.totalOre).toBe(919500);expect(priced.lineItems[0].price_data.product_data.name).toContain('DJ/musikafvikler, 4 timer');});
  it("hver situation har sit eget kortbillede, så anledninger ikke ser ens ud",()=>{
   const images=eventSituations.map(s=>s.image);
   expect(new Set(images).size).toBe(images.length);
@@ -43,5 +43,14 @@ describe("Hvide katalogbilleder",()=>{
   expect(whiteProductImage('/images/product-thumpgo-v2.webp')).toBe('/images/product-thumpgo-v2-white.webp');
   expect(whiteProductImage('/api/image/img_1789052313320_qv7h3shszi')).toBe('/images/product-lyseffekt-live-white.webp');
   expect(whiteProductImage('/api/image/new-photo')).toBe('/api/image/new-photo');
+  expect(whiteProductImage('/images/product-halloween-heksetimen.webp')).toBe('/images/product-halloween-heksetimen.webp');
+ });
+ it("halloween-pakkerne bruger stemningsfotos, ikke hvide katalogbilleder",()=>{
+  for (const id of ["halloween_lys","halloween_lille","halloween_stor"]) {
+   const p=rentalProducts.find(x=>x.id===id)!;
+   expect(p.image).toMatch(/\/images\/product-halloween-(heksetimen|monsterfesten|midnatsklubben)\.webp$/);
+   expect(p.image).not.toContain("-white");
+   expect(existsSync(`public${p.image}`),p.image).toBe(true);
+  }
  });
 });

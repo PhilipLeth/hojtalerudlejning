@@ -123,7 +123,7 @@ describe("Tidsrummet som tekst til mails og lejeseddel", () => {
 
 /** Vælg produkt, bladr frem til dagen og vælg den + dagen efter */
 async function vælgDatoer(fra: Date, til: Date) {
-  window.history.pushState({}, "", "/?product=festival#book");
+  window.history.pushState({}, "", "/?product=festival");
   render(<BookingFlow />);
   await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
 

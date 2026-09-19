@@ -56,7 +56,7 @@ export default function ProjektorPage() {
         text="Projektoren hører sammen med et lærred, ikke en LED-storskærm.
               Tilføj lærred og trådløs mikrofon, så er præsentationen komplet."
         links={[
-          { href: "/?product=laerred_160#book", label: "Book lærred 160 cm", priceId: "laerred_160" },
+          { href: "/book?product=laerred_160", label: "Book lærred 160 cm", priceId: "laerred_160" },
           { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "traadloes_mikrofon", fra: true },
         ]}
       />
