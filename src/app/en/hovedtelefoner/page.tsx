@@ -26,7 +26,7 @@ export default function Page() {
       name="DJ headphones · Fun Generation HP 5"
       price={100}
       headline="Hire DJ headphones"
-      sub="DJ headphones are not available for rent right now. The DJ system is an AlphaTheta XDJ-AZ, and DJs bring their own headphones. bring your own deck."
+      sub="DJ headphones are not available for rent right now. The DJ system is an AlphaTheta XDJ, and DJs bring their own headphones. bring your own deck."
       image="/images/product-hovedtelefoner.webp"
       imageAlt="Fun Generation HP 5 DJ headphones for hire"
       productId="dj_headphones"

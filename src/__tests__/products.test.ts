@@ -254,12 +254,12 @@ describe("Addons data", () => {
     expect(p.bundle!.parts.map((x) => x.productId)).toEqual(["thumpgo", "lyskaeder", "lyseffekt"]);
   });
 
-  it("DJ-hovedtelefonerne er på pause: arkets pult er en AlphaTheta XDJ-AZ uden hovedtelefoner (19. sept 2026)", () => {
+  it("DJ-hovedtelefonerne er på pause: arkets pult er en AlphaTheta XDJ uden hovedtelefoner (19. sept 2026)", () => {
     const hp = rentalProducts.find((p) => p.id === "dj_headphones")!;
     expect(hp.hidden).toBe(true);
     const pult = rentalProducts.find((p) => p.id === "dj_pult")!;
     expect(pult.price).toBe(1695);
-    expect(pult.name_da).toBe("DJ-pult · AlphaTheta XDJ-AZ");
+    expect(pult.name_da).toBe("DJ-pult · AlphaTheta XDJ");
     expect(pult.contents.join(" ")).not.toMatch(/hovedtelefoner|iPad|FLX4/);
   });
 
