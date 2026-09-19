@@ -175,10 +175,12 @@ describe("Addons data", () => {
     expect(sub.contents?.join(" ")).toContain("Behringer");
   });
 
-  it("subwoofer kan tilvælges på begge festpakker (whitelistede tilvalg)", () => {
-    for (const id of ["pakke_fest_lille", "pakke_fest_stor"]) {
+  it("festpakkerne tilbyder røgmaskine og stativer som tilvalg (produktarket 19. sept 2026)", () => {
+    for (const id of ["pakke_fest_lille", "pakke_fest_stor", "pakke_fest_100"]) {
       const pakke = rentalProducts.find((p) => p.id === id)!;
-      expect(pakke.allowedAddons).toContain("subwoofer");
+      expect(pakke.allowedAddons).toContain("rog");
+      expect(pakke.allowedAddons).toContain("stativer");
+      expect(pakke.allowedAddons).not.toContain("subwoofer");
     }
   });
 
@@ -252,12 +254,13 @@ describe("Addons data", () => {
     expect(p.bundle!.parts.map((x) => x.productId)).toEqual(["thumpgo", "lyskaeder", "lyseffekt"]);
   });
 
-  it("DJ-hovedtelefoner koster 100 kr og følger med pulten", () => {
+  it("DJ-hovedtelefonerne er på pause: arkets pult er en AlphaTheta XDJ-AZ uden hovedtelefoner (19. sept 2026)", () => {
     const hp = rentalProducts.find((p) => p.id === "dj_headphones")!;
+    expect(hp.hidden).toBe(true);
     const pult = rentalProducts.find((p) => p.id === "dj_pult")!;
-    expect(hp.price).toBe(100);
-    expect(hp.image).toBe("/images/product-hovedtelefoner.webp");
-    expect(pult.contents).toContain("DJ-hovedtelefoner · Fun Generation HP 5");
+    expect(pult.price).toBe(1695);
+    expect(pult.name_da).toBe("DJ-pult · AlphaTheta XDJ-AZ");
+    expect(pult.contents.join(" ")).not.toMatch(/hovedtelefoner|iPad|FLX4/);
   });
 
   it("visible equipment addons have an image", () => {

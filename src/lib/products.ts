@@ -181,7 +181,7 @@ export const speakers: Speaker[] = [
     sizeClass: "lille",
     weight: "10 kg",
     // Kørsels-id'erne står skrevet ud: DELIVERY_ADDON_IDS er først defineret længere nede i filen.
-    allowedAddons: ["mikrofon_kabel", "stativ_enkelt", "lys", "levering_ud", "afhentning_retur", "levering_begge"],
+    allowedAddons: ["lys", "rog", "stativ_enkelt", "mikrofon_kabel", "lyseffekt", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ["Mackie Thump GO 8\"", "Oplader", "AUX-kabel", "Bluetooth"],
     da: {
       name: "Mackie Thump GO",
@@ -208,6 +208,7 @@ export const speakers: Speaker[] = [
     power: "kabel",
     sizeClass: "lille",
     weight: "12 kg",
+    allowedAddons: ["lys", "stativer", "mikrofon", "mikrofon_kabel", "lyseffekt", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ['2× Alto 10" højtalere', "Bluetooth", "AUX + strømkabler", "USB-C / iPhone-adapter"],
     da: {
       name: "Lille højtalerpakke",
@@ -234,7 +235,7 @@ export const speakers: Speaker[] = [
     power: "batteri",
     sizeClass: "stor",
     weight: "11 kg",
-    allowedAddons: ["mikrofon_kabel", "stativ_enkelt", "lys", "batteri", "levering_ud", "afhentning_retur", "levering_begge"],
+    allowedAddons: ["lys", "rog", "stativ_enkelt", "mikrofon_kabel", "batteri", "lyseffekt", "stroboskop", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ["Soundboks 4", "Oplader", "AUX-kabel", "Bluetooth"],
     da: {
       name: "Soundboks 4",
@@ -261,6 +262,7 @@ export const speakers: Speaker[] = [
     power: "kabel",
     sizeClass: "stor",
     weight: "2× 16 kg",
+    allowedAddons: ["lys", "stativer", "mikrofon", "mikrofon_kabel", "lyseffekt", "stroboskop", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ['2× EV 12" højtalere', "Bluetooth", "AUX + strømkabler", "USB-C / iPhone-adapter"],
     da: {
       name: "Mellem højtalerpakke",
@@ -287,6 +289,7 @@ export const speakers: Speaker[] = [
     power: "kabel",
     sizeClass: "stor",
     weight: "48 kg",
+    allowedAddons: ["lys", "stativer", "mikrofon", "mikrofon_kabel", "stroboskop", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ['2× EV 12" højtalere', '12" subwoofer', "Højtalerstativer", "Alle kabler"],
     da: {
       name: "Stor højtalerpakke",
@@ -315,6 +318,7 @@ export const addons: Addon[] = [
     id: "stroboskop",
     price: 395,
     image: "/images/product-stroboskop-white.webp",
+    allowedAddons: ["lys", "rog", "lysstativ", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ["Botex SP-1500 DMX stroboskop", "Controller", "Strømkabel"],
     da: { label: "Stroboskop med styring", desc: "Kraftigt stroboskop med controller, så hastighed og styrke kan skrues op og ned" },
     en: { label: "Strobe light with controller", desc: "Powerful strobe with a controller for speed and intensity" },
@@ -325,6 +329,7 @@ export const addons: Addon[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=XhecuXfY0vo",
     price: 195,
     image: "/images/product-lyseffekt-live-white.webp",
+    allowedAddons: ["lys", "rog", "lysstativ", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ["1× LED-par-lys (uden stativ)", "Strømkabel", "Automatiske farveeffekter"],
     da: { label: "Enkelt lyseffekt", desc: "1 LED-par-lys med farveeffekter, leveres uden stativ, plug and play" },
     en: { label: "Single light effect", desc: "1 LED par light with colour effects, comes without a stand, plug and play" },
@@ -335,6 +340,7 @@ export const addons: Addon[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=FcOqGlPsyYY",
     price: 395,
     image: "/images/product-lys-v4-white.webp",
+    allowedAddons: ["rog", "lyseffekt", "stroboskop", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ["2× farvede LED-lamper", "Centereffekt", "Stativ", "Strøm + DMX/kabler"],
     da: { label: "Lysbar", desc: "2 farvede lamper + centereffekt på stativ" },
     en: { label: "Light bar", desc: "2 coloured lamps + centre effect on stand" },
@@ -345,6 +351,7 @@ export const addons: Addon[] = [
     youtubeUrl: "https://www.youtube.com/watch?v=hQXFyo28Ndc",
     price: 245,
     image: "/images/product-rog-v2-white.webp",
+    allowedAddons: ["lys", "lyseffekt", "stroboskop", "roegvaeske", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ["Røgmaskine", "Røgvæske", "Strømkabel"],
     da: { label: "Røgmaskine", desc: "Kompakt røgmaskine inkl. røgvæske, gør lyset 10x federe" },
     en: { label: "Fog machine", desc: "Compact fog machine incl. fluid, makes the lights 10x better" },
@@ -640,7 +647,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Lille højtalerpakke + mikrofon med ledning. Lyd og taler til op til 30 gæster, spar 45 kr.",
     desc_en: "Small speaker package + wired microphone. Sound and speeches for up to 30 guests, save 45 DKK.",
     contents: ["2× Alto 10\" højtalere", "Mikrofon med ledning", "Bluetooth", "Alle kabler"],
-    allowedAddons: ["mikrofonstativ", "mixer_stor", ...DELIVERY_ADDON_IDS],
+    allowedAddons: ["stativer", "mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 45,
       usecase_da: "Musik og en tale eller to i det mindre selskab. Mikrofonen går direkte i højtaleren.",
@@ -662,7 +669,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Lille højtalerpakke + trådløs Shure-mikrofon. Taler og musik til op til 30 gæster, spar 95 kr.",
     desc_en: "Small speaker package + wireless Shure microphone. Speeches and music for up to 30 guests, save 95 DKK.",
     contents: ["2× Alto 10\" højtalere", "Trådløs Shure-mikrofon", "Alle kabler"],
-    allowedAddons: ["mikrofonstativ", "mixer_stor", ...DELIVERY_ADDON_IDS],
+    allowedAddons: ["stativer", "mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 95,
       usecase_da: "Taler uden kabel i det mindre selskab, og musik bagefter.",
@@ -684,7 +691,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Stor højtalerpakke + 2 lysbarer. Lyd med bas og lys i begge ender af dansegulvet til 50-100 gæster, spar 390 kr.",
     desc_en: "Large speaker package + 2 light bars. Sound with bass and lights at both ends of the dancefloor for 50-100 guests, save 390 DKK.",
     contents: ["2× EV 12\" højtalere", "12\" subwoofer", "2× lysbar (2 lamper + centereffekt)", "Alle kabler"],
-    allowedAddons: ["rog", "mikrofon", ...DELIVERY_ADDON_IDS],
+    allowedAddons: ["rog", "stativer", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 390,
       usecase_da: "Festen med 50-100 gæster: subwooferen giver tryk, to lysbarer dækker hele dansegulvet.",
@@ -706,7 +713,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Mellem højtalerpakke + discokugle 40 cm med stativ og spot. Lyd og klassisk lys til 30-50 gæster, spar 45 kr.",
     desc_en: "Medium speaker package + 40 cm disco ball with stand and spot. Sound and classic light for 30-50 guests, save 45 DKK.",
     contents: ["2× EV 12\" højtalere", "Discokugle 40 cm med motor, stativ og spot", "Alle kabler"],
-    allowedAddons: ["stativer", "mikrofon", "rog", ...DELIVERY_ADDON_IDS],
+    allowedAddons: ["stativer", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 45,
       usecase_da: "Til festen hvor lyset skal være stilfuldt frem for blinkende: en discokugle i spot og god lyd.",
@@ -728,7 +735,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Mackie Thump GO + lysbar. Batterihøjtaler og lys til den lille fest, spar 95 kr.",
     desc_en: "Mackie Thump GO + light bar. Battery speaker and lights for the small party, save 95 DKK.",
     contents: ["Mackie Thump GO 8\"", "Lysbar (2 lamper + centereffekt)", "Stativ", "Alle kabler"],
-    allowedAddons: ["rog", "mikrofon_kabel", ...DELIVERY_ADDON_IDS],
+    allowedAddons: ["stativer", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 95,
       usecase_da: "Det billige alternativ til Soundboks-pakken: batterihøjtaler til op til 30 gæster og en lysbar. Lysbaren kræver strøm.",
@@ -750,7 +757,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Lysbar + røgmaskine. Lys og røg til dansegulvet for op til 50 gæster, spar 95 kr.",
     desc_en: "Light bar + fog machine. Lights and fog for the dancefloor for up to 50 guests, save 95 DKK.",
     contents: ["Lysbar (2 lamper + centereffekt)", "Røgmaskine med væske", "Stativ og kabler"],
-    allowedAddons: ["roegvaeske", "stroboskop", ...DELIVERY_ADDON_IDS],
+    allowedAddons: [...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 95,
       usecase_da: "Røgen gør lyset synligt. Til dig der har lyden, men mangler dansegulvet.",
@@ -772,7 +779,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "2 lysbarer + røgmaskine. Lys i begge ender af dansegulvet og røg til 50-100 gæster, spar 40 kr.",
     desc_en: "2 light bars + fog machine. Lights at both ends of the dancefloor and fog for 50-100 guests, save 40 DKK.",
     contents: ["2× lysbar (2 lamper + centereffekt)", "Røgmaskine med væske", "Stativer og kabler"],
-    allowedAddons: ["roegvaeske", "stroboskop", ...DELIVERY_ADDON_IDS],
+    allowedAddons: [...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 40,
       usecase_da: "Det store dansegulv: to lysbarer dækker rummet, røgen gør strålerne synlige.",
@@ -785,17 +792,18 @@ export const rentalProducts: RentalProduct[] = [
   },
   // ── Nye enkeltprodukter fra arket (17. sept 2026), fotos genereret i husstilen.
   { id: "monitor", category: "lyd", price: 495, image: "/images/product-monitor-white.webp", name_da: "Monitor · EV ZLX 12P", name_en: "Monitor · EV ZLX 12P", desc_da: "Én aktiv 12\" EV-højtaler, som monitor til scenen eller ekstra højtaler.", desc_en: "A single active 12\" EV speaker, as a stage monitor or an extra speaker.", contents: ["1× EV ZLX 12P aktiv højtaler", "Strømkabel"] },
-  { id: "discokugle_guld", category: "lys", price: 645, image: "/images/product-discokugle-guld-white.webp", name_da: "Discokugle 40 cm guld", name_en: "Disco ball 40 cm gold", desc_da: "Komplet pakke: 40 cm guldfarvet discokugle med motor, spot og stativ.", desc_en: "Complete package: 40 cm gold disco ball with motor, spotlight and stand.", contents: ["Discokugle 40 cm guld", "Motor", "LED-spot", "Stativ", "Strømkabel"] },
-  { id: "scenelys", category: "lys", price: 695, image: "/images/product-scenelys-white.webp", name_da: "Scenelys (4 LED på stativ)", name_en: "Stage lights (4 LEDs on a stand)", desc_da: "4 LED-lamper på stativ med tværbom og fjernbetjening, lys til scene, taler og band.", desc_en: "4 LED lights on a stand with cross bar and remote, light for a stage, speeches and bands.", contents: ["4× LED PAR", "Stativ med tværbom", "Fjernbetjening", "Strømkabler"] },
-  { id: "foelgespot", category: "lys", price: 1995, image: "/images/product-foelgespot-white.webp", name_da: "Følgespot", name_en: "Follow spot", desc_da: "LED-følgespot 120 W på stativ, til at følge taleren eller brudeparret.", desc_en: "120 W LED follow spot on a stand, to follow the speaker or the couple.", contents: ["LED-følgespot 120 W", "Stativ", "Strømkabel"] },
-  { id: "uv_lampe", category: "lys", price: 245, image: "/images/product-uv-lampe-white.webp", name_da: "UV-lampe", name_en: "UV light", desc_da: "UV-lampe der får hvidt og neon til at lyse, til UV- og neonfester.", desc_en: "UV light that makes white and neon glow, for UV and neon parties.", contents: ["LED UV-lampe", "Strømkabel"] },
-  { id: "laser", category: "lys", price: 595, image: "/images/product-laser-white.webp", name_da: "RGB-laser", name_en: "RGB laser", desc_da: "Farvet laser med mønstre, bedst sammen med røg.", desc_en: "Colour laser with patterns, best together with fog.", contents: ["RGB-laser", "Strømkabel"] },
-  { id: "snemaskine", category: "roeg", price: 445, image: "/images/product-snemaskine-white.webp", name_da: "Snemaskine", name_en: "Snow machine", desc_da: "Snemaskine der laver fin kunstig sne, inkl. snevæske.", desc_en: "Snow machine that makes fine artificial snow, incl. snow fluid.", contents: ["Snemaskine", "Snevæske", "Strømkabel"] },
-  { id: "saebeboblemaskine", category: "roeg", price: 995, image: "/images/product-saebeboblemaskine-white.webp", name_da: "Sæbeboblemaskine", name_en: "Bubble machine", desc_da: "Stor sæbeboblemaskine, fylder rummet med bobler, inkl. boblevæske.", desc_en: "Large bubble machine that fills the room with bubbles, incl. bubble fluid.", contents: ["Sæbeboblemaskine", "Boblevæske", "Strømkabel"] },
+  { id: "discokugle_guld", category: "lys", price: 645, image: "/images/product-discokugle-guld-white.webp", name_da: "Discokugle 40 cm guld", name_en: "Disco ball 40 cm gold", desc_da: "Komplet pakke: 40 cm guldfarvet discokugle med motor, spot og stativ.", desc_en: "Complete package: 40 cm gold disco ball with motor, spotlight and stand.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["Discokugle 40 cm guld", "Motor", "LED-spot", "Stativ", "Strømkabel"] },
+  { id: "scenelys", category: "lys", price: 695, image: "/images/product-scenelys-white.webp", name_da: "Scenelys (4 LED på stativ)", name_en: "Stage lights (4 LEDs on a stand)", desc_da: "4 LED-lamper på stativ med tværbom og fjernbetjening, lys til scene, taler og band.", desc_en: "4 LED lights on a stand with cross bar and remote, light for a stage, speeches and bands.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["4× LED PAR", "Stativ med tværbom", "Fjernbetjening", "Strømkabler"] },
+  { id: "foelgespot", category: "lys", price: 1995, image: "/images/product-foelgespot-white.webp", name_da: "Følgespot", name_en: "Follow spot", desc_da: "LED-følgespot 120 W på stativ, til at følge taleren eller brudeparret.", desc_en: "120 W LED follow spot on a stand, to follow the speaker or the couple.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["LED-følgespot 120 W", "Stativ", "Strømkabel"] },
+  { id: "uv_lampe", category: "lys", price: 245, image: "/images/product-uv-lampe-white.webp", name_da: "UV-lampe", name_en: "UV light", desc_da: "UV-lampe der får hvidt og neon til at lyse, til UV- og neonfester.", desc_en: "UV light that makes white and neon glow, for UV and neon parties.", allowedAddons: ["lys", "rog", "lysstativ", "stroboskop", ...DELIVERY_ADDON_IDS], contents: ["LED UV-lampe", "Strømkabel"] },
+  { id: "laser", category: "lys", price: 595, image: "/images/product-laser-white.webp", name_da: "RGB-laser", name_en: "RGB laser", desc_da: "Farvet laser med mønstre, bedst sammen med røg.", desc_en: "Colour laser with patterns, best together with fog.", allowedAddons: ["lys", "rog", "lysstativ", "stroboskop", ...DELIVERY_ADDON_IDS], contents: ["RGB-laser", "Strømkabel"] },
+  { id: "snemaskine", category: "roeg", price: 445, image: "/images/product-snemaskine-white.webp", name_da: "Snemaskine", name_en: "Snow machine", desc_da: "Snemaskine der laver fin kunstig sne, inkl. snevæske.", desc_en: "Snow machine that makes fine artificial snow, incl. snow fluid.", allowedAddons: ["snevaeske", ...DELIVERY_ADDON_IDS], contents: ["Snemaskine", "Snevæske", "Strømkabel"] },
+  { id: "saebeboblemaskine", category: "roeg", price: 995, image: "/images/product-saebeboblemaskine-white.webp", name_da: "Sæbeboblemaskine", name_en: "Bubble machine", desc_da: "Stor sæbeboblemaskine, fylder rummet med bobler, inkl. boblevæske.", desc_en: "Large bubble machine that fills the room with bubbles, incl. bubble fluid.", allowedAddons: ["boblevaeske", ...DELIVERY_ADDON_IDS], contents: ["Sæbeboblemaskine", "Boblevæske", "Strømkabel"] },
   ...situationPackages,
   ...microphonePackages,
   {
     id: "dj_headphones",
+    hidden: true,
     page: "/hovedtelefoner",
     category: "lyd",
     price: 100,
@@ -969,7 +977,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Lille højtalerpakke + lysbar. Lyd og lys til op til 30 gæster, spar 95 kr.",
     desc_en: "Small speaker package + light bar. Sound and lights for up to 30 guests, save 95 DKK.",
     contents: ["2× Alto 10\" højtalere", "Lysbar (2 lamper + centereffekt)", "Bluetooth + alle kabler"],
-    allowedAddons: ["subwoofer", "rog", "stativer", "mikrofon", ...DELIVERY_ADDON_IDS],
+    allowedAddons: ["rog", "stativer", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 95,
       usecase_da: "Lyd og lys til den lille fest, op til 30 gæster. Kompakt sæt, klar på 10 minutter.",
@@ -994,7 +1002,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Mellem højtalerpakke + lysbar. Lyd og lys til 30-50 gæster, spar 95 kr.",
     desc_en: "Medium speaker package + light bar. Sound and lights for 30-50 guests, save 95 DKK.",
     contents: ["2× EV 12\" højtalere", "Lysbar (2 lamper + centereffekt)", "Bluetooth + alle kabler"],
-    allowedAddons: ["subwoofer", "rog", "stativer", "mikrofon", ...DELIVERY_ADDON_IDS],
+    allowedAddons: ["rog", "stativer", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 95,
       usecase_da: "Lyd og lys til festen med 30-50 gæster, med de store 12\" højtalere.",
@@ -1206,7 +1214,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "4 uplights, lyskæde og discokugle, hele rummet skifter karakter. Spar 140 kr.",
     desc_en: "4 uplights, fairy lights and a disco ball, the whole room changes character. Save 140 DKK.",
     contents: ["4× LED uplight til vægge og hjørner", "10 m lyskæde", "Discokugle med motor og spot", "Strømkabler"],
-    allowedAddons: ["rog", ...DELIVERY_ADDON_IDS],
+    allowedAddons: [...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 140,
       usecase_da: "Lys uden lyd: uplights vasker væggene, lyskæden giver varmen, discokuglen giver dansegulvet. Til lokaler der er lejet med lysstofrør i loftet.",
@@ -1349,7 +1357,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Soundboks 4 + lysbar. Batteridrevet lyd og lys til festen, spar 95 kr.",
     desc_en: "Soundboks 4 + light bar. Battery-powered sound and lights, save 95 DKK.",
     contents: ["Soundboks 4 (batteri)", "Lysbar (2 lamper + centereffekt)", "Stativ", "Alle kabler"],
-    allowedAddons: ["rog", "batteri", "mikrofon_kabel", ...DELIVERY_ADDON_IDS],
+    allowedAddons: ["stativer", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 95,
       usecase_da: "Soundboks klarer lyden uden en stikkontakt, lysbaren gør det til en fest. Lysbaren kræver strøm, så den skal tænkes med, hvis I er udenfor.",
@@ -1424,7 +1432,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Mellem højtalerpakke + mikrofon med ledning. Lyd og taler til 30-50 gæster, spar 95 kr.",
     desc_en: "Medium speaker package + wired microphone. Sound and speeches for 30-50 guests, save 95 DKK.",
     contents: ["2× EV 12\" højtalere", "Mikrofon med ledning", "Bluetooth", "Alle kabler"],
-    allowedAddons: ["mikrofonstativ", "mixer_stor", ...DELIVERY_ADDON_IDS],
+    allowedAddons: ["stativer", "mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 95,
       usecase_da: "Til det arrangement hvor der både skal spilles musik og holdes tale. Mikrofonen går direkte i højtaleren, så der ikke skal en mixer imellem.",
@@ -1482,23 +1490,23 @@ export const rentalProducts: RentalProduct[] = [
       ],
     },
   },
-  { id: "discokugle", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 645, image: "/images/product-discokugle-v2-white.webp", name_da: "Discokugle 40 cm", name_en: "Disco ball 40 cm", desc_da: "Komplet pakke: 40 cm roterende discokugle med motor, spot og stativ.", desc_en: "Complete package: 40 cm rotating disco ball with motor, spotlight and stand.", contents: ["Discokugle 40 cm", "Motor", "LED-spot", "Stativ/ophæng", "Strømkabel"] },
+  { id: "discokugle", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 645, image: "/images/product-discokugle-v2-white.webp", name_da: "Discokugle 40 cm", name_en: "Disco ball 40 cm", desc_da: "Komplet pakke: 40 cm roterende discokugle med motor, spot og stativ.", desc_en: "Complete package: 40 cm rotating disco ball with motor, spotlight and stand.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["Discokugle 40 cm", "Motor", "LED-spot", "Stativ/ophæng", "Strømkabel"] },
   // Samme pakke, mindre kugle. Egen side er ikke lavet, begge peger på
   // /discokugle, hvor størrelserne står beskrevet.
-  { id: "discokugle_30", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 545, image: "/images/product-discokugle-v2-white.webp", name_da: "Discokugle 30 cm", name_en: "Disco ball 30 cm", desc_da: "Komplet pakke: 30 cm roterende discokugle med motor, spot og stativ.", desc_en: "Complete package: 30 cm rotating disco ball with motor, spotlight and stand.", contents: ["Discokugle 30 cm", "Motor", "LED-spot", "Stativ/ophæng", "Strømkabel"] },
-  { id: "lyskaeder", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-v2-white.webp", name_da: "Lyskæde varm hvid", name_en: "Fairy lights warm white", desc_da: "10m lyskæde med varmt hvidt lys, hyggelig festbelysning.", desc_en: "10m fairy lights with warm white light, cosy party lighting.", contents: ["10m lyskæde", "Varm hvide pærer", "Strømforsyning"] },
-  { id: "lyskaeder_farvet", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-farvet-v2-white.webp", name_da: "Lyskæde farvet", name_en: "Fairy lights coloured", desc_da: "10m lyskæde med farvede pærer, festlig stemning fra første sekund.", desc_en: "10m fairy lights with coloured bulbs, party mood instantly.", contents: ["10m lyskæde", "Farvede pærer", "Strømforsyning"] },
-  { id: "uplight", page: "/uplights", category: "lys", price: 195, image: "/images/product-uplight-v2-white.webp", name_da: "Uplight", name_en: "Uplight", desc_da: "Simpel LED uplight på gulv, plug and play. Vasker vægge og hjørner i farvet lys.", desc_en: "Simple floor LED uplight, plug and play. Washes walls and corners in coloured light.", contents: ["1× LED uplight", "Strømkabel", "Automatiske farver"] },
-  { id: "uplight_4", page: "/uplights", category: "lys", price: 595, image: "/images/product-uplight-4-v2-white.webp", name_da: "Uplight 4-pak", name_en: "Uplight 4-pack", desc_da: "4 simple LED uplights til vægge og hjørner, spar 185 kr vs enkeltvis.", desc_en: "4 simple LED uplights for walls and corners, save 185 DKK vs singles.", contents: ["4× LED uplight", "Strømkabler", "Plug and play"] },
+  { id: "discokugle_30", page: "/discokugle", youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM", category: "lys", price: 545, image: "/images/product-discokugle-v2-white.webp", name_da: "Discokugle 30 cm", name_en: "Disco ball 30 cm", desc_da: "Komplet pakke: 30 cm roterende discokugle med motor, spot og stativ.", desc_en: "Complete package: 30 cm rotating disco ball with motor, spotlight and stand.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["Discokugle 30 cm", "Motor", "LED-spot", "Stativ/ophæng", "Strømkabel"] },
+  { id: "lyskaeder", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-v2-white.webp", name_da: "Lyskæde varm hvid", name_en: "Fairy lights warm white", desc_da: "10m lyskæde med varmt hvidt lys, hyggelig festbelysning.", desc_en: "10m fairy lights with warm white light, cosy party lighting.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["10m lyskæde", "Varm hvide pærer", "Strømforsyning"] },
+  { id: "lyskaeder_farvet", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-farvet-v2-white.webp", name_da: "Lyskæde farvet", name_en: "Fairy lights coloured", desc_da: "10m lyskæde med farvede pærer, festlig stemning fra første sekund.", desc_en: "10m fairy lights with coloured bulbs, party mood instantly.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["10m lyskæde", "Farvede pærer", "Strømforsyning"] },
+  { id: "uplight", page: "/uplights", category: "lys", price: 195, image: "/images/product-uplight-v2-white.webp", name_da: "Uplight", name_en: "Uplight", desc_da: "Simpel LED uplight på gulv, plug and play. Vasker vægge og hjørner i farvet lys.", desc_en: "Simple floor LED uplight, plug and play. Washes walls and corners in coloured light.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["1× LED uplight", "Strømkabel", "Automatiske farver"] },
+  { id: "uplight_4", page: "/uplights", category: "lys", price: 595, image: "/images/product-uplight-4-v2-white.webp", name_da: "Uplight 4-pak", name_en: "Uplight 4-pack", desc_da: "4 simple LED uplights til vægge og hjørner, spar 185 kr vs enkeltvis.", desc_en: "4 simple LED uplights for walls and corners, save 185 DKK vs singles.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["4× LED uplight", "Strømkabler", "Plug and play"] },
   { id: "projektor", page: "/projektor", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", price: 495, image: "/images/product-projektor-white.webp", name_da: "Projektor", name_en: "Projector", desc_da: "Full HD projektor til præsentationer og film.", desc_en: "Full HD projector for presentations and film.", contents: ["Full HD projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
   { id: "skaerm_55", page: "/skaerm", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 595, image: "/images/product-skaerm-white.webp", name_da: '55" Storskærm', name_en: '55" Screen', desc_da: "55\" LED-skærm på 3-fod stativ, justerbar højde.", desc_en: '55" LED screen on tripod stand, adjustable height.', contents: ['55" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
   { id: "skaerm_32", page: "/skaerm-32", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 395, image: "/images/product-skaerm-32-white.webp", name_da: '32" Skærm', name_en: '32" Screen', desc_da: "32\" LED-skærm på 3-fod stativ, kompakt og nem at flytte. Perfekt til karaoke.", desc_en: '32" LED screen on tripod stand, compact and easy to move. Perfect for karaoke.', contents: ['32" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
-  { id: "traadloes_mikrofon", page: "/traadloes-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=ED_w3MHXjxk", category: "av", price: 445, image: "/images/product-mikrofon-pro-v2-white.webp", name_da: "Trådløs mikrofon", name_en: "Wireless mic", desc_da: "Shure BLX24 med SM58, trådløs håndholdt mikrofon i scenekvalitet til taler, sang og karaoke.", desc_en: "Shure BLX24 with SM58, a stage-quality wireless handheld microphone for speeches, vocals and karaoke.", allowedAddons: ["mikrofonstativ", "mixer_stor", ...DELIVERY_ADDON_IDS], contents: ["Shure BLX24/SM58 trådløs mikrofon", "Shure modtager", "Kabelforbindelse til højtaler"] },
+  { id: "traadloes_mikrofon", page: "/traadloes-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=ED_w3MHXjxk", category: "av", price: 445, image: "/images/product-mikrofon-pro-v2-white.webp", name_da: "Trådløs mikrofon", name_en: "Wireless mic", desc_da: "Shure BLX24 med SM58, trådløs håndholdt mikrofon i scenekvalitet til taler, sang og karaoke.", desc_en: "Shure BLX24 with SM58, a stage-quality wireless handheld microphone for speeches, vocals and karaoke.", allowedAddons: ["mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS], contents: ["Shure BLX24/SM58 trådløs mikrofon", "Shure modtager", "Kabelforbindelse til højtaler"] },
   { id: "traadloes_mikrofon_pro", hidden: true, page: "/traadloes-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 595, image: "/images/product-mikrofon-pro-v2-white.webp", name_da: "Trådløs mikrofon PRO", name_en: "Wireless mic PRO", desc_da: "Shure BLX trådløs mikrofon, scenekvalitet til events og konferencer.", desc_en: "Shure BLX wireless microphone, stage quality for events and conferences.", contents: ["Shure trådløs håndholdt mic", "Shure modtager", "Kabelforbindelse til højtaler"] },
   { id: "headset", page: "/headset-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 445, image: "/images/product-headset-pro-v2-white.webp", name_da: "Trådløst headset", name_en: "Wireless headset", desc_da: "Shure BLX14 trådløst headset, frie hænder til præsentationer og undervisning.", desc_en: "Shure BLX14 wireless headset, hands free for presentations and teaching.", allowedAddons: ["mixer_stor", ...DELIVERY_ADDON_IDS], contents: ["Headset-mikrofon", "Bodypack + modtager", "Kabelforbindelse"] },
   { id: "headset_pro", hidden: true, page: "/headset-pro", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 595, image: "/images/product-headset-pro-v2-white.webp", name_da: "Trådløst headset PRO", name_en: "Wireless headset PRO", desc_da: "Professionelt headset i broadcast-kvalitet, til konferencer og scener.", desc_en: "Professional broadcast-quality headset, for conferences and stages.", contents: ["PRO headset-mikrofon", "Bodypack + modtager", "Kabelforbindelse"] },
-  { id: "haandholdt_mikrofon", page: "/haandholdt-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=4gssAwctUFQ", category: "av", price: 95, image: "/images/product-mikrofon-kabel-v2-white.webp", name_da: "Håndholdt mikrofon (kabel)", name_en: "Handheld microphone (wired)", desc_da: "Almindelig håndholdt mikrofon med kabel, til taler og sang.", desc_en: "Standard wired handheld microphone, for speeches and vocals.", allowedAddons: ["mikrofonstativ", "mixer_stor", ...DELIVERY_ADDON_IDS], contents: ["Håndholdt mic", "XLR/kabel"] },
-  { id: "haandholdt_mikrofon_pro", page: "/haandholdt-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=Y8CBYnicB5g", category: "av", price: 345, image: "/images/product-mikrofon-kabel-pro-v2-white.webp", name_da: "Håndholdt mikrofon PRO (kabel)", name_en: "Handheld microphone PRO (wired)", desc_da: "Shure Beta 58A med kabel, klassikeren til sang og taler.", desc_en: "Shure Beta 58A wired, the classic for vocals and speeches.", allowedAddons: ["mikrofonstativ", "mixer_stor", ...DELIVERY_ADDON_IDS], contents: ["Shure Beta 58A", "XLR/kabel"] },
+  { id: "haandholdt_mikrofon", page: "/haandholdt-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=4gssAwctUFQ", category: "av", price: 95, image: "/images/product-mikrofon-kabel-v2-white.webp", name_da: "Håndholdt mikrofon (kabel)", name_en: "Handheld microphone (wired)", desc_da: "Almindelig håndholdt mikrofon med kabel, til taler og sang.", desc_en: "Standard wired handheld microphone, for speeches and vocals.", allowedAddons: ["mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS], contents: ["Håndholdt mic", "XLR/kabel"] },
+  { id: "haandholdt_mikrofon_pro", page: "/haandholdt-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=Y8CBYnicB5g", category: "av", price: 345, image: "/images/product-mikrofon-kabel-pro-v2-white.webp", name_da: "Håndholdt mikrofon PRO (kabel)", name_en: "Handheld microphone PRO (wired)", desc_da: "Shure Beta 58A med kabel, klassikeren til sang og taler.", desc_en: "Shure Beta 58A wired, the classic for vocals and speeches.", allowedAddons: ["mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS], contents: ["Shure Beta 58A", "XLR/kabel"] },
   { id: "laerred_160", page: "/laerred-160", youtubeUrl: "https://www.youtube.com/watch?v=PLqEcB93Sac", category: "av", price: 195, image: "/images/product-laerred-v2-white.webp", name_da: "Lærred 160 cm", name_en: "Projector screen 160 cm", desc_da: "160 cm lærred på stativ, perfekt til projektor.", desc_en: "160 cm projector screen on stand.", contents: ["160 cm lærred", "Stativ"] },
   { id: "projektor_pro", page: "/projektor-pro", youtubeUrl: "https://www.youtube.com/watch?v=7FhRTCCKCm0", category: "av", price: 795, image: "/images/product-projektor-pro-v2-white.webp", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor, skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector, sharp even in daylight.", contents: ["5000 lumen projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
   { id: "pakke_praesentation", page: "/pakke-praesentation", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", price: 695, image: "/images/product-projektor-white.webp", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen, spar 90 kr.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation, save 90 kr.", contents: ["Full HD projektor", "Lærred 160 cm", "Håndholdt mic + kabel", "HDMI + strøm"], bundle: { discount: 90, usecase_da: "Alt til præsentationen, projektor, lærred og mikrofon.", usecase_en: "Everything for your presentation.", parts: [ { productId: "projektor", label_da: "Projektor", label_en: "Projector", price: 495 }, { productId: "laerred_160", label_da: "Lærred 160 cm", label_en: "Screen 160 cm", price: 195 }, { productId: "haandholdt_mikrofon", label_da: "Håndholdt mikrofon", label_en: "Wired mic", price: 95 } ] } },
@@ -1517,7 +1525,7 @@ export const rentalProducts: RentalProduct[] = [
     desc_da: "Mellem højtalerpakke + trådløs Shure-mikrofon. Taler og musik til 30-50 gæster, spar 95 kr.",
     desc_en: "Medium speaker package + wireless Shure microphone. Speeches and music for 30-50 guests, save 95 DKK.",
     contents: ["2× EV 12\" højtalere", "Trådløs Shure-mikrofon", "Alle kabler"],
-    allowedAddons: ["mikrofonstativ", "mixer_stor", ...DELIVERY_ADDON_IDS],
+    allowedAddons: ["stativer", "mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS],
     bundle: {
       discount: 95,
       usecase_da: "Taler uden kabel: den trådløse mikrofon giver frihed til at gå rundt, højtalerne klarer musikken bagefter.",
@@ -1577,7 +1585,7 @@ export const rentalProducts: RentalProduct[] = [
       ],
     },
   },
-  { id: "low_fog", page: "/roeg", youtubeUrl: "https://www.youtube.com/watch?v=GM_WsXv1FU4", category: "roeg", price: 545, image: "/images/product-lowfog-v2-white.webp", name_da: "Low fog-maskine (røggulv)", name_en: "Low fog machine (fog floor)", desc_da: "Laver et flot gulv af røg vha. is, 'dansen på skyer'-effekten fra bryllupper og musikvideoer.", desc_en: "Creates a floor of low-lying fog using ice, the 'dancing on clouds' effect.", contents: ["Low fog-maskine", "Røgvæske", "Is-bakke / instruks"] },
+  { id: "low_fog", page: "/roeg", youtubeUrl: "https://www.youtube.com/watch?v=GM_WsXv1FU4", category: "roeg", price: 545, image: "/images/product-lowfog-v2-white.webp", name_da: "Low fog-maskine (røggulv)", name_en: "Low fog machine (fog floor)", desc_da: "Laver et flot gulv af røg vha. is, 'dansen på skyer'-effekten fra bryllupper og musikvideoer.", desc_en: "Creates a floor of low-lying fog using ice, the 'dancing on clouds' effect.", allowedAddons: ["roegvaeske", ...DELIVERY_ADDON_IDS], contents: ["Low fog-maskine", "Røgvæske", "Is-bakke / instruks"] },
 ];
 
 /* ───── På pause ─────
@@ -1601,6 +1609,8 @@ export const PAUSEDE_PRODUKTER: string[] = [
   // Produktarket 17. sept 2026: arkets trådløse mikrofon og headset ER Shure-modellerne,
   // så PRO-varianterne er overflødige. Bæretasken står ikke i arket.
   "traadloes_mikrofon_pro", "headset_pro", "taske",
+  // Hovedtelefonerne fulgte med Pioneer-pulten; arkets AlphaTheta XDJ-AZ står uden, og de er ikke i arket.
+  "dj_headphones",
 ];
 
 /**

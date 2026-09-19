@@ -13,7 +13,6 @@ import styles from "./EventHome.module.css";
 
 const EQUIPMENT = [
   ["/dj-pult", "DJ-pulte", "DJ controllers"],
-  ["/hovedtelefoner", "DJ-hovedtelefoner", "DJ headphones"],
   ["/skaerm", "Skærme", "Displays"],
   ["/projektor", "Projektorer", "Projectors"],
   ["/lej-mikrofon", "Mikrofoner", "Microphones"],

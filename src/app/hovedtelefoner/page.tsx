@@ -25,7 +25,7 @@ export default function Page() {
       name="DJ-hovedtelefoner · Fun Generation HP 5"
       price={100}
       headline="Lej DJ-hovedtelefoner"
-      sub="Lukkede over-ear hovedtelefoner til pulten. De følger med DJ-pulten, og kan bookes alene hvis I har jeres eget controller."
+      sub="DJ-hovedtelefoner udlejes ikke lige nu. DJ-pulten er en AlphaTheta XDJ-AZ, og hovedtelefoner medbringer DJ'en selv."
       image="/images/product-hovedtelefoner.webp"
       imageAlt="Fun Generation HP 5 DJ-hovedtelefoner til leje"
       productId="dj_headphones"
