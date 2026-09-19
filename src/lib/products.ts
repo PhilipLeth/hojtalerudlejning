@@ -1609,7 +1609,7 @@ export const PAUSEDE_PRODUKTER: string[] = [
   // Produktarket 17. sept 2026: arkets trådløse mikrofon og headset ER Shure-modellerne,
   // så PRO-varianterne er overflødige. Bæretasken står ikke i arket.
   "traadloes_mikrofon_pro", "headset_pro", "taske",
-  // Hovedtelefonerne fulgte med Pioneer-pulten; arkets AlphaTheta XDJ-AZ står uden, og de er ikke i arket.
+  // Hovedtelefonerne fulgte med Pioneer-pulten; arkets AlphaTheta XDJ står uden, og de er ikke i arket.
   "dj_headphones",
 ];
 

@@ -6,14 +6,14 @@ export const djGearProducts: RentalProduct[] = [
     "category": "lyd",
     "price": 1695,
     "image": "/images/product-dj-pult-white.webp",
-    "name_da": "DJ-pult · AlphaTheta XDJ-AZ",
-    "name_en": "DJ system · AlphaTheta XDJ-AZ",
-    "desc_da": "AlphaTheta XDJ-AZ, et komplet standalone DJ-system med touchskærm og fire kanaler. Spil fra USB-stik eller stream direkte, ingen computer nødvendig. DJ og højtalere vælges separat.",
-    "desc_en": "AlphaTheta XDJ-AZ, a complete standalone DJ system with a touchscreen and four channels. Play from USB sticks or stream directly, no laptop needed. DJ and speakers are hired separately.",
+    "name_da": "DJ-pult · AlphaTheta XDJ",
+    "name_en": "DJ system · AlphaTheta XDJ",
+    "desc_da": "AlphaTheta XDJ, et komplet all-in-one DJ-system. Spil fra USB-stik, ingen computer nødvendig. DJ og højtalere vælges separat.",
+    "desc_en": "AlphaTheta XDJ, a complete all-in-one DJ system. Play from USB sticks, no laptop needed. DJ and speakers are hired separately.",
     "allowedAddons": ["x_stativ", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
     "contents": [
-      "AlphaTheta XDJ-AZ (eller XDJ-RR)",
-      "Standalone, ingen computer",
+      "AlphaTheta XDJ all-in-one DJ-system",
+      "All-in-one, ingen computer",
       "Tilslutningskabler til højtalere"
     ]
   },
@@ -30,7 +30,7 @@ export const djGearProducts: RentalProduct[] = [
     "desc_en": "Controller and two speakers for smaller parties and background music. Add a DJ/music host by the hour.",
     "allowedAddons": ["rog", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
     "contents": [
-      "DJ-pult · AlphaTheta XDJ-AZ",
+      "DJ-pult · AlphaTheta XDJ",
       "Lille højtalerpakke",
       "Højtalerstativer",
       "Lysbar",
@@ -41,8 +41,8 @@ export const djGearProducts: RentalProduct[] = [
         {
           "productId": "dj_pult",
           "price": 1695,
-          "label_da": "DJ-pult · AlphaTheta XDJ-AZ",
-          "label_en": "DJ system · AlphaTheta XDJ-AZ"
+          "label_da": "DJ-pult · AlphaTheta XDJ",
+          "label_en": "DJ system · AlphaTheta XDJ"
         },
         {
           "productId": "party",
@@ -87,7 +87,7 @@ export const djGearProducts: RentalProduct[] = [
     "desc_en": "Controller, two larger speakers and a subwoofer for the dance floor. Add a DJ/music host by the hour.",
     "allowedAddons": ["rog", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
     "contents": [
-      "DJ-pult · AlphaTheta XDJ-AZ",
+      "DJ-pult · AlphaTheta XDJ",
       "Mellem højtalerpakke",
       "Højtalerstativer",
       "Lysbar",
@@ -98,8 +98,8 @@ export const djGearProducts: RentalProduct[] = [
         {
           "productId": "dj_pult",
           "price": 1695,
-          "label_da": "DJ-pult · AlphaTheta XDJ-AZ",
-          "label_en": "DJ system · AlphaTheta XDJ-AZ"
+          "label_da": "DJ-pult · AlphaTheta XDJ",
+          "label_en": "DJ system · AlphaTheta XDJ"
         },
         {
           "productId": "festival",
@@ -143,7 +143,7 @@ export const djGearProducts: RentalProduct[] = [
     "desc_da": "Pult, lyd, subwoofer, lys og mikrofon til en hel aften. DJ/musikafvikler tilvælges pr. time.",
     "desc_en": "Controller, speakers, subwoofer, lights and a microphone for the whole evening. Add a DJ/music host by the hour.",
     "contents": [
-      "DJ-pult · AlphaTheta XDJ-AZ",
+      "DJ-pult · AlphaTheta XDJ",
       "Mellem højtalerpakke",
       "Højtalerstativer",
       "Subwoofer 12”",
@@ -155,8 +155,8 @@ export const djGearProducts: RentalProduct[] = [
         {
           "productId": "dj_pult",
           "price": 1695,
-          "label_da": "DJ-pult · AlphaTheta XDJ-AZ",
-          "label_en": "DJ system · AlphaTheta XDJ-AZ"
+          "label_da": "DJ-pult · AlphaTheta XDJ",
+          "label_en": "DJ system · AlphaTheta XDJ"
         },
         {
           "productId": "festival",
