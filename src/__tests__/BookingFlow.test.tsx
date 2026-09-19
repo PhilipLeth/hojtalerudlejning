@@ -292,8 +292,8 @@ describe("BookingFlow - Preselect via ?product=", () => {
     window.history.pushState({}, "", "/");
   });
 
-  it("preselects pakke_tale_musik from /?product=pakke_tale_musik#book without sold out message", async () => {
-    window.history.pushState({}, "", "/?product=pakke_tale_musik#book");
+  it("preselects pakke_tale_musik from /?product=pakke_tale_musik without sold out message", async () => {
+    window.history.pushState({}, "", "/?product=pakke_tale_musik");
     render(<BookingFlow />);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
@@ -303,8 +303,8 @@ describe("BookingFlow - Preselect via ?product=", () => {
     expect(screen.queryByText(/udsolgt/i)).not.toBeInTheDocument();
   });
 
-  it("preselects low_fog from /?product=low_fog#book (nyligt aktiveret)", async () => {
-    window.history.pushState({}, "", "/?product=low_fog#book");
+  it("preselects low_fog from /?product=low_fog (nyligt aktiveret)", async () => {
+    window.history.pushState({}, "", "/?product=low_fog");
     render(<BookingFlow />);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
@@ -313,7 +313,7 @@ describe("BookingFlow - Preselect via ?product=", () => {
   });
 
   it("Book-knap på et tilvalg (subwoofer) preselecter det og viser produktets navn", async () => {
-    window.history.pushState({}, "", "/?product=subwoofer#book");
+    window.history.pushState({}, "", "/?product=subwoofer");
     render(<BookingFlow />);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
@@ -325,14 +325,14 @@ describe("BookingFlow - Preselect via ?product=", () => {
 
   it("beholder første produkt i kurven når man booker endnu et via ?product=", async () => {
     const onSummary = vi.fn();
-    window.history.pushState({}, "", "/?product=soundboks#book");
+    window.history.pushState({}, "", "/?product=soundboks");
     const { rerender } = render(<BookingFlow onSummaryChange={onSummary} urlTick={0} />);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
 
     // Kunden klikker "Book" på et andet produkt → nyt ?product= + urlTick bump
-    window.history.pushState({}, "", "/?product=lys#book");
+    window.history.pushState({}, "", "/?product=lys");
     rerender(<BookingFlow onSummaryChange={onSummary} urlTick={1} />);
 
     await waitFor(() => {
@@ -345,13 +345,13 @@ describe("BookingFlow - Preselect via ?product=", () => {
 
   it("stabler ikke dubletter når samme produkt bookes igen", async () => {
     const onSummary = vi.fn();
-    window.history.pushState({}, "", "/?product=soundboks#book");
+    window.history.pushState({}, "", "/?product=soundboks");
     const { rerender } = render(<BookingFlow onSummaryChange={onSummary} urlTick={0} />);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
 
-    window.history.pushState({}, "", "/?product=soundboks#book");
+    window.history.pushState({}, "", "/?product=soundboks");
     rerender(<BookingFlow onSummaryChange={onSummary} urlTick={1} />);
 
     await waitFor(() => {
@@ -486,5 +486,26 @@ describe("BookingFlow - Flere enheder af samme produkt", () => {
     if (!(await tilTrin3())) return;
 
     expect(screen.getByLabelText("Én mere")).toBeDisabled();
+  });
+});
+
+describe("BookingFlow - tom /book", () => {
+  afterEach(() => {
+    window.history.pushState({}, "", "/");
+  });
+
+  it("viser ingen produkter valgt på fuld side uden produkt", async () => {
+    window.history.pushState({}, "", "/book");
+    render(<BookingFlow variant="page" />);
+    await waitFor(() => expect(screen.getByText("Ingen produkter valgt")).toBeInTheDocument());
+    expect(screen.queryByText("Vælg højtalere")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Se udstyr" })).toHaveAttribute("href", "/av-udstyr");
+  });
+
+  it("preselecter stadig produkt på /book?product=", async () => {
+    window.history.pushState({}, "", "/book?product=party");
+    render(<BookingFlow variant="page" />);
+    await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
+    expect(screen.queryByText("Ingen produkter valgt")).not.toBeInTheDocument();
   });
 });

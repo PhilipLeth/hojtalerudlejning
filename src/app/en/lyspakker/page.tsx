@@ -126,13 +126,22 @@ export default function LightPackagesPage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-3xl px-4 pb-8 text-center">
+        <Link
+          href="/en/lys-ai"
+          className="inline-block rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
+        >
+          Try the lights in your venue
+        </Link>
+      </section>
+
       <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
         <h2 className="text-3xl font-bold sm:text-4xl">Ready to light up the party?</h2>
         <p className="mx-auto mt-4 max-w-md text-white/50">
           Book online in 2 minutes. Free pickup in Copenhagen S, or have it delivered and set up.
         </p>
         <a
-          href="/en?product=lys#book"
+          href="/en/book?product=lys"
           className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
         >
           Book lights now

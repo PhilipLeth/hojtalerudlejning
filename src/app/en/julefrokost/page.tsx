@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Christmas party sound rental Copenhagen",
     description: "Office hygge, canteen speech or Friday bar. Book online.",
     url: "https://lejhojtaler.dk/en/julefrokost",
-    images: ["/images/julefrokost-hero.webp"],
+    images: ["/images/julefrokost-kantine.webp"],
     locale: "en_GB",
     type: "website",
   },

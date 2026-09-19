@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { applyDiscount, isSummerSale } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
+import { bookHref } from "@/lib/bookUrl";
 import PhoneLink from "@/components/PhoneLink";
 
 export default function StickyBookBar() {
@@ -12,7 +13,7 @@ export default function StickyBookBar() {
   const price = summer ? applyDiscount(startPrice) : startPrice;
 
   useEffect(() => {
-    // Booking ligger i en drawer nu, vis baren når man er scrollet forbi hero
+    // Booking ligger på /book som fuld side. Vis baren når man er scrollet forbi hero
     // (eller efter 400px hvis der ikke findes en hero-sektion på siden)
     const hero = document.querySelector<HTMLElement>("section.hero-section");
     const book = document.getElementById("book");
@@ -69,7 +70,7 @@ export default function StickyBookBar() {
         <span className="rounded-full bg-black/20 px-2 py-0.5 text-xs font-bold text-white">-25%</span>
       )}
       <a
-        href="/#book"
+        href={bookHref()}
         className="font-semibold text-black text-base"
       >
         Book fra {summer && <span className="line-through opacity-60 mr-1">{startPrice}</span>}{price} kr

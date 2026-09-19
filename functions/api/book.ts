@@ -1,4 +1,4 @@
-import { DJ_ID, requireDjGear, priceDj, djLabel, type DjHours } from "../../src/lib/dj";
+import { DJ_ID, requireDjGear, priceDj, djLabel, dateFromDay, type DjHours } from "../../src/lib/dj";
 import { resolveDiscountFor } from "./_lib/discounts";
 import { sendPush } from "../../src/lib/webpush";
 import { KV_PUSH_SUBS, loadSubscriptions } from "./push";
@@ -296,10 +296,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (data.speakerId === DJ_ID || data.addonIds?.includes(DJ_ID)) throw new Error("DJ kræver valg af timer");
     for (const item of data.cartItems ?? []) {
       if (item.productId !== DJ_ID) continue;
-      const priced = priceDj(item.dj);
+      const djDate = dateFromDay(data.pickupDay, data.pickup);
+      const priced = priceDj(item.dj, djDate);
       if (item.price !== priced.total) throw new Error("DJ-prisen stemmer ikke med de valgte timer");
       item.price = priced.total;
-      item.name = djLabel(priced, data.locale === "en" ? "en" : "da");
+      item.name = djLabel((item.dj ?? priced) as DjHours, data.locale === "en" ? "en" : "da", djDate);
+      console.log("[book] DJ-pris", { peak: priced.peak, hours: priced.hours, total: priced.total });
     }
   } catch (error) {
     return new Response(JSON.stringify({error: error instanceof Error ? error.message : "Ugyldige DJ-timer"}), {status:400,headers:{"Content-Type":"application/json"}});

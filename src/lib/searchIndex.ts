@@ -13,6 +13,7 @@
  */
 import { NAV_CATEGORIES } from "@/lib/products";
 import { localizedHref } from "@/lib/enPages";
+import { bookHref } from "@/lib/bookUrl";
 import type { Catalog } from "@/lib/useProducts";
 import type { Locale } from "@/lib/i18n";
 
@@ -115,7 +116,7 @@ export function buildSearchIndex(catalog: Catalog, locale: Locale): Entry[] {
     if (!a.page && a.ydelse) {
       // En ydelse har ingen produktside — den vælges til i bookingen
       add(entry(
-        { href: `${localizedHref("/", locale)}#book`, title: t.label, hint: t.desc, price: a.price, kind: "produkt", priceUnit: a.priceUnit?.[locale] },
+        { href: bookHref(a.id, locale), title: t.label, hint: t.desc, price: a.price, kind: "produkt", priceUnit: a.priceUnit?.[locale] },
         `${a.da.label} ${a.en.label} lydtekniker tekniker sound technician`,
       ));
       continue;
@@ -163,6 +164,7 @@ export const EKSTRA_SIDER: Array<[string, string, string]> = [
   ["/erhverv", "Erhverv og firmaevents", "firma konference event tilbud"],
   ["/halloween", "Halloween-pakker", "halloween heksetimen monsterfesten midnatsklubben"],
   ["/julefrokost", "Lyd til julefrokost", "julefrokost firmafest fredagsbar december hygge"],
+  ["/lys-ai", "AI-lys i lokalet", "lys ai visualiser uplight lyskæde lyseffekt"],
 ];
 
 /**

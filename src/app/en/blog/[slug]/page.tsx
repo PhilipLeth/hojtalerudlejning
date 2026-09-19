@@ -156,7 +156,7 @@ export default async function Page({ params }: Props) {
               From {startPrisDkk()}/weekend. Collect Friday, return Monday.
             </p>
             <Link
-              href="/en#book"
+              href="/en/book"
               className="mt-4 inline-block rounded-full bg-brand-500 px-8 py-3 font-semibold text-black hover:bg-brand-400 transition"
             >
               Book now

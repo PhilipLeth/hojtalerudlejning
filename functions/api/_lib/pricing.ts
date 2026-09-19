@@ -1,9 +1,10 @@
-import { DJ_ID, requireDjGear, priceDj, djLabel, type DjHours } from "../../../src/lib/dj";
+import { DJ_ID, requireDjGear, priceDj, djLabel, dateFromDay, type DjHours } from "../../../src/lib/dj";
 /** Server-side prisopslag til Stripe — beløb beregnes ALTID her, aldrig fra klienten. */
 import {
   speakers as defaultSpeakers,
   addons as defaultAddons,
   rentalProducts as defaultRentals,
+  isDeliveryAddon,
 } from "../../../src/lib/products";
 import { CATALOG_KEY } from "./channels";
 
@@ -83,24 +84,29 @@ export interface BuiltLineItem {
  */
 export function buildLineItems(
   table: Map<string, PricedItem>,
-  items: LineItemInput[]
+  items: LineItemInput[],
+  date?: Date | null,
 ): { lineItems: BuiltLineItem[]; totalOre: number } {
   if (!Array.isArray(items) || items.length === 0 || items.length > 25) {
     throw new Error("Invalid items");
   }
   requireDjGear(items.map(item=>String(item?.id ?? "")));
+  const hasDj = items.some((item) => item?.id === DJ_ID);
   const lineItems: BuiltLineItem[] = [];
   let totalOre = 0;
   for (const item of items) {
-    const priced = table.get(String(item?.id ?? ""));
+    const id = String(item?.id ?? "");
+    // DJ-prisen rummer allerede levering/opsætning/nedtagning.
+    if (hasDj && isDeliveryAddon(id)) continue;
+    const priced = table.get(id);
     if (!priced) throw new Error(`Unknown product: ${item?.id}`);
-    const dj = item.id === DJ_ID ? priceDj(item.dj) : null;
+    const dj = id === DJ_ID ? priceDj(item.dj, date) : null;
     const unitAmount = dj ? dj.total * 100 : priced.unitAmount;
     lineItems.push({
       price_data: {
         currency: "dkk",
         unit_amount: unitAmount,
-        product_data: { name: dj ? djLabel(dj) : priced.name },
+        product_data: { name: dj ? djLabel(item.dj as DjHours, "da", date) : priced.name },
       },
       quantity: 1,
     });

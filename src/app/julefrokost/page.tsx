@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "Lyd til julefrokost | Lejhøjtaler.dk",
     description: "Kontorets hygge, kantinens tale eller fredagsbaren i december. Book online.",
     url: "https://lejhojtaler.dk/julefrokost",
-    images: ["/images/julefrokost-hero.webp"],
+    images: ["/images/julefrokost-kantine.webp"],
     locale: "da_DK",
     type: "website",
   },

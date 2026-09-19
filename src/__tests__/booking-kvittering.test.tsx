@@ -111,7 +111,7 @@ describe("Kvitteringen kan gemmes, hentes frem og printes", () => {
     fireEvent.click(screen.getByText(/Send booking|Videre til betaling/).closest("button")!);
     await waitFor(() => expect(screen.getByText("Booking modtaget!")).toBeInTheDocument(), { timeout: 4000 });
 
-    // Stod før på /?product=thumpgo#book — et tryk på Opdater sendte kunden
+    // Stod før på /?product=thumpgo — et tryk på Opdater sendte kunden
     // tilbage i bookingflowet i stedet for til sin kvittering
     const url = replaceState.mock.calls.at(-1)?.[2];
     expect(String(url)).toContain("kvittering=1787347874016_kvc5a0");

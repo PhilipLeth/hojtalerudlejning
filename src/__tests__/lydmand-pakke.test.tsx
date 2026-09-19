@@ -21,7 +21,7 @@ beforeEach(() => {
 afterEach(() => window.history.pushState({}, "", "/"));
 
 async function tilTilvalg(productId = "pakke_lydmand_fest") {
-  window.history.pushState({}, "", `/?product=${productId}#book`);
+  window.history.pushState({}, "", `/?product=${productId}`);
   render(<BookingFlow />);
   await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
   vælgDatoer();

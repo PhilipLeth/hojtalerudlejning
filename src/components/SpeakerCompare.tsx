@@ -6,6 +6,7 @@ import { applyDiscount, isSummerSale, type Speaker, type PowerType } from "@/lib
 import { useProducts } from "@/lib/useProducts";
 import { thumbSrcSet, GRID_IMAGE_SIZES } from "@/lib/imageSrcSet";
 import { localizedHref } from "@/lib/enPages";
+import { bookHref } from "@/lib/bookUrl";
 
 function PowerIcon({ power }: { power: PowerType }) {
   if (power === "batteri") {
@@ -28,7 +29,7 @@ export default function SpeakerCompare({
   bookLinks = "hash",
 }: {
   locale?: Locale;
-  /** hash = #book (forside), booking = /?product=ID#book (undersider) */
+  /** hash =  (forside), booking = /?product=ID (undersider) */
   bookLinks?: "hash" | "booking";
 }) {
   const c = t[locale].compare;
@@ -103,7 +104,7 @@ export default function SpeakerCompare({
                       </td>
                       <td className="px-3 py-4 text-right">
                         <a
-                          href={bookLinks === "booking" ? `/?product=${sp.id}#book` : "/#book"}
+                          href={bookHref(sp.id, locale)}
                           className="inline-block rounded-full bg-brand-500 px-4 py-2 text-xs font-semibold text-black transition hover:bg-brand-400 active:scale-95"
                         >
                           {c.book}
@@ -122,7 +123,7 @@ export default function SpeakerCompare({
       <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
         {groups.flatMap((g) => g.items).map((sp) => {
           const text = sp[locale];
-          const href = bookLinks === "booking" ? `/?product=${sp.id}#book` : "/#book";
+          const href = bookHref(sp.id, locale);
           // Produktsiden på læserens eget sprog. sp.page fra kataloget er altid
           // den danske sti, så uden det her sendte /en sine besøgende ind i
           // dansk tekst.

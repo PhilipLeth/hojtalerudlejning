@@ -3856,7 +3856,8 @@
         "halloween_lille Monsterfesten 1495",
         "halloween_stor Midnatsklubben 1995"
       ],
-      "vindue": "09-01 til 11-02"
+      "vindue": "09-01 til 11-02",
+      "billeder": "Hub og pakkesider bruger de custom stemningsfotos (product-halloween-heksetimen/monsterfesten/midnatsklubben.webp), ikke de hvide katalogversioner. whiteProductImages mapper dem ikke, og KV-kataloget må ikke overskrive billedet."
     },
     "julefrokost": {
       "hub": "/julefrokost",
@@ -3869,7 +3870,12 @@
       "ny_pakke": "Julehyggen: thumpgo + lyskaeder + lyseffekt, page /julehyggen. Kun på /lej-hojtaler i KATEGORI_PAKKER."
     },
     "anledningskort": "Shop efter anledning bruger scener (situation-*.webp), ikke produktfotos. Messe, reception og koncert beholder rigtige eventfotos.",
-    "ny_saeson": "Tilføj objekt i SEASONS, hub DA+EN, COPY i SeasonCampaign, evt. tema i HalloweenHome.module.css."
+    "ny_saeson": "Tilføj objekt i SEASONS, hub DA+EN, COPY i SeasonCampaign, evt. tema i HalloweenHome.module.css.",
+    "enkeltprodukter": "Halloween-hubben viser røg, LED-effekt, discokugle og lys-pakke. Stroboskop er skjult kladde og sælges ikke. Julefrokost-hubben viser lyskæder, farvede lyskæder, uplight 4-pak, lyseffekt og trådløs mikrofon.",
+    "favicon": "Blåt lh-mærke (#1249cf) som i ProHeader. icon.svg + icon-192/512 + apple-touch-icon + favicon.ico.",
+    "forside": "SeasonalStrip ligger direkte under heroen som kant-til-kant desktop-plakater (78vh / min 560px, to kolonner). Overlay-tekst på billedet. Hero-scener, ikke produktfotos.",
+    "julefrokost_hero": "Firmajulefrokost med synligt EV-anlæg på stativer, lyskæder og rød/grøn PAR-uplight. Fil julefrokost-kantine.webp. Overlay-tekst nederst, ikke midt i billedet.",
+    "checkout": "Tom /book uden produkt viser 'Ingen produkter valgt' og CTA til udstyr, ikke højtalervælgeren. Flowet bor i layout, så kurven overlever navigation."
   },
   "pakkepris_gennemgang_2026_09_14": {
     "godkendt": "Brugeren godkendte alle foreslåede prisrettelser.",
@@ -4133,5 +4139,20 @@
     "ads": "Annoncerne følger kataloget: scripts/ads/aag/sync.mjs genskaber de AAG-grupper, hvis tekst har ændret sig (priser), og skal køres EFTER deploy, så annoncen aldrig lover en anden pris end siden.",
     "arket_19_09": "Philip sendte arket igen 19. sept med kolonnen 'Relevante add-ons' udfyldt for hvert produkt og konkurrentpriser (LejFesten, Idisko, LejAnlæg, Nawi). scripts/katalog/tilvalg.py læser kolonnen som en relation begge veje og skriver allowedAddons for 42 produkter; kun varer fra tilvalgslisten kan vises som tilvalg i bookingen, resten (fx uplight-pakke ↔ diskokugle) er krydssalg og er ikke bygget. DJ-pulten: arkets tekst siger 'AlphaTheta XDJ-AZ eller XDJ-RR' (4 kanaler), men arkets indkøbslink er en AlphaTheta XDJ-AN (2 kanaler, 6.855 kr). Sitet siger derfor kun 'AlphaTheta XDJ all-in-one' uden model og kanaltal, indtil Philip siger hvad der købes — sæt så modelnavnet på i djGearProducts.ts, de to dj-pult-sider, DjGearPicker, DjProduct og SituationPage. Navn, tekst, foto og side er skiftet fra Pioneer DDJ-FLX4 med iPad; hovedtelefonerne (dj_headphones) er ikke i arket og er pauset. DJ Pakke 0-30 = 2.695 (arket), 30-50 = 2.995. Kabeltromlerne står i arket uden pris og er ikke lagt ind. De fire pakkepriser over delenes sum står stadig i arket (1.149 / 1.395 / 1.395), kataloget holder de afledte 895 / 1.095 / 1.145 — en pakke må ikke koste mere end delene, se pakkestige.test.ts.",
     "modeller_19_09": "Philip: 'produkterne matcher ikke det reelle produkt, nogle er en blanding af gamle og nye'. scripts/katalog/modeller.py retter katalog og produktsider (DA+EN) til arkets modeller: Enkelt lyseffekt er Eurolite LED Mini Z-20 (var LED-par-lys med gammelt foto), Soundboks batteri har eget foto og siger ikke længere Thump GO, Stor højtalerpakke er 2× EV ZLX 12P G2 + Behringer B1200D Pro UDEN stativer (stativer er tilvalg, som arket siger; nyt foto uden stativer), trådløs mikrofon og headset bruger Shure-fotoene, mikrofon med ledning er the t.bone MB 60, mixer-teksterne påstår ikke længere kanaltal, og modelnavne står i alle indholdslinjer (Millenium, Gravity KSX 2, PartyPar 12, ADJ Mini Dekker, Showtec, Eurolite, Eliminator, Laserworld, Stairville, Stageworx). Galleri-fotoene under /hojtalerpakke-bas viser stadig stativer — de er rigtige fotos af det gamle setup og skal skydes om."
+  },
+  "lys_ai_2026_09_16": {
+    "side": "/lys-ai og /en/lys-ai",
+    "api": "/api/lys-visualiser. Uden GEMINI_API_KEY (samme secret som galleriet) returneres scenen uændret + anbefalingen lyskaeder, uplight_4, lyseffekt.",
+    "produkter": [
+      "lyskaeder",
+      "lyskaeder_farvet",
+      "uplight",
+      "uplight_4",
+      "lyseffekt",
+      "lys",
+      "discokugle"
+    ],
+    "kurv": "Læg hele setuppet via bookSetupHref (?product=første&extras=resten). Link fra /lyspakker, /festlys og DJ-lysvælgeren.",
+    "loft": "8 forsøg pr. IP pr. dag i KV."
   }
 }

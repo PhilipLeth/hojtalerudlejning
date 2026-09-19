@@ -1,11 +1,14 @@
 "use client";
-import { DJ_ID, DJ_DEFAULT, priceDj, djLabel, isDjGear, requireDjGear, type DjHours } from "@/lib/dj";
+import { DJ_ID, DJ_DEFAULT, priceDj, djLabel, djHoursFromRange, rangeFromHours, isDjGear, isDjLight, requireDjGear, type DjHours } from "@/lib/dj";
 import DjGearPicker from "./DjGearPicker";
 import DjHoursPicker from "./DjHoursPicker";
+import DjLightsPicker from "./DjLightsPicker";
 
 import { useState, useMemo, useEffect, useCallback, useRef, FormEvent } from "react";
+import Link from "next/link";
 import { rapporterFejl } from "@/lib/errorReport";
 import { type Locale, t } from "@/lib/i18n";
+import { localizedHref } from "@/lib/enPages";
 
 import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, isInternalAddon, isServiceAddon, bundleIncludesDelivery, DELIVERY_ADDON_IDS } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
@@ -437,6 +440,7 @@ function DeliveryPicker({
   pickupDate,
   returnDate,
   included = false,
+  includedDesc,
   locale = "da",
 }: {
   options: Array<{ id: string; label: string; desc: string; price: number }>;
@@ -444,6 +448,7 @@ function DeliveryPicker({
   onSelect: (id: string | null) => void;
   /** Kørslen er en del af pakken, vis den som låst i stedet for som et valg */
   included?: boolean;
+  includedDesc?: string;
   address: string;
   onAddressChange: (v: string) => void;
   addressMissing: boolean;
@@ -461,7 +466,7 @@ function DeliveryPicker({
   const selfDesc = `${pickupAddress}, ${locale === "en" ? "free" : "gratis"}`;
 
   const rows: Array<{ id: string | null; label: string; desc: string; price: number }> = included
-    ? [{ id: value, label: s.deliveryIncludedLabel, desc: s.deliveryIncludedDesc, price: 0 }]
+    ? [{ id: value, label: s.deliveryIncludedLabel, desc: includedDesc ?? s.deliveryIncludedDesc, price: 0 }]
     : [{ id: null, label: selfLabel, desc: selfDesc, price: 0 }, ...options];
 
   return (
@@ -719,13 +724,13 @@ export default function BookingFlow({
   urlTick = 0,
 }: {
   locale?: Locale;
-  variant?: "inline" | "drawer";
+  variant?: "inline" | "drawer" | "page";
   /** Kurv-summary til drawer-fanen: antal produkter + total */
   onSummaryChange?: (summary: { count: number; total: number }) => void;
   /** Bumpes når URL ændres (soft-nav) så ?product= preselectes igen */
   urlTick?: number;
 }) {
-  const inDrawer = variant === "drawer";
+  const inDrawer = variant === "drawer" || variant === "page";
   const s = t[locale].booking;
 
   // Åbningstider fra /admin/indstillinger: hvad kalenderen viser, og, hvis
@@ -781,8 +786,16 @@ export default function BookingFlow({
   const [djHours, setDjHours] = useState<DjHours>(DJ_DEFAULT);
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
-    if(q.get("product") !== DJ_ID || !q.has("djBefore") || !q.has("djAfter")) return;
-    try { const parsed = priceDj({before23:Number(q.get("djBefore")),after23:Number(q.get("djAfter"))}); setDjHours({before23:parsed.before23,after23:parsed.after23}); } catch { /* Standardvalget beholdes ved ugyldig URL. */ }
+    if(q.get("product") !== DJ_ID) return;
+    const from = q.get("djFrom");
+    const to = q.get("djTo");
+    const ranged = from && to ? djHoursFromRange(from, to) : null;
+    if (ranged) { setDjHours(ranged); return; }
+    if (!q.has("djBefore") || !q.has("djAfter")) return;
+    try {
+      const parsed = priceDj({ before23: Number(q.get("djBefore")), after23: Number(q.get("djAfter")) });
+      setDjHours(rangeFromHours({ before23: parsed.before23, after23: parsed.after23 }));
+    } catch { /* Standardvalget beholdes ved ugyldig URL. */ }
   }, [urlTick]);
   const harDj = selectedAddons.includes(DJ_ID);
   const orderHasDj = harDj || cartItems.some(c=>c.productId===DJ_ID);
@@ -790,17 +803,25 @@ export default function BookingFlow({
   function chooseDjGear(id: string) {
     const gear=rentalProducts.find(p=>p.id===id && isDjGear(p.id));
     if(!gear) return;
+    if (id === "dj_pakke_stor") setSelectedAddons((prev) => prev.filter((x) => !isDjLight(x)));
     if(isDjGear(speaker)){setSpeaker(id);return;}
     setCartItems(prev=>[...prev.filter(c=>!isDjGear(c.productId)),{productId:gear.id,name:locale==='en'?gear.name_en:gear.name_da,price:isSummerSale()?applyDiscount(gear.price):gear.price}]);
   }
+  function chooseDjLight(id: string | null) {
+    setSelectedAddons((prev) => {
+      const rest = prev.filter((x) => !isDjLight(x));
+      return id ? [...rest, id] : rest;
+    });
+  }
+  const selectedDjLight = selectedAddons.find(isDjLight) ?? null;
   function ensureDjGear(id?:string|null) {
     if(selectedDjGear) return;
     const gear=rentalProducts.find(p=>p.id===(isDjGear(id)?id:'dj_pult'));
     if(!gear)return;
     setCartItems(prev=>prev.some(c=>isDjGear(c.productId))?prev:[...prev,{productId:gear.id,name:locale==='en'?gear.name_en:gear.name_da,price:isSummerSale()?applyDiscount(gear.price):gear.price}]);
   }
-  const djPris = priceDj(djHours).total;
-  const djNavn = djLabel(djHours, locale);
+  const djPris = priceDj(djHours, pickupDate).total;
+  const djNavn = djLabel(djHours, locale, pickupDate);
   const harLydmand = selectedAddons.includes(LYDMAND_ID);
   const lydmandAddon = addons.find((a) => a.id === LYDMAND_ID);
   const lydmandFraTil = timerMellem(lydmandFra, lydmandTil);
@@ -894,11 +915,14 @@ export default function BookingFlow({
   /**
    * Kvitteringen som data. Gemmes i kundens egen browser og lægges i URL'en,
    * så han kan opdatere siden, gemme et bogmærke og printe den, i stedet for
-   * at stå på /?product=thumpgo#book, hvor et enkelt tryk på Opdater sender
+   * at stå på /?product=thumpgo, hvor et enkelt tryk på Opdater sender
    * ham tilbage i bookingflowet.
    */
   const [kvittering, setKvittering] = useState<KvitteringData | null>(null);
   const [error, setError] = useState("");
+  /** Tom /book skal ikke vise højtalervælgeren før vi ved om URL'en har et produkt. */
+  const [urlTjekket, setUrlTjekket] = useState(false);
+  const [urlProdukt, setUrlProdukt] = useState<string | null>(null);
 
   // Availability state, only checked for the selected dates (step 2).
   // No overview check in step 1: a single booking somewhere in the coming
@@ -909,8 +933,10 @@ export default function BookingFlow({
 
   // Drawer: scroll altid til toppen når man skifter step
   useEffect(() => {
-    if (inDrawer) {
+    if (inDrawer && variant !== "page") {
       document.getElementById("booking-drawer-scroll")?.scrollTo({ top: 0 });
+    } else if (variant === "page") {
+      window.scrollTo({ top: 0 });
     }
   }, [step, inDrawer]);
 
@@ -918,6 +944,14 @@ export default function BookingFlow({
   useEffect(() => {
     preselected.current = false;
   }, [urlTick]);
+
+  useEffect(() => {
+    if (variant !== "page") return;
+    if (typeof window === "undefined") return;
+    const q = new URLSearchParams(window.location.search);
+    setUrlProdukt(q.get("product"));
+    setUrlTjekket(true);
+  }, [urlTick, variant]);
 
   /**
    * Læg det aktuelle valg (produkt + tilvalg) i kurven i stedet for at smide
@@ -952,6 +986,35 @@ export default function BookingFlow({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [speaker, selectedAddons, addons, speakers, rentalProducts, locale, lydmandLabel, lydmandPris, djHours, djNavn, djPris]);
 
+  /** Flere produkter fra ?extras=id,id, fx AI-lyssetup. */
+  const lægExtrasIKurv = (primær: string) => {
+    const extras = new URLSearchParams(window.location.search).get("extras");
+    if (!extras) return;
+    const ids = extras.split(",").map((s) => s.trim()).filter(Boolean);
+    if (!ids.length) return;
+    const priceOf = (base: number) => (isSummerSale() ? applyDiscount(base) : base);
+    setCartItems((prev) => {
+      const items = [...prev];
+      const already = new Set(items.map((i) => i.productId));
+      for (const id of ids) {
+        if (already.has(id) || id === primær) continue;
+        const rp = rentalProducts.find((p) => p.id === id);
+        if (rp) {
+          items.push({ productId: id, name: locale === "en" ? rp.name_en : rp.name_da, price: priceOf(rp.price) });
+          already.add(id);
+          continue;
+        }
+        const a = addons.find((p) => p.id === id);
+        if (a) {
+          items.push({ productId: id, name: a.label, price: priceOf(a.price) });
+          already.add(id);
+        }
+      }
+      console.log("[booking] extras i kurven", ids);
+      return items;
+    });
+  };
+
   // Preselect product from ?product=ID, re-runs on soft-nav (urlTick).
   // Er der allerede et produkt i gang, lægges det i kurven først, så
   // "book endnu en ting" aldrig smider det første valg væk.
@@ -978,10 +1041,27 @@ export default function BookingFlow({
         const requestedGear=q.get("djGear");
         if(isDjGear(requestedGear)){const gear=rentalProducts.find(p=>p.id===requestedGear);if(gear)setCartItems(prev=>[...prev.filter(c=>!isDjGear(c.productId)),{productId:gear.id,name:locale==="en"?gear.name_en:gear.name_da,price:isSummerSale()?applyDiscount(gear.price):gear.price}]);}
         else ensureDjGear();
-        try {const v=priceDj({before23:Number(q.get("djBefore") ?? 3),after23:Number(q.get("djAfter") ?? 0)});setDjHours({before23:v.before23,after23:v.after23});} catch {setDjHours(DJ_DEFAULT);}
+        try {
+          const from = q.get("djFrom");
+          const to = q.get("djTo");
+          const ranged = from && to ? djHoursFromRange(from, to) : null;
+          if (ranged) setDjHours(ranged);
+          else {
+            const v = priceDj({ before23: Number(q.get("djBefore") ?? 3), after23: Number(q.get("djAfter") ?? 0) });
+            setDjHours(rangeFromHours({ before23: v.before23, after23: v.after23 }));
+          }
+        } catch { setDjHours(DJ_DEFAULT); }
       }
       setSpeaker("effects-only");
-      setSelectedAddons((prev) => [...prev.filter((id) => DELIVERY_IDS.includes(id)), product]);
+      setSelectedAddons((prev) => {
+        const next = [...prev.filter((id) => DELIVERY_IDS.includes(id)), product];
+        if (product !== DJ_ID) return next;
+        const q = new URLSearchParams(window.location.search);
+        const light = q.get("djLight");
+        if (isDjLight(light) && q.get("djGear") !== "dj_pakke_stor" && !next.includes(light)) next.push(light);
+        return next;
+      });
+      lægExtrasIKurv(product);
       setStep(2);
       return;
     }
@@ -996,6 +1076,7 @@ export default function BookingFlow({
       }
       if (hasCurrent) stashSelectionToCart();
       setSpeaker(product);
+      lægExtrasIKurv(product);
       setStep(2);
       return;
     }
@@ -1105,7 +1186,7 @@ export default function BookingFlow({
   const DELIVERY_IDS: readonly string[] = DELIVERY_ADDON_IDS;
   // Pakker med lydmand har kørslen med i prisen: den står ikke som tilvalg
   // (så den ikke betales to gange), men ordren får stadig deliveryOptionId
-  const includedDelivery = bundleIncludesDelivery(selectedRental);
+  const includedDelivery = bundleIncludesDelivery(selectedRental) ?? (orderHasDj ? "levering_begge" : null);
   const hasDelivery = !!includedDelivery || selectedAddons.some((id) => DELIVERY_IDS.includes(id));
   const deliveryChoice = includedDelivery ?? selectedAddons.find((id) => DELIVERY_IDS.includes(id)) ?? null;
   // Kørsel uden adresse er ubrugelig, så ved vi ikke hvor vi skal hen
@@ -1223,6 +1304,13 @@ export default function BookingFlow({
 
   // Kurv-summary op til draweren (fane når draweren er pakket væk)
   const cartCount = cartItems.length + (speaker ? 1 : 0);
+  const tomKurv =
+    variant === "page" &&
+    urlTjekket &&
+    !urlProdukt &&
+    !speaker &&
+    cartItems.length === 0 &&
+    selectedAddons.filter((id) => !DELIVERY_IDS.includes(id)).length === 0;
   useEffect(() => {
     onSummaryChange?.({ count: cartCount, total });
   }, [cartCount, total, onSummaryChange]);
@@ -1456,7 +1544,7 @@ export default function BookingFlow({
         }
         // URL'en skal pege på kvitteringen, ikke på produktet man kom fra
         try {
-          window.history.replaceState(null, "", `${locale === "en" ? "/en" : "/"}?kvittering=${nr}`);
+          window.history.replaceState(null, "", `${locale === "en" ? "/en/book" : "/book"}?kvittering=${nr}`);
         } catch {
           /* ikke kritisk */
         }
@@ -1501,7 +1589,7 @@ export default function BookingFlow({
         // Stripe regner pr. id, lydmanden sendes én gang pr. time
         const itemIds: string[] = [
           ...(!isEffectsOnly && speaker ? [speaker] : []),
-          ...selectedAddons.filter((id) => id !== LYDMAND_ID && id !== DJ_ID),
+          ...selectedAddons.filter((id) => id !== LYDMAND_ID && id !== DJ_ID && !(orderHasDj && DELIVERY_IDS.includes(id))),
           ...(harLydmand ? Array.from({ length: lydmandAntal }, () => LYDMAND_ID) : []),
           ...cartItems.filter(c => c.productId !== DJ_ID).map((c) => c.productId),
         ];
@@ -1807,7 +1895,20 @@ export default function BookingFlow({
 
 
       {/* ── Content ── */}
-      <div className={inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-4 pb-16" : "relative z-20 mx-auto max-w-lg px-4 py-24"}>
+      <div className={variant === "page" ? "relative z-20 mx-auto max-w-2xl px-4 py-4 pb-16" : inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-4 pb-16" : "relative z-20 mx-auto max-w-lg px-4 py-24"}>
+        {tomKurv ? (
+          <div className="space-y-5 py-16 text-center">
+            <h2 className="text-2xl font-bold">{s.emptyCartTitle}</h2>
+            <p className="mx-auto max-w-md text-white/50">{s.emptyCartBody}</p>
+            <Link
+              href={localizedHref("/av-udstyr", locale)}
+              className="inline-block rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
+            >
+              {s.emptyCartCta}
+            </Link>
+          </div>
+        ) : (
+          <>
         {/* Progress */}
         <div className="mb-8 flex items-center justify-center gap-2">
           {[1, 2, 3, 4].map((st) => (
@@ -2131,6 +2232,13 @@ export default function BookingFlow({
             <DeliveryPicker
               locale={locale}
               included={!!includedDelivery}
+              includedDesc={
+                orderHasDj
+                  ? locale === "en"
+                    ? "Delivery, setup and collection are in the DJ price."
+                    : "Levering, opsætning og nedtagning er med i DJ-prisen."
+                  : undefined
+              }
               options={addons
                 .filter((a) => DELIVERY_IDS.includes(a.id))
                 .map((a) => ({ id: a.id, label: a.label, desc: a.desc, price: a.price }))}
@@ -2150,6 +2258,14 @@ export default function BookingFlow({
             />
 
             {orderHasDj && <DjGearPicker locale={locale} value={selectedDjGear ?? ""} onChange={chooseDjGear}/>}
+            {orderHasDj && (
+              <DjLightsPicker
+                locale={locale}
+                value={selectedDjLight}
+                onChange={chooseDjLight}
+                hidden={selectedDjGear === "dj_pakke_stor"}
+              />
+            )}
             {orderHasDj && !selectedDjGear && <p role="alert" className="text-sm text-red-600">{locale==="en"?"Choose equipment for the DJ before continuing.":"Vælg gear til DJ’en før du fortsætter."}</p>}
             {/* Tilvalgene. Kun de fem mest relevante vises, resten kan foldes
                 ud. Før stod otte tilvalg og seks krydssalg åbne på én gang, og
@@ -2164,6 +2280,7 @@ export default function BookingFlow({
                 };
                 const alle = visibleAddons
                   .filter((a) => !DELIVERY_IDS.includes(a.id))
+                  .filter((a) => !(orderHasDj && isDjLight(a.id)))
                   .filter((a) => !q || a.label.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q))
                   .sort((a, b) => rang(a.id) - rang(b.id));
                 // Et valgt tilvalg skal blive stående, også når listen er foldet sammen
@@ -2200,11 +2317,11 @@ export default function BookingFlow({
                           <p className="truncate text-xs text-white/40">{a.desc}</p>
                         </div>
                         <p className="shrink-0 text-right text-sm font-bold text-brand-400">
-                          +{a.price},-
-                          {(a.id === LYDMAND_ID || a.id === DJ_ID) && <span className="block text-[11px] font-normal text-white/40">{s.perHour}</span>}
+                          {a.id === DJ_ID ? `${djPris},-` : `+${a.price},-`}
+                          {a.id === LYDMAND_ID && <span className="block text-[11px] font-normal text-white/40">{s.perHour}</span>}
                         </p>
                       </button>
-                      {a.id === DJ_ID && selected && <DjHoursPicker value={djHours} onChange={setDjHours} locale={locale}/>}
+                      {a.id === DJ_ID && selected && <DjHoursPicker value={djHours} onChange={setDjHours} locale={locale} date={pickupDate}/>}
                       {/* Lydmanden: timerne er antallet, og start/slut er en hjælp, ikke et krav */}
                       {a.id === LYDMAND_ID && selected && (
                         <div className="mt-2 rounded-xl border border-brand-500/30 bg-brand-500/5 p-3">
@@ -2772,6 +2889,8 @@ export default function BookingFlow({
               </button>
             </div>
           </form>
+        )}
+          </>
         )}
       </div>
     </section>

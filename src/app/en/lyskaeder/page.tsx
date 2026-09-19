@@ -74,7 +74,7 @@ export default function Page() {
             10 m string lights, choose warm white or coloured bulbs. Right for any party.
           </p>
           <a
-            href="/en?product=lyskaeder#book"
+            href="/en/book?product=lyskaeder"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book fairy lights now
@@ -135,7 +135,7 @@ export default function Page() {
             Book online in 2 minutes. Collect on Friday in Copenhagen S, return Monday.
           </p>
           <a
-            href="/en?product=lyskaeder#book"
+            href="/en/book?product=lyskaeder"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book fairy lights now

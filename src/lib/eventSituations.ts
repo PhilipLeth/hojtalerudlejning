@@ -275,7 +275,7 @@ export const eventSituations = [
       "check": [
         "Middag og dansegulv i samme rum",
         "Taler og underholdning",
-        "DJ-timer før og efter kl. 23"
+        "DJ-timer, start og slut"
       ]
     },
     "en": {
@@ -285,7 +285,7 @@ export const eventSituations = [
       "check": [
         "Dinner and dancing in the same room",
         "Speeches and entertainment",
-        "DJ hours before and after 23:00"
+        "DJ hours, start and finish"
       ]
     }
   },

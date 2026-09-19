@@ -26,6 +26,8 @@ export interface Season {
   hero: string;
   productIds: string[];
   featuredId?: string;
+  /** Enkeltprodukter under pakkerne (røg, lyskæder, …). */
+  extraIds?: string[];
 }
 
 export const SEASONS: Season[] = [
@@ -40,12 +42,13 @@ export const SEASONS: Season[] = [
     kickerEn: "Halloween · 31 October",
     titleDa: "Skru op for uhyggen.",
     titleEn: "Turn up the fright.",
-    leadDa: "Tre pakker med lyd, lys og røg. Du står for kostumerne.",
-    leadEn: "Three packages with sound, lights and fog. You bring the costumes.",
+    leadDa: "Tre pakker med lyd, lys og røg, og enkeltprodukter hvis I kun mangler røgen.",
+    leadEn: "Three packages with sound, lights and fog, plus single products if you only need the fog.",
     accent: "#e87a2a",
     hero: "/images/halloween-hero.webp",
     productIds: ["halloween_lys", "halloween_lille", "halloween_stor"],
     featuredId: "halloween_lille",
+    extraIds: ["rog", "lyseffekt", "discokugle", "lys"],
   },
   {
     id: "julefrokost",
@@ -61,9 +64,10 @@ export const SEASONS: Season[] = [
     leadDa: "Kontorets julehygge, kantinens julefrokost eller fredagsbaren i december. Book pakken online.",
     leadEn: "Office hygge, the canteen Christmas lunch or the December Friday bar. Book the package online.",
     accent: "#b42318",
-    hero: "/images/julefrokost-hero.webp",
+    hero: "/images/julefrokost-kantine.webp",
     productIds: ["jul_hygge", "pakke_firmafest", "event_fredagsbar_2"],
     featuredId: "pakke_firmafest",
+    extraIds: ["lyskaeder", "lyskaeder_farvet", "uplight_4", "lyseffekt", "traadloes_mikrofon"],
   },
 ];
 

@@ -120,8 +120,9 @@
 
 ## Praktisk
 
+- [Book udstyr](https://lejhojtaler.dk/book): Vælg udstyr, datoer og tilvalg. Book online på et par minutter.
 - [Diskret AV-opstilling, se vores eksempel](https://lejhojtaler.dk/cases): Fotos af konkrete AV-opstillinger i København. Se grejet i rummet, og book den tilsvarende pakke online.
-- [DJ og musikafvikler København](https://lejhojtaler.dk/dj): Minimum 3 timer. 1.000 kr/time før kl. 23 og 1.500 kr/time efter kl. 23, inklusive moms. Vælg antal timer online.
+- [DJ og musikafvikler København](https://lejhojtaler.dk/dj): Sæt start og sluttid. 1.800 kr/time, altid. Levering, opsætning og nedtagning er med. Book online.
 - [AV og eventteknik til erhverv i København](https://lejhojtaler.dk/erhverv): Lyd, skærme, projektorer, mikrofoner og lys til møder, messer, receptioner og mindre koncerter. Levering, opsætning og tekniker efter aftale.
 - [Komplette AV-løsninger til møder, messer og events](https://lejhojtaler.dk/eventloesninger): Seksten anledninger med færdige AV-pakker. Sammenlign indhold og book online. Tilbud kun ved særlige rum.
 - [Bryllupper, lyd, lys og AV i København](https://lejhojtaler.dk/events/bryllup): Fra den første tale til den sidste dans. Planlæg lyd til middag og fest, og overvej en separat batteriløsning til vielsen. Musikafvikling, mikrofoner og skift mellem rum aftales efter dagens program.
@@ -145,6 +146,7 @@
 - [Kontakt os](https://lejhojtaler.dk/kontakt): Kontakt Lejhøjtaler.dk, skriv til info@lejhojtaler.dk, ring eller brug formularen. Vi svarer som regel samme dag.
 - [Lej projektor og storskærm i København](https://lejhojtaler.dk/lej-projektor): Lej projektor, lærred og storskærm i København. Projektor fra 495 kr, 55" skærm fra 595 kr og lærred fra 195 kr. Til møde, konference og filmaften. Book online.
 - [Lejevilkår](https://lejhojtaler.dk/lejevilkaar): Lejevilkår for leje af højtalere, lysudstyr og PA-anlæg hos Lejhøjtaler.dk. Læs om priser, lejeperiode, afhentning, returnering og ansvar.
+- [Se lyset i jeres lokale](https://lejhojtaler.dk/lys-ai): Upload et foto af lokalet. Vi sætter lyskæder, uplights og lyseffekter op, og I lægger setuppet i kurven. Lysudlejning i København.
 - [Om os](https://lejhojtaler.dk/om): Mød Frederik Scharling, stifter af lejhøjtaler.dk. Københavns mest tilgængelige udlejningsservice for lyd og lys til private fester, firmaevents og alt derimellem.
 - [Privatlivspolitik](https://lejhojtaler.dk/privatlivspolitik): Sådan behandler Lejhøjtaler.dk dine personoplysninger: hvad vi indsamler, hvorfor, hvor længe vi gemmer det, og hvilke rettigheder du har efter GDPR.
 
@@ -164,6 +166,7 @@
 - [Rent a speaker you can take home on your bike in Copenhagen](https://lejhojtaler.dk/en/blog/speaker-on-a-bike-copenhagen): Our small speaker package weighs just 12 kg and fits in a carry bag. Made for Copenhageners without a car. Collect by bike in Copenhagen S, or have it delivered.
 - [Speaker Rental Copenhagen – Rent a Party Speaker from 395 DKK](https://lejhojtaler.dk/en/blog/speaker-rental-copenhagen): Rent speakers and PA systems in Copenhagen from 395 DKK/weekend. Pick up Friday, return Monday. Easy online booking for parties and events.
 - [Which speaker should you rent for your party?](https://lejhojtaler.dk/en/blog/which-speaker-for-your-party): A guide to choosing the right speaker for your party in Copenhagen. Small package for 40 people, large package for 100+. See prices and book from 395 DKK.
+- [Book equipment](https://lejhojtaler.dk/en/book): Choose equipment, dates and extras. Book online in a couple of minutes.
 - [Wedding Sound & Light Rental Copenhagen](https://lejhojtaler.dk/en/bryllup): Rent sound and lighting for a wedding in Copenhagen from 1.095 DKK. Speakers for the speeches and the dancefloor, a wireless microphone and ambient light. Delivery and setup available.
 - [Wedding light package Copenhagen](https://lejhojtaler.dk/en/bryllupslys) — 1200 kr/weekend: Fairy lights, uplights and low fog for the wedding waltz, dancing on clouds for 1,200 DKK. Save 135 DKK. Rental in Copenhagen.
 - [Wedding Package](https://lejhojtaler.dk/en/bryllupspakke) — 2315 kr/weekend: Wedding package: 2× EV 12" speakers on stands, wireless microphone for the speeches, light bar, string lights and low fog machine for 2,315 DKK, save 155 DKK. Delivery and setup available in Copenhagen.
@@ -171,7 +174,7 @@
 - [Disco Ball Rental Copenhagen](https://lejhojtaler.dk/en/discokugle) — 645 kr/weekend: Rent a disco ball in Copenhagen for 645 DKK per weekend. 40 cm rotating mirror ball with motor, LED spotlight and stand, plug and play. Pay on pickup.
 - [Disco light package Copenhagen](https://lejhojtaler.dk/en/diskolys) — 685 kr/weekend: Disco light effect and disco ball, the dancefloor for 685 DKK. Save 155 DKK. Rental in Copenhagen.
 - [Club light package Copenhagen](https://lejhojtaler.dk/en/diskotek-pakke) — 1050 kr/weekend: Light bar, disco effect and disco ball, a full dancefloor without fog for 1,050 DKK. Save 185 DKK. Rental in Copenhagen.
-- [DJ hire Copenhagen](https://lejhojtaler.dk/en/dj): Minimum 3 hours. DKK 1,000/hour before 23:00 and DKK 1,500/hour after 23:00. VAT included. Choose your hours online.
+- [DJ hire Copenhagen](https://lejhojtaler.dk/en/dj): Set start and finish. DKK 1,800/hour, always. Delivery, setup and collection included. Book online.
 - [DJ system rental Copenhagen](https://lejhojtaler.dk/en/dj-pult) — 1695 kr/weekend: Hire an AlphaTheta XDJ, an all-in-one DJ system with no laptop needed. Choose the controller on its own or a small, medium or medium speaker package. VAT included.
 - [Soundboks Battery Rental](https://lejhojtaler.dk/en/ekstra-batteri) — 395 kr/weekend: Rent an extra battery for the Soundboks 4 for 395 DKK. Double the playtime without power, for garden parties, beaches and graduation rides. Rent in Copenhagen.
 - [Single Light Effect Rental Copenhagen](https://lejhojtaler.dk/en/enkelt-lyseffekt) — 195 kr/weekend: Rent a single LED party light in Copenhagen for 195 DKK per weekend. Plug-and-play colour effect for birthdays, house parties and small venues. Book online in 2 minutes.
@@ -228,6 +231,7 @@
 - [Rental Terms](https://lejhojtaler.dk/en/lejevilkaar): Rental terms for speaker, lighting and PA system hire at Lejhøjtaler.dk. Read about prices, rental periods, pickup, return and liability.
 - [PA System Rental Copenhagen, packages by guest count](https://lejhojtaler.dk/en/lydanlaeg): Rent a PA system in Copenhagen by how many guests are coming: 50, 100, 150 or 250 people. Ready-made packages with speakers, sub, lights and fog, delivery and setup available.
 - [Sound Engineer Hire Copenhagen](https://lejhojtaler.dk/en/lydmand) — 1000 kr/weekend: Hire a sound engineer for your party or corporate event in Copenhagen, 1,000 DKK per hour incl. VAT. The AV technician sets up, runs the sound check and controls sound and microphones while you enjoy the event.
+- [See the lights in your venue](https://lejhojtaler.dk/en/lys-ai): Upload a photo of the room. We place fairy lights, uplights and effects, and you add the setup to the basket. Event lighting rental in Copenhagen.
 - [Party Light Package Rental Copenhagen](https://lejhojtaler.dk/en/lys-pakke) — 395 kr/weekend: Rent a party light package in Copenhagen for 395 DKK per weekend. 2 coloured LED lamps and a centre effect on a stand, plug and play, ready in minutes. Pay on pickup.
 - [Fairy Light Rental Copenhagen](https://lejhojtaler.dk/en/lyskaeder): Rent fairy lights in Copenhagen from 195 DKK per weekend. 10 m string lights in warm white or colour, for garden parties, weddings and birthdays. Pay on pickup.
 - [Party Light Rental Copenhagen, packages from 645 DKK](https://lejhojtaler.dk/en/lyspakker): Light rental in Copenhagen: ready-made light bars for teen parties, party tents, weddings and dancefloors from 645 DKK. Everything is plug and play, pick up for free or have it delivered.

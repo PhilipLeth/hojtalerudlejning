@@ -48,7 +48,7 @@ describe("Bookingmail viser hele ordren", () => {
 
 describe("Man kan tilføje flere produkter uanset produkttype", () => {
   async function toStep3(productId: string) {
-    window.history.pushState({}, "", `/?product=${productId}#book`);
+    window.history.pushState({}, "", `/?product=${productId}`);
     render(<BookingFlow />);
     await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
     // Hop til tilvalgs-steppet uden at vælge datoer

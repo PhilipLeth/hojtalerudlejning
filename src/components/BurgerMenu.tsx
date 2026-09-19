@@ -7,6 +7,7 @@ import { NAV_CATEGORIES } from "@/lib/products";
 import { activeSeasons } from "@/lib/seasons";
 import PhoneLink from "@/components/PhoneLink";
 import { danskSti, hasEnglish, localizedHref } from "@/lib/enPages";
+import { bookHref } from "@/lib/bookUrl";
 
 /**
  * Menuens faste tekster.
@@ -200,7 +201,7 @@ export default function BurgerMenu() {
 
           {/* CTA */}
           <a
-            href={locale === "en" ? "/en#book" : "/#book"}
+            href={bookHref(null, locale)}
             onClick={() => setOpen(false)}
             className="mt-8 block rounded-full bg-brand-500 px-6 py-3 text-center font-semibold text-black transition hover:bg-brand-400"
           >
