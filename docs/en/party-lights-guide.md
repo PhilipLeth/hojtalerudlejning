@@ -38,15 +38,15 @@ Our party light package is put together to be easy to set up and to give the mos
 
 3. **The fog machine behind the speaker.** Place it behind or beside your sound system so the fog drifts out across the dancefloor. Use it in short bursts — too much fog is also too much.
 
-4. **Combine it with sound.** Light and sound belong together. When the bass lands and the light dances in the fog, you have a party. Combine the light bar with a [speaker package](/en#book) for the full effect.
+4. **Combine it with sound.** Light and sound belong together. When the bass lands and the light dances in the fog, you have a party. Combine the [light bar](/en/lys-pakke) with a [speaker package](/en/lej-hojtaler) for the full effect.
 
 ## When are party lights worth it?
 
-- **A birthday in a flat** — ceiling off, LED spots on, music up
-- **A garden party after sunset** — outdoor LED spots make a garden look magical
+- **A birthday in a flat** — see [birthday sound](/en/foedselsdag)
+- **A garden party after sunset** — see [garden party sound](/en/havefest)
 - **A company party or team event** — lifts the evening from obligatory to actually fun
-- **A confirmation party** — the younger guests will love a miniature nightclub
+- **A confirmation party** — see [confirmation sound](/en/konfirmation)
 
 ## Book lights for your party
 
-The light bar can be added to any speaker package. [See prices and book here](/en#book).
+See [party lights](/en/festlys) and the [light bar](/en/lys-pakke) — it can be added to any speaker package. [Book here](/en#book).

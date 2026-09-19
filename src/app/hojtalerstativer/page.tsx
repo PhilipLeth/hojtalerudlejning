@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
+import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Lej Højtalerstativer København | 95 kr | Lejhøjtaler.dk",
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/hojtalerstativer"),
   },
   openGraph: {
+    images: ogImages("/images/product-stativer.webp"),
     title: "Lej Højtalerstativer | 95 kr",
     description: "2 professionelle stativer, løfter lyden op i øjenhøjde. Passer til alle vores højtalere.",
     url: "https://lejhojtaler.dk/hojtalerstativer",

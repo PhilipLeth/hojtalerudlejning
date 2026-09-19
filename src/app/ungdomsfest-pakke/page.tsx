@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Ungdomsfest-pakken | Lyd og diskolys | 1.250 kr | Lejhøjtaler.dk",
   description: "Soundboks 4, diskolyseffekt og discokugle i én pakke, lyd og lys til ungdomsfesten for 1.250 kr. Spar 185 kr. Lejes i København, sat op på ti minutter.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/ungdomsfest-pakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-ungdomsfest-taendt.webp"),
     title: "Ungdomsfest-pakken | Lyd og diskolys | 1.250 kr | Lejhøjtaler.dk",
     description: "Soundboks 4, diskolyseffekt og discokugle. Sluk loftslyset, tænd pakken, spar 185 kr.",
     url: "https://lejhojtaler.dk/ungdomsfest-pakke",

@@ -60,7 +60,7 @@ The price is the same whether you keep it for 1 or 5 days — there is no daily 
 
 ## How to book
 
-1. Go to our [booking page](/en#book)
+1. Pick a system by guest count on [PA packages](/en/lydanlaeg) — or go straight to [booking](/en#book)
 2. Choose your package and date
 3. You get a confirmation straight away
 4. Collect the equipment at Vermlandsgade 66

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Speech & Music Package Rental Copenhagen | 1,145 DKK | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/pakke-tale-musik"),
   },
   openGraph: {
+    images: ogImages("/images/product-festival-v2.webp"),
     title: "Speech & music package rental | 1,145 DKK",
     description: "Medium speaker package + wireless microphone, speeches and music for events. Save 95 DKK.",
     url: "https://lejhojtaler.dk/en/pakke-tale-musik",

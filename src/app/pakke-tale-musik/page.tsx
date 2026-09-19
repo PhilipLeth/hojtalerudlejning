@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Tale & musik-pakken København | 1.145 kr | Lejhøjtaler.dk",
   description: "Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar 95 kr. 1.145 kr/weekend. Betal ved afhentning. Book online.",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/pakke-tale-musik"),
   },
   openGraph: {
+    images: ogImages("/images/product-festival-v2.webp"),
     title: "Lej Tale & musik-pakken København | 1.145 kr",
     description: "Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar 95 kr. 1.145 kr/weekend. Betal ved afhentning. Book online.",
     url: "https://lejhojtaler.dk/pakke-tale-musik",

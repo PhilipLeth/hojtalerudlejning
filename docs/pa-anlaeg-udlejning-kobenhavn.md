@@ -56,7 +56,7 @@ Prisen er flad for 1-5 dages leje: en enkelt hverdag koster det samme som hele w
 
 ## Sådan booker du
 
-1. Gå til vores [booking-side](/#book)
+1. Vælg anlæg efter gæsteantal på [lydanlæg](/lydanlaeg) — eller gå direkte til [booking](/#book)
 2. Vælg din pakke og dato
 3. Du får en bekræftelse med det samme
 4. Hent udstyret på Vermlandsgade 66

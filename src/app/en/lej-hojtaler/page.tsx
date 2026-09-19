@@ -11,6 +11,7 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 /**
  * /en/lej-hojtaler, højtalerkategorien på engelsk.
  *
@@ -36,6 +37,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lej-hojtaler"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Speaker Rental Copenhagen | From ${startPrisDkk()}/weekend`,
     description:
       `Battery-powered speakers and PA packages from ${startPrisDkk()}/weekend. Cables included, pay on pickup. Book online.`,

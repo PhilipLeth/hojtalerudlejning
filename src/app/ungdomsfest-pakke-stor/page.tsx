@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Stor ungdomsfest-pakke | Diskotek til 100 gæster | 1.860 kr | Lejhøjtaler.dk",
   description: "2× 12\" højtalere, lysbar, discokugle 40 cm og røgmaskine, et rigtigt diskotek til ungdomsfesten for 1.860 kr. Spar 220 kr. Lejes i København.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/ungdomsfest-pakke-stor"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-ungdomsfest-stor-taendt.webp"),
     title: "Stor ungdomsfest-pakke | Diskotek til 100 gæster | 1.860 kr | Lejhøjtaler.dk",
     description: "2× 12\" højtalere, lysbar på stativ, discokugle 40 cm og røgmaskine. Et rigtigt diskotek, spar 220 kr.",
     url: "https://lejhojtaler.dk/ungdomsfest-pakke-stor",

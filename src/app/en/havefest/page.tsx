@@ -3,6 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisDkk } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Garden Party Speaker Rental Copenhagen | From ${prisDkk("pakke_fest_lille")} | Lejhøjtaler.dk`,
   description: `Rent speakers and fairy lights for a garden party in Copenhagen from ${prisDkk("pakke_fest_lille")}. Battery-powered options for gardens with no power outlet. Music without upsetting the neighbours.`,
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/havefest"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Garden Party Speaker Rental Copenhagen | From ${prisDkk("pakke_fest_lille")} | Lejhøjtaler.dk`,
     description: `Battery-powered speakers and fairy lights for the garden. Music without upsetting the neighbours.`,
     url: "https://lejhojtaler.dk/en/havefest",

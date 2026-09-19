@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Small Speaker Package Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
   description:
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/hojtalerpakke-lille"),
   },
   openGraph: {
+    images: ogImages("/images/product-party-v2.webp"),
     title: "Small Speaker Package Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
     description:
       'Rent two 10" Alto speakers with Bluetooth in Copenhagen from 595 DKK/weekend. Enough sound for up to 30 guests, all cables included. Pick up Friday, return Monday.',

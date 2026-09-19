@@ -2,7 +2,7 @@
 title: "Sound for a birthday party — the complete guide"
 description: "How to choose the right speaker for a birthday party in Copenhagen. A guide to sound for adults, for teenagers and for an outdoor birthday."
 date: "2026-06-11"
-updated: "2026-09-08"
+updated: "2026-09-16"
 keywords:
   - birthday party speaker rental copenhagen
   - speaker hire for birthday
@@ -12,7 +12,7 @@ keywords:
 
 # Sound for a birthday party — the complete guide
 
-A birthday without music is just... a meeting. Whether you are turning 30, hosting a teenager's party, or arranging a children's birthday, good sound makes the whole difference. Here is how to pick the right setup.
+A birthday without music is just... a meeting. Whether you are turning 30, hosting a teenager's party, or arranging a children's birthday, good sound makes the whole difference. Here is how to pick the right setup — or go straight to the [birthday landing page](/en/foedselsdag) with packages and prices.
 
 ## An adult birthday (25-50 guests)
 
@@ -20,14 +20,14 @@ The classic milestone birthday in a flat, a shared venue or a garden. It usually
 
 **What do you need?**
 
-- **Under 30 guests indoors:** the small speaker package is perfect. Bluetooth from your phone, and the sound fills the room.
-- **30-50 guests, or outdoors:** the medium speaker package with two 12" tops. Especially if there are speeches — add a wireless microphone and it plugs straight into the speaker.
+- **Under 30 guests indoors:** the [small speaker package](/en/hojtalerpakke-lille) is perfect. Bluetooth from your phone, and the sound fills the room.
+- **30-50 guests, or outdoors:** the [medium speaker package](/en/hojtalerpakke-normal). Especially if there are speeches — add a [wireless microphone](/en/traadloes-mikrofon) and it plugs straight into the speaker.
 
 **A tip for the speeches:** pause the phone, hand the birthday guest of honour the microphone, and let everyone hear every last embarrassing anecdote. A microphone makes speeches so much better.
 
 ## A teenager's party
 
-Teenagers have different expectations from the adults. They want **loud music, bass and party lights**. The medium speaker package is the right choice here, together with our light bar.
+Teenagers have different expectations from the adults. They want **loud music, bass and party lights**. See also [youth party](/en/ungdomsfest) — the medium speaker package plus the [light bar](/en/lys-pakke) is usually the right call.
 
 **Tips:**
 
@@ -49,7 +49,7 @@ For a children's party you do not need a big system. But a bit of music works wo
 
 ## Indoors versus outdoors
 
-Is the birthday going to be in the garden? Then read our [guide to sound for a garden party](/en/blog/garden-party-sound) for specific tips on outdoor speaker placement.
+Is the birthday going to be in the garden? Then read our [guide to sound for a garden party](/en/blog/garden-party-sound) — or go straight to [garden party sound](/en/havefest) with packages ready to book.
 
 The short version:
 
@@ -65,4 +65,4 @@ The short version:
 
 ## Book sound for your birthday
 
-From 395 DKK per weekend you get a speaker that lifts the whole day. [Book your speaker now](/en#book) — it takes under two minutes.
+See packages and prices on [birthday sound](/en/foedselsdag) — or [book your speaker now](/en#book). It takes under two minutes.

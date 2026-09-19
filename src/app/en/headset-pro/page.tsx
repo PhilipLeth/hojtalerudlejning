@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "PRO Wireless Headset Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
   description:
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/headset-pro"),
   },
   openGraph: {
+    images: ogImages("/images/product-headset-pro-v2.webp"),
     title: "PRO Wireless Headset Rental Copenhagen | 595 DKK",
     description:
       "Broadcast-quality wireless headset, for conferences and stages. Book online.",

@@ -2,6 +2,7 @@
 title: "Festlys der gør din fest 10x federe"
 description: "Alt om festlys til leje. LED-lys, røgmaskine og lyseffekter gør din fest uforglemmelig. Lej lysbar til din næste fest."
 date: "2026-06-11"
+updated: "2026-09-16"
 keywords:
   - festlys
   - lys til fest
@@ -38,15 +39,15 @@ Vores festlys-pakke er sammensat, så den er nem at sette op og giver maksimal e
 
 3. **Røgmaskinen bag højtaleren.** Sæt røgmaskinen bag eller ved siden af dit lydanlæg, så røgen spreder sig ud over dansegulvet. Brug den i korte pust – for meget røg er også for meget.
 
-4. **Kombiner med lyd.** Lys og lyd hænger sammen. Når bassen rammer, og lyset danser i røgen, er der fest. Kombiner vores lysbar med en [højtaler-pakke](/#book) for den fulde oplevelse.
+4. **Kombiner med lyd.** Lys og lyd hænger sammen. Når bassen rammer, og lyset danser i røgen, er der fest. Kombiner [lysbaren](/lys-pakke) med en [højtaler-pakke](/lej-hojtaler) for den fulde oplevelse.
 
 ## Hvornår er festlys relevant?
 
-- **Fødselsdag i lejligheden** – sluk loftet, tænd LED-spots, sæt gang i musikken
-- **Havefest efter solnedgang** – udendørs LED-spots gør haven magisk
+- **Fødselsdag i lejligheden** – se [lyd til fødselsdag](/foedselsdag)
+- **Havefest efter solnedgang** – se [lyd til havefest](/havefest)
 - **Firmafest eller teambuilding** – løft stemningen fra "tvangssjov" til "faktisk sjovt"
-- **Konfirmation** – de unge gæster vil elske et mini-diskotek
+- **Konfirmation** – se [lyd til konfirmation](/konfirmation)
 
 ## Book lys til din fest
 
-Lysbaren kan bookes som tillæg til enhver højtaler-pakke. [Se priser og book her](/#book).
+Se [festlys](/festlys) og [lysbaren](/lys-pakke) — den kan bookes som tillæg til enhver højtaler-pakke. [Book her](/#book).

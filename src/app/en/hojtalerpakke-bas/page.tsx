@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
+import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Large speaker package Rental Copenhagen | 1,295 DKK | Lejhøjtaler.dk",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/hojtalerpakke-bas"),
   },
   openGraph: {
+    images: ogImages("/images/product-festival-bas-v2.webp"),
     title: "Large speaker package rental | 1,295 DKK",
     description: "2× 12\" EV ZLX 12P G2 + Behringer 12\" subwoofer. For 50-100 guests.",
     url: "https://lejhojtaler.dk/en/hojtalerpakke-bas",

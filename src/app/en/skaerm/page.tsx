@@ -3,6 +3,7 @@ import UpsellBox from "@/components/UpsellBox";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Large Screen Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/skaerm"),
   },
   openGraph: {
+    images: ogImages("/images/product-skaerm.webp"),
     title: "Large screen rental Copenhagen | 595 DKK",
     description: "55\" LED display on a stand. Works in daylight, sharper than a projector.",
     url: "https://lejhojtaler.dk/en/skaerm",

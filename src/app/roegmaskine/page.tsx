@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Røgmaskine København | Fra 245 kr | Lejhøjtaler.dk",
   description:
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/roegmaskine"),
   },
   openGraph: {
+    images: ogImages("/images/product-rog-v2.webp"),
     title: "Lej Røgmaskine København | Fra 245 kr",
     description:
       "Lej røgmaskine i København fra 245 kr. Inkl. røgvæske og fjernbetjening. Book online.",

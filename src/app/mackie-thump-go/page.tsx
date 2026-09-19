@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Mackie Thump GO København | Fra 495 kr | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/mackie-thump-go"),
   },
   openGraph: {
+    images: ogImages("/images/product-thumpgo-v2.webp"),
     title: "Lej Mackie Thump GO København | Fra 495 kr",
     description: "Batteridrevet 8\" højtaler fra 495 kr/weekend. Book online.",
     url: "https://lejhojtaler.dk/mackie-thump-go",

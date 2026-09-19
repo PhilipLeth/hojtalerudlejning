@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Trådløs Mikrofon København | Fra 445 kr | Lejhøjtaler.dk",
   description:
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/traadloes-mikrofon"),
   },
   openGraph: {
+    images: ogImages("/images/product-mikrofon-v2.webp"),
     title: "Lej Trådløs Mikrofon København | Fra 445 kr",
     description:
       "Lej trådløs mikrofon i København fra 445 kr. Professionel håndholdt mikrofon til taler og events. Book online.",

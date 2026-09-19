@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Shure BLX Wireless Microphone Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
   description:
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/traadloes-mikrofon-pro"),
   },
   openGraph: {
+    images: ogImages("/images/product-mikrofon-pro-v2.webp"),
     title: "Shure BLX Wireless Microphone Rental Copenhagen | 595 DKK",
     description:
       "Shure BLX wireless microphone, stage quality for events and conferences. Book online.",

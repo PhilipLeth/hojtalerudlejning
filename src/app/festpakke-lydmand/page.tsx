@@ -4,6 +4,7 @@ import LivePrice from "@/components/LivePrice";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Festpakke med lydmand | Anlæg + lys + tekniker | 5.710 kr | Lejhøjtaler.dk",
   description:
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festpakke-lydmand"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-lydmand-fest-v2.webp"),
     title: "Festpakke med lydmand | 5.710 kr",
     description: "Mellem højtalerpakke + lysbar + lydmand i 4 timer. Leveret, sat op og hentet igen, spar 275 kr.",
     url: "https://lejhojtaler.dk/festpakke-lydmand",

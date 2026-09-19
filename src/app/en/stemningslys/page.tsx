@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Ambient Light Package | Uplights, Fairy Lights & Disco Ball | 1.295 DKK | Lejhøjtaler.dk",
   description:
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/stemningslys"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-stemningslys-taendt-v3.webp"),
     title: "Ambient Light Package | Uplights, Fairy Lights & Disco Ball | 1.295 DKK",
     description:
       "4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling, save 140 DKK.",

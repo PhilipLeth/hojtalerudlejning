@@ -9,6 +9,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Uplights København | Fra 195 kr | Lejhøjtaler.dk",
   description:
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/uplights"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Lej Uplights København | Fra 195 kr",
     description:
       "Simple LED uplights på gulv, 195 kr/stk eller 595 kr for 4-pak. Book online.",

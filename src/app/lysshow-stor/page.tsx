@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lysshow stort | Lys, uplights, discokugle og low fog | 1.910 kr | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lysshow-stor"),
   },
   openGraph: {
+    images: ogImages("/images/product-uplight-4-v2.webp"),
     title: "Lysshow stort | Lys, uplights, discokugle og low fog | 1.910 kr",
     description: "Lysbar, fire uplights, discokugle og low fog. Hele rummet skifter karakter, spar 270 kr.",
     url: "https://lejhojtaler.dk/lysshow-stor",

@@ -9,6 +9,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Lyskæder København | Fra 195 kr | Lejhøjtaler.dk",
   description:
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lyskaeder"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Lej Lyskæder København | Fra 195 kr",
     description:
       "Lej lyskæde i København fra 195 kr. 10m lyskæde, varm hvid eller farvet. Book online.",

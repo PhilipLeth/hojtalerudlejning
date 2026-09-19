@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Projector Screen 160 cm Rental Copenhagen | 195 DKK | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/laerred-160"),
   },
   openGraph: {
+    images: ogImages("/images/product-laerred-v2.webp"),
     title: "Projector screen 160 cm rental | 195 DKK",
     description: "160 cm projector screen on a stand, the perfect partner for the projector.",
     url: "https://lejhojtaler.dk/en/laerred-160",

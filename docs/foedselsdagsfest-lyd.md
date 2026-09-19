@@ -2,6 +2,7 @@
 title: "Lyd til fødselsdag – den komplette guide"
 description: "Sådan vælger du den rigtige højtaler til din fødselsdagsfest. Guide til lyd til voksne, børn og udendørs fødselsdag."
 date: "2026-06-11"
+updated: "2026-09-16"
 keywords:
   - højtaler til fødselsdag
   - lyd fødselsdag
@@ -11,7 +12,7 @@ keywords:
 
 # Lyd til fødselsdag – den komplette guide
 
-En fødselsdag uden musik er bare... et møde. Uanset om du fylder 30, holder konfirmation for teenageren, eller arrangerer børnefødselsdag, gør god lyd hele forskellen. Her får du en guide til at vælge den rigtige løsning.
+En fødselsdag uden musik er bare... et møde. Uanset om du fylder 30, holder konfirmation for teenageren, eller arrangerer børnefødselsdag, gør god lyd hele forskellen. Her får du en guide til at vælge den rigtige løsning — og den færdige [landingsside til fødselsdag](/foedselsdag) med pakker og priser, hvis du hellere vil booke med det samme.
 
 ## Voksenfødselsdag (25-50 gæster)
 
@@ -19,14 +20,14 @@ Den klassiske runde fødselsdag i lejlighed, fælleslokale eller have. Typisk fo
 
 **Hvad har du brug for?**
 
-- **Under 30 gæster indendors:** Party-pakken er perfekt. Bluetooth-tilslutning til din telefon, og lyden fylder rummet.
-- **30-50 gæster eller udendørs:** Festival-pakken med stereo og subwoofer. Særligt hvis der skal holdes taler – mixeren har mikrofon-indgang.
+- **Under 30 gæster indendørs:** [Den lille højtalerpakke](/hojtalerpakke-lille) er perfekt. Bluetooth-tilslutning til din telefon, og lyden fylder rummet.
+- **30-50 gæster eller udendørs:** [Mellem højtalerpakke](/hojtalerpakke-normal) — gerne med [subwoofer](/subwoofer). Skal der holdes taler, lejer du en [trådløs mikrofon](/traadloes-mikrofon) til.
 
 **Pro-tip til taler:** Sæt telefonen på pause, giv fødselsbarnet mikrofonen, og lad gæsterne høre hver eneste (pinlige) anekdote. En mikrofon gør taler så meget bedre.
 
 ## Konfirmation og ungdomsfest
 
-Teenagere har andre forventninger end de voksne. De vil have **højt musik, bas og festlys**. Her er Festival-pakken det rigtige valg, suppleret med vores lysbar.
+Teenagere har andre forventninger end de voksne. De vil have **højt musik, bas og festlys**. Se også vores sider til [konfirmation](/konfirmation) og [ungdomsfest](/ungdomsfest) — Mellem højtalerpakke plus [lysbaren](/lys-pakke) er typisk det rigtige valg.
 
 **Tips til konfirmation:**
 
@@ -41,19 +42,19 @@ Til børnefødselsdag behøver du ikke et stort anlæg. Men lidt musik gør unde
 
 **Hvad virker:**
 
-- Party-pakken er rigeligt til en børnefødselsdag
+- Den lille højtalerpakke er rigeligt til en børnefødselsdag
 - Bluetooth-forbindelse, så du nemt kan styre musikken fra din telefon
-- Sæt en "børnedisko"-spilleliste på Spotify – det er en kæmpe succes
+- En [discokugle](/discokugle) eller [lyseffekt](/enkelt-lyseffekt) forvandler stuen til diskotek
 - Undgå for høj bas – børneører er følsomme
 
-## Indendors vs. udendørs fødselsdag
+## Indendørs vs. udendørs fødselsdag
 
-Skal fødselsdagen være i haven? Så læs også vores [guide til lyd til havefest](/blog/lyd-til-havefest) for specifikke tips om udendørs lydplacering.
+Skal fødselsdagen være i haven? Så læs vores [guide til lyd til havefest](/blog/lyd-til-havefest) — eller gå direkte til [lyd til havefest](/havefest) med pakker klar til booking.
 
 Kort opsummeret:
 
-- **Indendors:** Højtaleren kan stå lavere, vægge hjælper med at reflektere lyden
-- **Udendørs:** Højtaleren SKAL på stativ, og du har brug for mere kraft (Festival-pakken)
+- **Indendørs:** Højtaleren kan stå lavere, vægge hjælper med at reflektere lyden
+- **Udendørs:** Højtaleren SKAL på stativ, og du har brug for mere kraft (den store pakke)
 
 ## Musik-tips til fødselsdag
 
@@ -64,4 +65,4 @@ Kort opsummeret:
 
 ## Book lyd til din fødselsdag
 
-Fra 395 kr/weekend får du en højtaler, der lofter din fødselsdag. [Book din højtaler nu](/#book) – det tager under 2 minutter.
+Se færdige pakker og priser på [lyd til fødselsdag](/foedselsdag) — eller [book din højtaler nu](/#book). Det tager under 2 minutter.

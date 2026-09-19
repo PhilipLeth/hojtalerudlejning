@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import GoogleReviews from "@/components/GoogleReviews";
 import { LocationKicker } from "@/components/PhoneLink";
 
+import { ogImages } from "@/lib/og";
 /**
  * /lej-projektor, kategorisiden for projektor, lærred og skærm.
  *
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/lej-projektor" },
   openGraph: {
+    images: ogImages(),
     title: "Lej projektor og storskærm i København | Fra 195 kr",
     description:
       "Projektor fra 495 kr, 55\" storskærm fra 595 kr og lærred fra 195 kr. Book online.",

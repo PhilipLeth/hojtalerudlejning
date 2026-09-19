@@ -3,6 +3,7 @@ import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Lyd til fødselsdag København | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
   description: `Lej lyd til fødselsdagen i København fra ${prisKr("pakke_fest_lille")}. Højtalere til tale og fest, discolys og mikrofon, til både børnefødselsdag og de runde dage. Book online.`,
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/foedselsdag"),
   },
   openGraph: {
+    images: ogImages(),
     title: `Lyd til fødselsdag København | Fra ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
     description: `Lej lyd til fødselsdagen i København fra ${prisKr("pakke_fest_lille")}. Højtalere til tale og fest, discolys og mikrofon, til både børnefødselsdag og de runde dage. Book online.`,
     url: "https://lejhojtaler.dk/foedselsdag",

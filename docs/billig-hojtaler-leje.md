@@ -75,7 +75,7 @@ Det betyder lavere overhead og lavere priser for dig.
 
 ## Sådan booker du
 
-1. Gå til [booking-siden](/#book)
+1. Se alle højtalere på [lej højtaler](/lej-hojtaler) — eller gå til [booking](/#book)
 2. Vælg pakke og dato
 3. Få bekræftelse med det samme
 4. Hent på Vermlandsgade 66, 2300 København

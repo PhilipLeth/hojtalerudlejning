@@ -7,6 +7,7 @@ import { LADDER_FEST, type LadderStep } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
 import { localizedHref } from "@/lib/enPages";
 import { localeAlternates } from "@/lib/hreflang";
+import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "PA System Rental Copenhagen, packages by guest count | Lejhøjtaler.dk",
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lydanlaeg"),
   },
   openGraph: {
+    images: ogImages(),
     title: "PA System Rental Copenhagen, packages by guest count",
     description:
       "Choose a system by how many are coming: 50, 100, 150 or 250 guests. Ready-made packages, ready to set up.",

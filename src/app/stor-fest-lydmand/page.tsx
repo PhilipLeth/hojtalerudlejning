@@ -4,6 +4,7 @@ import LivePrice from "@/components/LivePrice";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Stor fest med lydmand | Fuldt anlæg + lys + røg + tekniker | 6.560 kr | Lejhøjtaler.dk",
   description:
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/stor-fest-lydmand"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-lydmand-stor-v2.webp"),
     title: "Stor fest med lydmand | 6.560 kr",
     description: "Mellem højtalerpakke + subwoofer + stativer + lys + røg + lydmand i 4 timer. Leveret, sat op og hentet igen, spar 260 kr.",
     url: "https://lejhojtaler.dk/stor-fest-lydmand",

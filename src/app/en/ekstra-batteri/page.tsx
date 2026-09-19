@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Soundboks Battery Rental | 395 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/ekstra-batteri"),
   },
   openGraph: {
+    images: ogImages("/images/product-thumpgo-v2.webp"),
     title: "Soundboks battery rental | 395 DKK",
     description: "Extra battery for the Soundboks 4, double the playtime without power.",
     url: "https://lejhojtaler.dk/en/ekstra-batteri",

@@ -9,6 +9,7 @@ import { LYSSHOW_PAKKER } from "@/lib/products";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 /**
  * /lysshow, kategorisiden for lys som helhed.
  *
@@ -35,6 +36,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lysshow"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Lej Lysshow København | Fra 1.140 kr | Lejhøjtaler.dk",
     description:
       "Færdige lyspakker med effekter, discokugle, uplights og røg. Book online.",

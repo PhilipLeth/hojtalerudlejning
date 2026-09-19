@@ -3,6 +3,7 @@ import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Headset Microphone Rental Copenhagen | 445 DKK | Lejhøjtaler.dk",
   description:
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/headset-mikrofon"),
   },
   openGraph: {
+    images: ogImages("/images/product-headset-v2.webp"),
     title: "Headset Microphone Rental Copenhagen | 445 DKK",
     description:
       "Wireless headset microphone for presentations and conferences. Hands-free. Book online.",

@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Movie Night Package | Projector, screen and speakers | 1,195 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/filmaften"),
   },
   openGraph: {
+    images: ogImages("/images/product-projektor.webp"),
     title: "Movie night package | Projector, screen and speakers | 1,195 DKK",
     description: "Projector, screen and speakers, everything for an outdoor cinema in the backyard for 1,195 DKK.",
     url: "https://lejhojtaler.dk/en/filmaften",

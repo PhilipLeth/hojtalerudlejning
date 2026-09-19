@@ -7,6 +7,7 @@ import GoogleReviews from "@/components/GoogleReviews";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import { LocationKicker } from "@/components/PhoneLink";
 
+import { ogImages } from "@/lib/og";
 /**
  * /karaoke, kategorisiden for karaoke.
  *
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://lejhojtaler.dk/karaoke" },
   openGraph: {
+    images: ogImages(),
     title: "Lej karaoke i København | Fra 695 kr",
     description:
       "Karaokemaskine med to trådløse mikrofoner fra 695 kr, eller hele pakken med skærm og højtalere. Book online.",

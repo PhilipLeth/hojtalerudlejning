@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Filmaften-pakken | Projektor, lærred og højtalere | 1.195 kr | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/filmaften"),
   },
   openGraph: {
+    images: ogImages("/images/product-projektor.webp"),
     title: "Filmaften-pakken | Projektor, lærred og højtalere | 1.195 kr | Lejhøjtaler.dk",
     description:
       "Filmaften-pakken med projektor, lærred og højtalere, alt til udendørs biograf i baghaven for 1.195 kr. Book online i København.",

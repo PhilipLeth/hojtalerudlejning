@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Lærred 160 cm København | 195 kr | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/laerred-160"),
   },
   openGraph: {
+    images: ogImages("/images/product-laerred-v2.webp"),
     title: "Lej Lærred 160 cm København | 195 kr",
     description:
       "Lej et 160 cm lærred på stativ i København for 195 kr. Passer til alle vores projektorer, stilles op på et minut. Book online.",

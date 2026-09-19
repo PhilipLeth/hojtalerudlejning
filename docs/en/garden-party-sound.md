@@ -2,7 +2,7 @@
 title: "Sound for a garden party — a guide to getting outdoor audio right"
 description: "How to get the best sound at your garden party in Copenhagen. Tips on speaker placement, volume and keeping the neighbours happy. Rent from 395 DKK."
 date: "2026-06-11"
-updated: "2026-09-08"
+updated: "2026-09-16"
 keywords:
   - garden party sound copenhagen
   - outdoor speaker rental copenhagen
@@ -12,7 +12,7 @@ keywords:
 
 # Sound for a garden party — a guide to getting outdoor audio right
 
-Garden parties are wonderful. But outdoor sound is a different discipline from indoors. It disperses in every direction, the wind carries it away, and the neighbours hear all of it. Here are concrete tips for getting the best sound at your garden party.
+Garden parties are wonderful. But outdoor sound is a different discipline from indoors. It disperses in every direction, the wind carries it away, and the neighbours hear all of it. Here are concrete tips — or go straight to the [garden party landing page](/en/havefest) with packages ready to book.
 
 ## Why is outdoor sound harder?
 
@@ -55,8 +55,8 @@ This one matters. Good rules:
 
 ## Combine it with party lights
 
-Outdoor sound and light together lift any garden party. Our light bar with LED spots and a fog machine sets the mood once the sun goes down, and 10 metres of fairy lights at 195 DKK is the cheapest transformation there is. [See the party lights](/en/festlys).
+Outdoor sound and light together lift any garden party. Our [light bar](/en/lys-pakke) with LED spots and a fog machine sets the mood once the sun goes down, and [fairy lights](/en/lyskaeder) are the cheapest transformation there is. [See the party lights](/en/festlys).
 
 ## Book sound for your garden party
 
-Rent a speaker or a full PA system for your garden party from 395 DKK per weekend. Collect at Vermlandsgade 66, return on Monday. [Book your speaker now](/en#book).
+See packages on [garden party sound](/en/havefest) — or [book your speaker now](/en#book). Collect at Vermlandsgade 66, return on Monday.

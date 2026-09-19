@@ -2,12 +2,14 @@ import { Metadata } from "next";
 import OccasionLanding from "@/components/OccasionLanding";
 import { prisKr } from "@/lib/products";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Højtaler til polterabend København | Fra ${prisKr("thumpgo")} | Lejhøjtaler.dk`,
   description: `Lej en batteridreven højtaler til polterabend i København fra ${prisKr("thumpgo")}. Ingen strøm nødvendig, tag den med i parken, på havnen eller i bussen. Book online.`,
   keywords: ["højtaler til polterabend", "lej højtaler polterabend", "batteri højtaler leje", "musik til polterabend", "soundboks leje københavn"],
   alternates: { canonical: "https://lejhojtaler.dk/polterabend" },
   openGraph: {
+    images: ogImages(),
     title: `Højtaler til polterabend København | Fra ${prisKr("thumpgo")} | Lejhøjtaler.dk`,
     description: `Lej en batteridreven højtaler til polterabend i København fra ${prisKr("thumpgo")}. Ingen strøm nødvendig, tag den med i parken, på havnen eller i bussen. Book online.`,
     url: "https://lejhojtaler.dk/polterabend",

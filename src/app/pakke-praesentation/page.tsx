@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Præsentationspakken København | 695 kr | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/pakke-praesentation"),
   },
   openGraph: {
+    images: ogImages("/images/product-projektor.webp"),
     title: "Lej Præsentationspakken København | 695 kr",
     description:
       "Præsentationspakken med projektor, 160 cm lærred og håndholdt mikrofon, alt til præsentationen for 695 kr. Spar 90 kr. Book online i København.",

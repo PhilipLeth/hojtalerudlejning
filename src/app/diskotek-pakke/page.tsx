@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Diskotek-pakken | 1.050 kr | Lejhøjtaler.dk",
   description: "Lysbar, diskolyseffekt og discokugle, fuldt dansegulv uden røg for 1.050 kr. Spar 185 kr. Lejes i København.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/diskotek-pakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-diskotek-taendt-v2.webp"),
     title: "Diskotek-pakken | 1.050 kr | Lejhøjtaler.dk",
     description: "Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar 185 kr.",
     url: "https://lejhojtaler.dk/diskotek-pakke",

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Højtalerpakke Lille København | Fra 595 kr | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/hojtalerpakke-lille"),
   },
   openGraph: {
+    images: ogImages("/images/product-party-v2.webp"),
     title: "Lej Højtalerpakke Lille | Fra 595 kr",
     description: "2× 10\" Alto højtalere fra 595 kr/weekend. Book online.",
     url: "https://lejhojtaler.dk/hojtalerpakke-lille",

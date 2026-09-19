@@ -5,6 +5,7 @@ import { catalogDiscount, catalogPartsPrice, prisTekst } from "@/lib/products";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: 'Lej 32" Skærm på Stativ København | 395 kr | Lejhøjtaler.dk',
   description:
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/skaerm-32"),
   },
   openGraph: {
+    images: ogImages("/images/product-skaerm-32.webp"),
     title: 'Lej 32" Skærm på Stativ | 395 kr',
     description:
       "Lej en 32\" LED-skærm på stativ i København for 395 kr. Kompakt og nem at flytte, perfekt til karaoke og det lille mødelokale. Book online.",

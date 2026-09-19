@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Karaoke-festpakken København | 1.825 kr | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/pakke-karaoke-fest"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-karaoke-fest-v2.webp"),
     title: "Lej Karaoke-festpakken København | 1.825 kr",
     description:
       "Karaoke-festpakken med maskine, 55\" storskærm og store højtalere, karaoke til op til 100 gæster for 1.825 kr. Spar 260 kr. Book online.",

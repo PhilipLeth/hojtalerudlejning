@@ -75,7 +75,7 @@ That means lower overhead, and lower prices for you.
 
 ## How to book
 
-1. Go to the [booking page](/en#book)
+1. See all speakers on [rent a speaker](/en/lej-hojtaler) — or go to [booking](/en#book)
 2. Choose a package and a date
 3. Get your confirmation straight away
 4. Collect at Vermlandsgade 66, 2300 Copenhagen

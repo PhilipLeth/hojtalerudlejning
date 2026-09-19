@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Subwoofer 12\" Rental Copenhagen | 495 DKK | Lejhøjtaler.dk",
   description:
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/subwoofer"),
   },
   openGraph: {
+    images: ogImages("/images/product-subwoofer-v2.webp"),
     title: "Subwoofer 12\" rental Copenhagen | 495 DKK",
     description: "Behringer 12\" powered subwoofer, the deep bass for the party. Fits all our speaker packages. Book online.",
     url: "https://lejhojtaler.dk/en/subwoofer",

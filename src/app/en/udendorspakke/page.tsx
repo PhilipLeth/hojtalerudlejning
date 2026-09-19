@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Outdoor Package | Soundboks, extra battery and string lights | 1,125 DKK | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/udendorspakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-soundboks-v2.webp"),
     title: "Outdoor package | Soundboks, extra battery and string lights | 1,125 DKK",
     description: "Soundboks 4, extra battery and 10 m string lights. Courtyard, beach or park, save 160 DKK.",
     url: "https://lejhojtaler.dk/en/udendorspakke",

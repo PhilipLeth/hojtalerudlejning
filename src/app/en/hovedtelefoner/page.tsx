@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
+import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "DJ headphone rental Copenhagen | Fun Generation HP 5 | 100 DKK",
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
   keywords: ["dj headphone rental copenhagen", "hire dj headphones", "dj headphones hire"],
   alternates: { canonical: "https://lejhojtaler.dk/en/hovedtelefoner", languages: localeAlternates("/hovedtelefoner") },
   openGraph: {
+    images: ogImages(),
     title: "DJ headphone rental | 100 DKK",
     description: "Fun Generation HP 5. Included with the DJ controller, or book them on their own.",
     url: "https://lejhojtaler.dk/en/hovedtelefoner",

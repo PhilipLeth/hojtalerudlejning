@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Party tent lights Copenhagen | 870 DKK | Lejhøjtaler.dk",
   description: "Two strings of fairy lights and four uplights, tent and garden lit for 870 DKK. Save 115 DKK. Rental in Copenhagen.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festtelt-lys"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-festtelt-taendt.webp"),
     title: "Party tent lights Copenhagen | 870 DKK | Lejhøjtaler.dk",
     description: "20 m of fairy lights (warm white + coloured) and 4 LED uplights. From canteen tent to garden party, save 115 DKK.",
     url: "https://lejhojtaler.dk/en/festtelt-lys",

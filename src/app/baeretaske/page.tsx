@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Bæretaske til Højtalere | 95 kr | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/baeretaske"),
   },
   openGraph: {
+    images: ogImages("/images/product-taske-v2.webp"),
     title: "Lej Bæretaske | 95 kr",
     description: "Polstret sportstaske til sikker transport på cykel eller i bil.",
     url: "https://lejhojtaler.dk/baeretaske",

@@ -7,6 +7,7 @@ import MixerRange from "@/components/MixerRange";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 /** Vælg mixer efter samtidige mikrofoner og musikkilder. */
 export const metadata: Metadata = {
   title: "Lej Mixer København | Mixer med effekter | 345 kr | Lejhøjtaler.dk",
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/mixer"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Lej Mixer København | Fra 295 kr | Lejhøjtaler.dk",
     description:
       "t.mix xmix 1202 FXMP USB med effekter og USB til møde, panel og band. Lille og stor model på forespørgsel.",

@@ -2,7 +2,7 @@
 title: "Lyd til havefest – guide til den perfekte udendørs lyd"
 description: "Sådan får du den bedste lyd til din havefest. Tips til højtaler-placering, lydniveau og nabohensyn. Lej højtaler fra 395 kr."
 date: "2026-06-11"
-updated: "2026-08-22"
+updated: "2026-09-16"
 keywords:
   - lyd til havefest
   - højtaler havefest
@@ -12,18 +12,18 @@ keywords:
 
 # Lyd til havefest – guide til den perfekte udendørs lyd
 
-Havefester er fantastiske. Men udendørs lyd er en helt anden disciplin end indendors. Lyden spredes i alle retninger, vinden bærer den væk, og nabørne kan høre alt. Her får du konkrete tips til at få den bedste lyd til din havefest.
+Havefester er fantastiske. Men udendørs lyd er en helt anden disciplin end indendørs. Lyden spredes i alle retninger, vinden bærer den væk, og nabørne kan høre alt. Her får du konkrete tips — og den færdige [landingsside til havefest](/havefest) med pakker, hvis du hellere vil booke med det samme.
 
 ## Hvorfor er udendørs lyd sværere?
 
-Indendors hjælper vægge, loft og gulv med at reflektere lyden tilbage til dig. Udendørs har du ingen af de refleksioner. Resultatet er, at du har brug for mere lydtryk for at opnå den samme oplevede lydstyrke.
+Indendørs hjælper vægge, loft og gulv med at reflektere lyden tilbage til dig. Udendørs har du ingen af de refleksioner. Resultatet er, at du har brug for mere lydtryk for at opnå den samme oplevede lydstyrke.
 
 En Bluetooth-højtaler, der fylder en stue perfekt, forsvinder fuldstændig i en have. Du har brug for et rigtigt lydsystem.
 
 ## Vælg den rigtige pakke
 
-- **Lille have, under 30 gæster:** Vores Party-pakke kan klare det, særligt hvis du placerer højtaleren klogt (se nedenfor).
-- **Stor have, 30+ gæster:** Festival-pakken er et must. Stereo-lyd og subwoofer sikrer, at alle kan høre musikken.
+- **Lille have, under 30 gæster:** [Den lille højtalerpakke](/hojtalerpakke-lille) kan klare det, særligt hvis du placerer højtaleren klogt (se nedenfor). Ingen strøm? Tag [Mackie Thump GO](/mackie-thump-go) eller en [Soundboks](/soundboks-4).
+- **Stor have, 30+ gæster:** [Mellem højtalerpakke](/hojtalerpakke-normal) — gerne med [subwoofer](/subwoofer). Eller [udendørspakken](/udendorspakke) hvis batteri er et must.
 
 ## 5 tips til perfekt udendørs lyd
 
@@ -54,8 +54,8 @@ Det her er vigtigt. Gode nabo-regler:
 
 ## Kombiner med festlys
 
-Udendørs lyd og lys sammen lofter enhver havefest. Vores lysbar med LED-spots og rogmaskine giver den rigtige stemning, når solen går ned. [Se vores lysbar](/#book).
+Udendørs lyd og lys sammen løfter enhver havefest. [Lysbaren](/lys-pakke) med LED-spots og røgmaskine giver den rigtige stemning, når solen går ned — eller start med [lyskæder](/lyskaeder) for den billigste forvandling.
 
 ## Book din havefest-lyd
 
-Lej højtaler og PA-anlæg til din havefest fra 395 kr/weekend. Hent på Vermlandsgade 66, aflever mandag. [Book din højtaler nu](/#book).
+Se pakker og priser på [lyd til havefest](/havefest) — eller [book din højtaler nu](/#book). Hent på Vermlandsgade 66, aflever mandag.

@@ -4,6 +4,7 @@ import { enBlogSlug, getAllPosts, getPostBySlug } from "@/lib/blog";
 import { localeAlternates } from "@/lib/hreflang";
 import { AUTHOR, authorLd } from "@/lib/author";
 
+import { ogImages } from "@/lib/og";
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -33,6 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : {}),
     },
     openGraph: {
+      images: ogImages(post.image),
       title: post.title,
       description: post.description,
       url: `https://lejhojtaler.dk/blog/${post.slug}`,

@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Youth Party Package Copenhagen | Sound and Disco Lights | 1,250 DKK | Lejhøjtaler.dk",
   description: "Soundboks 4, disco light effect and mirror ball in one package, sound and lights for a youth party at 1,250 DKK. Save 185 DKK. Rental in Copenhagen, set up in ten minutes.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/ungdomsfest-pakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-ungdomsfest-taendt.webp"),
     title: "Youth Party Package Copenhagen | Sound and Disco Lights | 1,250 DKK | Lejhøjtaler.dk",
     description: "Soundboks 4, disco light effect and mirror ball. Kill the ceiling light, switch this on, save 185 DKK.",
     url: "https://lejhojtaler.dk/en/ungdomsfest-pakke",

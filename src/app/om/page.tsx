@@ -3,12 +3,14 @@ import Link from "next/link";
 import { localeAlternates } from "@/lib/hreflang";
 import LocalBusinessJsonLd from "@/components/LocalBusinessJsonLd";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Om os | Lejhøjtaler.dk",
   description:
     "Mød Frederik Scharling, stifter af lejhøjtaler.dk. Københavns mest tilgængelige udlejningsservice for lyd og lys til private fester, firmaevents og alt derimellem.",
   alternates: { canonical: "https://lejhojtaler.dk/om", languages: localeAlternates("/om") },
   openGraph: {
+    images: ogImages(),
     title: "Om os | Lejhøjtaler.dk",
     description:
       "Mød Frederik Scharling, stifter af lejhøjtaler.dk. Københavns mest tilgængelige udlejningsservice for lyd og lys.",

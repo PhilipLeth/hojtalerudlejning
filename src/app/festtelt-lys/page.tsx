@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Festtelt-lys | 870 kr | Lejhøjtaler.dk",
   description: "To lyskæder og fire uplights, teltet og haven lyst op for 870 kr. Spar 115 kr. Lejes i København.",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/festtelt-lys"),
   },
   openGraph: {
+    images: ogImages("/images/product-pakke-festtelt-taendt.webp"),
     title: "Festtelt-lys | 870 kr | Lejhøjtaler.dk",
     description: "20 m lyskæde (varm hvid + farvet) og 4 LED uplights. Fra kantine-telt til havefest, spar 115 kr.",
     url: "https://lejhojtaler.dk/festtelt-lys",

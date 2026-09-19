@@ -8,6 +8,7 @@ import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 /**
  * /lej-mikrofon, kategorisiden for mikrofoner.
  *
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lej-mikrofon"),
   },
   openGraph: {
+    images: ogImages(),
     title: "Lej Mikrofon København | Fra 95 kr | Lejhøjtaler.dk",
     description:
       "Trådløs, headset og håndholdt. Passer direkte i vores højtalere, ingen mixer nødvendig.",

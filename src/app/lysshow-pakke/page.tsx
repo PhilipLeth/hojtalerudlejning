@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lysshow-pakken | Lys, discokugle og røg | 1.140 kr | Lejhøjtaler.dk",
   description:
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/lysshow-pakke"),
   },
   openGraph: {
+    images: ogImages("/images/product-lys-v4.webp"),
     title: "Lysshow-pakken | Lys, discokugle og røg | 1.140 kr",
     description: "Lysbar, discokugle og røgmaskine. Strålerne bliver synlige i luften, spar 145 kr.",
     url: "https://lejhojtaler.dk/lysshow-pakke",

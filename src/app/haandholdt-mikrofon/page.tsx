@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
+import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Håndholdt mikrofon (kabel) København | 95 kr | Lejhøjtaler.dk",
   description: "Almindelig håndholdt mikrofon med kabel, til taler og sang. 95 kr/weekend. Betal ved afhentning. Book online.",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/haandholdt-mikrofon"),
   },
   openGraph: {
+    images: ogImages("/images/product-mikrofon-kabel-v2.webp"),
     title: "Lej Håndholdt mikrofon (kabel) København | 95 kr",
     description: "Almindelig håndholdt mikrofon med kabel, til taler og sang. 95 kr/weekend. Betal ved afhentning. Book online.",
     url: "https://lejhojtaler.dk/haandholdt-mikrofon",
