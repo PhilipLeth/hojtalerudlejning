@@ -3,16 +3,17 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
-import { LADDER_FEST, ladderPrice, type LadderStep } from "@/lib/products";
+import BundleGrid from "@/components/BundleGrid";
+import { LADDER_LYD, SPEAKERPAKKER, ladderPrice, prisDkk, type LadderStep } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
 import { localizedHref } from "@/lib/enPages";
 import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "PA System Rental Copenhagen, packages by guest count | Lejhøjtaler.dk",
+  title: `PA System Rental Copenhagen, by guest count | From ${prisDkk("party")} | Lejhøjtaler.dk`,
   description:
-    "Rent a PA system in Copenhagen by how many guests are coming: 50, 100, 150 or 250 people. Ready-made packages with speakers, sub, lights and fog, delivery and setup available.",
+    `Rent a PA system in Copenhagen by how many guests are coming: up to 30, 30-50 or 50-100 people. Speakers, subwoofer and every cable, from ${prisDkk("party")} per weekend. Microphones and lighting can be added.`,
   keywords: [
     "pa system rental copenhagen",
     "sound system rental copenhagen",
@@ -26,9 +27,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages(),
-    title: "PA System Rental Copenhagen, packages by guest count",
+    title: "PA System Rental Copenhagen, by guest count",
     description:
-      "Choose a system by how many are coming: 50, 100, 150 or 250 guests. Ready-made packages, ready to set up.",
+      "Choose a system by how many are coming: up to 30, 30-50 or 50-100 guests. Speakers and cables, ready to set up.",
     url: "https://lejhojtaler.dk/en/lydanlaeg",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -120,23 +121,60 @@ export default function Page() {
           Choose a system by how many are coming
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
-          You should not have to guess at inches and watts. Tell us how many guests are coming and the package is
-          already put together, speakers, bass, stands, lights and cables in one.
+          You should not have to guess at inches and watts. Tell us how many guests are coming and the speakers, the
+          bass and the cables are already put together. Microphones and lighting you add yourself below.
         </p>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-4">
-        <h2 className="mb-6 text-2xl font-bold">For parties</h2>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {LADDER_FEST.map((step) => (
-            <Step key={step.navn} step={step} highlighted={step.productId === "pakke_fest_150"} />
+        <h2 className="mb-2 text-2xl font-bold">The system</h2>
+        <p className="mb-6 max-w-2xl text-sm text-white/50">
+          Speakers, a subwoofer from 50 guests, and every cable. This is the sound on its own, so you can add lighting
+          or leave it out.
+        </p>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {LADDER_LYD.map((step) => (
+            <Step key={step.navn} step={step} highlighted={step.productId === "festival"} />
           ))}
         </div>
       </section>
 
-      {/* Konference-stigen er væk sammen med pausen på projektor og skærm
-          samme afgrænsning som på den danske side. */}
+      {/* Arkets afsnit 1.2: anlæg + mikrofon. Stadig ren lyd, så den hører her. */}
+      <BundleGrid
+        locale="en"
+        ids={SPEAKERPAKKER}
+        eyebrow="Is there a speech?"
+        title="A system with a microphone"
+        subtitle="The same system, with the microphone included. It plugs straight into the speaker, so no mixer is needed in between. Wireless if the speaker needs to move around."
+      />
+
+      {/* Festpakkerne har lysbar og røg med og hører derfor i arkets afsnit 3,
+          ikke på en lydside. Her er det et link, ikke et kort. */}
       <section className="mx-auto max-w-6xl px-4 py-12">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+          <h2 className="mb-2 text-2xl font-bold">Do you want lighting too?</h2>
+          <p className="mb-6 max-w-2xl text-sm text-white/60">
+            The party packages are the same systems with a light bar and a fog machine in the price, and they cost less
+            than hiring the parts separately. If you only want the sound, you are in the right place.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/en/lej-hojtaler"
+              className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
+            >
+              See the sound and light packages
+            </Link>
+            <Link
+              href="/en/festlys"
+              className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
+            >
+              Lighting only
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-12">
         <h2 className="mb-2 text-2xl font-bold">For speeches and meetings</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">
           If something has to be said, the microphone matters more than the bass. We rent out the sound and the
@@ -145,7 +183,7 @@ export default function Page() {
         <div className="flex flex-wrap gap-3">
           <Link
             href={localizedHref("/pakke-tale-musik", "en")}
-            className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
+            className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
           >
             The speech &amp; music package
           </Link>
@@ -173,8 +211,8 @@ export default function Page() {
             probably seen the venue before, or we can tell from a photo.
           </p>
           <p className="mt-4 text-sm text-white/60">
-            Every package can be booked with delivery, setup and collection. From Party package 150 and up we recommend
-            it, four speakers and a subwoofer do not come home on a cargo bike.
+            Every system can be booked with delivery, setup and collection. From the large speaker package and up we
+            recommend it, two 12&quot; speakers and a subwoofer weigh 48 kg and do not come home on a cargo bike.
           </p>
         </div>
       </section>

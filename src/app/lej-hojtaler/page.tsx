@@ -103,8 +103,9 @@ export default function LejHojtalerPage() {
       <main className="relative z-20 bg-[#07060b]">
         <BundleGrid
           ids={FEST_LADDER_IDS}
-          title="Vælg anlæg efter antal gæster"
-          subtitle="Sig hvor mange der kommer, så er pakken sat sammen på forhånd, højtalere, bas, stativer, lys og kabler i ét."
+          eyebrow="Lyd og lys"
+          title="Festpakker efter antal gæster"
+          subtitle="Højtalere, bas, stativer, lysbar og kabler i ét. Vil du kun have lyden, står anlæggene for sig på /lydanlaeg."
         />
         <BundleGrid
           ids={LYD_LEJLIGHEDSPAKKER}

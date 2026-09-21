@@ -100,8 +100,9 @@ export default function Page() {
         <BundleGrid
           locale="en"
           ids={FEST_LADDER_IDS}
-          title="Choose a system by number of guests"
-          subtitle="Tell us how many are coming and the package is already put together, speakers, bass, stands, lights and cables in one."
+          eyebrow="Sound and light"
+          title="Party packages by number of guests"
+          subtitle="Speakers, bass, stands, a light bar and cables in one. If you only want the sound, the systems stand on their own at /en/lydanlaeg."
         />
         <BundleGrid
           locale="en"

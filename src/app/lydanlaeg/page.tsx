@@ -3,15 +3,16 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
-import { LADDER_FEST, ladderPrice, type LadderStep } from "@/lib/products";
+import BundleGrid from "@/components/BundleGrid";
+import { LADDER_LYD, SPEAKERPAKKER, ladderPrice, prisKr, type LadderStep } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
 import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Lydanlæg til leje, pakker efter antal gæster | Lejhøjtaler.dk",
+  title: `Lydanlæg til leje, anlæg efter antal gæster | Fra ${prisKr("party")} | Lejhøjtaler.dk`,
   description:
-    "Lej lydanlæg i København efter hvor mange gæster der kommer: 50, 100, 150 eller 250 personer. Færdige pakker med højtalere, sub, lys og røg, levering og opsætning kan tilvælges.",
+    `Lej lydanlæg i København efter hvor mange gæster der kommer: op til 30, 30-50 eller 50-100 personer. Højtalere, subwoofer og alle kabler, fra ${prisKr("party")} pr. weekend. Mikrofon og lys kan tilvælges.`,
   keywords: [
     "lej lydanlæg",
     "lydanlæg til fest",
@@ -27,9 +28,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages(),
-    title: "Lydanlæg til leje, pakker efter antal gæster",
+    title: "Lydanlæg til leje, anlæg efter antal gæster",
     description:
-      "Vælg anlæg efter hvor mange der kommer: 50, 100, 150 eller 250 gæster. Færdige pakker, klar til at blive stillet op.",
+      "Vælg anlæg efter hvor mange der kommer: op til 30, 30-50 eller 50-100 gæster. Højtalere og kabler, klar til at blive stillet op.",
     url: "https://lejhojtaler.dk/lydanlaeg",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -69,7 +70,7 @@ function Trin({ step, fremhaevet }: { step: LadderStep; fremhaevet: boolean }) {
       </p>
       <p className="mt-1 text-xs text-white/40">
         {step.koersel === "tilvalg" && "Hent selv, eller tilvælg levering + opsætning"}
-        {step.koersel === "anbefalet" && "Levering + opsætning anbefales, 795 kr begge veje"}
+        {step.koersel === "anbefalet" && `Levering + opsætning anbefales, ${prisKr("levering_begge")} begge veje`}
         {step.koersel === "tilbud" && "Levering, opsætning og tekniker er med i tilbuddet"}
       </p>
 
@@ -117,24 +118,59 @@ export default function LydanlaegPage() {
           Vælg anlæg efter hvor mange der kommer
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
-          Du skal ikke gætte på tommer og watt. Sig hvor mange gæster der kommer, så er pakken sat sammen på forhånd
-          højtalere, bas, stativer, lys og kabler i ét.
+          Du skal ikke gætte på tommer og watt. Sig hvor mange gæster der kommer, så er højtalerne, bassen og kablerne
+          sat sammen på forhånd. Mikrofon og lys vælger du selv til nedenfor.
         </p>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-4">
-        <h2 className="mb-6 text-2xl font-bold">Til fest</h2>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {LADDER_FEST.map((step) => (
-            <Trin key={step.navn} step={step} fremhaevet={step.productId === "pakke_fest_150"} />
+        <h2 className="mb-2 text-2xl font-bold">Anlægget</h2>
+        <p className="mb-6 max-w-2xl text-sm text-white/50">
+          Højtalere, subwoofer fra 50 gæster, og alle kabler. Det er lyden alene, så du kan vælge lys til eller lade
+          det være.
+        </p>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {LADDER_LYD.map((step) => (
+            <Trin key={step.navn} step={step} fremhaevet={step.productId === "festival"} />
           ))}
         </div>
       </section>
 
-      {/* Konference-stigen er væk: alle tre trin havde projektor eller skærm
-          med, og det udlejer vi ikke lige nu. Lyden til en tale kan vi stadig,
-          og det er den, afsnittet lover, hverken mere eller mindre. */}
+      {/* Arkets afsnit 1.2: anlæg + mikrofon. Stadig ren lyd, så den hører her. */}
+      <BundleGrid
+        ids={SPEAKERPAKKER}
+        eyebrow="Skal der holdes tale?"
+        title="Anlæg med mikrofon"
+        subtitle="Samme anlæg, med mikrofonen i. Den går direkte i højtaleren, så der ikke skal en mixer imellem. Trådløs, hvis taleren skal kunne gå rundt."
+      />
+
+      {/* Festpakkerne har lysbar og røg med og hører derfor i arkets afsnit 3,
+          ikke på en lydside. Her er det et link, ikke et kort. */}
       <section className="mx-auto max-w-6xl px-4 py-12">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+          <h2 className="mb-2 text-2xl font-bold">Skal der også være lys?</h2>
+          <p className="mb-6 max-w-2xl text-sm text-white/60">
+            Festpakkerne er de samme anlæg med lysbar og røgmaskine i prisen, og de er billigere end at leje delene
+            hver for sig. Vil du bare have lyden, bliver du her.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/lej-hojtaler"
+              className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
+            >
+              Se lyd og lys-pakkerne
+            </Link>
+            <Link
+              href="/festlys"
+              className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
+            >
+              Kun lys
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-12">
         <h2 className="mb-2 text-2xl font-bold">Til taler og møder</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">
           Skal der siges noget, er mikrofonen vigtigere end bassen. Vi udlejer både lyden og billedet
@@ -143,7 +179,7 @@ export default function LydanlaegPage() {
         <div className="flex flex-wrap gap-3">
           <Link
             href="/pakke-tale-musik"
-            className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
+            className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
           >
             Tale &amp; musik-pakken
           </Link>
@@ -171,8 +207,8 @@ export default function LydanlaegPage() {
             eller også kan vi se det på et billede.
           </p>
           <p className="mt-4 text-sm text-white/60">
-            Alle pakker kan bookes med levering, opsætning og afhentning. Fra Festpakke 150 og op anbefaler vi det
-            fire højtalere og en subwoofer kommer ikke hjem på en ladcykel.
+            Alle anlæg kan bookes med levering, opsætning og afhentning. Fra den store højtalerpakke og op anbefaler
+            vi det to 12&quot;-højtalere og en subwoofer vejer 48 kg og kommer ikke hjem på en ladcykel.
           </p>
         </div>
       </section>

@@ -11,6 +11,10 @@ import {
   rentalProducts as defaultRentals,
   isBundleProduct,
   isDeliveryAddon,
+  bundleListPrice,
+  bundlePrice,
+  bundleRabat,
+  PAKKE_RABAT,
   type Speaker,
   type Addon,
   type RentalProduct,
@@ -88,6 +92,48 @@ function AllowedAddonsField({
       {!allChecked && selected.length === 0 && (
         <p style={{ fontSize: "12px", color: "#dc3545", marginTop: "4px" }}>Ingen tilvalg vises ved booking af dette produkt</p>
       )}
+    </div>
+  );
+}
+
+/**
+ * En pakkes pris kan ikke redigeres — den er delenes sum minus rabatten.
+ *
+ * Feltet viser regnestykket og lader dig rette det ene tal, der er en
+ * beslutning: rabatprocenten. Prisarkets standard er 8 %. Skrev man prisen i
+ * hånden, ville den drive fra delene i samme øjeblik en lysbar skiftede pris —
+ * og serveren regner alligevel sin egen, så kunden ville se ét tal og betale et
+ * andet.
+ */
+function PakkeprisFelt({
+  pakke,
+  onRabat,
+}: {
+  pakke: RentalProduct;
+  onRabat: (rabat: number) => void;
+}) {
+  const sum = bundleListPrice(pakke);
+  const pct = Math.round(bundleRabat(pakke.bundle!) * 1000) / 10;
+  return (
+    <div>
+      <label style={labelStyle}>Pakkerabat (%)</label>
+      <input
+        type="number"
+        step="0.5"
+        min="0"
+        max="60"
+        value={pct}
+        onChange={(e) => {
+          const n = Number(e.target.value);
+          onRabat(Number.isFinite(n) && n >= 0 && n < 100 ? n / 100 : PAKKE_RABAT);
+        }}
+        style={inputStyle}
+      />
+      <p style={{ fontSize: "12px", color: "#666", margin: "4px 0 0" }}>
+        {sum.toLocaleString("da-DK")} kr for delene − {pct} % ={" "}
+        <strong>{bundlePrice(sum, pakke.bundle!).toLocaleString("da-DK")} kr</strong>. Prisen følger
+        delene, så ret dem for at ændre den.
+      </p>
     </div>
   );
 }
@@ -597,7 +643,14 @@ export default function AdminProdukterPage() {
                 </span>
               </summary>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", marginTop: "16px" }}>
-                <Field label="Pris (kr)" type="number" value={r.price} onChange={(v) => updateRental(i, { price: Number(v) || 0 })} />
+                {isBundleProduct(r) ? (
+                  <PakkeprisFelt
+                    pakke={r}
+                    onRabat={(rabat) => updateRental(i, { bundle: { ...r.bundle!, rabat } })}
+                  />
+                ) : (
+                  <Field label="Pris (kr)" type="number" value={r.price} onChange={(v) => updateRental(i, { price: Number(v) || 0 })} />
+                )}
                 <StockField
                   id={r.id}
                   parts={isBundleProduct(r) ? r.bundle!.parts.map((p) => p.productId) : undefined}

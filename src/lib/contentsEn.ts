@@ -153,6 +153,7 @@ export const CONTENTS_EN: Record<string, string> = {
   "Trådløs mikrofon til talerne": "Wireless microphone for the speeches",
   "Trådløs håndholdt mic": "Wireless handheld mic",
   "Shure trådløs håndholdt mic": "Shure wireless handheld mic",
+  "Shure trådløs mikrofon": "Shure wireless microphone",
   "Shure trådløs mikrofon PRO": "Shure wireless microphone PRO",
   "Shure BLX24/SM58 trådløs mikrofon": "Shure BLX24/SM58 wireless microphone",
   "Trådløs Shure-mikrofon": "Wireless Shure microphone",

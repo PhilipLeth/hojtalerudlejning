@@ -614,6 +614,55 @@ export const addons: Addon[] = [
     da: { label: "DJ-stativ med klæde", desc: "Gravity KSX 2 RD Set: X-stativ med sort klæde foran, skjuler kabler og giver en pæn DJ-front" },
     en: { label: "DJ stand with cloth", desc: "Gravity KSX 2 RD Set: X-stand with a black front cloth, hides cables and gives a tidy DJ booth" },
   },
+  /* ───── Strøm, prisarkets afsnit 4 ─────
+   *
+   * Forlængerledninger og stikdåser stod i arket, men har aldrig været på
+   * sitet. De hører til i checkout — det er dem, kunden opdager mangler, når
+   * teltet står 20 meter fra stikkontakten.
+   *
+   * Skjult indtil de har et foto: reglen er, at et synligt tilvalg har et
+   * billede, og et kort uden er værre end intet kort. Se AFVENTER_FOTO.
+   */
+  {
+    id: "kabeltromle",
+    hidden: true,
+    price: 45,
+    image: null,
+    da: { label: "Kabeltromle 10 m", desc: "Kabeltromle med 4 udtag, 10 meter. Til når stikkontakten ikke er der, hvor anlægget skal stå" },
+    en: { label: "Cable reel 10 m", desc: "Cable reel with 4 sockets, 10 metres. For when the socket is not where the system goes" },
+  },
+  {
+    id: "kabeltromle_jord",
+    hidden: true,
+    price: 95,
+    image: null,
+    da: { label: "Kabeltromle med jord, 25 m", desc: "Kabeltromle med 4 udtag og jord, 25 meter. Til udendørs og til telt" },
+    en: { label: "Earthed cable reel, 25 m", desc: "Cable reel with 4 earthed sockets, 25 metres. For outdoors and marquees" },
+  },
+  {
+    id: "stikdaase",
+    hidden: true,
+    price: 25,
+    image: null,
+    da: { label: "Stikdåse, 4 udtag", desc: "4-stikdåse med 5 meter ledning. Ét udtag bliver hurtigt for lidt til højtaler, lys og røg" },
+    en: { label: "Power strip, 4 sockets", desc: "4-socket strip with a 5 metre lead. One socket is quickly too few for speaker, light and fog" },
+  },
+  {
+    id: "stikdaase_jord",
+    hidden: true,
+    price: 25,
+    image: null,
+    da: { label: "Stikdåse med jord, 5 udtag", desc: "5-stikdåse med jord og 5 meter ledning. Til udstyr der kræver jordforbindelse" },
+    en: { label: "Earthed power strip, 5 sockets", desc: "5-socket earthed strip with a 5 metre lead. For equipment that needs earthing" },
+  },
+  {
+    id: "omformer_udendors",
+    hidden: true,
+    price: 10,
+    image: null,
+    da: { label: "Omformer til udendørs stik", desc: "Hybridstikprop til dansk jord. Passer vores stik til et udendørsstik i telt eller på terrasse" },
+    en: { label: "Adapter for outdoor sockets", desc: "Hybrid plug for Danish earthed sockets. Fits our plugs to an outdoor socket in a marquee or on a terrace" },
+  },
   {
     id: "roegvaeske",
     price: 295,
@@ -1507,6 +1556,30 @@ const rentalProductsRaw: RawRentalProduct[] = [
     },
   },
   {
+    // Prisarkets fjerde speakerpakke, "Speakerpakke trådløs 50-100". De tre
+    // andre fandtes allerede. Skjult indtil pakken har sit eget foto: et
+    // pakkekort med et genbrugt løsdelsbillede ser ikke ud som de andre.
+    id: "pakke_speaker_traadloes_stor",
+    hidden: true,
+    category: "lyd",
+    image: "/images/product-festival-v2-white.webp",
+    showPartImages: true,
+    name_da: "Speakerpakke trådløs 30-50",
+    name_en: "Speech package wireless 30-50",
+    desc_da: "Mellem højtalerpakke + trådløs mikrofon. Taleren kan gå rundt, til 30-50 gæster.",
+    desc_en: "Medium speaker package + wireless microphone. The speaker can move around, for 30-50 guests.",
+    contents: ["2× EV 12\" højtalere", "Shure trådløs mikrofon", "Bluetooth", "Alle kabler"],
+    allowedAddons: ["stativer", "mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS],
+    bundle: {
+      usecase_da: "Receptionen eller generalforsamlingen hvor taleren skal kunne bevæge sig, og hvor der også skal spilles musik.",
+      usecase_en: "The reception or general assembly where the speaker needs to move around and music is played too.",
+      parts: [
+        { productId: "festival", label_da: "Mellem højtalerpakke", label_en: "Medium speaker package", price: 795 },
+        { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless microphone", price: 445 },
+      ],
+    },
+  },
+  {
     id: "pakke_lysshow",
     page: "/lysshow-pakke",
     category: "lys",
@@ -1694,7 +1767,17 @@ export const PAUSEDE_PRODUKTER: string[] = [
  * produkter fik genererede fotos i husstilen. Reglen står: står Frederiks ark på
  * et produkt, er det ikke på pause.
  */
-export const AFVENTER_FOTO: string[] = [];
+/** Produkter der venter på et foto, før de kan blive synlige. */
+export const AFVENTER_FOTO: string[] = [
+  // Prisarkets afsnit 4, strøm — tilføjet 21. sept 2026
+  "kabeltromle",
+  "kabeltromle_jord",
+  "stikdaase",
+  "stikdaase_jord",
+  "omformer_udendors",
+  // Arkets fjerde speakerpakke
+  "pakke_speaker_traadloes_stor",
+];
 
 /** Er produktet sat på pause? Bruges af produktsiderne, der ellers ville stå
  *  med en bookingknap til noget, vi ikke udlejer. */
@@ -1800,6 +1883,20 @@ export const NAV_CATEGORIES: NavCategory[] = [
  * så det her er kontrakten for at de stadig kan findes, en test kræver at hver
  * pakke med en egen side står på præcis én kategoriside.
  */
+/**
+ * Prisarkets afsnit 1.2: anlæg + mikrofon. Ren lyd, så de bor på /lydanlaeg.
+ *
+ * Speakerpakke 30-50 lå før på /av-udstyr, fordi mikrofonen blev regnet som
+ * AV-udstyr. Men kunden, der skal holde en tale til en reception, leder efter
+ * lyd — og /av-udstyr handler om skærme og projektorer.
+ */
+export const SPEAKERPAKKER = [
+  "pakke_speaker_lille",
+  "pakke_speaker_mik",
+  "pakke_speaker_traadloes_lille",
+  "pakke_speaker_traadloes_stor",
+];
+
 export const KATEGORI_PAKKER: Record<string, string[]> = {
   "/dj-pult": ["dj_pakke_lille", "dj_pakke_mellem", "dj_pakke_stor"],
   ...Object.fromEntries(eventSituations.map(s => [`/events/${s.slug}`, [...s.packageIds]])),
@@ -1835,7 +1932,10 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
   ],
   "/lysshow": ["pakke_lysshow", "pakke_lysshow_stor"],
   "/karaoke": ["pakke_karaoke", "pakke_karaoke_fest"],
-  "/av-udstyr": ["pakke_tale_musik", "pakke_praesentation", "pakke_konference", "pakke_konference_150", "pakke_speaker_mik", "pakke_mikrofon_panel", "pakke_hybrid_teams"],
+  // Speakerpakkerne er arkets afsnit 1.2 og bor på /lydanlaeg, ikke her: det er
+  // lyd med mikrofon, ikke skærm og projektor.
+  "/av-udstyr": ["pakke_tale_musik", "pakke_praesentation", "pakke_konference", "pakke_konference_150", "pakke_mikrofon_panel", "pakke_hybrid_teams"],
+  "/lydanlaeg": SPEAKERPAKKER,
   "/lej-projektor": ["pakke_filmaften"],
 };
 
@@ -1850,7 +1950,7 @@ export const LYDMAND_PAKKER = ["pakke_lydmand_fest", "pakke_lydmand_firma", "pak
 export const LYSSHOW_PAKKER = ["pakke_lysshow", "pakke_lysshow_stor", "pakke_stemningslys"];
 
 /** Lydpakker der (også) vises som ekstra på /av-udstyr og i anledningslisten */
-export const LYD_EKSTRAPAKKER = ["pakke_speaker_mik", "pakke_soundboks_lys"];
+export const LYD_EKSTRAPAKKER = ["pakke_soundboks_lys"];
 
 /** Det der er tilbage på /av-udstyr, når projektor, skærm og lærred er på
  *  pause: højtaler + mikrofon. Se PAUSEDE_PRODUKTER. */
@@ -1908,6 +2008,29 @@ export const OCCASION_PACKAGES: Record<string, string> = {
 export function ladderPrice(step: LadderStep): number | null {
   return step.productId ? catalogPrice(step.productId) : null;
 }
+
+/* ───── Lydstigen, prisarkets afsnit 1.1 ─────
+ *
+ * /lydanlaeg lovede "vælg anlæg efter antal gæster" og viste Festpakker — hvor
+ * en lysbar og en røgmaskine er en del af prisen. Kunden kom for at vide, hvor
+ * store højtalere der skal til 60 gæster, og fik et lysshow med.
+ *
+ * Arket skiller de to ting: 1.1 Højtalerpakker er lyden alene, 3. LYD OG LYS
+ * PAKKER er festpakkerne. Lydstigen herunder er 1.1, og siden linker videre til
+ * afsnit 3 for dem der vil have lys med. katalog-struktur.test.ts holder
+ * skellet: ingen del i et trin på lydstigen må høre til lys eller røg.
+ */
+export const LADDER_LYD: LadderStep[] = [
+  { productId: "party", navn: "Lille højtalerpakke", navn_en: "Small speaker package", gaester: "op til 30", gaester_en: "up to 30", maxGaester: 30, href: "/hojtalerpakke-lille", hvad: '2× 10" Alto med Bluetooth, 12 kg i alt', hvad_en: '2× 10" Alto with Bluetooth, 12 kg in total', koersel: "tilvalg" },
+  { productId: "festival", navn: "Mellem højtalerpakke", navn_en: "Medium speaker package", gaester: "30-50", gaester_en: "30-50", maxGaester: 50, href: "/hojtalerpakke-normal", hvad: '2× 12" EV ZLX, mere tryk og mere rækkevidde', hvad_en: '2× 12" EV ZLX, more punch and more reach', koersel: "tilvalg" },
+  { productId: "hojtaler_100", navn: "Stor højtalerpakke", navn_en: "Large speaker package", gaester: "50-100", gaester_en: "50-100", maxGaester: 100, href: "/hojtalerpakke-bas", hvad: '2× 12" EV ZLX + subwoofer, bas til dansegulvet', hvad_en: '2× 12" EV ZLX + subwoofer, bass for the dancefloor', koersel: "anbefalet" },
+  { productId: null, navn: "Over 100 gæster", navn_en: "More than 100 guests", gaester: "100+", gaester_en: "100+", maxGaester: 9999, href: "/erhverv#tilbud", hvad: "Flere tops og subs skaffes, tekniker med på dagen", hvad_en: "We source more tops and subs, a technician comes on the day", koersel: "tilbud" },
+];
+
+/** Højtalerpakkerne i stigen, uden trinnet der kun er et tilbud. */
+export const LYD_LADDER_IDS: string[] = LADDER_LYD.map((t) => t.productId).filter(
+  (id): id is string => id !== null,
+);
 
 export const LADDER_FEST: LadderStep[] = [
   { productId: "pakke_fest_lille", navn: "Festpakke 0-30", navn_en: "Party package 0-30", gaester: "op til 30", gaester_en: "up to 30", maxGaester: 30, href: "/festpakke-lille", hvad: '2× 10" højtalere + lysbar', hvad_en: '2× 10" speakers + light bar', koersel: "tilvalg" },
