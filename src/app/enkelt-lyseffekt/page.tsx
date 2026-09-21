@@ -38,7 +38,6 @@ export default function Page() {
       name="Enkelt lyseffekt"
       headline="Lej enkelt lyseffekt i København"
       sub="Eurolite LED Mini Z-20, lille USB-drevet beam-effekt med roterende farvede stråler. Plug and play på få minutter."
-      image="/images/product-lyseffekt-z20-white.webp"
       imageAlt="Eurolite LED Mini Z-20 beam-effekt til leje i København"
       productId="lyseffekt"
       faqPhrase="en enkelt lyseffekt"

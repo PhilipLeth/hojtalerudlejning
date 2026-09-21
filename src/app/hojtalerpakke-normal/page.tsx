@@ -31,7 +31,6 @@ export default function HojtalerpakkeNormalPage() {
       name="Mellem højtalerpakke"
       headline="Lej mellem højtalerpakke i København"
       sub={'To kraftige 12" EV aktive højtalere - klar lyd til større rum og udendørs.'}
-      image="/images/product-festival-v2-white.webp"
       imageAlt="Mellem højtalerpakke til leje i København"
       productId="festival"
       faqPhrase="Mellem højtalerpakke"

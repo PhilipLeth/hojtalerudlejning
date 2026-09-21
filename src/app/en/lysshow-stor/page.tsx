@@ -33,7 +33,6 @@ export default function Page() {
       name="Light show large"
       headline="Large light show, the whole room changes"
       sub={`Light bar, four uplights, 40 cm disco ball and low fog machine. For the big party or the rented venue with fluorescent ceiling lights, save ${rabatDkk("pakke_lysshow_stor")}.`}
-      image="/images/product-uplight-4-v2-white.webp"
       imageAlt="Large light show with uplights, light bar, disco ball and low fog"
       productId="pakke_lysshow_stor"
       faqPhrase="the large light show"

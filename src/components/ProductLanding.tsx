@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
 import { PhoneText } from "@/components/PhoneLink";
 import { buildProductFaq } from "@/lib/productFaq";
-import { catalogPrice, erPaaPause, erGenereretBillede } from "@/lib/products";
+import { catalogImage, catalogPrice, erPaaPause, erGenereretBillede } from "@/lib/products";
 import ProductGallery from "@/components/ProductGallery";
 import type { Locale } from "@/lib/i18n";
 
@@ -69,7 +69,12 @@ export interface ProductLandingProps {
   price?: number;
   headline: string;
   sub: string;
-  image: string;
+  /**
+   * Billedet slås op i kataloget ud fra productId — skriv det ikke på siden.
+   * Feltet står tilbage til det ene tilfælde hvor siden skal vise noget andet
+   * end kortet i gitteret.
+   */
+  image?: string;
   imageAlt: string;
   bullets: string[];
   /** Booking product id for /?product=ID */
@@ -151,7 +156,7 @@ export default function ProductLanding({
   price: prisProp,
   headline,
   sub,
-  image,
+  image: billedeProp,
   imageAlt,
   bullets,
   productId,
@@ -169,6 +174,7 @@ export default function ProductLanding({
 }: ProductLandingProps) {
   // Pakkeprisen er udledt af delene, så den findes kun ét sted: kataloget.
   const price = prisProp ?? catalogPrice(productId);
+  const image = billedeProp ?? catalogImage(productId);
 
   const bookHref = toBook(productId, locale);
   const c = COPY[locale];

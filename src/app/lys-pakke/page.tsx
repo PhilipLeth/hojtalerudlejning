@@ -40,7 +40,6 @@ export default function LysPakkePage() {
       name="Lysbar"
       headline="Lej lysbar i København"
       sub="2 farvede LED-lamper + centereffekt på stativ. Klar på få minutter."
-      image="/images/product-lys-v4-white.webp"
       imageAlt="Lysbar til leje i København"
       productId="lys"
       bookLabel="Book lysbar nu"

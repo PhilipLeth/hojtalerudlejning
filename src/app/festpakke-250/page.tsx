@@ -32,7 +32,6 @@ export default function Festpakke250Page() {
       name="Festpakke 250"
       headline="Festpakke 250, anlægget til salen"
       sub={`4× EV 12&quot; højtalere, 2 subwoofere, stativer, lys og røg. Til op til 250 gæster, spar ${rabatKr("pakke_fest_250")}.`}
-      image="/images/product-pakke-fest-250-v2-white.webp"
       imageAlt="Festpakke 250: fire EV 12&quot; højtalere på stativer, to 12&quot; subwoofere, lysbar og røgmaskine"
       productId="pakke_fest_250"
       capacity={{ level: 3, label: "150-250 pers." }}

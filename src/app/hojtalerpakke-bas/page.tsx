@@ -36,7 +36,6 @@ export default function HojtalerpakkeBasPage() {
       name="Stor højtalerpakke"
       headline="Lej højtalerpakke til 50-100 gæster"
       sub={'De store 12" EV ZLX 12P G2 med en Behringer 12" subwoofer, trinnet over Mellem højtalerpakke. Stativer kan tilkøbes.'}
-      image="/images/product-hojtalerpakke-stor-white.webp"
       imageAlt="Stor højtalerpakke med to 12 tommer EV-højtalere og subwoofer til leje i København"
       productId="hojtaler_100"
       faqPhrase="højtalerpakken med subwoofer"

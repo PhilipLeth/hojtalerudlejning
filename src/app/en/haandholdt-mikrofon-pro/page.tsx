@@ -38,7 +38,6 @@ export default function Page() {
       name="Handheld microphone PRO (wired)"
       headline="Rent a Shure Beta 58A"
       sub="Shure Beta 58A with cable, the classic for vocals and speeches."
-      image="/images/product-mikrofon-kabel-pro-v2-white.webp"
       imageAlt="Shure Beta 58A microphone for rent in Copenhagen"
       productId="haandholdt_mikrofon_pro"
       faqPhrase="a Shure Beta 58A"

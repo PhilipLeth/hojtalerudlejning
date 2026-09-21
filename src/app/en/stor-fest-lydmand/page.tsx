@@ -35,7 +35,6 @@ export default function Page() {
       priceUnit="/event"
       headline="Big party with a sound engineer"
       sub={`Full rig with bass, lights and fog + AV technician for 4 hours. We set it all up and keep the dancefloor going, save ${rabatDkk("pakke_lydmand_stor")}.`}
-      image="/images/product-pakke-lydmand-stor-v2-white.webp"
       imageAlt="Big party with sound engineer: speakers, fog machine and the engineer's mixer"
       productId="pakke_lydmand_stor"
       bookLabel="Book the big party package"

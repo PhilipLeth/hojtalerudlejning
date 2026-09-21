@@ -35,7 +35,6 @@ export default function Page() {
       priceUnit="/event"
       headline="Party package with a sound engineer"
       sub={`Medium speaker package + light bar + AV technician for 4 hours. We arrive, set up, run the sound and pack down, save ${rabatDkk("pakke_lydmand_fest")}.`}
-      image="/images/product-pakke-lydmand-fest-v2-white.webp"
       imageAlt="Party package with sound engineer: speakers, lights and the engineer's mixer"
       productId="pakke_lydmand_fest"
       bookLabel="Book the party package with sound engineer"

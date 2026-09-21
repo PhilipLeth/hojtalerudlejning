@@ -32,7 +32,6 @@ export default function FirmafestpakkePage() {
       name="Firmafestpakke"
       headline="Firmafestpakken, talen først, dansegulvet bagefter"
       sub={`Højtalere på stativer, trådløs mikrofon, subwoofer, lys og røg. Til julefrokost og firmafest, spar ${rabatKr("pakke_firmafest")}.`}
-      image="/images/product-pakke-fest-stor-white.webp"
       imageAlt="Firmafestpakke med højtalere, subwoofer, lys og røgmaskine"
       productId="pakke_firmafest"
       faqPhrase="firmafestpakken"

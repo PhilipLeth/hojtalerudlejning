@@ -33,7 +33,6 @@ export default function Page() {
       name="Soundboks battery"
       headline="Rent an extra battery for the Soundboks 4"
       sub="An extra battery for the Soundboks 4, so the party does not end when the first one runs dry."
-      image="/images/product-soundboks-batteri-white.webp"
       imageAlt="Soundboks battery for rent"
       productId="batteri"
       bookLabel="Book an extra battery"

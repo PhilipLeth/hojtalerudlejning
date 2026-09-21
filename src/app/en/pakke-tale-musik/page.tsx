@@ -32,7 +32,6 @@ export default function Page() {
       name="Speech & music package"
       headline="The speech & music package"
       sub={`Medium speaker package + wireless microphone, speeches and music for events. Save ${rabatDkk("pakke_tale_musik")}.`}
-      image="/images/product-festival-v2-white.webp"
       imageAlt="Speech and music package with large speakers and a wireless microphone"
       productId="pakke_tale_musik"
       bullets={[

@@ -40,7 +40,6 @@ export default function Page() {
       name="Disco ball"
       headline="Rent a disco ball in Copenhagen"
       sub="Rotating mirror ball with a motor and coloured LED spotlight. Ready in 2 minutes."
-      image="/images/product-discokugle-v2-white.webp"
       imageAlt="Disco ball for rent in Copenhagen"
       productId="discokugle"
       bookLabel="Book the disco ball now"

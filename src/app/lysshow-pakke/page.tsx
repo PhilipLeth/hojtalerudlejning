@@ -32,7 +32,6 @@ export default function Page() {
       name="Lysshow"
       headline="Lysshow-pakken, lyset bliver synligt i luften"
       sub={`Lysbar, discokugle 40 cm og røgmaskine. Uden røg ser man farvede pletter på væggen; med røg bliver strålerne til et show, spar ${rabatKr("pakke_lysshow")}.`}
-      image="/images/product-lys-v4-white.webp"
       imageAlt="Lysshow-pakken med lysbar, discokugle og røgmaskine"
       productId="pakke_lysshow"
       faqPhrase="lysshow-pakken"

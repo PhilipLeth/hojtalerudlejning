@@ -32,7 +32,6 @@ export default function Page() {
       name="Large youth party package"
       headline="Large youth party package, a proper disco"
       sub={`Two 12&quot; speakers, a light bar on a stand, a 40 cm mirror ball and a fog machine. The hall becomes a club, save ${rabatDkk("pakke_ungdomsfest_stor")}.`}
-      image="/images/product-pakke-ungdomsfest-stor-taendt-white.webp"
       imageAlt="Large youth party package switched on: two 12-inch speakers, light bar on a stand, mirror ball with spotlight and fog machine"
       productId="pakke_ungdomsfest_stor"
       faqPhrase="the large youth party package"

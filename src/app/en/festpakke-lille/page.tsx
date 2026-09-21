@@ -40,7 +40,6 @@ export default function SmallPartyPackageEn() {
       name="Party package 0-30"
       headline="Party package 0-30, sound and lights"
       sub={`2× Alto 10" speakers + a light bar. Everything for a party of up to 30 guests, save ${rabatDkk("pakke_fest_lille")}.`}
-      image="/images/product-pakke-fest-lille-white.webp"
       imageAlt="Party package 0-30 with Alto speakers and a light bar"
       productId="pakke_fest_lille"
       faqPhrase="the party package 0-30"

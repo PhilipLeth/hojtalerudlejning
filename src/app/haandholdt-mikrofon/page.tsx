@@ -30,7 +30,6 @@ export default function Page() {
       name="Håndholdt mikrofon (kabel)"
       headline="Lej håndholdt mikrofon"
       sub={'the t.bone MB 60, håndholdt dynamisk mikrofon med kabel, til taler og sang.'}
-      image="/images/product-mikrofon-kabel-v2-white.webp"
       imageAlt="Håndholdt mikrofon med kabel til leje"
       productId="mikrofon_kabel"
       faqPhrase="en håndholdt mikrofon med kabel"

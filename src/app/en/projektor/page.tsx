@@ -33,7 +33,6 @@ export default function Page() {
       name="Projector"
       headline="Rent a projector in Copenhagen"
       sub="Full HD projector for presentations and film. HDMI, ready in 5 minutes."
-      image="/images/product-projektor-white.webp"
       imageAlt="Projector for rent in Copenhagen"
       productId="projektor"
       bookLabel="Book the projector"

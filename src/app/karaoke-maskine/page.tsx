@@ -32,7 +32,6 @@ export default function Page() {
       name="Karaokemaskine"
       headline="Lej karaokemaskine i København"
       sub={'Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys, tilslut TV via HDMI.'}
-      image="/images/product-karaoke-v2-white.webp"
       imageAlt="Singing Machine karaokemaskine med to trådløse mikrofoner til leje"
       productId="karaoke"
       faqPhrase="en karaokemaskine"

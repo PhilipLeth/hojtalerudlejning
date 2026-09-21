@@ -31,7 +31,6 @@ export default function Side() {
       name="Diskotek-pakken"
       headline="Diskotek-pakken, fuldt dansegulv uden røg"
       sub={`Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar ${rabatKr("pakke_diskotek")}.`}
-      image="/images/product-pakke-diskotek-taendt-v2-white.webp"
       imageAlt="Diskotek-pakken tændt: lysbar på stativ, discokugle og en ekstra LED-lyseffekt"
       productId="pakke_diskotek"
       faqPhrase="diskotek-pakken"

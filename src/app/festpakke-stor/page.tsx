@@ -33,7 +33,6 @@ export default function FestpakkeStorPage() {
       name="Festpakke 30-50"
       headline="Festpakke 30-50, lyd og lys til 30-50 gæster"
       sub={`2× EV 12&quot; højtalere + lysbar. Fuld fest, spar ${rabatKr("pakke_fest_stor")}.`}
-      image="/images/product-pakke-fest-stor-white.webp"
       imageAlt="Festpakke 30-50 med store EV højtalere og lysbar"
       productId="pakke_fest_stor"
       faqPhrase="Festpakke 30-50"

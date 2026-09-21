@@ -40,7 +40,6 @@ export default function Page() {
       name="Fog machine"
       headline="Rent a fog machine in Copenhagen"
       sub="Fog fluid and remote control included, and it sets up in minutes."
-      image="/images/product-rog-v2-white.webp"
       imageAlt="Fog machine for rent in Copenhagen"
       productId="rog"
       bookLabel="Book the fog machine now"

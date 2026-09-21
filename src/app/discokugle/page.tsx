@@ -50,7 +50,6 @@ export default function DiscokuglePage() {
       name="Discokugle"
       headline="Lej diskokugle i København"
       sub="Roterende discokugle med LED-lys og farver. Klar på 2 min."
-      image="/images/product-discokugle-v2-white.webp"
       imageAlt="Discokugle til leje i København"
       productId="discokugle"
       bookLabel="Book discokugle nu"

@@ -37,7 +37,6 @@ export default function Soundboks4Page() {
         headline="Lej en Soundboks i København"
         sub="Soundboks 4, batteridrevet med kraftig bas, ingen strøm nødvendig. Intet depositum: du betaler først, når du henter."
         weekendAvailability
-        image="/images/product-soundboks-v2-white.webp"
         imageAlt="Soundboks 4 til leje i København"
         productId="soundboks"
         faqExtra={[

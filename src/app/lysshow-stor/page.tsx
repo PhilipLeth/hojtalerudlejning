@@ -32,7 +32,6 @@ export default function Page() {
       name="Lysshow stort"
       headline="Lysshow stort, hele rummet skifter karakter"
       sub={`Lysbar, fire uplights, discokugle 40 cm og low fog-maskine. Til den store fest eller det lejede lokale med lysstofrør i loftet, spar ${rabatKr("pakke_lysshow_stor")}.`}
-      image="/images/product-uplight-4-v2-white.webp"
       imageAlt="Lysshow stort med uplights, lysbar, discokugle og low fog"
       productId="pakke_lysshow_stor"
       faqPhrase="det store lysshow"

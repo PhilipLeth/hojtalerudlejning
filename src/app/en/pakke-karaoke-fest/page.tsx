@@ -32,7 +32,6 @@ export default function Page() {
       name="Karaoke party bundle"
       headline="The karaoke party bundle, up to 100 people"
       sub={`Karaoke machine + 55\" display + large speakers. Save ${rabatDkk("pakke_karaoke_fest")}.`}
-      image="/images/product-pakke-karaoke-fest-v2-white.webp"
       imageAlt="Large karaoke bundle with a large screen and speakers for rent"
       productId="pakke_karaoke_fest"
       bullets={[

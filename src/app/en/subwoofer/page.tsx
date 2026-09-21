@@ -32,7 +32,6 @@ export default function Page() {
       name={"Subwoofer 12\""}
       headline="Rent a subwoofer in Copenhagen"
       sub={"Behringer 12\" powered subwoofer, the deep bass that makes the party felt in the body."}
-      image="/images/product-subwoofer-v2-white.webp"
       imageAlt={"Behringer 12\" powered subwoofer for rent in Copenhagen"}
       productId="subwoofer"
       faqPhrase="a subwoofer"

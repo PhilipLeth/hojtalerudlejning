@@ -32,7 +32,6 @@ export default function Page() {
       name="Speakerpakken"
       headline="Speakerpakken, musik og taler uden en mixer imellem"
       sub={`Mellem højtalerpakke + håndholdt mikrofon med kabel. Mikrofonen går direkte i højtaleren, spar ${rabatKr("pakke_speaker_mik")}.`}
-      image="/images/product-festival-v2-white.webp"
       imageAlt="Speakerpakken med to EV-højtalere og håndholdt mikrofon"
       productId="pakke_speaker_mik"
       faqPhrase="speakerpakken"

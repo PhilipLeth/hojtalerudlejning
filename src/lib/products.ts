@@ -2157,6 +2157,27 @@ export const startPrice = cheapestSpeakerPrice();
  */
 
 /** Katalogpris for et produkt-id (default-kataloget, brug LivePrice for admin-redigerede tal). */
+/**
+ * Katalogets billede for et produkt.
+ *
+ * Produktsiderne skrev deres eget `image=`, og 110 af 116 skrev heldigvis det
+ * samme som kataloget. De sidste seks gjorde ikke: /hojtalerpakke-bas viste
+ * generiske søjlehøjtalere i stedet for pakkens EV'er, og Udendørspakken viste
+ * en bar Soundboks uden det batteri og den lyskæde, kunden betaler for. Et
+ * billede skrevet i siden driver fra kataloget på præcis samme måde som en
+ * pris gjorde det.
+ */
+export function catalogImage(id: string): string {
+  const p =
+    speakers.find((s) => s.id === id) ??
+    rentalProducts.find((r) => r.id === id) ??
+    addons.find((a) => a.id === id);
+  if (!p) throw new Error(`catalogImage: ukendt produkt-id "${id}"`);
+  const src = "product" in p ? p.product : p.image;
+  if (!src) throw new Error(`catalogImage: "${id}" har intet billede`);
+  return src;
+}
+
 export function catalogPrice(id: string): number {
   const p =
     speakers.find((s) => s.id === id) ??

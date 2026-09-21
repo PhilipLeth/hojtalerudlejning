@@ -31,7 +31,6 @@ export default function Side() {
       name="Ungdomsfest-pakken"
       headline="Ungdomsfest-pakken, lyd og diskolys i én pris"
       sub={`Soundboks 4, diskolyseffekt og discokugle 30 cm. Batteridrevet lyd, lys der laver dansegulvet, spar ${rabatKr("pakke_ungdomsfest")}.`}
-      image="/images/product-pakke-ungdomsfest-taendt-white.webp"
       imageAlt="Ungdomsfest-pakken tændt: Soundboks 4, LED-lyseffekt og discokugle med spot i et mørkt rum"
       productId="pakke_ungdomsfest"
       faqPhrase="ungdomsfest-pakken"

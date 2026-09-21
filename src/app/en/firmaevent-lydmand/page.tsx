@@ -35,7 +35,6 @@ export default function Page() {
       priceUnit="/event"
       headline="Corporate event with a sound engineer"
       sub={`Medium speaker package + mixer + wireless mic + AV technician for 4 hours. Speeches, music and someone running it all, save ${rabatDkk("pakke_lydmand_firma")}.`}
-      image="/images/product-pakke-lydmand-firma-v2-white.webp"
       imageAlt="Corporate event with sound engineer: speakers, mixer and microphone"
       productId="pakke_lydmand_firma"
       bookLabel="Book the corporate event package"

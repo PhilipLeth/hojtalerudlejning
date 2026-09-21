@@ -34,7 +34,6 @@ export default function Page() {
       priceUnit="/event"
       headline="Firmaevent med lydmand"
       sub={`Mellem højtalerpakke + mixer + trådløs mikrofon + AV-tekniker i 4 timer. Taler, musik og én der passer det hele, spar ${rabatKr("pakke_lydmand_firma")}.`}
-      image="/images/product-pakke-lydmand-firma-v2-white.webp"
       imageAlt="Firmaevent med lydmand: højtalere, mixer og mikrofon"
       productId="pakke_lydmand_firma"
       bookLabel="Book firmaevent med lydmand"

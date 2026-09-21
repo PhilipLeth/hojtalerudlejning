@@ -40,7 +40,6 @@ export default function TraadloesMikrofonPage() {
       name="Trådløs mikrofon"
       headline="Lej trådløs mikrofon"
       sub="Shure BLX24 med SM58, trådløs håndholdt mikrofon i scenekvalitet til taler, bryllup og events."
-      image="/images/product-mikrofon-pro-v2-white.webp"
       imageAlt="Shure BLX24 trådløs mikrofon til leje i København"
       productId="mikrofon"
       bookLabel="Book mikrofon nu"

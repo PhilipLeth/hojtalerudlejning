@@ -32,7 +32,6 @@ export default function Page() {
       name="Karaoke machine"
       headline="Rent a karaoke machine in Copenhagen"
       sub="Singing Machine with built-in screen, 2 wireless microphones and party lights, connect a TV via HDMI."
-      image="/images/product-karaoke-v2-white.webp"
       imageAlt="Singing Machine karaoke machine with two wireless microphones for rent"
       productId="karaoke"
       faqPhrase="a karaoke machine"

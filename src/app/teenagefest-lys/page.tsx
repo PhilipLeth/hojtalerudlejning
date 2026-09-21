@@ -31,7 +31,6 @@ export default function Side() {
       name="Teenagefest-lys"
       headline="Teenagefest-lys, kælderen bliver en klub"
       sub={`Diskolyseffekt, discokugle og 10 m farvet lyskæde. Sluk loftslyset, tænd pakken, spar ${rabatKr("pakke_teenagefest")}.`}
-      image="/images/product-pakke-teenagefest-taendt-v2-white.webp"
       imageAlt="Teenagefest-lys tændt: discokugle, LED-lyseffekt og farvet lyskæde i et mørkt rum"
       productId="pakke_teenagefest"
       faqPhrase="teenagefest-lys"

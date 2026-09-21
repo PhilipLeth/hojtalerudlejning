@@ -32,7 +32,6 @@ export default function Page() {
       name="Karaoke bundle"
       headline="The karaoke bundle, machine, screen and sound"
       sub={`Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke, save ${rabatDkk("pakke_karaoke")}.`}
-      image="/images/product-pakke-karaoke-v2-white.webp"
       imageAlt={"Karaoke bundle with machine, 32\" screen and speakers for rent"}
       productId="pakke_karaoke"
       bullets={[

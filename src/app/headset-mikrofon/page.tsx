@@ -39,7 +39,6 @@ export default function HeadsetMikrofonPage() {
       name="Trådløst headset-mikrofon"
       headline="Lej headset-mikrofon"
       sub="Shure BLX14 trådløst headset til præsentationer og konferencer. Hands-free."
-      image="/images/product-headset-pro-v2-white.webp"
       imageAlt="Trådløst headset-mikrofon til leje i København"
       productId="headset"
       bookLabel="Book headset nu"

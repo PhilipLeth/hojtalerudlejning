@@ -32,7 +32,6 @@ export default function Page() {
       name="Karaokepakken"
       headline="Karaokepakken, maskine, skærm og lyd"
       sub={`Karaokemaskine + 32" skærm + 2× Alto-højtalere. Alt til karaoke, spar ${rabatKr("pakke_karaoke")}.`}
-      image="/images/product-pakke-karaoke-v2-white.webp"
       imageAlt={'Karaokepakke med maskine, 32" skærm og højtalere til leje'}
       productId="pakke_karaoke"
       bullets={["Singing Machine + 2 trådløse mikrofoner", "32\" LED-skærm på 3-fod stativ til teksterne", "2× Alto 10\" højtalere med Bluetooth", "HDMI + alle kabler", `Spar ${rabatKr("pakke_karaoke")} ift. enkeltpriser (1.685 kr)`, "Karaoke til op til 40 personer"]}

@@ -33,7 +33,6 @@ export default function Page() {
       name="Speaker package"
       headline="Speaker package, music and speeches with no mixer in between"
       sub={`Medium speaker package + wired handheld microphone. The mic plugs straight into the speaker, save ${rabatDkk("pakke_speaker_mik")}.`}
-      image="/images/product-festival-v2-white.webp"
       imageAlt="Speaker package with two EV speakers and a handheld microphone"
       productId="pakke_speaker_mik"
       faqPhrase="the speaker package"

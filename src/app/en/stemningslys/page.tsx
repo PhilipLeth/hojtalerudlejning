@@ -40,7 +40,6 @@ export default function Page() {
       name="Ambient light bar"
       headline="Ambient light bar, light without sound"
       sub={`4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling, save ${rabatDkk("pakke_stemningslys")}.`}
-      image="/images/product-pakke-stemningslys-taendt-v3-white.webp"
       imageAlt="Ambient light bar with uplights, fairy lights and a disco ball"
       productId="pakke_stemningslys"
       faqPhrase="the ambient light package"

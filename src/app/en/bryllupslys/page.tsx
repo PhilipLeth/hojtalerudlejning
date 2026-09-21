@@ -32,7 +32,6 @@ export default function Page() {
       name="Wedding light bar"
       headline="Wedding light bar, waltz on clouds"
       sub={`Warm light above the tables, uplights on the walls and low fog for the first dance, save ${rabatDkk("pakke_bryllupslys")}.`}
-      image="/images/product-pakke-bryllupslys-taendt-white.webp"
       imageAlt="Wedding light bar switched on: warm white string lights, four LED uplights and the low fog machine"
       productId="pakke_bryllupslys"
       faqPhrase="wedding light bar"

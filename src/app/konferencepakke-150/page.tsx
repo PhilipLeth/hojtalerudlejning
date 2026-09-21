@@ -33,7 +33,6 @@ export default function Konferencepakke150Page() {
       name="Konferencepakke 150"
       headline="Konferencepakke 150, så både taleren og salen er med"
       sub={`2× EV 12&quot; på stativer, Shure trådløs mikrofon, trådløst headset og 55&quot; skærm. Til 100-150 deltagere, spar ${rabatKr("pakke_konference_150")}.`}
-      image="/images/product-skaerm-white.webp"
       imageAlt="Konferencepakke med højtalere, mikrofon, headset og storskærm"
       productId="pakke_konference_150"
       capacity={{ level: 3, label: "100-150 pers." }}

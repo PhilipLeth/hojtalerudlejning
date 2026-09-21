@@ -41,7 +41,6 @@ export default function MackieThumpGoEn() {
       name="Mackie Thump GO"
       headline="Rent Mackie Thump GO in Copenhagen"
       sub='Battery-powered 8" speaker, park, beach, courtyard. No power needed.'
-      image="/images/product-thumpgo-v2-white.webp"
       imageAlt="Mackie Thump GO battery speaker for rent in Copenhagen"
       productId="thumpgo"
       faqPhrase="the Mackie Thump GO"

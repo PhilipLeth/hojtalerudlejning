@@ -32,7 +32,6 @@ export default function StudenterpakkePage() {
       name="Studenterpakken"
       headline="Studenterpakken, spiller hele vognturen"
       sub={`Soundboks 4, ekstra batteri og polstret bæretaske. Ingen strøm på ladet, spar ${rabatKr("pakke_student")}.`}
-      image="/images/product-soundboks-v2-white.webp"
       imageAlt="Studenterpakken med Soundboks 4, ekstra batteri og bæretaske"
       productId="pakke_student"
       faqPhrase="studenterpakken"

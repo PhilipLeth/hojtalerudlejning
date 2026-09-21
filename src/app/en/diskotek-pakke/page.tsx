@@ -32,7 +32,6 @@ export default function Page() {
       name="Club light bar"
       headline="Club light bar, a full dancefloor, no fog"
       sub={`Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms, save ${rabatDkk("pakke_diskotek")}.`}
-      image="/images/product-pakke-diskotek-taendt-v2-white.webp"
       imageAlt="Club light bar switched on: light bar on a stand, mirror ball and an extra LED par light"
       productId="pakke_diskotek"
       faqPhrase="club light bar"

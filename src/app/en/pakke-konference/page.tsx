@@ -32,7 +32,6 @@ export default function Page() {
       name="Conference bundle"
       headline="The conference bundle, ready for the meeting"
       sub={`55\" display + wireless headset + small speaker package. Save ${rabatDkk("pakke_konference")}.`}
-      image="/images/product-skaerm-white.webp"
       imageAlt="Conference bundle with large screen, headset and speakers"
       productId="pakke_konference"
       bullets={[

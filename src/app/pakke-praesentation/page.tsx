@@ -32,7 +32,6 @@ export default function Page() {
       name="Præsentationspakken"
       headline="Præsentationspakken, alt til mødet"
       sub={`Projektor + lærred 160 cm + håndholdt mikrofon. Spar ${rabatKr("pakke_praesentation")} ift. enkeltpriser.`}
-      image="/images/product-projektor-white.webp"
       imageAlt="Præsentationspakke med projektor, lærred og mikrofon"
       productId="pakke_praesentation"
       bullets={["Full HD projektor", "Lærred 160 cm på stativ", "Håndholdt mikrofon m. kabel", "Alle kabler inkluderet", `Spar ${rabatKr("pakke_praesentation")} ift. at leje delene enkeltvis`]}

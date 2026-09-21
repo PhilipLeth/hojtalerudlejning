@@ -32,7 +32,6 @@ export default function Page() {
       name="Karaoke-festpakken"
       headline="Karaoke-festpakken, op til 100 pers."
       sub={`Karaokemaskine + 55" storskærm + store højtalere. Spar ${rabatKr("pakke_karaoke_fest")}.`}
-      image="/images/product-pakke-karaoke-fest-v2-white.webp"
       imageAlt="Stor karaokepakke med storskærm og højtalere til leje"
       productId="pakke_karaoke_fest"
       bullets={["Singing Machine + 2 trådløse mikrofoner", "55\" LED-skærm på 3-fod stativ", "2× 12\" EV-højtalere med stativer", "Karaoke til op til 100 personer", `Spar ${rabatKr("pakke_karaoke_fest")} ift. enkeltpriser`]}

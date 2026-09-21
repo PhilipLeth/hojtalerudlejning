@@ -33,7 +33,6 @@ export default function Page() {
       name="Light show"
       headline="Light show package, the beams become visible"
       sub={`Light bar, 40 cm disco ball and fog machine. Without fog you see coloured dots on the wall; with fog the beams turn into a show, save ${rabatDkk("pakke_lysshow")}.`}
-      image="/images/product-lys-v4-white.webp"
       imageAlt="Light show package with light bar, disco ball and fog machine"
       productId="pakke_lysshow"
       faqPhrase="the light show package"

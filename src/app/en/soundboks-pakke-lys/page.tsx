@@ -33,7 +33,6 @@ export default function Page() {
       name="Soundboks package with lights"
       headline="Soundboks package with lights, sound without a socket, lights that make it a party"
       sub={`Soundboks 4 + light bar with 2 coloured lamps and a centre effect. The bass runs on battery, the lights need a socket, save ${rabatDkk("pakke_soundboks_lys")}.`}
-      image="/images/product-soundboks-v2-white.webp"
       imageAlt="Soundboks package with lights: Soundboks 4 and light bar"
       productId="pakke_soundboks_lys"
       faqPhrase="the Soundboks package with lights"

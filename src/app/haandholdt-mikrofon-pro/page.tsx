@@ -30,7 +30,6 @@ export default function Page() {
       name="Håndholdt mikrofon PRO (kabel)"
       headline="Lej Shure Beta 58A"
       sub={'Shure Beta 58A med kabel, klassikeren til sang og taler.'}
-      image="/images/product-mikrofon-kabel-pro-v2-white.webp"
       imageAlt="Shure Beta 58A mikrofon til leje"
       productId="haandholdt_mikrofon_pro"
       faqPhrase="en håndholdt PRO-mikrofon med kabel"

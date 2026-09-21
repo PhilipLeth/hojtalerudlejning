@@ -34,7 +34,6 @@ export default function Page() {
       priceUnit="/event"
       headline="Festpakke med lydmand"
       sub={`Mellem højtalerpakke + lysbar + AV-tekniker i 4 timer. Vi kommer, sætter op, styrer lyden og pakker sammen, spar ${rabatKr("pakke_lydmand_fest")}.`}
-      image="/images/product-pakke-lydmand-fest-v2-white.webp"
       imageAlt="Festpakke med lydmand: højtalere, lys og lydmandens mixer"
       productId="pakke_lydmand_fest"
       bookLabel="Book festpakke med lydmand"

@@ -32,7 +32,6 @@ export default function Page() {
       name="Soundboks batteri"
       headline="Lej ekstra batteri til Soundboks 4"
       sub="Et ekstra batteri til Soundboks 4, så festen ikke slutter, når det første løber tørt."
-      image="/images/product-soundboks-batteri-white.webp"
       imageAlt="Soundboks batteri til leje"
       productId="batteri"
       bookLabel="Book ekstra batteri nu"

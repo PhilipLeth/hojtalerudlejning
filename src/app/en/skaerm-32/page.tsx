@@ -34,7 +34,6 @@ export default function Page() {
       name={"32\" Screen"}
       headline={"Rent a 32\" screen on a stand"}
       sub={"32\" LED screen on a tripod stand, compact, easy to move and ready in 5 minutes."}
-      image="/images/product-skaerm-32-white.webp"
       imageAlt={"32\" LED screen on a tripod stand for rent in Copenhagen"}
       productId="skaerm_32"
       faqPhrase={"a 32\" screen"}

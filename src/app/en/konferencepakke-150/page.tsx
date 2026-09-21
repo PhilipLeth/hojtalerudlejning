@@ -33,7 +33,6 @@ export default function Page() {
       name="Conference package 150"
       headline="Conference package 150, so both the speaker and the hall are with you"
       sub={`2× EV 12\" on stands, Shure wireless microphone, wireless headset and 55\" display. For 100-150 participants, save ${rabatDkk("pakke_konference_150")}.`}
-      image="/images/product-skaerm-white.webp"
       imageAlt="Conference package with speakers, microphone, headset and large screen"
       productId="pakke_konference_150"
       capacity={{ level: 3, label: "100-150 people" }}

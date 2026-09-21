@@ -40,7 +40,6 @@ export default function LargePartyPackageEn() {
       name="Party package 30-50"
       headline="Party package 30-50, sound and lights for 30-50 guests"
       sub={`2× EV 12" speakers + the full light package. A proper party, save ${rabatDkk("pakke_fest_stor")}.`}
-      image="/images/product-pakke-fest-stor-white.webp"
       imageAlt="Party package 30-50 with EV speakers and light bar"
       productId="pakke_fest_stor"
       faqPhrase="the party package 30-50"

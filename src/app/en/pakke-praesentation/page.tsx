@@ -32,7 +32,6 @@ export default function Page() {
       name="Presentation bundle"
       headline="The presentation bundle, everything for the meeting"
       sub={`Projector + 160 cm screen + handheld microphone. Save ${rabatDkk("pakke_praesentation")} compared to single prices.`}
-      image="/images/product-projektor-white.webp"
       imageAlt="Presentation bundle with projector, screen and microphone"
       productId="pakke_praesentation"
       bullets={[

@@ -40,7 +40,6 @@ export default function Page() {
       name="Wireless microphone"
       headline="Rent a wireless microphone in Copenhagen"
       sub="Shure BLX24 with SM58, a stage-quality wireless handheld microphone for speeches, weddings and events."
-      image="/images/product-mikrofon-pro-v2-white.webp"
       imageAlt="Shure BLX24 wireless microphone for rent in Copenhagen"
       productId="mikrofon"
       bookLabel="Book the microphone now"

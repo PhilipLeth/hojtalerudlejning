@@ -32,7 +32,6 @@ export default function Page() {
       name="Large speaker package"
       headline="Rent a speaker package for 50-100 guests"
       sub={"The large 12\" EV ZLX 12P G2 with a Behringer 12\" subwoofer, the step above the medium speaker package. Stands are an add-on."}
-      image="/images/product-hojtalerpakke-stor-white.webp"
       imageAlt="Large speaker package with two 12 inch EV speakers and a subwoofer for rent in Copenhagen"
       productId="hojtaler_100"
       faqPhrase="the speaker package with subwoofer"

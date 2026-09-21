@@ -33,7 +33,6 @@ export default function Page() {
       name="Large screen"
       headline="Rent a large screen in Copenhagen"
       sub={"55\" LED display on a tripod stand. Works in daylight, sharper than a projector."}
-      image="/images/product-skaerm-white.webp"
       imageAlt="Large screen for rent in Copenhagen"
       productId="skaerm_55"
       bookLabel="Book the large screen"

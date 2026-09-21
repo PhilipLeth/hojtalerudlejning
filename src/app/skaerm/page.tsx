@@ -40,7 +40,6 @@ export default function SkaermPage() {
       name="Storskærm"
       headline="Lej storskærm i København"
       sub='55" LED-skærm på 3-fod stativ. Fungerer i dagslys, skarpere end projektor.'
-      image="/images/product-skaerm-white.webp"
       imageAlt="Storskærm til leje i København"
       productId="skaerm_55"
       bookLabel="Book storskærm nu"

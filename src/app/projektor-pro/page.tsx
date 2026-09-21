@@ -32,7 +32,6 @@ export default function Page() {
       name="Projektor Pro (5000 lumen)"
       headline="Lej Projektor Pro, 5000 lumen"
       sub={'Kraftig 5000 lumen projektor, skarp selv i dagslys.'}
-      image="/images/product-projektor-pro-v2-white.webp"
       imageAlt="5000 lumen projektor til leje"
       productId="projektor_pro"
       faqPhrase="Projektor Pro"

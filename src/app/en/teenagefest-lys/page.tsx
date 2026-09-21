@@ -32,7 +32,6 @@ export default function Page() {
       name="Teen party lights"
       headline="Teen party lights, the basement becomes a club"
       sub={`Disco effect, disco ball and 10 m of coloured fairy lights. Kill the ceiling light, switch this on, save ${rabatDkk("pakke_teenagefest")}.`}
-      image="/images/product-pakke-teenagefest-taendt-v2-white.webp"
       imageAlt="Teen party lights switched on: mirror ball, LED par light and a coloured festoon string"
       productId="pakke_teenagefest"
       faqPhrase="teen party lights"

@@ -39,7 +39,6 @@ export default function ProjektorPage() {
       name="Projektor"
       headline="Lej projektor i København"
       sub="Full HD projektor til præsentationer og film. HDMI, klar på 5 min."
-      image="/images/product-projektor-white.webp"
       imageAlt="Projektor til leje i København"
       productId="projektor"
       bookLabel="Book projektor nu"

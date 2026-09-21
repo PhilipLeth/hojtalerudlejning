@@ -31,7 +31,6 @@ export default function HojtalerpakkeLillePage() {
       name="Højtalerpakke lille"
       headline="Lej højtalerpakke lille i København"
       sub={'To kompakte 10" Alto TX 410 med Bluetooth, klar til cyklen.'}
-      image="/images/product-party-v2-white.webp"
       imageAlt="Lille højtalerpakke til leje i København"
       productId="party"
       faqPhrase="den lille højtalerpakke"

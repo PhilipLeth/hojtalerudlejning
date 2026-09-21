@@ -40,7 +40,6 @@ export default function Page() {
       name="Light bar"
       headline="Rent a party light package in Copenhagen"
       sub="2 coloured LED lamps and a centre effect on a stand. Ready in a few minutes."
-      image="/images/product-lys-v4-white.webp"
       imageAlt="Party light bar for rent in Copenhagen"
       productId="lys"
       bookLabel="Book the light bar now"

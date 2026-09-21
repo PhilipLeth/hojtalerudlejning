@@ -41,7 +41,6 @@ export default function LargeSpeakerPackageEn() {
       name="Medium Speaker Package"
       headline="Rent a medium speaker package in Copenhagen"
       sub='Two powerful 12" EV active speakers, clear sound for larger rooms and outdoors.'
-      image="/images/product-festival-v2-white.webp"
       imageAlt="Medium speaker package for rent in Copenhagen"
       productId="festival"
       faqPhrase="the medium speaker package"

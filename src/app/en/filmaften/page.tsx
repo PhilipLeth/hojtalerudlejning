@@ -33,7 +33,6 @@ export default function Page() {
       name="Movie night package"
       headline="The movie night package, cinema in the courtyard"
       sub={`Full HD projector, 160 cm screen on a stand and two speakers. Everything for movie night, save ${rabatDkk("pakke_filmaften")}.`}
-      image="/images/product-projektor-white.webp"
       imageAlt="Movie night package with projector, screen and speakers"
       productId="pakke_filmaften"
       capacity={{ level: 2, label: "up to 40 people" }}

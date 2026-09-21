@@ -32,7 +32,6 @@ export default function Page() {
       name="Projector Pro (5000 lumen)"
       headline="Rent the Projector Pro, 5000 lumen"
       sub="Powerful 5000 lumen projector, sharp even in daylight."
-      image="/images/product-projektor-pro-v2-white.webp"
       imageAlt="5000 lumen projector for rent"
       productId="projektor_pro"
       faqPhrase="the Projector Pro"

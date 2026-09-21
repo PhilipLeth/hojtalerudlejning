@@ -41,7 +41,6 @@ export default function SoundEngineerPage() {
       priceUnit="/hour"
       headline="Hire a sound engineer for your event"
       sub="An AV technician who sets up, runs the sound check and controls the sound, so you can enjoy the party instead of standing at the mixer."
-      image="/images/product-lydmand-white.webp"
       imageAlt="Sound engineer: mixer, headphones and microphone"
       productId="lydmand"
       bookLabel="Book a sound engineer"

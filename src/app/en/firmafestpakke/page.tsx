@@ -33,7 +33,6 @@ export default function Page() {
       name="Company party package"
       headline="The company party package, the speech first, the dancefloor after"
       sub={`Speakers on stands, wireless microphone, subwoofer, lights and fog. For Christmas parties and company events, save ${rabatDkk("pakke_firmafest")}.`}
-      image="/images/product-pakke-fest-stor-white.webp"
       imageAlt="Company party package with speakers, subwoofer, lights and fog machine"
       productId="pakke_firmafest"
       faqPhrase="the company party package"

@@ -33,7 +33,6 @@ export default function Page() {
       name="Outdoor package"
       headline="The outdoor package, the whole party without a socket"
       sub={`Soundboks 4, extra battery and 10 m string lights. Courtyard, beach or park, save ${rabatDkk("pakke_udendors")}.`}
-      image="/images/product-soundboks-v2-white.webp"
       imageAlt="Outdoor package with Soundboks 4, extra battery and string lights"
       productId="pakke_udendors"
       faqPhrase="the outdoor package"

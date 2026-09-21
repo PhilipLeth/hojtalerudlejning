@@ -33,7 +33,6 @@ export default function Page() {
       name="Graduation package"
       headline="The graduation package, plays through the whole truck ride"
       sub={`Soundboks 4, extra battery and padded carry bag. No power on the truck, save ${rabatDkk("pakke_student")}.`}
-      image="/images/product-soundboks-v2-white.webp"
       imageAlt="Graduation package with Soundboks 4, extra battery and carry bag"
       productId="pakke_student"
       faqPhrase="the graduation package"

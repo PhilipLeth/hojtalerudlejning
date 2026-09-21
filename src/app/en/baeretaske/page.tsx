@@ -33,7 +33,6 @@ export default function Page() {
       name="Carry bag"
       headline="Rent a carry bag for the speakers"
       sub="A padded sports bag that holds the small speaker package and all the cables, so you can collect by bike."
-      image="/images/product-taske-v2-white.webp"
       imageAlt="Padded carry bag for speakers"
       productId="taske"
       bookLabel="Book a carry bag"

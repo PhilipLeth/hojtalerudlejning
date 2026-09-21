@@ -61,6 +61,22 @@ describe("Produktsidernes pris", () => {
     expect(afvig, `sider uden gyldigt productId:\n${afvig.join("\n")}`).toEqual([]);
   });
 
+  /**
+   * Samme regel for billedet.
+   *
+   * 110 af 116 sider skrev heldigvis det samme som kataloget. De sidste seks
+   * gjorde ikke: /hojtalerpakke-bas viste generiske søjlehøjtalere i stedet
+   * for pakkens EV'er, og Udendørspakken en bar Soundboks uden batteriet og
+   * lyskæden. Kortet i gitteret viste noget andet end produktsiden.
+   */
+  it("ingen side skriver billedet selv", () => {
+    const skriver = produktsider.filter((s) => /\simage="/.test(s.kilde)).map((s) => s.sti);
+    expect(
+      skriver,
+      `sider der skriver billedet i stedet for at lade ProductLanding slå det op:\n${skriver.join("\n")}`,
+    ).toEqual([]);
+  });
+
   it("ingen side skriver prisen selv", () => {
     const skriver = produktsider
       .filter((s) => /price=\{\s*\d/.test(s.kilde))
