@@ -59,7 +59,7 @@ export default function LeveringPage() {
         </div>
         <p className="mt-4 text-sm text-slate-500">
           Skal vi kun hente igen bagefter, fordi du selv kan hente, men ikke aflevere, koster den tur{" "}
-          <LivePrice productId="afhentning_retur" prefix="" />. Alle tre valg ligger i bookingen under &quot;Levering og
+          <LivePrice productId="afhentning_retur" prefix="" suffix=" kr" />. Alle tre valg ligger i bookingen under &quot;Levering og
           afhentning&quot;, og du skriver adressen, når du vælger dem.
         </p>
       </section>
