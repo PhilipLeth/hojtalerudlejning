@@ -1,6 +1,7 @@
 import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
@@ -62,6 +63,16 @@ export default function DiscokuglePage() {
         "Hent fredag, aflever mandag",
       ]}
     >
+      {/*
+        Annoncerne lover "diskokugle fra 545 kr" — det er 30 cm-kuglen — og
+        guldkuglen havde slet ingen side. Begge står på siden nu, så løftet kan
+        indfries her i stedet for at sende kunden videre.
+      */}
+      <section className="mx-auto max-w-6xl px-4 pb-16">
+        <h2 className="mb-2 text-2xl font-bold">Alle tre discokugler</h2>
+        <p className="mb-8 text-white/50">30 eller 40 cm, sølv eller guld. Motor, stativ og spot er med i dem alle.</p>
+        <CategoryProductGrid items={[{ id: "discokugle_30" }, { id: "discokugle" }, { id: "discokugle_guld" }]} />
+      </section>
       <UpsellBox
         title="Kombiner med røg og lys"
         text="Discokuglen er perfekt sammen med røgmaskine og festlys. Skab den fulde festoplevelse."

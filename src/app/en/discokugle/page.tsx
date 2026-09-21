@@ -1,6 +1,7 @@
 import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
 import UpsellBox from "@/components/UpsellBox";
 import { localeAlternates } from "@/lib/hreflang";
 
@@ -52,6 +53,16 @@ export default function Page() {
         "Collect Friday, return Monday",
       ]}
     >
+      {/*
+        The ads promise "disco balls from 545 DKK", which is the 30 cm one, and
+        the gold ball had no page at all. Both are on the page now, so the
+        promise can actually be booked here.
+      */}
+      <section className="mx-auto max-w-6xl px-4 pb-16">
+        <h2 className="mb-2 text-2xl font-bold">All three disco balls</h2>
+        <p className="mb-8 text-white/50">30 or 40 cm, silver or gold. Motor, stand and spotlight included in all of them.</p>
+        <CategoryProductGrid locale="en" items={[{ id: "discokugle_30" }, { id: "discokugle" }, { id: "discokugle_guld" }]} />
+      </section>
       <UpsellBox
         locale="en"
         title="Add fog and lights"
