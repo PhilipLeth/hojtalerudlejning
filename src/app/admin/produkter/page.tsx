@@ -593,7 +593,12 @@ export default function AdminProdukterPage() {
                   <input type="checkbox" checked={!!sp.hidden} onChange={(e) => updateSpeaker(i, { hidden: e.target.checked })} />
                   Skjul på siden
                 </label>
-                <AllowedAddonsField allAddons={addons} value={sp.allowedAddons} onChange={(v) => updateSpeaker(i, { allowedAddons: v })} />
+                {/* Feltet er 30+ afkrydsningsfelter pr. produkt. Med hele
+                    kataloget på siden bliver det tusinder, og hvert tastetryk
+                    tegner dem om. Det vises derfor først når kortet er åbnet. */}
+                {aabne.has(sp.id) && (
+                  <AllowedAddonsField allAddons={addons} value={sp.allowedAddons} onChange={(v) => updateSpeaker(i, { allowedAddons: v })} />
+                )}
                 <LinjeFelt
                   label={INDHOLD_LABEL}
                   value={sp.contents}
@@ -680,7 +685,9 @@ export default function AdminProdukterPage() {
                   <input type="checkbox" checked={!!r.hidden} onChange={(e) => updateRental(i, { hidden: e.target.checked })} />
                   Skjul på siden
                 </label>
-                <AllowedAddonsField allAddons={addons} value={r.allowedAddons} onChange={(v) => updateRental(i, { allowedAddons: v })} />
+                {aabne.has(r.id) && (
+                  <AllowedAddonsField allAddons={addons} value={r.allowedAddons} onChange={(v) => updateRental(i, { allowedAddons: v })} />
+                )}
                 {r.page && (
                   <GalleryField
                     productId={r.id}

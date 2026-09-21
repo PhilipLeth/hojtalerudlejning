@@ -1,6 +1,7 @@
 import {djGearProducts} from "./djGearProducts";
 import { eventSituations } from "./eventSituations";
 import { situationPackages } from "./situationPackages";
+import { anledningPakker, ANLEDNING_PAKKE_IDS } from "./anledningPakker";
 import { mixerModels } from "./mixerModels";
 import { microphonePackages } from "./microphonePackages";
 
@@ -963,6 +964,8 @@ const rentalProductsRaw: RawRentalProduct[] = [
   { id: "saebeboblemaskine", category: "roeg", price: 995, image: "/images/product-saebeboblemaskine-white.webp", name_da: "Sæbeboblemaskine", name_en: "Bubble machine", desc_da: "Stor sæbeboblemaskine, fylder rummet med bobler, inkl. boblevæske.", desc_en: "Large bubble machine that fills the room with bubbles, incl. bubble fluid.", allowedAddons: ["boblevaeske", ...DELIVERY_ADDON_IDS], contents: ["Eurolite SD201 DMX sæbeboblemaskine", "Boblevæske", "Strømkabel"] },
   ...situationPackages,
   ...microphonePackages,
+  // Prisarkets afsnit 5 og 6, alle hidden indtil de har et foto
+  ...anledningPakker,
   {
     id: "dj_headphones",
     hidden: true,
@@ -1779,6 +1782,8 @@ export const AFVENTER_FOTO: string[] = [
   "omformer_udendors",
   // Arkets fjerde speakerpakke
   "pakke_speaker_traadloes_stor",
+  // Arkets afsnit 5 og 6: 46 anledningspakker, se anledningPakker.ts
+  ...ANLEDNING_PAKKE_IDS,
 ];
 
 /** Er produktet sat på pause? Bruges af produktsiderne, der ellers ville stå
