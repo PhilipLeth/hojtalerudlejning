@@ -4163,5 +4163,15 @@
     ],
     "kurv": "Læg hele setuppet via bookSetupHref (?product=første&extras=resten). Link fra /lyspakker, /festlys og DJ-lysvælgeren.",
     "loft": "8 forsøg pr. IP pr. dag i KV."
+  },
+  "intent_ia_og_prisside_2026_09_21": {
+    "hvorfor": "Et intentkort over AV-udlejning (199 intents, søjle A-T) blev lagt i Frederiks prisliste-regneark, fanen 'AI IA'. Det viste to søgninger uden landingsside og en stavefejl, vi selv havde skrevet.",
+    "intentkort": "https://docs.google.com/spreadsheets/d/1IIx-AfepoGyiBkHmJImc-_mlRCIF7Lw0 (fanen 'AI IA'). Kolonner: søjle, hub, intent, intent-type, funnel, søgefraser DA/EN, sæson, anbefalet URL, sideform, status, eksisterende side, produkter, prioritet, evidens (Ads-visninger 30 dage), note. Status pr. 21/9: 64 findes, 39 delvist, 80 mangler side, 11 mangler sortiment.",
+    "priser_side": "/priser og /en/priser bygger hele prislisten af kataloget via useProducts (PriceTable.tsx), grupperet i Højtalere, kategorierne fra rentalProducts, tilbehør, bemanding og kørsel. Ingen beløb skrevet i hånden, så siden følger KV.",
+    "levering_side": "/levering og /en/levering: hent selv (gratis), levering + opsætning, begge veje. Priser via LivePrice. Området er 'hele København'; længere ude er et opkald. Begge sider er linket fra footeren, som ikke havde nogen indgang til priser eller levering før.",
+    "diskokugle_stavning": "Kunderne staver den med k: 104 visninger på 'diskokugle' mod 22 på 'discokugle' (30 dage). Title, H1 og keywords på /discokugle bruger nu k-formen; stien og c-formen i teksten er uændret, så begge stavemåder står på siden.",
+    "aabent_diskokugle": "Annoncerne i AAG139-142 lover 'Fra 545 kr', men kataloget siger 495 (30 cm) og 595 (40 cm). En RSA kan ikke redigeres, den skal genskabes. Produktnavnet i KV hedder stadig 'Discokugle 40 cm' og skal rettes i /admin/produkter. Begge dele afventer Frederik (kommentar lagt i arket).",
+    "odense": "Undersøgt 21/9: kampagnen har allerede [odense], [fyn], [århus], [aalborg], [jylland] m.fl. som negative søgeord. De odense-visninger, 30-dages-tallet viste, er fra 22.-24. august, altså før negativerne. Intet at tilføje. scripts/ads/negativ-kampagne.mjs kan vise og tilføje negativer på kampagneniveau (tørløb som standard, --udfoer skriver).",
+    "naeste": "Fra arket, højeste prioritet: hub for skoler og gymnasier (gymnasiefest, galla, studenterfest), EAN-faktura, pakke til 300-800 gæster, guides om skærmstørrelse pr. gæstetal og om mikrofoner der hyler, samt værktøjet 'hvad skal jeg bruge til X gæster'."
   }
 }
