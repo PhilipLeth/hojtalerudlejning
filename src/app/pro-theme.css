@@ -59,7 +59,7 @@ body:not(:has(.admin-shell)) .via-\[\#07060b\]\/60{--tw-gradient-stops: var(--tw
 body:not(:has(.admin-shell)) .via-\[\#0d0c12\]\/70{--tw-gradient-stops: var(--tw-gradient-from), #f4f7fc, var(--tw-gradient-to);}
 body:not(:has(.admin-shell)) .glass{background:#f5f8fd;border-color:#d7e1ee;} 
 body:not(:has(.admin-shell)) .glass-selected{background:#eaf1ff;border-color:#1249cf;}
-body:not(:has(.admin-shell)) .bg-brand-500.text-white,body:not(:has(.admin-shell)) .bg-brand-500.text-black,body:not(:has(.admin-shell)) .bg-brand-400.text-black{color:#fff;}
+body:not(:has(.admin-shell)) .bg-brand-400.text-white,body:not(:has(.admin-shell)) .bg-brand-400.text-black,body:not(:has(.admin-shell)) .bg-brand-500.text-white,body:not(:has(.admin-shell)) .bg-brand-500.text-black,body:not(:has(.admin-shell)) .bg-brand-600.text-white,body:not(:has(.admin-shell)) .bg-brand-600.text-black,body:not(:has(.admin-shell)) .bg-brand-700.text-white,body:not(:has(.admin-shell)) .bg-brand-700.text-black,body:not(:has(.admin-shell)) .bg-brand-800.text-white,body:not(:has(.admin-shell)) .bg-brand-800.text-black,body:not(:has(.admin-shell)) .bg-brand-900.text-white,body:not(:has(.admin-shell)) .bg-brand-900.text-black{color:#fff;}
 body:not(:has(.admin-shell)) .bg-brand-500 .text-black{color:#fff;}
 body:not(:has(.admin-shell)) .prose-blog{color:#53657d;}
 body:not(:has(.admin-shell)) .prose-blog :is(h1,h2,h3,h4,strong){color:#12284a;}

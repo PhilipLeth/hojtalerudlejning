@@ -19,9 +19,9 @@ export default function Page() {
         <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">Equipment rental · Copenhagen</p>
         <h1 className="mt-4 max-w-3xl text-4xl font-bold sm:text-6xl">Screens, lighting, mics and speakers. Book online.</h1>
         <p className="mt-6 max-w-2xl text-lg text-slate-600">Ready-made packages and individual items. Panel and Teams/Zoom setups are booked as packages, not by phone.</p>
-        <div className="mt-8 flex flex-wrap gap-4">
-          <a href="#screens" className="rounded-lg bg-brand-600 px-6 py-3 font-semibold text-white">See screens and projectors</a>
-          <a href="#lighting" className="font-semibold text-brand-600">See lighting →</a>
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          <a href="#screens" className="rounded-full border border-transparent bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400">See screens and projectors</a>
+          <a href="#lighting" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">See lighting →</a>
         </div>
       </section>
       <BundleGrid locale="en" ids={AV_PAKKER} eyebrow="AV packages" title="Ready to book" subtitle="Panel and hybrid-meeting packages are here. VAT included." />
