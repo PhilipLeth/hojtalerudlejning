@@ -16,7 +16,7 @@
  * på spørgsmålet.
  */
 import type { FaqItem } from "@/components/FaqSection";
-import { prisKr, rabatKr, startPrisKr } from "@/lib/products";
+import { prisDkk, prisKr, rabatKr, startPrisKr } from "@/lib/products";
 
 /** Går igen på alle kategorisider — afhentning og de to kørselspriser. */
 const AFHENTNING: FaqItem = {
@@ -178,29 +178,30 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvilket lydanlæg passer til antallet af gæster?",
       a:
-        "Festpakke 0-30 (" + prisKr("pakke_fest_lille") + ") til op til 30 gæster, Festpakke 30-50 (" + prisKr("pakke_fest_stor") + ") til 30-50, Festpakke 150 (" + prisKr("pakke_fest_150") + ") til " +
-        "50-150 med subwoofer og stativer, og Festpakke 250 (" + prisKr("pakke_fest_250") + ") til 150-250 med fire højtalere og to " +
-        "subwoofere. Er I over 250, skaffer vi større tops og subs og sender en tekniker med på dagen — skriv til os.",
+        "Lille højtalerpakke (" + prisKr("party") + ") til op til 30 gæster, Mellem højtalerpakke (" + prisKr("festival") + ") til 30-50, og " +
+        "Stor højtalerpakke (" + prisKr("hojtaler_100") + ") til 50-100, hvor en subwoofer er med. Er I over 100, skaffer vi flere tops " +
+        "og subs og sender en tekniker med på dagen — skriv til os. Skal der også være lys, er Festpakkerne de samme " +
+        "anlæg med lysbar i prisen.",
     },
     {
       q: "Gælder gæstetallene også udendørs?",
       a:
         "Nej. Tallene er indendørs, hvor væggene holder på lyden. Udendørs forsvinder lyden opad og udad, så vælg " +
-        "gerne ét trin op — eller læg en subwoofer til for 495 kr.",
+        "gerne ét trin op — eller læg en subwoofer til for " + prisKr("subwoofer") + ".",
     },
     {
       q: "Kan jeg få mikrofon med til taler?",
       a:
-        "Ja. En trådløs mikrofon koster 445 kr, en Shure BLX i scenekvalitet 595 kr og et trådløst headset 445 kr. " +
-        "Skal der både være tale og musik, findes Tale & musik-pakken til " + prisKr("pakke_tale_musik") + " med to 12\" højtalere og " +
-        "trådløs mikrofon. Projektor og skærm udlejer vi ikke lige nu.",
+        "Ja. En mikrofon med ledning koster " + prisKr("haandholdt_mikrofon") + " og en trådløs " + prisKr("traadloes_mikrofon") + ". Vil du have den med i " +
+        "prisen, findes Speakerpakkerne: samme anlæg med mikrofonen i, fra " + prisKr("pakke_speaker_lille") + ". Mikrofonen går direkte " +
+        "i højtaleren, så der ikke skal en mixer imellem. Projektor og skærm udlejer vi ikke lige nu.",
     },
     {
       q: "Hvad er forskellen på et festanlæg og et taleanlæg?",
       a:
         "Et festanlæg er bygget til musik og bas og skal kunne spille højt i mange timer. Et taleanlæg er bygget til " +
-        "at gøre en stemme tydelig — mikrofon og klar diskant. Skal I bruge begge dele, findes " +
-        "Tale & musik-pakken, der kan det samtidig.",
+        "at gøre en stemme tydelig — mikrofon og klar diskant. Skal I bruge begge dele, er Speakerpakkerne det samme " +
+        "anlæg med en mikrofon i, og Tale & musik-pakken kan det samtidig.",
     },
     LEJEPERIODE,
     AFHENTNING,
@@ -529,30 +530,30 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Which PA system fits the number of guests?",
       a:
-        "Party package 0-30 (" + prisKr("pakke_fest_lille") + ") for up to 30 guests, Party package 30-50 (" + prisKr("pakke_fest_stor") + ") for 30-50, Party package 150 " +
-        "(" + prisKr("pakke_fest_150") + ") for 50-150 with a subwoofer and stands, and Party package 250 (" + prisKr("pakke_fest_250") + ") for 150-250 with four " +
-        "speakers and two subwoofers. If you are over 250, we source larger tops and subs and send a technician on the " +
-        "day — write to us.",
+        "The small speaker package (" + prisDkk("party") + ") for up to 30 guests, the medium one (" + prisDkk("festival") + ") for 30-50, and the large " +
+        "one (" + prisDkk("hojtaler_100") + ") for 50-100, which includes a subwoofer. Over 100, we source more tops and subs and send a " +
+        "technician on the day — write to us. If you want lighting as well, the party packages are the same systems " +
+        "with a light bar in the price.",
     },
     {
       q: "Do the guest numbers apply outdoors too?",
       a:
         "No. The numbers are for indoors, where the walls hold on to the sound. Outdoors it escapes upwards and " +
-        "outwards, so go one step up — or add a subwoofer for 495 kr.",
+        "outwards, so go one step up — or add a subwoofer for " + prisDkk("subwoofer") + ".",
     },
     {
       q: "Can I get a microphone for speeches?",
       a:
-        "Yes. A wireless microphone is 445 kr, a stage-quality Shure BLX 595 kr and a wireless headset 445 kr. If you " +
-        "need both speech and music, the speech & music package at " + prisKr("pakke_tale_musik") + " has two 12\" speakers and a wireless " +
-        "microphone. We do not rent out projectors and screens at the moment.",
+        "Yes. A wired microphone is " + prisDkk("haandholdt_mikrofon") + " and a wireless one " + prisDkk("traadloes_mikrofon") + ". To have it in the price, take " +
+        "one of the speech packages: the same system with the microphone included, from " + prisDkk("pakke_speaker_lille") + ". It plugs " +
+        "straight into the speaker, so no mixer is needed. We do not rent out projectors and screens at the moment.",
     },
     {
       q: "What is the difference between a party system and a speech system?",
       a:
         "A party system is built for music and bass and has to play loudly for hours. A speech system is built to make " +
-        "a voice clear — a microphone and crisp treble. If you need both, the speech & music package does the two at " +
-        "once.",
+        "a voice clear — a microphone and crisp treble. If you need both, the speech packages are the same system with " +
+        "a microphone in, and the speech & music package does the two at once.",
     },
     LEJEPERIODE_EN,
     AFHENTNING_EN,
