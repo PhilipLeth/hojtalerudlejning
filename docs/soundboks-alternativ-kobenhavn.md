@@ -30,7 +30,7 @@ En Soundboks er designet til udendørs brug med batteri. Det lyder smart i teori
 
 ## Vores løsning: Professionel lyd fra stikkontakten
 
-Hos lejhøjtaler.dk kan du få begge dele. Skal der ikke være en stikkontakt i nærheden, har vi [Mackie Thump GO til 495 kr.](/mackie-thump-go) og [Soundboks 4 til 695 kr.](/soundboks-4) — begge batteridrevne med op til 12 timers spilletid. Vil du bare [leje en Soundboks i København](/soundboks-4), er den booket på to minutter. Men er der strøm, og det er der næsten altid, får du mere lyd for pengene med et sæt aktive højtalere.
+Hos lejhøjtaler.dk kan du få begge dele. Skal der ikke være en stikkontakt i nærheden, har vi [Mackie Thump GO til 445 kr.](/mackie-thump-go) og [Soundboks 4 til 695 kr.](/soundboks-4) — begge batteridrevne med op til 12 timers spilletid. Vil du bare [leje en Soundboks i København](/soundboks-4), er den booket på to minutter. Men er der strøm, og det er der næsten altid, får du mere lyd for pengene med et sæt aktive højtalere.
 
 Det betyder:
 

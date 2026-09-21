@@ -1,3 +1,4 @@
+import { catalogPrice } from "@/lib/products";
 /**
  * Lydmanden er ét produkt, og antallet er timer (13. september 2026).
  *
@@ -68,7 +69,7 @@ describe("Kataloget", () => {
     const lydmand = addons.find((a) => a.id === "lydmand")!;
     const gammelt: Addon[] = [
       { ...lydmand, da: { label: "Lydmand", desc: "Skriv antal timer i kommentaren, så retter vi ordren." } },
-      { ...lydmand, id: "lydmand_4t", price: 4000 },
+      { ...lydmand, id: "lydmand_4t", price: catalogPrice("lydmand") * 4 },
     ];
     const flettet = mergeAddonsForTest(gammelt);
     expect(flettet.map((a) => a.id)).not.toContain("lydmand_4t");
@@ -96,13 +97,13 @@ describe("Lydmand i bookingen", () => {
   it("vælges med timer som antal, fire som udgangspunkt — og ingen besked om kommentaren", async () => {
     await medLydmand();
     expect(screen.getAllByText("Lydmand, 4 timer").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("4000 kr").length).toBeGreaterThan(0);
+    expect(screen.getAllByText(`${catalogPrice("lydmand") * 4} kr`).length).toBeGreaterThan(0);
     expect(screen.queryByText(/kommentaren/)).not.toBeInTheDocument();
 
     // Én time mere — timepanelet ligger før kurven, så det er den første "Én mere"
     fireEvent.click(screen.getAllByLabelText("Én mere")[0]);
     expect(screen.getAllByText("Lydmand, 5 timer").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("5000 kr").length).toBeGreaterThan(0);
+    expect(screen.getAllByText(`${catalogPrice("lydmand") * 5} kr`).length).toBeGreaterThan(0);
   });
 
   it("regner timerne ud af start og slut, og sender én linje med hele beløbet", async () => {
@@ -119,11 +120,11 @@ describe("Lydmand i bookingen", () => {
 
     await waitFor(() => expect(bookKald()).toBeTruthy());
     const body = JSON.parse(bookKald()[1].body);
-    expect(body.cartItems).toContainEqual({ name: "Lydmand, 5 timer (kl. 18–22.30)", price: 5000, productId: "lydmand" });
+    expect(body.cartItems).toContainEqual({ name: "Lydmand, 5 timer (kl. 18–22.30)", price: catalogPrice("lydmand") * 5, productId: "lydmand" });
     // Ikke også som tilvalg — så stod den to gange på ordren
     expect(body.addonIds).not.toContain("lydmand");
     expect(body.addons).not.toContain("Lydmand");
-    expect(body.total).toBe(795 + 5000);
+    expect(body.total).toBe(795 + catalogPrice("lydmand") * 5);
   });
 
   it("betaler pr. time hos Stripe — id'et sendes én gang pr. time", async () => {

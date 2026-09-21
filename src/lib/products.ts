@@ -292,7 +292,8 @@ export const speakers: Speaker[] = [
     id: "thumpgo",
     page: "/mackie-thump-go",
     youtubeUrl: "https://www.youtube.com/watch?v=0M7xZoiqn9U",
-    price: 495,
+    // Prisarket 21. sept 2026: arkets "Lille batteri højtaler" koster 445 kr
+    price: 445,
     product: "/images/product-thumpgo-v2-white.webp",
     mood: "/images/mood-party.webp",
     power: "batteri",
@@ -608,7 +609,7 @@ export const addons: Addon[] = [
   },
   {
     id: "dj_stativ",
-    price: 495,
+    price: 395, // Prisarket 21. sept 2026: DJ-stativ med klæde koster 395 kr
     image: "/images/product-dj-stativ-white.webp",
     contents: ["Gravity KSX 2 RD Set: X-stativ med sort klæde"],
     da: { label: "DJ-stativ med klæde", desc: "Gravity KSX 2 RD Set: X-stativ med sort klæde foran, skjuler kabler og giver en pæn DJ-front" },
@@ -691,14 +692,15 @@ export const addons: Addon[] = [
   {
     id: "lydmand",
     page: "/lydmand",
-    price: 1000,
+    // Prisarket 21. sept 2026: arkets "Teknikertime" koster 1.195 kr
+    price: 1195,
     image: "/images/product-lydmand-white.webp",
     ydelse: true,
     priceUnit: { da: "kr/time", en: "DKK/hour" },
     contents: ["AV-tekniker på stedet", "Opsætning og lydprøve", "Styrer lyd og mikrofoner under festen"],
     da: {
       label: "Lydmand",
-      desc: "AV-tekniker på stedet, sætter op, laver lydprøve og styrer lyden under festen. 1.000 kr pr. time.",
+      desc: "AV-tekniker på stedet, sætter op, laver lydprøve og styrer lyden under festen. Prisen er pr. time.",
     },
     en: {
       label: "Sound engineer",

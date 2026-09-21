@@ -24,7 +24,7 @@ The small package is two powered 10" Alto speakers that deliver clear sound for 
 - AUX cable and a Bluetooth connection
 - Every cable you need
 
-The price is 595 DKK for a weekend — collect Friday, return Monday. If you want a single battery-powered speaker instead, the Mackie Thump GO is 495 DKK.
+The price is 595 DKK for a weekend — collect Friday, return Monday. If you want a single battery-powered speaker instead, the Mackie Thump GO is 445 DKK.
 
 ## The medium speaker package: 50-100 people
 

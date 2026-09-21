@@ -106,11 +106,12 @@ describe("Pakkeprisen følger delene", () => {
     const p = rentalProducts.find((x) => x.id === "pakke_lydmand_fest")!;
     const del = p.bundle!.parts.find((x) => x.productId === "lydmand")!;
     expect(del.qty).toBe(4);
+    const timepris = del.price / 4 + 100;
     const [efter] = refreshBundlePrices(
       [p],
-      katalog.map((i) => (i.id === "lydmand" ? { ...i, price: 1100 } : i)),
+      katalog.map((i) => (i.id === "lydmand" ? { ...i, price: timepris } : i)),
     );
-    expect(efter.bundle!.parts.find((x) => x.productId === "lydmand")!.price).toBe(4400);
+    expect(efter.bundle!.parts.find((x) => x.productId === "lydmand")!.price).toBe(timepris * 4);
     expect(efter.price).toBeGreaterThan(p.price);
   });
 

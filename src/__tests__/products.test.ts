@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { existsSync } from "node:fs";
-import { bundleListPrice, bundlePrice, speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice, bundleIncludesDelivery, LYDMAND_PAKKER, KATEGORI_PAKKER, DELIVERY_ADDON_IDS } from "@/lib/products";
+import { bundleListPrice, bundlePrice, catalogPrice, speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice, bundleIncludesDelivery, LYDMAND_PAKKER, KATEGORI_PAKKER, DELIVERY_ADDON_IDS } from "@/lib/products";
 import { stockItems } from "@/lib/stock";
 import { mergeAddonsForTest } from "@/lib/useProducts";
 
@@ -15,8 +15,8 @@ describe("Products data", () => {
     expect(stor.page).toBe("/hojtalerpakke-bas");
   });
 
-  it("thump go is 495 kr (produktarket 17. sept 2026)", () => {
-    expect(speakers.find((s) => s.id === "thumpgo")!.price).toBe(495);
+  it("thump go is 445 kr (prisarket 21. sept 2026, arkets lille batterihøjtaler)", () => {
+    expect(speakers.find((s) => s.id === "thumpgo")!.price).toBe(445);
   });
 
   it("party speaker is 595 kr", () => {
@@ -34,7 +34,7 @@ describe("Products data", () => {
   it("startPrice matches cheapest speaker", () => {
     const cheapest = Math.min(...speakers.map((s) => s.price));
     expect(startPrice).toBe(cheapest);
-    expect(startPrice).toBe(495); // produktarket 17. sept 2026
+    expect(startPrice).toBe(445); // prisarket 21. sept 2026: Thump GO er billigst
   });
 
   it("cheapestSpeakerPrice ignores hidden speakers", () => {
@@ -276,10 +276,11 @@ describe("Addons data", () => {
     }
   });
 
-  it("lydmand 1.000 kr pr. time er en kundevendt ydelse, faktureringsgebyr 100 kr en intern vare (11. sept 2026)", () => {
+  it("lydmanden er en kundevendt ydelse pr. time, faktureringsgebyr 100 kr en intern vare (11. sept 2026)", () => {
     const lydmand = addons.find((a) => a.id === "lydmand");
     const gebyr = addons.find((a) => a.id === "faktureringsgebyr");
-    expect(lydmand).toMatchObject({ price: 1000, ydelse: true, page: "/lydmand", image: "/images/product-lydmand-white.webp", priceUnit: { da: "kr/time", en: "DKK/hour" } });
+    // Arkets "Teknikertime", 1.195 kr pr. time (prisarket 21. sept 2026)
+    expect(lydmand).toMatchObject({ price: 1195, ydelse: true, page: "/lydmand", image: "/images/product-lydmand-white.webp", priceUnit: { da: "kr/time", en: "DKK/hour" } });
     // 13. sept 2026: "Lydmand, 4 timer" som egen vare er væk — timerne er antallet på den ene lydmand
     expect(addons.find((a) => a.id === "lydmand_4t")).toBeUndefined();
     expect(lydmand?.da.desc).not.toMatch(/kommentar/);
@@ -307,7 +308,11 @@ describe("Addons data", () => {
       const dele = p.bundle!.parts.map((x) => x.productId);
       expect(dele, `${id} mangler levering`).toContain("levering_begge");
       expect(dele, `${id} mangler lydmand`).toContain("lydmand");
-      expect(p.bundle!.parts.find((x) => x.productId === "lydmand")).toMatchObject({ qty: 4, price: 4000 });
+      // Delprisen er fire timer af katalogets timepris, ikke et tal skrevet her
+      expect(p.bundle!.parts.find((x) => x.productId === "lydmand")).toMatchObject({
+        qty: 4,
+        price: catalogPrice("lydmand") * 4,
+      });
       expect(bundleIncludesDelivery(p)).toBe("levering_begge");
       // Kørslen må ikke også kunne vælges som tilvalg — så betales den to gange
       for (const d of DELIVERY_ADDON_IDS) expect(p.allowedAddons, `${id} tilbyder ${d} oveni`).not.toContain(d);
