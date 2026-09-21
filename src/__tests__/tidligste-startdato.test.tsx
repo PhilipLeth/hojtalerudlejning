@@ -17,6 +17,7 @@ import BookingFlow from "@/components/BookingFlow";
 import IndstillingerPage from "@/app/admin/indstillinger/page";
 import {
   DEFAULT_OPENING_HOURS,
+  aktivEarliestPickup,
   isBeforeEarliestPickup,
   normalizeOpeningHours,
   validateOpeningHours,
@@ -40,6 +41,14 @@ function spærredato(): Date {
 
 function medSpærre(dato: string) {
   return normalizeOpeningHours({ ...DEFAULT_OPENING_HOURS, earliestPickup: dato });
+}
+
+/** En dato n dage fra i dag, som ISO. Spærren gælder kun fremad, så en fast
+ *  dato i testen holder op med at virke, når kalenderen passerer den. */
+function omDage(n: number): string {
+  const d = new Date();
+  d.setDate(d.getDate() + n);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
 /* ───── indstillingen ───── */
@@ -73,13 +82,29 @@ describe("Indstillingen", () => {
   });
 
   it("spærrer dagene før datoen — men ikke datoen selv", () => {
-    const hours = medSpærre("2026-09-05");
-    expect(isBeforeEarliestPickup(hours, "2026-09-04")).toBe(true);
-    expect(isBeforeEarliestPickup(hours, "2026-08-31")).toBe(true);
-    expect(isBeforeEarliestPickup(hours, "2026-09-05")).toBe(false);
-    expect(isBeforeEarliestPickup(hours, "2026-09-06")).toBe(false);
+    const spærre = omDage(14);
+    const hours = medSpærre(spærre);
+    expect(isBeforeEarliestPickup(hours, omDage(13))).toBe(true);
+    expect(isBeforeEarliestPickup(hours, omDage(-30))).toBe(true);
+    expect(isBeforeEarliestPickup(hours, spærre)).toBe(false);
+    expect(isBeforeEarliestPickup(hours, omDage(15))).toBe(false);
     // Uden spærre er ingen dato for tidlig
     expect(isBeforeEarliestPickup(DEFAULT_OPENING_HOURS, "2020-01-01")).toBe(false);
+  });
+
+  /**
+   * En spærre sættes til en konkret dato og bliver stående. Den 21. september
+   * stod der stadig "Vi tager først imod bookinger med start fra 5. sep" i
+   * kalenderen — seksten dage efter at den holdt op med at betyde noget. For
+   * en kunde fra en annonce ligner det et site, ingen passer.
+   */
+  it("en spærre i fortiden spærrer ingenting og nævnes ikke", () => {
+    const hours = medSpærre(omDage(-3));
+    expect(aktivEarliestPickup(hours)).toBe("");
+    expect(isBeforeEarliestPickup(hours, omDage(-10))).toBe(false);
+    expect(isBeforeEarliestPickup(hours, omDage(1))).toBe(false);
+    // I morgen er stadig en spærre
+    expect(aktivEarliestPickup(medSpærre(omDage(1)))).toBe(omDage(1));
   });
 });
 
@@ -286,7 +311,8 @@ describe("/api/book", () => {
 
   async function book(pickupDay: string, returnDay: string) {
     const kv = fakeKv({
-      site_settings: JSON.stringify({ phone: "31132852", hours: medSpærre("2026-09-05") }),
+      // Spærren skal ligge i fremtiden for at spærre noget — se aktivEarliestPickup
+      site_settings: JSON.stringify({ phone: "31132852", hours: medSpærre(omDage(14)) }),
     });
     const ctx = {
       env: { RESEND_API_KEY: "re_test", NOTIFY_EMAIL: "info@lejhojtaler.dk", BOOKINGS: kv },
@@ -300,15 +326,15 @@ describe("/api/book", () => {
   }
 
   it("afviser en startdato før spærren — kalenderen er ikke den eneste lås", async () => {
-    const { svar, kv } = await book("2026-09-04", "2026-09-06");
+    const { svar, kv } = await book(omDage(13), omDage(15));
     expect(svar.status).toBe(400);
-    expect((await svar.json() as { error: string }).error).toMatch(/5\. sep/);
+    expect((await svar.json() as { error: string }).error).toBeTruthy();
     // Ingen ordre, ingen mails
     expect([...kv.data.keys()].some((k) => k.startsWith("booking_"))).toBe(false);
   });
 
   it("tager imod en booking fra datoen og frem", async () => {
-    const { svar } = await book("2026-09-05", "2026-09-07");
+    const { svar } = await book(omDage(14), omDage(16));
     expect(svar.status).toBe(200);
   });
 });

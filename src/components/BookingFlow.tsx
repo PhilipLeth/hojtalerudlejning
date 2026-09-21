@@ -30,6 +30,7 @@ import {
   upcomingExceptions,
   type OpeningHours,
   type TimeSlotId,
+  aktivEarliestPickup,
 } from "@/lib/openingHours";
 
 /* ───── Helpers ───── */
@@ -139,8 +140,9 @@ function MiniCalendar({
     const denneMåned = new Date(now.getFullYear(), now.getMonth(), 1);
     // Spærrer vi frem til en dato i næste måned, er det den måned kunden skal
     // se, ellers åbner kalenderen på en måned hvor alt er gråt
-    if (hours.earliestPickup) {
-      const første = new Date(`${hours.earliestPickup}T12:00:00Z`);
+    const spærre = aktivEarliestPickup(hours);
+    if (spærre) {
+      const første = new Date(`${spærre}T12:00:00Z`);
       const førsteMåned = new Date(første.getUTCFullYear(), første.getUTCMonth(), 1);
       if (førsteMåned > denneMåned) return førsteMåned;
     }
@@ -244,17 +246,27 @@ function MiniCalendar({
       <SelectedDayHours hours={hours} pickupDate={pickupDate} returnDate={returnDate} locale={locale} />
 
       {/* Hvorfor de første dage er grå, ellers ligner det en fejl i kalenderen */}
-      {hours.earliestPickup && (
+      {aktivEarliestPickup(hours) && (
         <div className="mt-3 flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-xs text-white/60">
           <svg className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 8v5l3 2" /></svg>
-          {s.earliestStart.replace("{date}", formatShortDate(hours.earliestPickup, locale))}
+          {s.earliestStart.replace("{date}", formatShortDate(aktivEarliestPickup(hours), locale))}
         </div>
       )}
 
-      {/* Nudge */}
-      <div className="mt-3 flex items-center gap-2 rounded-lg bg-orange-400/10 px-3 py-2 text-xs text-orange-300">
-        <span className="flex h-2 w-2 shrink-0 rounded-full bg-orange-400" />
-        {s.calendarNudge}
+      {/*
+        Her stod "Få anlæg tilbage de næste weekender, book hurtigt" — på hver
+        dato, for hvert produkt, uanset lageret. Kalenderen kender ikke
+        ledigheden (MiniCalendar får kun datoer og åbningstider), så påstanden
+        var ikke bundet til noget. Vælger kunden så en dato og ser at alt er
+        ledigt, er det tydeligt, at den var opfundet.
+
+        Den rigtige knaphed står allerede på produktsiden, hvor den er regnet
+        ud af lageret (WeekendLedighed). Her står i stedet det, kunden faktisk
+        spørger om ved en kalender: hvad lejeperioden koster.
+      */}
+      <div className="mt-3 flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 text-xs text-white/60">
+        <span className="flex h-2 w-2 shrink-0 rounded-full bg-brand-400" />
+        {s.calendarNote}
       </div>
     </div>
   );
@@ -1335,7 +1347,7 @@ export default function BookingFlow({
     // Knappen er allerede spærret; det her holder også når datoen kommer et
     // andet sted fra (tastatur, en gammel fane med en anden indstilling)
     if (isBeforeEarliestPickup(hours, dateKey(d))) {
-      setSoldOutMsg(s.earliestStart.replace("{date}", formatShortDate(hours.earliestPickup, locale)));
+      setSoldOutMsg(s.earliestStart.replace("{date}", formatShortDate(aktivEarliestPickup(hours), locale)));
       return;
     }
     if (!pickupDate || (pickupDate && returnDate)) {

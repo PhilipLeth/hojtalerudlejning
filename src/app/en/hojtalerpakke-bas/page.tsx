@@ -39,7 +39,7 @@ export default function Page() {
       capacity={{ level: 3, label: "50-100 people" }}
       bullets={[
         "2× 12\" EV powered speakers",
-        "Speaker stands included",
+        "Speaker stands can be added",
         "12\" subwoofer for the bottom end of the music",
         "Bluetooth + all cables",
         "No lights, Party package 150 is the same sound plus lights and fog",

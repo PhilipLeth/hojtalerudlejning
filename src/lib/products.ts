@@ -403,8 +403,14 @@ export const speakers: Speaker[] = [
     id: "hojtaler_100",
     page: "/hojtalerpakke-bas",
     price: 1295,
-    // Fotoet viser præcis pakken: to 12" EV på stativer med subwoofer under.
-    product: "/images/product-hojtalerpakke-stor-white.webp",
+    /*
+     * Fotoet SKAL vise pakken. product-hojtalerpakke-stor-white.webp gjorde
+     * det ikke: den var AI-genereret på grå baggrund med nogle generiske
+     * søjlehøjtalere, der ikke ligner en EV ZLX, og uden stativer — mens
+     * siden lovede "højtalerstativer inkluderet". Her er de rigtige EV'er og
+     * Behringer-subben, i husets hvide stil.
+     */
+    product: "/images/product-festival-bas-v2-white.webp",
     mood: "/images/mood-party.webp",
     power: "kabel",
     sizeClass: "stor",
@@ -1327,7 +1333,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
     page: "/udendorspakke",
     youtubeUrl: "https://www.youtube.com/watch?v=k7nG3O4I6JI",
     category: "lyd",
-    image: "/images/product-soundboks-v2-white.webp",
+    image: "/images/product-pakke-udendors-komposition-white.webp",
     name_da: "Udendørspakke",
     name_en: "Outdoor package",
     desc_da: "Soundboks 4, ekstra batteri og lyskæde, hele festen uden en eneste stikkontakt.",
@@ -1349,7 +1355,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
     page: "/studenterpakke",
     youtubeUrl: "https://www.youtube.com/watch?v=k7nG3O4I6JI",
     category: "lyd",
-    image: "/images/product-soundboks-v2-white.webp",
+    image: "/images/product-pakke-student-komposition-white.webp",
     name_da: "Studenterpakken",
     name_en: "Graduation package",
     desc_da: "Soundboks 4, ekstra batteri og bæretaske, spiller hele vognturen.",

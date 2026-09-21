@@ -43,7 +43,7 @@ export default function HojtalerpakkeBasPage() {
       capacity={{ level: 3, label: "50-100 pers." }}
       bullets={[
         '2× 12" EV aktive højtalere',
-        "Højtalerstativer inkluderet",
+        "Højtalerstativer kan tilkøbes",
         '12" subwoofer til bunden i musikken',
         "Bluetooth + alle kabler",
         "Uden lys, Festpakke 150 er samme lyd plus lys og røg",

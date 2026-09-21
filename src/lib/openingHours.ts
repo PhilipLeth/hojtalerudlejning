@@ -299,8 +299,28 @@ export function isOpenOn(hours: OpeningHours, isoDate: string): boolean {
  * sende en spærret dato uden om knapperne.
  */
 export function isBeforeEarliestPickup(hours: OpeningHours, isoDate: string): boolean {
-  if (!hours.earliestPickup) return false;
-  return isoDate.slice(0, 10) < hours.earliestPickup;
+  const spærre = aktivEarliestPickup(hours);
+  if (!spærre) return false;
+  return isoDate.slice(0, 10) < spærre;
+}
+
+/**
+ * Spærredatoen, men kun så længe den ligger i fremtiden.
+ *
+ * Spærren sættes i /admin/indstillinger til en konkret dato ("vi tager først
+ * imod bookinger fra den 5."), og så bliver den stående. Den 21. september stod
+ * der stadig "Vi tager først imod bookinger med start fra 5. sep" i kalenderen
+ * — seksten dage efter at den holdt op med at betyde noget. For en kunde, der
+ * lige har klikket på en annonce, ligner det et site, ingen passer.
+ *
+ * En dato i fortiden spærrer ingenting, så den skal heller ikke stå nogen
+ * steder. Nu rydder spærren sig selv.
+ */
+export function aktivEarliestPickup(hours: OpeningHours, iDag = new Date()): string {
+  const dato = hours.earliestPickup;
+  if (!dato) return "";
+  const idag = `${iDag.getFullYear()}-${String(iDag.getMonth() + 1).padStart(2, "0")}-${String(iDag.getDate()).padStart(2, "0")}`;
+  return dato > idag ? dato : "";
 }
 
 /** "Fredag 14–18 (afhentning)", eller "30. dec 14–18 (afhentning)" for en særlig dato */
