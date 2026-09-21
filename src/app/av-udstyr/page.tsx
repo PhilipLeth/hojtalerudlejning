@@ -26,9 +26,9 @@ export default function AVUdstyrPage() {
         <p className="mt-6 max-w-2xl text-lg text-slate-600">
           Enkeltprodukter og færdige pakker. Panel og Teams/Zoom booker I som pakke, ikke via telefon.
         </p>
-        <div className="mt-8 flex flex-wrap gap-4">
-          <a href="#billede" className="rounded-lg bg-brand-600 px-6 py-3 font-semibold text-white">Se skærme og projektor</a>
-          <a href="#lys" className="font-semibold text-brand-600">Se lys →</a>
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          <a href="#billede" className="rounded-full border border-transparent bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400">Se skærme og projektor</a>
+          <a href="#lys" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">Se lys →</a>
         </div>
       </section>
 
