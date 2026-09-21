@@ -11,6 +11,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
+import { sprogskifteSti } from "@/lib/enPages";
 import { join } from "node:path";
 import { NAV_CATEGORIES } from "@/lib/products";
 import { CONTENTS_EN, contentsFor } from "@/lib/contentsEn";
@@ -57,13 +58,38 @@ describe("Engelsk navigation", () => {
     expect(localizedHref(danskSti("/polterabend"), "en")).toBe("/polterabend");
   });
 
-  it("sprogskifteren peger aldrig på den side, man allerede står på", () => {
-    // localizedHref falder tilbage til dansk, når siden ikke findes på engelsk.
-    // Brugt råt gav det href="/mixer">English på /mixer — et link til intet.
-    // (/mixer har siden fået en engelsk udgave; fælden er den samme.)
-    const src = læs("components/BurgerMenu.tsx");
-    expect(src).toContain("hasEnglish");
-    expect(src).toMatch(/hasEnglish\(daSti\)[\s\S]{0,80}"\/en"/);
+  /**
+   * Sprogskifteren testes på opførsel, ikke på kildetekst.
+   *
+   * Før stod reglen skrevet ud i BurgerMenu, og testen læste efter ordet
+   * "hasEnglish" i filen. Headeren havde sin EGEN sprogskifter, som bare
+   * oversatte stien — og på /en/blog/garden-party-sound pegede "DA" derfor på
+   * /blog/garden-party-sound, en side der ikke findes. Tolv engelske
+   * blogindlæg havde hver sit døde link, og testen var grøn hele tiden.
+   *
+   * Nu er der én funktion, begge bruger, og den prøves på de stier, der gør ondt.
+   */
+  it("sprogskifteren lander altid på en side der findes", () => {
+    // Blogindlæg: slug'en bærer sit eget sprogs søgeord og kan ikke oversættes
+    expect(sprogskifteSti("/en/blog/garden-party-sound", "da")).toBe("/blog/lyd-til-havefest");
+    expect(sprogskifteSti("/blog/lyd-til-havefest", "en")).toBe("/en/blog/garden-party-sound");
+    // Et indlæg uden makker går til bloggens forside, ikke til en 404
+    expect(sprogskifteSti("/en/blog/speaker-rental-copenhagen", "da")).toBe("/blog");
+    // Almindelige sider oversættes
+    expect(sprogskifteSti("/en/festlys", "da")).toBe("/festlys");
+    expect(sprogskifteSti("/festlys", "en")).toBe("/en/festlys");
+    // Findes siden ikke på engelsk, er forsiden bedre end den side man står på
+    expect(sprogskifteSti("/polterabend", "en")).toBe("/en");
+    expect(sprogskifteSti("/en", "da")).toBe("/");
+    expect(sprogskifteSti("/", "en")).toBe("/en");
+  });
+
+  it("både headeren og menuen bruger den samme sprogskifter", () => {
+    for (const fil of ["components/BurgerMenu.tsx", "components/SiteHeader.tsx"]) {
+      const src = læs(fil);
+      expect(src, `${fil} har sin egen sprogskifter`).toContain("sprogskifteSti");
+      expect(src, `${fil} oversætter stien blindt`).not.toMatch(/localizedHref\(danskSti/);
+    }
   });
 
   it("båndet øverst findes på begge sprog", () => {

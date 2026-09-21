@@ -50,4 +50,4 @@ Vores festlys-pakke er sammensat, så den er nem at sette op og giver maksimal e
 
 ## Book lys til din fest
 
-Se [festlys](/festlys) og [lysbaren](/lys-pakke) — den kan bookes som tillæg til enhver højtaler-pakke. [Book her](/#book).
+Se [festlys](/festlys) og [lysbaren](/lys-pakke) — den kan bookes som tillæg til enhver højtaler-pakke. [Book her](/festlys).

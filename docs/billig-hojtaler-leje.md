@@ -1,6 +1,6 @@
 ---
-title: "Billig højtaler leje i København fra 395 kr"
-description: "Lej en højtaler billigt i København fra 395 kr/weekend. Se priserne, hvad der er inkluderet, og hvorfor leje slår kob."
+title: "Billig højtaler leje i København fra 445 kr"
+description: "Lej en højtaler billigt i København fra 445 kr/weekend. Se priserne, hvad der er inkluderet, og hvorfor leje slår kob."
 date: "2026-06-10"
 updated: "2026-08-22"
 keywords:
@@ -10,7 +10,7 @@ keywords:
   - billig PA udlejning
 ---
 
-# Billig højtaler leje i København fra 395 kr
+# Billig højtaler leje i København fra 445 kr
 
 Du skal holde fest, men du har ikke brug for at eje et PA-anlæg. Du skal bruge det en aften – måske to. Her er det, du behøver at vide om priser på højtaler-leje i København.
 
@@ -75,9 +75,9 @@ Det betyder lavere overhead og lavere priser for dig.
 
 ## Sådan booker du
 
-1. Se alle højtalere på [lej højtaler](/lej-hojtaler) — eller gå til [booking](/#book)
+1. Se alle højtalere på [lej højtaler](/lej-hojtaler) — eller gå til [booking](/lej-hojtaler#hojtalerne)
 2. Vælg pakke og dato
 3. Få bekræftelse med det samme
 4. Hent på Vermlandsgade 66, 2300 København
 
-[Book din højtaler nu](/#book) – fra 395 kr/weekend.
+[Book din højtaler nu](/lej-hojtaler#hojtalerne) – fra 445 kr/weekend.

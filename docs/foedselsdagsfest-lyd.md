@@ -65,4 +65,4 @@ Kort opsummeret:
 
 ## Book lyd til din fødselsdag
 
-Se færdige pakker og priser på [lyd til fødselsdag](/foedselsdag) — eller [book din højtaler nu](/#book). Det tager under 2 minutter.
+Se færdige pakker og priser på [lyd til fødselsdag](/foedselsdag) — eller [book din højtaler nu](/foedselsdag). Det tager under 2 minutter.

@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { type Locale, t } from "@/lib/i18n";
+import { type Locale } from "@/lib/i18n";
 import PhoneLink from "@/components/PhoneLink";
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import { CompanyBlock, CompanyEmail, CompanyEmailLink } from "@/components/CompanyInfo";
 import { formatDateLine, formatOneLine, openDays, otherLine, upcomingExceptions } from "@/lib/openingHours";
 import { socialEntries } from "@/lib/socials";
+import { localizedHref } from "@/lib/enPages";
 
 /**
  * Åbningstiderne i footeren. Tiderne kommer fra /admin/indstillinger, så de kan
@@ -125,100 +126,183 @@ function NewsletterForm({ locale }: { locale: Locale }) {
   );
 }
 
-export default function Footer({ locale = "da" }: { locale?: Locale }) {
-  const s = t[locale].footer;
-  const newsletterLabel = locale === "da" ? "Få tilbud og nyheder" : "Get deals and news";
-  return (
-    <footer className="relative z-20 border-t border-white/5 bg-[#07060b] px-4 py-12 text-center text-sm text-white/30">
-      <CompanyBlock />
-      <OpeningHoursLine locale={locale} />
-      <SocialLine />
-      <p className="mt-3">
-        <PhoneLink
-          className="inline-flex items-center gap-1.5 font-semibold text-brand-400 hover:text-brand-300 transition"
-          prefix={locale === "da" ? "Ring" : "Call"}
-        />
-        {" · "}
-        <CompanyEmailLink className="inline-flex items-center gap-1.5 font-semibold text-brand-400 hover:text-brand-300 transition">
-          <>
-            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="shrink-0">
-              <rect x="2" y="4" width="20" height="16" rx="2" />
-              <path d="m22 7-10 6L2 7" />
-            </svg>
-            <CompanyEmail />
-          </>
-        </CompanyEmailLink>
-        {" · "}
-        <a href="/kontakt" className="font-semibold text-brand-400 hover:text-brand-300 transition">
-          {locale === "da" ? "Kontakt" : "Contact"}
-        </a>
-      </p>
-      <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-        <Link href={s.aboutHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
-          {s.about}
-        </Link>
-        <Link href={s.blogHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
-          {s.blog}
-        </Link>
-        <Link href={s.pricesHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
-          {s.prices}
-        </Link>
-        <Link href={s.deliveryHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
-          {s.delivery}
-        </Link>
-        <Link href={s.termsHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
-          {s.terms}
-        </Link>
-        <Link href={s.privacyHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
-          {s.privacy}
-        </Link>
-      </p>
-      {/*
-        Indgange der ellers står forældreløse. /festlyd, /lydudstyr og
-        /kobenhavn er landingssider for Google Ads, men ingen side på sitet
-        linkede til dem, de blev crawlet som blindgyder uden intern linkværdi.
-        De hører ikke hjemme i menuen, som bevidst er en vej ind og ikke et
-        katalog; footeren er stedet, hvor de kan stå uden at støje.
-        De engelske kategorisider har samme problem: /en/festlys, /en/lysshow og
-        /en/lej-mikrofon står uden ét eneste indgående link, fordi menuen og
-        forsiden kun kender pakkerne. Listen er ikke en oversættelse af den
-        danske, de tre danske annoncelandingssider findes ikke på engelsk, og
-        de engelske kategorisider er dem, der skal findes på "party light
-        rental copenhagen" og "microphone rental copenhagen". /en/lyspakker kom
-        til i samme omgang som /lyspakker og har samme problem.
-      */}
-      {locale === "da" ? (
-        <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs">
-          <Link href="/festlyd" className="text-white/30 hover:text-brand-400 transition">
-            Lyd til fest
-          </Link>
-          <Link href="/lydudstyr" className="text-white/30 hover:text-brand-400 transition">
-            PA-anlæg &amp; lydudstyr
-          </Link>
-          <Link href="/kobenhavn" className="text-white/30 hover:text-brand-400 transition">
-            Højtalerudlejning i København
-          </Link>
-        </p>
-      ) : (
-        <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs">
-          <Link href="/en/festlys" className="text-white/30 hover:text-brand-400 transition">
-            Party light rental
-          </Link>
-          <Link href="/en/lysshow" className="text-white/30 hover:text-brand-400 transition">
-            Light show packages
-          </Link>
-          <Link href="/en/lej-mikrofon" className="text-white/30 hover:text-brand-400 transition">
-            Microphone rental
-          </Link>
-          <Link href="/en/lyspakker" className="text-white/30 hover:text-brand-400 transition">
-            Light bars
-          </Link>
-        </p>
-      )}
+/* ───── Footerens spalter ─────
+ *
+ * Footeren var én lang midterstillet kolonne: firma, tider, telefon, seks
+ * links, og nederst tre "forældreløse" landingssider, der ikke måtte forsvinde.
+ * Den kunne ikke læses, og den var sitets eneste sted med plads til de
+ * indgange, menuen bevidst ikke har (menuen er en vej ind, ikke et katalog).
+ *
+ * Nu står den i fire spalter med data: hvem vi er, hvad vi har, hvad du skal
+ * holde, og det praktiske. Det giver samtidig hver eneste side et internt link
+ * til alle kategorisider — /festlyd, /lydudstyr og /kobenhavn er
+ * annoncelandingssider, som ellers blev crawlet som blindgyder.
+ */
 
-      <p className="mt-5 text-white/40 text-xs">{newsletterLabel}</p>
-      <NewsletterForm locale={locale} />
-      <p className="mt-6">&copy; {new Date().getFullYear()} Lejhøjtaler.dk</p>
+interface FooterLink {
+  href: string;
+  da: string;
+  en: string;
+}
+
+interface FooterColumn {
+  da: string;
+  en: string;
+  links: FooterLink[];
+}
+
+/** Katalogets indgange. localizedHref beholder den danske sti, hvis siden ikke findes på engelsk. */
+const SPALTER: FooterColumn[] = [
+  {
+    da: "Lyd, lys & AV",
+    en: "Sound, light & AV",
+    links: [
+      { href: "/lej-hojtaler", da: "Højtalere og pakker", en: "Speakers and packages" },
+      { href: "/lydanlaeg", da: "Anlæg efter antal gæster", en: "Systems by guest count" },
+      { href: "/festlys", da: "Festlys og effekter", en: "Party lights and effects" },
+      { href: "/roeg", da: "Røg og low fog", en: "Fog and low fog" },
+      { href: "/lej-mikrofon", da: "Mikrofoner", en: "Microphones" },
+      { href: "/dj-pult", da: "DJ-pulte", en: "DJ booths" },
+      { href: "/av-udstyr", da: "Skærme og karaoke", en: "Screens and karaoke" },
+    ],
+  },
+  {
+    da: "Til din anledning",
+    en: "For your occasion",
+    links: [
+      { href: "/bryllup", da: "Bryllup", en: "Weddings" },
+      { href: "/firmafestpakke", da: "Firmafest", en: "Company parties" },
+      { href: "/foedselsdag", da: "Fødselsdag", en: "Birthdays" },
+      { href: "/konfirmation", da: "Konfirmation", en: "Confirmations" },
+      { href: "/havefest", da: "Havefest", en: "Garden parties" },
+      { href: "/julefrokost", da: "Julefrokost", en: "Christmas lunches" },
+      { href: "/nytaar", da: "Nytår", en: "New Year" },
+      { href: "/eventloesninger", da: "Alle anledninger", en: "All occasions" },
+    ],
+  },
+  {
+    da: "Praktisk",
+    en: "Practical",
+    links: [
+      { href: "/priser", da: "Priser", en: "Prices" },
+      { href: "/levering", da: "Levering og afhentning", en: "Delivery and collection" },
+      { href: "/lejevilkaar", da: "Lejevilkår", en: "Rental terms" },
+      { href: "/kontakt", da: "Kontakt", en: "Contact" },
+      { href: "/om", da: "Om os", en: "About us" },
+      { href: "/blog", da: "Guides og blog", en: "Guides and blog" },
+      { href: "/privatlivspolitik", da: "Privatlivspolitik", en: "Privacy policy" },
+    ],
+  },
+];
+
+/**
+ * Sider, der kun findes på ét sprog, og som ingen menu linker til.
+ *
+ * De danske er annoncelandingssider; de engelske er kategorisider, som skal
+ * kunne findes på "party light rental copenhagen" og lignende. Uden et link
+ * herfra står de uden intern linkværdi — se generate-sitemap.py's advarsel om
+ * forældreløse sider.
+ */
+const EKSTRA_DA: FooterLink[] = [
+  { href: "/festlyd", da: "Lyd til fest", en: "Sound for parties" },
+  { href: "/lydudstyr", da: "PA-anlæg og lydudstyr", en: "PA systems" },
+  { href: "/kobenhavn", da: "Højtalerudlejning i København", en: "Speaker rental Copenhagen" },
+  { href: "/cases", da: "Opstillinger vi har sat", en: "Setups we have run" },
+];
+
+const EKSTRA_EN: FooterLink[] = [
+  { href: "/en/festlys", da: "Festlys", en: "Party light rental" },
+  { href: "/en/lysshow", da: "Lysshow", en: "Light show packages" },
+  { href: "/en/lej-mikrofon", da: "Mikrofoner", en: "Microphone rental" },
+  { href: "/en/lyspakker", da: "Lysbarer", en: "Light bars" },
+  { href: "/en/cases", da: "Opstillinger", en: "Setups we have run" },
+];
+
+function Spalte({ column, locale }: { column: FooterColumn; locale: Locale }) {
+  return (
+    <div>
+      <h3 className="mb-3 text-xs font-bold uppercase tracking-widest text-white/70">
+        {locale === "en" ? column.en : column.da}
+      </h3>
+      <ul className="space-y-2">
+        {column.links.map((l) => (
+          <li key={l.href}>
+            <Link
+              href={localizedHref(l.href, locale)}
+              className="text-white/45 transition hover:text-brand-400"
+            >
+              {locale === "en" ? l.en : l.da}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function Footer({ locale = "da" }: { locale?: Locale }) {
+  const en = locale === "en";
+  const newsletterLabel = en ? "Get deals and news" : "Få tilbud og nyheder";
+  const ekstra = en ? EKSTRA_EN : EKSTRA_DA;
+
+  return (
+    <footer className="relative z-20 border-t border-white/5 bg-[#07060b] px-4 py-14 text-sm text-white/40">
+      <div className="mx-auto grid max-w-6xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Spalte 1: hvem vi er og hvordan man får fat i os */}
+        <div>
+          <h3 className="mb-3 text-xs font-bold uppercase tracking-widest text-white/70">
+            {en ? "Lejhøjtaler.dk" : "Lejhøjtaler.dk"}
+          </h3>
+          <CompanyBlock />
+          <p className="mt-3 flex flex-col gap-1.5">
+            <PhoneLink
+              className="inline-flex items-center gap-1.5 font-semibold text-brand-400 transition hover:text-brand-300"
+              prefix={en ? "Call" : "Ring"}
+            />
+            <CompanyEmailLink className="inline-flex items-center gap-1.5 font-semibold text-brand-400 transition hover:text-brand-300">
+              <>
+                <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="shrink-0">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="m22 7-10 6L2 7" />
+                </svg>
+                <CompanyEmail />
+              </>
+            </CompanyEmailLink>
+          </p>
+          <div className="mt-3 text-white/45">
+            <OpeningHoursLine locale={locale} />
+          </div>
+          <SocialLine />
+        </div>
+
+        {SPALTER.map((c) => (
+          <Spalte key={c.da} column={c} locale={locale} />
+        ))}
+      </div>
+
+      {/*
+        Sider uden en plads i menuen, som bevidst er en vej ind og ikke et
+        katalog. De danske er annoncelandingssider, de engelske er
+        kategorisider — begge stod uden ét eneste indgående link og blev
+        crawlet som blindgyder.
+      */}
+      <div className="mx-auto mt-10 max-w-6xl border-t border-white/5 pt-6">
+        <p className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/30">
+          {ekstra.map((l) => (
+            <Link key={l.href} href={l.href} className="transition hover:text-brand-400">
+              {en ? l.en : l.da}
+            </Link>
+          ))}
+        </p>
+      </div>
+
+      <div className="mx-auto mt-8 flex max-w-6xl flex-col gap-6 border-t border-white/5 pt-8 sm:flex-row sm:items-end sm:justify-between">
+        <div className="sm:max-w-sm">
+          <p className="text-xs font-bold uppercase tracking-widest text-white/70">{newsletterLabel}</p>
+          <NewsletterForm locale={locale} />
+        </div>
+        <p className="text-xs text-white/30">&copy; {new Date().getFullYear()} Lejhøjtaler.dk</p>
+      </div>
     </footer>
   );
 }

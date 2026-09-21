@@ -73,4 +73,4 @@ Vi gennemgår altid setupmet med dig, når du henter udstyret. Du får også en 
 
 ## Book dit musikanlæg
 
-Den lille højtalerpakke koster 595 kr for en hel weekend, den store 995 kr — og subwoofer, mixer og mikrofon kan lægges til efter behov. [Book nu](/#book) og hent på Vermlandsgade 66 på Amager.
+Den lille højtalerpakke koster 595 kr for en hel weekend, den store 795 kr — og subwoofer, mixer og mikrofon kan lægges til efter behov. [Book nu](/lydanlaeg) og hent på Vermlandsgade 66 på Amager.

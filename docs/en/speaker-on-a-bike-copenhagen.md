@@ -57,4 +57,4 @@ That is cheaper than most alternatives — and you avoid batteries, long rental 
 
 Booking online takes two minutes. Choose the small package, pick your date, and turn up on your bike on Friday afternoon. It really is that simple.
 
-[Book now](/en#book)
+[Book now](/en/lej-hojtaler#hojtalerne)

@@ -13,11 +13,20 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { addons, rentalProducts, speakers } from "@/lib/products";
+import { addons, rentalProducts, speakers, startPrice } from "@/lib/products";
 import { DEFAULT_PICKUP_ADDRESS } from "@/lib/pickup";
 
 const DOCS = join(process.cwd(), "docs");
 const filer = readdirSync(DOCS).filter((f) => f.endsWith(".md"));
+
+/** Begge sprog — de engelske indlæg bærer de samme løfter. */
+function alleIndlaeg(): string[] {
+  const en = join(DOCS, "en");
+  return [
+    ...filer.map((f) => join(DOCS, f)),
+    ...readdirSync(en).filter((f) => f.endsWith(".md")).map((f) => join(en, f)),
+  ];
+}
 
 function katalogBeloeb(): Set<number> {
   const b = new Set<number>();
@@ -35,6 +44,41 @@ function katalogBeloeb(): Set<number> {
 
 /** Beløb der ikke er vores egne priser, men markedspriser vi sammenligner med. */
 const SAMMENLIGNING = new Set([1200, 2000, 5000, 6000, 10000, 15000]);
+
+/**
+ * "Fra X kr" om en højtaler må ikke være billigere end den billigste højtaler.
+ *
+ * Fem indlæg lovede "fra 395 kr" længe efter at Mackie Thump GO var steget, og
+ * testen ovenfor så intet galt: 395 kr er lysbarens pris, så beløbet fandtes jo
+ * i kataloget. Men et "fra"-tal, der er lavere end noget, vi har, er et tilbud,
+ * vi ikke kan indfri — kunden klikker og finder en anden pris.
+ *
+ * Reglen gælder kun sætninger, der faktisk handler om lyd: "festlys fra 395 kr"
+ * er rigtigt, fordi lysbaren koster det.
+ */
+describe("Fra-priser i blogindlæg", () => {
+  it("lover aldrig en højtaler billigere end den billigste vi har", () => {
+    const FRA = /\b(?:fra|from|starter (?:ved|fra)|start(?:s)? at)\b[^.\n]{0,24}?\*{0,2}(\d{1,3}(?:[.,]\d{3})*)\s*(?:kr|DKK)/gi;
+    const LYD = /(højtaler|hojtaler|speaker|anlæg|pa[- ]system|soundboks)/i;
+    const afvigelser: string[] = [];
+    for (const sti of alleIndlaeg()) {
+      const txt = readFileSync(sti, "utf8");
+      for (const m of txt.matchAll(FRA)) {
+        const beloeb = Number(m[1].replace(/[.,]/g, ""));
+        // Sætningen omkring fundet — er den om lyd?
+        const fra = Math.max(0, m.index! - 140);
+        const omkring = txt.slice(fra, m.index! + m[0].length + 60);
+        if (!LYD.test(omkring)) continue;
+        if (beloeb < startPrice) {
+          afvigelser.push(
+            `${sti.split("/docs/")[1]}: "${m[0].trim()}" — billigste højtaler er ${startPrice} kr`,
+          );
+        }
+      }
+    }
+    expect(afvigelser, `fra-priser vi ikke kan indfri:\n${afvigelser.join("\n")}`).toEqual([]);
+  });
+});
 
 describe("Blogindlæg", () => {
   it("nævner ingen priser, der ikke findes i kataloget", () => {

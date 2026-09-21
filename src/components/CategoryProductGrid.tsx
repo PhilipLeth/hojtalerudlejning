@@ -18,8 +18,8 @@ import type { Locale } from "@/lib/i18n";
  * productFaq.ts, hvor de engelske svar også citerer den danske pakkeliste.
  */
 const COPY = {
-  da: { included: "Inkluderet", currency: "kr", perWeekend: "/weekend", book: "Book", info: "Info" },
-  en: { included: "Included", currency: "DKK", perWeekend: "/weekend", book: "Book", info: "Details" },
+  da: { included: "Inkluderet", currency: "kr", perWeekend: "/weekend", book: "Book", info: "Info", save: "Spar" },
+  en: { included: "Included", currency: "DKK", perWeekend: "/weekend", book: "Book", info: "Details", save: "Save" },
 } as const;
 
 export interface CategoryItem {
@@ -27,6 +27,11 @@ export interface CategoryItem {
   id: string;
   /** Link, produktside hvis den findes, ellers /?product=ID */
   href?: string;
+  /**
+   * Mærkat øverst på kortet. Udelades den, regner gitteret selv "Spar X kr"
+   * ud af pakkens rabat. Skriv den ikke i hånden: tallene på /festlys stod
+   * som "Spar 140,-" længe efter at rabatten var en anden.
+   */
   tag?: string;
 }
 
@@ -95,8 +100,10 @@ export default function CategoryProductGrid({
     }
     const r = rentalProducts.find((p) => p.id === item.id);
     if (r) {
+      const spar = r.bundle?.discount ?? 0;
       return {
         ...item,
+        tag: item.tag ?? (spar > 0 ? `${c.save} ${spar.toLocaleString(locale === "en" ? "en-GB" : "da-DK")} ${c.currency}` : undefined),
         name: locale === "en" ? r.name_en : r.name_da,
         desc: (locale === "en" ? r.desc_en : r.desc_da) ?? "",
         price: r.price,

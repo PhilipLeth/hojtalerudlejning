@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import GoogleReviews from "@/components/GoogleReviews";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
@@ -84,7 +85,7 @@ export default function LydudstyrPage() {
             Professionelt lydudstyr fra 395 kr.
           </p>
           <a
-            href="/book"
+            href="#produkter"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book lydudstyr nu
@@ -93,6 +94,28 @@ export default function LydudstyrPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
+        {/*
+          Annoncelandingsside for "PA-anlæg". Den havde intet at booke, så
+          klikket var betalt for ingenting.
+        */}
+        <section id="produkter" className="mx-auto max-w-6xl scroll-mt-20 px-4 pt-16">
+          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">Anlæggene</p>
+          <h2 className="mb-2 text-3xl font-bold sm:text-4xl">Lej anlægget efter antal gæster</h2>
+          <p className="mb-8 max-w-2xl text-white/50">
+            Højtalere, subwoofer og alle kabler. Mikrofon, stativer og lys kan lægges til i kurven.
+          </p>
+          <CategoryProductGrid
+            items={[
+              { id: "party" },
+              { id: "festival" },
+              { id: "hojtaler_100" },
+              { id: "subwoofer" },
+              { id: "stativer" },
+              { id: "mixer_stor" },
+            ]}
+          />
+        </section>
+
         {/* Festival detailed view */}
         <section className="mx-auto max-w-4xl px-4 py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
@@ -189,7 +212,7 @@ export default function LydudstyrPage() {
             Book online på 2 minutter. Hent fredag i København S, aflever mandag. Fra 395 kr/weekend.
           </p>
           <a
-            href="/book"
+            href="#produkter"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book lydudstyr nu

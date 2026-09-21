@@ -23,7 +23,7 @@ keywords:
 | **Reach** | 3-5 metres | 15-30+ metres |
 | **Microphone** | Rarely | Yes, straight into the speaker |
 | **Guests** | Up to 15 | Up to 100+ |
-| **Price (rental)** | – | From 395 DKK per weekend |
+| **Price (rental)** | – | From 445 DKK per weekend |
 
 ### When is a Bluetooth speaker enough?
 
@@ -71,4 +71,4 @@ We always walk through the setup with you when you collect the equipment, and yo
 
 ## Book your PA system
 
-Rent a complete PA system for your party from 395 DKK per weekend. [Book now](/en#book) and collect at Vermlandsgade 66 on Amager.
+Rent a complete PA system for your party from 445 DKK per weekend. [Book now](/en/lydanlaeg) and collect at Vermlandsgade 66 on Amager.

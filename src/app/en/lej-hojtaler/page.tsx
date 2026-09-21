@@ -3,7 +3,8 @@ import Link from "next/link";
 import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import BundleGrid from "@/components/BundleGrid";
-import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER, LYDMAND_PAKKER, startPrisDkk } from "@/lib/products";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
+import { FEST_LADDER_IDS, LYD_LADDER_IDS, LYD_LEJLIGHEDSPAKKER, LYDMAND_PAKKER, startPrisDkk } from "@/lib/products";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
@@ -88,15 +89,41 @@ export default function Page() {
             <LiveStartPrice prefix="from " suffix=" DKK" />, book online, pay when you collect.
           </p>
           <a
-            href="/en/book"
+            href="#hojtalerne"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book a speaker now
+            See the speakers
           </a>
         </div>
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
+        {/*
+          The page is called "rent speakers", so the speakers come first.
+          Before, it opened with eighteen package cards, and the speaker
+          themselves only appeared in a comparison table further down — an ad
+          for "speaker rental" landed on a page without a single speaker to book.
+        */}
+        <section id="hojtalerne" className="mx-auto max-w-6xl scroll-mt-20 px-4 pt-16">
+          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">The speakers</p>
+          <h2 className="mb-2 text-3xl font-bold sm:text-4xl">Rent the speakers on their own</h2>
+          <p className="mb-8 max-w-2xl text-white/50">
+            Battery speakers for where there is no socket, and mains packages for where there is. Add a
+            microphone, stands or lighting in the basket.
+          </p>
+          <CategoryProductGrid
+            locale="en"
+            items={[
+              { id: "thumpgo" },
+              { id: "party" },
+              { id: "soundboks" },
+              { id: "festival" },
+              { id: "hojtaler_100" },
+              { id: "subwoofer" },
+            ]}
+          />
+        </section>
+
         <BundleGrid
           locale="en"
           ids={FEST_LADDER_IDS}
@@ -194,10 +221,10 @@ export default function Page() {
             <LiveStartPrice prefix="From " suffix=" DKK/weekend." />
           </p>
           <a
-            href="/en/book"
+            href="#hojtalerne"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book a speaker now
+            See the speakers
           </a>
         </section>
 

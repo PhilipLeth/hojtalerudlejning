@@ -1,6 +1,6 @@
 ---
 title: "Hvilken højtaler skal du leje til din fest?"
-description: "Guide til at vælge den rigtige højtaler til din fest. Lille højtalerpakke til 30 personer, stor pakke til 50 — eller festpakker til de store fester. Book fra 395 kr."
+description: "Guide til at vælge den rigtige højtaler til din fest. Lille højtalerpakke til 30 personer, stor pakke til 50 — eller festpakker til de store fester. Book fra 445 kr."
 date: "2026-06-12"
 updated: "2026-09-08"
 keywords:
@@ -25,7 +25,7 @@ Vores [lille højtalerpakke](/hojtalerpakke-lille) består af to kompakte aktive
 - Bluetooth og aux
 - Alle nødvendige kabler
 
-Prisen er 595 kr for en hel weekend (hent fredag, aflever mandag). Skal det være endnu billigere, starter en enkelt batterihøjtaler ved 395 kr.
+Prisen er 595 kr for en hel weekend (hent fredag, aflever mandag). Skal det være endnu billigere, starter en enkelt batterihøjtaler ved 445 kr.
 
 ## Mellem højtalerpakke: 30-50 personer
 
@@ -38,7 +38,7 @@ Skal du holde en større fest – havefest, firmaevent, konfirmation – så har
 - Alle kabler
 - Tilkøb efter behov: subwoofer, stativer, mixer og mikrofon
 
-Prisen er 995 kr for en hel weekend. Er I flere end 50, tager [Festpakke 150](/festpakke-150) og [Festpakke 250](/festpakke-250) over med subwoofer og stativer inkluderet.
+Prisen er 795 kr for en hel weekend. Er I flere end 50, tager [Festpakke 150](/festpakke-150) og [Festpakke 250](/festpakke-250) over med subwoofer og stativer inkluderet.
 
 ## Hvordan vælger du?
 
@@ -58,4 +58,4 @@ Her er en simpel tommelfingerregel:
 
 ## Klar til at booke?
 
-Vi gør det nemt: book online på 2 minutter, hent udstyret på Vermlandsgade 66 på Amager, og aflever det igen mandag. [Book din højtaler nu](/#book).
+Vi gør det nemt: book online på 2 minutter, hent udstyret på Vermlandsgade 66 på Amager, og aflever det igen mandag. [Book din højtaler nu](/lej-hojtaler#hojtalerne).

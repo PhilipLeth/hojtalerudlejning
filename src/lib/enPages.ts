@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { daBlogPath, enBlogSlug } from "@/lib/blogPairs";
 
 /**
  * Hvilke danske sider der har en engelsk udgave.
@@ -144,6 +145,37 @@ export function hasEnglish(daPath: string): boolean {
  * Bruges af sprogskifteren i menuen, så den bliver på samme side i stedet for
  * altid at sende folk til forsiden.
  */
+/**
+ * Samme side på det andet sprog, til sprogskifteren.
+ *
+ * Både headeren og burgermenuen skal svare det samme, og begge kan komme ud
+ * for en sti, hvor den simple oversættelse ikke holder:
+ *
+ *  - Blogindlæggenes slug bærer sit eget sprogs søgeord ("garden-party-sound"
+ *    mod "lyd-til-havefest"), så stien kan ikke oversættes, den skal slås op.
+ *    Headeren oversatte blindt, og tolv engelske indlæg pegede hver især på en
+ *    dansk side, der ikke fandtes.
+ *  - Findes siden slet ikke på engelsk, er forsiden bedre end en 404.
+ */
+export function sprogskifteSti(sti: string, tilLocale: Locale): string {
+  const clean = (sti || "/").replace(/\/$/, "") || "/";
+  const erEngelsk = clean === "/en" || clean.startsWith("/en/");
+
+  // Blogindlæg: slug'en skal slås op i parrene, ikke oversættes
+  if (erEngelsk && clean.startsWith("/en/blog/")) {
+    const da = daBlogPath(clean.slice("/en/blog/".length));
+    return tilLocale === "da" ? (da ?? "/blog") : clean;
+  }
+  if (!erEngelsk && clean.startsWith("/blog/")) {
+    const en = enBlogSlug(clean.slice("/blog/".length));
+    return tilLocale === "en" ? (en ? `/en/blog/${en}` : "/en/blog") : clean;
+  }
+
+  const da = danskSti(clean);
+  if (tilLocale === "da") return da;
+  return hasEnglish(da) ? localizedHref(da, "en") : "/en";
+}
+
 export function danskSti(sti: string): string {
   const clean = sti.replace(/\/$/, "") || "/";
   if (clean === "/en") return "/";

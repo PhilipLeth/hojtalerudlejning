@@ -3,7 +3,8 @@ import Link from "next/link";
 import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
 import SpeakerCompare from "@/components/SpeakerCompare";
 import BundleGrid from "@/components/BundleGrid";
-import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER, LYDMAND_PAKKER, startPrisKr } from "@/lib/products";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
+import { FEST_LADDER_IDS, LYD_LADDER_IDS, LYD_LEJLIGHEDSPAKKER, LYDMAND_PAKKER, startPrisKr } from "@/lib/products";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
@@ -91,21 +92,49 @@ export default function LejHojtalerPage() {
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
             Batterihøjtalere og PA-pakker <LiveStartPrice />, book online, betal først ved afhentning.
           </p>
+          {/* Peger på højtalerne på siden, ikke på /book: kurven er tom,
+              indtil kunden har valgt noget, og "Book nu" til en tom kurv er
+              en blindgyde. */}
           <a
-            href="/book"
+            href="#hojtalerne"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book højtaler nu
+            Se højtalerne
           </a>
         </div>
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
+        {/*
+          Siden hedder "lej højtalere", så højtalerne kommer først. Før åbnede
+          den med atten pakkekort, og højtalerne selv stod kun i en
+          sammenligningstabel længere nede — en annonce på "lej højtaler"
+          landede altså på en side uden én eneste højtaler at booke.
+        */}
+        <section id="hojtalerne" className="mx-auto max-w-6xl scroll-mt-20 px-4 pt-16">
+          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">Højtalerne</p>
+          <h2 className="mb-2 text-3xl font-bold sm:text-4xl">Lej højtalerne alene</h2>
+          <p className="mb-8 max-w-2xl text-white/50">
+            Batterihøjtalere til hvor der ikke er et stik, og kabelanlæg til hvor der er. Mikrofon, stativer
+            og lys kan lægges til i kurven.
+          </p>
+          <CategoryProductGrid
+            items={[
+              { id: "thumpgo" },
+              { id: "party" },
+              { id: "soundboks" },
+              { id: "festival" },
+              { id: "hojtaler_100" },
+              { id: "subwoofer" },
+            ]}
+          />
+        </section>
+
         <BundleGrid
           ids={FEST_LADDER_IDS}
           eyebrow="Lyd og lys"
           title="Festpakker efter antal gæster"
-          subtitle="Højtalere, bas, stativer, lysbar og kabler i ét. Vil du kun have lyden, står anlæggene for sig på /lydanlaeg."
+          subtitle="Højtalere, bas, stativer, lysbar og kabler i ét, billigere end delene hver for sig."
         />
         <BundleGrid
           ids={LYD_LEJLIGHEDSPAKKER}
@@ -204,11 +233,14 @@ export default function LejHojtalerPage() {
             Book online på 2 minutter. Hent fredag i København S, aflever mandag.{" "}
             <LiveStartPrice prefix="Fra " suffix=" kr/weekend." />
           </p>
+          {/* Peger på højtalerne på siden, ikke på /book: kurven er tom,
+              indtil kunden har valgt noget, og "Book nu" til en tom kurv er
+              en blindgyde. */}
           <a
-            href="/book"
+            href="#hojtalerne"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book højtaler nu
+            Se højtalerne
           </a>
         </section>
 

@@ -4,6 +4,7 @@ import { prisKr, startPrisKr } from "@/lib/products";
 import Link from "next/link";
 import Image from "next/image";
 import GoogleReviews from "@/components/GoogleReviews";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
@@ -103,7 +104,7 @@ export default function KobenhavnPage() {
             Afhent i K&oslash;benhavn S eller f&aring; det leveret.
           </p>
           <a
-            href="/book"
+            href="#produkter"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book h&oslash;jtaler nu
@@ -112,6 +113,29 @@ export default function KobenhavnPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
+        {/*
+          Annoncelandingsside for "højtalerudlejning i København". Den havde
+          intet produkt på siden, så et betalt klik endte uden en bookingknap.
+        */}
+        <section id="produkter" className="mx-auto max-w-6xl scroll-mt-20 px-4 pt-16">
+          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">Højtalerne</p>
+          <h2 className="mb-2 text-3xl font-bold sm:text-4xl">Lej højtalere i København</h2>
+          <p className="mb-8 max-w-2xl text-white/50">
+            Hent hos os på Amager, eller få det leveret. Batteri til hvor der ikke er strøm, kabelanlæg
+            til hvor der er.
+          </p>
+          <CategoryProductGrid
+            items={[
+              { id: "thumpgo" },
+              { id: "party" },
+              { id: "soundboks" },
+              { id: "festival" },
+              { id: "hojtaler_100" },
+              { id: "lys" },
+            ]}
+          />
+        </section>
+
         {/* Pricing comparison */}
         <section className="mx-auto max-w-4xl px-4 py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
@@ -324,7 +348,7 @@ export default function KobenhavnPage() {
             <LiveStartPrice prefix="Fra " suffix=" kr/weekend." />
           </p>
           <a
-            href="/book"
+            href="#produkter"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book h&oslash;jtaler nu

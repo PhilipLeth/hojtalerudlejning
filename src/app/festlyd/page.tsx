@@ -1,9 +1,10 @@
 import { Metadata } from "next";
 import LivePrice, { LiveStartPrice } from "@/components/LivePrice";
-import { catalogPrice, prisTekst, startPrisKr } from "@/lib/products";
+import { FEST_LADDER_IDS, catalogPrice, prisTekst, startPrisKr } from "@/lib/products";
 import Image from "next/image";
 import Link from "next/link";
 import GoogleReviews from "@/components/GoogleReviews";
+import BundleGrid from "@/components/BundleGrid";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
@@ -89,15 +90,29 @@ export default function FestlydPage() {
             Havefest, fødselsdag eller firmaevent – <LiveStartPrice />.
           </p>
           <a
-            href="/book"
+            href="#produkter"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book festlyd nu
+            Se festpakkerne
           </a>
         </div>
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
+        {/*
+          Siden er en annoncelandingsside for "lyd til fest". Den havde ingen
+          produkter — kunden klikkede på en betalt annonce og kunne ikke booke
+          noget uden først at finde en anden side.
+        */}
+        <section id="produkter" className="scroll-mt-20">
+          <BundleGrid
+            ids={FEST_LADDER_IDS}
+            eyebrow="Lyd og lys"
+            title="Festpakker efter antal gæster"
+            subtitle="Højtalere, lysbar og alle kabler i ét. Vælg efter hvor mange der kommer, og book online."
+          />
+        </section>
+
         {/* Scenario cards */}
         <section className="mx-auto max-w-4xl px-4 py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
@@ -218,10 +233,10 @@ export default function FestlydPage() {
             <LiveStartPrice prefix="Fra " suffix=" kr/weekend." />
           </p>
           <a
-            href="/book"
+            href="#produkter"
             className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
-            Book festlyd nu
+            Se festpakkerne
           </a>
         </section>
 

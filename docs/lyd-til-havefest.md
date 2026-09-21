@@ -1,6 +1,6 @@
 ---
 title: "Lyd til havefest – guide til den perfekte udendørs lyd"
-description: "Sådan får du den bedste lyd til din havefest. Tips til højtaler-placering, lydniveau og nabohensyn. Lej højtaler fra 395 kr."
+description: "Sådan får du den bedste lyd til din havefest. Tips til højtaler-placering, lydniveau og nabohensyn. Lej højtaler fra 445 kr."
 date: "2026-06-11"
 updated: "2026-09-16"
 keywords:
@@ -58,4 +58,4 @@ Udendørs lyd og lys sammen løfter enhver havefest. [Lysbaren](/lys-pakke) med 
 
 ## Book din havefest-lyd
 
-Se pakker og priser på [lyd til havefest](/havefest) — eller [book din højtaler nu](/#book). Hent på Vermlandsgade 66, aflever mandag.
+Se pakker og priser på [lyd til havefest](/havefest) — eller [book din højtaler nu](/havefest). Hent på Vermlandsgade 66, aflever mandag.

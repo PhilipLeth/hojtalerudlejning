@@ -1,6 +1,6 @@
 ---
 title: "Soundboks-alternativ i København: Derfor er lejede højtalere bedre"
-description: "Leder du efter et Soundboks-alternativ i København? Se hvorfor professionelle højtalere til leje slår en Soundboks på lyd, pris og batteritid. Fra 395 kr."
+description: "Leder du efter et Soundboks-alternativ i København? Se hvorfor professionelle højtalere til leje slår en Soundboks på lyd, pris og batteritid. Fra 445 kr."
 date: "2025-06-10"
 updated: "2026-09-08"
 keywords:
@@ -40,7 +40,7 @@ Det betyder:
 
 ## Hvad koster det?
 
-Priserne starter ved **395 kr.** for Mackie Thump GO og **595 kr.** for den lille højtalerpakke med alle kabler inkluderet. Ingen skjulte gebyrer, og prisen er den samme for 1-5 dage. Du kan betale med kort online eller ved afhentning.
+Priserne starter ved **445 kr.** for Mackie Thump GO og **595 kr.** for den lille højtalerpakke med alle kabler inkluderet. Ingen skjulte gebyrer, og prisen er den samme for 1-5 dage. Du kan betale med kort online eller ved afhentning.
 
 Til sammenligning koster en Soundboks 4 hos os 695 kr. for weekenden. Du får én batteridrevet højtaler — fri for ledninger, men uden den stereobredde to højtalere giver.
 

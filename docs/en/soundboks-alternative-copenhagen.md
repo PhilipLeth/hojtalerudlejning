@@ -1,6 +1,6 @@
 ---
 title: "Soundboks alternative in Copenhagen: why rented speakers win"
-description: "Looking for a Soundboks alternative in Copenhagen? See why professional rented speakers beat a Soundboks on sound, price and battery life. From 395 DKK."
+description: "Looking for a Soundboks alternative in Copenhagen? See why professional rented speakers beat a Soundboks on sound, price and battery life. From 445 DKK."
 date: "2025-06-10"
 updated: "2026-09-08"
 keywords:
@@ -39,7 +39,7 @@ That means:
 
 ## What does it cost?
 
-Prices start at **395 DKK** for the Mackie Thump GO and **595 DKK** for the small speaker package with every cable included. No hidden fees, and the price is the same for 1 to 5 days. You can pay by card online or when you collect.
+Prices start at **445 DKK** for the Mackie Thump GO and **595 DKK** for the small speaker package with every cable included. No hidden fees, and the price is the same for 1 to 5 days. You can pay by card online or when you collect.
 
 For comparison, a Soundboks 4 from us is 695 DKK for the weekend. You get one battery-powered speaker — free of cables, but without the stereo width two speakers give you.
 
@@ -57,4 +57,4 @@ Are you heading to the beach, the woods, or somewhere with no power at all? Then
 
 Booking takes two minutes. Choose your equipment, choose your date, and we handle the rest. Professional sound for your party — without battery anxiety, and at a better price.
 
-[Book now](/en#book)
+[Book now](/en/lej-hojtaler#hojtalerne)

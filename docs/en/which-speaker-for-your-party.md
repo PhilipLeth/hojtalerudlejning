@@ -1,6 +1,6 @@
 ---
 title: "Which speaker should you rent for your party?"
-description: "A guide to choosing the right speaker for your party in Copenhagen. Small package for 40 people, large package for 100+. See prices and book from 395 DKK."
+description: "A guide to choosing the right speaker for your party in Copenhagen. Small package for 40 people, large package for 100+. See prices and book from 445 DKK."
 date: "2026-06-12"
 updated: "2026-09-08"
 keywords:
@@ -36,7 +36,7 @@ For a bigger party — a garden party, a company event, a confirmation with 80+ 
 - AUX cable and a Bluetooth connection
 - Every cable you need
 
-The price is 995 DKK for a weekend. Speaker stands are 95 DKK, and a 12" subwoofer is 495 DKK if you want the bass to be felt rather than just heard.
+The price is 795 DKK for a weekend. Speaker stands are 95 DKK, and a 12" subwoofer is 495 DKK if you want the bass to be felt rather than just heard.
 
 ## How do you choose?
 
@@ -57,4 +57,4 @@ A simple rule of thumb:
 
 ## Ready to book?
 
-We make it easy: book online in two minutes, collect at Vermlandsgade 66 on Amager, and return it on Monday. [Book your speaker now](/en#book).
+We make it easy: book online in two minutes, collect at Vermlandsgade 66 on Amager, and return it on Monday. [Book your speaker now](/en/lej-hojtaler#hojtalerne).

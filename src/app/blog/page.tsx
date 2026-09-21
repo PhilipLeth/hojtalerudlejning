@@ -53,7 +53,7 @@ export default function BlogPage() {
       <main className="min-h-screen bg-[#07060b] px-4 py-20">
         <div className="mx-auto max-w-3xl">
           <Link
-            href="/book"
+            href="/"
             className="inline-block text-sm text-white/40 hover:text-brand-400 transition mb-8"
           >
             &larr; Tilbage til forsiden

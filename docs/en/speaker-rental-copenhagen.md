@@ -1,6 +1,6 @@
 ---
-title: "Speaker Rental Copenhagen – Rent a Party Speaker from 395 DKK"
-description: "Rent speakers and PA systems in Copenhagen from 395 DKK/weekend. Pick up Friday, return Monday. Easy online booking for parties and events."
+title: "Speaker Rental Copenhagen – Rent a Party Speaker from 445 DKK"
+description: "Rent speakers and PA systems in Copenhagen from 445 DKK/weekend. Pick up Friday, return Monday. Easy online booking for parties and events."
 date: "2026-06-10"
 updated: "2026-08-22"
 keywords:
@@ -11,7 +11,7 @@ keywords:
   - sound equipment rental copenhagen
 ---
 
-# Speaker Rental Copenhagen – Rent a Party Speaker from 395 DKK
+# Speaker Rental Copenhagen – Rent a Party Speaker from 445 DKK
 
 Planning a party in Copenhagen? Whether you are an expat throwing a birthday, a student hosting a dorm party, or organising a company event, you need decent sound. Here is everything you need to know about renting speakers in Copenhagen.
 
@@ -24,7 +24,7 @@ We rent out professional PA systems for parties and events. No consumer-grade Bl
 - 8" battery-powered speaker with Bluetooth
 - Up to 12 hours of battery — no power outlet needed
 - Charger and AUX cable included
-- **Price: 395 DKK/weekend**
+- **Price: 445 DKK/weekend**
 
 Perfect for the park, the beach or a courtyard where there is nowhere to plug in.
 
@@ -40,7 +40,7 @@ Perfect for apartment parties, birthday dinners and small gatherings.
 
 - 2× 12" EV active speakers with Bluetooth
 - All cables included; stands available for 95 DKK
-- **Price: 995 DKK/weekend**
+- **Price: 795 DKK/weekend**
 
 The right choice for garden parties, corporate events and confirmations.
 
@@ -63,7 +63,7 @@ Add lights to any speaker package and transform your venue.
 
 ## How it works
 
-1. **Book online** at [lejhøjtaler.dk](/#book) – it takes under 2 minutes
+1. **Book online** at [lejhøjtaler.dk](/en/lej-hojtaler#hojtalerne) – it takes under 2 minutes
 2. **Pick up** the equipment at Vermlandsgade 66, 2300 Copenhagen (Friday)
 3. **Party** all weekend
 4. **Return** the equipment on Monday
@@ -91,6 +91,6 @@ We are based at Vermlandsgade 66, 2300 Copenhagen, on Amager. Easy to reach by b
 
 ## Booking
 
-Ready to book? Head to our [booking page](/#book), select your package and date, and you are good to go. The entire process takes under 2 minutes.
+Ready to book? Head to our [booking page](/en/lej-hojtaler#hojtalerne), select your package and date, and you are good to go. The entire process takes under 2 minutes.
 
-[Book your speaker now](/#book).
+[Book your speaker now](/en/lej-hojtaler#hojtalerne).

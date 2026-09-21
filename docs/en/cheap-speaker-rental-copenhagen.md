@@ -1,6 +1,6 @@
 ---
-title: "Cheap speaker rental in Copenhagen from 395 DKK"
-description: "Rent a speaker cheaply in Copenhagen from 395 DKK per weekend. See the prices, what is included, and why renting beats buying."
+title: "Cheap speaker rental in Copenhagen from 445 DKK"
+description: "Rent a speaker cheaply in Copenhagen from 445 DKK per weekend. See the prices, what is included, and why renting beats buying."
 date: "2026-06-10"
 updated: "2026-09-08"
 keywords:
@@ -10,7 +10,7 @@ keywords:
   - rent speakers denmark
 ---
 
-# Cheap speaker rental in Copenhagen from 395 DKK
+# Cheap speaker rental in Copenhagen from 445 DKK
 
 You are throwing a party, but you have no use for owning a PA system. You need it for one evening — maybe two. Here is what you need to know about speaker rental prices in Copenhagen.
 
@@ -75,9 +75,9 @@ That means lower overhead, and lower prices for you.
 
 ## How to book
 
-1. See all speakers on [rent a speaker](/en/lej-hojtaler) — or go to [booking](/en#book)
+1. See all speakers on [rent a speaker](/en/lej-hojtaler) — or go to [booking](/en/lej-hojtaler#hojtalerne)
 2. Choose a package and a date
 3. Get your confirmation straight away
 4. Collect at Vermlandsgade 66, 2300 Copenhagen
 
-[Book your speaker now](/en#book) — from 395 DKK per weekend.
+[Book your speaker now](/en/lej-hojtaler#hojtalerne) — from 445 DKK per weekend.

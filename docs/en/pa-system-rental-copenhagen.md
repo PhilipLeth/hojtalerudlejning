@@ -1,6 +1,6 @@
 ---
 title: "PA system rental in Copenhagen — what you need to know"
-description: "Everything about renting a PA system in Copenhagen. What a PA system is, when you need one, and what it costs. Rent from 395 DKK per weekend."
+description: "Everything about renting a PA system in Copenhagen. What a PA system is, when you need one, and what it costs. Rent from 445 DKK per weekend."
 date: "2026-06-12"
 updated: "2026-09-08"
 keywords:
@@ -54,15 +54,15 @@ If you would rather have it delivered, delivery and setup anywhere in Copenhagen
 
 ## What does it cost?
 
-Prices start at **395 DKK for a weekend**. That includes the equipment and the cables. No hidden fees.
+Prices start at **445 DKK for a weekend**. That includes the equipment and the cables. No hidden fees.
 
 The price is the same whether you keep it for 1 or 5 days — there is no daily surcharge.
 
 ## How to book
 
-1. Pick a system by guest count on [PA packages](/en/lydanlaeg) — or go straight to [booking](/en#book)
+1. Pick a system by guest count on [PA packages](/en/lydanlaeg) — or go straight to [booking](/en/lydanlaeg)
 2. Choose your package and date
 3. You get a confirmation straight away
 4. Collect the equipment at Vermlandsgade 66
 
-The whole process takes under two minutes. [Book your PA system now](/en#book).
+The whole process takes under two minutes. [Book your PA system now](/en/lydanlaeg).

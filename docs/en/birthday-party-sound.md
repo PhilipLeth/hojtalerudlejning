@@ -65,4 +65,4 @@ The short version:
 
 ## Book sound for your birthday
 
-See packages and prices on [birthday sound](/en/foedselsdag) — or [book your speaker now](/en#book). It takes under two minutes.
+See packages and prices on [birthday sound](/en/foedselsdag) — or [book your speaker now](/en/foedselsdag). It takes under two minutes.

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { NAV_CATEGORIES } from "@/lib/products";
 import { activeSeasons } from "@/lib/seasons";
 import PhoneLink from "@/components/PhoneLink";
-import { danskSti, hasEnglish, localizedHref } from "@/lib/enPages";
+import { localizedHref, sprogskifteSti } from "@/lib/enPages";
 import { bookHref } from "@/lib/bookUrl";
 
 /**
@@ -29,7 +29,7 @@ const COPY = {
     blog: "Blog",
     terms: "Lejevilkår",
     otherLang: "English",
-    book: "Book nu",
+    book: "Se pakker og book",
     call: "Ring",
   },
   en: {
@@ -43,7 +43,7 @@ const COPY = {
     blog: "Blog",
     terms: "Rental terms",
     otherLang: "Dansk",
-    book: "Book now",
+    book: "See packages and book",
     call: "Call",
   },
 } as const;
@@ -66,14 +66,7 @@ export default function BurgerMenu() {
    * ikke blindt til danskSti() den anden vej: /en/blog/<slug> har ikke en dansk
    * side på samme sti, fordi blogindlæggenes slug bærer sit eget sprogs søgeord.
    */
-  const daSti = danskSti(pathname ?? "/");
-  const andetSprog = !hasEnglish(daSti)
-    ? locale === "en"
-      ? "/"
-      : "/en"
-    : locale === "en"
-      ? daSti
-      : localizedHref(daSti, "en");
+  const andetSprog = sprogskifteSti(pathname ?? "/", locale === "en" ? "da" : "en");
   const nav = (sti: string) => localizedHref(sti, locale);
 
   // Lock body scroll when menu is open
@@ -199,9 +192,11 @@ export default function BurgerMenu() {
             </Link>
           </div>
 
-          {/* CTA */}
+          {/* CTA — til pakkevælgeren på forsiden, ikke til /book.
+              Kurven er tom, indtil kunden har valgt noget, så "Book nu" til
+              /book landede på "Ingen produkter valgt". */}
           <a
-            href={bookHref(null, locale)}
+            href={locale === "en" ? "/en#shop-pakker" : "/#shop-pakker"}
             onClick={() => setOpen(false)}
             className="mt-8 block rounded-full bg-brand-500 px-6 py-3 text-center font-semibold text-black transition hover:bg-brand-400"
           >

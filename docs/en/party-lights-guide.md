@@ -49,4 +49,4 @@ Our party light package is put together to be easy to set up and to give the mos
 
 ## Book lights for your party
 
-See [party lights](/en/festlys) and the [light bar](/en/lys-pakke) — it can be added to any speaker package. [Book here](/en#book).
+See [party lights](/en/festlys) and the [light bar](/en/lys-pakke) — it can be added to any speaker package. [Book here](/en/festlys).

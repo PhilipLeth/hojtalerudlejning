@@ -53,4 +53,4 @@ Booking takes three minutes. Choose your equipment, choose your date, and we han
 
 *— Frederik Scharling, founder of Lejhøjtaler.dk*
 
-[Book now](/en#book)
+[Book now](/en/lej-hojtaler#hojtalerne)

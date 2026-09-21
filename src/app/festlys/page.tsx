@@ -118,15 +118,15 @@ export default function FestlysPage() {
 
           <CategoryProductGrid
             items={[
-              { id: "pakke_stemningslys", href: "/stemningslys", tag: "Spar 140,-" },
-              { id: "pakke_diskolys", href: "/diskolys", tag: "Spar 145,-" },
-              { id: "pakke_teenagefest", href: "/teenagefest-lys", tag: "Spar 140,-" },
-              { id: "pakke_festtelt", href: "/festtelt-lys", tag: "Spar 90,-" },
-              { id: "pakke_bryllupslys", href: "/bryllupslys", tag: "Spar 140,-" },
-              { id: "pakke_diskotek", href: "/diskotek-pakke", tag: "Spar 190,-" },
+              { id: "pakke_stemningslys", href: "/stemningslys" },
+              { id: "pakke_diskolys", href: "/diskolys" },
+              { id: "pakke_teenagefest", href: "/teenagefest-lys" },
+              { id: "pakke_festtelt", href: "/festtelt-lys" },
+              { id: "pakke_bryllupslys", href: "/bryllupslys" },
+              { id: "pakke_diskotek", href: "/diskotek-pakke" },
               { id: "lyseffekt", href: "/enkelt-lyseffekt" },
               { id: "uplight", href: "/uplights" },
-              { id: "uplight_4", href: "/uplights", tag: "Spar 105,-" },
+              { id: "uplight_4", href: "/uplights" },
               { id: "lys", href: "/lys-pakke" },
               { id: "rog", href: "/roegmaskine" },
               { id: "discokugle", href: "/discokugle" },

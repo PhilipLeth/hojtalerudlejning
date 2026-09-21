@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { startPrisKr } from "@/lib/products";
 import { enBlogSlug, getAllPosts, getPostBySlug } from "@/lib/blog";
 import { localeAlternates } from "@/lib/hreflang";
 import { AUTHOR, authorLd } from "@/lib/author";
@@ -167,13 +168,13 @@ export default async function BlogPostPage({ params }: Props) {
           {/* CTA */}
           <section className="mt-16 glass rounded-2xl p-8 text-center">
             <h2 className="text-xl font-bold text-white">
-              Klar til at leje? Book din hojtaler nu
+              Klar til at leje? Book din højtaler nu
             </h2>
             <p className="mt-2 text-white/50 text-sm">
-              Fra 395 kr/weekend. Hent fredag, aflever mandag.
+              {startPrisKr()}/weekend. Hent fredag, aflever mandag.
             </p>
             <Link
-              href="/book"
+              href="/#shop-pakker"
               className="mt-4 inline-block rounded-full bg-brand-500 px-8 py-3 font-semibold text-black hover:bg-brand-400 transition"
             >
               Book nu

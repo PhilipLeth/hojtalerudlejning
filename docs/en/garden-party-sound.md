@@ -1,6 +1,6 @@
 ---
 title: "Sound for a garden party — a guide to getting outdoor audio right"
-description: "How to get the best sound at your garden party in Copenhagen. Tips on speaker placement, volume and keeping the neighbours happy. Rent from 395 DKK."
+description: "How to get the best sound at your garden party in Copenhagen. Tips on speaker placement, volume and keeping the neighbours happy. Rent from 445 DKK."
 date: "2026-06-11"
 updated: "2026-09-16"
 keywords:
@@ -59,4 +59,4 @@ Outdoor sound and light together lift any garden party. Our [light bar](/en/lys-
 
 ## Book sound for your garden party
 
-See packages on [garden party sound](/en/havefest) — or [book your speaker now](/en#book). Collect at Vermlandsgade 66, return on Monday.
+See packages on [garden party sound](/en/havefest) — or [book your speaker now](/en/havefest). Collect at Vermlandsgade 66, return on Monday.

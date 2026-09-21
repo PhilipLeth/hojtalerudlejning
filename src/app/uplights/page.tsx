@@ -95,7 +95,7 @@ export default function UplightsPage() {
           <CategoryProductGrid
             items={[
               { id: "uplight" },
-              { id: "uplight_4", tag: "Spar 105,-" },
+              { id: "uplight_4" },
             ]}
           />
         </section>

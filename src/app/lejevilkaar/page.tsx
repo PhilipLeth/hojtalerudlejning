@@ -133,7 +133,7 @@ export default function Lejevilkaar() {
         {/* CTA */}
         <div className="text-center pt-8">
           <Link
-            href="/book"
+            href="/#shop-pakker"
             className="inline-flex rounded-xl bg-brand-500 px-8 py-3.5 font-semibold text-black transition hover:bg-brand-400 active:scale-95"
           >
             Book nu

@@ -1,6 +1,6 @@
 ---
 title: "PA-anlæg udlejning i København – hvad skal du vide?"
-description: "Alt om PA-anlæg udlejning i København. Hvad er et PA-system, hvornår har du brug for det, og hvad koster det? Lej fra 395 kr/weekend."
+description: "Alt om PA-anlæg udlejning i København. Hvad er et PA-system, hvornår har du brug for det, og hvad koster det? Lej fra 445 kr/weekend."
 date: "2026-06-12"
 updated: "2026-09-08"
 keywords:
@@ -50,15 +50,15 @@ Vi holder til på Vermlandsgade 66, 2300 København. Du henter udstyret fredag o
 
 ## Hvad koster det?
 
-Vores priser starter fra **395 kr for en weekend** — den lille højtalerpakke koster 595 kr, den store 995 kr. Alle kabler er med i prisen, og der er ingen skjulte gebyrer; subwoofer, mixer, mikrofon og stativer lejes til efter behov.
+Vores priser starter fra **445 kr for en weekend** — den lille højtalerpakke koster 595 kr, den store 795 kr. Alle kabler er med i prisen, og der er ingen skjulte gebyrer; subwoofer, mixer, mikrofon og stativer lejes til efter behov.
 
 Prisen er flad for 1-5 dages leje: en enkelt hverdag koster det samme som hele weekenden, og fredag-mandag tæller som én weekend.
 
 ## Sådan booker du
 
-1. Vælg anlæg efter gæsteantal på [lydanlæg](/lydanlaeg) — eller gå direkte til [booking](/#book)
+1. Vælg anlæg efter gæsteantal på [lydanlæg](/lydanlaeg) — eller gå direkte til [booking](/lydanlaeg)
 2. Vælg din pakke og dato
 3. Du får en bekræftelse med det samme
 4. Hent udstyret på Vermlandsgade 66
 
-Hele processen tager under 2 minutter. [Book dit PA-anlæg nu](/#book).
+Hele processen tager under 2 minutter. [Book dit PA-anlæg nu](/lydanlaeg).
