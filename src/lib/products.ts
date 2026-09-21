@@ -429,11 +429,12 @@ export const speakers: Speaker[] = [
 ];
 
 export const addons: Addon[] = [
-  { id: "dj_musikafvikler", page: "/dj", price: 1800, image: null, ydelse: true,
+  { id: "dj_musikafvikler", page: "/dj", // Følger DJ_HOUR_RATE — prisarket 21. sept 2026: DJ Time 1.495 kr
+    price: 1495, image: null, ydelse: true,
     priceUnit: { da: "kr/time", en: "DKK/hour" },
     contents: ["DJ/musikafvikler", "Minimum 3 timer"],
-    da: { label: "DJ/musikafvikler", desc: "Minimum 3 timer. 1.800 kr/time, altid. Levering, opsætning og nedtagning er med. Vælg anlæg og evt. lys." },
-    en: { label: "DJ/music host", desc: "Minimum 3 hours. DKK 1,800/hour, always. Delivery, setup and collection included. Choose a sound system and optional lights." } },
+    da: { label: "DJ/musikafvikler", desc: "Minimum 3 timer. Prisen er pr. time, altid. Levering, opsætning og nedtagning er med. Vælg anlæg og evt. lys." },
+    en: { label: "DJ/music host", desc: "Minimum 3 hours. The price is per hour, always. Delivery, setup and collection included. Choose a sound system and optional lights." } },
   {
     id: "stroboskop",
     price: 395,
@@ -526,17 +527,22 @@ export const addons: Addon[] = [
   // ── Kørsel: levering (ud) og afhentning (retur) er to selvstændige ture.
   // Én vej koster 495, begge veje 795, derfor er "begge veje" et selvstændigt
   // id med sin egen pris i stedet for to linjer der lægges sammen til 990.
+  //
+  // Prisarket skiller kørsel og opsætning ad: "Levering/Afhentning 795" og
+  // "Levering/Afhentning + Opsætning/Nedtagning 1.395". Teksterne lovede før
+  // opsætning med i de 495 og de 795 — det gør de ikke længere, og
+  // opsætningen er sit eget valg til 1.395.
   {
     id: "levering_ud",
     price: 495,
     image: null,
     da: {
-      label: "Levering + opsætning",
-      desc: "Vi kører ud, sætter op klar til brug, du afleverer selv bagefter",
+      label: "Levering",
+      desc: "Vi kører ud med udstyret, du afleverer selv bagefter",
     },
     en: {
-      label: "Delivery + setup",
-      desc: "We drive out and set everything up, you return it yourself",
+      label: "Delivery",
+      desc: "We drive the gear out to you, you return it yourself",
     },
   },
   {
@@ -557,12 +563,28 @@ export const addons: Addon[] = [
     price: 795,
     image: null,
     da: {
-      label: "Levering + afhentning (begge veje)",
-      desc: "Vi kører ud, sætter op og henter igen, spar 195 kr.",
+      label: "Levering og afhentning (begge veje)",
+      desc: "Vi kører ud med udstyret og henter det igen efter festen, spar 195 kr.",
     },
     en: {
-      label: "Delivery + collection (both ways)",
-      desc: "We deliver, set up and collect again, save 195 DKK",
+      label: "Delivery and collection (both ways)",
+      desc: "We bring the gear out and collect it after the party, save 195 DKK",
+    },
+  },
+  {
+    // Prisarkets "Levering/Afhentning + Opsætning/Nedtagning", 1.395 kr.
+    // Id'et hedder ikke levering_opsaetning — det navn er brugt af en gammel
+    // ordre-id i LEGACY_DELIVERY_IDS og ville forveksles med den.
+    id: "levering_begge_opsaetning",
+    price: 1395,
+    image: null,
+    da: {
+      label: "Levering og afhentning + opsætning og nedtagning",
+      desc: "Vi kører ud, stiller op klar til brug, og pakker sammen og henter igen efter festen",
+    },
+    en: {
+      label: "Delivery and collection + setup and takedown",
+      desc: "We drive out, set everything up ready to use, then pack down and collect after the party",
     },
   },
   // ── Produktarket 17. sept 2026: stativer, væsker og den kablede mikrofon som tilvalg.
@@ -761,8 +783,34 @@ export function erGenereretBillede(sti: string | null | undefined): boolean {
   return !!sti && (GENEREREDE_BILLEDER.has(sti) || /\/images\/product-[^/]+-white(?:-400)?\.webp(?:\?|$)/.test(sti) || sti === "/images/product-dj.webp");
 }
 
-export const DELIVERY_ADDON_IDS = ["levering_ud", "afhentning_retur", "levering_begge"] as const;
+export const DELIVERY_ADDON_IDS = ["levering_ud", "afhentning_retur", "levering_begge", "levering_begge_opsaetning"] as const;
 export type DeliveryAddonId = (typeof DELIVERY_ADDON_IDS)[number];
+
+/* ───── Sammenlagte varer ─────
+ *
+ * Prisarket har én linje pr. fysisk ting. Kataloget havde to: den trådløse
+ * mikrofon lå både som tilvalget `mikrofon` (445) og som udlejningsvaren
+ * `traadloes_mikrofon` (445), og den kablede som `mikrofon_kabel` (95) og
+ * `haandholdt_mikrofon` (95). Samme mikrofon, samme pris, samme produktside —
+ * men to lagerrækker, to priser der kunne drive fra hinanden, og to id'er en
+ * pakke kunne pege på.
+ *
+ * Tilvalgene overlevede: det er dem, bookingen kan tilbyde under et produkt,
+ * og de ejede i forvejen produktsiden. Udlejningsvarerne er væk.
+ *
+ * Kortet her er ikke pynt. Gamle ordrer i KV, gemte kataloger, bogmærker og
+ * annonce-URL'er bærer stadig de gamle id'er, og både prisopslaget på serveren
+ * og lageropgørelsen slår derfor op gennem det.
+ */
+export const SAMMENLAGTE_IDER: Record<string, string> = {
+  traadloes_mikrofon: "mikrofon",
+  haandholdt_mikrofon: "mikrofon_kabel",
+};
+
+/** Det id en vare hedder i dag — uændret, hvis den ikke er lagt sammen. */
+export function nuvaerendeId(id: string): string {
+  return SAMMENLAGTE_IDER[id] ?? id;
+}
 
 /** Gamle ordrer/kataloger bruger disse ids, de tæller stadig som kørsel */
 export const LEGACY_DELIVERY_IDS = ["levering", "levering_opsaetning"];
@@ -805,7 +853,7 @@ export function bundleIncludesDelivery(
 export function deliveryDirections(id: string): { out: boolean; back: boolean } {
   if (id === "levering_ud") return { out: true, back: false };
   if (id === "afhentning_retur") return { out: false, back: true };
-  if (id === "levering_begge" || LEGACY_DELIVERY_IDS.includes(id)) return { out: true, back: true };
+  if (id === "levering_begge" || id === "levering_begge_opsaetning" || LEGACY_DELIVERY_IDS.includes(id)) return { out: true, back: true };
   return { out: false, back: false };
 }
 
@@ -829,7 +877,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
       usecase_en: "Music and a speech or two for the smaller gathering. The microphone plugs straight into the speaker.",
       parts: [
         { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speaker package", price: 595 },
-        { productId: "haandholdt_mikrofon", label_da: "Mikrofon med ledning", label_en: "Wired microphone", price: 95 },
+        { productId: "mikrofon_kabel", label_da: "Mikrofon med ledning", label_en: "Wired microphone", price: 95 },
       ],
     },
   },
@@ -849,7 +897,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
       usecase_en: "Speeches without a cable for the smaller gathering, and music afterwards.",
       parts: [
         { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speaker package", price: 595 },
-        { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 },
+        { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 },
       ],
     },
   },
@@ -1241,7 +1289,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
       parts: [
         { productId: "festival", label_da: 'Mellem højtalerpakke (2× 12")', label_en: 'Medium speaker package (2× 12")', price: 795 },
         { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 95 },
-        { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 },
+        { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 },
         { productId: "lys", label_da: "Lysbar", label_en: "Light bar", price: 395 },
         { productId: "lyskaeder", label_da: "Lyskæde varm hvid", label_en: "Fairy lights warm white", price: 195 },
         { productId: "low_fog", label_da: "Low fog-maskine", label_en: "Low fog machine", price: 545 },
@@ -1267,7 +1315,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
       parts: [
         { productId: "festival", label_da: 'Mellem højtalerpakke (2× 12")', label_en: 'Medium speaker package (2× 12")', price: 795 },
         { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 95 },
-        { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 },
+        { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 },
         { productId: "subwoofer", label_da: 'Subwoofer 12"', label_en: 'Subwoofer 12"', price: 495 },
         { productId: "lys", label_da: "Lysbar", label_en: "Light bar", price: 395 },
         { productId: "rog", label_da: "Røgmaskine", label_en: "Fog machine", price: 245 },
@@ -1556,7 +1604,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
       usecase_en: "For the event with both music and speeches. The microphone plugs straight into the speaker, so no mixer is needed in between.",
       parts: [
         { productId: "festival", label_da: "Mellem højtalerpakke", label_en: "Medium speaker package", price: 795 },
-        { productId: "haandholdt_mikrofon", label_da: "Mikrofon med ledning", label_en: "Wired microphone", price: 95 },
+        { productId: "mikrofon_kabel", label_da: "Mikrofon med ledning", label_en: "Wired microphone", price: 95 },
       ],
     },
   },
@@ -1580,7 +1628,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
       usecase_en: "The reception or general assembly where the speaker needs to move around and music is played too.",
       parts: [
         { productId: "festival", label_da: "Mellem højtalerpakke", label_en: "Medium speaker package", price: 795 },
-        { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless microphone", price: 445 },
+        { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless microphone", price: 445 },
       ],
     },
   },
@@ -1638,17 +1686,15 @@ const rentalProductsRaw: RawRentalProduct[] = [
   { id: "projektor", page: "/projektor", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", price: 495, image: "/images/product-projektor-white.webp", name_da: "Projektor", name_en: "Projector", desc_da: "Full HD projektor til præsentationer og film.", desc_en: "Full HD projector for presentations and film.", contents: ["Full HD projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
   { id: "skaerm_55", page: "/skaerm", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 595, image: "/images/product-skaerm-white.webp", name_da: '55" Storskærm', name_en: '55" Screen', desc_da: "55\" LED-skærm på 3-fod stativ, justerbar højde.", desc_en: '55" LED screen on tripod stand, adjustable height.', contents: ['55" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
   { id: "skaerm_32", page: "/skaerm-32", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 395, image: "/images/product-skaerm-32-white.webp", name_da: '32" Skærm', name_en: '32" Screen', desc_da: "32\" LED-skærm på 3-fod stativ, kompakt og nem at flytte. Perfekt til karaoke.", desc_en: '32" LED screen on tripod stand, compact and easy to move. Perfect for karaoke.', contents: ['32" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
-  { id: "traadloes_mikrofon", page: "/traadloes-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=ED_w3MHXjxk", category: "av", price: 445, image: "/images/product-mikrofon-pro-v2-white.webp", name_da: "Trådløs mikrofon", name_en: "Wireless mic", desc_da: "Shure BLX24 med SM58, trådløs håndholdt mikrofon i scenekvalitet til taler, sang og karaoke.", desc_en: "Shure BLX24 with SM58, a stage-quality wireless handheld microphone for speeches, vocals and karaoke.", allowedAddons: ["mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS], contents: ["Shure BLX24/SM58 trådløs mikrofon", "Shure modtager", "Kabelforbindelse til højtaler"] },
   { id: "traadloes_mikrofon_pro", hidden: true, page: "/traadloes-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 595, image: "/images/product-mikrofon-pro-v2-white.webp", name_da: "Trådløs mikrofon PRO", name_en: "Wireless mic PRO", desc_da: "Shure BLX trådløs mikrofon, scenekvalitet til events og konferencer.", desc_en: "Shure BLX wireless microphone, stage quality for events and conferences.", contents: ["Shure trådløs håndholdt mic", "Shure modtager", "Kabelforbindelse til højtaler"] },
   { id: "headset", page: "/headset-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 445, image: "/images/product-headset-pro-v2-white.webp", name_da: "Trådløst headset", name_en: "Wireless headset", desc_da: "Shure BLX14 trådløst headset, frie hænder til præsentationer og undervisning.", desc_en: "Shure BLX14 wireless headset, hands free for presentations and teaching.", allowedAddons: ["mixer_stor", ...DELIVERY_ADDON_IDS], contents: ["Shure BLX14 med PGA31 headset", "Bodypack + modtager", "Kabel til højtaler"] },
   { id: "headset_pro", hidden: true, page: "/headset-pro", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 595, image: "/images/product-headset-pro-v2-white.webp", name_da: "Trådløst headset PRO", name_en: "Wireless headset PRO", desc_da: "Professionelt headset i broadcast-kvalitet, til konferencer og scener.", desc_en: "Professional broadcast-quality headset, for conferences and stages.", contents: ["PRO headset-mikrofon", "Bodypack + modtager", "Kabelforbindelse"] },
-  { id: "haandholdt_mikrofon", page: "/haandholdt-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=4gssAwctUFQ", category: "av", price: 95, image: "/images/product-mikrofon-kabel-v2-white.webp", name_da: "Håndholdt mikrofon (kabel)", name_en: "Handheld microphone (wired)", desc_da: "the t.bone MB 60, håndholdt dynamisk mikrofon med kabel, til taler og sang.", desc_en: "the t.bone MB 60, wired dynamic handheld microphone, for speeches and vocals.", allowedAddons: ["mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS], contents: ["the t.bone MB 60", "XLR-kabel"] },
   { id: "haandholdt_mikrofon_pro", page: "/haandholdt-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=Y8CBYnicB5g", category: "av", price: 345, image: "/images/product-mikrofon-kabel-pro-v2-white.webp", name_da: "Håndholdt mikrofon PRO (kabel)", name_en: "Handheld microphone PRO (wired)", desc_da: "Shure Beta 58A med kabel, klassikeren til sang og taler.", desc_en: "Shure Beta 58A wired, the classic for vocals and speeches.", allowedAddons: ["mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS], contents: ["Shure Beta 58A", "XLR/kabel"] },
   { id: "laerred_160", page: "/laerred-160", youtubeUrl: "https://www.youtube.com/watch?v=PLqEcB93Sac", category: "av", price: 195, image: "/images/product-laerred-v2-white.webp", name_da: "Lærred 160 cm", name_en: "Projector screen 160 cm", desc_da: "160 cm lærred på stativ, perfekt til projektor.", desc_en: "160 cm projector screen on stand.", contents: ["160 cm lærred", "Stativ"] },
   { id: "projektor_pro", page: "/projektor-pro", youtubeUrl: "https://www.youtube.com/watch?v=7FhRTCCKCm0", category: "av", price: 795, image: "/images/product-projektor-pro-v2-white.webp", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor, skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector, sharp even in daylight.", contents: ["5000 lumen projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
-  { id: "pakke_praesentation", page: "/pakke-praesentation", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", image: "/images/product-projektor-white.webp", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation.", contents: ["Full HD projektor", "Lærred 160 cm", "Håndholdt mic + kabel", "HDMI + strøm"], bundle: { usecase_da: "Alt til præsentationen, projektor, lærred og mikrofon.", usecase_en: "Everything for your presentation.", parts: [ { productId: "projektor", label_da: "Projektor", label_en: "Projector", price: 495 }, { productId: "laerred_160", label_da: "Lærred 160 cm", label_en: "Screen 160 cm", price: 195 }, { productId: "haandholdt_mikrofon", label_da: "Håndholdt mikrofon", label_en: "Wired mic", price: 95 } ] } },
+  { id: "pakke_praesentation", page: "/pakke-praesentation", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", image: "/images/product-projektor-white.webp", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation.", contents: ["Full HD projektor", "Lærred 160 cm", "Håndholdt mic + kabel", "HDMI + strøm"], bundle: { usecase_da: "Alt til præsentationen, projektor, lærred og mikrofon.", usecase_en: "Everything for your presentation.", parts: [ { productId: "projektor", label_da: "Projektor", label_en: "Projector", price: 495 }, { productId: "laerred_160", label_da: "Lærred 160 cm", label_en: "Screen 160 cm", price: 195 }, { productId: "mikrofon_kabel", label_da: "Håndholdt mikrofon", label_en: "Wired mic", price: 95 } ] } },
   { id: "pakke_konference", page: "/pakke-konference", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", image: "/images/product-skaerm-white.webp", name_da: "Konferencepakken", name_en: "Conference bundle", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke. Klar til konference.", desc_en: "55\" screen + wireless headset + small speaker package. Conference-ready.", contents: ['55" skærm + stativ', "Trådløst headset", '2× 10" højtalere', "Kabler + adapter"], bundle: { usecase_da: "Klar til konference, skærm, headset og lyd.", usecase_en: "Conference-ready, screen, headset and sound.", parts: [ { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 445 }, { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speakers", price: 595 } ] } },
-  { id: "pakke_konference_150", page: "/konferencepakke-150", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", image: "/images/product-skaerm-white.webp", name_da: "Konferencepakke 150", name_en: "Conference package 150", desc_da: '2× 12" højtalere på stativer + Shure trådløs mikrofon + headset + 55" skærm. Til sale med 100-150 deltagere.', desc_en: 'Two 12" speakers on stands + Shure wireless mic + headset + 55" screen. For rooms with 100-150 attendees.', contents: ['2× EV 12" højtalere + stativer', "Trådløs mikrofon", "Trådløst headset", '55" skærm på stativ', "HDMI + alle kabler"], allowedAddons: ["mikrofon",...DELIVERY_ADDON_IDS], bundle: { usecase_da: "Konference eller generalforsamling hvor både taleren og salen skal kunne høres og se med.", usecase_en: "Conference or general assembly where both the speaker and the room must be heard and seen.", parts: [ { productId: "festival", label_da: 'Mellem højtalerpakke (2× 12")', label_en: 'Medium speaker package (2× 12")', price: 795 }, { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 95 }, { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 445 }, { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 } ] } },
+  { id: "pakke_konference_150", page: "/konferencepakke-150", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", image: "/images/product-skaerm-white.webp", name_da: "Konferencepakke 150", name_en: "Conference package 150", desc_da: '2× 12" højtalere på stativer + Shure trådløs mikrofon + headset + 55" skærm. Til sale med 100-150 deltagere.', desc_en: 'Two 12" speakers on stands + Shure wireless mic + headset + 55" screen. For rooms with 100-150 attendees.', contents: ['2× EV 12" højtalere + stativer', "Trådløs mikrofon", "Trådløst headset", '55" skærm på stativ', "HDMI + alle kabler"], allowedAddons: ["mikrofon",...DELIVERY_ADDON_IDS], bundle: { usecase_da: "Konference eller generalforsamling hvor både taleren og salen skal kunne høres og se med.", usecase_en: "Conference or general assembly where both the speaker and the room must be heard and seen.", parts: [ { productId: "festival", label_da: 'Mellem højtalerpakke (2× 12")', label_en: 'Medium speaker package (2× 12")', price: 795 }, { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 95 }, { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 445 }, { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 } ] } },
   {
     id: "pakke_tale_musik",
     page: "/pakke-tale-musik",
@@ -1667,7 +1713,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
       usecase_en: "Speeches without a cable: the wireless microphone lets you move around, the speakers handle the music afterwards.",
       parts: [
         { productId: "festival", label_da: "Mellem højtalerpakke", label_en: "Medium speaker package", price: 795 },
-        { productId: "traadloes_mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 },
+        { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 },
       ],
     },
   },

@@ -1019,7 +1019,7 @@ export const PRODUCT_GALLERY: Record<string, GalleryImage[]> = {
       "caption_en": "This is what it looks like standing ready."
     }
   ],
-  "traadloes_mikrofon": [
+  "mikrofon": [
     {
       "src": "/images/gallery/traadloes_mikrofon/hvad_du_faar.webp?v=37a19e9f",
       "thumb": "/images/gallery/traadloes_mikrofon/hvad_du_faar-400.webp?v=5917b426",

@@ -78,9 +78,12 @@ describe("hidden virker hele vejen ud", () => {
   it("mikrofonerne er ikke på pause — de hører til lyden", () => {
     // PRO-varianterne gik på pause med produktarket 17. sept 2026: arkets trådløse mikrofon
     // og headset ER Shure-modellerne (445 kr), så der er ikke længere to af hver.
-    const mikrofoner = ["traadloes_mikrofon", "headset", "haandholdt_mikrofon", "haandholdt_mikrofon_pro"];
+    const mikrofoner = ["mikrofon", "headset", "mikrofon_kabel", "haandholdt_mikrofon_pro"];
+    // Efter sammenlægningen ligger de to almindelige mikrofoner som tilvalg og
+    // de to PRO som udlejningsvarer — testen skal se hele kataloget, ikke én liste.
+    const katalog = [...addons, ...rentalProducts];
     for (const id of mikrofoner) {
-      const p = rentalProducts.find((r) => r.id === id);
+      const p = katalog.find((r) => r.id === id);
       expect(p, `${id} findes ikke i kataloget`).toBeTruthy();
       expect(p!.hidden, `${id} er sat på pause`).toBeFalsy();
     }

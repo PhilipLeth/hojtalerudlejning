@@ -53,7 +53,7 @@ export default function Page() {
         text="The large screen pairs well with a projector or a wireless microphone for presentations and events."
         links={[
           { href: "/en/projektor", label: "See the projector", priceId: "projektor", fra: true },
-          { href: "/en/traadloes-mikrofon", label: "See the wireless microphone", priceId: "traadloes_mikrofon", fra: true },
+          { href: "/en/traadloes-mikrofon", label: "See the wireless microphone", priceId: "mikrofon", fra: true },
         ]}
       />
     </ProductLanding>

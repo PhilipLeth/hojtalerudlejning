@@ -102,7 +102,7 @@ describe("Åbningstider ved 'jeg henter selv'", () => {
     await tilTilvalg();
     expect(document.body.textContent).toMatch(/Afhentning:\s*Fredag 14–18/);
 
-    fireEvent.click(screen.getByText("Levering + afhentning (begge veje)").closest("button")!);
+    fireEvent.click(screen.getByText("Levering og afhentning (begge veje)").closest("button")!);
 
     await waitFor(() => expect(document.body.textContent).not.toMatch(/Afhentning:\s*Fredag 14–18/));
   }, 20000);

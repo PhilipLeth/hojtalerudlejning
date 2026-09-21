@@ -27,14 +27,19 @@ describe("Mikrofonpakker som kan bookes og reserverer de rigtige antal", () => {
   it("trækker to mikrofoner pr. pakke, både fra defaults og et gemt katalog", () => {
     for (const catalog of [null, { rentalProducts: microphonePackages }]) {
       const parts = bundlePartsFromCatalog(catalog).pakke_mikrofon_duo;
-      expect(parts.filter((id) => id === "traadloes_mikrofon")).toHaveLength(2);
-      expect(bundleSlots(parts, { party: 4, traadloes_mikrofon: 3, mixer_stor: 4 }, { traadloes_mikrofon: 2 })).toEqual({ total: 1, used: 1 });
+      expect(parts.filter((id) => id === "mikrofon")).toHaveLength(2);
+      expect(bundleSlots(parts, { party: 4, mikrofon: 3, mixer_stor: 4 }, { mikrofon: 2 })).toEqual({ total: 1, used: 1 });
     }
-    expect(expandProductIds(["pakke_mikrofon_duo"]).filter((id) => id === "traadloes_mikrofon")).toHaveLength(2);
+    expect(expandProductIds(["pakke_mikrofon_duo"]).filter((id) => id === "mikrofon")).toHaveLength(2);
+    // En gammel ordre bærer stadig det id, mikrofonen hed før sammenlægningen.
+    // Den skal tælle på den samme hylde, ellers ser to bookinger af samme
+    // mikrofon ud som to forskellige ting.
+    expect(expandProductIds(["traadloes_mikrofon"])).toEqual(["mikrofon"]);
+    expect(expandProductIds(["haandholdt_mikrofon"])).toEqual(["mikrofon_kabel"]);
   });
   it("viser to samtidige mikrofoner i hver sin lagerbane for samme booking", () => {
-    const rows = buildOccupancy([{ id: "duo", name: "Test", pickup: "2026-10-01", returnDate: "2026-10-03", productIds: ["pakke_mikrofon_duo"] }], { traadloes_mikrofon: 2 }, "2026-10-01", "2026-10-04");
-    const row = rows.find((x) => x.id === "traadloes_mikrofon")!;
+    const rows = buildOccupancy([{ id: "duo", name: "Test", pickup: "2026-10-01", returnDate: "2026-10-03", productIds: ["pakke_mikrofon_duo"] }], { mikrofon: 2 }, "2026-10-01", "2026-10-04");
+    const row = rows.find((x) => x.id === "mikrofon")!;
     expect(row.bookings.map((x) => x.lane).sort()).toEqual([0, 1]);
     expect(row.bookings.every((x) => x.bookingId === "duo")).toBe(true);
   });

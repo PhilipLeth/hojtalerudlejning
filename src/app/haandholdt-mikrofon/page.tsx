@@ -5,8 +5,8 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: `Lej Håndholdt mikrofon (kabel) København | ${prisKr("haandholdt_mikrofon")} | Lejhøjtaler.dk`,
-  description: `Almindelig håndholdt mikrofon med kabel, til taler og sang. ${prisKr("haandholdt_mikrofon")}/weekend. Betal ved afhentning. Book online.`,
+  title: `Lej Håndholdt mikrofon (kabel) København | ${prisKr("mikrofon_kabel")} | Lejhøjtaler.dk`,
+  description: `Almindelig håndholdt mikrofon med kabel, til taler og sang. ${prisKr("mikrofon_kabel")}/weekend. Betal ved afhentning. Book online.`,
   keywords: ["lej mikrofon", "håndholdt mikrofon leje", "mikrofon til tale leje københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/haandholdt-mikrofon",
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-mikrofon-kabel-v2.webp"),
-    title: `Lej Håndholdt mikrofon (kabel) København | ${prisKr("haandholdt_mikrofon")}`,
-    description: `Almindelig håndholdt mikrofon med kabel, til taler og sang. ${prisKr("haandholdt_mikrofon")}/weekend. Betal ved afhentning. Book online.`,
+    title: `Lej Håndholdt mikrofon (kabel) København | ${prisKr("mikrofon_kabel")}`,
+    description: `Almindelig håndholdt mikrofon med kabel, til taler og sang. ${prisKr("mikrofon_kabel")}/weekend. Betal ved afhentning. Book online.`,
     url: "https://lejhojtaler.dk/haandholdt-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -32,9 +32,9 @@ export default function Page() {
       sub={'the t.bone MB 60, håndholdt dynamisk mikrofon med kabel, til taler og sang.'}
       image="/images/product-mikrofon-kabel-v2-white.webp"
       imageAlt="Håndholdt mikrofon med kabel til leje"
-      productId="haandholdt_mikrofon"
+      productId="mikrofon_kabel"
       faqPhrase="en håndholdt mikrofon med kabel"
-      bullets={["Klassisk håndholdt dynamisk mikrofon", "XLR-kabel inkluderet", "Tilslut direkte til vores højtalere", "Perfekt til taler og fest", `Kun ${prisKr("haandholdt_mikrofon")}/weekend`]}
+      bullets={["Klassisk håndholdt dynamisk mikrofon", "XLR-kabel inkluderet", "Tilslut direkte til vores højtalere", "Perfekt til taler og fest", `Kun ${prisKr("mikrofon_kabel")}/weekend`]}
     />
   );
 }

@@ -57,7 +57,7 @@ export default function HeadsetMikrofonPage() {
         title="Kombiner med mikrofon og højtalere"
         text="Headsettet holder hænderne fri, mens en trådløs mikrofon går rundt i salen til spørgsmål. Højtaleren skal med, headsettet forstærker ingenting selv."
         links={[
-          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "traadloes_mikrofon", fra: true },
+          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "mikrofon", fra: true },
         ]}
       />
     </ProductLanding>

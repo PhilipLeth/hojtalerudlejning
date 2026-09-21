@@ -40,7 +40,7 @@ export default function Page() {
       primaryProductId="pakke_fest_stor"
       primaryName={"large party package"}
       primaryWhy={"Two 12\" EV speakers on stands fill a living room or a venue without turning shrill, and the light bar puts a difference between the dinner and the party afterwards. Enough for up to 100 guests."}
-      gridItems={[{ id: "pakke_fest_stor", tag: "Recommended" }, { id: "pakke_fest_lille" }, { id: "traadloes_mikrofon" }, { id: "discokugle" }, { id: "pakke_fest_150", tag: "100-150 guests" }]}
+      gridItems={[{ id: "pakke_fest_stor", tag: "Recommended" }, { id: "pakke_fest_lille" }, { id: "mikrofon" }, { id: "discokugle" }, { id: "pakke_fest_150", tag: "100-150 guests" }]}
       tips={[
         { title: "For the milestone ones: bring a microphone", text: "50th and 60th birthdays are speech parties. A wireless microphone makes sure every speech is heard, including the one where the voice goes thin." },
         { title: "For a kids' party: disco lights", text: "A disco ball at " + prisDkk("discokugle") + " or a single light effect at " + prisDkk("lyseffekt") + " turns the living room into a nightclub. Children are easy to entertain with light and music." },

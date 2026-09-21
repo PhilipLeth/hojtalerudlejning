@@ -5,7 +5,7 @@
  * belægning. Overbookinger får ekstra baner (markeret).
  */
 
-import { bundlePartIds, addons, isServiceAddon, isBundleProduct, rentalProducts as defaultRentals } from "../../../src/lib/products";
+import { bundlePartIds, addons, isServiceAddon, isBundleProduct, rentalProducts as defaultRentals, nuvaerendeId } from "../../../src/lib/products";
 import { addDays, bookedProductIds } from "./bookings";
 
 /**
@@ -110,10 +110,14 @@ const SKIP_IDS = new Set([
  */
 export function expandProductIds(ids: string[], parts_ = BUNDLE_PARTS): string[] {
   const out: string[] = [];
-  for (const id of ids) {
+  for (const raw of ids) {
+    // En gammel ordre kan bære et id, der er lagt sammen med et andet. Den
+    // mikrofon står på hylden ét sted, så den skal tælle på det nye id —
+    // ellers ser to bookinger af samme mikrofon ud som to forskellige ting.
+    const id = nuvaerendeId(raw);
     if (SKIP_IDS.has(id)) continue;
     const parts = parts_[id];
-    if (parts) out.push(...parts.filter((part) => !SKIP_IDS.has(part)));
+    if (parts) out.push(...parts.filter((part) => !SKIP_IDS.has(part)).map(nuvaerendeId));
     else out.push(id);
   }
   return out;

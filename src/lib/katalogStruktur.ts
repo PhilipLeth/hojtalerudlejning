@@ -81,11 +81,11 @@ export const KATALOG_AFSNIT: KatalogAfsnit[] = [
         titel: "Mikrofoner",
         titel_en: "Microphones",
         ids: [
+          // Én linje pr. fysisk mikrofon, som i arket. Tilvalget og
+          // udlejningsvaren var det samme og er lagt sammen, se SAMMENLAGTE_IDER.
           "mikrofon_kabel",
-          "haandholdt_mikrofon",
           "haandholdt_mikrofon_pro",
           "mikrofon",
-          "traadloes_mikrofon",
           "traadloes_mikrofon_pro",
           "headset",
           "headset_pro",
@@ -207,7 +207,15 @@ export const KATALOG_AFSNIT: KatalogAfsnit[] = [
         nr: "0",
         titel: "Vælges i checkout",
         titel_en: "Chosen at checkout",
-        ids: ["levering_ud", "afhentning_retur", "levering_begge", "lydmand", "dj_musikafvikler", "faktureringsgebyr"],
+        ids: [
+          "levering_ud",
+          "afhentning_retur",
+          "levering_begge",
+          "levering_begge_opsaetning",
+          "lydmand",
+          "dj_musikafvikler",
+          "faktureringsgebyr",
+        ],
       },
     ],
   },

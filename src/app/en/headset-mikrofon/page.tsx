@@ -62,7 +62,7 @@ export default function Page() {
           {
             href: "/en/traadloes-mikrofon",
             label: "See the wireless microphone",
-            priceId: "traadloes_mikrofon",
+            priceId: "mikrofon",
             fra: true,
           },
         ]}

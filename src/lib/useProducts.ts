@@ -11,6 +11,7 @@ import {
   DELIVERY_ADDON_IDS,
   LEGACY_DELIVERY_IDS,
   RETIRED_ADDON_IDS,
+  SAMMENLAGTE_IDER,
   type DeliveryAddonId,
   type Speaker,
   type Addon,
@@ -40,6 +41,9 @@ function visible<T extends { hidden?: boolean }>(list: T[]): T[] {
 
 /** Keep admin catalog, but add any new default rentals (e.g. festpakker) missing in KV. */
 function mergeRentals(fromKv: RentalProduct[]): RentalProduct[] {
+  // Sammenlagte varer må ikke komme tilbage gennem et gammelt KV-katalog:
+  // så stod den trådløse mikrofon igen to gange, med hver sin pris.
+  fromKv = fromKv.filter((p) => !(p.id in SAMMENLAGTE_IDER));
   const ids = new Set(fromKv.map((p) => p.id));
   const missing = defaultRentals.filter((d) => !ids.has(d.id));
   const merged = fromKv.map((p) => {

@@ -49,7 +49,7 @@ export default function Page() {
       primaryProductId="pakke_student"
       primaryName={"graduation package"}
       primaryWhy={"There is no power on the flatbed, and the speaker gets lifted on and off all day. Two batteries last from morning to the last address, and the padded bag is what gets the Soundboks through the trip."}
-      gridItems={[{ id: "pakke_student", tag: "Recommended" }, { id: "soundboks" }, { id: "thumpgo" }, { id: "batteri" }, { id: "traadloes_mikrofon" }]}
+      gridItems={[{ id: "pakke_student", tag: "Recommended" }, { id: "soundboks" }, { id: "thumpgo" }, { id: "batteri" }, { id: "mikrofon" }]}
       tips={[
         { title: "Strap it down properly", text: "The Soundboks has to be lashed to the truck with straps, it weighs 11 kg and must not be able to slide under braking. We are happy to lend you straps." },
         { title: "Book early in June", text: "Graduation season is concentrated in a few weeks in June, and our battery speakers go first. April is not too early." },

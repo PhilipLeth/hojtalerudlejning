@@ -2,8 +2,8 @@ import {describe,it,expect} from "vitest";
 import {existsSync} from "node:fs";
 import {eventSituations} from "@/lib/eventSituations";
 import {situationPackages} from "@/lib/situationPackages";
-import {speakers,addons,rentalProducts} from "@/lib/products";
-import {priceDj,DJ_ID} from "@/lib/dj";
+import {speakers,addons,rentalProducts,catalogPrice} from "@/lib/products";
+import {priceDj,DJ_ID,DJ_HOUR_RATE} from "@/lib/dj";
 import {buildLineItems,loadPriceTable} from "../../functions/api/_lib/pricing";
 describe("Situationspakker",()=>{
  it("har to forskellige pakker og begge sprog til alle situationer",()=>{
@@ -19,9 +19,10 @@ describe("Situationspakker",()=>{
  });
 });
 describe("DJ-priser",()=>{
- it("beregner hele timer til 1.800 kr, uanset klokkeslæt",()=>{expect(priceDj({before23:3,after23:0}).total).toBe(5400);expect(priceDj({before23:0,after23:3}).total).toBe(5400);expect(priceDj({before23:2,after23:2}).total).toBe(7200);});
+ /* Timeprisen står i dj.ts (prisarket: DJ Time 1.495), ikke her — testen vogter at den er FLAD, ikke hvad den er. */
+ it("beregner hele timer til samme sats, uanset klokkeslæt",()=>{expect(priceDj({before23:3,after23:0}).total).toBe(3*DJ_HOUR_RATE);expect(priceDj({before23:0,after23:3}).total).toBe(3*DJ_HOUR_RATE);expect(priceDj({before23:2,after23:2}).total).toBe(4*DJ_HOUR_RATE);});
  it("afviser under tre timer, brøker, negative og manglende timer",()=>{for(const v of [undefined,{}, {before23:2,after23:0},{before23:-1,after23:4},{before23:2.5,after23:1},{before23:25,after23:0}])expect(()=>priceDj(v)).toThrow();});
- it("Stripe beregner DJ på serveren og accepterer ikke en enkelt billig time",async()=>{const table=await loadPriceTable({get:async()=>null} as unknown as KVNamespace);expect(()=>buildLineItems(table,[{id:DJ_ID}])).toThrow();const priced=buildLineItems(table,[{id:DJ_ID,dj:{before23:2,after23:2}},{id:'dj_pult'}]);expect(priced.totalOre).toBe(889500);expect(priced.lineItems[0].price_data.product_data.name).toContain('DJ/musikafvikler, 4 timer');});
+ it("Stripe beregner DJ på serveren og accepterer ikke en enkelt billig time",async()=>{const table=await loadPriceTable({get:async()=>null} as unknown as KVNamespace);expect(()=>buildLineItems(table,[{id:DJ_ID}])).toThrow();const priced=buildLineItems(table,[{id:DJ_ID,dj:{before23:2,after23:2}},{id:'dj_pult'}]);expect(priced.totalOre).toBe((4*DJ_HOUR_RATE+catalogPrice('dj_pult'))*100);expect(priced.lineItems[0].price_data.product_data.name).toContain('DJ/musikafvikler, 4 timer');});
  it("hver situation har sit eget kortbillede, så anledninger ikke ser ens ud",()=>{
   const images=eventSituations.map(s=>s.image);
   expect(new Set(images).size).toBe(images.length);

@@ -59,7 +59,7 @@ export default function ProjektorPage() {
               Tilføj lærred og trådløs mikrofon, så er præsentationen komplet."
         links={[
           { href: "/book?product=laerred_160", label: "Book lærred 160 cm", priceId: "laerred_160" },
-          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "traadloes_mikrofon", fra: true },
+          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "mikrofon", fra: true },
         ]}
       />
     </ProductLanding>

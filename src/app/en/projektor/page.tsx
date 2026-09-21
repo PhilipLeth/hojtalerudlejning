@@ -53,7 +53,7 @@ export default function Page() {
         text="A projector belongs with a screen, not an LED display. Add the 160 cm screen and a wireless microphone and the presentation is complete."
         links={[
           { href: "/en/book?product=laerred_160", label: "Book the 160 cm screen", priceId: "laerred_160" },
-          { href: "/en/traadloes-mikrofon", label: "See the wireless microphone", priceId: "traadloes_mikrofon", fra: true },
+          { href: "/en/traadloes-mikrofon", label: "See the wireless microphone", priceId: "mikrofon", fra: true },
         ]}
       />
     </ProductLanding>

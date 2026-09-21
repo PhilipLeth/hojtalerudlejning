@@ -1,7 +1,14 @@
 /** DJ-timer afregnes inklusive moms. Pult, lys og anlæg vælges som separate lejeprodukter. */
 
-/** Fast timepris, uanset klokkeslæt og sæson. Levering, opsætning og nedtagning er med. */
-export const DJ_HOUR_RATE = 1800;
+/**
+ * Fast timepris, uanset klokkeslæt og sæson. Levering, opsætning og nedtagning
+ * er med.
+ *
+ * Prisarket (LejHøjtaler Katalog.xlsx) skriver "DJ Time 1.495" både under
+ * 1.4 DJ-udstyr og under 0. checkout. Sitet tog 1.800, og arket vinder.
+ * Minimum tre timer er uændret — det står ikke i arket, men er vores egen regel.
+ */
+export const DJ_HOUR_RATE = 1495;
 export const DJ_DAY_RATE = DJ_HOUR_RATE;
 export const DJ_NIGHT_RATE = DJ_HOUR_RATE;
 /** Levering er med i timeprisen, ikke et tillæg. */

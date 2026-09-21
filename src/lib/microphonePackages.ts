@@ -25,7 +25,7 @@ export const microphonePackages: RawRentalProduct[] = [
           "qty": 1
         },
         {
-          "productId": "haandholdt_mikrofon",
+          "productId": "mikrofon_kabel",
           "label_da": "Mikrofon med kabel",
           "label_en": "Wired microphone",
           "price": 95,
@@ -59,7 +59,7 @@ export const microphonePackages: RawRentalProduct[] = [
           "qty": 1
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless microphone",
           "price": 445,
@@ -93,7 +93,7 @@ export const microphonePackages: RawRentalProduct[] = [
           "qty": 1
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "2× Trådløs mikrofon",
           "label_en": "2× Wireless microphone",
           "price": 890,
@@ -134,7 +134,7 @@ export const microphonePackages: RawRentalProduct[] = [
           "qty": 1
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "2× Trådløs mikrofon",
           "label_en": "2× Wireless microphone",
           "price": 890,
@@ -179,7 +179,7 @@ export const microphonePackages: RawRentalProduct[] = [
     "bundle": {
       "parts": [
         { "productId": "party", "label_da": "2× Alto 10″ højtalere", "label_en": "2× Alto 10″ speakers", "price": 595, "qty": 1 },
-        { "productId": "traadloes_mikrofon", "label_da": "4× Trådløs mikrofon", "label_en": "4× Wireless microphone", "price": 1780, "qty": 4 },
+        { "productId": "mikrofon", "label_da": "4× Trådløs mikrofon", "label_en": "4× Wireless microphone", "price": 1780, "qty": 4 },
         { "productId": "mixer_stor", "label_da": "t.mix mixer · 6 mikrofonindgange", "label_en": "t.mix mixer · 6 microphone inputs", "price": 345, "qty": 1 }
       ],
       "usecase_da": "Fire trådløse mikrofoner, to højtalere og USB-mixer. Book online til panel, generalforsamling og debat. Kræver strøm.",
@@ -200,7 +200,7 @@ export const microphonePackages: RawRentalProduct[] = [
       "parts": [
         { "productId": "party", "label_da": "2× Alto 10″ højtalere", "label_en": "2× Alto 10″ speakers", "price": 595, "qty": 1 },
         { "productId": "mixer_stor", "label_da": "t.mix mixer · USB til Teams/Zoom", "label_en": "t.mix mixer · USB for Teams/Zoom", "price": 345, "qty": 1 },
-        { "productId": "traadloes_mikrofon", "label_da": "Trådløs mikrofon", "label_en": "Wireless microphone", "price": 445, "qty": 1 }
+        { "productId": "mikrofon", "label_da": "Trådløs mikrofon", "label_en": "Wireless microphone", "price": 445, "qty": 1 }
       ],
       "usecase_da": "USB-mixer sender salens tale til mødet og mødets lyd i højtalerne. En trådløs mikrofon og to højtalere. Book online. Kræver strøm og jeres computer.",
       "usecase_en": "A USB mixer sends the room to the call and the call to the speakers. One wireless microphone and two speakers. Book online. Mains power and your laptop required."

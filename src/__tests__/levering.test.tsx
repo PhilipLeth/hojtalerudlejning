@@ -40,9 +40,11 @@ async function toAddonStep() {
 describe("Levering og afhentning i bookingen", () => {
   it("viser begge veje som selvstændige valg med pris", async () => {
     await toAddonStep();
-    expect(screen.getByText("Levering + opsætning")).toBeInTheDocument();
+    expect(screen.getByText("Levering")).toBeInTheDocument();
     expect(screen.getByText("Afhentning efter festen")).toBeInTheDocument();
-    expect(screen.getByText("Levering + afhentning (begge veje)")).toBeInTheDocument();
+    expect(screen.getByText("Levering og afhentning (begge veje)")).toBeInTheDocument();
+    // Prisarkets fjerde valg: kørsel MED opsætning og nedtagning
+    expect(screen.getByText("Levering og afhentning + opsætning og nedtagning")).toBeInTheDocument();
     // Priserne skal stå på knapperne — én vej 495, begge veje 795
     expect(screen.getAllByText("+495,-").length).toBeGreaterThanOrEqual(2);
     expect(screen.getByText("+795,-")).toBeInTheDocument();
@@ -50,7 +52,7 @@ describe("Levering og afhentning i bookingen", () => {
 
   it("beder om adressen og spærrer for at gå videre uden", async () => {
     await toAddonStep();
-    fireEvent.click(screen.getByText("Levering + afhentning (begge veje)"));
+    fireEvent.click(screen.getByText("Levering og afhentning (begge veje)"));
 
     const address = screen.getByPlaceholderText("Leveringsadresse i København");
     expect(address).toBeInTheDocument();

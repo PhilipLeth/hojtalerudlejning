@@ -4206,11 +4206,24 @@
    "test": "anledningspakker.test.ts holder at de er skjulte, står i AFVENTER_FOTO, har begge sprog, og at serveren afviser at booke dem."
   },
   "aabne_spoergsmaal": [
-   "Arket skriver 'DJ Time 1.495'. Sitet regner DJ pr. time à 1.800 kr med minimum tre timer i src/lib/dj.ts. Hvilket tal gælder?",
-   "Arket har to kørselsvalg (795 levering/afhentning, 1.395 med opsætning/nedtagning). Sitet har tre id'er: levering_ud 495, afhentning_retur 495, levering_begge 795. Skal opsætning/nedtagning blive et eget valg?",
-   "Kataloget har dubletter fra før arket: mikrofon/traadloes_mikrofon (begge 445) og mikrofon_kabel/haandholdt_mikrofon (begge 95). Arket har kun én af hver.",
-   "/festlyd har ingen engelsk udgave, så begge sprog linker til /lej-hojtaler i stedet.",
-   "46 anledningspakker venter på fotos. Billedgenerering koster penge og startes af Philip."
-  ]
+   "Annoncetekst: 22 beløb i aktive annoncer kan ikke bookes på landingssiden. DJ-satsen og mikrofon-sammenlægningen gør listen længere. RSA'er kan ikke redigeres, se ads-export/fix_soundboks_pris.py.",
+   "De to envejsture à 495 kr står ikke i arket. De er beholdt, fordi annoncerne lover dem — skal de væk, skal annoncerne med.",
+   "46 anledningspakker og strøm-varerne venter stadig på fotos."
+  ],
+  "fulgt_helt_21_sept": {
+   "besked": "Philip: 'Du skal følge arket. Saml dubletterne.' De tre åbne spørgsmål om priser er dermed afgjort af arket.",
+   "dj_timepris": "DJ_HOUR_RATE 1.800 → 1.495 kr/time. Arket skriver 'DJ Time 1.495' både under 1.4 DJ-udstyr og 0. checkout. Minimum tre timer er uændret — det er vores egen regel, ikke arkets.",
+   "koersel": {
+    "nyt": "levering_begge_opsaetning, 1.395 kr — arkets 'Levering/Afhentning + Opsætning/Nedtagning'. Id'et hedder ikke levering_opsaetning; det navn er optaget af en gammel ordre-id i LEGACY_DELIVERY_IDS.",
+    "tekster": "Arket skiller kørsel og opsætning ad, så 495 og 795 lover ikke længere opsætning. levering_ud hed 'Levering + opsætning' og hedder nu bare 'Levering'.",
+    "beholdt": "De to envejsture à 495 står stadig. Arket nævner dem ikke, men modsiger dem heller ikke, og næsten alle aktive annoncer lover 'levering 495 kr'."
+   },
+   "dubletter": {
+    "hvad": "Den trådløse mikrofon lå som tilvalget `mikrofon` (445) OG udlejningsvaren `traadloes_mikrofon` (445); den kablede som `mikrofon_kabel` (95) og `haandholdt_mikrofon` (95). Samme pris, samme produktside, to lagerrækker.",
+    "valg": "Tilvalgene overlevede: kun de kan tilbydes under et produkt i bookingen, og de ejede i forvejen produktsiden. De to udlejningsvarer er slettet, og 29 filer peger om.",
+    "bagud": "SAMMENLAGTE_IDER + nuvaerendeId() i products.ts. Serverens pristabel lægger et alias ind, så en gammel ordre stadig kan prissættes, og expandProductIds() oversætter, så en gammel booking tæller på den nye vares hylde. useProducts filtrerer dem fra et gammelt KV-katalog.",
+    "vagt": "ingen-dubletter.test.ts: intet id to gange, ingen to poster med samme side OG pris (undtagen lyskæde hvid/farvet, som er to varer i arket), de sammenlagte id'er er væk, og de gamle id'er virker stadig i pris og lager."
+   }
+  }
  }
 }

@@ -137,11 +137,11 @@ export default function LejMikrofonPage() {
           <CategoryProductGrid
             items={[
               { id: "traadloes_mikrofon_pro", href: "/traadloes-mikrofon-pro", tag: "Bedst til tale" },
-              { id: "traadloes_mikrofon", href: "/traadloes-mikrofon" },
+              { id: "mikrofon", href: "/traadloes-mikrofon" },
               { id: "headset_pro", href: "/headset-pro" },
               { id: "headset", href: "/headset-mikrofon" },
               { id: "haandholdt_mikrofon_pro", href: "/haandholdt-mikrofon-pro" },
-              { id: "haandholdt_mikrofon", href: "/haandholdt-mikrofon" },
+              { id: "mikrofon_kabel", href: "/haandholdt-mikrofon" },
             ]}
           />
         </section>

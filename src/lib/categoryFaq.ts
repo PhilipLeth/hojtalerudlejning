@@ -192,7 +192,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan jeg få mikrofon med til taler?",
       a:
-        "Ja. En mikrofon med ledning koster " + prisKr("haandholdt_mikrofon") + " og en trådløs " + prisKr("traadloes_mikrofon") + ". Vil du have den med i " +
+        "Ja. En mikrofon med ledning koster " + prisKr("mikrofon_kabel") + " og en trådløs " + prisKr("mikrofon") + ". Vil du have den med i " +
         "prisen, findes Speakerpakkerne: samme anlæg med mikrofonen i, fra " + prisKr("pakke_speaker_lille") + ". Mikrofonen går direkte " +
         "i højtaleren, så der ikke skal en mixer imellem. Projektor og skærm udlejer vi ikke lige nu.",
     },
@@ -544,7 +544,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Can I get a microphone for speeches?",
       a:
-        "Yes. A wired microphone is " + prisDkk("haandholdt_mikrofon") + " and a wireless one " + prisDkk("traadloes_mikrofon") + ". To have it in the price, take " +
+        "Yes. A wired microphone is " + prisDkk("mikrofon_kabel") + " and a wireless one " + prisDkk("mikrofon") + ". To have it in the price, take " +
         "one of the speech packages: the same system with the microphone included, from " + prisDkk("pakke_speaker_lille") + ". It plugs " +
         "straight into the speaker, so no mixer is needed. We do not rent out projectors and screens at the moment.",
     },

@@ -59,7 +59,7 @@ export default function SkaermPage() {
         text="Storskærmen er perfekt sammen med en projektor eller trådløs mikrofon til præsentationer og events."
         links={[
           { href: "/projektor", label: "Se projektor", priceId: "projektor", fra: true },
-          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "traadloes_mikrofon", fra: true },
+          { href: "/traadloes-mikrofon", label: "Se trådløs mikrofon", priceId: "mikrofon", fra: true },
         ]}
       />
     </ProductLanding>

@@ -33,7 +33,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 95
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -89,7 +89,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 95
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -179,7 +179,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 495
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -252,7 +252,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 495
         },
         {
-          "productId": "haandholdt_mikrofon",
+          "productId": "mikrofon_kabel",
           "label_da": "Håndholdt mikrofon (kabel)",
           "label_en": "Handheld microphone (wired)",
           "price": 95
@@ -292,7 +292,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 95
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -335,13 +335,13 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 95
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
         },
         {
-          "productId": "haandholdt_mikrofon",
+          "productId": "mikrofon_kabel",
           "label_da": "Håndholdt mikrofon (kabel)",
           "label_en": "Handheld microphone (wired)",
           "price": 95
@@ -393,7 +393,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 95
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -521,7 +521,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 495
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -567,7 +567,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 495
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -616,7 +616,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 95
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -668,7 +668,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 95
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -710,7 +710,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 95
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -1040,7 +1040,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 345
         },
         {
-          "productId": "haandholdt_mikrofon",
+          "productId": "mikrofon_kabel",
           "label_da": "Håndholdt mikrofon (kabel)",
           "label_en": "Handheld microphone (wired)",
           "price": 95
@@ -1087,7 +1087,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 95
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -1143,7 +1143,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 495
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445
@@ -1354,7 +1354,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 495
         },
         {
-          "productId": "haandholdt_mikrofon",
+          "productId": "mikrofon_kabel",
           "label_da": "Håndholdt mikrofon (kabel)",
           "label_en": "Handheld microphone (wired)",
           "price": 95
@@ -1387,7 +1387,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 695
         },
         {
-          "productId": "haandholdt_mikrofon",
+          "productId": "mikrofon_kabel",
           "label_da": "Håndholdt mikrofon (kabel)",
           "label_en": "Handheld microphone (wired)",
           "price": 95
@@ -1420,7 +1420,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 495
         },
         {
-          "productId": "haandholdt_mikrofon",
+          "productId": "mikrofon_kabel",
           "label_da": "Håndholdt mikrofon (kabel)",
           "label_en": "Handheld microphone (wired)",
           "price": 95
@@ -1461,7 +1461,7 @@ export const situationPackages: RawRentalProduct[] = [
           "price": 95
         },
         {
-          "productId": "traadloes_mikrofon",
+          "productId": "mikrofon",
           "label_da": "Trådløs mikrofon",
           "label_en": "Wireless mic",
           "price": 445

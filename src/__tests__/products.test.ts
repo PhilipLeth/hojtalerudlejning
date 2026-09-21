@@ -264,7 +264,8 @@ describe("Addons data", () => {
 
   it("visible equipment addons have an image", () => {
     // Kun ydelser behøver ikke et produktfoto.
-    const udenFoto = ["levering_ud", "afhentning_retur", "levering_begge"];
+    // Kørsel er en ydelse, ikke et stykke grej — den har intet produktfoto
+    const udenFoto = [...DELIVERY_ADDON_IDS];
     for (const a of addons) {
       if (a.hidden) continue; // skjulte kladder kan afvente model og foto
       if (a.ydelse) continue; // en ydelse må have et foto (lydmand har), men skal ikke

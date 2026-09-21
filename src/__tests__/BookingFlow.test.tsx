@@ -200,9 +200,9 @@ describe("BookingFlow - Step 3: Addons", () => {
       // Kørslen har sit eget felt med de tre valgmuligheder — ikke bare endnu
       // en tilvalgs-række
       expect(screen.getByText("Levering og afhentning")).toBeInTheDocument();
-      expect(screen.getByText("Levering + opsætning")).toBeInTheDocument();
+      expect(screen.getByText("Levering")).toBeInTheDocument();
       expect(screen.getByText("Afhentning efter festen")).toBeInTheDocument();
-      expect(screen.getByText("Levering + afhentning (begge veje)")).toBeInTheDocument();
+      expect(screen.getByText("Levering og afhentning (begge veje)")).toBeInTheDocument();
       expect(screen.getByText("Jeg henter og afleverer selv")).toBeInTheDocument();
     }
   });

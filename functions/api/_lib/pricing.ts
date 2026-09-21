@@ -5,6 +5,8 @@ import {
   addons as defaultAddons,
   rentalProducts as defaultRentals,
   isDeliveryAddon,
+  nuvaerendeId,
+  SAMMENLAGTE_IDER,
   solveBundlePrices,
   type BundlePart,
 } from "../../../src/lib/products";
@@ -72,6 +74,17 @@ export async function loadPriceTable(kv: KVNamespace): Promise<Map<string, Price
   }
 
   deriveBundlePrices(table, kvRentals);
+
+  /*
+   * Sammenlagte varer: den trådløse mikrofon lå både som `mikrofon` og
+   * `traadloes_mikrofon`. Den sidste er væk, men gamle ordrer, gemte kataloger
+   * og bogmærkede /?product=-links bærer den stadig. Uden det her ville en
+   * genberegning af en gammel ordre kaste "Unknown product".
+   */
+  for (const [gammelt, nyt] of Object.entries(SAMMENLAGTE_IDER)) {
+    const priced = table.get(nyt);
+    if (priced && !table.has(gammelt)) table.set(gammelt, { ...priced, id: gammelt });
+  }
 
   return table;
 }

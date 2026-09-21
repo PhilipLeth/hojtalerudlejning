@@ -6,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: `Lej Trådløs Mikrofon København | Fra ${prisKr("traadloes_mikrofon")} | Lejhøjtaler.dk`,
+  title: `Lej Trådløs Mikrofon København | Fra ${prisKr("mikrofon")} | Lejhøjtaler.dk`,
   description:
-    `Lej trådløs mikrofon i København fra ${prisKr("traadloes_mikrofon")}/weekend. Professionel trådløs håndholdt mikrofon til taler og events. Betal ved afhentning.`,
+    `Lej trådløs mikrofon i København fra ${prisKr("mikrofon")}/weekend. Professionel trådløs håndholdt mikrofon til taler og events. Betal ved afhentning.`,
   keywords: [
     "lej trådløs mikrofon",
     "mikrofon udlejning",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-mikrofon-v2.webp"),
-    title: `Lej Trådløs Mikrofon København | Fra ${prisKr("traadloes_mikrofon")}`,
+    title: `Lej Trådløs Mikrofon København | Fra ${prisKr("mikrofon")}`,
     description:
-      `Lej trådløs mikrofon i København fra ${prisKr("traadloes_mikrofon")}. Professionel håndholdt mikrofon til taler og events. Book online.`,
+      `Lej trådløs mikrofon i København fra ${prisKr("mikrofon")}. Professionel håndholdt mikrofon til taler og events. Book online.`,
     url: "https://lejhojtaler.dk/traadloes-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -42,7 +42,7 @@ export default function TraadloesMikrofonPage() {
       sub="Shure BLX24 med SM58, trådløs håndholdt mikrofon i scenekvalitet til taler, bryllup og events."
       image="/images/product-mikrofon-pro-v2-white.webp"
       imageAlt="Shure BLX24 trådløs mikrofon til leje i København"
-      productId="traadloes_mikrofon"
+      productId="mikrofon"
       bookLabel="Book mikrofon nu"
       faqPhrase="en trådløs mikrofon"
       bullets={[

@@ -40,16 +40,16 @@ export default function Page() {
       primaryProductId="pakke_fest_stor"
       primaryName={"large party package"}
       primaryWhy={"A confirmation is both a speech occasion and a party. The large speakers handle both for up to 100 guests, and the light bar changes the room once the tables are pushed aside."}
-      gridItems={[{ id: "pakke_fest_stor", tag: "Recommended" }, { id: "pakke_fest_lille" }, { id: "traadloes_mikrofon" }, { id: "party" }, { id: "lyskaeder" }]}
+      gridItems={[{ id: "pakke_fest_stor", tag: "Recommended" }, { id: "pakke_fest_lille" }, { id: "mikrofon" }, { id: "party" }, { id: "lyskaeder" }]}
       tips={[
-        { title: "Remember a microphone for the speeches", text: "Confirmations are speech parties. A wireless microphone at " + prisDkk("traadloes_mikrofon") + " is the cheapest way to make sure grandmother's speech reaches the back table too." },
+        { title: "Remember a microphone for the speeches", text: "Confirmations are speech parties. A wireless microphone at " + prisDkk("mikrofon") + " is the cheapest way to make sure grandmother's speech reaches the back table too." },
         { title: "Book well ahead", text: "April and May are our busiest months. Confirmation weekends are typically booked 2-3 months in advance, Saturdays especially." },
         { title: "Music for both the young and the grown-ups", text: "The speakers connect to a phone over Bluetooth, so you can switch between playlists through the day without touching a cable." },
         { title: "Delivery if you are busy", text: "We can deliver and set up in Copenhagen for " + prisDkk("levering_ud") + ", so you can concentrate on laying the table instead of the technology." },
       ]}
       faq={[
         { q: "How many guests can the party package 0-30 handle?", a: "Up to about 30 guests in an ordinary venue or a garden. If you are more than 30, we recommend the party package 30-50 with 12\" speakers." },
-        { q: "Can I get a microphone for the speeches?", a: "Yes. A wireless microphone is " + prisDkk("traadloes_mikrofon") + " and can be added directly in the booking. It connects to the speakers in under a minute." },
+        { q: "Can I get a microphone for the speeches?", a: "Yes. A wireless microphone is " + prisDkk("mikrofon") + " and can be added directly in the booking. It connects to the speakers in under a minute." },
         { q: "When do I collect and return?", a: "The standard is collection on Friday and return on Monday, the same price whether you use it for one day or five. You choose the dates in the booking, and whether you collect early or late in the day." },
         { q: "What if the party is outdoors?", a: "The speakers are fine outdoors in dry weather. If there is no power in the garden, we can recommend a battery-powered Soundboks instead." },
       ]}

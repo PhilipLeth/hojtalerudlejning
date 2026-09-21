@@ -133,7 +133,7 @@ describe("Pakkelisten på engelsk", () => {
       locale: "en",
       name: "Wireless microphone",
       price: 445, // produktarket 17. sept 2026
-      productId: "traadloes_mikrofon",
+      productId: "mikrofon", // lagt sammen med traadloes_mikrofon, se SAMMENLAGTE_IDER
       phrase: "a wireless microphone",
     });
     const svar = faq.find((f) => f.q.startsWith("What is included"))!.a;

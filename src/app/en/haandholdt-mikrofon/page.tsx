@@ -5,9 +5,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: `Wired Handheld Microphone Rental Copenhagen | ${prisDkk("haandholdt_mikrofon")} | Lejhøjtaler.dk`,
+  title: `Wired Handheld Microphone Rental Copenhagen | ${prisDkk("mikrofon_kabel")} | Lejhøjtaler.dk`,
   description:
-    `Rent a wired handheld microphone in Copenhagen for ${prisDkk("haandholdt_mikrofon")} per weekend. XLR cable included, plugs straight into our speakers. For speeches and vocals. Pay on pickup.`,
+    `Rent a wired handheld microphone in Copenhagen for ${prisDkk("mikrofon_kabel")} per weekend. XLR cable included, plugs straight into our speakers. For speeches and vocals. Pay on pickup.`,
   keywords: [
     "microphone rental copenhagen",
     "cheap microphone rental copenhagen",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-mikrofon-kabel-v2.webp"),
-    title: `Wired Handheld Microphone Rental Copenhagen | ${prisDkk("haandholdt_mikrofon")}`,
+    title: `Wired Handheld Microphone Rental Copenhagen | ${prisDkk("mikrofon_kabel")}`,
     description:
       "Standard wired handheld microphone for speeches and vocals. XLR cable included. Book online.",
     url: "https://lejhojtaler.dk/en/haandholdt-mikrofon",
@@ -40,7 +40,7 @@ export default function Page() {
       sub="the t.bone MB 60, wired dynamic handheld microphone, for speeches and vocals."
       image="/images/product-mikrofon-kabel-v2-white.webp"
       imageAlt="Wired handheld microphone for rent in Copenhagen"
-      productId="haandholdt_mikrofon"
+      productId="mikrofon_kabel"
       faqPhrase="a wired handheld microphone"
       bullets={[
         "Classic handheld dynamic microphone",

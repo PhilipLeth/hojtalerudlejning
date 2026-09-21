@@ -159,7 +159,7 @@
       "sted": "havefest",
       "opstilling": "The small battery speaker sits on the end of the table among glasses and plates."
     },
-    "traadloes_mikrofon": {
+    "mikrofon": {
       "sted": "bryllup"
     },
     "traadloes_mikrofon_pro": {
@@ -171,7 +171,7 @@
     "headset_pro": {
       "sted": "moede"
     },
-    "haandholdt_mikrofon": {
+    "mikrofon_kabel": {
       "sted": "moede"
     },
     "haandholdt_mikrofon_pro": {

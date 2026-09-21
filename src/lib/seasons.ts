@@ -67,7 +67,7 @@ export const SEASONS: Season[] = [
     hero: "/images/julefrokost-kantine.webp",
     productIds: ["jul_hygge", "pakke_firmafest", "event_fredagsbar_2"],
     featuredId: "pakke_firmafest",
-    extraIds: ["lyskaeder", "lyskaeder_farvet", "uplight_4", "lyseffekt", "traadloes_mikrofon"],
+    extraIds: ["lyskaeder", "lyskaeder_farvet", "uplight_4", "lyseffekt", "mikrofon"],
   },
 ];
 
