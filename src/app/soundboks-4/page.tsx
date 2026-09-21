@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import SoundboksAltPopup from "@/components/SoundboksAltPopup";
@@ -7,9 +8,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej en Soundboks i København | Soundboks 4 fra 695 kr | Lejhøjtaler.dk",
+  title: `Lej en Soundboks i København | Soundboks 4 fra ${prisKr("soundboks")} | Lejhøjtaler.dk`,
   description:
-    "Lej en Soundboks i København, Soundboks 4 fra 695 kr for en hel weekend. Batteridrevet med kraftig bas, intet depositum. Book online, betal ved afhentning.",
+    `Lej en Soundboks i København, Soundboks 4 fra ${prisKr("soundboks")} for en hel weekend. Batteridrevet med kraftig bas, intet depositum. Book online, betal ved afhentning.`,
   keywords: ["lej soundboks", "lej en soundboks", "soundboks leje", "leje af soundboks", "soundboks udlejning københavn", "lej soundbox"],
   alternates: {
     canonical: "https://lejhojtaler.dk/soundboks-4",
@@ -17,8 +18,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-soundboks-v2.webp"),
-    title: "Lej en Soundboks i København | Fra 695 kr",
-    description: "Lej en Soundboks i København fra 695 kr/weekend. Intet depositum. Book online.",
+    title: `Lej en Soundboks i København | Fra ${prisKr("soundboks")}`,
+    description: `Lej en Soundboks i København fra ${prisKr("soundboks")}/weekend. Intet depositum. Book online.`,
     url: "https://lejhojtaler.dk/soundboks-4",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -33,7 +34,6 @@ export default function Soundboks4Page() {
       <ProductLanding
         slug="soundboks-4"
         name="Soundboks 4"
-        price={695}
         headline="Lej en Soundboks i København"
         sub="Soundboks 4, batteridrevet med kraftig bas, ingen strøm nødvendig. Intet depositum: du betaler først, når du henter."
         weekendAvailability

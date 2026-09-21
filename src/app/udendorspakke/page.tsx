@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Udendørspakke | Soundboks, ekstra batteri og lyskæde | 1.125 kr | Lejhøjtaler.dk",
+  title: `Udendørspakke | Soundboks, ekstra batteri og lyskæde | ${prisKr("pakke_udendors")} | Lejhøjtaler.dk`,
   description:
-    "Udendørspakke: Soundboks 4, ekstra batteri og 10 m lyskæde for 1.125 kr, spar 160 kr. Fest i baggård, park eller på stranden helt uden strøm. Lejes i København.",
+    `Udendørspakke: Soundboks 4, ekstra batteri og 10 m lyskæde for ${prisKr("pakke_udendors")}, spar ${rabatKr("pakke_udendors")}. Fest i baggård, park eller på stranden helt uden strøm. Lejes i København.`,
   keywords: ["fest uden strøm", "soundboks leje", "havefest lyd", "polterabend højtaler", "batteri højtaler leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/udendorspakke",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-soundboks-v2.webp"),
-    title: "Udendørspakke | Soundboks, ekstra batteri og lyskæde | 1.125 kr | Lejhøjtaler.dk",
-    description: "Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park, spar 160 kr.",
+    title: `Udendørspakke | Soundboks, ekstra batteri og lyskæde | ${prisKr("pakke_udendors")} | Lejhøjtaler.dk`,
+    description: `Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park, spar ${rabatKr("pakke_udendors")}.`,
     url: "https://lejhojtaler.dk/udendorspakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,9 +30,8 @@ export default function UdendorspakkePage() {
     <ProductLanding
       slug="udendorspakke"
       name="Udendørspakke"
-      price={1125}
       headline="Udendørspakken, hele festen uden en stikkontakt"
-      sub="Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park, spar 160 kr."
+      sub={`Soundboks 4, ekstra batteri og 10 m lyskæde. Baggård, strand eller park, spar ${rabatKr("pakke_udendors")}.`}
       image="/images/product-soundboks-v2-white.webp"
       imageAlt="Udendørspakke med Soundboks 4, ekstra batteri og lyskæde"
       productId="pakke_udendors"
@@ -42,7 +42,7 @@ export default function UdendorspakkePage() {
         "Ekstra batteri: to batterier holder til en hel aften og nat",
         "10 m lyskæde, så der også er lys når solen går ned",
         "Ingen strøm, ingen forlængerledninger, ingen kabler over græsset",
-        "Spar 160 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_udendors")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

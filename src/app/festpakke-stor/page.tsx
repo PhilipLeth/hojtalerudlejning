@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
@@ -6,9 +7,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Festpakke 30-50 | Højtalere + lysbar til 30-50 gæster | 1.095 kr | Lejhøjtaler.dk",
+  title: `Festpakke 30-50 | Højtalere + lysbar til 30-50 gæster | ${prisKr("pakke_fest_stor")} | Lejhøjtaler.dk`,
   description:
-    "Festpakke 30-50: 2× EV 12\" højtalere + lysbar for 1.095 kr, spar 95 kr. Lyd og lys til 30-50 gæster. Levering og opsætning kan tilvælges. Book online.",
+    `Festpakke 30-50: 2× EV 12\" højtalere + lysbar for ${prisKr("pakke_fest_stor")}, spar ${rabatKr("pakke_fest_stor")}. Lyd og lys til 30-50 gæster. Levering og opsætning kan tilvælges. Book online.`,
   keywords: ["stor festpakke", "lej festpakke", "højtaler og lys leje", "fest 100 personer lyd", "festpakke københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festpakke-stor",
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-fest-stor.webp"),
-    title: "Festpakke 30-50 | Højtalere + lysbar til 30-50 gæster | 1.095 kr",
-    description: "2× EV 12\" højtalere + lysbar, lyd og lys til 30-50 gæster. Spar 95 kr.",
+    title: `Festpakke 30-50 | Højtalere + lysbar til 30-50 gæster | ${prisKr("pakke_fest_stor")}`,
+    description: `2× EV 12\" højtalere + lysbar, lyd og lys til 30-50 gæster. Spar ${rabatKr("pakke_fest_stor")}.`,
     url: "https://lejhojtaler.dk/festpakke-stor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -30,18 +31,17 @@ export default function FestpakkeStorPage() {
     <ProductLanding
       slug="festpakke-stor"
       name="Festpakke 30-50"
-      price={1095}
       headline="Festpakke 30-50, lyd og lys til 30-50 gæster"
-      sub="2× EV 12&quot; højtalere + lysbar. Fuld fest, spar 95 kr."
+      sub={`2× EV 12&quot; højtalere + lysbar. Fuld fest, spar ${rabatKr("pakke_fest_stor")}.`}
       image="/images/product-pakke-fest-stor-white.webp"
       imageAlt="Festpakke 30-50 med store EV højtalere og lysbar"
       productId="pakke_fest_stor"
       faqPhrase="Festpakke 30-50"
       bullets={[
         "2× EV 12\" aktive højtalere med Bluetooth (30-50 gæster)",
-        "Stativer kan tilkøbes (95 kr), lyden op i øjenhøjde",
+        `Stativer kan tilkøbes (${rabatKr("pakke_fest_stor")}), lyden op i øjenhøjde`,
         "Lysbar: 2 farvede lamper + centereffekt",
-        "Spar 95 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_fest_stor")} vs. at leje delene enkeltvis`,
         "Levering og opsætning kan tilvælges i booking",
       ]}
     >

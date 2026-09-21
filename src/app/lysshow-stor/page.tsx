@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lysshow stort | Lys, uplights, discokugle og low fog | 1.910 kr | Lejhøjtaler.dk",
+  title: `Lysshow stort | Lys, uplights, discokugle og low fog | ${prisKr("pakke_lysshow_stor")} | Lejhøjtaler.dk`,
   description:
-    "Lysshow stort: lysbar, fire uplights, discokugle og low fog-maskine for 1.910 kr, spar 270 kr. Uplights maler væggene, low fog lægger et røggulv uden at vække røgalarmen. Lejes i København.",
+    `Lysshow stort: lysbar, fire uplights, discokugle og low fog-maskine for ${prisKr("pakke_lysshow_stor")}, spar ${rabatKr("pakke_lysshow_stor")}. Uplights maler væggene, low fog lægger et røggulv uden at vække røgalarmen. Lejes i København.`,
   keywords: ["stort lysshow leje", "uplights og low fog leje", "lys til stor fest københavn", "low fog maskine leje", "lys til lejet lokale"],
   alternates: {
     canonical: "https://lejhojtaler.dk/lysshow-stor",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-uplight-4-v2.webp"),
-    title: "Lysshow stort | Lys, uplights, discokugle og low fog | 1.910 kr",
-    description: "Lysbar, fire uplights, discokugle og low fog. Hele rummet skifter karakter, spar 270 kr.",
+    title: `Lysshow stort | Lys, uplights, discokugle og low fog | ${prisKr("pakke_lysshow_stor")}`,
+    description: `Lysbar, fire uplights, discokugle og low fog. Hele rummet skifter karakter, spar ${rabatKr("pakke_lysshow_stor")}.`,
     url: "https://lejhojtaler.dk/lysshow-stor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,9 +30,8 @@ export default function Page() {
     <ProductLanding
       slug="lysshow-stor"
       name="Lysshow stort"
-      price={1910}
       headline="Lysshow stort, hele rummet skifter karakter"
-      sub="Lysbar, fire uplights, discokugle 40 cm og low fog-maskine. Til den store fest eller det lejede lokale med lysstofrør i loftet, spar 270 kr."
+      sub={`Lysbar, fire uplights, discokugle 40 cm og low fog-maskine. Til den store fest eller det lejede lokale med lysstofrør i loftet, spar ${rabatKr("pakke_lysshow_stor")}.`}
       image="/images/product-uplight-4-v2-white.webp"
       imageAlt="Lysshow stort med uplights, lysbar, discokugle og low fog"
       productId="pakke_lysshow_stor"
@@ -43,7 +43,7 @@ export default function Page() {
         "Discokugle 40 cm med motor og spot",
         "Low fog-maskine: røggulv i stedet for røg i hele rummet, røgalarmen får fred",
         "Alle stativer og kabler med",
-        "Spar 270 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_lysshow_stor")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Festpakke 250 | Dobbelt anlæg til 250 gæster | 3.210 kr | Lejhøjtaler.dk",
+  title: `Festpakke 250 | Dobbelt anlæg til 250 gæster | ${prisKr("pakke_fest_250")} | Lejhøjtaler.dk`,
   description:
-    "Festpakke 250: 4× EV 12\" højtalere, 2× 12\" subwoofer, stativer, lys og røgmaskine for 3.210 kr, spar 200 kr. Anlæg til sal, gård eller hal med op til 250 gæster i København.",
+    `Festpakke 250: 4× EV 12\" højtalere, 2× 12\" subwoofer, stativer, lys og røgmaskine for ${prisKr("pakke_fest_250")}, spar ${rabatKr("pakke_fest_250")}. Anlæg til sal, gård eller hal med op til 250 gæster i København.`,
   keywords: ["lydanlæg 250 personer", "anlæg til stor fest", "pa anlæg til firmafest", "lej lydanlæg til sal", "festpakke 200 personer"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festpakke-250",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-fest-250-v2.webp"),
-    title: "Festpakke 250 | Dobbelt anlæg til 250 gæster | 3.210 kr",
-    description: "4× EV 12\" + 2 subwoofere + lys + røg. Til sal, gård eller hal, spar 200 kr.",
+    title: `Festpakke 250 | Dobbelt anlæg til 250 gæster | ${prisKr("pakke_fest_250")}`,
+    description: `4× EV 12\" + 2 subwoofere + lys + røg. Til sal, gård eller hal, spar ${rabatKr("pakke_fest_250")}.`,
     url: "https://lejhojtaler.dk/festpakke-250",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,9 +30,8 @@ export default function Festpakke250Page() {
     <ProductLanding
       slug="festpakke-250"
       name="Festpakke 250"
-      price={3210}
       headline="Festpakke 250, anlægget til salen"
-      sub="4× EV 12&quot; højtalere, 2 subwoofere, stativer, lys og røg. Til op til 250 gæster, spar 200 kr."
+      sub={`4× EV 12&quot; højtalere, 2 subwoofere, stativer, lys og røg. Til op til 250 gæster, spar ${rabatKr("pakke_fest_250")}.`}
       image="/images/product-pakke-fest-250-v2-white.webp"
       imageAlt="Festpakke 250: fire EV 12&quot; højtalere på stativer, to 12&quot; subwoofere, lysbar og røgmaskine"
       productId="pakke_fest_250"
@@ -41,7 +41,7 @@ export default function Festpakke250Page() {
         "2× 12\" subwoofer holder bunden i et stort rum",
         "2 sæt stativer, alle kabler og strøm",
         "Lysbar og røgmaskine med",
-        "Spar 200 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_fest_250")} vs. at leje delene enkeltvis`,
         "Levering og opsætning anbefales, det er en bil fuld af grej",
       ]}
     >

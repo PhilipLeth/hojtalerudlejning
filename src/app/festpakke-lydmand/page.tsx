@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
@@ -6,9 +7,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Festpakke med lydmand | Anlæg + lys + tekniker | 5.710 kr | Lejhøjtaler.dk",
+  title: `Festpakke med lydmand | Anlæg + lys + tekniker | ${prisKr("pakke_lydmand_fest")} | Lejhøjtaler.dk`,
   description:
-    "Festpakke med lydmand: mellem højtalerpakke + lysbar + AV-tekniker i 4 timer. Leveret, sat op og hentet igen for 5.710 kr, spar 275 kr. Lyd og lys til op til 100 gæster i København.",
+    `Festpakke med lydmand: mellem højtalerpakke + lysbar + AV-tekniker i 4 timer. Leveret, sat op og hentet igen for ${prisKr("pakke_lydmand_fest")}, spar ${rabatKr("pakke_lydmand_fest")}. Lyd og lys til op til 100 gæster i København.`,
   keywords: ["festpakke med lydmand", "lej lydanlæg med tekniker", "fest med lydmand københavn", "lyd og lys med opsætning", "lydmand til fødselsdag"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festpakke-lydmand",
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-lydmand-fest-v2.webp"),
-    title: "Festpakke med lydmand | 5.710 kr",
-    description: "Mellem højtalerpakke + lysbar + lydmand i 4 timer. Leveret, sat op og hentet igen, spar 275 kr.",
+    title: `Festpakke med lydmand | ${prisKr("pakke_lydmand_fest")}`,
+    description: `Mellem højtalerpakke + lysbar + lydmand i 4 timer. Leveret, sat op og hentet igen, spar ${rabatKr("pakke_lydmand_fest")}.`,
     url: "https://lejhojtaler.dk/festpakke-lydmand",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -30,10 +31,9 @@ export default function Page() {
     <ProductLanding
       slug="festpakke-lydmand"
       name="Festpakke med lydmand"
-      price={5710}
       priceUnit="/event"
       headline="Festpakke med lydmand"
-      sub="Mellem højtalerpakke + lysbar + AV-tekniker i 4 timer. Vi kommer, sætter op, styrer lyden og pakker sammen, spar 275 kr."
+      sub={`Mellem højtalerpakke + lysbar + AV-tekniker i 4 timer. Vi kommer, sætter op, styrer lyden og pakker sammen, spar ${rabatKr("pakke_lydmand_fest")}.`}
       image="/images/product-pakke-lydmand-fest-v2-white.webp"
       imageAlt="Festpakke med lydmand: højtalere, lys og lydmandens mixer"
       productId="pakke_lydmand_fest"
@@ -63,7 +63,7 @@ export default function Page() {
         "Lysbar: 2 farvede lamper + centereffekt på stativ",
         "Lydmand i 4 timer, sætter op, laver lydprøve og styrer lyden",
         "Levering, opsætning og afhentning er med",
-        "Spar 275 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_lydmand_fest")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

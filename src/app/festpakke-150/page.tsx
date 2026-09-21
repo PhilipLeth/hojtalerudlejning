@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Festpakke 150 | Lyd, bas, lys og røg til 150 gæster | 1.915 kr | Lejhøjtaler.dk",
+  title: `Festpakke 150 | Lyd, bas, lys og røg til 150 gæster | ${prisKr("pakke_fest_150")} | Lejhøjtaler.dk`,
   description:
-    "Festpakke 150: 2× EV 12\" højtalere, 12\" subwoofer, stativer, lysbar og røgmaskine for 1.915 kr, spar 110 kr. Lyd og lys til op til 150 gæster i København. Levering og opsætning kan tilvælges.",
+    `Festpakke 150: 2× EV 12\" højtalere, 12\" subwoofer, stativer, lysbar og røgmaskine for ${prisKr("pakke_fest_150")}, spar ${rabatKr("pakke_fest_150")}. Lyd og lys til op til 150 gæster i København. Levering og opsætning kan tilvælges.`,
   keywords: ["festpakke 150 personer", "lydanlæg 150 personer", "lej lyd og lys til fest", "anlæg til stor fest", "højtalere og sub leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festpakke-150",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-fest-150-v2.webp"),
-    title: "Festpakke 150 | Lyd, bas, lys og røg til 150 gæster | 1.915 kr",
-    description: "2× EV 12\" + subwoofer + stativer + lys + røg. Alt til festen, spar 110 kr.",
+    title: `Festpakke 150 | Lyd, bas, lys og røg til 150 gæster | ${prisKr("pakke_fest_150")}`,
+    description: `2× EV 12\" + subwoofer + stativer + lys + røg. Alt til festen, spar ${rabatKr("pakke_fest_150")}.`,
     url: "https://lejhojtaler.dk/festpakke-150",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,9 +30,8 @@ export default function Festpakke150Page() {
     <ProductLanding
       slug="festpakke-150"
       name="Festpakke 150"
-      price={1915}
       headline="Festpakke 150, når dansegulvet skal fungere"
-      sub="2× EV 12&quot; højtalere, subwoofer, stativer, lysbar og røgmaskine. Til op til 150 gæster, spar 110 kr."
+      sub={`2× EV 12&quot; højtalere, subwoofer, stativer, lysbar og røgmaskine. Til op til 150 gæster, spar ${rabatKr("pakke_fest_150")}.`}
       image="/images/product-pakke-fest-150-v2-white.webp"
       imageAlt="Festpakke 150: to EV 12&quot; højtalere på stativer, 12&quot; subwoofer, lysbar og røgmaskine"
       productId="pakke_fest_150"
@@ -42,7 +42,7 @@ export default function Festpakke150Page() {
         "Lysbar: 2 farvede lamper + centereffekt",
         "Røgmaskine med væske, uden røg kan man ikke se lyset",
         "Alle kabler, Bluetooth og strøm med i kassen",
-        "Spar 110 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_fest_150")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

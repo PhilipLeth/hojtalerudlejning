@@ -1,3 +1,4 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Speaker Stands Rental Copenhagen | 95 DKK | Lejhøjtaler.dk",
+  title: `Speaker Stands Rental Copenhagen | ${prisDkk("stativer")} | Lejhøjtaler.dk`,
   description:
-    "Rent 2 professional speaker stands in Copenhagen for 95 DKK. Lifts the speakers to ear level so the sound reaches the whole room. Fits all our speaker packages.",
+    `Rent 2 professional speaker stands in Copenhagen for ${prisDkk("stativer")}. Lifts the speakers to ear level so the sound reaches the whole room. Fits all our speaker packages.`,
   keywords: ["speaker stands rental copenhagen", "speaker stand hire", "pa speaker stands denmark", "tripod speaker stands rental"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/hojtalerstativer",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-stativer.webp"),
-    title: "Speaker stands rental | 95 DKK",
+    title: `Speaker stands rental | ${prisDkk("stativer")}`,
     description: "2 professional stands, lifts the sound to ear level. Fits all our speakers.",
     url: "https://lejhojtaler.dk/en/hojtalerstativer",
     siteName: "Lejhøjtaler.dk",
@@ -30,7 +31,6 @@ export default function Page() {
       locale="en"
       slug="en/hojtalerstativer"
       name="Speaker stands"
-      price={95}
       headline="Rent speaker stands"
       sub="2 professional Millenium stands that lift the speakers to ear level, so the sound travels over heads instead of into the backs of the front row."
       image="/images/product-stativer-white.webp"

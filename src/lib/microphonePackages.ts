@@ -1,11 +1,10 @@
-import type { RentalProduct } from "./products";
+import type { RawRentalProduct } from "./products";
 
 /** Færdige mikrofonpakker med faktiske antal; trådløs modtager kræver strøm. */
-export const microphonePackages: RentalProduct[] = [
+export const microphonePackages: RawRentalProduct[] = [
   {
     "id": "pakke_mikrofon_batteri",
     "category": "av",
-    "price": 535,
     "image": "/images/product-thumpgo-v2-white.webp",
     "showPartImages": true,
     "name_da": "Batteripakke til tale",
@@ -33,7 +32,6 @@ export const microphonePackages: RentalProduct[] = [
           "qty": 1
         }
       ],
-      "discount": 55,
       "usecase_da": "Til vielse, have og tale uden stikkontakt. Batterihøjtaler og mikrofon med kabel.",
       "usecase_en": "For outdoor ceremonies and speeches without mains power. Battery speaker and wired microphone."
     }
@@ -41,7 +39,6 @@ export const microphonePackages: RentalProduct[] = [
   {
     "id": "pakke_mikrofon_traadloes",
     "category": "av",
-    "price": 880,
     "image": "/images/product-thumpgo-v2-white.webp",
     "showPartImages": true,
     "name_da": "Trådløs talepakke",
@@ -69,7 +66,6 @@ export const microphonePackages: RentalProduct[] = [
           "qty": 1
         }
       ],
-      "discount": 60,
       "usecase_da": "Én trådløs mikrofon og kompakt batterihøjtaler. Beregn en stikkontakt til mikrofonmodtageren.",
       "usecase_en": "One wireless microphone and a compact battery speaker. Allow a mains socket for the microphone receiver."
     }
@@ -77,7 +73,6 @@ export const microphonePackages: RentalProduct[] = [
   {
     "id": "pakke_mikrofon_duo",
     "category": "av",
-    "price": 1615,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "To trådløse mikrofoner og lyd",
@@ -112,7 +107,6 @@ export const microphonePackages: RentalProduct[] = [
           "qty": 1
         }
       ],
-      "discount": 215,
       "usecase_da": "Til panel, møde og duet: to trådløse mikrofoner, to højtalere og mixer til mikrofoner og musik. Kræver strøm.",
       "usecase_en": "For panels, meetings and duets: two wireless microphones, two speakers and a mixer for microphones and music. Mains power required."
     }
@@ -120,7 +114,6 @@ export const microphonePackages: RentalProduct[] = [
   {
     "id": "pakke_mikrofon_av",
     "category": "av",
-    "price": 2215,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "AV-pakke med to trådløse mikrofoner",
@@ -169,7 +162,6 @@ export const microphonePackages: RentalProduct[] = [
           "qty": 1
         }
       ],
-      "discount": 305,
       "usecase_da": "Til præsentation og møde: projektor, lærred, to højtalere, mixer og to trådløse mikrofoner. Kræver strøm. Computer medbringes.",
       "usecase_en": "For presentations and meetings: projector, screen, two speakers, mixer and two wireless microphones. Mains power required. Bring your laptop."
     }
@@ -177,7 +169,6 @@ export const microphonePackages: RentalProduct[] = [
   {
     "id": "pakke_mikrofon_panel",
     "category": "av",
-    "price": 2500,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Panelpakke med fire mikrofoner",
@@ -191,7 +182,6 @@ export const microphonePackages: RentalProduct[] = [
         { "productId": "traadloes_mikrofon", "label_da": "4× Trådløs mikrofon", "label_en": "4× Wireless microphone", "price": 1780, "qty": 4 },
         { "productId": "mixer_stor", "label_da": "t.mix mixer · 6 mikrofonindgange", "label_en": "t.mix mixer · 6 microphone inputs", "price": 345, "qty": 1 }
       ],
-      "discount": 220,
       "usecase_da": "Fire trådløse mikrofoner, to højtalere og USB-mixer. Book online til panel, generalforsamling og debat. Kræver strøm.",
       "usecase_en": "Four wireless microphones, two speakers and a USB mixer. Book online for panels, assemblies and debates. Mains power required."
     }
@@ -199,7 +189,6 @@ export const microphonePackages: RentalProduct[] = [
   {
     "id": "pakke_hybrid_teams",
     "category": "av",
-    "price": 1290,
     "image": "/images/product-mixer-tmix-1202-fx-usb.jpg",
     "showPartImages": true,
     "name_da": "Teams- og Zoom-pakken",
@@ -213,7 +202,6 @@ export const microphonePackages: RentalProduct[] = [
         { "productId": "mixer_stor", "label_da": "t.mix mixer · USB til Teams/Zoom", "label_en": "t.mix mixer · USB for Teams/Zoom", "price": 345, "qty": 1 },
         { "productId": "traadloes_mikrofon", "label_da": "Trådløs mikrofon", "label_en": "Wireless microphone", "price": 445, "qty": 1 }
       ],
-      "discount": 95,
       "usecase_da": "USB-mixer sender salens tale til mødet og mødets lyd i højtalerne. En trådløs mikrofon og to højtalere. Book online. Kræver strøm og jeres computer.",
       "usecase_en": "A USB mixer sends the room to the call and the call to the speakers. One wireless microphone and two speakers. Book online. Mains power and your laptop required."
     }

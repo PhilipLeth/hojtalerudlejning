@@ -1,12 +1,13 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Party Package 250 Copenhagen | 3.210 DKK | Lejhøjtaler.dk",
+  title: `Party Package 250 Copenhagen | ${prisDkk("pakke_fest_250")} | Lejhøjtaler.dk`,
   description:
-    'Rent sound and lights for up to 250 guests in Copenhagen for 3.210 DKK. Four 12" speakers, two subwoofers, stands, light bar and fog machine. Delivery available.',
+    `Rent sound and lights for up to 250 guests in Copenhagen for ${prisDkk("pakke_fest_250")}. Four 12" speakers, two subwoofers, stands, light bar and fog machine. Delivery available.`,
   keywords: [
     "event sound rental copenhagen",
     "big party sound hire",
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-fest-250-v2.webp"),
-    title: "Party Package 250 Copenhagen | 3.210 DKK | Lejhøjtaler.dk",
+    title: `Party Package 250 Copenhagen | ${prisDkk("pakke_fest_250")} | Lejhøjtaler.dk`,
     description:
-      'Rent sound and lights for up to 250 guests in Copenhagen for 3.210 DKK. Four 12" speakers, two subwoofers, stands, light bar and fog machine. Delivery available.',
+      `Rent sound and lights for up to 250 guests in Copenhagen for ${prisDkk("pakke_fest_250")}. Four 12" speakers, two subwoofers, stands, light bar and fog machine. Delivery available.`,
     url: "https://lejhojtaler.dk/en/festpakke-250",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -37,7 +38,6 @@ export default function PartyPackage250En() {
       locale="en"
       slug="en/festpakke-250"
       name="Party Package 250"
-      price={3210}
       headline="Party package for 250 guests"
       sub='4× EV 12" speakers, two subwoofers, stands, lights and fog.'
       image="/images/product-pakke-fest-250-v2-white.webp"

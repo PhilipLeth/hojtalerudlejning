@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
@@ -6,9 +7,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Corporate Event with Sound Engineer | Sound + mixer + mic + tech | 6,100 DKK | Lejhøjtaler.dk",
+  title: `Corporate Event with Sound Engineer | Sound + mixer + mic + tech | ${prisDkk("pakke_lydmand_firma")} | Lejhøjtaler.dk`,
   description:
-    "Corporate event with a sound engineer: medium speaker package + t.mix 1202 FXMP USB mixer + wireless mic + AV technician for 4 hours. Delivered, set up and collected for 6,100 DKK, save 280 DKK. Speeches and music for up to 100 people.",
+    `Corporate event with a sound engineer: medium speaker package + t.mix 1202 FXMP USB mixer + wireless mic + AV technician for 4 hours. Delivered, set up and collected for ${prisDkk("pakke_lydmand_firma")}, save ${rabatDkk("pakke_lydmand_firma")}. Speeches and music for up to 100 people.`,
   keywords: ["corporate event sound engineer copenhagen", "company party sound system with technician", "microphone and technician for reception", "av technician corporate event denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/firmaevent-lydmand",
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-lydmand-firma-v2.webp"),
-    title: "Corporate event with sound engineer | 6,100 DKK",
-    description: "Medium speaker package + mixer + wireless mic + sound engineer for 4 hours. Delivered, set up and collected, save 280 DKK.",
+    title: `Corporate event with sound engineer | ${prisDkk("pakke_lydmand_firma")}`,
+    description: `Medium speaker package + mixer + wireless mic + sound engineer for 4 hours. Delivered, set up and collected, save ${rabatDkk("pakke_lydmand_firma")}.`,
     url: "https://lejhojtaler.dk/en/firmaevent-lydmand",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -31,10 +32,9 @@ export default function Page() {
       locale="en"
       slug="en/firmaevent-lydmand"
       name="Corporate event with sound engineer"
-      price={6100}
       priceUnit="/event"
       headline="Corporate event with a sound engineer"
-      sub="Medium speaker package + mixer + wireless mic + AV technician for 4 hours. Speeches, music and someone running it all, save 280 DKK."
+      sub={`Medium speaker package + mixer + wireless mic + AV technician for 4 hours. Speeches, music and someone running it all, save ${rabatDkk("pakke_lydmand_firma")}.`}
       image="/images/product-pakke-lydmand-firma-v2-white.webp"
       imageAlt="Corporate event with sound engineer: speakers, mixer and microphone"
       productId="pakke_lydmand_firma"
@@ -65,7 +65,7 @@ export default function Page() {
         "Wireless handheld microphone for speeches and presentations",
         "Sound engineer for 4 hours, the mic works when the boss stands up",
         "Delivery, setup and collection included",
-        "Save 280 DKK compared to renting the parts separately",
+        `Save ${rabatDkk("pakke_lydmand_firma")} compared to renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

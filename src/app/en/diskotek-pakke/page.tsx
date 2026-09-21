@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,8 +6,8 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Club light package Copenhagen | 1.050 DKK | Lejhøjtaler.dk",
-  description: "Light bar, disco effect and disco ball, a full dancefloor without fog for 1,050 DKK. Save 185 DKK. Rental in Copenhagen.",
+  title: `Club light package Copenhagen | ${prisDkk("pakke_diskotek")} | Lejhøjtaler.dk`,
+  description: `Light bar, disco effect and disco ball, a full dancefloor without fog for ${prisDkk("pakke_diskotek")}. Save ${rabatDkk("pakke_diskotek")}. Rental in Copenhagen.`,
   keywords: ["club lights rental copenhagen", "dj lights rental", "party lights no fog"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/diskotek-pakke",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-diskotek-taendt-v2.webp"),
-    title: "Club light package Copenhagen | 1.050 DKK | Lejhøjtaler.dk",
-    description: "Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms, save 185 DKK.",
+    title: `Club light package Copenhagen | ${prisDkk("pakke_diskotek")} | Lejhøjtaler.dk`,
+    description: `Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms, save ${rabatDkk("pakke_diskotek")}.`,
     url: "https://lejhojtaler.dk/en/diskotek-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,9 +30,8 @@ export default function Page() {
       locale="en"
       slug="en/diskotek-pakke"
       name="Club light bar"
-      price={1050}
       headline="Club light bar, a full dancefloor, no fog"
-      sub="Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms, save 185 DKK."
+      sub={`Light bar on a stand, an extra effect and a disco ball. For venues with smoke alarms, save ${rabatDkk("pakke_diskotek")}.`}
       image="/images/product-pakke-diskotek-taendt-v2-white.webp"
       imageAlt="Club light bar switched on: light bar on a stand, mirror ball and an extra LED par light"
       productId="pakke_diskotek"
@@ -42,7 +42,7 @@ export default function Page() {
         "Extra LED par light to cross the floor",
         "40 cm disco ball with motor and spotlight",
         "No fog, safe for venues with smoke alarms",
-        "Save 185 DKK vs renting the parts separately",
+        `Save ${rabatDkk("pakke_diskotek")} vs renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

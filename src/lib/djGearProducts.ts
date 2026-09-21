@@ -1,5 +1,5 @@
-import type {RentalProduct} from "./products";
-export const djGearProducts: RentalProduct[] = [
+import type {RawRentalProduct} from "./products";
+export const djGearProducts: RawRentalProduct[] = [
   {
     "id": "dj_pult",
     "page": "/dj-pult",
@@ -21,7 +21,6 @@ export const djGearProducts: RentalProduct[] = [
     "id": "dj_pakke_lille",
     "page": "/dj-pult",
     "category": "lyd",
-    "price": 2695,
     "image": "/images/product-dj-pult-white.webp",
     "showPartImages": true,
     "name_da": "DJ Pakke 0-30",
@@ -69,7 +68,6 @@ export const djGearProducts: RentalProduct[] = [
           "label_en": "X-stand"
         }
       ],
-      "discount": 180,
       "usecase_da": "Pult og to højtalere til mindre fester og baggrundsmusik.",
       "usecase_en": "Controller and two speakers for smaller parties and background music."
     }
@@ -78,7 +76,6 @@ export const djGearProducts: RentalProduct[] = [
     "id": "dj_pakke_mellem",
     "page": "/dj-pult",
     "category": "lyd",
-    "price": 2995,
     "image": "/images/product-dj-pult-white.webp",
     "showPartImages": true,
     "name_da": "DJ Pakke 30-50",
@@ -126,7 +123,6 @@ export const djGearProducts: RentalProduct[] = [
           "label_en": "X-stand"
         }
       ],
-      "discount": 80,
       "usecase_da": "Pult, to større højtalere og subwoofer til dansegulvet.",
       "usecase_en": "Controller, two larger speakers and a subwoofer for the dance floor."
     }
@@ -135,7 +131,6 @@ export const djGearProducts: RentalProduct[] = [
     "id": "dj_pakke_stor",
     "page": "/dj-pult",
     "category": "lyd",
-    "price": 3725,
     "image": "/images/product-dj-pult-white.webp",
     "showPartImages": true,
     "name_da": "Stor DJ-pakke",
@@ -189,7 +184,6 @@ export const djGearProducts: RentalProduct[] = [
           "label_en": "Wireless microphone"
         }
       ],
-      "discount": 195,
       "usecase_da": "Pult, lyd, subwoofer, lys og mikrofon til en hel aften.",
       "usecase_en": "Controller, speakers, subwoofer, lights and a microphone for the whole evening."
     }

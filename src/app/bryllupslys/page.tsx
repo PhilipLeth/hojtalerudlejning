@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,8 +6,8 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Bryllupslys-pakken | 1.200 kr | Lejhøjtaler.dk",
-  description: "Lyskæde, uplights og low fog til brudevalsen, dans på skyer for 1.200 kr. Spar 135 kr. Lejes i København.",
+  title: `Bryllupslys-pakken | ${prisKr("pakke_bryllupslys")} | Lejhøjtaler.dk`,
+  description: `Lyskæde, uplights og low fog til brudevalsen, dans på skyer for ${prisKr("pakke_bryllupslys")}. Spar ${rabatKr("pakke_bryllupslys")}. Lejes i København.`,
   keywords: ["bryllupslys leje", "low fog bryllup", "brudevals røg på gulvet", "lys til bryllup leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/bryllupslys",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-bryllupslys-taendt.webp"),
-    title: "Bryllupslys-pakken | 1.200 kr | Lejhøjtaler.dk",
-    description: "Varmt lys over bordene, uplights på væggene og low fog til brudevalsen, spar 135 kr.",
+    title: `Bryllupslys-pakken | ${prisKr("pakke_bryllupslys")} | Lejhøjtaler.dk`,
+    description: `Varmt lys over bordene, uplights på væggene og low fog til brudevalsen, spar ${rabatKr("pakke_bryllupslys")}.`,
     url: "https://lejhojtaler.dk/bryllupslys",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,9 +29,8 @@ export default function Side() {
     <ProductLanding
       slug="bryllupslys"
       name="Bryllupslys-pakken"
-      price={1200}
       headline="Bryllupslys-pakken, dans brudevalsen på skyer"
-      sub="Varmt lys over bordene, uplights på væggene og low fog til brudevalsen, spar 135 kr."
+      sub={`Varmt lys over bordene, uplights på væggene og low fog til brudevalsen, spar ${rabatKr("pakke_bryllupslys")}.`}
       image="/images/product-pakke-bryllupslys-taendt-white.webp"
       imageAlt="Bryllupslys-pakken tændt: varm hvid lyskæde, fire LED uplights og low fog-maskinen med røggulv"
       productId="pakke_bryllupslys"
@@ -41,7 +41,7 @@ export default function Side() {
         "10 m varm hvid lyskæde over bordene",
         "4× LED uplight, vælg én farve, og salen følger med",
         "Alt kører på almindelig strøm, ingen tekniker",
-        "Spar 135 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_bryllupslys")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

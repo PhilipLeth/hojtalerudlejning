@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { bookHref as toBook } from "@/lib/bookUrl";
 import { PhoneText } from "@/components/PhoneLink";
 import { buildProductFaq } from "@/lib/productFaq";
-import { erPaaPause, erGenereretBillede } from "@/lib/products";
+import { catalogPrice, erPaaPause, erGenereretBillede } from "@/lib/products";
 import ProductGallery from "@/components/ProductGallery";
 import type { Locale } from "@/lib/i18n";
 
@@ -59,7 +59,14 @@ const COPY = {
 export interface ProductLandingProps {
   slug: string;
   name: string;
-  price: number;
+  /**
+   * Prisen slås op i kataloget ud fra productId — den skal IKKE skrives på
+   * siden. Et tal i en side er dét Google og kunden ser før hydrering, og det
+   * var netop de tal, der drev fra kataloget ved prisstigningen. Feltet står
+   * tilbage til det ene tilfælde hvor siden sælger noget, kataloget ikke
+   * kender endnu.
+   */
+  price?: number;
   headline: string;
   sub: string;
   image: string;
@@ -141,7 +148,7 @@ export interface ProductLandingProps {
 export default function ProductLanding({
   slug,
   name,
-  price,
+  price: prisProp,
   headline,
   sub,
   image,
@@ -160,6 +167,9 @@ export default function ProductLanding({
   locale = "da",
   children,
 }: ProductLandingProps) {
+  // Pakkeprisen er udledt af delene, så den findes kun ét sted: kataloget.
+  const price = prisProp ?? catalogPrice(productId);
+
   const bookHref = toBook(productId, locale);
   const c = COPY[locale];
   /**

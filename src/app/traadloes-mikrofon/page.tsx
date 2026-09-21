@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Trådløs Mikrofon København | Fra 445 kr | Lejhøjtaler.dk",
+  title: `Lej Trådløs Mikrofon København | Fra ${prisKr("traadloes_mikrofon")} | Lejhøjtaler.dk`,
   description:
-    "Lej trådløs mikrofon i København fra 445 kr/weekend. Professionel trådløs håndholdt mikrofon til taler og events. Betal ved afhentning.",
+    `Lej trådløs mikrofon i København fra ${prisKr("traadloes_mikrofon")}/weekend. Professionel trådløs håndholdt mikrofon til taler og events. Betal ved afhentning.`,
   keywords: [
     "lej trådløs mikrofon",
     "mikrofon udlejning",
@@ -22,9 +23,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-mikrofon-v2.webp"),
-    title: "Lej Trådløs Mikrofon København | Fra 445 kr",
+    title: `Lej Trådløs Mikrofon København | Fra ${prisKr("traadloes_mikrofon")}`,
     description:
-      "Lej trådløs mikrofon i København fra 445 kr. Professionel håndholdt mikrofon til taler og events. Book online.",
+      `Lej trådløs mikrofon i København fra ${prisKr("traadloes_mikrofon")}. Professionel håndholdt mikrofon til taler og events. Book online.`,
     url: "https://lejhojtaler.dk/traadloes-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -37,7 +38,6 @@ export default function TraadloesMikrofonPage() {
     <ProductLanding
       slug="traadloes-mikrofon"
       name="Trådløs mikrofon"
-      price={445}
       headline="Lej trådløs mikrofon"
       sub="Shure BLX24 med SM58, trådløs håndholdt mikrofon i scenekvalitet til taler, bryllup og events."
       image="/images/product-mikrofon-pro-v2-white.webp"

@@ -1,12 +1,13 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Medium Speaker Package Rental Copenhagen | 795 DKK | Lejhøjtaler.dk",
+  title: `Medium Speaker Package Rental Copenhagen | ${prisDkk("festival")} | Lejhøjtaler.dk`,
   description:
-    'Rent two 12" EV active speakers in Copenhagen from 795 DKK/weekend. Clear, powerful sound for 30-50 guests. All cables included, stands available. Book online.',
+    `Rent two 12" EV active speakers in Copenhagen from ${prisDkk("festival")}/weekend. Clear, powerful sound for 30-50 guests. All cables included, stands available. Book online.`,
   keywords: [
     "PA system rental copenhagen",
     "rent large speakers copenhagen",
@@ -22,9 +23,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-festival-v2.webp"),
-    title: "Medium Speaker Package Rental Copenhagen | 795 DKK | Lejhøjtaler.dk",
+    title: `Medium Speaker Package Rental Copenhagen | ${prisDkk("festival")} | Lejhøjtaler.dk`,
     description:
-      'Rent two 12" EV active speakers in Copenhagen from 795 DKK/weekend. Clear, powerful sound for 30-50 guests. All cables included, stands available. Book online.',
+      `Rent two 12" EV active speakers in Copenhagen from ${prisDkk("festival")}/weekend. Clear, powerful sound for 30-50 guests. All cables included, stands available. Book online.`,
     url: "https://lejhojtaler.dk/en/hojtalerpakke-normal",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -38,7 +39,6 @@ export default function LargeSpeakerPackageEn() {
       locale="en"
       slug="en/hojtalerpakke-normal"
       name="Medium Speaker Package"
-      price={795}
       headline="Rent a medium speaker package in Copenhagen"
       sub='Two powerful 12" EV active speakers, clear sound for larger rooms and outdoors.'
       image="/images/product-festival-v2-white.webp"

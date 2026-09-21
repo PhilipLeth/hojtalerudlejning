@@ -1,12 +1,13 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Stor Højtalerpakke København | Fra 795 kr | Lejhøjtaler.dk",
+  title: `Lej Stor Højtalerpakke København | Fra ${prisKr("festival")} | Lejhøjtaler.dk`,
   description:
-    "Lej mellem højtalerpakke i København fra 795 kr/weekend. 2× 12\" EV aktive højtalere. Stativer kan tilkøbes. Book online.",
+    `Lej mellem højtalerpakke i København fra ${prisKr("festival")}/weekend. 2× 12\" EV aktive højtalere. Stativer kan tilkøbes. Book online.`,
   keywords: ["mellem højtalerpakke", "lej PA anlæg", "EV højtaler leje", "højtalerudlejning københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/hojtalerpakke-normal",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-festival-v2.webp"),
-    title: "Lej Stor Højtalerpakke | Fra 795 kr",
-    description: "2× 12\" EV højtalere fra 795 kr/weekend. Book online.",
+    title: `Lej Stor Højtalerpakke | Fra ${prisKr("festival")}`,
+    description: `2× 12\" EV højtalere fra ${prisKr("festival")}/weekend. Book online.`,
     url: "https://lejhojtaler.dk/hojtalerpakke-normal",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,7 +29,6 @@ export default function HojtalerpakkeNormalPage() {
     <ProductLanding
       slug="hojtalerpakke-normal"
       name="Mellem højtalerpakke"
-      price={795}
       headline="Lej mellem højtalerpakke i København"
       sub={'To kraftige 12" EV aktive højtalere - klar lyd til større rum og udendørs.'}
       image="/images/product-festival-v2-white.webp"

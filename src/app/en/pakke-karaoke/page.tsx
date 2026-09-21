@@ -1,12 +1,13 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Karaoke Bundle Rental Copenhagen | 1,300 DKK | Lejhøjtaler.dk",
+  title: `Karaoke Bundle Rental Copenhagen | ${prisDkk("pakke_karaoke")} | Lejhøjtaler.dk`,
   description:
-    "Karaoke bundle with machine, 32\" screen and two speakers, karaoke for up to 40 people for 1,300 DKK. Save 385 DKK. Book online in Copenhagen.",
+    `Karaoke bundle with machine, 32\" screen and two speakers, karaoke for up to 40 people for ${prisDkk("pakke_karaoke")}. Save ${rabatDkk("pakke_karaoke")}. Book online in Copenhagen.`,
   keywords: ["karaoke package rental copenhagen", "karaoke with screen hire", "karaoke system rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/pakke-karaoke",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-karaoke-v2.webp"),
-    title: "Karaoke bundle rental | 1,300 DKK",
-    description: "Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke, save 385 DKK.",
+    title: `Karaoke bundle rental | ${prisDkk("pakke_karaoke")}`,
+    description: `Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke, save ${rabatDkk("pakke_karaoke")}.`,
     url: "https://lejhojtaler.dk/en/pakke-karaoke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,9 +30,8 @@ export default function Page() {
       locale="en"
       slug="en/pakke-karaoke"
       name="Karaoke bundle"
-      price={1300}
       headline="The karaoke bundle, machine, screen and sound"
-      sub={"Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke, save 385 DKK."}
+      sub={`Karaoke machine + 32\" screen + 2× Alto speakers. Everything for karaoke, save ${rabatDkk("pakke_karaoke")}.`}
       image="/images/product-pakke-karaoke-v2-white.webp"
       imageAlt={"Karaoke bundle with machine, 32\" screen and speakers for rent"}
       productId="pakke_karaoke"
@@ -40,7 +40,7 @@ export default function Page() {
         "32\" LED screen on a tripod stand for the lyrics",
         "2× Alto 10\" speakers with Bluetooth",
         "HDMI + all cables",
-        "Save 385 DKK compared to single prices (1,685 DKK)",
+        `Save ${rabatDkk("pakke_karaoke")} compared to single prices (1,685 DKK)`,
         "Karaoke for up to 40 people",
       ]}
     />

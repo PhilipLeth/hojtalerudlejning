@@ -1,19 +1,23 @@
 import { describe, expect, it } from "vitest";
 import { microphonePackages } from "../lib/microphonePackages";
-import { rentalProducts, addons, speakers } from "../lib/products";
+import { catalogPrice, rentalProducts, addons, speakers } from "../lib/products";
 import { bundlePartsFromCatalog, bundleSlots } from "../../functions/api/_lib/inventory";
 import { buildOccupancy, expandProductIds } from "../../functions/api/_lib/occupancy";
 import { loadPriceTable, buildLineItems } from "../../functions/api/_lib/pricing";
 
 describe("Mikrofonpakker som kan bookes og reserverer de rigtige antal", () => {
-  it("har eksisterende dele og en pris der stemmer med den oplyste rabat", () => {
+  it("har eksisterende dele og en pris der følger delene", () => {
     const catalog = [...speakers, ...addons, ...rentalProducts];
-    for (const p of microphonePackages) {
-      expect(p.name_en).toBeTruthy();
+    for (const raw of microphonePackages) {
+      expect(raw.name_en).toBeTruthy();
+      // microphonePackages er RÅ data uden pris — den udledes af delene, så
+      // pakken slås op i kataloget for at få det tal, kunden ser.
+      const p = rentalProducts.find((x) => x.id === raw.id)!;
+      expect(p, `${raw.id} mangler i kataloget`).toBeTruthy();
       let sum = 0;
       for (const part of p.bundle!.parts) {
         const product = catalog.find((x) => x.id === part.productId)!;
-        expect(product).toBeTruthy();
+        expect(product, `${raw.id}: ukendt del ${part.productId}`).toBeTruthy();
         expect(part.price).toBe(product.price * (part.qty ?? 1));
         sum += part.price;
       }
@@ -37,6 +41,10 @@ describe("Mikrofonpakker som kan bookes og reserverer de rigtige antal", () => {
   it("beregner betaling på serveren fra pakkeprisen", async () => {
     const kv = { get: async () => JSON.stringify({ rentalProducts: microphonePackages }) } as unknown as KVNamespace;
     const table = await loadPriceTable(kv);
-    expect(buildLineItems(table, [{ id: "pakke_mikrofon_av" }]).totalOre).toBe(221500); // produktarket 17. sept 2026: AV-pakken 2215 kr (før 1995)
+    // Beløbet står ikke her: pakkeprisen er udledt af delene, og serveren
+    // regner den ud på samme måde som kataloget.
+    expect(buildLineItems(table, [{ id: "pakke_mikrofon_av" }]).totalOre).toBe(
+      catalogPrice("pakke_mikrofon_av") * 100,
+    );
   });
 });

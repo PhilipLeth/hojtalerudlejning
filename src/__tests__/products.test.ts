@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { existsSync } from "node:fs";
-import { speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice, bundleIncludesDelivery, LYDMAND_PAKKER, KATEGORI_PAKKER, DELIVERY_ADDON_IDS } from "@/lib/products";
+import { bundleListPrice, bundlePrice, speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice, bundleIncludesDelivery, LYDMAND_PAKKER, KATEGORI_PAKKER, DELIVERY_ADDON_IDS } from "@/lib/products";
 import { stockItems } from "@/lib/stock";
 import { mergeAddonsForTest } from "@/lib/useProducts";
 
@@ -119,15 +119,15 @@ describe("Addons data", () => {
     expect(deliveryDirections("levering_opsaetning")).toEqual({ out: true, back: true });
   });
 
-  it("festpakker: 895 og 1095 kr med korrekt rabat (produktarket 17. sept 2026)", () => {
+  it("festpakkerne er højtalerpakke + lysbar, og prisen kommer fra delene", () => {
     const lille = rentalProducts.find((p) => p.id === "pakke_fest_lille")!;
     const stor = rentalProducts.find((p) => p.id === "pakke_fest_stor")!;
     expect(lille.bundle?.parts.map((x) => x.productId)).toEqual(["party", "lys"]);
-    expect(lille.price).toBe(895); // 595 + 395 - 95
-    expect(lille.bundle?.discount).toBe(95);
+    // Prisen står ikke i data: den er delenes sum minus pakkerabatten.
+    // bundle-live-prices.test.ts vogter selve udregningen.
+    expect(lille.price).toBe(bundlePrice(bundleListPrice(lille), lille.bundle!));
     expect(stor.bundle?.parts.map((x) => x.productId)).toEqual(["festival", "lys"]);
-    expect(stor.price).toBe(1095); // 795 + 395 - 95
-    expect(stor.bundle?.discount).toBe(95);
+    expect(stor.price).toBe(bundlePrice(bundleListPrice(stor), stor.bundle!));
     // Levering/opsætning er tilvalg — ikke en del af pakken
     for (const p of [lille, stor]) {
       expect(p.bundle!.parts.map((x) => x.productId)).not.toContain("levering_begge");
@@ -204,24 +204,20 @@ describe("Addons data", () => {
     expect(existsSync("public/images/product-skaerm-white.webp")).toBe(true);
   });
 
-  it("karaokepakkerne har stærke rabatter og korrekt sum af dele", () => {
+  it("karaokepakkerne består af maskine, skærm og højtalere", () => {
     const lille = rentalProducts.find((p) => p.id === "pakke_karaoke")!;
     const fest = rentalProducts.find((p) => p.id === "pakke_karaoke_fest")!;
 
-    // Karaokepakken: maskine 695 + 32" skærm 395 + højtaler 0-30 595 = 1685 → 1300 (spar 385)
+    // Karaokepakken: maskine + 32" skærm + højtalerpakke 0-30
     expect(lille.bundle!.parts.map((x) => x.productId)).toEqual(["karaoke", "skaerm_32", "party"]);
-    const lilleSum = lille.bundle!.parts.reduce((s, x) => s + x.price, 0);
-    expect(lilleSum).toBe(1685);
-    expect(lille.price).toBe(1300);
-    expect(lille.bundle!.discount).toBe(385);
+    const lilleSum = bundleListPrice(lille);
+    expect(lille.price).toBe(bundlePrice(lilleSum, lille.bundle!));
     expect(lilleSum - lille.price).toBe(lille.bundle!.discount);
 
-    // Festpakken: 695 + 595 + 795 = 2085 → 1825 (spar 260) — festival = 795, produktarket 17. sept 2026
+    // Festpakken: maskine + 55" skærm + højtalerpakke 30-50
     expect(fest.bundle!.parts.map((x) => x.productId)).toEqual(["karaoke", "skaerm_55", "festival"]);
-    const festSum = fest.bundle!.parts.reduce((s, x) => s + x.price, 0);
-    expect(festSum).toBe(2085);
-    expect(fest.price).toBe(1825);
-    expect(fest.bundle!.discount).toBe(260);
+    const festSum = bundleListPrice(fest);
+    expect(fest.price).toBe(bundlePrice(festSum, fest.bundle!));
     expect(festSum - fest.price).toBe(fest.bundle!.discount);
   });
 
@@ -250,9 +246,9 @@ describe("Addons data", () => {
     }
   });
 
-  it("Julehyggen koster 785 kr med Thump GO, lyskæde og lyseffekt", () => {
+  it("Julehyggen er Thump GO, lyskæde og lyseffekt", () => {
     const p = rentalProducts.find((x) => x.id === "jul_hygge")!;
-    expect(p.price).toBe(785); // produktarket 17. sept 2026: 495 + 195 + 195 - 100
+    expect(p.price).toBe(bundlePrice(bundleListPrice(p), p.bundle!));
     expect(p.page).toBe("/julehyggen");
     expect(p.bundle!.parts.map((x) => x.productId)).toEqual(["thumpgo", "lyskaeder", "lyseffekt"]);
   });

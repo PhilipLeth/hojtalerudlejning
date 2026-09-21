@@ -1,15 +1,15 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
-import { catalogDiscount, catalogPartsPrice, prisTekst } from "@/lib/products";
+import { catalogDiscount, catalogPartsPrice, prisKr, prisTekst } from "@/lib/products";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: 'Lej 32" Skærm på Stativ København | 395 kr | Lejhøjtaler.dk',
+  title: `Lej 32" Skærm på Stativ København | ${prisKr("skaerm_32")} | Lejhøjtaler.dk`,
   description:
-    "Lej en 32\" LED-skærm på stativ i København for 395 kr. Kompakt og nem at flytte, perfekt til karaoke og det lille mødelokale. Book online.",
+    `Lej en 32\" LED-skærm på stativ i København for ${prisKr("skaerm_32")}. Kompakt og nem at flytte, perfekt til karaoke og det lille mødelokale. Book online.`,
   keywords: [
     "lej skærm",
     "32 tommer skærm leje",
@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-skaerm-32.webp"),
-    title: 'Lej 32" Skærm på Stativ | 395 kr',
+    title: `Lej 32" Skærm på Stativ | ${prisKr("skaerm_32")}`,
     description:
-      "Lej en 32\" LED-skærm på stativ i København for 395 kr. Kompakt og nem at flytte, perfekt til karaoke og det lille mødelokale. Book online.",
+      `Lej en 32\" LED-skærm på stativ i København for ${prisKr("skaerm_32")}. Kompakt og nem at flytte, perfekt til karaoke og det lille mødelokale. Book online.`,
     url: "https://lejhojtaler.dk/skaerm-32",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -38,7 +38,6 @@ export default function Page() {
     <ProductLanding
       slug="skaerm-32"
       name={'32" Skærm'}
-      price={395}
       headline={'Lej 32" skærm på stativ'}
       sub={'32" LED-skærm på 3-fod stativ, kompakt, nem at flytte og klar på 5 minutter.'}
       image="/images/product-skaerm-32-white.webp"

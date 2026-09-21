@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Lej Højtalerstativer København | 95 kr | Lejhøjtaler.dk",
+  title: `Lej Højtalerstativer København | ${prisKr("stativer")} | Lejhøjtaler.dk`,
   description:
-    "Lej 2 professionelle højtalerstativer i København for 95 kr. Løfter højtalerne op i øjenhøjde, så lyden når hele rummet. Passer til alle vores højtalerpakker.",
+    `Lej 2 professionelle højtalerstativer i København for ${prisKr("stativer")}. Løfter højtalerne op i øjenhøjde, så lyden når hele rummet. Passer til alle vores højtalerpakker.`,
   keywords: ["lej højtalerstativer", "højtalerstativ leje københavn", "stativ til højtaler", "pa stativer leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/hojtalerstativer",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-stativer.webp"),
-    title: "Lej Højtalerstativer | 95 kr",
+    title: `Lej Højtalerstativer | ${prisKr("stativer")}`,
     description: "2 professionelle stativer, løfter lyden op i øjenhøjde. Passer til alle vores højtalere.",
     url: "https://lejhojtaler.dk/hojtalerstativer",
     siteName: "Lejhøjtaler.dk",
@@ -29,7 +30,6 @@ export default function Page() {
     <ProductLanding
       slug="hojtalerstativer"
       name="Højtalerstativer"
-      price={95}
       headline="Lej højtalerstativer"
       sub="2 professionelle Millenium-stativer, der løfter højtalerne op i øjenhøjde, så lyden går over hovederne i stedet for ind i ryggen på første række."
       image="/images/product-stativer-white.webp"

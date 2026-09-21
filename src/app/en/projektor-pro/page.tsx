@@ -1,12 +1,13 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Projector Pro (5000 lumen) Rental Copenhagen | 795 DKK | Lejhøjtaler.dk",
+  title: `Projector Pro (5000 lumen) Rental Copenhagen | ${prisDkk("projektor_pro")} | Lejhøjtaler.dk`,
   description:
-    "Rent a 5000 lumen PRO projector in Copenhagen for 795 DKK. Sharp even in lit rooms and daylight, for halls, trade shows and large meetings. Book online.",
+    `Rent a 5000 lumen PRO projector in Copenhagen for ${prisDkk("projektor_pro")}. Sharp even in lit rooms and daylight, for halls, trade shows and large meetings. Book online.`,
   keywords: ["projector pro rental copenhagen", "5000 lumen projector hire", "bright projector rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/projektor-pro",
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-projektor-pro-v2.webp"),
-    title: "Projector Pro (5000 lumen) rental | 795 DKK",
+    title: `Projector Pro (5000 lumen) rental | ${prisDkk("projektor_pro")}`,
     description: "Powerful 5000 lumen projector, sharp even in daylight.",
     url: "https://lejhojtaler.dk/en/projektor-pro",
     siteName: "Lejhøjtaler.dk",
@@ -29,7 +30,6 @@ export default function Page() {
       locale="en"
       slug="en/projektor-pro"
       name="Projector Pro (5000 lumen)"
-      price={795}
       headline="Rent the Projector Pro, 5000 lumen"
       sub="Powerful 5000 lumen projector, sharp even in daylight."
       image="/images/product-projektor-pro-v2-white.webp"

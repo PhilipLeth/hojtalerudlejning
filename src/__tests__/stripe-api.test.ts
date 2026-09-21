@@ -5,6 +5,7 @@
  */
 import { describe, it, expect, vi } from "vitest";
 import fs from "node:fs";
+import { catalogPrice } from "@/lib/products";
 import { loadPriceTable, buildLineItems } from "../../functions/api/_lib/pricing";
 import { onRequestPost as createSession } from "../../functions/api/stripe/create-checkout-session";
 import { onRequestGet as stripeConfig } from "../../functions/api/stripe/config";
@@ -47,10 +48,13 @@ describe("Server-side prisberegning (pricing)", () => {
     expect(lineItems[0].price_data.currency).toBe("dkk");
   });
 
-  // produktarket 17. sept 2026: Festpakke 0-30 = party 595 + lysbar 395 - 95 = 895 (før 690)
-  it("festpakke lille = præcis 895 kr", async () => {
+  // Pakkeprisen er udledt af delene (party + lysbar − 8 %), så testen slår den
+  // op i kataloget i stedet for at gentage tallet. Se bundle-live-prices.
+  it("festpakke lille koster præcis katalogets pakkepris", async () => {
     const table = await loadPriceTable(fakeKv());
-    expect(buildLineItems(table, [{ id: "pakke_fest_lille" } ]).totalOre).toBe(89500);
+    expect(buildLineItems(table, [{ id: "pakke_fest_lille" } ]).totalOre).toBe(
+      catalogPrice("pakke_fest_lille") * 100,
+    );
   });
 
   it("flere varer summeres korrekt (party + lys + rog)", async () => {

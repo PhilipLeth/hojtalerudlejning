@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Soundboks Batteri | 395 kr | Lejhøjtaler.dk",
+  title: `Lej Soundboks Batteri | ${prisKr("batteri")} | Lejhøjtaler.dk`,
   description:
-    "Lej et ekstra batteri til Soundboks 4 for 395 kr. Dobbelt spilletid uden strøm, til havefest, strand og studenterkørsel. Lejes i København.",
+    `Lej et ekstra batteri til Soundboks 4 for ${prisKr("batteri")}. Dobbelt spilletid uden strøm, til havefest, strand og studenterkørsel. Lejes i København.`,
   keywords: ["ekstra batteri højtaler leje", "soundboks ekstra batteri", "batterihøjtaler hele natten"],
   alternates: {
     canonical: "https://lejhojtaler.dk/ekstra-batteri",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-thumpgo-v2.webp"),
-    title: "Lej Soundboks Batteri | 395 kr",
+    title: `Lej Soundboks Batteri | ${prisKr("batteri")}`,
     description: "Ekstra batteri til Soundboks 4, dobbelt spilletid uden strøm.",
     url: "https://lejhojtaler.dk/ekstra-batteri",
     siteName: "Lejhøjtaler.dk",
@@ -29,7 +30,6 @@ export default function Page() {
     <ProductLanding
       slug="ekstra-batteri"
       name="Soundboks batteri"
-      price={395}
       headline="Lej ekstra batteri til Soundboks 4"
       sub="Et ekstra batteri til Soundboks 4, så festen ikke slutter, når det første løber tørt."
       image="/images/product-soundboks-batteri-white.webp"

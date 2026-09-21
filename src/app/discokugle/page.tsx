@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
@@ -10,9 +11,9 @@ export const metadata: Metadata = {
   // k-formen, mens c-formen bliver stående i teksten, så begge stavemåder
   // står på siden. Stien er uændret — en redirect ville koste mere end den
   // giver.
-  title: "Lej Diskokugle København | Fra 645 kr | Lejhøjtaler.dk",
+  title: `Lej Diskokugle København | Fra ${prisKr("discokugle")} | Lejhøjtaler.dk`,
   description:
-    "Lej diskokugle i København fra 645 kr/weekend. Roterende discokugle, 30 eller 40 cm, med spot og stativ. Plug-and-play. Betal ved afhentning. Book online.",
+    `Lej diskokugle i København fra ${prisKr("discokugle")}/weekend. Roterende discokugle, 30 eller 40 cm, med spot og stativ. Plug-and-play. Betal ved afhentning. Book online.`,
   keywords: [
     "lej diskokugle",
     "diskokugle leje",
@@ -31,9 +32,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-discokugle-v2.webp"),
-    title: "Lej Diskokugle København | Fra 645 kr",
+    title: `Lej Diskokugle København | Fra ${prisKr("discokugle")}`,
     description:
-      "Lej diskokugle i København fra 645 kr/weekend. Roterende discokugle med LED-lys og farver. Book online.",
+      `Lej diskokugle i København fra ${prisKr("discokugle")}/weekend. Roterende discokugle med LED-lys og farver. Book online.`,
     url: "https://lejhojtaler.dk/discokugle",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -46,7 +47,6 @@ export default function DiscokuglePage() {
     <ProductLanding
       slug="discokugle"
       name="Discokugle"
-      price={645}
       headline="Lej diskokugle i København"
       sub="Roterende discokugle med LED-lys og farver. Klar på 2 min."
       image="/images/product-discokugle-v2-white.webp"

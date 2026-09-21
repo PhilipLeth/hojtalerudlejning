@@ -2,13 +2,13 @@ import { Metadata } from "next";
 import BundleGrid from "@/components/BundleGrid";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
-import { LYDMAND_PAKKER } from "@/lib/products";
+import { LYDMAND_PAKKER, prisKr } from "@/lib/products";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Lydmand København | AV-tekniker 1.000 kr/time | Lejhøjtaler.dk",
+  title: `Lej Lydmand København | AV-tekniker ${prisKr("lydmand")}/time | Lejhøjtaler.dk`,
   description:
-    "Lej en lydmand til festen eller firmaeventet i København, 1.000 kr pr. time inkl. moms. AV-teknikeren sætter op, laver lydprøve og styrer lyd og mikrofoner, mens I holder fest.",
+    `Lej en lydmand til festen eller firmaeventet i København, ${prisKr("lydmand")} pr. time inkl. moms. AV-teknikeren sætter op, laver lydprøve og styrer lyd og mikrofoner, mens I holder fest.`,
   keywords: [
     "lej lydmand københavn",
     "lydmand til fest",
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-lydmand.webp"),
-    title: "Lej Lydmand København | 1.000 kr/time",
+    title: `Lej Lydmand København | ${prisKr("lydmand")}/time`,
     description:
-      "AV-tekniker på stedet: sætter op, laver lydprøve og styrer lyden under festen. 1.000 kr pr. time. Book online.",
+      `AV-tekniker på stedet: sætter op, laver lydprøve og styrer lyden under festen. ${prisKr("lydmand")} pr. time. Book online.`,
     url: "https://lejhojtaler.dk/lydmand",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -39,7 +39,6 @@ export default function LydmandPage() {
     <ProductLanding
       slug="lydmand"
       name="Lydmand"
-      price={1000}
       priceUnit="/time"
       headline="Lej en lydmand til festen"
       sub="En AV-tekniker, der sætter op, laver lydprøve og styrer lyden, så I kan holde fest i stedet for at stå ved mixeren."
@@ -63,7 +62,7 @@ export default function LydmandPage() {
         },
         {
           q: "Hvad koster en lydmand?",
-          a: "1.000 kr pr. time inkl. moms. Vælger du lydmanden i bookingen, sætter du selv antallet af timer, og vil du, kan du skrive hvornår festen starter og slutter, så regner vi timerne ud. I pakkerne herunder er 4 timer med i prisen.",
+          a: `${prisKr("lydmand")} pr. time inkl. moms. Vælger du lydmanden i bookingen, sætter du selv antallet af timer, og vil du, kan du skrive hvornår festen starter og slutter, så regner vi timerne ud. I pakkerne herunder er 4 timer med i prisen.`,
         },
         {
           q: "Skal jeg selv hente udstyret, når jeg har en lydmand med?",

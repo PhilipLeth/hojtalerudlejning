@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Bæretaske til Højtalere | 95 kr | Lejhøjtaler.dk",
+  title: `Lej Bæretaske til Højtalere | ${prisKr("taske")} | Lejhøjtaler.dk`,
   description:
-    "Lej en polstret bæretaske til den lille højtalerpakke for 95 kr. Sikker transport på cykel, i bus eller bil, højtalere og kabler samlet ét sted. Lejes i København.",
+    `Lej en polstret bæretaske til den lille højtalerpakke for ${prisKr("taske")}. Sikker transport på cykel, i bus eller bil, højtalere og kabler samlet ét sted. Lejes i København.`,
   keywords: ["bæretaske højtaler leje", "taske til højtalere", "højtaler på cykel", "transport af højtalere"],
   alternates: {
     canonical: "https://lejhojtaler.dk/baeretaske",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-taske-v2.webp"),
-    title: "Lej Bæretaske | 95 kr",
+    title: `Lej Bæretaske | ${prisKr("taske")}`,
     description: "Polstret sportstaske til sikker transport på cykel eller i bil.",
     url: "https://lejhojtaler.dk/baeretaske",
     siteName: "Lejhøjtaler.dk",
@@ -29,7 +30,6 @@ export default function Page() {
     <ProductLanding
       slug="baeretaske"
       name="Bæretaske"
-      price={95}
       headline="Lej bæretaske til højtalerne"
       sub="Polstret sportstaske, hvor den lille højtalerpakke og alle kablerne er samlet, så du kan hente på cykel."
       image="/images/product-taske-v2-white.webp"

@@ -1,11 +1,12 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Tale & musik-pakken København | 1.145 kr | Lejhøjtaler.dk",
-  description: "Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar 95 kr. 1.145 kr/weekend. Betal ved afhentning. Book online.",
+  title: `Lej Tale & musik-pakken København | ${prisKr("pakke_tale_musik")} | Lejhøjtaler.dk`,
+  description: `Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar ${rabatKr("pakke_tale_musik")}. ${prisKr("pakke_tale_musik")}/weekend. Betal ved afhentning. Book online.`,
   keywords: ["lej lyd til tale og musik", "højtaler og mikrofon pakke", "event lyd pakke københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/pakke-tale-musik",
@@ -13,8 +14,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-festival-v2.webp"),
-    title: "Lej Tale & musik-pakken København | 1.145 kr",
-    description: "Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar 95 kr. 1.145 kr/weekend. Betal ved afhentning. Book online.",
+    title: `Lej Tale & musik-pakken København | ${prisKr("pakke_tale_musik")}`,
+    description: `Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar ${rabatKr("pakke_tale_musik")}. ${prisKr("pakke_tale_musik")}/weekend. Betal ved afhentning. Book online.`,
     url: "https://lejhojtaler.dk/pakke-tale-musik",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,13 +28,12 @@ export default function Page() {
     <ProductLanding
       slug="pakke-tale-musik"
       name="Tale & musik-pakken"
-      price={1145}
       headline="Tale & musik-pakken"
-      sub={'Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar 95 kr.'}
+      sub={`Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar ${rabatKr("pakke_tale_musik")}.`}
       image="/images/product-festival-v2-white.webp"
       imageAlt="Tale og musik pakke med store højtalere og trådløs mikrofon"
       productId="pakke_tale_musik"
-      bullets={["2× 12\" EV højtalere med stativer", "Trådløs håndholdt mikrofon", "Op til 100 personer", "Alle kabler inkluderet", "Spar 95 kr ift. enkeltpriser"]}
+      bullets={["2× 12\" EV højtalere med stativer", "Trådløs håndholdt mikrofon", "Op til 100 personer", "Alle kabler inkluderet", `Spar ${rabatKr("pakke_tale_musik")} ift. enkeltpriser`]}
     />
   );
 }

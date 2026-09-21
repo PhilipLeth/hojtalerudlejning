@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Soundboks-pakken med lys | Soundboks 4 + lysbar | 995 kr | Lejhøjtaler.dk",
+  title: `Soundboks-pakken med lys | Soundboks 4 + lysbar | ${prisKr("pakke_soundboks_lys")} | Lejhøjtaler.dk`,
   description:
-    "Soundboks-pakken med lys: Soundboks 4 og lysbar for 995 kr, spar 95 kr. Batteridrevet lyd og festlys til op til 50 personer. Lejes i København.",
+    `Soundboks-pakken med lys: Soundboks 4 og lysbar for ${prisKr("pakke_soundboks_lys")}, spar ${rabatKr("pakke_soundboks_lys")}. Batteridrevet lyd og festlys til op til 50 personer. Lejes i København.`,
   keywords: ["soundboks med lys leje", "soundboks pakke", "lej soundboks og festlys", "batterihøjtaler og lys københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/soundboks-pakke-lys",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-soundboks-v2.webp"),
-    title: "Soundboks-pakken med lys | 995 kr",
-    description: "Soundboks 4 + lysbar. Batteridrevet lyd og lys til festen, spar 95 kr.",
+    title: `Soundboks-pakken med lys | ${prisKr("pakke_soundboks_lys")}`,
+    description: `Soundboks 4 + lysbar. Batteridrevet lyd og lys til festen, spar ${rabatKr("pakke_soundboks_lys")}.`,
     url: "https://lejhojtaler.dk/soundboks-pakke-lys",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,9 +30,8 @@ export default function Page() {
     <ProductLanding
       slug="soundboks-pakke-lys"
       name="Soundboks-pakken med lys"
-      price={995}
       headline="Soundboks-pakken med lys, lyd uden stik, lys der gør det til en fest"
-      sub="Soundboks 4 + lysbar med 2 farvede lamper og centereffekt. Bassen kører på batteri, lyset kræver en stikkontakt, spar 95 kr."
+      sub={`Soundboks 4 + lysbar med 2 farvede lamper og centereffekt. Bassen kører på batteri, lyset kræver en stikkontakt, spar ${rabatKr("pakke_soundboks_lys")}.`}
       image="/images/product-soundboks-v2-white.webp"
       imageAlt="Soundboks-pakken med lys: Soundboks 4 og lysbar"
       productId="pakke_soundboks_lys"
@@ -42,7 +42,7 @@ export default function Page() {
         "Lysbar: 2 farvede LED-lamper + centereffekt på stativ",
         "Lyset kræver strøm, tænk det med, hvis I er udenfor",
         "Oplader, AUX-kabel og alle lyskabler med",
-        "Spar 95 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_soundboks_lys")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

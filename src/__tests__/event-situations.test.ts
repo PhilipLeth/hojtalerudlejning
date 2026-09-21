@@ -12,7 +12,9 @@ describe("Situationspakker",()=>{
   for(const s of eventSituations){
    expect(new Set(s.packageIds).size).toBeGreaterThanOrEqual(2);
    for(const prefix of ['', 'en/'])expect(existsSync(`src/app/${prefix}events/${s.slug}/page.tsx`)).toBe(true);
-   for(const id of s.packageIds){const p=situationPackages.find(p=>p.id===id)!;expect(p).toBeDefined();const sum=p.bundle!.parts.reduce((sum,part)=>{expect(all.some(p=>p.id===part.productId)).toBe(true);return sum+part.price;},0);expect(p.price).toBeLessThanOrEqual(sum);expect(p.bundle!.discount).toBe(sum-p.price);}
+   for(const id of s.packageIds){expect(situationPackages.some(p=>p.id===id),`${id} mangler i situationPackages`).toBe(true);
+    // Prisen står ikke i de rå data — den udledes af delene, så pakken slås op i kataloget.
+    const p=rentalProducts.find(p=>p.id===id)!;expect(p,`${id} mangler i kataloget`).toBeDefined();const sum=p.bundle!.parts.reduce((sum,part)=>{expect(all.some(p=>p.id===part.productId)).toBe(true);return sum+part.price;},0);expect(p.price).toBeLessThanOrEqual(sum);expect(p.bundle!.discount).toBe(sum-p.price);}
   }
  });
 });

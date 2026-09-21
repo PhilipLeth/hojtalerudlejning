@@ -1,11 +1,12 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Håndholdt mikrofon (kabel) København | 95 kr | Lejhøjtaler.dk",
-  description: "Almindelig håndholdt mikrofon med kabel, til taler og sang. 95 kr/weekend. Betal ved afhentning. Book online.",
+  title: `Lej Håndholdt mikrofon (kabel) København | ${prisKr("haandholdt_mikrofon")} | Lejhøjtaler.dk`,
+  description: `Almindelig håndholdt mikrofon med kabel, til taler og sang. ${prisKr("haandholdt_mikrofon")}/weekend. Betal ved afhentning. Book online.`,
   keywords: ["lej mikrofon", "håndholdt mikrofon leje", "mikrofon til tale leje københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/haandholdt-mikrofon",
@@ -13,8 +14,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-mikrofon-kabel-v2.webp"),
-    title: "Lej Håndholdt mikrofon (kabel) København | 95 kr",
-    description: "Almindelig håndholdt mikrofon med kabel, til taler og sang. 95 kr/weekend. Betal ved afhentning. Book online.",
+    title: `Lej Håndholdt mikrofon (kabel) København | ${prisKr("haandholdt_mikrofon")}`,
+    description: `Almindelig håndholdt mikrofon med kabel, til taler og sang. ${prisKr("haandholdt_mikrofon")}/weekend. Betal ved afhentning. Book online.`,
     url: "https://lejhojtaler.dk/haandholdt-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,14 +28,13 @@ export default function Page() {
     <ProductLanding
       slug="haandholdt-mikrofon"
       name="Håndholdt mikrofon (kabel)"
-      price={95}
       headline="Lej håndholdt mikrofon"
       sub={'the t.bone MB 60, håndholdt dynamisk mikrofon med kabel, til taler og sang.'}
       image="/images/product-mikrofon-kabel-v2-white.webp"
       imageAlt="Håndholdt mikrofon med kabel til leje"
       productId="haandholdt_mikrofon"
       faqPhrase="en håndholdt mikrofon med kabel"
-      bullets={["Klassisk håndholdt dynamisk mikrofon", "XLR-kabel inkluderet", "Tilslut direkte til vores højtalere", "Perfekt til taler og fest", "Kun 95 kr/weekend"]}
+      bullets={["Klassisk håndholdt dynamisk mikrofon", "XLR-kabel inkluderet", "Tilslut direkte til vores højtalere", "Perfekt til taler og fest", `Kun ${prisKr("haandholdt_mikrofon")}/weekend`]}
     />
   );
 }

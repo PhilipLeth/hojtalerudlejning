@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
@@ -6,9 +7,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Festpakke 0-30 | Højtalere + lysbar | 895 kr | Lejhøjtaler.dk",
+  title: `Festpakke 0-30 | Højtalere + lysbar | ${prisKr("pakke_fest_lille")} | Lejhøjtaler.dk`,
   description:
-    "Festpakke 0-30: 2× Alto 10\" højtalere + lysbar for 895 kr, spar 95 kr. Lyd og lys til op til 30 gæster. Levering og opsætning kan tilvælges. Book online.",
+    `Festpakke 0-30: 2× Alto 10\" højtalere + lysbar for ${prisKr("pakke_fest_lille")}, spar ${rabatKr("pakke_fest_lille")}. Lyd og lys til op til 30 gæster. Levering og opsætning kan tilvælges. Book online.`,
   keywords: ["festpakke", "lej festpakke", "højtaler og lys leje", "lille festpakke københavn", "fest lyd og lys"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festpakke-lille",
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-fest-lille.webp"),
-    title: "Festpakke 0-30 | Højtalere + lysbar | 895 kr",
-    description: "2× Alto 10\" højtalere + lysbar, lyd og lys til op til 30 gæster. Spar 95 kr.",
+    title: `Festpakke 0-30 | Højtalere + lysbar | ${prisKr("pakke_fest_lille")}`,
+    description: `2× Alto 10\" højtalere + lysbar, lyd og lys til op til 30 gæster. Spar ${rabatKr("pakke_fest_lille")}.`,
     url: "https://lejhojtaler.dk/festpakke-lille",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -30,9 +31,8 @@ export default function FestpakkeLillePage() {
     <ProductLanding
       slug="festpakke-lille"
       name="Festpakke 0-30"
-      price={895}
       headline="Festpakke 0-30, lyd og lys"
-      sub="2× Alto 10&quot; højtalere + lysbar. Alt til festen med op til 30 gæster, spar 95 kr."
+      sub={`2× Alto 10&quot; højtalere + lysbar. Alt til festen med op til 30 gæster, spar ${rabatKr("pakke_fest_lille")}.`}
       image="/images/product-pakke-fest-lille-white.webp"
       imageAlt="Festpakke 0-30 med Alto højtalere og lysbar"
       productId="pakke_fest_lille"
@@ -41,7 +41,7 @@ export default function FestpakkeLillePage() {
         "2× Alto 10\" højtalere med Bluetooth (op til 30 gæster)",
         "Lysbar: 2 farvede lamper + centereffekt på stativ",
         "Alle kabler inkluderet",
-        "Spar 95 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_fest_lille")} vs. at leje delene enkeltvis`,
         "Levering og opsætning kan tilvælges i booking",
       ]}
     >

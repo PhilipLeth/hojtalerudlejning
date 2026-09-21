@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,8 +6,8 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Diskotek-pakken | 1.050 kr | Lejhøjtaler.dk",
-  description: "Lysbar, diskolyseffekt og discokugle, fuldt dansegulv uden røg for 1.050 kr. Spar 185 kr. Lejes i København.",
+  title: `Diskotek-pakken | ${prisKr("pakke_diskotek")} | Lejhøjtaler.dk`,
+  description: `Lysbar, diskolyseffekt og discokugle, fuldt dansegulv uden røg for ${prisKr("pakke_diskotek")}. Spar ${rabatKr("pakke_diskotek")}. Lejes i København.`,
   keywords: ["diskotekslys leje", "dj lys leje", "diskolys uden røg", "lys til fest i forsamlingshus"],
   alternates: {
     canonical: "https://lejhojtaler.dk/diskotek-pakke",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-diskotek-taendt-v2.webp"),
-    title: "Diskotek-pakken | 1.050 kr | Lejhøjtaler.dk",
-    description: "Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar 185 kr.",
+    title: `Diskotek-pakken | ${prisKr("pakke_diskotek")} | Lejhøjtaler.dk`,
+    description: `Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar ${rabatKr("pakke_diskotek")}.`,
     url: "https://lejhojtaler.dk/diskotek-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,9 +29,8 @@ export default function Side() {
     <ProductLanding
       slug="diskotek-pakke"
       name="Diskotek-pakken"
-      price={1050}
       headline="Diskotek-pakken, fuldt dansegulv uden røg"
-      sub="Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar 185 kr."
+      sub={`Lysbar på stativ, ekstra lyseffekt og discokugle. Til lokaler med røgalarm, spar ${rabatKr("pakke_diskotek")}.`}
       image="/images/product-pakke-diskotek-taendt-v2-white.webp"
       imageAlt="Diskotek-pakken tændt: lysbar på stativ, discokugle og en ekstra LED-lyseffekt"
       productId="pakke_diskotek"
@@ -41,7 +41,7 @@ export default function Side() {
         "Ekstra LED-par-lys til at krydse gulvet",
         "Discokugle 40 cm med motor og spot",
         "Ingen røg, må bruges i lokaler med røgalarm",
-        "Spar 185 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_diskotek")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

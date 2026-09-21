@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Graduation Package | Soundboks, extra battery and bag | 995 DKK | Lejhøjtaler.dk",
+  title: `Graduation Package | Soundboks, extra battery and bag | ${prisDkk("pakke_student")} | Lejhøjtaler.dk`,
   description:
-    "Graduation package: Soundboks 4, extra battery and padded carry bag for 995 DKK, save 95 DKK. Plays through the whole graduation truck ride without power. Rent in Copenhagen.",
+    `Graduation package: Soundboks 4, extra battery and padded carry bag for ${prisDkk("pakke_student")}, save ${rabatDkk("pakke_student")}. Plays through the whole graduation truck ride without power. Rent in Copenhagen.`,
   keywords: ["graduation truck speaker rental", "soundboks for graduation ride copenhagen", "student party speaker hire", "music for graduation truck"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/studenterpakke",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-soundboks-v2.webp"),
-    title: "Graduation package | Soundboks, extra battery and bag | 995 DKK",
-    description: "Soundboks 4, extra battery and padded carry bag. No power on the truck, save 95 DKK.",
+    title: `Graduation package | Soundboks, extra battery and bag | ${prisDkk("pakke_student")}`,
+    description: `Soundboks 4, extra battery and padded carry bag. No power on the truck, save ${rabatDkk("pakke_student")}.`,
     url: "https://lejhojtaler.dk/en/studenterpakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -30,9 +31,8 @@ export default function Page() {
       locale="en"
       slug="en/studenterpakke"
       name="Graduation package"
-      price={995}
       headline="The graduation package, plays through the whole truck ride"
-      sub="Soundboks 4, extra battery and padded carry bag. No power on the truck, save 95 DKK."
+      sub={`Soundboks 4, extra battery and padded carry bag. No power on the truck, save ${rabatDkk("pakke_student")}.`}
       image="/images/product-soundboks-v2-white.webp"
       imageAlt="Graduation package with Soundboks 4, extra battery and carry bag"
       productId="pakke_student"
@@ -43,7 +43,7 @@ export default function Page() {
         "Extra battery, so it lasts from morning to the last address",
         "Padded carry bag: the system is lifted on and off all day",
         "Bluetooth, everyone can change the track from their phone",
-        "Save 95 DKK compared to renting the parts separately",
+        `Save ${rabatDkk("pakke_student")} compared to renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

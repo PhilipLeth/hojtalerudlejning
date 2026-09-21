@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,8 +6,8 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Youth Party Package Copenhagen | Sound and Disco Lights | 1,250 DKK | Lejhøjtaler.dk",
-  description: "Soundboks 4, disco light effect and mirror ball in one package, sound and lights for a youth party at 1,250 DKK. Save 185 DKK. Rental in Copenhagen, set up in ten minutes.",
+  title: `Youth Party Package Copenhagen | Sound and Disco Lights | ${prisDkk("pakke_ungdomsfest")} | Lejhøjtaler.dk`,
+  description: `Soundboks 4, disco light effect and mirror ball in one package, sound and lights for a youth party at ${prisDkk("pakke_ungdomsfest")}. Save ${rabatDkk("pakke_ungdomsfest")}. Rental in Copenhagen, set up in ten minutes.`,
   keywords: ["youth party package rental copenhagen", "18th birthday party sound and lights", "disco lights and speaker rental", "teen party equipment hire copenhagen"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/ungdomsfest-pakke",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-ungdomsfest-taendt.webp"),
-    title: "Youth Party Package Copenhagen | Sound and Disco Lights | 1,250 DKK | Lejhøjtaler.dk",
-    description: "Soundboks 4, disco light effect and mirror ball. Kill the ceiling light, switch this on, save 185 DKK.",
+    title: `Youth Party Package Copenhagen | Sound and Disco Lights | ${prisDkk("pakke_ungdomsfest")} | Lejhøjtaler.dk`,
+    description: `Soundboks 4, disco light effect and mirror ball. Kill the ceiling light, switch this on, save ${rabatDkk("pakke_ungdomsfest")}.`,
     url: "https://lejhojtaler.dk/en/ungdomsfest-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,9 +30,8 @@ export default function Page() {
       locale="en"
       slug="en/ungdomsfest-pakke"
       name="Youth party package"
-      price={1250}
       headline="Youth party package, sound and disco lights in one price"
-      sub="Soundboks 4, disco light effect and 30 cm mirror ball. Battery-powered sound, lights that make the dancefloor, save 185 DKK."
+      sub={`Soundboks 4, disco light effect and 30 cm mirror ball. Battery-powered sound, lights that make the dancefloor, save ${rabatDkk("pakke_ungdomsfest")}.`}
       image="/images/product-pakke-ungdomsfest-taendt-white.webp"
       imageAlt="Youth party package switched on: Soundboks 4, LED par light and mirror ball with spotlight in a dark room"
       productId="pakke_ungdomsfest"
@@ -42,7 +42,7 @@ export default function Page() {
         "LED par light with automatic colour effects, plug and play",
         "30 cm mirror ball with motor and spotlight, the classic dotted effect",
         "Fog machine and coloured fairy lights can be added in the booking",
-        "Save 185 DKK vs renting the parts separately",
+        `Save ${rabatDkk("pakke_ungdomsfest")} vs renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

@@ -1,3 +1,4 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Speaker Carry Bag Rental | 95 DKK | Lejhøjtaler.dk",
+  title: `Speaker Carry Bag Rental | ${prisDkk("taske")} | Lejhøjtaler.dk`,
   description:
-    "Rent a padded carry bag for the small speaker package for 95 DKK. Safe transport by bike, bus or car, speakers and cables together in one place. Rent in Copenhagen.",
+    `Rent a padded carry bag for the small speaker package for ${prisDkk("taske")}. Safe transport by bike, bus or car, speakers and cables together in one place. Rent in Copenhagen.`,
   keywords: ["speaker carry bag rental", "bag for speakers hire copenhagen", "speakers by bike copenhagen", "speaker transport bag"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/baeretaske",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-taske-v2.webp"),
-    title: "Carry bag rental | 95 DKK",
+    title: `Carry bag rental | ${prisDkk("taske")}`,
     description: "Padded sports bag for safe transport by bike or car.",
     url: "https://lejhojtaler.dk/en/baeretaske",
     siteName: "Lejhøjtaler.dk",
@@ -30,7 +31,6 @@ export default function Page() {
       locale="en"
       slug="en/baeretaske"
       name="Carry bag"
-      price={95}
       headline="Rent a carry bag for the speakers"
       sub="A padded sports bag that holds the small speaker package and all the cables, so you can collect by bike."
       image="/images/product-taske-v2-white.webp"

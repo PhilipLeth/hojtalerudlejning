@@ -1,12 +1,13 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Projektor Pro (5000 lumen) København | 795 kr | Lejhøjtaler.dk",
+  title: `Lej Projektor Pro (5000 lumen) København | ${prisKr("projektor_pro")} | Lejhøjtaler.dk`,
   description:
-    "Lej en 5000 lumen PRO-projektor i København for 795 kr. Skarp selv i oplyste lokaler og i dagslys, til sale, messer og store møder. Book online.",
+    `Lej en 5000 lumen PRO-projektor i København for ${prisKr("projektor_pro")}. Skarp selv i oplyste lokaler og i dagslys, til sale, messer og store møder. Book online.`,
   keywords: ["lej projektor pro", "5000 lumen projektor leje", "kraftig projektor udlejning"],
   alternates: {
     canonical: "https://lejhojtaler.dk/projektor-pro",
@@ -14,9 +15,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-projektor-pro-v2.webp"),
-    title: "Lej Projektor Pro (5000 lumen) København | 795 kr",
+    title: `Lej Projektor Pro (5000 lumen) København | ${prisKr("projektor_pro")}`,
     description:
-      "Lej en 5000 lumen PRO-projektor i København for 795 kr. Skarp selv i oplyste lokaler og i dagslys, til sale, messer og store møder. Book online.",
+      `Lej en 5000 lumen PRO-projektor i København for ${prisKr("projektor_pro")}. Skarp selv i oplyste lokaler og i dagslys, til sale, messer og store møder. Book online.`,
     url: "https://lejhojtaler.dk/projektor-pro",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,7 +30,6 @@ export default function Page() {
     <ProductLanding
       slug="projektor-pro"
       name="Projektor Pro (5000 lumen)"
-      price={795}
       headline="Lej Projektor Pro, 5000 lumen"
       sub={'Kraftig 5000 lumen projektor, skarp selv i dagslys.'}
       image="/images/product-projektor-pro-v2-white.webp"

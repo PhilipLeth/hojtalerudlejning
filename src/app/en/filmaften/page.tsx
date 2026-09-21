@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Movie Night Package | Projector, screen and speakers | 1,195 DKK | Lejhøjtaler.dk",
+  title: `Movie Night Package | Projector, screen and speakers | ${prisDkk("pakke_filmaften")} | Lejhøjtaler.dk`,
   description:
-    "Movie night package with projector, screen and speakers, everything for an outdoor cinema in the backyard for 1,195 DKK. Book online in Copenhagen.",
+    `Movie night package with projector, screen and speakers, everything for an outdoor cinema in the backyard for ${prisDkk("pakke_filmaften")}. Book online in Copenhagen.`,
   keywords: ["projector and screen rental copenhagen", "outdoor cinema hire", "projector for party rental", "movie night equipment copenhagen", "projector screen rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/filmaften",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-projektor.webp"),
-    title: "Movie night package | Projector, screen and speakers | 1,195 DKK",
-    description: "Projector, screen and speakers, everything for an outdoor cinema in the backyard for 1,195 DKK.",
+    title: `Movie night package | Projector, screen and speakers | ${prisDkk("pakke_filmaften")}`,
+    description: `Projector, screen and speakers, everything for an outdoor cinema in the backyard for ${prisDkk("pakke_filmaften")}.`,
     url: "https://lejhojtaler.dk/en/filmaften",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -30,9 +31,8 @@ export default function Page() {
       locale="en"
       slug="en/filmaften"
       name="Movie night package"
-      price={1195}
       headline="The movie night package, cinema in the courtyard"
-      sub="Full HD projector, 160 cm screen on a stand and two speakers. Everything for movie night, save 90 DKK."
+      sub={`Full HD projector, 160 cm screen on a stand and two speakers. Everything for movie night, save ${rabatDkk("pakke_filmaften")}.`}
       image="/images/product-projektor-white.webp"
       imageAlt="Movie night package with projector, screen and speakers"
       productId="pakke_filmaften"
@@ -42,7 +42,7 @@ export default function Page() {
         "160 cm screen on a stand, free-standing, nothing to hang up",
         "2× Alto 10\" speakers: a projector's own sound is not enough",
         "All cables and power included",
-        "Save 90 DKK compared to renting the parts separately",
+        `Save ${rabatDkk("pakke_filmaften")} compared to renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

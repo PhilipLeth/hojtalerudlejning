@@ -1,12 +1,13 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Party Package 150 Copenhagen | 1.915 DKK | Lejhøjtaler.dk",
+  title: `Party Package 150 Copenhagen | ${prisDkk("pakke_fest_150")} | Lejhøjtaler.dk`,
   description:
-    'Rent a complete party setup for up to 150 guests in Copenhagen for 1.915 DKK. Two 12" speakers, a subwoofer, stands, light bar and fog machine. Delivery available.',
+    `Rent a complete party setup for up to 150 guests in Copenhagen for ${prisDkk("pakke_fest_150")}. Two 12" speakers, a subwoofer, stands, light bar and fog machine. Delivery available.`,
   keywords: [
     "large event sound rental copenhagen",
     "party package 150 guests",
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-fest-150-v2.webp"),
-    title: "Party Package 150 Copenhagen | 1.915 DKK | Lejhøjtaler.dk",
+    title: `Party Package 150 Copenhagen | ${prisDkk("pakke_fest_150")} | Lejhøjtaler.dk`,
     description:
-      'Rent a complete party setup for up to 150 guests in Copenhagen for 1.915 DKK. Two 12" speakers, a subwoofer, stands, light bar and fog machine. Delivery available.',
+      `Rent a complete party setup for up to 150 guests in Copenhagen for ${prisDkk("pakke_fest_150")}. Two 12" speakers, a subwoofer, stands, light bar and fog machine. Delivery available.`,
     url: "https://lejhojtaler.dk/en/festpakke-150",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -37,7 +38,6 @@ export default function PartyPackage150En() {
       locale="en"
       slug="en/festpakke-150"
       name="Party Package 150"
-      price={1915}
       headline="Party package for 150 guests"
       sub='2× EV 12" speakers, subwoofer, stands, lights and a fog machine.'
       image="/images/product-pakke-fest-150-v2-white.webp"

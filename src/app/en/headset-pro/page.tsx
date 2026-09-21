@@ -1,12 +1,13 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "PRO Wireless Headset Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
+  title: `PRO Wireless Headset Rental Copenhagen | ${prisDkk("headset_pro")} | Lejhøjtaler.dk`,
   description:
-    "Rent a broadcast-quality wireless headset microphone in Copenhagen for 595 DKK per weekend. For conferences, stages and full-day speakers. Pay on pickup.",
+    `Rent a broadcast-quality wireless headset microphone in Copenhagen for ${prisDkk("headset_pro")} per weekend. For conferences, stages and full-day speakers. Pay on pickup.`,
   keywords: [
     "professional headset microphone rental copenhagen",
     "broadcast headset hire copenhagen",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-headset-pro-v2.webp"),
-    title: "PRO Wireless Headset Rental Copenhagen | 595 DKK",
+    title: `PRO Wireless Headset Rental Copenhagen | ${prisDkk("headset_pro")}`,
     description:
       "Broadcast-quality wireless headset, for conferences and stages. Book online.",
     url: "https://lejhojtaler.dk/en/headset-pro",
@@ -35,7 +36,6 @@ export default function Page() {
       locale="en"
       slug="en/headset-pro"
       name="Wireless headset PRO"
-      price={595}
       headline="Rent a PRO wireless headset"
       sub="The wireless headset PRO is not available for rent right now as a separate product. Our regular wireless headset is now the Shure BLX14 at 445 DKK."
       image="/images/product-headset-pro-v2-white.webp"

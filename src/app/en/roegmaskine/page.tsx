@@ -1,3 +1,4 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Fog Machine Rental Copenhagen | 245 DKK | Lejhøjtaler.dk",
+  title: `Fog Machine Rental Copenhagen | ${prisDkk("rog")} | Lejhøjtaler.dk`,
   description:
-    "Rent a smoke machine in Copenhagen for 245 DKK per weekend. Fog fluid and remote control included, warms up in 5 minutes. Makes your party lights visible. Pay on pickup.",
+    `Rent a smoke machine in Copenhagen for ${prisDkk("rog")} per weekend. Fog fluid and remote control included, warms up in 5 minutes. Makes your party lights visible. Pay on pickup.`,
   keywords: [
     "fog machine rental copenhagen",
     "smoke machine rental copenhagen",
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-rog-v2.webp"),
-    title: "Fog Machine Rental Copenhagen | 245 DKK",
+    title: `Fog Machine Rental Copenhagen | ${prisDkk("rog")}`,
     description:
-      "Smoke machine incl. fog fluid and remote control. 245 DKK per weekend. Book online.",
+      `Smoke machine incl. fog fluid and remote control. ${prisDkk("rog")} per weekend. Book online.`,
     url: "https://lejhojtaler.dk/en/roegmaskine",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -37,7 +38,6 @@ export default function Page() {
       locale="en"
       slug="en/roegmaskine"
       name="Fog machine"
-      price={245}
       headline="Rent a fog machine in Copenhagen"
       sub="Fog fluid and remote control included, and it sets up in minutes."
       image="/images/product-rog-v2-white.webp"

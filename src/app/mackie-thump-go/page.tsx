@@ -1,12 +1,13 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Mackie Thump GO København | Fra 495 kr | Lejhøjtaler.dk",
+  title: `Lej Mackie Thump GO København | Fra ${prisKr("thumpgo")} | Lejhøjtaler.dk`,
   description:
-    "Lej Mackie Thump GO i København fra 495 kr/weekend. Batteridrevet 8\" højtaler med Bluetooth. Ingen strøm nødvendig. Book online.",
+    `Lej Mackie Thump GO i København fra ${prisKr("thumpgo")}/weekend. Batteridrevet 8\" højtaler med Bluetooth. Ingen strøm nødvendig. Book online.`,
   keywords: ["mackie thump go leje", "batterihøjtaler leje", "lej mackie go", "mobil højtaler københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/mackie-thump-go",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-thumpgo-v2.webp"),
-    title: "Lej Mackie Thump GO København | Fra 495 kr",
-    description: "Batteridrevet 8\" højtaler fra 495 kr/weekend. Book online.",
+    title: `Lej Mackie Thump GO København | Fra ${prisKr("thumpgo")}`,
+    description: `Batteridrevet 8\" højtaler fra ${prisKr("thumpgo")}/weekend. Book online.`,
     url: "https://lejhojtaler.dk/mackie-thump-go",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,7 +29,6 @@ export default function MackieThumpGoPage() {
     <ProductLanding
       slug="mackie-thump-go"
       name="Mackie Thump GO"
-      price={495}
       headline="Lej Mackie Thump GO i København"
       sub={'Batteridrevet 8" højtaler - park, strand, baggård. Ingen strøm nødvendig.'}
       image="/images/product-thumpgo-v2-white.webp"

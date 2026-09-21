@@ -1,3 +1,4 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Headset Microphone Rental Copenhagen | 445 DKK | Lejhøjtaler.dk",
+  title: `Headset Microphone Rental Copenhagen | ${prisDkk("headset")} | Lejhøjtaler.dk`,
   description:
-    "Rent a wireless headset microphone in Copenhagen for 445 DKK per weekend. Hands-free sound for presentations, conferences and teaching. Receiver and batteries included.",
+    `Rent a wireless headset microphone in Copenhagen for ${prisDkk("headset")} per weekend. Hands-free sound for presentations, conferences and teaching. Receiver and batteries included.`,
   keywords: [
     "headset microphone rental copenhagen",
     "wireless headset rental copenhagen",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-headset-v2.webp"),
-    title: "Headset Microphone Rental Copenhagen | 445 DKK",
+    title: `Headset Microphone Rental Copenhagen | ${prisDkk("headset")}`,
     description:
       "Wireless headset microphone for presentations and conferences. Hands-free. Book online.",
     url: "https://lejhojtaler.dk/en/headset-mikrofon",
@@ -37,7 +38,6 @@ export default function Page() {
       locale="en"
       slug="en/headset-mikrofon"
       name="Wireless headset microphone"
-      price={445}
       headline="Rent a headset microphone"
       sub="Shure BLX14 wireless headset for presentations and conferences. Hands-free."
       image="/images/product-headset-pro-v2-white.webp"

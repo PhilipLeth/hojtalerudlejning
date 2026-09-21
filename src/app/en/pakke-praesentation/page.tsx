@@ -1,12 +1,13 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Presentation Bundle Rental Copenhagen | 695 DKK | Lejhøjtaler.dk",
+  title: `Presentation Bundle Rental Copenhagen | ${prisDkk("pakke_praesentation")} | Lejhøjtaler.dk`,
   description:
-    "Presentation bundle with projector, 160 cm screen and wired handheld microphone, everything for the presentation for 695 DKK. Save 90 DKK. Book online in Copenhagen.",
+    `Presentation bundle with projector, 160 cm screen and wired handheld microphone, everything for the presentation for ${prisDkk("pakke_praesentation")}. Save ${rabatDkk("pakke_praesentation")}. Book online in Copenhagen.`,
   keywords: ["presentation equipment rental copenhagen", "projector and screen hire", "av package for meeting denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/pakke-praesentation",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-projektor.webp"),
-    title: "Presentation bundle rental | 695 DKK",
-    description: "Projector + 160 cm screen + handheld microphone. Save 90 DKK compared to single prices.",
+    title: `Presentation bundle rental | ${prisDkk("pakke_praesentation")}`,
+    description: `Projector + 160 cm screen + handheld microphone. Save ${rabatDkk("pakke_praesentation")} compared to single prices.`,
     url: "https://lejhojtaler.dk/en/pakke-praesentation",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,9 +30,8 @@ export default function Page() {
       locale="en"
       slug="en/pakke-praesentation"
       name="Presentation bundle"
-      price={695}
       headline="The presentation bundle, everything for the meeting"
-      sub="Projector + 160 cm screen + handheld microphone. Save 90 DKK compared to single prices."
+      sub={`Projector + 160 cm screen + handheld microphone. Save ${rabatDkk("pakke_praesentation")} compared to single prices.`}
       image="/images/product-projektor-white.webp"
       imageAlt="Presentation bundle with projector, screen and microphone"
       productId="pakke_praesentation"
@@ -40,7 +40,7 @@ export default function Page() {
         "160 cm screen on a stand",
         "Wired handheld microphone",
         "All cables included",
-        "Save 90 DKK compared to renting the parts separately",
+        `Save ${rabatDkk("pakke_praesentation")} compared to renting the parts separately`,
       ]}
     />
   );

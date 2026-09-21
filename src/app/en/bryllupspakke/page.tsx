@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Wedding Package | Sound, microphone, lights and low fog | 2,315 DKK | Lejhøjtaler.dk",
+  title: `Wedding Package | Sound, microphone, lights and low fog | ${prisDkk("pakke_bryllup")} | Lejhøjtaler.dk`,
   description:
-    "Wedding package: 2× EV 12\" speakers on stands, wireless microphone for the speeches, light bar, string lights and low fog machine for 2,315 DKK, save 155 DKK. Delivery and setup available in Copenhagen.",
+    `Wedding package: 2× EV 12\" speakers on stands, wireless microphone for the speeches, light bar, string lights and low fog machine for ${prisDkk("pakke_bryllup")}, save ${rabatDkk("pakke_bryllup")}. Delivery and setup available in Copenhagen.`,
   keywords: ["wedding sound system rental copenhagen", "wedding package hire", "microphone for wedding speeches rental", "low fog first dance copenhagen", "wedding lighting rental"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/bryllupspakke",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-bryllup-taendt.webp"),
-    title: "Wedding package | Sound, microphone, lights and low fog | 2,315 DKK",
-    description: "Speakers on stands, wireless microphone, lights, string lights and low fog for the first dance. Save 155 DKK.",
+    title: `Wedding package | Sound, microphone, lights and low fog | ${prisDkk("pakke_bryllup")}`,
+    description: `Speakers on stands, wireless microphone, lights, string lights and low fog for the first dance. Save ${rabatDkk("pakke_bryllup")}.`,
     url: "https://lejhojtaler.dk/en/bryllupspakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -30,9 +31,8 @@ export default function Page() {
       locale="en"
       slug="en/bryllupspakke"
       name="Wedding package"
-      price={2315}
       headline="The wedding package, speeches and dancefloor in one"
-      sub="Speakers on stands, wireless microphone, lights, string lights and low fog for the first dance. Save 155 DKK."
+      sub={`Speakers on stands, wireless microphone, lights, string lights and low fog for the first dance. Save ${rabatDkk("pakke_bryllup")}.`}
       image="/images/product-pakke-bryllup-taendt-white.webp"
       imageAlt="The wedding package: two EV speakers on stands, wireless microphone, warm white string lights and the low fog machine"
       productId="pakke_bryllup"
@@ -44,7 +44,7 @@ export default function Page() {
         "Light bar: 2 coloured lamps + centre effect",
         "10 m string lights for the tent or ceiling",
         "Low fog machine, \"dancing on clouds\" for the first dance",
-        "Save 155 DKK compared to renting the parts separately",
+        `Save ${rabatDkk("pakke_bryllup")} compared to renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

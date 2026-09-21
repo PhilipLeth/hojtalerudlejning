@@ -1,11 +1,10 @@
-import type { RentalProduct } from "./products";
+import type { RawRentalProduct } from "./products";
 /** Udstyrspakker. Transport og bemanding tilvælges separat. */
-export const situationPackages: RentalProduct[] = [
+export const situationPackages: RawRentalProduct[] = [
   {
     "id": "event_konference_1",
     "page": "/events/konference",
     "category": "av",
-    "price": 2160,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Konference med skærm",
@@ -52,7 +51,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 115,
       "usecase_da": "Når programmet skal holde fra første oplæg til sidste spørgsmål.",
       "usecase_en": "Keep the programme moving, from the first presentation to the final question."
     }
@@ -61,7 +59,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_konference_2",
     "page": "/events/konference",
     "category": "av",
-    "price": 2960,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Konference med projektion",
@@ -122,7 +119,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 195
         }
       ],
-      "discount": 155,
       "usecase_da": "Når programmet skal holde fra første oplæg til sidste spørgsmål.",
       "usecase_en": "Keep the programme moving, from the first presentation to the final question."
     }
@@ -131,7 +127,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_moede_1",
     "page": "/events/moede",
     "category": "av",
-    "price": 595,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Mødeskærm",
@@ -150,7 +145,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 0,
       "usecase_da": "Et møde, hvor alle kan høre og følge med.",
       "usecase_en": "A meeting everyone can hear and follow."
     }
@@ -159,7 +153,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_moede_2",
     "page": "/events/moede",
     "category": "av",
-    "price": 1460,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Møde med billede og tale",
@@ -192,7 +185,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 445
         }
       ],
-      "discount": 75,
       "usecase_da": "Et møde, hvor alle kan høre og følge med.",
       "usecase_en": "A meeting everyone can hear and follow."
     }
@@ -201,7 +193,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_praesentation_1",
     "page": "/events/praesentation",
     "category": "av",
-    "price": 595,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Præsentation på skærm",
@@ -220,7 +211,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 0,
       "usecase_da": "Gør plads til budskabet på skærmen.",
       "usecase_en": "Give your message the screen it needs."
     }
@@ -229,7 +219,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_praesentation_2",
     "page": "/events/praesentation",
     "category": "av",
-    "price": 1500,
     "image": "/images/product-projektor-pro-v2-white.webp",
     "showPartImages": true,
     "name_da": "Præsentation med projektion",
@@ -269,7 +258,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 95
         }
       ],
-      "discount": 80,
       "usecase_da": "Gør plads til budskabet på skærmen.",
       "usecase_en": "Give your message the screen it needs."
     }
@@ -278,7 +266,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_generalforsamling_1",
     "page": "/events/generalforsamling",
     "category": "av",
-    "price": 1080,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Generalforsamling med tale",
@@ -311,7 +298,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 445
         }
       ],
-      "discount": 55,
       "usecase_da": "Tydelig tale og plads til spørgsmål.",
       "usecase_en": "Clear speech with room for questions."
     }
@@ -320,7 +306,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_generalforsamling_2",
     "page": "/events/generalforsamling",
     "category": "av",
-    "price": 2250,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Generalforsamling med billede",
@@ -374,7 +359,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 120,
       "usecase_da": "Tydelig tale og plads til spørgsmål.",
       "usecase_en": "Clear speech with room for questions."
     }
@@ -383,7 +367,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_foredrag_1",
     "page": "/events/foredrag",
     "category": "av",
-    "price": 1080,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Foredrag med mikrofon",
@@ -416,7 +399,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 445
         }
       ],
-      "discount": 55,
       "usecase_da": "Lad publikum koncentrere sig om indholdet.",
       "usecase_en": "Let your audience concentrate on the content."
     }
@@ -425,7 +407,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_foredrag_2",
     "page": "/events/foredrag",
     "category": "av",
-    "price": 2535,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Undervisning med headset og billede",
@@ -479,7 +460,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 195
         }
       ],
-      "discount": 135,
       "usecase_da": "Lad publikum koncentrere sig om indholdet.",
       "usecase_en": "Let your audience concentrate on the content."
     }
@@ -488,7 +468,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_messe_1",
     "page": "/events/messe",
     "category": "av",
-    "price": 595,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Stand med skærm",
@@ -507,7 +486,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 0,
       "usecase_da": "Et tydeligt budskab på få kvadratmeter.",
       "usecase_en": "A clear message in a compact space."
     }
@@ -516,7 +494,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_messe_2",
     "page": "/events/messe",
     "category": "av",
-    "price": 2020,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Stand med præsentationslyd",
@@ -556,7 +533,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 110,
       "usecase_da": "Et tydeligt budskab på få kvadratmeter.",
       "usecase_en": "A clear message in a compact space."
     }
@@ -565,7 +541,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_produktlancering_1",
     "page": "/events/produktlancering",
     "category": "av",
-    "price": 1460,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Lancering med skærm",
@@ -598,7 +573,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 445
         }
       ],
-      "discount": 75,
       "usecase_da": "Fra afsløring til præsentation.",
       "usecase_en": "From the reveal to the presentation."
     }
@@ -607,7 +581,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_produktlancering_2",
     "page": "/events/produktlancering",
     "category": "av",
-    "price": 2725,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Lancering med lys og stor lyd",
@@ -661,7 +634,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 145,
       "usecase_da": "Fra afsløring til præsentation.",
       "usecase_en": "From the reveal to the presentation."
     }
@@ -670,7 +642,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_reception_1",
     "page": "/events/reception",
     "category": "lyd",
-    "price": 1080,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Reception med tale og musik",
@@ -703,7 +674,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 445
         }
       ],
-      "discount": 55,
       "usecase_da": "Musik og taler med plads til samtalen.",
       "usecase_en": "Music and speeches with space for conversation."
     }
@@ -712,7 +682,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_reception_2",
     "page": "/events/reception",
     "category": "lyd",
-    "price": 2160,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Reception med stemningslys",
@@ -759,7 +728,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 115,
       "usecase_da": "Musik og taler med plads til samtalen.",
       "usecase_en": "Music and speeches with space for conversation."
     }
@@ -768,7 +736,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_fredagsbar_1",
     "page": "/events/fredagsbar",
     "category": "lyd",
-    "price": 1080,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Fredagsbar med musik",
@@ -801,7 +768,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 445
         }
       ],
-      "discount": 55,
       "usecase_da": "Fra arbejdsdag til en god aften sammen.",
       "usecase_en": "From the working day to a good evening together."
     }
@@ -810,7 +776,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_fredagsbar_2",
     "page": "/events/fredagsbar",
     "category": "lyd",
-    "price": 2115,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Fredagsbar med dansegulv",
@@ -857,7 +822,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 445
         }
       ],
-      "discount": 110,
       "usecase_da": "Fra arbejdsdag til en god aften sammen.",
       "usecase_en": "From the working day to a good evening together."
     }
@@ -866,7 +830,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_firmafest_1",
     "page": "/events/firmafest",
     "category": "lyd",
-    "price": 1595,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Firmafest med tale og musik",
@@ -906,7 +869,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 345
         }
       ],
-      "discount": 85,
       "usecase_da": "Taler ved bordene. Musik på dansegulvet.",
       "usecase_en": "Dinner speeches. Music on the dance floor."
     }
@@ -915,7 +877,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_firmafest_2",
     "page": "/events/firmafest",
     "category": "lyd",
-    "price": 3005,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Firmafest med bas og lys",
@@ -976,7 +937,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 160,
       "usecase_da": "Taler ved bordene. Musik på dansegulvet.",
       "usecase_en": "Dinner speeches. Music on the dance floor."
     }
@@ -985,7 +945,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_koncert_1",
     "page": "/events/koncert",
     "category": "lyd",
-    "price": 1500,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Akustisk livesæt",
@@ -1025,7 +984,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 345
         }
       ],
-      "discount": 80,
       "usecase_da": "Et nærværende livesæt med styr på lyden.",
       "usecase_en": "An intimate live set with sound taken care of."
     }
@@ -1034,7 +992,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_koncert_2",
     "page": "/events/koncert",
     "category": "lyd",
-    "price": 2625,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Live med ekstra bas og lys",
@@ -1095,7 +1052,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 140,
       "usecase_da": "Et nærværende livesæt med styr på lyden.",
       "usecase_en": "An intimate live set with sound taken care of."
     }
@@ -1104,7 +1060,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_bryllup_1",
     "page": "/events/bryllup",
     "category": "lyd",
-    "price": 1595,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Bryllup med taler og musik",
@@ -1144,7 +1099,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 345
         }
       ],
-      "discount": 85,
       "usecase_da": "Fra den første tale til den sidste dans.",
       "usecase_en": "From the first speech to the last dance."
     }
@@ -1153,7 +1107,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_bryllup_2",
     "page": "/events/bryllup",
     "category": "lyd",
-    "price": 3005,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Bryllup med dansegulv og lys",
@@ -1214,7 +1167,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 160,
       "usecase_da": "Fra den første tale til den sidste dans.",
       "usecase_en": "From the first speech to the last dance."
     }
@@ -1223,7 +1175,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_privatfest_1",
     "page": "/events/privatfest",
     "category": "lyd",
-    "price": 655,
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
     "name_da": "Privatfest med musik",
@@ -1249,7 +1200,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 95
         }
       ],
-      "discount": 35,
       "usecase_da": "Den rigtige lyd til jeres lokale og gæster.",
       "usecase_en": "The right sound for your room and guests."
     }
@@ -1258,7 +1208,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_privatfest_2",
     "page": "/events/privatfest",
     "category": "lyd",
-    "price": 1645,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Privatfest med lyd og lys",
@@ -1298,7 +1247,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 445
         }
       ],
-      "discount": 85,
       "usecase_da": "Den rigtige lyd til jeres lokale og gæster.",
       "usecase_en": "The right sound for your room and guests."
     }
@@ -1307,7 +1255,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_filmaften_1",
     "page": "/events/filmaften",
     "category": "av",
-    "price": 1035,
     "image": "/images/product-skaerm-white.webp",
     "showPartImages": true,
     "name_da": "Fællesvisning på skærm",
@@ -1333,7 +1280,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 495
         }
       ],
-      "discount": 55,
       "usecase_da": "Et stort billede og lyd, der følger med.",
       "usecase_en": "A big picture with sound to match."
     }
@@ -1342,7 +1288,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_filmaften_2",
     "page": "/events/filmaften",
     "category": "av",
-    "price": 1595,
     "image": "/images/product-projektor-pro-v2-white.webp",
     "showPartImages": true,
     "name_da": "Filmaften med projektor",
@@ -1382,7 +1327,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 95
         }
       ],
-      "discount": 85,
       "usecase_da": "Et stort billede og lyd, der følger med.",
       "usecase_en": "A big picture with sound to match."
     }
@@ -1391,7 +1335,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_udendoers_1",
     "page": "/events/udendoers",
     "category": "lyd",
-    "price": 560,
     "image": "/images/product-thumpgo-v2-white.webp",
     "showPartImages": true,
     "name_da": "Udendørs tale",
@@ -1417,7 +1360,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 95
         }
       ],
-      "discount": 30,
       "usecase_da": "Musik og tale under åben himmel.",
       "usecase_en": "Music and speech in the open air."
     }
@@ -1426,7 +1368,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_udendoers_2",
     "page": "/events/udendoers",
     "category": "lyd",
-    "price": 750,
     "image": "/images/product-soundboks-v2-white.webp",
     "showPartImages": true,
     "name_da": "Udendørs musik og tale",
@@ -1452,7 +1393,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 95
         }
       ],
-      "discount": 40,
       "usecase_da": "Musik og tale under åben himmel.",
       "usecase_en": "Music and speech in the open air."
     }
@@ -1461,7 +1401,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_forening_1",
     "page": "/events/forening",
     "category": "lyd",
-    "price": 560,
     "image": "/images/product-thumpgo-v2-white.webp",
     "showPartImages": true,
     "name_da": "Klubdag med mikrofon",
@@ -1487,7 +1426,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 95
         }
       ],
-      "discount": 30,
       "usecase_da": "Beskeder, præmier og musik til fællesskabet.",
       "usecase_en": "Announcements, awards and music for your community."
     }
@@ -1496,7 +1434,6 @@ export const situationPackages: RentalProduct[] = [
     "id": "event_forening_2",
     "page": "/events/forening",
     "category": "lyd",
-    "price": 1835,
     "image": "/images/product-festival-v2-white.webp",
     "showPartImages": true,
     "name_da": "Klubhus med lyd og billede",
@@ -1536,7 +1473,6 @@ export const situationPackages: RentalProduct[] = [
           "price": 595
         }
       ],
-      "discount": 95,
       "usecase_da": "Beskeder, præmier og musik til fællesskabet.",
       "usecase_en": "Announcements, awards and music for your community."
     }

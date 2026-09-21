@@ -1,3 +1,4 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Wireless Microphone Rental Copenhagen | 445 DKK | Lejhøjtaler.dk",
+  title: `Wireless Microphone Rental Copenhagen | ${prisDkk("traadloes_mikrofon")} | Lejhøjtaler.dk`,
   description:
-    "Rent a wireless handheld microphone in Copenhagen for 445 DKK per weekend. Receiver, batteries and cable included, plugs straight into our speakers. Pay on pickup.",
+    `Rent a wireless handheld microphone in Copenhagen for ${prisDkk("traadloes_mikrofon")} per weekend. Receiver, batteries and cable included, plugs straight into our speakers. Pay on pickup.`,
   keywords: [
     "wireless microphone rental copenhagen",
     "microphone rental copenhagen",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-mikrofon-v2.webp"),
-    title: "Wireless Microphone Rental Copenhagen | 445 DKK",
+    title: `Wireless Microphone Rental Copenhagen | ${prisDkk("traadloes_mikrofon")}`,
     description:
       "Wireless handheld microphone for speeches, weddings and events. Receiver and cables included. Book online.",
     url: "https://lejhojtaler.dk/en/traadloes-mikrofon",
@@ -37,7 +38,6 @@ export default function Page() {
       locale="en"
       slug="en/traadloes-mikrofon"
       name="Wireless microphone"
-      price={445}
       headline="Rent a wireless microphone in Copenhagen"
       sub="Shure BLX24 with SM58, a stage-quality wireless handheld microphone for speeches, weddings and events."
       image="/images/product-mikrofon-pro-v2-white.webp"

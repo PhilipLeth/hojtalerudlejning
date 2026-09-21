@@ -1,12 +1,13 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Karaoke-festpakken København | 1.825 kr | Lejhøjtaler.dk",
+  title: `Lej Karaoke-festpakken København | ${prisKr("pakke_karaoke_fest")} | Lejhøjtaler.dk`,
   description:
-    "Karaoke-festpakken med maskine, 55\" storskærm og store højtalere, karaoke til op til 100 gæster for 1.825 kr. Spar 260 kr. Book online.",
+    `Karaoke-festpakken med maskine, 55\" storskærm og store højtalere, karaoke til op til 100 gæster for ${prisKr("pakke_karaoke_fest")}. Spar ${rabatKr("pakke_karaoke_fest")}. Book online.`,
   keywords: ["stor karaoke pakke", "karaoke anlæg til fest", "karaoke firmafest leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/pakke-karaoke-fest",
@@ -14,9 +15,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-karaoke-fest-v2.webp"),
-    title: "Lej Karaoke-festpakken København | 1.825 kr",
+    title: `Lej Karaoke-festpakken København | ${prisKr("pakke_karaoke_fest")}`,
     description:
-      "Karaoke-festpakken med maskine, 55\" storskærm og store højtalere, karaoke til op til 100 gæster for 1.825 kr. Spar 260 kr. Book online.",
+      `Karaoke-festpakken med maskine, 55\" storskærm og store højtalere, karaoke til op til 100 gæster for ${prisKr("pakke_karaoke_fest")}. Spar ${rabatKr("pakke_karaoke_fest")}. Book online.`,
     url: "https://lejhojtaler.dk/pakke-karaoke-fest",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,13 +30,12 @@ export default function Page() {
     <ProductLanding
       slug="pakke-karaoke-fest"
       name="Karaoke-festpakken"
-      price={1825}
       headline="Karaoke-festpakken, op til 100 pers."
-      sub={'Karaokemaskine + 55" storskærm + store højtalere. Spar 260 kr.'}
+      sub={`Karaokemaskine + 55" storskærm + store højtalere. Spar ${rabatKr("pakke_karaoke_fest")}.`}
       image="/images/product-pakke-karaoke-fest-v2-white.webp"
       imageAlt="Stor karaokepakke med storskærm og højtalere til leje"
       productId="pakke_karaoke_fest"
-      bullets={["Singing Machine + 2 trådløse mikrofoner", "55\" LED-skærm på 3-fod stativ", "2× 12\" EV-højtalere med stativer", "Karaoke til op til 100 personer", "Spar 260 kr ift. enkeltpriser"]}
+      bullets={["Singing Machine + 2 trådløse mikrofoner", "55\" LED-skærm på 3-fod stativ", "2× 12\" EV-højtalere med stativer", "Karaoke til op til 100 personer", `Spar ${rabatKr("pakke_karaoke_fest")} ift. enkeltpriser`]}
     />
   );
 }

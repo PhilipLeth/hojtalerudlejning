@@ -1,3 +1,4 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import UpsellBox from "@/components/UpsellBox";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Large Screen Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
+  title: `Large Screen Rental Copenhagen | ${prisDkk("skaerm_55")} | Lejhøjtaler.dk`,
   description:
-    "Rent a 55\" LED display on a stand in Copenhagen for 595 DKK. Adjustable height, HDMI cable included, for meetings, conferences and karaoke. Book online.",
+    `Rent a 55\" LED display on a stand in Copenhagen for ${prisDkk("skaerm_55")}. Adjustable height, HDMI cable included, for meetings, conferences and karaoke. Book online.`,
   keywords: ["large screen rental copenhagen", "tv screen hire event", "55 inch display rental", "screen for conference copenhagen", "presentation screen rental"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/skaerm",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-skaerm.webp"),
-    title: "Large screen rental Copenhagen | 595 DKK",
+    title: `Large screen rental Copenhagen | ${prisDkk("skaerm_55")}`,
     description: "55\" LED display on a stand. Works in daylight, sharper than a projector.",
     url: "https://lejhojtaler.dk/en/skaerm",
     siteName: "Lejhøjtaler.dk",
@@ -30,7 +31,6 @@ export default function Page() {
       locale="en"
       slug="en/skaerm"
       name="Large screen"
-      price={595}
       headline="Rent a large screen in Copenhagen"
       sub={"55\" LED display on a tripod stand. Works in daylight, sharper than a projector."}
       image="/images/product-skaerm-white.webp"

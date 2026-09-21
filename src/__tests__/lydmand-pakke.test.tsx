@@ -1,3 +1,4 @@
+import { catalogPrice } from "@/lib/products";
 /**
  * Pakkerne med lydmand har kørslen MED i prisen (11. sept 2026).
  *
@@ -53,8 +54,10 @@ describe("Pakke med lydmand i bookingen", () => {
     fireEvent.change(screen.getByPlaceholderText("Leveringsadresse i København"), {
       target: { value: "Amagerbrogade 100, 2300 København S" },
     });
-    // Pakkens pris — ikke pakken plus 795 kr. Produktarket 17. sept 2026: 5710 kr (før 5995)
-    expect(screen.getAllByText("5710 kr").length).toBeGreaterThan(0);
+    // Pakkens pris — ikke pakken plus 795 kr. Beløbet slås op, fordi
+    // pakkeprisen er udledt af delene (4 timer lydmand + anlæg − rabat).
+    const pakkepris = catalogPrice("pakke_lydmand_fest");
+    expect(screen.getAllByText(`${pakkepris} kr`).length).toBeGreaterThan(0);
     expect(screen.queryByText("6505 kr")).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByText("Videre"));
@@ -72,7 +75,7 @@ describe("Pakke med lydmand i bookingen", () => {
       expect(body.deliveryOptionId).toBe("levering_begge");
       expect(body.addonIds).not.toContain("levering_begge");
       expect(body.deliveryAddress).toBe("Amagerbrogade 100, 2300 København S");
-      expect(body.total).toBe(5710);
+      expect(body.total).toBe(pakkepris);
     });
   });
 

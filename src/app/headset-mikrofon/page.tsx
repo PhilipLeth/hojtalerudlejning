@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Headset-Mikrofon København | Fra 445 kr | Lejhøjtaler.dk",
+  title: `Lej Headset-Mikrofon København | Fra ${prisKr("headset")} | Lejhøjtaler.dk`,
   description:
-    "Lej trådløst headset-mikrofon i København fra 445 kr/weekend. Hands-free mikrofon til præsentationer og konferencer. Betal ved afhentning.",
+    `Lej trådløst headset-mikrofon i København fra ${prisKr("headset")}/weekend. Hands-free mikrofon til præsentationer og konferencer. Betal ved afhentning.`,
   keywords: [
     "lej headset mikrofon",
     "headset mikrofon udlejning",
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-headset-v2.webp"),
-    title: "Lej Headset-Mikrofon København | Fra 445 kr",
+    title: `Lej Headset-Mikrofon København | Fra ${prisKr("headset")}`,
     description:
-      "Lej trådløst headset-mikrofon i København fra 445 kr/weekend. Hands-free mikrofon til præsentationer og konferencer. Betal ved afhentning.",
+      `Lej trådløst headset-mikrofon i København fra ${prisKr("headset")}/weekend. Hands-free mikrofon til præsentationer og konferencer. Betal ved afhentning.`,
     url: "https://lejhojtaler.dk/headset-mikrofon",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -36,7 +37,6 @@ export default function HeadsetMikrofonPage() {
     <ProductLanding
       slug="headset-mikrofon"
       name="Trådløst headset-mikrofon"
-      price={445}
       headline="Lej headset-mikrofon"
       sub="Shure BLX14 trådløst headset til præsentationer og konferencer. Hands-free."
       image="/images/product-headset-pro-v2-white.webp"

@@ -1,3 +1,4 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,14 +6,14 @@ import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "DJ headphone rental Copenhagen | Fun Generation HP 5 | 100 DKK",
+  title: `DJ headphone rental Copenhagen | Fun Generation HP 5 | ${prisDkk("dj_headphones")}`,
   description:
-    "Hire closed-back DJ headphones in Copenhagen for 100 DKK. Fun Generation HP 5 with mini-jack and 6.3 mm adapter. Included with the DJ controller, or book them on their own.",
+    `Hire closed-back DJ headphones in Copenhagen for ${prisDkk("dj_headphones")}. Fun Generation HP 5 with mini-jack and 6.3 mm adapter. Included with the DJ controller, or book them on their own.`,
   keywords: ["dj headphone rental copenhagen", "hire dj headphones", "dj headphones hire"],
   alternates: { canonical: "https://lejhojtaler.dk/en/hovedtelefoner", languages: localeAlternates("/hovedtelefoner") },
   openGraph: {
     images: ogImages(),
-    title: "DJ headphone rental | 100 DKK",
+    title: `DJ headphone rental | ${prisDkk("dj_headphones")}`,
     description: "Fun Generation HP 5. Included with the DJ controller, or book them on their own.",
     url: "https://lejhojtaler.dk/en/hovedtelefoner",
     locale: "en_GB",
@@ -26,7 +27,6 @@ export default function Page() {
       locale="en"
       slug="en/hovedtelefoner"
       name="DJ headphones · Fun Generation HP 5"
-      price={100}
       headline="Hire DJ headphones"
       sub="DJ headphones are not available for rent right now. The DJ system is an AlphaTheta XDJ, and DJs bring their own headphones. bring your own deck."
       image="/images/product-hovedtelefoner.webp"
@@ -39,7 +39,7 @@ export default function Page() {
         "Mini-jack and 6.3 mm adapter included",
         "3 m cable",
         "Included when you hire the DJ controller",
-        "100 DKK for the whole rental period",
+        `${prisDkk("dj_headphones")} for the whole rental period`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

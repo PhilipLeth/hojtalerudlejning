@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
@@ -5,9 +6,9 @@ import UpsellBox from "@/components/UpsellBox";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Storskærm København | 595 kr | Lejhøjtaler.dk",
+  title: `Lej Storskærm København | ${prisKr("skaerm_55")} | Lejhøjtaler.dk`,
   description:
-    "Lej en 55\" LED-storskærm på stativ i København for 595 kr. Justerbar højde, HDMI-kabel med, til møder, konferencer og karaoke. Book online.",
+    `Lej en 55\" LED-storskærm på stativ i København for ${prisKr("skaerm_55")}. Justerbar højde, HDMI-kabel med, til møder, konferencer og karaoke. Book online.`,
   keywords: [
     "lej storskærm",
     "skærm udlejning",
@@ -22,9 +23,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-skaerm.webp"),
-    title: "Lej Storskærm København | 595 kr",
+    title: `Lej Storskærm København | ${prisKr("skaerm_55")}`,
     description:
-      "Lej en 55\" LED-storskærm på stativ i København for 595 kr. Justerbar højde, HDMI-kabel med, til møder, konferencer og karaoke. Book online.",
+      `Lej en 55\" LED-storskærm på stativ i København for ${prisKr("skaerm_55")}. Justerbar højde, HDMI-kabel med, til møder, konferencer og karaoke. Book online.`,
     url: "https://lejhojtaler.dk/skaerm",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -37,7 +38,6 @@ export default function SkaermPage() {
     <ProductLanding
       slug="skaerm"
       name="Storskærm"
-      price={595}
       headline="Lej storskærm i København"
       sub='55" LED-skærm på 3-fod stativ. Fungerer i dagslys, skarpere end projektor.'
       image="/images/product-skaerm-white.webp"

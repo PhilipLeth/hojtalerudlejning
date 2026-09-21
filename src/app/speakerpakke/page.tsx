@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Speakerpakken | Mellem højtalerpakke + håndholdt mikrofon | 795 kr | Lejhøjtaler.dk",
+  title: `Speakerpakken | Mellem højtalerpakke + håndholdt mikrofon | ${prisKr("pakke_speaker_mik")} | Lejhøjtaler.dk`,
   description:
-    "Speakerpakken: mellem højtalerpakke og håndholdt mikrofon med kabel for 795 kr, spar 95 kr. Musik og taler til 30-50 gæster, mikrofonen går direkte i højtaleren. Lejes i København.",
+    `Speakerpakken: mellem højtalerpakke og håndholdt mikrofon med kabel for ${prisKr("pakke_speaker_mik")}, spar ${rabatKr("pakke_speaker_mik")}. Musik og taler til 30-50 gæster, mikrofonen går direkte i højtaleren. Lejes i København.`,
   keywords: ["højtaler og mikrofon leje", "lyd til tale og musik", "speakerpakke", "lej anlæg med mikrofon københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/speakerpakke",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-festival-v2.webp"),
-    title: "Speakerpakken | Højtalere + mikrofon | 795 kr",
-    description: "Mellem højtalerpakke + håndholdt mikrofon. Lyd og taler til 30-50 gæster, spar 95 kr.",
+    title: `Speakerpakken | Højtalere + mikrofon | ${prisKr("pakke_speaker_mik")}`,
+    description: `Mellem højtalerpakke + håndholdt mikrofon. Lyd og taler til 30-50 gæster, spar ${rabatKr("pakke_speaker_mik")}.`,
     url: "https://lejhojtaler.dk/speakerpakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,9 +30,8 @@ export default function Page() {
     <ProductLanding
       slug="speakerpakke"
       name="Speakerpakken"
-      price={795}
       headline="Speakerpakken, musik og taler uden en mixer imellem"
-      sub="Mellem højtalerpakke + håndholdt mikrofon med kabel. Mikrofonen går direkte i højtaleren, spar 95 kr."
+      sub={`Mellem højtalerpakke + håndholdt mikrofon med kabel. Mikrofonen går direkte i højtaleren, spar ${rabatKr("pakke_speaker_mik")}.`}
       image="/images/product-festival-v2-white.webp"
       imageAlt="Speakerpakken med to EV-højtalere og håndholdt mikrofon"
       productId="pakke_speaker_mik"
@@ -42,7 +42,7 @@ export default function Page() {
         "Håndholdt mikrofon med kabel, direkte i højtaleren",
         "Ingen mixer at lære, sæt i og tal",
         "Alle kabler med",
-        "Spar 95 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_speaker_mik")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

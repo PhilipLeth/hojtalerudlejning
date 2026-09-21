@@ -1,3 +1,4 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Soundboks Battery Rental | 395 DKK | Lejhøjtaler.dk",
+  title: `Soundboks Battery Rental | ${prisDkk("batteri")} | Lejhøjtaler.dk`,
   description:
-    "Rent an extra battery for the Soundboks 4 for 395 DKK. Double the playtime without power, for garden parties, beaches and graduation rides. Rent in Copenhagen.",
+    `Rent an extra battery for the Soundboks 4 for ${prisDkk("batteri")}. Double the playtime without power, for garden parties, beaches and graduation rides. Rent in Copenhagen.`,
   keywords: ["extra battery speaker rental", "soundboks extra battery hire", "battery speaker all night"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/ekstra-batteri",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-thumpgo-v2.webp"),
-    title: "Soundboks battery rental | 395 DKK",
+    title: `Soundboks battery rental | ${prisDkk("batteri")}`,
     description: "Extra battery for the Soundboks 4, double the playtime without power.",
     url: "https://lejhojtaler.dk/en/ekstra-batteri",
     siteName: "Lejhøjtaler.dk",
@@ -30,7 +31,6 @@ export default function Page() {
       locale="en"
       slug="en/ekstra-batteri"
       name="Soundboks battery"
-      price={395}
       headline="Rent an extra battery for the Soundboks 4"
       sub="An extra battery for the Soundboks 4, so the party does not end when the first one runs dry."
       image="/images/product-soundboks-batteri-white.webp"

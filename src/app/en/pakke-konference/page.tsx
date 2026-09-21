@@ -1,12 +1,13 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Conference Bundle Rental Copenhagen | 1,485 DKK | Lejhøjtaler.dk",
+  title: `Conference Bundle Rental Copenhagen | ${prisDkk("pakke_konference")} | Lejhøjtaler.dk`,
   description:
-    "Conference bundle with 55\" display, wireless headset and two speakers, ready for the meeting room for 1,485 DKK. Save 150 DKK. Book online in Copenhagen.",
+    `Conference bundle with 55\" display, wireless headset and two speakers, ready for the meeting room for ${prisDkk("pakke_konference")}. Save ${rabatDkk("pakke_konference")}. Book online in Copenhagen.`,
   keywords: ["conference equipment rental copenhagen", "screen and sound for conference hire", "av equipment conference denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/pakke-konference",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-skaerm.webp"),
-    title: "Conference bundle rental | 1,485 DKK",
-    description: "55\" display + wireless headset + small speaker package. Save 150 DKK.",
+    title: `Conference bundle rental | ${prisDkk("pakke_konference")}`,
+    description: `55\" display + wireless headset + small speaker package. Save ${rabatDkk("pakke_konference")}.`,
     url: "https://lejhojtaler.dk/en/pakke-konference",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,9 +30,8 @@ export default function Page() {
       locale="en"
       slug="en/pakke-konference"
       name="Conference bundle"
-      price={1485}
       headline="The conference bundle, ready for the meeting"
-      sub={"55\" display + wireless headset + small speaker package. Save 150 DKK."}
+      sub={`55\" display + wireless headset + small speaker package. Save ${rabatDkk("pakke_konference")}.`}
       image="/images/product-skaerm-white.webp"
       imageAlt="Conference bundle with large screen, headset and speakers"
       productId="pakke_konference"
@@ -40,7 +40,7 @@ export default function Page() {
         "Wireless headset",
         "2× 10\" speakers with Bluetooth",
         "All cables and adapters",
-        "Save 150 DKK compared to single prices",
+        `Save ${rabatDkk("pakke_konference")} compared to single prices`,
       ]}
     />
   );

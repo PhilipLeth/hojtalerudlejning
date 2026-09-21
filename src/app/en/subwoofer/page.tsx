@@ -1,12 +1,13 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Subwoofer 12\" Rental Copenhagen | 495 DKK | Lejhøjtaler.dk",
+  title: `Subwoofer 12\" Rental Copenhagen | ${prisDkk("subwoofer")} | Lejhøjtaler.dk`,
   description:
-    "Rent a Behringer 12\" powered subwoofer in Copenhagen from 495 DKK per weekend. Gives the party the deep bass, fits all our speaker packages. Book online in 2 minutes.",
+    `Rent a Behringer 12\" powered subwoofer in Copenhagen from ${prisDkk("subwoofer")} per weekend. Gives the party the deep bass, fits all our speaker packages. Book online in 2 minutes.`,
   keywords: ["subwoofer rental copenhagen", "subwoofer hire", "behringer subwoofer rental", "bass for party rental", "powered subwoofer hire denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/subwoofer",
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-subwoofer-v2.webp"),
-    title: "Subwoofer 12\" rental Copenhagen | 495 DKK",
+    title: `Subwoofer 12\" rental Copenhagen | ${prisDkk("subwoofer")}`,
     description: "Behringer 12\" powered subwoofer, the deep bass for the party. Fits all our speaker packages. Book online.",
     url: "https://lejhojtaler.dk/en/subwoofer",
     siteName: "Lejhøjtaler.dk",
@@ -29,7 +30,6 @@ export default function Page() {
       locale="en"
       slug="en/subwoofer"
       name={"Subwoofer 12\""}
-      price={495}
       headline="Rent a subwoofer in Copenhagen"
       sub={"Behringer 12\" powered subwoofer, the deep bass that makes the party felt in the body."}
       image="/images/product-subwoofer-v2-white.webp"

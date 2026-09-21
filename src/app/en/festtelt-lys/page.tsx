@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,8 +6,8 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Party tent lights Copenhagen | 870 DKK | Lejhøjtaler.dk",
-  description: "Two strings of fairy lights and four uplights, tent and garden lit for 870 DKK. Save 115 DKK. Rental in Copenhagen.",
+  title: `Party tent lights Copenhagen | ${prisDkk("pakke_festtelt")} | Lejhøjtaler.dk`,
+  description: `Two strings of fairy lights and four uplights, tent and garden lit for ${prisDkk("pakke_festtelt")}. Save ${rabatDkk("pakke_festtelt")}. Rental in Copenhagen.`,
   keywords: ["party tent lighting rental", "fairy lights rental copenhagen", "garden party lights"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/festtelt-lys",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-festtelt-taendt.webp"),
-    title: "Party tent lights Copenhagen | 870 DKK | Lejhøjtaler.dk",
-    description: "20 m of fairy lights (warm white + coloured) and 4 LED uplights. From canteen tent to garden party, save 115 DKK.",
+    title: `Party tent lights Copenhagen | ${prisDkk("pakke_festtelt")} | Lejhøjtaler.dk`,
+    description: `20 m of fairy lights (warm white + coloured) and 4 LED uplights. From canteen tent to garden party, save ${rabatDkk("pakke_festtelt")}.`,
     url: "https://lejhojtaler.dk/en/festtelt-lys",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,9 +30,8 @@ export default function Page() {
       locale="en"
       slug="en/festtelt-lys"
       name="Party tent lights"
-      price={870}
       headline="Party tent lights, tent and garden lit up"
-      sub="20 m of fairy lights (warm white + coloured) and 4 LED uplights. From canteen tent to garden party, save 115 DKK."
+      sub={`20 m of fairy lights (warm white + coloured) and 4 LED uplights. From canteen tent to garden party, save ${rabatDkk("pakke_festtelt")}.`}
       image="/images/product-pakke-festtelt-taendt-white.webp"
       imageAlt="Party tent lights switched on: a warm white string above a coloured string and four LED uplights"
       productId="pakke_festtelt"
@@ -42,7 +42,7 @@ export default function Page() {
         "10 m coloured string for the party",
         "4 LED uplights for canvas, hedge or house wall",
         "Everything handles a Danish summer evening under cover",
-        "Save 115 DKK vs renting the parts separately",
+        `Save ${rabatDkk("pakke_festtelt")} vs renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

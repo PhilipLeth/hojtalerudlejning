@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,8 +6,8 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Stor ungdomsfest-pakke | Diskotek til 100 gæster | 1.860 kr | Lejhøjtaler.dk",
-  description: "2× 12\" højtalere, lysbar, discokugle 40 cm og røgmaskine, et rigtigt diskotek til ungdomsfesten for 1.860 kr. Spar 220 kr. Lejes i København.",
+  title: `Stor ungdomsfest-pakke | Diskotek til 100 gæster | ${prisKr("pakke_ungdomsfest_stor")} | Lejhøjtaler.dk`,
+  description: `2× 12\" højtalere, lysbar, discokugle 40 cm og røgmaskine, et rigtigt diskotek til ungdomsfesten for ${prisKr("pakke_ungdomsfest_stor")}. Spar ${rabatKr("pakke_ungdomsfest_stor")}. Lejes i København.`,
   keywords: ["stor ungdomsfest pakke", "diskotek til fest leje", "lyd og lys til gymnasiefest", "18 års fødselsdag fest udstyr leje", "røgmaskine og discokugle leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/ungdomsfest-pakke-stor",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-ungdomsfest-stor-taendt.webp"),
-    title: "Stor ungdomsfest-pakke | Diskotek til 100 gæster | 1.860 kr | Lejhøjtaler.dk",
-    description: "2× 12\" højtalere, lysbar på stativ, discokugle 40 cm og røgmaskine. Et rigtigt diskotek, spar 220 kr.",
+    title: `Stor ungdomsfest-pakke | Diskotek til 100 gæster | ${prisKr("pakke_ungdomsfest_stor")} | Lejhøjtaler.dk`,
+    description: `2× 12\" højtalere, lysbar på stativ, discokugle 40 cm og røgmaskine. Et rigtigt diskotek, spar ${rabatKr("pakke_ungdomsfest_stor")}.`,
     url: "https://lejhojtaler.dk/ungdomsfest-pakke-stor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,9 +29,8 @@ export default function Side() {
     <ProductLanding
       slug="ungdomsfest-pakke-stor"
       name="Stor ungdomsfest-pakke"
-      price={1860}
       headline="Stor ungdomsfest-pakke, et rigtigt diskotek"
-      sub="To 12&quot; højtalere, lysbar på stativ, discokugle 40 cm og røgmaskine. Forsamlingshuset bliver til en klub, spar 220 kr."
+      sub={`To 12&quot; højtalere, lysbar på stativ, discokugle 40 cm og røgmaskine. Forsamlingshuset bliver til en klub, spar ${rabatKr("pakke_ungdomsfest_stor")}.`}
       image="/images/product-pakke-ungdomsfest-stor-taendt-white.webp"
       imageAlt="Stor ungdomsfest-pakke tændt: to 12-tommer højtalere, lysbar på stativ, discokugle med spot og røgmaskine"
       productId="pakke_ungdomsfest_stor"
@@ -41,7 +41,7 @@ export default function Side() {
         "Lysbar: to farvede lamper og centereffekt på stativ",
         "Discokugle 40 cm med motor og spot, prikker over hele rummet",
         "Røgmaskine med væske, det er røgen, der gør lysstrålerne synlige",
-        "Subwoofer, stativer og mikrofon kan tilvælges, spar 220 kr vs. delene enkeltvis",
+        `Subwoofer, stativer og mikrofon kan tilvælges, spar ${rabatKr("pakke_ungdomsfest_stor")} vs. delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

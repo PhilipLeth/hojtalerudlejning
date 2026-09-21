@@ -1,12 +1,13 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Præsentationspakken København | 695 kr | Lejhøjtaler.dk",
+  title: `Lej Præsentationspakken København | ${prisKr("pakke_praesentation")} | Lejhøjtaler.dk`,
   description:
-    "Præsentationspakken med projektor, 160 cm lærred og håndholdt mikrofon, alt til præsentationen for 695 kr. Spar 90 kr. Book online i København.",
+    `Præsentationspakken med projektor, 160 cm lærred og håndholdt mikrofon, alt til præsentationen for ${prisKr("pakke_praesentation")}. Spar ${rabatKr("pakke_praesentation")}. Book online i København.`,
   keywords: ["præsentationspakke leje", "lej projektor og lærred", "av pakke til møde"],
   alternates: {
     canonical: "https://lejhojtaler.dk/pakke-praesentation",
@@ -14,9 +15,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-projektor.webp"),
-    title: "Lej Præsentationspakken København | 695 kr",
+    title: `Lej Præsentationspakken København | ${prisKr("pakke_praesentation")}`,
     description:
-      "Præsentationspakken med projektor, 160 cm lærred og håndholdt mikrofon, alt til præsentationen for 695 kr. Spar 90 kr. Book online i København.",
+      `Præsentationspakken med projektor, 160 cm lærred og håndholdt mikrofon, alt til præsentationen for ${prisKr("pakke_praesentation")}. Spar ${rabatKr("pakke_praesentation")}. Book online i København.`,
     url: "https://lejhojtaler.dk/pakke-praesentation",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,13 +30,12 @@ export default function Page() {
     <ProductLanding
       slug="pakke-praesentation"
       name="Præsentationspakken"
-      price={695}
       headline="Præsentationspakken, alt til mødet"
-      sub={'Projektor + lærred 160 cm + håndholdt mikrofon. Spar 90 kr ift. enkeltpriser.'}
+      sub={`Projektor + lærred 160 cm + håndholdt mikrofon. Spar ${rabatKr("pakke_praesentation")} ift. enkeltpriser.`}
       image="/images/product-projektor-white.webp"
       imageAlt="Præsentationspakke med projektor, lærred og mikrofon"
       productId="pakke_praesentation"
-      bullets={["Full HD projektor", "Lærred 160 cm på stativ", "Håndholdt mikrofon m. kabel", "Alle kabler inkluderet", "Spar 90 kr ift. at leje delene enkeltvis"]}
+      bullets={["Full HD projektor", "Lærred 160 cm på stativ", "Håndholdt mikrofon m. kabel", "Alle kabler inkluderet", `Spar ${rabatKr("pakke_praesentation")} ift. at leje delene enkeltvis`]}
     />
   );
 }

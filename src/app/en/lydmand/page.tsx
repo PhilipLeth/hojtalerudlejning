@@ -2,13 +2,13 @@ import { Metadata } from "next";
 import BundleGrid from "@/components/BundleGrid";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
-import { LYDMAND_PAKKER } from "@/lib/products";
+import { LYDMAND_PAKKER, prisDkk } from "@/lib/products";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Sound Engineer Hire Copenhagen | 1,000 DKK/hour | Lejhøjtaler.dk",
+  title: `Sound Engineer Hire Copenhagen | ${prisDkk("lydmand")}/hour | Lejhøjtaler.dk`,
   description:
-    "Hire a sound engineer for your party or corporate event in Copenhagen, 1,000 DKK per hour incl. VAT. The AV technician sets up, runs the sound check and controls sound and microphones while you enjoy the event.",
+    `Hire a sound engineer for your party or corporate event in Copenhagen, ${prisDkk("lydmand")} per hour incl. VAT. The AV technician sets up, runs the sound check and controls sound and microphones while you enjoy the event.`,
   keywords: [
     "sound engineer hire copenhagen",
     "av technician copenhagen",
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-lydmand.webp"),
-    title: "Sound Engineer Hire Copenhagen | 1,000 DKK/hour",
+    title: `Sound Engineer Hire Copenhagen | ${prisDkk("lydmand")}/hour`,
     description:
-      "AV technician on site: setup, sound check and running the sound during your event. 1,000 DKK per hour. Book online.",
+      `AV technician on site: setup, sound check and running the sound during your event. ${prisDkk("lydmand")} per hour. Book online.`,
     url: "https://lejhojtaler.dk/en/lydmand",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -38,7 +38,6 @@ export default function SoundEngineerPage() {
       locale="en"
       slug="en/lydmand"
       name="Sound engineer"
-      price={1000}
       priceUnit="/hour"
       headline="Hire a sound engineer for your event"
       sub="An AV technician who sets up, runs the sound check and controls the sound, so you can enjoy the party instead of standing at the mixer."
@@ -62,7 +61,7 @@ export default function SoundEngineerPage() {
         },
         {
           q: "How much does a sound engineer cost?",
-          a: "1,000 DKK per hour incl. VAT. When you add the sound engineer in the booking, you set the number of hours yourself, and if you like, enter when the party starts and ends and we work out the hours. The packages below include 4 hours.",
+          a: `${prisDkk("lydmand")} per hour incl. VAT. When you add the sound engineer in the booking, you set the number of hours yourself, and if you like, enter when the party starts and ends and we work out the hours. The packages below include 4 hours.`,
         },
         {
           q: "Do I still have to collect the equipment myself?",

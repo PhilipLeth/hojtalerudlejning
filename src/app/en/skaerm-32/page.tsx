@@ -1,15 +1,15 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
-import { catalogDiscount, catalogPartsPrice, prisTekst } from "@/lib/products";
+import { catalogDiscount, catalogPartsPrice, prisDkk, prisTekst } from "@/lib/products";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "32\" Screen on Stand Rental Copenhagen | 395 DKK | Lejhøjtaler.dk",
+  title: `32\" Screen on Stand Rental Copenhagen | ${prisDkk("skaerm_32")} | Lejhøjtaler.dk`,
   description:
-    "Rent a 32\" LED screen on a stand in Copenhagen for 395 DKK. Compact and easy to move, perfect for karaoke and the small meeting room. Book online.",
+    `Rent a 32\" LED screen on a stand in Copenhagen for ${prisDkk("skaerm_32")}. Compact and easy to move, perfect for karaoke and the small meeting room. Book online.`,
   keywords: ["32 inch screen rental copenhagen", "screen on stand hire", "small screen for event rental", "karaoke screen rental denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/skaerm-32",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-skaerm-32.webp"),
-    title: "32\" screen on stand rental | 395 DKK",
+    title: `32\" screen on stand rental | ${prisDkk("skaerm_32")}`,
     description: "32\" LED screen on a tripod stand, compact, easy to move and ready in 5 minutes.",
     url: "https://lejhojtaler.dk/en/skaerm-32",
     siteName: "Lejhøjtaler.dk",
@@ -32,7 +32,6 @@ export default function Page() {
       locale="en"
       slug="en/skaerm-32"
       name={"32\" Screen"}
-      price={395}
       headline={"Rent a 32\" screen on a stand"}
       sub={"32\" LED screen on a tripod stand, compact, easy to move and ready in 5 minutes."}
       image="/images/product-skaerm-32-white.webp"

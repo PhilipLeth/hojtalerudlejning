@@ -3,7 +3,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
-import { LADDER_FEST, type LadderStep } from "@/lib/products";
+import { LADDER_FEST, ladderPrice, type LadderStep } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
 import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
@@ -42,7 +42,8 @@ function kr(n: number) {
 }
 
 function Trin({ step, fremhaevet }: { step: LadderStep; fremhaevet: boolean }) {
-  const erTilbud = step.pris === null;
+  const pris = ladderPrice(step);
+  const erTilbud = pris === null;
   const href = erTilbud ? step.href : step.productId ? bookHref(step.productId) : step.href;
 
   return (
@@ -63,7 +64,7 @@ function Trin({ step, fremhaevet }: { step: LadderStep; fremhaevet: boolean }) {
       <p className="mt-2 flex-1 text-sm text-white/60">{step.hvad}</p>
 
       <p className="mt-4 text-3xl font-bold">
-        {erTilbud ? "Efter tilbud" : `${kr(step.pris!)} kr`}
+        {erTilbud ? "Efter tilbud" : `${kr(pris!)} kr`}
         {!erTilbud && <span className="ml-1 text-sm font-normal text-white/40">/ weekend</span>}
       </p>
       <p className="mt-1 text-xs text-white/40">

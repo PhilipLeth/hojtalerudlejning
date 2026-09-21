@@ -1,12 +1,13 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Shure BLX Wireless Microphone Rental Copenhagen | 595 DKK | Lejhøjtaler.dk",
+  title: `Shure BLX Wireless Microphone Rental Copenhagen | ${prisDkk("traadloes_mikrofon_pro")} | Lejhøjtaler.dk`,
   description:
-    "Rent a Shure BLX wireless microphone in Copenhagen for 595 DKK per weekend. Stage-quality sound for conferences, events and live performance. Pay on pickup.",
+    `Rent a Shure BLX wireless microphone in Copenhagen for ${prisDkk("traadloes_mikrofon_pro")} per weekend. Stage-quality sound for conferences, events and live performance. Pay on pickup.`,
   keywords: [
     "shure microphone rental copenhagen",
     "professional microphone rental copenhagen",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-mikrofon-pro-v2.webp"),
-    title: "Shure BLX Wireless Microphone Rental Copenhagen | 595 DKK",
+    title: `Shure BLX Wireless Microphone Rental Copenhagen | ${prisDkk("traadloes_mikrofon_pro")}`,
     description:
       "Shure BLX wireless microphone, stage quality for events and conferences. Book online.",
     url: "https://lejhojtaler.dk/en/traadloes-mikrofon-pro",
@@ -35,7 +36,6 @@ export default function Page() {
       locale="en"
       slug="en/traadloes-mikrofon-pro"
       name="Wireless microphone PRO"
-      price={595}
       headline="Rent a Shure BLX wireless microphone"
       sub="The wireless microphone PRO is not available for rent right now as a separate product. Our regular wireless microphone is now the Shure BLX24 with SM58 at 445 DKK."
       image="/images/product-mikrofon-pro-v2-white.webp"

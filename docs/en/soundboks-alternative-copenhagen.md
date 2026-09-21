@@ -35,7 +35,7 @@ That means:
 
 - **No battery anxiety.** With mains power the music runs all night without interruption.
 - **Professional sound quality.** Powered speakers with clear treble and deep bass — not the compressed sound you know from a battery speaker.
-- **A setup that scales.** The small speaker package covers up to 30 people, the large one 30-50. For more than that, Party package 150 (1.915 DKK) and Party package 250 (3.210 DKK) take over with a subwoofer and stands.
+- **A setup that scales.** The small speaker package covers up to 30 people, the large one 30-50. For more than that, Party package 150 (1.860 DKK) and Party package 250 (3.140 DKK) take over with a subwoofer and stands.
 
 ## What does it cost?
 

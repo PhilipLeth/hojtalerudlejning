@@ -1,12 +1,13 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Lej Stor højtalerpakke København | 1.295 kr | Lejhøjtaler.dk",
+  title: `Lej Stor højtalerpakke København | ${prisKr("hojtaler_100")} | Lejhøjtaler.dk`,
   description:
-    "Lej højtalerpakke til 50-100 gæster i København for 1.295 kr. 2× 12\" EV ZLX 12P G2 med Behringer 12\" subwoofer. Trinnet over Mellem højtalerpakke.",
+    `Lej højtalerpakke til 50-100 gæster i København for ${prisKr("hojtaler_100")}. 2× 12\" EV ZLX 12P G2 med Behringer 12\" subwoofer. Trinnet over Mellem højtalerpakke.`,
   keywords: [
     "højtalerpakke med subwoofer",
     "lej PA anlæg med bas",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-festival-bas-v2.webp"),
-    title: "Lej Stor højtalerpakke | 1.295 kr",
+    title: `Lej Stor højtalerpakke | ${prisKr("hojtaler_100")}`,
     description: '2× 12" EV ZLX 12P G2 + Behringer 12" subwoofer. Til 50-100 gæster.',
     url: "https://lejhojtaler.dk/hojtalerpakke-bas",
     siteName: "Lejhøjtaler.dk",
@@ -33,7 +34,6 @@ export default function HojtalerpakkeBasPage() {
     <ProductLanding
       slug="hojtalerpakke-bas"
       name="Stor højtalerpakke"
-      price={1295}
       headline="Lej højtalerpakke til 50-100 gæster"
       sub={'De store 12" EV ZLX 12P G2 med en Behringer 12" subwoofer, trinnet over Mellem højtalerpakke. Stativer kan tilkøbes.'}
       image="/images/product-hojtalerpakke-stor-white.webp"

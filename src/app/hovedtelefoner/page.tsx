@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,14 +6,14 @@ import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Lej DJ-hovedtelefoner København | Fun Generation HP 5 | 100 kr",
+  title: `Lej DJ-hovedtelefoner København | Fun Generation HP 5 | ${prisKr("dj_headphones")}`,
   description:
-    "Lej lukkede DJ-hovedtelefoner i København for 100 kr. Fun Generation HP 5 med mini-jack og 6,3 mm-adapter. Følger med DJ-pulten, og kan bookes alene online.",
+    `Lej lukkede DJ-hovedtelefoner i København for ${prisKr("dj_headphones")}. Fun Generation HP 5 med mini-jack og 6,3 mm-adapter. Følger med DJ-pulten, og kan bookes alene online.`,
   keywords: ["lej dj hovedtelefoner", "dj headphones leje", "hovedtelefoner udlejning københavn"],
   alternates: { canonical: "https://lejhojtaler.dk/hovedtelefoner", languages: localeAlternates("/hovedtelefoner") },
   openGraph: {
     images: ogImages(),
-    title: "Lej DJ-hovedtelefoner | 100 kr",
+    title: `Lej DJ-hovedtelefoner | ${prisKr("dj_headphones")}`,
     description: "Fun Generation HP 5. Følger med DJ-pulten, eller book dem alene.",
     url: "https://lejhojtaler.dk/hovedtelefoner",
     locale: "da_DK",
@@ -25,7 +26,6 @@ export default function Page() {
     <ProductLanding
       slug="hovedtelefoner"
       name="DJ-hovedtelefoner · Fun Generation HP 5"
-      price={100}
       headline="Lej DJ-hovedtelefoner"
       sub="DJ-hovedtelefoner udlejes ikke lige nu. DJ-pulten er en AlphaTheta XDJ, og hovedtelefoner medbringer DJ'en selv."
       image="/images/product-hovedtelefoner.webp"
@@ -38,7 +38,7 @@ export default function Page() {
         "Mini-jack og 6,3 mm-adapter med",
         "3 m kabel",
         "Følger med, når I lejer DJ-pulten",
-        "100 kr for hele lejeperioden",
+        `${prisKr("dj_headphones")} for hele lejeperioden`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

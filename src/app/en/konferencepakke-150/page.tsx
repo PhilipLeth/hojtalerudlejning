@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Conference Package 150 | Speakers, microphone, headset and screen | 2,165 DKK | Lejhøjtaler.dk",
+  title: `Conference Package 150 | Speakers, microphone, headset and screen | ${prisDkk("pakke_konference_150")} | Lejhøjtaler.dk`,
   description:
-    "Conference package 150 with two 12\" speakers on stands, Shure wireless microphone, headset and 55\" display. For halls with 100-150 participants, 2,165 DKK.",
+    `Conference package 150 with two 12\" speakers on stands, Shure wireless microphone, headset and 55\" display. For halls with 100-150 participants, ${prisDkk("pakke_konference_150")}.`,
   keywords: ["conference equipment rental copenhagen", "microphone and speaker hire", "av equipment for conference denmark", "sound for general assembly rental", "screen and microphone rental"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/konferencepakke-150",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-skaerm.webp"),
-    title: "Conference package 150 | Speakers, microphone, headset and screen | 2,165 DKK",
-    description: "Two 12\" speakers on stands, Shure wireless microphone, headset and 55\" display. For 100-150 participants, 2,165 DKK.",
+    title: `Conference package 150 | Speakers, microphone, headset and screen | ${prisDkk("pakke_konference_150")}`,
+    description: `Two 12\" speakers on stands, Shure wireless microphone, headset and 55\" display. For 100-150 participants, ${prisDkk("pakke_konference_150")}.`,
     url: "https://lejhojtaler.dk/en/konferencepakke-150",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -30,9 +31,8 @@ export default function Page() {
       locale="en"
       slug="en/konferencepakke-150"
       name="Conference package 150"
-      price={2165}
       headline="Conference package 150, so both the speaker and the hall are with you"
-      sub={"2× EV 12\" on stands, Shure wireless microphone, wireless headset and 55\" display. For 100-150 participants, save 210 DKK."}
+      sub={`2× EV 12\" on stands, Shure wireless microphone, wireless headset and 55\" display. For 100-150 participants, save ${rabatDkk("pakke_konference_150")}.`}
       image="/images/product-skaerm-white.webp"
       imageAlt="Conference package with speakers, microphone, headset and large screen"
       productId="pakke_konference_150"
@@ -43,7 +43,7 @@ export default function Page() {
         "Wireless headset so the presenter can move freely",
         "55\" display on a stand with HDMI, slides and video",
         "All cables and power included",
-        "Save 210 DKK compared to renting the parts separately",
+        `Save ${rabatDkk("pakke_konference_150")} compared to renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

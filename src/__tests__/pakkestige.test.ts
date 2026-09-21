@@ -7,6 +7,7 @@ import {
   FEST_LADDER_IDS,
   KATEGORI_PAKKER,
   LADDER_FEST,
+  ladderPrice,
   LYD_LEJLIGHEDSPAKKER,
   LYDMAND_PAKKER,
   OCCASION_PACKAGES,
@@ -49,9 +50,9 @@ describe("Pakkestigen", () => {
     }
   });
 
-  it("prisen på stigen er den samme som produktets pris", () => {
+  it("stigen skriver ikke prisen selv, den slår den op i kataloget", () => {
     for (const trin of medProdukt) {
-      expect(findProdukt(trin.productId!)!.price, `${trin.navn} har forskellig pris`).toBe(trin.pris);
+      expect(ladderPrice(trin), `${trin.navn} har forskellig pris`).toBe(findProdukt(trin.productId!)!.price);
     }
   });
 
@@ -63,7 +64,7 @@ describe("Pakkestigen", () => {
 
   it("trin uden produkt går til tilbud, ikke til en bookingknap", () => {
     for (const trin of alleTrin.filter((t) => t.productId === null)) {
-      expect(trin.pris).toBeNull();
+      expect(ladderPrice(trin)).toBeNull();
       expect(trin.koersel).toBe("tilbud");
       expect(trin.href).toBe("/erhverv#tilbud");
     }

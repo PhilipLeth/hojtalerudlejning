@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import BundleGrid from "@/components/BundleGrid";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
@@ -16,9 +17,9 @@ import { ogImages } from "@/lib/og";
  * skærmen der viser teksterne, og de to pakker hvor lyden er med.
  */
 export const metadata: Metadata = {
-  title: "Lej karaoke i København | Maskine og pakker fra 695 kr | Lejhøjtaler.dk",
+  title: `Lej karaoke i København | Maskine og pakker fra ${prisKr("karaoke")} | Lejhøjtaler.dk`,
   description:
-    "Lej karaoke i København. Karaokemaskine med to trådløse mikrofoner fra 695 kr, eller en pakke med skærm og højtalere fra 1.300 kr. Intet depositum, book online.",
+    `Lej karaoke i København. Karaokemaskine med to trådløse mikrofoner fra ${prisKr("karaoke")}, eller en pakke med skærm og højtalere fra ${prisKr("pakke_karaoke")}. Intet depositum, book online.`,
   keywords: [
     "lej karaoke",
     "karaoke udlejning københavn",

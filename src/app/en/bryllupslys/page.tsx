@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,8 +6,8 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Wedding light package Copenhagen | 1.200 DKK | Lejhøjtaler.dk",
-  description: "Fairy lights, uplights and low fog for the wedding waltz, dancing on clouds for 1,200 DKK. Save 135 DKK. Rental in Copenhagen.",
+  title: `Wedding light package Copenhagen | ${prisDkk("pakke_bryllupslys")} | Lejhøjtaler.dk`,
+  description: `Fairy lights, uplights and low fog for the wedding waltz, dancing on clouds for ${prisDkk("pakke_bryllupslys")}. Save ${rabatDkk("pakke_bryllupslys")}. Rental in Copenhagen.`,
   keywords: ["wedding lights rental copenhagen", "low fog wedding first dance", "wedding party lights"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/bryllupslys",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-bryllupslys-taendt.webp"),
-    title: "Wedding light package Copenhagen | 1.200 DKK | Lejhøjtaler.dk",
-    description: "Warm light above the tables, uplights on the walls and low fog for the first dance, save 135 DKK.",
+    title: `Wedding light package Copenhagen | ${prisDkk("pakke_bryllupslys")} | Lejhøjtaler.dk`,
+    description: `Warm light above the tables, uplights on the walls and low fog for the first dance, save ${rabatDkk("pakke_bryllupslys")}.`,
     url: "https://lejhojtaler.dk/en/bryllupslys",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -29,9 +30,8 @@ export default function Page() {
       locale="en"
       slug="en/bryllupslys"
       name="Wedding light bar"
-      price={1200}
       headline="Wedding light bar, waltz on clouds"
-      sub="Warm light above the tables, uplights on the walls and low fog for the first dance, save 135 DKK."
+      sub={`Warm light above the tables, uplights on the walls and low fog for the first dance, save ${rabatDkk("pakke_bryllupslys")}.`}
       image="/images/product-pakke-bryllupslys-taendt-white.webp"
       imageAlt="Wedding light bar switched on: warm white string lights, four LED uplights and the low fog machine"
       productId="pakke_bryllupslys"
@@ -42,7 +42,7 @@ export default function Page() {
         "10 m warm white fairy lights above the tables",
         "4 LED uplights, pick one colour and the hall follows",
         "Everything runs on normal power, no technician",
-        "Save 135 DKK vs renting the parts separately",
+        `Save ${rabatDkk("pakke_bryllupslys")} vs renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
@@ -6,9 +7,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Stor fest med lydmand | Fuldt anlæg + lys + røg + tekniker | 6.560 kr | Lejhøjtaler.dk",
+  title: `Stor fest med lydmand | Fuldt anlæg + lys + røg + tekniker | ${prisKr("pakke_lydmand_stor")} | Lejhøjtaler.dk`,
   description:
-    "Stor fest med lydmand: mellem højtalerpakke + subwoofer + stativer + lysbar + røgmaskine + AV-tekniker i 4 timer. Leveret, sat op og hentet igen for 6.560 kr, spar 260 kr. Til op til 150 gæster.",
+    `Stor fest med lydmand: mellem højtalerpakke + subwoofer + stativer + lysbar + røgmaskine + AV-tekniker i 4 timer. Leveret, sat op og hentet igen for ${prisKr("pakke_lydmand_stor")}, spar ${rabatKr("pakke_lydmand_stor")}. Til op til 150 gæster.`,
   keywords: ["stor fest med lydmand", "lej lydanlæg med tekniker 150 personer", "fest lyd lys røg med opsætning", "lydmand til stor fest københavn", "dj anlæg med tekniker"],
   alternates: {
     canonical: "https://lejhojtaler.dk/stor-fest-lydmand",
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-lydmand-stor-v2.webp"),
-    title: "Stor fest med lydmand | 6.560 kr",
-    description: "Mellem højtalerpakke + subwoofer + stativer + lys + røg + lydmand i 4 timer. Leveret, sat op og hentet igen, spar 260 kr.",
+    title: `Stor fest med lydmand | ${prisKr("pakke_lydmand_stor")}`,
+    description: `Mellem højtalerpakke + subwoofer + stativer + lys + røg + lydmand i 4 timer. Leveret, sat op og hentet igen, spar ${rabatKr("pakke_lydmand_stor")}.`,
     url: "https://lejhojtaler.dk/stor-fest-lydmand",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -30,10 +31,9 @@ export default function Page() {
     <ProductLanding
       slug="stor-fest-lydmand"
       name="Stor fest med lydmand"
-      price={6560}
       priceUnit="/event"
       headline="Stor fest med lydmand"
-      sub="Fuldt anlæg med bas, lys og røg + AV-tekniker i 4 timer. Vi sætter det hele op og holder dansegulvet kørende, spar 260 kr."
+      sub={`Fuldt anlæg med bas, lys og røg + AV-tekniker i 4 timer. Vi sætter det hele op og holder dansegulvet kørende, spar ${rabatKr("pakke_lydmand_stor")}.`}
       image="/images/product-pakke-lydmand-stor-v2-white.webp"
       imageAlt="Stor fest med lydmand: højtalere, røgmaskine og lydmandens mixer"
       productId="pakke_lydmand_stor"
@@ -65,7 +65,7 @@ export default function Page() {
         "Røgmaskine inkl. røgvæske, lyset bliver synligt",
         "Lydmand i 4 timer, sætter op, laver lydprøve og styrer lyd, lys og røg",
         "Levering, opsætning og afhentning er med",
-        "Spar 260 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_lydmand_stor")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Ambient Light Package | Uplights, Fairy Lights & Disco Ball | 1.295 DKK | Lejhøjtaler.dk",
+  title: `Ambient Light Package | Uplights, Fairy Lights & Disco Ball | ${prisDkk("pakke_stemningslys")} | Lejhøjtaler.dk`,
   description:
-    "The ambient light package: 4 LED uplights, 10 m of fairy lights and a disco ball for 1.295 DKK, save 140 DKK. Lighting that transforms a rented venue. Rental in Copenhagen.",
+    `The ambient light package: 4 LED uplights, 10 m of fairy lights and a disco ball for ${prisDkk("pakke_stemningslys")}, save ${rabatDkk("pakke_stemningslys")}. Lighting that transforms a rented venue. Rental in Copenhagen.`,
   keywords: [
     "uplighting rental copenhagen",
     "wedding lighting rental copenhagen",
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-stemningslys-taendt-v3.webp"),
-    title: "Ambient Light Package | Uplights, Fairy Lights & Disco Ball | 1.295 DKK",
+    title: `Ambient Light Package | Uplights, Fairy Lights & Disco Ball | ${prisDkk("pakke_stemningslys")}`,
     description:
-      "4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling, save 140 DKK.",
+      `4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling, save ${rabatDkk("pakke_stemningslys")}.`,
     url: "https://lejhojtaler.dk/en/stemningslys",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -37,9 +38,8 @@ export default function Page() {
       locale="en"
       slug="en/stemningslys"
       name="Ambient light bar"
-      price={1295}
       headline="Ambient light bar, light without sound"
-      sub="4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling, save 140 DKK."
+      sub={`4 LED uplights, 10 m of fairy lights and a disco ball. For the venue with fluorescent tubes in the ceiling, save ${rabatDkk("pakke_stemningslys")}.`}
       image="/images/product-pakke-stemningslys-taendt-v3-white.webp"
       imageAlt="Ambient light bar with uplights, fairy lights and a disco ball"
       productId="pakke_stemningslys"
@@ -50,7 +50,7 @@ export default function Page() {
         "10 m of fairy lights for the ceiling, a marquee or the bar",
         "Disco ball with motor and spotlight for the dancefloor",
         "Plug and play: everything runs on ordinary power, no DMX control",
-        "Save 140 DKK vs renting the parts separately",
+        `Save ${rabatDkk("pakke_stemningslys")} vs renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

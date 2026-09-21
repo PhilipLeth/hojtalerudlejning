@@ -1,12 +1,13 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Højtalerpakke Lille København | Fra 595 kr | Lejhøjtaler.dk",
+  title: `Lej Højtalerpakke Lille København | Fra ${prisKr("party")} | Lejhøjtaler.dk`,
   description:
-    "Lej lille højtalerpakke i København fra 595 kr/weekend. 2× 10\" Alto TX 410 med Bluetooth. Alle kabler inkluderet. Book online.",
+    `Lej lille højtalerpakke i København fra ${prisKr("party")}/weekend. 2× 10\" Alto TX 410 med Bluetooth. Alle kabler inkluderet. Book online.`,
   keywords: ["lille højtalerpakke", "lej højtaler pakke", "alto højtaler leje", "højtalerudlejning københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/hojtalerpakke-lille",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-party-v2.webp"),
-    title: "Lej Højtalerpakke Lille | Fra 595 kr",
-    description: "2× 10\" Alto højtalere fra 595 kr/weekend. Book online.",
+    title: `Lej Højtalerpakke Lille | Fra ${prisKr("party")}`,
+    description: `2× 10\" Alto højtalere fra ${prisKr("party")}/weekend. Book online.`,
     url: "https://lejhojtaler.dk/hojtalerpakke-lille",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,7 +29,6 @@ export default function HojtalerpakkeLillePage() {
     <ProductLanding
       slug="hojtalerpakke-lille"
       name="Højtalerpakke lille"
-      price={595}
       headline="Lej højtalerpakke lille i København"
       sub={'To kompakte 10" Alto TX 410 med Bluetooth, klar til cyklen.'}
       image="/images/product-party-v2-white.webp"

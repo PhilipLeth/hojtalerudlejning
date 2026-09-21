@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lysshow-pakken | Lys, discokugle og røg | 1.140 kr | Lejhøjtaler.dk",
+  title: `Lysshow-pakken | Lys, discokugle og røg | ${prisKr("pakke_lysshow")} | Lejhøjtaler.dk`,
   description:
-    "Lysshow-pakken: lysbar, discokugle 40 cm og røgmaskine for 1.140 kr, spar 145 kr. Røgen gør lysstrålerne synlige, så det ligner et show. Lejes i København.",
+    `Lysshow-pakken: lysbar, discokugle 40 cm og røgmaskine for ${prisKr("pakke_lysshow")}, spar ${rabatKr("pakke_lysshow")}. Røgen gør lysstrålerne synlige, så det ligner et show. Lejes i København.`,
   keywords: ["lysshow leje", "lej lys og røg til fest", "discokugle og røgmaskine leje", "festlys pakke københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/lysshow-pakke",
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-lys-v4.webp"),
-    title: "Lysshow-pakken | Lys, discokugle og røg | 1.140 kr",
-    description: "Lysbar, discokugle og røgmaskine. Strålerne bliver synlige i luften, spar 145 kr.",
+    title: `Lysshow-pakken | Lys, discokugle og røg | ${prisKr("pakke_lysshow")}`,
+    description: `Lysbar, discokugle og røgmaskine. Strålerne bliver synlige i luften, spar ${rabatKr("pakke_lysshow")}.`,
     url: "https://lejhojtaler.dk/lysshow-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -29,9 +30,8 @@ export default function Page() {
     <ProductLanding
       slug="lysshow-pakke"
       name="Lysshow"
-      price={1140}
       headline="Lysshow-pakken, lyset bliver synligt i luften"
-      sub="Lysbar, discokugle 40 cm og røgmaskine. Uden røg ser man farvede pletter på væggen; med røg bliver strålerne til et show, spar 145 kr."
+      sub={`Lysbar, discokugle 40 cm og røgmaskine. Uden røg ser man farvede pletter på væggen; med røg bliver strålerne til et show, spar ${rabatKr("pakke_lysshow")}.`}
       image="/images/product-lys-v4-white.webp"
       imageAlt="Lysshow-pakken med lysbar, discokugle og røgmaskine"
       productId="pakke_lysshow"
@@ -42,7 +42,7 @@ export default function Page() {
         "Discokugle 40 cm med motor og spot",
         "Røgmaskine inkl. røgvæske, strålerne bliver synlige",
         "Alle stativer og kabler med",
-        "Spar 145 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_lysshow")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

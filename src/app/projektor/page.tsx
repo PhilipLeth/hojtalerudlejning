@@ -1,3 +1,4 @@
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
@@ -5,9 +6,9 @@ import UpsellBox from "@/components/UpsellBox";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Projektor København | 495 kr | Lejhøjtaler.dk",
+  title: `Lej Projektor København | ${prisKr("projektor")} | Lejhøjtaler.dk`,
   description:
-    "Lej en Full HD-projektor i København for 495 kr. Til præsentationer, møder og filmaften, HDMI-kabel og fjernbetjening følger med. Book online.",
+    `Lej en Full HD-projektor i København for ${prisKr("projektor")}. Til præsentationer, møder og filmaften, HDMI-kabel og fjernbetjening følger med. Book online.`,
   keywords: [
     "lej projektor",
     "projektor udlejning",
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-projektor.webp"),
-    title: "Lej Projektor København | 495 kr",
+    title: `Lej Projektor København | ${prisKr("projektor")}`,
     description:
-      "Lej en Full HD-projektor i København for 495 kr. Til præsentationer, møder og filmaften, HDMI-kabel og fjernbetjening følger med. Book online.",
+      `Lej en Full HD-projektor i København for ${prisKr("projektor")}. Til præsentationer, møder og filmaften, HDMI-kabel og fjernbetjening følger med. Book online.`,
     url: "https://lejhojtaler.dk/projektor",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -36,7 +37,6 @@ export default function ProjektorPage() {
     <ProductLanding
       slug="projektor"
       name="Projektor"
-      price={495}
       headline="Lej projektor i København"
       sub="Full HD projektor til præsentationer og film. HDMI, klar på 5 min."
       image="/images/product-projektor-white.webp"

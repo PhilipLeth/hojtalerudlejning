@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,8 +6,8 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Festtelt-lys | 870 kr | Lejhøjtaler.dk",
-  description: "To lyskæder og fire uplights, teltet og haven lyst op for 870 kr. Spar 115 kr. Lejes i København.",
+  title: `Festtelt-lys | ${prisKr("pakke_festtelt")} | Lejhøjtaler.dk`,
+  description: `To lyskæder og fire uplights, teltet og haven lyst op for ${prisKr("pakke_festtelt")}. Spar ${rabatKr("pakke_festtelt")}. Lejes i København.`,
   keywords: ["lys til festtelt", "lyskæder til telt leje", "party lyskæde udendørs", "lys til havefest"],
   alternates: {
     canonical: "https://lejhojtaler.dk/festtelt-lys",
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-festtelt-taendt.webp"),
-    title: "Festtelt-lys | 870 kr | Lejhøjtaler.dk",
-    description: "20 m lyskæde (varm hvid + farvet) og 4 LED uplights. Fra kantine-telt til havefest, spar 115 kr.",
+    title: `Festtelt-lys | ${prisKr("pakke_festtelt")} | Lejhøjtaler.dk`,
+    description: `20 m lyskæde (varm hvid + farvet) og 4 LED uplights. Fra kantine-telt til havefest, spar ${rabatKr("pakke_festtelt")}.`,
     url: "https://lejhojtaler.dk/festtelt-lys",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -28,9 +29,8 @@ export default function Side() {
     <ProductLanding
       slug="festtelt-lys"
       name="Festtelt-lys"
-      price={870}
       headline="Festtelt-lys, teltet og haven lyst op"
-      sub="20 m lyskæde (varm hvid + farvet) og 4 LED uplights. Fra kantine-telt til havefest, spar 115 kr."
+      sub={`20 m lyskæde (varm hvid + farvet) og 4 LED uplights. Fra kantine-telt til havefest, spar ${rabatKr("pakke_festtelt")}.`}
       image="/images/product-pakke-festtelt-taendt-white.webp"
       imageAlt="Festtelt-lys tændt: varm hvid lyskæde over en farvet lyskæde og fire LED uplights"
       productId="pakke_festtelt"
@@ -41,7 +41,7 @@ export default function Side() {
         "10 m farvet lyskæde til festen",
         "4× LED uplight til teltdug, hæk eller husmur",
         "Alt tåler en dansk sommeraften under tag",
-        "Spar 115 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_festtelt")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

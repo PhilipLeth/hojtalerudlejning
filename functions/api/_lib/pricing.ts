@@ -5,6 +5,8 @@ import {
   addons as defaultAddons,
   rentalProducts as defaultRentals,
   isDeliveryAddon,
+  solveBundlePrices,
+  type BundlePart,
 } from "../../../src/lib/products";
 import { CATALOG_KEY } from "./channels";
 
@@ -22,7 +24,13 @@ export interface PricedItem {
 interface CatalogShape {
   speakers?: Array<{ id: string; price: number; hidden?: boolean; da?: { name?: string; size?: string } }>;
   addons?: Array<{ id: string; price: number; hidden?: boolean; da?: { label?: string } }>;
-  rentalProducts?: Array<{ id: string; price: number; hidden?: boolean; name_da?: string }>;
+  rentalProducts?: Array<{
+    id: string;
+    price: number;
+    hidden?: boolean;
+    name_da?: string;
+    bundle?: { parts?: BundlePart[]; rabat?: number };
+  }>;
 }
 
 /** Fuldt pristabel: KV-katalog (admin-redigeret) med kode-defaults som fallback. */
@@ -46,10 +54,12 @@ export async function loadPriceTable(kv: KVNamespace): Promise<Map<string, Price
   for (const r of defaultRentals) add(r.id, r.name_da, r.price, r.hidden, "rental");
 
   // KV-katalog overskriver defaults (samme kilde som frontend/useProducts)
+  let kvRentals: CatalogShape["rentalProducts"] = [];
   try {
     const raw = await kv.get(CATALOG_KEY);
     if (raw) {
       const cat = JSON.parse(raw) as CatalogShape;
+      kvRentals = cat.rentalProducts ?? [];
       for (const s of cat.speakers ?? []) {
         if (s.id === "festival_bas") continue; // opfundet combo-SKU
         add(s.id, s.da?.name ?? s.id, s.price, s.hidden, "speaker", s.da?.size);
@@ -61,7 +71,54 @@ export async function loadPriceTable(kv: KVNamespace): Promise<Map<string, Price
     // defaults gælder
   }
 
+  deriveBundlePrices(table, kvRentals);
+
   return table;
+}
+
+/**
+ * Pakkeprisen regnes ud af delene, også her på serveren.
+ *
+ * Uden dette trin læste Stripe den pris, der stod gemt på pakken — og en
+ * prisrettelse på en lysbar ville flytte tallet på siden, men ikke beløbet i
+ * kurven. Kunden så én pris og betalte en anden. Nu er kilden den samme begge
+ * steder: solveBundlePrices().
+ *
+ * Pakkens dele og rabat tages fra KV-kataloget, hvis admin har gemt dem, ellers
+ * fra koden.
+ */
+function deriveBundlePrices(table: Map<string, PricedItem>, kvRentals: CatalogShape["rentalProducts"]): void {
+  const fraKv = new Map<string, { parts: BundlePart[]; rabat?: number }>();
+  for (const r of kvRentals ?? []) {
+    if (r?.id && Array.isArray(r.bundle?.parts) && r.bundle!.parts!.length) {
+      fraKv.set(r.id, { parts: r.bundle!.parts!, rabat: r.bundle!.rabat });
+    }
+  }
+
+  const bundles: Array<{ id: string; parts: BundlePart[]; rabat?: number }> = [];
+  const set = new Set<string>();
+  for (const r of defaultRentals) {
+    if (!r.bundle?.parts?.length) continue;
+    const kv = fraKv.get(r.id);
+    bundles.push({ id: r.id, parts: kv?.parts ?? r.bundle.parts, rabat: kv ? kv.rabat : r.bundle.rabat });
+    set.add(r.id);
+  }
+  // Pakker admin har opfundet i KV, som koden ikke kender
+  for (const [id, b] of fraKv) if (!set.has(id)) bundles.push({ id, ...b });
+  if (!bundles.length) return;
+
+  const prices = new Map<string, number>();
+  for (const [id, item] of table) prices.set(id, item.unitAmount / 100);
+  solveBundlePrices(bundles, prices);
+
+  for (const b of bundles) {
+    const kr = prices.get(b.id);
+    const kendt = table.get(b.id);
+    // En skjult eller ukendt pakke skal blive ved at være ukendt — den må ikke
+    // kunne bookes, bare fordi delene findes.
+    if (!kendt || !Number.isFinite(kr) || (kr as number) <= 0) continue;
+    table.set(b.id, { ...kendt, unitAmount: Math.round((kr as number) * 100) });
+  }
 }
 
 export interface LineItemInput {

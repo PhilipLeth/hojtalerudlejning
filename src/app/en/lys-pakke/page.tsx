@@ -1,3 +1,4 @@
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import UpsellBox from "@/components/UpsellBox";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Party Light Package Rental Copenhagen | 395 DKK | Lejhøjtaler.dk",
+  title: `Party Light Package Rental Copenhagen | ${prisDkk("lys")} | Lejhøjtaler.dk`,
   description:
-    "Rent a party light package in Copenhagen for 395 DKK per weekend. 2 coloured LED lamps and a centre effect on a stand, plug and play, ready in minutes. Pay on pickup.",
+    `Rent a party light package in Copenhagen for ${prisDkk("lys")} per weekend. 2 coloured LED lamps and a centre effect on a stand, plug and play, ready in minutes. Pay on pickup.`,
   keywords: [
     "party light rental copenhagen",
     "light bar rental copenhagen",
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-lys-v4.webp"),
-    title: "Party Light Package Rental Copenhagen | 395 DKK",
+    title: `Party Light Package Rental Copenhagen | ${prisDkk("lys")}`,
     description:
-      "2 coloured LED lamps + centre effect on a stand. 395 DKK per weekend. Book online.",
+      `2 coloured LED lamps + centre effect on a stand. ${prisDkk("lys")} per weekend. Book online.`,
     url: "https://lejhojtaler.dk/en/lys-pakke",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -37,7 +38,6 @@ export default function Page() {
       locale="en"
       slug="en/lys-pakke"
       name="Light bar"
-      price={395}
       headline="Rent a party light package in Copenhagen"
       sub="2 coloured LED lamps and a centre effect on a stand. Ready in a few minutes."
       image="/images/product-lys-v4-white.webp"

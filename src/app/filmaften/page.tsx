@@ -1,3 +1,4 @@
+import { prisKr, rabatKr } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import ProductLanding from "@/components/ProductLanding";
@@ -5,9 +6,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Filmaften-pakken | Projektor, lærred og højtalere | 1.195 kr | Lejhøjtaler.dk",
+  title: `Filmaften-pakken | Projektor, lærred og højtalere | ${prisKr("pakke_filmaften")} | Lejhøjtaler.dk`,
   description:
-    "Filmaften-pakken med projektor, lærred og højtalere, alt til udendørs biograf i baghaven for 1.195 kr. Book online i København.",
+    `Filmaften-pakken med projektor, lærred og højtalere, alt til udendørs biograf i baghaven for ${prisKr("pakke_filmaften")}. Book online i København.`,
   keywords: ["lej projektor og lærred", "udendørs biograf leje", "projektor til fest", "filmaften udstyr", "lærred leje københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/filmaften",
@@ -15,9 +16,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-projektor.webp"),
-    title: "Filmaften-pakken | Projektor, lærred og højtalere | 1.195 kr | Lejhøjtaler.dk",
+    title: `Filmaften-pakken | Projektor, lærred og højtalere | ${prisKr("pakke_filmaften")} | Lejhøjtaler.dk`,
     description:
-      "Filmaften-pakken med projektor, lærred og højtalere, alt til udendørs biograf i baghaven for 1.195 kr. Book online i København.",
+      `Filmaften-pakken med projektor, lærred og højtalere, alt til udendørs biograf i baghaven for ${prisKr("pakke_filmaften")}. Book online i København.`,
     url: "https://lejhojtaler.dk/filmaften",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -30,9 +31,8 @@ export default function FilmaftenPage() {
     <ProductLanding
       slug="filmaften"
       name="Filmaften-pakken"
-      price={1195}
       headline="Filmaften-pakken, biograf i gården"
-      sub="Full HD projektor, 160 cm lærred på stativ og to højtalere. Alt til filmaftenen, spar 90 kr."
+      sub={`Full HD projektor, 160 cm lærred på stativ og to højtalere. Alt til filmaftenen, spar ${rabatKr("pakke_filmaften")}.`}
       image="/images/product-projektor-white.webp"
       imageAlt="Filmaften-pakken med projektor, lærred og højtalere"
       productId="pakke_filmaften"
@@ -42,7 +42,7 @@ export default function FilmaftenPage() {
         "Lærred 160 cm på stativ, står frit, skal ikke hænges op",
         '2× Alto 10" højtalere: en projektors egen lyd rækker ikke',
         "Alle kabler og strøm med",
-        "Spar 90 kr vs. at leje delene enkeltvis",
+        `Spar ${rabatKr("pakke_filmaften")} vs. at leje delene enkeltvis`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

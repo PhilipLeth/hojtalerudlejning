@@ -117,7 +117,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvad koster et lysshow?",
       a:
         "Lysshow med lysbar, discokugle og røgmaskine koster 1.140 kr. Det store lysshow med fire uplights " +
-        "og low fog i stedet koster 1.910 kr. Vil du have lys uden røg, er Stemningslys-pakken 1.295 kr. " +
+        "og low fog i stedet koster 1.910 kr. Vil du have lys uden røg, er Stemningslys-pakken " + prisKr("pakke_stemningslys") + ". " +
         "Alle priser er for hele lejeperioden, ikke pr. dag.",
     },
     {
@@ -156,7 +156,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvor kraftige højtalere skal jeg bruge til min fest?",
       a:
         "Op til 30 gæster rækker Mackie Thump GO eller den lille højtalerpakke. Til 30-50 gæster tager du Soundboks 4 " +
-        "eller Mellem højtalerpakke. Er I flere, giver Festpakke 150 (1.915 kr) og Festpakke 250 (3.210 kr) " +
+        "eller Mellem højtalerpakke. Er I flere, giver Festpakke 150 (" + prisKr("pakke_fest_150") + ") og Festpakke 250 (" + prisKr("pakke_fest_250") + ") " +
         "subwoofer og stativer med. Gæstetallene gælder indendørs — udendørs bærer lyden kortere.",
     },
     {
@@ -178,8 +178,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvilket lydanlæg passer til antallet af gæster?",
       a:
-        "Festpakke 0-30 (895 kr) til op til 30 gæster, Festpakke 30-50 (1.095 kr) til 30-50, Festpakke 150 (1.915 kr) til " +
-        "50-150 med subwoofer og stativer, og Festpakke 250 (3.210 kr) til 150-250 med fire højtalere og to " +
+        "Festpakke 0-30 (" + prisKr("pakke_fest_lille") + ") til op til 30 gæster, Festpakke 30-50 (" + prisKr("pakke_fest_stor") + ") til 30-50, Festpakke 150 (" + prisKr("pakke_fest_150") + ") til " +
+        "50-150 med subwoofer og stativer, og Festpakke 250 (" + prisKr("pakke_fest_250") + ") til 150-250 med fire højtalere og to " +
         "subwoofere. Er I over 250, skaffer vi større tops og subs og sender en tekniker med på dagen — skriv til os.",
     },
     {
@@ -192,7 +192,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Kan jeg få mikrofon med til taler?",
       a:
         "Ja. En trådløs mikrofon koster 445 kr, en Shure BLX i scenekvalitet 595 kr og et trådløst headset 445 kr. " +
-        "Skal der både være tale og musik, findes Tale & musik-pakken til 1.195 kr med to 12\" højtalere og " +
+        "Skal der både være tale og musik, findes Tale & musik-pakken til " + prisKr("pakke_tale_musik") + " med to 12\" højtalere og " +
         "trådløs mikrofon. Projektor og skærm udlejer vi ikke lige nu.",
     },
     {
@@ -211,7 +211,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvad koster det at leje et PA-anlæg i København?",
       a:
         "Mellem højtalerpakke med to aktive 12\" EV-højtalere koster 995 kr for en weekend. Skal der mere tryk på, " +
-        "giver Festpakke 150 (1.915 kr) dig samme højtalere plus subwoofer, stativer, lys og røg.",
+        "giver Festpakke 150 (" + prisKr("pakke_fest_150") + ") dig samme højtalere plus subwoofer, stativer, lys og røg.",
     },
     {
       q: "Hvad er inkluderet i PA-anlægget?",
@@ -240,7 +240,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvad koster lyd til en fest?",
       a:
         "Den lille højtalerpakke koster 595 kr for en weekend. Vil du have lys med, koster Festpakke 0-30 med to " +
-        "højtalere og en lysbar 895 kr, og Festpakke 30-50 med større højtalere og lysbar 1.095 kr.",
+        "højtalere og en lysbar " + prisKr("pakke_fest_lille") + ", og Festpakke 30-50 med større højtalere og lysbar " + prisKr("pakke_fest_stor") + ".",
     },
     {
       q: "Hvordan spiller jeg musik gennem højtalerne?",
@@ -268,9 +268,9 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje en lyspakke?",
       a:
-        "Fra 645 kr for en weekend. Festtelt-lys med to lyskæder og fire uplights koster 695 kr, Diskolys-pakken med " +
-        "lyseffekt og discokugle 645 kr, Teenagefest-lys 785 kr og Stemningslys-pakken 1.295 kr. Bryllupslys med low fog " +
-        "til brudevalsen koster 1.200 kr, og Diskotek-pakken — det fulde dansegulv uden røg — 1.095 kr.",
+        "Fra 645 kr for en weekend. Festtelt-lys med to lyskæder og fire uplights koster " + prisKr("pakke_festtelt") + ", Diskolys-pakken med " +
+        "lyseffekt og discokugle " + prisKr("pakke_diskolys") + ", Teenagefest-lys " + prisKr("pakke_teenagefest") + " og Stemningslys-pakken " + prisKr("pakke_stemningslys") + ". Bryllupslys med low fog " +
+        "til brudevalsen koster " + prisKr("pakke_bryllupslys") + ", og Diskotek-pakken — det fulde dansegulv uden røg — " + prisKr("pakke_diskotek") + ".",
     },
     {
       q: "Hvilken lyspakke skal jeg vælge?",
@@ -364,7 +364,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       a:
         "En trådløs håndholdt mikrofon koster 295 kr for hele lejeperioden, en Shure BLX i scenekvalitet " +
         "595 kr, et trådløst headset 445 kr og et PRO-headset 595 kr. Skal der også være lyd, koster Tale & " +
-        "musik-pakken med to 12\" højtalere og trådløs mikrofon 1.195 kr.",
+        "musik-pakken med to 12\" højtalere og trådløs mikrofon " + prisKr("pakke_tale_musik") + ".",
     },
     {
       q: "Hvad koster det at leje projektor, lærred og storskærm?",
@@ -402,8 +402,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvad koster det at leje karaoke i København?",
       a:
         "Karaokemaskinen alene koster 695 kr for hele lejeperioden — den har indbygget skærm, to trådløse " +
-        "mikrofoner og festlys. Karaokepakken med 32\" skærm og to højtalere koster 1.300 kr, og " +
-        "Karaoke-festpakken med 55\" storskærm og de store højtalere 1.825 kr. Priserne gælder 1 til 5 dage.",
+        "mikrofoner og festlys. Karaokepakken med 32\" skærm og to højtalere koster " + prisKr("pakke_karaoke") + ", og " +
+        "Karaoke-festpakken med 55\" storskærm og de store højtalere " + prisKr("pakke_karaoke_fest") + ". Priserne gælder 1 til 5 dage.",
     },
     {
       q: "Skal jeg leje en skærm til, eller er maskinens egen nok?",
@@ -465,8 +465,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvilken pakke passer til en konference?",
       a:
-        "Konferencepakken (1.395 kr) er 55\" storskærm, trådløst headset og to 10\" højtalere — klar til et " +
-        "mødelokale. Til en sal med 100-150 deltagere tager Konferencepakke 150 (2.165 kr) over med to 12\" " +
+        "Konferencepakken (" + prisKr("pakke_konference") + ") er 55\" storskærm, trådløst headset og to 10\" højtalere — klar til et " +
+        "mødelokale. Til en sal med 100-150 deltagere tager Konferencepakke 150 (" + prisKr("pakke_konference_150") + ") over med to 12\" " +
         "højtalere på stativer, Shure-mikrofon, headset og skærm. Flere mikrofoner booker I som Panelpakken, " +
         "og hybridmøder som Teams- og Zoom-pakken.",
     },
@@ -507,8 +507,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "How powerful a speaker do I need for my party?",
       a:
         "Up to 30 guests, the Mackie Thump GO or the small speaker package is enough. For 30-50 guests take the " +
-        "Soundboks 4 or the medium speaker package. If you are more, Party package 150 (1.915 kr) and Party package 250 " +
-        "(3.210 kr) bring a subwoofer and stands with them. The guest numbers are for indoor use — outdoors the sound " +
+        "Soundboks 4 or the medium speaker package. If you are more, Party package 150 (" + prisKr("pakke_fest_150") + ") and Party package 250 " +
+        "(" + prisKr("pakke_fest_250") + ") bring a subwoofer and stands with them. The guest numbers are for indoor use — outdoors the sound " +
         "carries less far.",
     },
     {
@@ -529,8 +529,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Which PA system fits the number of guests?",
       a:
-        "Party package 0-30 (895 kr) for up to 30 guests, Party package 30-50 (1.095 kr) for 30-50, Party package 150 " +
-        "(1.915 kr) for 50-150 with a subwoofer and stands, and Party package 250 (3.210 kr) for 150-250 with four " +
+        "Party package 0-30 (" + prisKr("pakke_fest_lille") + ") for up to 30 guests, Party package 30-50 (" + prisKr("pakke_fest_stor") + ") for 30-50, Party package 150 " +
+        "(" + prisKr("pakke_fest_150") + ") for 50-150 with a subwoofer and stands, and Party package 250 (" + prisKr("pakke_fest_250") + ") for 150-250 with four " +
         "speakers and two subwoofers. If you are over 250, we source larger tops and subs and send a technician on the " +
         "day — write to us.",
     },
@@ -544,7 +544,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Can I get a microphone for speeches?",
       a:
         "Yes. A wireless microphone is 445 kr, a stage-quality Shure BLX 595 kr and a wireless headset 445 kr. If you " +
-        "need both speech and music, the speech & music package at 1.195 kr has two 12\" speakers and a wireless " +
+        "need both speech and music, the speech & music package at " + prisKr("pakke_tale_musik") + " has two 12\" speakers and a wireless " +
         "microphone. We do not rent out projectors and screens at the moment.",
     },
     {

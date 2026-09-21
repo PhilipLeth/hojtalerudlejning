@@ -1,3 +1,4 @@
+import { prisDkk, rabatDkk } from "@/lib/products";
 import { Metadata } from "next";
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
@@ -6,9 +7,9 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Big Party with Sound Engineer | Full rig + lights + fog + tech | 6,560 DKK | Lejhøjtaler.dk",
+  title: `Big Party with Sound Engineer | Full rig + lights + fog + tech | ${prisDkk("pakke_lydmand_stor")} | Lejhøjtaler.dk`,
   description:
-    "Big party with a sound engineer: medium speaker package + subwoofer + stands + light bar + fog machine + AV technician for 4 hours. Delivered, set up and collected for 6,560 DKK, save 260 DKK. For up to 150 guests.",
+    `Big party with a sound engineer: medium speaker package + subwoofer + stands + light bar + fog machine + AV technician for 4 hours. Delivered, set up and collected for ${prisDkk("pakke_lydmand_stor")}, save ${rabatDkk("pakke_lydmand_stor")}. For up to 150 guests.`,
   keywords: ["big party sound engineer copenhagen", "sound system rental with technician 150 people", "party sound lights fog with setup copenhagen", "dj rig with technician denmark"],
   alternates: {
     canonical: "https://lejhojtaler.dk/en/stor-fest-lydmand",
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-pakke-lydmand-stor-v2.webp"),
-    title: "Big party with sound engineer | 6,560 DKK",
-    description: "Medium speaker package + subwoofer + stands + lights + fog + sound engineer for 4 hours. Delivered, set up and collected, save 260 DKK.",
+    title: `Big party with sound engineer | ${prisDkk("pakke_lydmand_stor")}`,
+    description: `Medium speaker package + subwoofer + stands + lights + fog + sound engineer for 4 hours. Delivered, set up and collected, save ${rabatDkk("pakke_lydmand_stor")}.`,
     url: "https://lejhojtaler.dk/en/stor-fest-lydmand",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -31,10 +32,9 @@ export default function Page() {
       locale="en"
       slug="en/stor-fest-lydmand"
       name="Big party with sound engineer"
-      price={6560}
       priceUnit="/event"
       headline="Big party with a sound engineer"
-      sub="Full rig with bass, lights and fog + AV technician for 4 hours. We set it all up and keep the dancefloor going, save 260 DKK."
+      sub={`Full rig with bass, lights and fog + AV technician for 4 hours. We set it all up and keep the dancefloor going, save ${rabatDkk("pakke_lydmand_stor")}.`}
       image="/images/product-pakke-lydmand-stor-v2-white.webp"
       imageAlt="Big party with sound engineer: speakers, fog machine and the engineer's mixer"
       productId="pakke_lydmand_stor"
@@ -66,7 +66,7 @@ export default function Page() {
         "Fog machine incl. fluid, makes the light beams visible",
         "Sound engineer for 4 hours, sets up, runs the sound check and controls sound, lights and fog",
         "Delivery, setup and collection included",
-        "Save 260 DKK compared to renting the parts separately",
+        `Save ${rabatDkk("pakke_lydmand_stor")} compared to renting the parts separately`,
       ]}
     >
       <section className="mx-auto max-w-3xl px-4 pb-16">

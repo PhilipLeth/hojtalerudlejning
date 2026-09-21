@@ -3,7 +3,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
-import { LADDER_FEST, type LadderStep } from "@/lib/products";
+import { LADDER_FEST, ladderPrice, type LadderStep } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
 import { localizedHref } from "@/lib/enPages";
 import { localeAlternates } from "@/lib/hreflang";
@@ -41,7 +41,8 @@ function dkk(n: number) {
 }
 
 function Step({ step, highlighted }: { step: LadderStep; highlighted: boolean }) {
-  const byQuote = step.pris === null;
+  const pris = ladderPrice(step);
+  const byQuote = pris === null;
   const href = byQuote
     ? localizedHref(step.href, "en")
     : step.productId
@@ -66,7 +67,7 @@ function Step({ step, highlighted }: { step: LadderStep; highlighted: boolean })
       <p className="mt-2 flex-1 text-sm text-white/60">{step.hvad_en}</p>
 
       <p className="mt-4 text-3xl font-bold">
-        {byQuote ? "By quote" : `${dkk(step.pris!)} DKK`}
+        {byQuote ? "By quote" : `${dkk(pris!)} DKK`}
         {!byQuote && <span className="ml-1 text-sm font-normal text-white/40">/ weekend</span>}
       </p>
       <p className="mt-1 text-xs text-white/40">
