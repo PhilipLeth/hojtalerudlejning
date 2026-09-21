@@ -21,7 +21,7 @@
 
 - [Bryllupslys-pakken](https://lejhojtaler.dk/bryllupslys) — 1200 kr/weekend: Lyskæde, uplights og low fog til brudevalsen, dans på skyer for 1.200 kr. Spar 135 kr. Lejes i København.
 - [Bryllupspakke](https://lejhojtaler.dk/bryllupspakke) — 2315 kr/weekend: Bryllupspakke: 2× EV 12" højtalere på stativer, trådløs mikrofon til talerne, lysbar, lyskæde og low fog-maskine for 2.315 kr, spar 155 kr. Levering og opsætning kan tilvælges i København.
-- [Lej Discokugle København](https://lejhojtaler.dk/discokugle) — 645 kr/weekend: Lej discokugle i København fra 645 kr/weekend. Roterende discokugle med LED-lys og farver. Plug-and-play. Betal ved afhentning. Book online.
+- [Lej Diskokugle København](https://lejhojtaler.dk/discokugle) — 645 kr/weekend: Lej diskokugle i København fra 645 kr/weekend. Roterende discokugle, 30 eller 40 cm, med spot og stativ. Plug-and-play. Betal ved afhentning. Book online.
 - [Lej diskolys i København](https://lejhojtaler.dk/diskolys) — 685 kr/weekend: Lej diskolys i København, pakken med lyseffekt og discokugle giver dansegulvet for 685 kr. Spar 155 kr vs. delene enkeltvis. Intet depositum.
 - [Diskotek-pakken](https://lejhojtaler.dk/diskotek-pakke) — 1050 kr/weekend: Lysbar, diskolyseffekt og discokugle, fuldt dansegulv uden røg for 1.050 kr. Spar 185 kr. Lejes i København.
 - [Lej DJ-pult](https://lejhojtaler.dk/dj-pult) — 1695 kr/weekend: Lej en AlphaTheta XDJ, et all-in-one DJ-system uden computer. Vælg pulten alene eller en lille, mellem eller stor DJ-pakke med højtalere. 1.695 kr inklusive moms.
@@ -146,8 +146,10 @@
 - [Kontakt os](https://lejhojtaler.dk/kontakt): Kontakt Lejhøjtaler.dk, skriv til info@lejhojtaler.dk, ring eller brug formularen. Vi svarer som regel samme dag.
 - [Lej projektor og storskærm i København](https://lejhojtaler.dk/lej-projektor): Lej projektor, lærred og storskærm i København. Projektor fra 495 kr, 55" skærm fra 595 kr og lærred fra 195 kr. Til møde, konference og filmaften. Book online.
 - [Lejevilkår](https://lejhojtaler.dk/lejevilkaar): Lejevilkår for leje af højtalere, lysudstyr og PA-anlæg hos Lejhøjtaler.dk. Læs om priser, lejeperiode, afhentning, returnering og ansvar.
+- [Levering og afhentning](https://lejhojtaler.dk/levering): Hent selv på Amager, eller få udstyret leveret og sat op i hele København. Se hvad levering koster, hvad opsætning dækker, og hvordan du vælger det i bookingen.
 - [Se lyset i jeres lokale](https://lejhojtaler.dk/lys-ai): Upload et foto af lokalet. Vi sætter lyskæder, uplights og lyseffekter op, og I lægger setuppet i kurven. Lysudlejning i København.
 - [Om os](https://lejhojtaler.dk/om): Mød Frederik Scharling, stifter af lejhøjtaler.dk. Københavns mest tilgængelige udlejningsservice for lyd og lys til private fester, firmaevents og alt derimellem.
+- [Priser](https://lejhojtaler.dk/priser): Hele prislisten ét sted: højtalere, festpakker, lys, røg, mikrofoner, skærme, lydmand og DJ. Samme pris om du lejer 1 eller 5 dage, og intet depositum.
 - [Privatlivspolitik](https://lejhojtaler.dk/privatlivspolitik): Sådan behandler Lejhøjtaler.dk dine personoplysninger: hvad vi indsamler, hvorfor, hvor længe vi gemmer det, og hvilke rettigheder du har efter GDPR.
 
 ## In English
@@ -229,6 +231,7 @@
 - [Speaker Rental Copenhagen](https://lejhojtaler.dk/en/lej-hojtaler): Rent speakers in Copenhagen from 495 DKK/weekend. Battery-powered speakers (Mackie Thump GO, Soundboks 4) and full PA packages. Cables included, pay on pickup. Book online.
 - [Microphone Rental Copenhagen](https://lejhojtaler.dk/en/lej-mikrofon): Rent a microphone in Copenhagen. Wireless microphone from 445 DKK, Shure BLX 595 DKK, wireless headset from 445 DKK and wired handheld from 95 DKK. Plugs straight into our speakers.
 - [Rental Terms](https://lejhojtaler.dk/en/lejevilkaar): Rental terms for speaker, lighting and PA system hire at Lejhøjtaler.dk. Read about prices, rental periods, pickup, return and liability.
+- [Delivery and collection](https://lejhojtaler.dk/en/levering): Collect it yourself in Amager, or have the gear delivered and set up anywhere in Copenhagen. See what delivery costs, what setup covers and how to choose it when you book.
 - [PA System Rental Copenhagen, packages by guest count](https://lejhojtaler.dk/en/lydanlaeg): Rent a PA system in Copenhagen by how many guests are coming: 50, 100, 150 or 250 people. Ready-made packages with speakers, sub, lights and fog, delivery and setup available.
 - [Sound Engineer Hire Copenhagen](https://lejhojtaler.dk/en/lydmand) — 1000 kr/weekend: Hire a sound engineer for your party or corporate event in Copenhagen, 1,000 DKK per hour incl. VAT. The AV technician sets up, runs the sound check and controls sound and microphones while you enjoy the event.
 - [See the lights in your venue](https://lejhojtaler.dk/en/lys-ai): Upload a photo of the room. We place fairy lights, uplights and effects, and you add the setup to the basket. Event lighting rental in Copenhagen.
@@ -246,6 +249,7 @@
 - [Conference Bundle Rental Copenhagen](https://lejhojtaler.dk/en/pakke-konference) — 1485 kr/weekend: Conference bundle with 55" display, wireless headset and two speakers, ready for the meeting room for 1,485 DKK. Save 150 DKK. Book online in Copenhagen.
 - [Presentation Bundle Rental Copenhagen](https://lejhojtaler.dk/en/pakke-praesentation) — 695 kr/weekend: Presentation bundle with projector, 160 cm screen and wired handheld microphone, everything for the presentation for 695 DKK. Save 90 DKK. Book online in Copenhagen.
 - [Speech & Music Package Rental Copenhagen](https://lejhojtaler.dk/en/pakke-tale-musik) — 1145 kr/weekend: Medium speaker package + wireless microphone, speeches and music for events. Save 95 DKK. 1,145 DKK per weekend. Pay on pickup. Book online.
+- [Rental prices](https://lejhojtaler.dk/en/priser): The full price list in one place: speakers, party packages, lighting, smoke, microphones, screens, sound engineer and DJ. Same price for 1 or 5 days, no deposit.
 - [Privacy Policy](https://lejhojtaler.dk/en/privatlivspolitik): How Lejhøjtaler.dk handles your personal data: what we collect, why, how long we keep it, and what rights you have under the GDPR.
 - [Projector Rental Copenhagen](https://lejhojtaler.dk/en/projektor) — 495 kr/weekend: Rent a Full HD projector in Copenhagen for 495 DKK. For presentations, meetings and movie nights, HDMI cable and remote control included. Book online.
 - [Projector Pro (5000 lumen) Rental Copenhagen](https://lejhojtaler.dk/en/projektor-pro) — 795 kr/weekend: Rent a 5000 lumen PRO projector in Copenhagen for 795 DKK. Sharp even in lit rooms and daylight, for halls, trade shows and large meetings. Book online.

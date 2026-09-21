@@ -5,15 +5,25 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Discokugle København | Fra 645 kr | Lejhøjtaler.dk",
+  // Kunderne staver den med k: "diskokugle" gav 104 visninger på 30 dage mod
+  // 22 på "discokugle" (Ads-søgetermer, sept 2026). Titel og H1 bruger derfor
+  // k-formen, mens c-formen bliver stående i teksten, så begge stavemåder
+  // står på siden. Stien er uændret — en redirect ville koste mere end den
+  // giver.
+  title: "Lej Diskokugle København | Fra 645 kr | Lejhøjtaler.dk",
   description:
-    "Lej discokugle i København fra 645 kr/weekend. Roterende discokugle med LED-lys og farver. Plug-and-play. Betal ved afhentning. Book online.",
+    "Lej diskokugle i København fra 645 kr/weekend. Roterende discokugle, 30 eller 40 cm, med spot og stativ. Plug-and-play. Betal ved afhentning. Book online.",
   keywords: [
+    "lej diskokugle",
+    "diskokugle leje",
+    "diskokugle udlejning",
     "lej discokugle",
     "discokugle udlejning",
-    "discokugle til fest",
+    "diskokugle til fest",
     "disco kugle leje",
-    "discokugle københavn",
+    "spejlkugle leje",
+    "stor diskokugle",
+    "diskokugle københavn",
   ],
   alternates: {
     canonical: "https://lejhojtaler.dk/discokugle",
@@ -21,9 +31,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-discokugle-v2.webp"),
-    title: "Lej Discokugle København | Fra 645 kr",
+    title: "Lej Diskokugle København | Fra 645 kr",
     description:
-      "Lej discokugle i København fra 645 kr/weekend. Roterende discokugle med LED-lys og farver. Book online.",
+      "Lej diskokugle i København fra 645 kr/weekend. Roterende discokugle med LED-lys og farver. Book online.",
     url: "https://lejhojtaler.dk/discokugle",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -37,7 +47,7 @@ export default function DiscokuglePage() {
       slug="discokugle"
       name="Discokugle"
       price={645}
-      headline="Lej discokugle i København"
+      headline="Lej diskokugle i København"
       sub="Roterende discokugle med LED-lys og farver. Klar på 2 min."
       image="/images/product-discokugle-v2-white.webp"
       imageAlt="Discokugle til leje i København"

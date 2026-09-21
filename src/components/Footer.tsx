@@ -160,6 +160,12 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
         <Link href={s.blogHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
           {s.blog}
         </Link>
+        <Link href={s.pricesHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
+          {s.prices}
+        </Link>
+        <Link href={s.deliveryHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
+          {s.delivery}
+        </Link>
         <Link href={s.termsHref} className="text-white/40 hover:text-brand-400 transition underline underline-offset-2">
           {s.terms}
         </Link>
