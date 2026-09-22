@@ -73,6 +73,14 @@ export default function InquiryDrawer() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [solutionId, setSolutionId] = useState<string>();
+  /**
+   * Forespørgselsvaren fra linket, fx "Send forespørgsel" på /slushicemaskine.
+   *
+   * Klikket åbner draweren UDEN at navigere, så URL'en er stadig produktsidens
+   * — formularen kan altså ikke selv læse ?produkt= ud af den. Den følger med
+   * herfra i stedet, ligesom loesning gør.
+   */
+  const [produktId, setProduktId] = useState<string>();
   const skjult = skjultPaa(pathname);
   const locale: Locale = pathname?.startsWith("/en") ? "en" : "da";
   const c = COPY[locale];
@@ -119,6 +127,7 @@ export default function InquiryDrawer() {
         e.preventDefault();
         const target = new URL(href, window.location.href);
         setSolutionId(target.searchParams.get("loesning") || undefined);
+        setProduktId(target.searchParams.get("produkt") || undefined);
         setOpen(true);
       }
     };
@@ -204,7 +213,7 @@ export default function InquiryDrawer() {
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-5">
             <p className="mb-5 text-sm text-white/50">{c.intro}</p>
-            {open && <EventInquiryForm locale={locale} initialSolution={solutionId} />}
+            {open && <EventInquiryForm locale={locale} initialSolution={solutionId} initialProduct={produktId} />}
           </div>
         </div>
       </div>

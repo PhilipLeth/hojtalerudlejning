@@ -37,6 +37,13 @@ export interface Speaker {
   sizeClass: SizeClass;
   weight: string;
   hidden?: boolean;
+  /**
+   * Forespørgselsvare: vises på sitet, men kan ikke bookes eller betales
+   * online. Knappen hedder "Send forespørgsel", og prisen er vejledende
+   * eller slet ikke sat. Se ER_FORESPOERGSEL i bunden af filen.
+   */
+  forespoergsel?: boolean;
+
   /** Produktvideo (instruktion/demo), vist med play-knap i produkt-hero */
   video?: string;
   /** YouTube-URL fra producenten, vist som ekstra info under produktbeskrivelsen */
@@ -61,6 +68,13 @@ export interface Addon {
   price: number;
   image: string | null;
   hidden?: boolean;
+  /**
+   * Forespørgselsvare: vises på sitet, men kan ikke bookes eller betales
+   * online. Knappen hedder "Send forespørgsel", og prisen er vejledende
+   * eller slet ikke sat. Se ER_FORESPOERGSEL i bunden af filen.
+   */
+  forespoergsel?: boolean;
+
   /** Produktvideo (instruktion/demo), vist med play-knap i produkt-hero */
   video?: string;
   /** YouTube-URL fra producenten, vist som ekstra info under produktbeskrivelsen */
@@ -139,6 +153,13 @@ export interface RentalProduct {
   desc_da?: string;
   desc_en?: string;
   hidden?: boolean;
+  /**
+   * Forespørgselsvare: vises på sitet, men kan ikke bookes eller betales
+   * online. Knappen hedder "Send forespørgsel", og prisen er vejledende
+   * eller slet ikke sat. Se ER_FORESPOERGSEL i bunden af filen.
+   */
+  forespoergsel?: boolean;
+
   /** Produktvideo (instruktion/demo), vist med play-knap i produkt-hero */
   video?: string;
   /** YouTube-URL fra producenten, vist som ekstra info under produktbeskrivelsen */
@@ -1707,15 +1728,15 @@ const rentalProductsRaw: RawRentalProduct[] = [
   { id: "lyskaeder_farvet", page: "/lyskaeder", youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c", category: "lys", price: 195, image: "/images/product-lyskaeder-farvet-v2-white.webp", name_da: "Lyskæde farvet", name_en: "Fairy lights coloured", desc_da: "10m lyskæde med farvede pærer, festlig stemning fra første sekund.", desc_en: "10m fairy lights with coloured bulbs, party mood instantly.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["10m lyskæde", "Farvede pærer", "Strømforsyning"] },
   { id: "uplight", page: "/uplights", category: "lys", price: 195, image: "/images/product-uplight-v2-white.webp", name_da: "Uplight", name_en: "Uplight", desc_da: "Fun Generation PartyPar 12 LED uplight inkl. fjernbetjening, plug and play. Vasker vægge og hjørner i farvet lys.", desc_en: "Fun Generation PartyPar 12 LED uplight incl. remote, plug and play. Washes walls and corners in coloured light.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["1× Fun Generation PartyPar 12 LED", "Fjernbetjening", "Strømkabel"] },
   { id: "uplight_4", page: "/uplights", category: "lys", price: 595, image: "/images/product-uplight-4-v2-white.webp", name_da: "Uplight 4-pak", name_en: "Uplight 4-pack", desc_da: "4 simple LED uplights til vægge og hjørner vs enkeltvis.", desc_en: "4 simple LED uplights for walls and corners vs singles.", allowedAddons: [...DELIVERY_ADDON_IDS], contents: ["4× Fun Generation PartyPar 12 LED", "Fjernbetjening", "Strømkabler"] },
-  { id: "projektor", page: "/projektor", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", price: 495, image: "/images/product-projektor-white.webp", name_da: "Projektor", name_en: "Projector", desc_da: "Full HD projektor til præsentationer og film.", desc_en: "Full HD projector for presentations and film.", contents: ["Full HD projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
-  { id: "skaerm_55", page: "/skaerm", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 595, image: "/images/product-skaerm-white.webp", name_da: '55" Storskærm', name_en: '55" Screen', desc_da: "55\" LED-skærm på 3-fod stativ, justerbar højde.", desc_en: '55" LED screen on tripod stand, adjustable height.', contents: ['55" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
-  { id: "skaerm_32", page: "/skaerm-32", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 395, image: "/images/product-skaerm-32-white.webp", name_da: '32" Skærm', name_en: '32" Screen', desc_da: "32\" LED-skærm på 3-fod stativ, kompakt og nem at flytte. Perfekt til karaoke.", desc_en: '32" LED screen on tripod stand, compact and easy to move. Perfect for karaoke.', contents: ['32" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
+  { id: "projektor", forespoergsel: true, page: "/projektor", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", price: 495, image: "/images/product-projektor-white.webp", name_da: "Projektor", name_en: "Projector", desc_da: "Full HD projektor til præsentationer og film.", desc_en: "Full HD projector for presentations and film.", contents: ["Full HD projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
+  { id: "skaerm_55", forespoergsel: true, page: "/skaerm", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 595, image: "/images/product-skaerm-white.webp", name_da: '55" Storskærm', name_en: '55" Screen', desc_da: "55\" LED-skærm på 3-fod stativ, justerbar højde.", desc_en: '55" LED screen on tripod stand, adjustable height.', contents: ['55" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
+  { id: "skaerm_32", forespoergsel: true, page: "/skaerm-32", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", price: 395, image: "/images/product-skaerm-32-white.webp", name_da: '32" Skærm', name_en: '32" Screen', desc_da: "32\" LED-skærm på 3-fod stativ, kompakt og nem at flytte. Perfekt til karaoke.", desc_en: '32" LED screen on tripod stand, compact and easy to move. Perfect for karaoke.', contents: ['32" LED-skærm', "3-fod stativ", "HDMI-kabel", "Strømkabel"] },
   { id: "traadloes_mikrofon_pro", hidden: true, page: "/traadloes-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 595, image: "/images/product-mikrofon-pro-v2-white.webp", name_da: "Trådløs mikrofon PRO", name_en: "Wireless mic PRO", desc_da: "Shure BLX trådløs mikrofon, scenekvalitet til events og konferencer.", desc_en: "Shure BLX wireless microphone, stage quality for events and conferences.", contents: ["Shure trådløs håndholdt mic", "Shure modtager", "Kabelforbindelse til højtaler"] },
   { id: "headset", page: "/headset-mikrofon", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 445, image: "/images/product-headset-pro-v2-white.webp", name_da: "Trådløst headset", name_en: "Wireless headset", desc_da: "Shure BLX14 trådløst headset, frie hænder til præsentationer og undervisning.", desc_en: "Shure BLX14 wireless headset, hands free for presentations and teaching.", allowedAddons: ["mixer_stor", ...DELIVERY_ADDON_IDS], contents: ["Shure BLX14 med PGA31 headset", "Bodypack + modtager", "Kabel til højtaler"] },
   { id: "headset_pro", hidden: true, page: "/headset-pro", youtubeUrl: "https://www.youtube.com/watch?v=mnNM1npG_EM", category: "av", price: 595, image: "/images/product-headset-pro-v2-white.webp", name_da: "Trådløst headset PRO", name_en: "Wireless headset PRO", desc_da: "Professionelt headset i broadcast-kvalitet, til konferencer og scener.", desc_en: "Professional broadcast-quality headset, for conferences and stages.", contents: ["PRO headset-mikrofon", "Bodypack + modtager", "Kabelforbindelse"] },
   { id: "haandholdt_mikrofon_pro", page: "/haandholdt-mikrofon-pro", youtubeUrl: "https://www.youtube.com/watch?v=Y8CBYnicB5g", category: "av", price: 345, image: "/images/product-mikrofon-kabel-pro-v2-white.webp", name_da: "Håndholdt mikrofon PRO (kabel)", name_en: "Handheld microphone PRO (wired)", desc_da: "Shure Beta 58A med kabel, klassikeren til sang og taler.", desc_en: "Shure Beta 58A wired, the classic for vocals and speeches.", allowedAddons: ["mixer_stor", "mikrofonstativ", ...DELIVERY_ADDON_IDS], contents: ["Shure Beta 58A", "XLR/kabel"] },
-  { id: "laerred_160", page: "/laerred-160", youtubeUrl: "https://www.youtube.com/watch?v=PLqEcB93Sac", category: "av", price: 195, image: "/images/product-laerred-v2-white.webp", name_da: "Lærred 160 cm", name_en: "Projector screen 160 cm", desc_da: "160 cm lærred på stativ, perfekt til projektor.", desc_en: "160 cm projector screen on stand.", contents: ["160 cm lærred", "Stativ"] },
-  { id: "projektor_pro", page: "/projektor-pro", youtubeUrl: "https://www.youtube.com/watch?v=7FhRTCCKCm0", category: "av", price: 795, image: "/images/product-projektor-pro-v2-white.webp", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor, skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector, sharp even in daylight.", contents: ["5000 lumen projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
+  { id: "laerred_160", forespoergsel: true, page: "/laerred-160", youtubeUrl: "https://www.youtube.com/watch?v=PLqEcB93Sac", category: "av", price: 195, image: "/images/product-laerred-v2-white.webp", name_da: "Lærred 160 cm", name_en: "Projector screen 160 cm", desc_da: "160 cm lærred på stativ, perfekt til projektor.", desc_en: "160 cm projector screen on stand.", contents: ["160 cm lærred", "Stativ"] },
+  { id: "projektor_pro", forespoergsel: true, page: "/projektor-pro", youtubeUrl: "https://www.youtube.com/watch?v=7FhRTCCKCm0", category: "av", price: 795, image: "/images/product-projektor-pro-v2-white.webp", name_da: "Projektor Pro (5000 lumen)", name_en: "Projector Pro (5000 lumen)", desc_da: "Kraftig 5000 lumen projektor, skarp selv i dagslys.", desc_en: "Powerful 5000 lumen projector, sharp even in daylight.", contents: ["5000 lumen projektor", "HDMI-kabel", "Strømkabel", "Fjernbetjening"] },
   { id: "pakke_praesentation", page: "/pakke-praesentation", youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k", category: "av", showPartImages: true, image: "/images/product-projektor-white.webp", name_da: "Præsentationspakken", name_en: "Presentation bundle", desc_da: "Projektor + lærred 160 cm + håndholdt mikrofon. Alt til præsentationen.", desc_en: "Projector + 160 cm screen + wired handheld mic. Everything for your presentation.", contents: ["Full HD projektor", "Lærred 160 cm", "Håndholdt mic + kabel", "HDMI + strøm"], bundle: { usecase_da: "Alt til præsentationen, projektor, lærred og mikrofon.", usecase_en: "Everything for your presentation.", parts: [ { productId: "projektor", label_da: "Projektor", label_en: "Projector", price: 495 }, { productId: "laerred_160", label_da: "Lærred 160 cm", label_en: "Screen 160 cm", price: 195 }, { productId: "mikrofon_kabel", label_da: "Håndholdt mikrofon", label_en: "Wired mic", price: 95 } ] } },
   { id: "pakke_konference", page: "/pakke-konference", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", showPartImages: true, image: "/images/product-skaerm-white.webp", name_da: "Konferencepakken", name_en: "Conference bundle", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke. Klar til konference.", desc_en: "55\" screen + wireless headset + small speaker package. Conference-ready.", contents: ['55" skærm + stativ', "Trådløst headset", '2× 10" højtalere', "Kabler + adapter"], bundle: { usecase_da: "Klar til konference, skærm, headset og lyd.", usecase_en: "Conference-ready, screen, headset and sound.", parts: [ { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 445 }, { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speakers", price: 595 } ] } },
   { id: "pakke_konference_150", page: "/konferencepakke-150", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", showPartImages: true, image: "/images/product-skaerm-white.webp", name_da: "Konferencepakke 150", name_en: "Conference package 150", desc_da: '2× 12" højtalere på stativer + Shure trådløs mikrofon + headset + 55" skærm. Til sale med 100-150 deltagere.', desc_en: 'Two 12" speakers on stands + Shure wireless mic + headset + 55" screen. For rooms with 100-150 attendees.', contents: ['2× EV 12" højtalere + stativer', "Trådløs mikrofon", "Trådløst headset", '55" skærm på stativ', "HDMI + alle kabler"], allowedAddons: ["mikrofon",...DELIVERY_ADDON_IDS], bundle: { usecase_da: "Konference eller generalforsamling hvor både taleren og salen skal kunne høres og se med.", usecase_en: "Conference or general assembly where both the speaker and the room must be heard and seen.", parts: [ { productId: "festival", label_da: 'Mellem højtalerpakke (2× 12")', label_en: 'Medium speaker package (2× 12")', price: 795 }, { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 95 }, { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 445 }, { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 } ] } },
@@ -1744,7 +1765,46 @@ const rentalProductsRaw: RawRentalProduct[] = [
       ],
     },
   },
-  { id: "karaoke", page: "/karaoke-maskine", youtubeUrl: "https://www.youtube.com/watch?v=_UaBe_xR3JY", category: "av", price: 695, image: "/images/product-karaoke-v2-white.webp", name_da: "Karaokemaskine", name_en: "Karaoke machine", desc_da: "Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys, tilslut TV via HDMI.", desc_en: "Singing Machine with built-in screen, 2 wireless mics and party lights, HDMI for your TV.", contents: ["Singing Machine karaoke-maskine", "2 trådløse mikrofoner", "Indbygget skærm + festlys", "HDMI-kabel + Bluetooth"] },
+  /* ───── Skaffevarer ─────
+   *
+   * Vi ejer dem ikke. De skaffes til arrangementet, og prisen afhænger af
+   * dato, antal og hvem der kan levere — derfor ingen weekendpris og ingen
+   * bookingknap, se ER_FORESPOERGSEL. Uden dem er der ingen vej ind på
+   * "lej slushicemaskine københavn", og kunden, der alligevel skal have lyd
+   * til studenterfesten, spørger et andet sted.
+   *
+   * De har intet foto, og de får ikke et genereret et: reglen på sitet er, at
+   * vi ikke viser udstyr, vi ikke har — hverken i annoncer eller i kataloget.
+   * Kortet viser navnet på en ren flade, indtil der står en rigtig maskine på
+   * lageret, og fotoet kan tages eller genereres ud fra den.
+   */
+  {
+    id: "slushice",
+    page: "/slushicemaskine",
+    category: "av",
+    price: 0,
+    image: "",
+    forespoergsel: true,
+    name_da: "Slushicemaskine",
+    name_en: "Slush machine",
+    desc_da: "To kamre, så der kan køre to smage. Til studenterfesten, sommerfesten og børnefødselsdagen.",
+    desc_en: "Two bowls, so you can run two flavours. For graduation parties, summer parties and children's birthdays.",
+    contents: ["Maskine med to kamre", "Sirup efter aftale", "Krus og sugerør kan følge med", "Almindelig 230 V"],
+  },
+  {
+    id: "fadoel",
+    page: "/fadoelsanlaeg",
+    category: "av",
+    price: 0,
+    image: "",
+    forespoergsel: true,
+    name_da: "Fadølsanlæg",
+    name_en: "Draught beer system",
+    desc_da: "Anlæg med køling, hane og kulsyre. Fustage og mærke aftaler vi, når vi kender antallet.",
+    desc_en: "A system with cooling, tap and CO2. We agree on the keg and the brand once we know the numbers.",
+    contents: ["Køleanlæg med hane", "Kulsyre og slanger", "Fustage efter aftale", "Vejledning ved levering"],
+  },
+  { id: "karaoke", forespoergsel: true, page: "/karaoke-maskine", youtubeUrl: "https://www.youtube.com/watch?v=_UaBe_xR3JY", category: "av", price: 695, image: "/images/product-karaoke-v2-white.webp", name_da: "Karaokemaskine", name_en: "Karaoke machine", desc_da: "Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys, tilslut TV via HDMI.", desc_en: "Singing Machine with built-in screen, 2 wireless mics and party lights, HDMI for your TV.", contents: ["Singing Machine karaoke-maskine", "2 trådløse mikrofoner", "Indbygget skærm + festlys", "HDMI-kabel + Bluetooth"] },
   {
     id: "pakke_karaoke",
     hidden: true,
@@ -1873,6 +1933,65 @@ export const STROEM_ADDON_IDS = [
   "omformer_udendors",
 ];
 
+/* ───── Forespørgselsvarer ─────
+ *
+ * Frederiks prisark er sortimentet. Men arket rummer kun det, vi selv har på
+ * hylden og kan sætte en fast weekendpris på — det har intet afsnit for
+ * skærm, projektor, lærred og karaoke, og slet ingen for slush ice og fadøl.
+ *
+ * At slette dem ville være forkert: Search Console viser ~350 visninger om
+ * måneden på "lej storskærm", og efterspørgslen på en slushicemaskine til
+ * studenterfesten er ikke mindre, fordi den ikke står i arket. At lade dem
+ * ligge med en bookingknap ville også være forkert: så lover vi en pris og en
+ * ledighed, arket ikke dækker.
+ *
+ * Tredje vej: de bliver stående som forespørgselsvarer. Siden er der, produktet
+ * er der, men knappen hedder "Send forespørgsel" i stedet for "Book", og
+ * serveren afviser dem i pristabellen, så ingen kan nå at betale for dem.
+ * Philip, 22. september 2026: "Du skal bare følge Frederiks logik. Du kan evt.
+ * have nogle produkter som skærm, projektor, slush ice, fadøl osv. som
+ * 'request'-produkt."
+ */
+export const ER_FORESPOERGSEL: string[] = [
+  // Arket har intet afsnit 7 — billede og karaoke står ikke i det nye ark
+  "skaerm_55",
+  "skaerm_32",
+  "projektor",
+  "projektor_pro",
+  "laerred_160",
+  "karaoke",
+  // Skaffes til arrangementet, står ikke på vores egen hylde
+  "slushice",
+  "fadoel",
+];
+
+/**
+ * Er varen en forespørgsel frem for en booking?
+ *
+ * En PAKKE arver det fra sine dele: Præsentationspakken er projektor, lærred
+ * og mikrofon, og kan derfor ikke bookes online, når projektoren ikke kan.
+ * Samme regel som "en pakke med en pauset del er selv på pause" — ellers
+ * sælger vi Konferencepakken uden den skærm, den lover.
+ */
+export function erForespoergsel(productId: string): boolean {
+  if (ER_FORESPOERGSEL.includes(productId)) return true;
+  const p = rentalProducts.find((r) => r.id === productId);
+  if (!p?.bundle) return false;
+  return p.bundle.parts.some((del) => ER_FORESPOERGSEL.includes(del.productId));
+}
+
+/**
+ * Linket til forespørgselsformularen for ét bestemt produkt.
+ *
+ * #foresp åbner InquiryDrawer på enhver side, og ?produkt= fortæller
+ * formularen hvad der spørges til, så Frederik ikke får en mail der bare
+ * siger "hej, hvad koster det?". Stien bevares, så linket også virker uden
+ * JavaScript — der ligger den samme formular på /erhverv.
+ */
+export function forespoergselHref(productId: string, locale: "da" | "en" = "da"): string {
+  return `${locale === "en" ? "/en/erhverv" : "/erhverv"}?produkt=${encodeURIComponent(productId)}#foresp`;
+}
+
 /** Er produktet sat på pause? Bruges af produktsiderne, der ellers ville stå
  *  med en bookingknap til noget, vi ikke udlejer. */
 export function erPaaPause(productId: string): boolean {
@@ -1966,7 +2085,9 @@ export const NAV_CATEGORIES: NavCategory[] = [
       { href: "/skaerm", label: "Storskærm 55\"", label_en: '55" Screen' },
       { href: "/lej-projektor", label: "Projektor og lærred", label_en: "Projectors and screens" },
       { href: "/karaoke", label: "Karaoke", label_en: "Karaoke" },
-      { href: "/pakke-konference", label: "Konferencepakken", label_en: "Conference bundle" },
+      // Skaffevarer: ingen fast pris, men de skal kunne findes
+      { href: "/slushicemaskine", label: "Slushicemaskine", label_en: "Slush machine" },
+      { href: "/fadoelsanlaeg", label: "Fadølsanlæg", label_en: "Draught beer" },
       { href: "/av-udstyr", label: "Se alt AV-udstyr", label_en: "All AV equipment" },
     ],
   },
@@ -2321,7 +2442,13 @@ export function catalogImage(id: string): string {
     addons.find((a) => a.id === id);
   if (!p) throw new Error(`catalogImage: ukendt produkt-id "${id}"`);
   const src = "product" in p ? p.product : p.image;
-  if (!src) throw new Error(`catalogImage: "${id}" har intet billede`);
+  // En forespørgselsvare, vi endnu ikke har på hylden (slush ice, fadøl), har
+  // intet foto — og skal ikke have et genereret, for vi viser ikke udstyr, vi
+  // ikke har. Tom streng er svaret; kortet og siden tegner en tekstflade.
+  if (!src) {
+    if (erForespoergsel(id)) return "";
+    throw new Error(`catalogImage: "${id}" har intet billede`);
+  }
   return src;
 }
 

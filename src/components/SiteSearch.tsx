@@ -37,6 +37,7 @@ const COPY = {
     results: "Søgeresultater",
     perWeekend: "kr/weekend",
     page: "Side",
+    ask: "Forespørgsel",
   },
   en: {
     open: "Search for equipment",
@@ -49,6 +50,7 @@ const COPY = {
     results: "Search results",
     perWeekend: "DKK/weekend",
     page: "Page",
+    ask: "On request",
   },
 } as const;
 
@@ -213,7 +215,7 @@ export default function SiteSearch({ locale = "da" }: { locale?: Locale }) {
                       </span>
                     ) : (
                       <span className="shrink-0 rounded-full border border-white/10 px-2 py-0.5 text-[11px] text-white/35">
-                        {c.page}
+                        {r.foresporg ? c.ask : c.page}
                       </span>
                     )}
                   </Link>

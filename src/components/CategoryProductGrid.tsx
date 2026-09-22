@@ -5,6 +5,7 @@ import { useProducts } from "@/lib/useProducts";
 import { thumbSrcSet, GRID_IMAGE_SIZES } from "@/lib/imageSrcSet";
 import { localizedHref } from "@/lib/enPages";
 import { bookHref } from "@/lib/bookUrl";
+import { erForespoergsel, forespoergselHref } from "@/lib/products";
 import { contentsFor } from "@/lib/contentsEn";
 import type { Locale } from "@/lib/i18n";
 
@@ -18,8 +19,8 @@ import type { Locale } from "@/lib/i18n";
  * productFaq.ts, hvor de engelske svar også citerer den danske pakkeliste.
  */
 const COPY = {
-  da: { included: "Inkluderet", currency: "kr", perWeekend: "/weekend", book: "Book", info: "Info", save: "Spar" },
-  en: { included: "Included", currency: "DKK", perWeekend: "/weekend", book: "Book", info: "Details", save: "Save" },
+  da: { included: "Inkluderet", currency: "kr", perWeekend: "/weekend", book: "Book", info: "Info", save: "Spar", ask: "Forespørg", askPrice: "Pris på forespørgsel", guide: "vejledende" },
+  en: { included: "Included", currency: "DKK", perWeekend: "/weekend", book: "Book", info: "Details", save: "Save", ask: "Enquire", askPrice: "Price on request", guide: "guide price" },
 } as const;
 
 export interface CategoryItem {
@@ -174,15 +175,31 @@ export default function CategoryProductGrid({
               <h3 className={`text-xl font-semibold ${light ? "text-slate-900" : "text-white"}`}>{p.name}</h3>
               <p className={`mt-1 flex-1 text-sm ${light ? "text-slate-500" : "text-white/40"}`}>{p.desc}</p>
               <div className="mt-4 flex items-center justify-between gap-3">
+                {/* En forespørgselsvare har ingen fast weekendpris — knappen
+                    fører til formularen, ikke til kurven. Se ER_FORESPOERGSEL. */}
                 <p className="text-2xl font-bold text-brand-600">
-                  {p.price} {c.currency}<span className={`ml-1 text-xs font-normal ${light ? "text-slate-400" : "text-white/40"}`}>{c.perWeekend}</span>
+                  {erForespoergsel(p.id) ? (
+                    p.price > 0 ? (
+                      <>
+                        {p.price} {c.currency}
+                        <span className={`ml-1 text-xs font-normal ${light ? "text-slate-400" : "text-white/40"}`}>{c.guide}</span>
+                      </>
+                    ) : (
+                      <span className="text-base font-semibold">{c.askPrice}</span>
+                    )
+                  ) : (
+                    <>
+                      {p.price} {c.currency}
+                      <span className={`ml-1 text-xs font-normal ${light ? "text-slate-400" : "text-white/40"}`}>{c.perWeekend}</span>
+                    </>
+                  )}
                 </p>
                 <div className="flex gap-2">
                   <Link
-                    href={p.href!}
+                    href={erForespoergsel(p.id) ? forespoergselHref(p.id, locale) : p.href!}
                     className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-brand-400 active:scale-95"
                   >
-                    {c.book}
+                    {erForespoergsel(p.id) ? c.ask : c.book}
                   </Link>
                   {p.page && (
                     <Link

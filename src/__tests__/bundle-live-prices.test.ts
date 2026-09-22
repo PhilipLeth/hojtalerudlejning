@@ -4,6 +4,7 @@ import {
   PAKKE_RABAT,
   bundleListPrice,
   bundlePrice,
+  erForespoergsel,
   bundleRabat,
   refreshBundlePrices,
   roundPackagePrice,
@@ -70,7 +71,21 @@ describe("Pakkeprisen følger delene", () => {
     const table = await loadPriceTable({ get: async () => null } as never);
     for (const p of pakker) {
       if (p.hidden) continue;
+      // En forespørgselspakke (Præsentationspakken, Konferencepakken …) har
+      // ingen fast pris i arket og må ikke kunne betales online. Serveren
+      // afviser den — det er meningen, se ER_FORESPOERGSEL.
+      if (erForespoergsel(p.id)) continue;
       expect(buildLineItems(table, [{ id: p.id }]).totalOre, p.id).toBe(p.price * 100);
+    }
+  });
+
+  it("en forespørgselspakke kan ikke betales, hverken direkte eller som del", async () => {
+    const table = await loadPriceTable({ get: async () => null } as never);
+    const foresporg = pakker.filter((p) => !p.hidden && erForespoergsel(p.id));
+    expect(foresporg.length).toBeGreaterThan(0);
+    for (const p of foresporg) {
+      expect(table.has(p.id), `${p.id} kan betales online`).toBe(false);
+      expect(() => buildLineItems(table, [{ id: p.id }]), p.id).toThrow(/Unknown product/);
     }
   });
 

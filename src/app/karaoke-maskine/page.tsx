@@ -1,4 +1,4 @@
-import { prisKr, rabatKr } from "@/lib/products";
+import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
@@ -7,7 +7,7 @@ import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Lej Karaokemaskine København | ${prisKr("karaoke")} | Lejhøjtaler.dk`,
   description:
-    `Lej en Singing Machine karaokemaskine i København for ${prisKr("karaoke")}. Indbygget skærm, to trådløse mikrofoner og festlys, tilslut dit TV via HDMI.`,
+    `Lej en Singing Machine karaokemaskine i København. Pris på forespørgsel. Indbygget skærm, to trådløse mikrofoner og festlys, tilslut dit TV via HDMI.`,
   keywords: ["lej karaokemaskine", "karaoke maskine leje københavn", "singing machine leje"],
   alternates: {
     canonical: "https://lejhojtaler.dk/karaoke-maskine",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     images: ogImages("/images/product-karaoke-v2.webp"),
     title: `Lej Karaokemaskine København | ${prisKr("karaoke")}`,
     description:
-      `Lej en Singing Machine karaokemaskine i København for ${prisKr("karaoke")}. Indbygget skærm, to trådløse mikrofoner og festlys, tilslut dit TV via HDMI.`,
+      `Lej en Singing Machine karaokemaskine i København. Pris på forespørgsel. Indbygget skærm, to trådløse mikrofoner og festlys, tilslut dit TV via HDMI.`,
     url: "https://lejhojtaler.dk/karaoke-maskine",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -35,7 +35,7 @@ export default function Page() {
       imageAlt="Singing Machine karaokemaskine med to trådløse mikrofoner til leje"
       productId="karaoke"
       faqPhrase="en karaokemaskine"
-      bullets={["Singing Machine med indbygget skærm", "2 trådløse mikrofoner medfølger", "Festlys i højtaleren", "HDMI til TV/projektor + Bluetooth", "Klar på 5 minutter", `Billigst i Karaokepakken, spar ${rabatKr("pakke_karaoke")}`]}
+      bullets={["Singing Machine med indbygget skærm", "2 trådløse mikrofoner medfølger", "Festlys i højtaleren", "HDMI til TV/projektor + Bluetooth", "Klar på 5 minutter", "Kan skaffes sammen med lyd og lys til samme fest"]}
     />
   );
 }

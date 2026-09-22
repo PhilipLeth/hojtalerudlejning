@@ -351,6 +351,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/en/fadoelsanlaeg</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en/festlys</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -656,6 +661,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/en/slushicemaskine</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en/soundboks-4</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -827,6 +837,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/events/udendoers</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/fadoelsanlaeg</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1167,6 +1182,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/skaerm-32</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/slushicemaskine</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

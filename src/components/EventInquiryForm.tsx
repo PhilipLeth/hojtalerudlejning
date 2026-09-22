@@ -4,6 +4,7 @@ import { eventSituations } from "@/lib/eventSituations";
 import { useState, useEffect, useId, FormEvent } from "react";
 import type { Locale } from "@/lib/i18n";
 import { eventSolutions } from "@/lib/eventSolutions";
+import { addons, rentalProducts, speakers } from "@/lib/products";
 import PhoneLink from "@/components/PhoneLink";
 
 /**
@@ -119,10 +120,29 @@ const EN: Record<string, string> = {
   "Skærm eller projektor": "Display or projector",
   "Røg / low fog": "Fog / low fog",
   "Levering + opsætning": "Delivery and setup",
-  "Tekniker på stedet": "On-site technician"
+  "Tekniker på stedet": "On-site technician",
+  "Forespørgsel på": "Enquiry about",
+  "Jeg vil gerne høre om": "I would like to ask about"
 };
 
-export default function EventInquiryForm({ locale = "da", initialSolution, initialSituation }: { locale?: Locale; initialSolution?: string; initialSituation?: string }) {
+/**
+ * Navnet på det produkt, forespørgslen handler om.
+ *
+ * Forespørgselsvarerne — skærm, projektor, slush ice, fadøl — har ingen
+ * bookingknap, men et link med ?produkt=<id>. Uden opslaget her ville
+ * Frederik få en mail der bare siger "hej, hvad koster det?".
+ */
+function produktNavn(id: string, locale: Locale): string | null {
+  const r = rentalProducts.find((p) => p.id === id);
+  if (r) return locale === "en" ? r.name_en : r.name_da;
+  const sp = speakers.find((p) => p.id === id);
+  if (sp) return sp[locale].name;
+  const a = addons.find((p) => p.id === id);
+  if (a) return a[locale].label;
+  return null;
+}
+
+export default function EventInquiryForm({ locale = "da", initialSolution, initialSituation, initialProduct }: { locale?: Locale; initialSolution?: string; initialSituation?: string; /** Forespørgselsvaren der spørges til, ellers læses ?produkt= */ initialProduct?: string }) {
   const formId = useId();
   const en = locale === "en";
   const tr = (da: string) => en ? (EN[da] ?? da) : da;
@@ -140,13 +160,26 @@ export default function EventInquiryForm({ locale = "da", initialSolution, initi
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const id = initialSolution || new URLSearchParams(window.location.search).get("loesning");
+    const params = new URLSearchParams(window.location.search);
+    const produkt = initialProduct || params.get("produkt");
+    const navn = produkt ? produktNavn(produkt, locale) : null;
+    if (navn) {
+      setF((prev) => ({
+        ...prev,
+        type: prev.type || "Andet",
+        besked: prev.besked || `${tr("Jeg vil gerne høre om")}: ${navn}.`,
+      }));
+    }
+    const id = initialSolution || params.get("loesning");
     const situationId = initialSituation || window.location.pathname.split("/events/")[1];
     const situation = eventSituations.find(s => s.slug === situationId);
     if (situation) setF(prev => ({...prev, type: "Andet", besked: situation[locale].title + ": " + situation[locale].check.join(", ")}));
     const solution = eventSolutions.find(s => s.id === id);
     if (solution) setF(prev => ({ ...prev, type: id === "messe" ? "Messe / stand" : id === "moeder" ? "Konference / møde" : id === "koncert" ? "Koncert / DJ" : "Reception", besked: `${solution[locale].title}: ${solution[locale].equipment.join(", ")}.` }));
-  }, [locale, initialSolution, initialSituation]);
+    // tr er stabil (udledt af locale), og produktnavnet skal kun sættes én
+    // gang — ellers overskriver den kundens egen tekst ved hver render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locale, initialSolution, initialSituation, initialProduct]);
 
   function toggleBehov(b: string) {
     setF((prev) => ({

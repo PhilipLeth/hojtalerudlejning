@@ -1,4 +1,4 @@
-import { prisDkk, rabatDkk } from "@/lib/products";
+import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
 import { localeAlternates } from "@/lib/hreflang";
@@ -41,7 +41,6 @@ export default function Page() {
         "Party lights in the speaker",
         "HDMI to TV/projector + Bluetooth",
         "Ready in 5 minutes",
-        `Cheapest in the Karaoke bundle, save ${rabatDkk("pakke_karaoke")}`,
       ]}
     />
   );

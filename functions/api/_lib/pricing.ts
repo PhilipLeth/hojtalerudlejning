@@ -4,6 +4,7 @@ import {
   speakers as defaultSpeakers,
   addons as defaultAddons,
   rentalProducts as defaultRentals,
+  erForespoergsel,
   isDeliveryAddon,
   nuvaerendeId,
   SAMMENLAGTE_IDER,
@@ -47,7 +48,11 @@ export async function loadPriceTable(kv: KVNamespace): Promise<Map<string, Price
     kind: PricedItem["kind"],
     size?: string,
   ) => {
-    if (!id || hidden || !Number.isFinite(priceKr) || priceKr <= 0) return;
+    // En forespørgselsvare (skærm, projektor, slush ice …) har ingen fast
+    // weekendpris i Frederiks ark, og må derfor aldrig kunne betales online —
+    // heller ikke hvis et gammelt link eller et gemt KV-katalog stadig bærer
+    // den. Se ER_FORESPOERGSEL i products.ts.
+    if (!id || hidden || erForespoergsel(id) || !Number.isFinite(priceKr) || priceKr <= 0) return;
     table.set(id, { id, name, unitAmount: Math.round(priceKr * 100), kind, size });
   };
 

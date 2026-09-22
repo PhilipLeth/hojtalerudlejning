@@ -12,6 +12,7 @@ import {
   LYD_LADDER_IDS,
   SPEAKERPAKKER,
   addons,
+  erForespoergsel,
   isBundleProduct,
   rentalProducts,
   speakers,
@@ -83,10 +84,15 @@ describe("Katalogets struktur følger prisarket", () => {
    * Pakker står ikke i strukturen som enkeltdele — de hører til det afsnit,
    * delene trækker dem ind i. Men et ENKELTprodukt, der ikke er i arket, er
    * gæld: så er der ingen der ved, hvor det hører hjemme på sitet.
+   *
+   * Undtagelsen er forespørgselsvarerne. De er PR. DEFINITION uden for arket
+   * — skærm, projektor, lærred, karaoke, slush ice og fadøl har ingen fast
+   * weekendpris — og det er netop derfor, de ikke kan bookes online. At kræve
+   * dem skrevet ind i strukturen ville være at kræve arket lavet om.
    */
   it("hvert synligt enkeltprodukt hører til et afsnit i arket", () => {
     const udenfor = alle
-      .filter((p) => !p.hidden && !dele(p.id) && !afsnitFor(p.id))
+      .filter((p) => !p.hidden && !dele(p.id) && !afsnitFor(p.id) && !erForespoergsel(p.id))
       .map((p) => `${p.id} (${p.navn})`);
     expect(
       udenfor,
@@ -97,6 +103,10 @@ describe("Katalogets struktur følger prisarket", () => {
   it("hver pakkes dele kan slås op i strukturen", () => {
     const uden: string[] = [];
     for (const p of rentalProducts.filter(isBundleProduct)) {
+      // En pakke der KUN består af forespørgselsvarer (Mødeskærm er en skærm
+      // og ikke andet) hører heller ikke til i arket — den arver forespørgslen
+      // fra sine dele og kan ikke bookes online.
+      if (erForespoergsel(p.id)) continue;
       if (!afsnitAf(p.id).size) uden.push(`${p.id} (${p.name_da})`);
     }
     expect(uden, `pakker hvis dele ingen af dem findes i strukturen:\n${uden.join("\n")}`).toEqual([]);

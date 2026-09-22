@@ -9,7 +9,7 @@ import { bookHref as toBook } from "@/lib/bookUrl";
 import { PhoneText } from "@/components/PhoneLink";
 import { buildProductFaq } from "@/lib/productFaq";
 import { localizedHref } from "@/lib/enPages";
-import { catalogBundleParts, catalogImage, catalogPrice, erPaaPause, erGenereretBillede, udgaaetPakke } from "@/lib/products";
+import { catalogBundleParts, catalogImage, catalogPrice, erForespoergsel, erPaaPause, erGenereretBillede, forespoergselHref, udgaaetPakke } from "@/lib/products";
 import ProductGallery from "@/components/ProductGallery";
 import type { Locale } from "@/lib/i18n";
 
@@ -41,6 +41,12 @@ const COPY = {
     udgaaetBody:
       "Vi er gået over til prisarkets sortiment, og den her pakke var det samme udstyr som en pakke, der stadig kan bookes. Du finder afløseren her — samme grej, samme pris pr. del.",
     udgaaetCta: "Se hvad du kan booke i stedet",
+    foresporgPris: "Pris på forespørgsel",
+    foresporgVejledende: "vejledende",
+    foresporgCta: "Send forespørgsel",
+    foresporgTitle: "Den her skaffer vi til jer",
+    foresporgBody:
+      "Den står ikke i vores faste prisliste, så den kan ikke bookes online. Skriv dato, antal og sted, så får du en pris — som regel samme dag.",
   },
   en: {
     kicker: "Pay on pickup · Call",
@@ -62,6 +68,12 @@ const COPY = {
     udgaaetBody:
       "We have moved to the range in our price list, and this package was the same equipment as one you can still book. The replacement is here — same gear, same price per part.",
     udgaaetCta: "See what you can book instead",
+    foresporgPris: "Price on request",
+    foresporgVejledende: "guide price",
+    foresporgCta: "Send an enquiry",
+    foresporgTitle: "We source this one for you",
+    foresporgBody:
+      "It is not on our standard price list, so it cannot be booked online. Send us the date, the numbers and the venue, and you get a price — usually the same day.",
   },
 } as const;
 
@@ -208,6 +220,12 @@ export default function ProductLanding({
    * peger den på afløseren, som er det samme udstyr under arkets navn.
    */
   const udgaaet = udgaaetPakke(productId);
+  /**
+   * Forespørgselsvare: skærm, projektor, slush ice, fadøl. Siden er der, og
+   * produktet er der — men prisen er vejledende eller slet ikke sat, og
+   * knappen fører til formularen frem for til kurven. Se ER_FORESPOERGSEL.
+   */
+  const foresporg = erForespoergsel(productId);
   const lukket = paused || !!udgaaet;
   const cta = bookLabel ?? c.book(name);
   const faq =
@@ -243,7 +261,8 @@ export default function ProductLanding({
       price: String(price),
       priceCurrency: "DKK",
       priceValidUntil: "2027-12-31",
-      availability: lukket ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+      availability:
+        lukket || foresporg ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
       url: `https://lejhojtaler.dk/${slug}`,
       shippingDetails: {
         "@type": "OfferShippingDetails",
@@ -301,7 +320,13 @@ export default function ProductLanding({
             {headline}
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              {lukket ? (udgaaet ? c.udgaaetTitle : c.pausedTitle) : <LivePrice productId={productId} fallback={price} prefix={locale === "en" ? "from " : "fra "} suffix={locale === "en" ? " DKK" : " kr."} />}
+              {lukket
+                ? (udgaaet ? c.udgaaetTitle : c.pausedTitle)
+                : foresporg
+                  ? (price > 0
+                      ? `${price} ${locale === "en" ? "DKK" : "kr."}`
+                      : c.foresporgPris)
+                  : <LivePrice productId={productId} fallback={price} prefix={locale === "en" ? "from " : "fra "} suffix={locale === "en" ? " DKK" : " kr."} />}
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">{sub}</p>
@@ -319,11 +344,14 @@ export default function ProductLanding({
             <PauseBoks c={c} udgaaet={udgaaet} className="mt-8" />
           ) : (
             <a
-              href={bookHref}
+              href={foresporg ? forespoergselHref(productId, locale) : bookHref}
               className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
             >
-              {cta}
+              {foresporg ? c.foresporgCta : cta}
             </a>
+          )}
+          {foresporg && !lukket && (
+            <p className="mx-auto mt-4 max-w-md text-sm text-white/45">{c.foresporgBody}</p>
           )}
         </div>
       </section>
@@ -358,7 +386,7 @@ export default function ProductLanding({
                     </li>
                   ))}
                 </ul>
-              ) : (
+              ) : image ? (
                 <img
                   src={image}
                   alt={imageAlt}
@@ -366,6 +394,11 @@ export default function ProductLanding({
                   height={400}
                   className="w-full object-contain p-6"
                 />
+              ) : (
+                /* Ingen foto endnu: vi viser ikke udstyr, vi ikke har stående */
+                <div className="flex h-56 items-center justify-center px-8 text-center">
+                  <span className="text-lg font-semibold text-white/30">{name}</span>
+                </div>
               )}
               {/* Under billedet, ikke henover det: oplysningen skal være der,
                   uden at en mærkat lægger sig på produktet. */}
@@ -381,6 +414,11 @@ export default function ProductLanding({
               <h2 className="mb-4 text-3xl font-bold">{name}</h2>
               {lukket ? (
                 <p className="mb-6 text-xl font-bold text-white/40">{udgaaet ? c.udgaaetTitle : c.pausedTitle}</p>
+              ) : foresporg ? (
+                <p className="mb-6 text-3xl font-bold text-brand-400">
+                  {price > 0 ? `${price} ${locale === "en" ? "DKK" : "kr"}` : c.foresporgPris}
+                  {price > 0 && <span className="text-lg font-normal text-white/40">{enhed} · {c.foresporgVejledende}</span>}
+                </p>
               ) : (
                 <p className="mb-6 text-3xl font-bold text-brand-400">
                   <LivePrice productId={productId} fallback={price} prefix="" suffix={locale === "en" ? " DKK" : " kr"} /><span className="text-lg font-normal text-white/40">{enhed}</span>
@@ -400,10 +438,10 @@ export default function ProductLanding({
                 <PauseBoks c={c} udgaaet={udgaaet} className="mt-8" />
               ) : (
                 <a
-                  href={bookHref}
+                  href={foresporg ? forespoergselHref(productId, locale) : bookHref}
                   className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95"
                 >
-                  {cta}
+                  {foresporg ? c.foresporgCta : cta}
                 </a>
               )}
             </div>
@@ -420,12 +458,12 @@ export default function ProductLanding({
 
         {/* FAQ'en er bygget af prisen, lejeperioden og afhentningen, svar på
             spørgsmål om noget, der ikke kan lejes. Den udgår på pausede sider. */}
-        {!lukket && faq.length > 0 && <FaqSection items={faq} title={c.faqTitle(name)} />}
+        {!lukket && !foresporg && faq.length > 0 && <FaqSection items={faq} title={c.faqTitle(name)} />}
 
         <GoogleReviews />
 
         <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">{lukket ? (udgaaet ? c.udgaaetTitle : c.pausedTitle) : c.ctaTitle}</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">{lukket ? (udgaaet ? c.udgaaetTitle : c.pausedTitle) : foresporg ? c.foresporgTitle : c.ctaTitle}</h2>
           {lukket ? (
             <>
               <p className="mx-auto mt-4 max-w-md text-white/50">{udgaaet ? c.udgaaetBody : c.pausedBody}</p>
@@ -433,14 +471,18 @@ export default function ProductLanding({
             </>
           ) : (
             <>
-              <p className="mx-auto mt-4 max-w-md text-white/50">
-                {bundtekst} <LivePrice productId={productId} fallback={price} prefix="" suffix={locale === "en" ? " DKK" : " kr"} />{enhed}.
-              </p>
+              {foresporg ? (
+                <p className="mx-auto mt-4 max-w-md text-white/50">{c.foresporgBody}</p>
+              ) : (
+                <p className="mx-auto mt-4 max-w-md text-white/50">
+                  {bundtekst} <LivePrice productId={productId} fallback={price} prefix="" suffix={locale === "en" ? " DKK" : " kr"} />{enhed}.
+                </p>
+              )}
               <a
-                href={bookHref}
+                href={foresporg ? forespoergselHref(productId, locale) : bookHref}
                 className="mt-8 inline-block rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-black transition hover:bg-brand-400 active:scale-95"
               >
-                {cta}
+                {foresporg ? c.foresporgCta : cta}
               </a>
             </>
           )}

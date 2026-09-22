@@ -76,6 +76,8 @@ export const EN_PAGES = [
   "/julefrokost",
   "/julehyggen",
   "/karaoke-maskine",
+  "/slushicemaskine",
+  "/fadoelsanlaeg",
   "/konferencepakke-150",
   "/konfirmation",
   "/kontakt",

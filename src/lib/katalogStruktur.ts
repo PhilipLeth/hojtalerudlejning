@@ -17,6 +17,18 @@
  * andet afsnit og en anden side. Se katalog-struktur.test.ts.
  */
 
+/*
+ * Afsnit 7, "Billede og karaoke", er væk 22. september 2026.
+ *
+ * Det nye ark har det ikke — der står hverken skærm, projektor, lærred eller
+ * karaokemaskine i det. Strukturen her ER arket, så afsnittet kan ikke blive
+ * stående, bare fordi produkterne findes.
+ *
+ * Produkterne er ikke slettet. De er flyttet til forespørgsel: de vises på
+ * sitet, men kan ikke bookes eller betales online, se ER_FORESPOERGSEL i
+ * products.ts. "av" bliver i typen, fordi kategorifeltet på produkterne
+ * stadig bruger den.
+ */
 export type KatalogKategori = "lyd" | "lys" | "roeg" | "lydlys" | "strom" | "av" | "service";
 
 export interface KatalogGruppe {
@@ -179,22 +191,6 @@ export const KATALOG_AFSNIT: KatalogAfsnit[] = [
         titel_en: "Cables and power strips",
         ids: ["kabeltromle", "kabeltromle_jord", "stikdaase", "stikdaase_jord", "omformer_udendors"],
       },
-    ],
-  },
-  {
-    id: "av",
-    nr: "7",
-    titel: "Billede og karaoke",
-    titel_en: "Screens and karaoke",
-    side: "/av-udstyr",
-    grupper: [
-      {
-        nr: "7.1",
-        titel: "Skærme og projektorer",
-        titel_en: "Screens and projectors",
-        ids: ["skaerm_55", "skaerm_32", "projektor", "projektor_pro", "laerred_160"],
-      },
-      { nr: "7.2", titel: "Karaoke", titel_en: "Karaoke", ids: ["karaoke"] },
     ],
   },
   {

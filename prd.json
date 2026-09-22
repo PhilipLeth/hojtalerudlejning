@@ -4260,5 +4260,29 @@
       "Resten af arkets 'Ved chek'-kolonne: den peger flere steder på hele PAKKER og HØJTALERE (fx 'Festpakke 30-50' under DJ-pulten), og allowedAddons kan kun rumme tilvalg. Krydssalg af et helt produkt er en ny mekanik, ikke en dataopdatering.",
       "301-redirects for de udgåede pakker: der er ikke slettet nogen side, så der er ingen døde URL'er. Siderne siger selv at pakken udgår og linker til afløseren, hvilket holder bedre på Googles placeringer end et 301 fra en side, der rangerer."
     ]
+  },
+  "forespoergselsvarer_2026_09_22": {
+    "beslutning": "Philip: 'Du skal bare følge Frederiks logik. Du kan evt. have nogle produkter som skærm, projektor, slush ice, fadøl osv. som request-produkt.'",
+    "problemet": "Det nye prisark har INTET afsnit 7. Hverken skærm, projektor, lærred eller karaoke står i det, og slush ice og fadøl har aldrig gjort. At slette dem ville smide efterspørgslen væk — Search Console viser ~350 visninger om måneden på 'lej storskærm' alene, og det var netop derfor skærmene kom tilbage i udlejning 8. september. At lade dem stå med en bookingknap ville love en pris og en ledighed, arket ikke dækker.",
+    "loesningen": "En tredje tilstand ved siden af 'kan bookes' og 'på pause': forespørgselsvaren. Siden er der, produktet er der, prisen står som vejledende (eller slet ikke), og knappen hedder 'Send forespørgsel'.",
+    "mekanik": {
+      "felt": "forespoergsel?: boolean på Speaker, Addon og RentalProduct. Listen ER_FORESPOERGSEL i products.ts er sandheden, og forespoergselsvarer.test.ts fejler, hvis feltet og listen ikke siger det samme.",
+      "arv": "erForespoergsel() lader en PAKKE arve det fra sine dele: Præsentationspakken er projektor + lærred + mikrofon, så den kan ikke bookes, når projektoren ikke kan. Samme regel som 'en pakke med en pauset del er selv på pause'. 18 pakker arver den, deriblandt 15 af event_*-situationspakkerne — netop de møde-, konference- og messeopstillinger, der har en skærm med.",
+      "server": "functions/api/_lib/pricing.ts springer dem over i pristabellen, ligesom skjulte varer. buildLineItems kaster 'Unknown product', så hverken et gammelt link, et bogmærke eller et gemt KV-katalog kan få en ordre igennem.",
+      "ui": "ProductLanding, CategoryProductGrid, BundleGrid og søgningen skifter knap og pristekst. FAQ'en udgår på en forespørgselsside — den bygges af en weekendpris, der ikke findes. Product-schema siger OutOfStock, så Google ikke viser en pris, vi ikke kan tage imod.",
+      "formularen": "forespoergselHref(id) giver /erhverv?produkt=<id>#foresp. InquiryDrawer fanger klikket, åbner uden at navigere og sender produktet videre som initialProduct; EventInquiryForm slår navnet op i kataloget og skriver det i beskeden. Uden det fik Frederik en mail der bare sagde 'hej, hvad koster det?'."
+    },
+    "hvilke": {
+      "fra_arket": "skaerm_55, skaerm_32, projektor, projektor_pro, laerred_160, karaoke — de beholder deres vejledende pris og deres eget produktfoto.",
+      "nye": "slushice (Slushicemaskine) og fadoel (Fadølsanlæg). Skaffes til arrangementet, pris 0 = 'Pris på forespørgsel'. Egne sider på begge sprog, i menuen under Billede & Karaoke, og i afsnittet 'Det skaffer vi' på /av-udstyr.",
+      "struktur": "Afsnit 7 er fjernet fra katalogStruktur.ts — strukturen ER arket, og arket har det ikke. katalog-struktur.test.ts undtager forespørgselsvarer fra kravet om en plads i arket: de står uden for det pr. definition, og det er netop derfor, de ikke kan bookes."
+    },
+    "produktfotos": {
+      "spoergsmaalet": "Philip: 'Du må gerne generere noget i samme stil med AI som dem der findes hos [Thomann, Jem & Fix, HiFi Klubben].'",
+      "svaret": "Kan ikke lade sig gøre for de varer, det handler om. scripts/product-images/generate.mjs bygger prompten af VORES egne produktfotos som referencer, og prompten siger udtrykkeligt 'Do not invent or substitute equipment'. Et produkt uden et referencefoto får derfor nul billeder i planen — prøvet med både slushice og kabeltromle. Det er ikke en fejl, det er husreglen: en udlejningsforretning reklamerer ikke med udstyr, den ikke har.",
+      "konsekvens": "Slushicemaskinen og fadølsanlægget står uden foto, og kortet og siden tegner en ren tekstflade i stedet. products.test.ts undtager dem sammen med kørsel og strøm.",
+      "naar_de_staar_paa_lageret": "Tag ét billede af maskinen, læg det i /public/images/, og kør: node scripts/product-images/generate.mjs --apply --only slushice --scene produktfoto. Eller tryk på billedknappen i /admin/produkter, som kører den samme prompt gennem functions/api/gallery.ts. Cloudflare har GEMINI_API_KEY som secret; dette udviklingsmiljø har den ikke.",
+      "strømvarerne": "kabeltromle, stikdåse og omformer har samme problem og samme svar. De vises som afkrydsninger i checkout uden foto, hvilket alligevel er den rigtige brugerflade for en stikdåse til 25 kr."
+    }
   }
 }

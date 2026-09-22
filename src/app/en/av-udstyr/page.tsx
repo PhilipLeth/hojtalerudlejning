@@ -40,6 +40,11 @@ export default function Page() {
         <h2 className="mb-6 text-3xl font-bold">Sound & microphones</h2>
         <CategoryProductGrid tone="light" locale="en" items={[{id:"festival"},{id:"party"},{id:"traadloes_mikrofon_pro"},{id:"headset"},{id:"mixer_stor"}]} />
       </section>
+      <section id="sourced" className="mx-auto max-w-6xl scroll-mt-24 px-5 pb-16">
+        <h2 className="mb-2 text-3xl font-bold">We can source these</h2>
+        <p className="mb-8 max-w-xl text-slate-500">We do not keep them on the shelf, but we bring them along when we are already driving out with sound and lighting. Send us the date and the numbers for a same-day price.</p>
+        <CategoryProductGrid tone="light" locale="en" cols={2} items={[{ id: "slushice" }, { id: "fadoel" }]} />
+      </section>
       <Footer locale="en" />
     </main>
   );

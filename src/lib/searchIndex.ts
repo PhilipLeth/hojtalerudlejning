@@ -11,7 +11,7 @@
  * sitet. Kategorisiderne kommer fra NAV_CATEGORIES, som i forvejen er stedet
  * hvor menuen defineres.
  */
-import { NAV_CATEGORIES, POPULAERE_IDS } from "@/lib/products";
+import { NAV_CATEGORIES, POPULAERE_IDS, erForespoergsel, forespoergselHref } from "@/lib/products";
 import { localizedHref } from "@/lib/enPages";
 import { bookHref } from "@/lib/bookUrl";
 import type { Catalog } from "@/lib/useProducts";
@@ -27,6 +27,8 @@ export interface SearchResult {
   kind: "produkt" | "side";
   /** Prisenhed når den ikke er weekendprisen, fx "kr/time" */
   priceUnit?: string;
+  /** Forespørgselsvare: ingen fast weekendpris, knappen fører til formularen */
+  foresporg?: boolean;
 }
 
 interface Entry extends SearchResult {
@@ -132,8 +134,9 @@ export function buildSearchIndex(catalog: Catalog, locale: Locale): Entry[] {
     if (!r.page) continue;
     const navn = locale === "en" ? r.name_en : r.name_da;
     const desc = locale === "en" ? r.desc_en : r.desc_da;
+    const foresporg = erForespoergsel(r.id);
     add(entry(
-      { href: localizedHref(r.page, locale), title: navn, hint: desc, price: r.price, kind: "produkt" },
+      { href: localizedHref(r.page, locale), title: navn, hint: desc, price: foresporg && r.price <= 0 ? undefined : r.price, kind: "produkt", foresporg },
       `${r.contents?.join(" ") ?? ""} ${r.name_da} ${r.name_en} ${r.category}`,
     ));
   }
@@ -227,5 +230,5 @@ export function search(index: Entry[], query: string, limit = 8): SearchResult[]
   return hits
     .sort((a, b) => b.score - a.score || a.e.title.localeCompare(b.e.title, "da"))
     .slice(0, limit)
-    .map(({ e }) => ({ href: e.href, title: e.title, hint: e.hint, price: e.price, kind: e.kind, priceUnit: e.priceUnit }));
+    .map(({ e }) => ({ href: e.href, title: e.title, hint: e.hint, price: e.price, kind: e.kind, priceUnit: e.priceUnit, foresporg: e.foresporg }));
 }
