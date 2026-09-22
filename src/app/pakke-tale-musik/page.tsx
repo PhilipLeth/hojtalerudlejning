@@ -5,17 +5,17 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: `Lej Tale & musik-pakken København | ${prisKr("pakke_tale_musik")} | Lejhøjtaler.dk`,
-  description: `Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar ${rabatKr("pakke_tale_musik")}. ${prisKr("pakke_tale_musik")}/weekend. Betal ved afhentning. Book online.`,
-  keywords: ["lej lyd til tale og musik", "højtaler og mikrofon pakke", "event lyd pakke københavn"],
+  title: `Lej Speakerpakke trådløs 30-50 København | ${prisKr("pakke_speaker_traadloes_stor")} | Lejhøjtaler.dk`,
+  description: `Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar ${rabatKr("pakke_speaker_traadloes_stor")}. ${prisKr("pakke_speaker_traadloes_stor")}/weekend. Betal ved afhentning. Book online.`,
+  keywords: ["lej lyd til tale og musik", "højtaler og trådløs mikrofon pakke", "speakerpakke leje københavn"],
   alternates: {
     canonical: "https://lejhojtaler.dk/pakke-tale-musik",
     languages: localeAlternates("/pakke-tale-musik"),
   },
   openGraph: {
     images: ogImages("/images/product-festival-v2.webp"),
-    title: `Lej Tale & musik-pakken København | ${prisKr("pakke_tale_musik")}`,
-    description: `Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar ${rabatKr("pakke_tale_musik")}. ${prisKr("pakke_tale_musik")}/weekend. Betal ved afhentning. Book online.`,
+    title: `Lej Speakerpakke trådløs 30-50 København | ${prisKr("pakke_speaker_traadloes_stor")}`,
+    description: `Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar ${rabatKr("pakke_speaker_traadloes_stor")}. ${prisKr("pakke_speaker_traadloes_stor")}/weekend. Betal ved afhentning. Book online.`,
     url: "https://lejhojtaler.dk/pakke-tale-musik",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -27,12 +27,12 @@ export default function Page() {
   return (
     <ProductLanding
       slug="pakke-tale-musik"
-      name="Tale & musik-pakken"
-      headline="Tale & musik-pakken"
-      sub={`Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar ${rabatKr("pakke_tale_musik")}.`}
-      imageAlt="Tale og musik pakke med store højtalere og trådløs mikrofon"
-      productId="pakke_tale_musik"
-      bullets={["2× 12\" EV højtalere med stativer", "Trådløs håndholdt mikrofon", "Op til 100 personer", "Alle kabler inkluderet", `Spar ${rabatKr("pakke_tale_musik")} ift. enkeltpriser`]}
+      name="Speakerpakke trådløs 30-50"
+      headline="Speakerpakke trådløs 30-50"
+      sub={`Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar ${rabatKr("pakke_speaker_traadloes_stor")}.`}
+      imageAlt="Speakerpakke med to EV-højtalere og trådløs mikrofon"
+      productId="pakke_speaker_traadloes_stor"
+      bullets={["2× 12\" EV højtalere med stativer", "Trådløs håndholdt mikrofon", "30-50 gæster", "Alle kabler inkluderet", `Spar ${rabatKr("pakke_speaker_traadloes_stor")} ift. enkeltpriser`]}
     />
   );
 }

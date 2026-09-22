@@ -17,10 +17,12 @@ describe("AV-forsiden og eventløsningerne", () => {
    expect(fs.existsSync(`public/images/events/${s.image}.webp`)).toBe(true);
   }
  });
- it("bevarer adgang til de store festpakker på begge sprog", () => {
-  const home=fs.readFileSync("src/components/EventHome.tsx","utf8");
+ it("de store festpakker kan stadig nås på begge sprog", () => {
+  // Forsiden viser nu arkets ti mest udlejede, ikke en linje med alle pakker.
+  // Festpakke 150 og 250 har deres egne sider og står i gitteret på
+  // /lej-hojtaler — det, testen passer på, er at den engelske vej findes.
   for(const path of ["/festpakke-150","/festpakke-250"]) {
-   expect(home).toContain(`href("${path}")`);
+   expect(fs.existsSync(`src/app${path}/page.tsx`)).toBe(true);
    expect(localizedHref(path,"en")).toBe(`/en${path}`);
   }
  });
@@ -32,10 +34,17 @@ describe("AV-forsiden og eventløsningerne", () => {
  it("forsiden linker til aktive sæsoner i stedet for at erstatte EventHome", () => {
   const home = fs.readFileSync("src/components/EventHome.tsx","utf8");
   expect(home).toContain("SeasonalStrip");
+  // Frederik 22. sept 2026: sæsonkasserne kommer EFTER de populære produkter,
+  // ikke før. Er man kommet for en Soundboks, skal julefrokosten ikke stå først.
+  const grid = home.indexOf("<CategoryProductGrid");
   const strip = home.indexOf("<SeasonalStrip");
-  const shop = home.indexOf("<ShopPackagePicker");
-  expect(strip).toBeGreaterThan(0);
-  expect(strip).toBeLessThan(shop);
+  expect(grid).toBeGreaterThan(0);
+  expect(strip).toBeGreaterThan(grid);
+ });
+
+ it("ankeret #shop-pakker findes stadig — otte sider linker til det", () => {
+  const home = fs.readFileSync("src/components/EventHome.tsx","utf8");
+  expect(home).toContain('id="shop-pakker"');
  });
  it("sæsonkortene er store billedpaneler på desktop", () => {
   const css = fs.readFileSync("src/components/EventHome.module.css","utf8");

@@ -20,7 +20,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useProducts } from "@/lib/useProducts";
-import { buildSearchIndex, search, type SearchResult } from "@/lib/searchIndex";
+import { buildSearchIndex, populaere, search, type SearchResult } from "@/lib/searchIndex";
+import { NAV_CATEGORIES } from "@/lib/products";
+import { localizedHref } from "@/lib/enPages";
 import type { Locale } from "@/lib/i18n";
 
 const COPY = {
@@ -29,7 +31,9 @@ const COPY = {
     placeholder: "Søg efter højtaler, lys, mikrofon…",
     empty: (q: string) => `Ingen træffere på "${q}".`,
     emptyHint: "Prøv fx højtaler, festlys, røg eller mikrofon.",
-    hint: "Skriv for at søge i hele sortimentet",
+    hint: "Mest lejet",
+    hintSub: "Eller skriv og søg i hele sortimentet",
+    browse: "Se kategorierne",
     results: "Søgeresultater",
     perWeekend: "kr/weekend",
     page: "Side",
@@ -39,7 +43,9 @@ const COPY = {
     placeholder: "Search for speakers, lights, microphone…",
     empty: (q: string) => `No matches for "${q}".`,
     emptyHint: "Try speaker, party lights, fog or microphone.",
-    hint: "Start typing to search the whole range",
+    hint: "Most rented",
+    hintSub: "Or start typing to search the whole range",
+    browse: "Browse categories",
     results: "Search results",
     perWeekend: "DKK/weekend",
     page: "Page",
@@ -59,7 +65,15 @@ export default function SiteSearch({ locale = "da" }: { locale?: Locale }) {
   const felt = useRef<HTMLInputElement>(null);
 
   const index = useMemo(() => buildSearchIndex(catalog, locale), [catalog, locale]);
-  const resultater = useMemo(() => search(index, query), [index, query]);
+  const fundne = useMemo(() => search(index, query), [index, query]);
+  /**
+   * Feltet er aldrig tomt. Har kunden ikke skrevet noget endnu, står de mest
+   * lejede produkter som rækker — de kan klikkes, og pil op/ned virker på dem
+   * ligesom på et søgeresultat.
+   */
+  const forslag = useMemo(() => populaere(catalog, locale), [catalog, locale]);
+  const tomt = query.trim().length < 2;
+  const resultater = tomt ? forslag : fundne;
 
   const luk = useCallback(() => {
     setOpen(false);
@@ -175,7 +189,10 @@ export default function SiteSearch({ locale = "da" }: { locale?: Locale }) {
               </button>
             </div>
 
-            <ul id="soegeresultater" role="listbox" aria-label={c.results} className="max-h-[60vh] overflow-y-auto">
+            {tomt && (
+              <p className="px-4 pt-4 text-[11px] font-semibold uppercase tracking-wider text-white/35">{c.hint}</p>
+            )}
+            <ul id="soegeresultater" role="listbox" aria-label={tomt ? c.hint : c.results} className="max-h-[60vh] overflow-y-auto">
               {resultater.map((r, i) => (
                 <li key={r.href} id={`soegetraef-${i}`} role="option" aria-selected={i === aktiv}>
                   <Link
@@ -204,15 +221,30 @@ export default function SiteSearch({ locale = "da" }: { locale?: Locale }) {
               ))}
             </ul>
 
-            {query.trim().length >= 2 && resultater.length === 0 && (
+            {!tomt && resultater.length === 0 && (
               <p className="px-4 py-6 text-center text-sm text-white/40">
                 {c.empty(query.trim())}
                 <span className="mt-1 block text-xs text-white/25">{c.emptyHint}</span>
               </p>
             )}
 
-            {query.trim().length < 2 && (
-              <p className="px-4 py-6 text-center text-xs text-white/25">{c.hint}</p>
+            {tomt && (
+              <div className="border-t border-white/5 px-4 py-4">
+                <p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-white/35">{c.browse}</p>
+                <div className="flex flex-wrap gap-2">
+                  {NAV_CATEGORIES.map((kat) => (
+                    <Link
+                      key={kat.id}
+                      href={localizedHref(kat.href, locale)}
+                      onClick={luk}
+                      className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/60 transition hover:border-brand-500/40 hover:text-brand-400"
+                    >
+                      {locale === "en" ? kat.title_en : kat.title}
+                    </Link>
+                  ))}
+                </div>
+                <p className="mt-4 text-xs text-white/25">{c.hintSub}</p>
+              </div>
             )}
           </div>
         </div>

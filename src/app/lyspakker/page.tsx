@@ -4,7 +4,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
-import { KATEGORI_PAKKER, rentalProducts, type RentalProduct } from "@/lib/products";
+import { KATEGORI_PAKKER, prisKr, rentalProducts, type RentalProduct } from "@/lib/products";
 import { bookHref } from "@/lib/bookUrl";
 import { thumbSrcSet } from "@/lib/imageSrcSet";
 import { localeAlternates } from "@/lib/hreflang";
@@ -20,9 +20,9 @@ import { ogImages } from "@/lib/og";
  */
 
 export const metadata: Metadata = {
-  title: "Lej lys til festen, færdige lyspakker fra 645 kr | Lejhøjtaler.dk",
+  title: `Lej lys til festen, færdige lyspakker fra ${prisKr("pakke_festlys_50")} | Lejhøjtaler.dk`,
   description:
-    "Lysudlejning i København: færdige lyspakker til teenagefest, festtelt, bryllup og dansegulv fra 645 kr. Alt er plug and play, hent selv, eller få det leveret.",
+    `Lysudlejning i København: færdige lyspakker til fest, bryllup og dansegulv fra ${prisKr("pakke_festlys_50")}. Alt er plug and play, hent selv, eller få det leveret.`,
   keywords: [
     "lysudlejning",
     "lej festlys",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages(),
-    title: "Lej lys til festen, færdige lyspakker fra 645 kr",
+    title: `Lej lys til festen, færdige lyspakker fra ${prisKr("pakke_festlys_50")}`,
     description:
       "Færdige lyspakker efter anledning: teenagefest, festtelt, bryllup, dansegulv, eller hele lokalet. Plug and play, uden tekniker.",
     url: "https://lejhojtaler.dk/lyspakker",
@@ -50,12 +50,9 @@ export const metadata: Metadata = {
 /** Anledningen øverst på kortet, det er den, folk søger på, ikke grejet. */
 const KICKER: Record<string, string> = {
   "halloween_lys": "Halloween",
-  "pakke_festtelt": "Festtelt & have",
-  "pakke_diskolys": "Dansegulvet",
-  "pakke_teenagefest": "Teenagefest",
+  "pakke_festlys_50": "Fest op til 50",
+  "pakke_festlys_100": "Fest 50-100",
   "pakke_stemningslys": "Hele lokalet",
-  "pakke_bryllupslys": "Bryllup",
-  "pakke_diskotek": "Lokale med røgalarm",
 };
 
 function Kort({ p, fremhaevet }: { p: RentalProduct; fremhaevet: boolean }) {
@@ -142,15 +139,16 @@ export default function LyspakkerPage() {
           Lys til festen, pakket efter anledningen
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
-          Du skal ikke vide hvad en uplight er. Sig hvad du holder, teenagefest, telt i haven, bryllup eller bare et
-          dansegulv, så er lyset sat sammen på forhånd. Alt er plug and play på almindelig strøm.
+          Du skal ikke vide hvad en uplight er. Sig hvor mange I er, så er lyset sat sammen på forhånd: en lysbar til
+          dansegulvet, to til den store sal, eller uplights og lyskæder der farver hele lokalet. Alt er plug and play
+          på almindelig strøm.
         </p>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-4">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {pakker.map((p) => (
-            <Kort key={p.id} p={p} fremhaevet={p.id === "pakke_stemningslys"} />
+            <Kort key={p.id} p={p} fremhaevet={p.id === "pakke_festlys_50"} />
           ))}
         </div>
       </section>
@@ -159,8 +157,9 @@ export default function LyspakkerPage() {
         <div className="glass rounded-2xl p-8">
           <h2 className="mb-3 text-2xl font-bold">Må der bruges røg?</h2>
           <p className="mb-6 text-white/50">
-            Så bliver lyset en anden liga: strålerne bliver synlige i luften, og effekterne ligner et show. Lysshow-pakkerne
-            har røgmaskinen med, men tjek lokalets røgalarm først. Er røg forbudt, er Diskotek-pakken bygget til netop det.
+            Så bliver lyset en anden liga: strålerne bliver synlige i luften, og effekterne ligner et show. Festlys-pakkerne
+            har røgmaskinen med, men tjek lokalets røgalarm først. Er røg forbudt, så vælg Stemningslys-pakken — uplights,
+            lyskæder og discokugle giver farve uden en eneste partikel i luften.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link

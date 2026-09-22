@@ -19,10 +19,13 @@ import {
   NAV_CATEGORIES,
   PAUSEDE_PRODUKTER,
   PAUSEDE_SIDER,
+  UDGAAEDE_IDER,
+  UDGAAEDE_PAKKER,
   addons,
   erPaaPause,
   rentalProducts,
   speakers,
+  udgaaetPakke,
 } from "@/lib/products";
 
 const src = readFileSync(join(process.cwd(), "src/app/admin/produkter/page.tsx"), "utf8");
@@ -69,10 +72,15 @@ describe("hidden virker hele vejen ud", () => {
       ...addons.filter((a) => a.hidden).map((a) => a.id),
       ...rentalProducts.filter((r) => r.hidden).map((r) => r.id),
     ];
-    // To grunde til at være skjult (produktarket 17. sept 2026): reelt pauset, eller
-    // i kataloget med arkets pris, men uden et ærligt produktfoto endnu.
-    expect(pausede.sort()).toEqual([...PAUSEDE_PRODUKTER, ...AFVENTER_FOTO].sort());
+    // Tre grunde til at være skjult: reelt pauset (produktarket 17. sept 2026),
+    // i kataloget med arkets pris men uden et ærligt produktfoto endnu, eller
+    // udgået fordi pakken ikke står i det nye prisark (22. sept 2026).
+    expect(pausede.sort()).toEqual([...PAUSEDE_PRODUKTER, ...AFVENTER_FOTO, ...UDGAAEDE_IDER].sort());
     for (const id of AFVENTER_FOTO) expect(PAUSEDE_PRODUKTER, `${id} står i begge lister`).not.toContain(id);
+    for (const id of UDGAAEDE_IDER) {
+      expect(PAUSEDE_PRODUKTER, `${id} står i begge lister`).not.toContain(id);
+      expect(AFVENTER_FOTO, `${id} står i begge lister`).not.toContain(id);
+    }
   });
 
   it("mikrofonerne er ikke på pause — de hører til lyden", () => {
@@ -118,9 +126,42 @@ describe("hidden virker hele vejen ud", () => {
       const fil = join(process.cwd(), `src/app${sti}/page.tsx`);
       expect(existsSync(fil), `${sti} findes ikke længere`).toBe(true);
       const kilde = readFileSync(fil, "utf8");
+      // En udgået pakkes side siger det gennem ProductLanding, som slår
+      // productId op i UDGAAEDE_PAKKER og skriver "Denne pakke udgår" med et
+      // link til afløseren. De andre pausede sider siger det i deres egen kilde.
       const siger =
-        kilde.includes("PausetKategori") || kilde.includes("udlejes ikke lige nu");
+        kilde.includes("ProductLanding") ||
+        kilde.includes("PausetKategori") ||
+        kilde.includes("udlejes ikke lige nu");
       expect(siger, `${sti} står uden besked om pausen`).toBe(true);
+    }
+  });
+
+  /**
+   * En udgået pakke må ikke være en blindgyde.
+   *
+   * Siderne bliver liggende, fordi de har deres plads i Google — men så SKAL
+   * de sende kunden et sted hen, og afløseren skal findes. Ellers har vi
+   * byttet en bookbar pakke ud med en side, der kun siger nej.
+   */
+  it("hver udgået pakke har en afløserside der findes", () => {
+    for (const [id, maal] of Object.entries(UDGAAEDE_PAKKER)) {
+      expect(udgaaetPakke(id)).toBe(maal);
+      expect(existsSync(join(process.cwd(), `src/app${maal}/page.tsx`)), `${id} → ${maal} findes ikke`).toBe(true);
+      const p = rentalProducts.find((r) => r.id === id);
+      expect(p, `${id} findes ikke i kataloget`).toBeTruthy();
+      expect(p!.hidden, `${id} er udgået, men stadig synlig`).toBe(true);
+      // Afløseren må ikke selv være udgået — så var vi ikke kommet videre
+      const afloeserPakke = rentalProducts.find((r) => r.page === maal);
+      if (afloeserPakke) expect(afloeserPakke.hidden, `${maal} er selv udgået`).toBeFalsy();
+    }
+  });
+
+  it("annoncerne for de udgåede pakker er slukket", () => {
+    // PAUSEDE_SIDER er det, adsCopy.validateFinalUrl afviser landingssider på
+    for (const [id, ] of Object.entries(UDGAAEDE_PAKKER)) {
+      const side = rentalProducts.find((r) => r.id === id)!.page!;
+      expect(PAUSEDE_SIDER, `${side} er ikke lukket for annoncer`).toContain(side);
     }
   });
 

@@ -292,13 +292,15 @@ describe("BookingFlow - Preselect via ?product=", () => {
     window.history.pushState({}, "", "/");
   });
 
-  it("preselects pakke_tale_musik from /?product=pakke_tale_musik without sold out message", async () => {
-    window.history.pushState({}, "", "/?product=pakke_tale_musik");
+  it("preselects Speakerpakke trådløs 30-50 uden udsolgt-besked", async () => {
+    // Prisarket 22. sept 2026: pakken lå to gange, som pakke_tale_musik og som
+    // arkets pakke_speaker_traadloes_stor. Arkets udgave overtog både navnet
+    // og siden /pakke-tale-musik; den gamle er skjult.
+    window.history.pushState({}, "", "/?product=pakke_speaker_traadloes_stor");
     render(<BookingFlow />);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
-    // produktarket 17. sept 2026: pakken hedder nu "Speakerpakke trådløs 30-50"
     expect(screen.getByText("Speakerpakke trådløs 30-50")).toBeInTheDocument();
     expect(screen.queryByText(/udsolgt/i)).not.toBeInTheDocument();
   });

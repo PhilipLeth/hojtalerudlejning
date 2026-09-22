@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { DELIVERY_ONE_WAY, MAX_RENTAL_DAYS } from "@/lib/productFaq";
 import { formaterRating, GOOGLE_PROFIL_URL } from "@/lib/googleReviews";
 import { useGoogleReviews } from "@/lib/useGoogleReviews";
+import { useSiteSettings } from "@/lib/useSiteSettings";
+import { kompaktAabningstid } from "@/lib/openingHours";
 import type { Locale } from "@/lib/i18n";
 
 /* Løfterne i båndet, hver med sit eget ikon */
@@ -46,21 +47,12 @@ const ICONS = {
  * kunde mødte "Levering i hele København fra 495 kr" som det første på siden.
  * Beløbet er leveringsprisen fra productFaq.ts, ikke et tal skrevet i hånden.
  */
-const USPS: Record<
-  Locale,
-  Array<{ icon: keyof typeof ICONS; text: string; href?: string; ekstern?: boolean }>
-> = {
-  da: [
-    { icon: "truck", text: "AV til events i København" },
-    { icon: "calendar", text: "Levering og opsætning som tilvalg i bookingen" },
-    { icon: "wallet", text: "Book online med priser inklusive moms" },
-  ],
-  en: [
-    { icon: "truck", text: "Event AV in Copenhagen" },
-    { icon: "calendar", text: "Add delivery and setup when you book" },
-    { icon: "wallet", text: "Book online with VAT-inclusive prices" },
-  ],
+const AFHENTNING: Record<Locale, string> = {
+  da: "Afhentning i København S eller levering",
+  en: "Collect in Copenhagen S, or have it delivered",
 };
+
+const AABENT: Record<Locale, string> = { da: "Åbent", en: "Open" };
 
 export default function TopBar() {
   const pathname = usePathname();
@@ -70,12 +62,20 @@ export default function TopBar() {
   const locale: Locale = pathname?.startsWith("/en") ? "en" : "da";
   // Samme kald som anmeldelsessektionen, hooken deler svaret mellem dem
   const { data } = useGoogleReviews(locale, !isAdmin);
+  // Åbningstiden skrives ikke i hånden her: retter Frederik den i
+  // /admin/indstillinger, følger båndet med uden et deploy
+  const { hours } = useSiteSettings();
+
+  const faste: Array<{ icon: keyof typeof ICONS; text: string; href?: string; ekstern?: boolean }> = [
+    { icon: "truck", text: AFHENTNING[locale] },
+    { icon: "calendar", text: `${AABENT[locale]} ${kompaktAabningstid(hours, locale)}` },
+  ];
 
   // Ratingen står kun i båndet, når Google faktisk har givet os en. Vi skriver
   // aldrig fem stjerner, som vi ikke har fået.
   const usps = data.rating
     ? [
-        ...USPS[locale],
+        ...faste,
         {
           icon: "stars" as const,
           text:
@@ -86,7 +86,7 @@ export default function TopBar() {
           ekstern: true,
         },
       ]
-    : USPS[locale];
+    : faste;
 
   useEffect(() => {
     if (isAdmin) return;

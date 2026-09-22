@@ -21,6 +21,8 @@ const COPY = {
   da: {
     open: "Åben menu",
     close: "Luk menu",
+    label: "Produkter",
+    labelClose: "Luk",
     proTitle: "Find pakken til festen",
     proText: "Vælg anledning, sammenlign indhold og priser, og book online.",
     proCta: "Se pakker og priser →",
@@ -35,6 +37,8 @@ const COPY = {
   en: {
     open: "Open menu",
     close: "Close menu",
+    label: "Products",
+    labelClose: "Close",
     proTitle: "Find your event package",
     proText: "Choose your occasion, compare equipment and prices, and book online.",
     proCta: "Shop packages →",
@@ -81,21 +85,35 @@ export default function BurgerMenu() {
 
   return (
     <>
-      {/* Burger button - fixed top right, below TopBar */}
+      {/*
+        Knappen til produktmenuen, øverst til højre under TopBaren.
+
+        Den var en umærket mørk cirkel på en hvid header: tre streger uden et
+        ord, og det eneste sted på sitet hvor hele sortimentet står. Philip
+        spurgte hvorfor produktmenuen var så svær at finde. Nu står der
+        "Produkter" på den, og den har headerens farver i stedet for at flyde
+        oven på dem.
+      */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed top-12 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 backdrop-blur-md border border-white/10 transition hover:bg-black/80"
+        className={`fixed top-12 right-4 z-50 flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold shadow-sm transition ${
+          open
+            ? "border-white/10 bg-black/70 text-white backdrop-blur-md hover:bg-black/85"
+            : "border-[#d8e3f2] bg-white text-[#1249cf] hover:border-[#1249cf]"
+        }`}
         aria-label={open ? c.close : c.open}
+        aria-expanded={open}
       >
         {open ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
             <path d="M18 6L6 18M6 6l12 12" />
           </svg>
         ) : (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
             <path d="M3 12h18M3 6h18M3 18h18" />
           </svg>
         )}
+        <span>{open ? c.labelClose : c.label}</span>
       </button>
 
       {/* Overlay */}

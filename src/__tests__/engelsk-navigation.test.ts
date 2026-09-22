@@ -94,9 +94,12 @@ describe("Engelsk navigation", () => {
 
   it("båndet øverst findes på begge sprog", () => {
     const src = læs("components/TopBar.tsx");
-    expect(src).toMatch(/Event AV in Copenhagen/);
-    expect(src).toMatch(/AV til events i København/);
-    expect(src).toContain("Add delivery and setup when you book");
+    expect(src).toMatch(/Afhentning i København S eller levering/);
+    expect(src).toMatch(/Collect in Copenhagen S, or have it delivered/);
+    // Åbningstiden skrives ikke i hånden — den bygges af de levende
+    // indstillinger, og kompaktAabningstid() kan begge sprog
+    expect(src).toContain("kompaktAabningstid");
+    expect(src).toMatch(/da: "Åbent", en: "Open"/);
   });
 });
 

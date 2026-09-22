@@ -54,6 +54,7 @@ export default function CategoryProductGrid({
   category,
   locale = "da",
   tone = "dark",
+  cols = 2,
 }: {
   items?: CategoryItem[];
   /** Alternativ: vis alle rentalProducts i en kategori */
@@ -62,6 +63,12 @@ export default function CategoryProductGrid({
   locale?: Locale;
   /** Lys tone til det hvide AV-site, mørk til de ældre kategorisider. */
   tone?: "dark" | "light";
+  /**
+   * Spalter på den brede skærm. Kategorisiderne viser fem-seks produkter og
+   * har plads til store kort; forsidens ti populære ville blive en halv meter
+   * scroll i to spalter.
+   */
+  cols?: 2 | 3 | 4;
 }) {
   const { speakers, addons, rentalProducts } = useProducts();
   const c = COPY[locale];
@@ -117,9 +124,11 @@ export default function CategoryProductGrid({
   });
 
   const light = tone === "light";
+  // Skrevet ud, ikke sat sammen: Tailwind scanner kilden efter hele klassenavne
+  const spalter = { 2: "sm:grid-cols-2", 3: "sm:grid-cols-2 lg:grid-cols-3", 4: "sm:grid-cols-2 lg:grid-cols-4" }[cols];
 
   return (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <div className={`grid grid-cols-1 gap-5 ${spalter}`}>
       {resolved.map((p) =>
         p ? (
           <article

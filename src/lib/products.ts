@@ -1102,6 +1102,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   // (bundleIncludesDelivery) i stedet for at spørge om kunden henter selv.
   {
     id: "pakke_lydmand_fest",
+    hidden: true,
     page: "/festpakke-lydmand",
     category: "lyd",
     image: "/images/product-pakke-lydmand-fest-v2-white.webp",
@@ -1124,6 +1125,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_lydmand_firma",
+    hidden: true,
     page: "/firmaevent-lydmand",
     category: "lyd",
     image: "/images/product-pakke-lydmand-firma-v2-white.webp",
@@ -1147,6 +1149,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_lydmand_stor",
+    hidden: true,
     page: "/stor-fest-lydmand",
     category: "lyd",
     image: "/images/product-pakke-lydmand-stor-v2-white.webp",
@@ -1279,6 +1282,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   // pakken bygget til det der skal ske: taler, ingen strøm, film, eller lys.
   {
     id: "pakke_bryllup",
+    hidden: true,
     page: "/bryllupspakke",
     youtubeUrl: "https://www.youtube.com/watch?v=GM_WsXv1FU4",
     category: "lyd",
@@ -1330,6 +1334,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_udendors",
+    hidden: true,
     page: "/udendorspakke",
     youtubeUrl: "https://www.youtube.com/watch?v=k7nG3O4I6JI",
     category: "lyd",
@@ -1352,6 +1357,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_student",
+    hidden: true,
     page: "/studenterpakke",
     youtubeUrl: "https://www.youtube.com/watch?v=k7nG3O4I6JI",
     category: "lyd",
@@ -1373,6 +1379,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_filmaften",
+    hidden: true,
     page: "/filmaften",
     youtubeUrl: "https://www.youtube.com/watch?v=PfUdmfpiV6k",
     category: "av",
@@ -1417,6 +1424,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_diskolys",
+    hidden: true,
     page: "/diskolys",
     youtubeUrl: "https://www.youtube.com/watch?v=XhecuXfY0vo",
     category: "lys",
@@ -1438,6 +1446,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_teenagefest",
+    hidden: true,
     page: "/teenagefest-lys",
     youtubeUrl: "https://www.youtube.com/watch?v=okV56ZfjetM",
     category: "lys",
@@ -1460,6 +1469,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_festtelt",
+    hidden: true,
     page: "/festtelt-lys",
     youtubeUrl: "https://www.youtube.com/watch?v=DLi7MQbRH8c",
     category: "lys",
@@ -1482,6 +1492,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_bryllupslys",
+    hidden: true,
     page: "/bryllupslys",
     youtubeUrl: "https://www.youtube.com/watch?v=GM_WsXv1FU4",
     category: "lys",
@@ -1504,6 +1515,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_diskotek",
+    hidden: true,
     page: "/diskotek-pakke",
     youtubeUrl: "https://www.youtube.com/watch?v=FcOqGlPsyYY",
     category: "lys",
@@ -1552,6 +1564,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   // vi ikke kan levere. Siden /ungdomsfest siger det ærligt og samler efterspørgslen.
   {
     id: "pakke_ungdomsfest",
+    hidden: true,
     page: "/ungdomsfest-pakke",
     category: "lyd",
     image: "/images/product-pakke-ungdomsfest-taendt-white.webp",
@@ -1573,6 +1586,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_ungdomsfest_stor",
+    hidden: true,
     page: "/ungdomsfest-pakke-stor",
     category: "lyd",
     image: "/images/product-pakke-ungdomsfest-stor-taendt-white.webp",
@@ -1616,10 +1630,15 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     // Prisarkets fjerde speakerpakke, "Speakerpakke trådløs 50-100". De tre
-    // andre fandtes allerede. Skjult indtil pakken har sit eget foto: et
-    // pakkekort med et genbrugt løsdelsbillede ser ikke ud som de andre.
+    // andre fandtes allerede.
+    //
+    // Den var skjult, indtil pakken havde sit eget foto. Det blev overflødigt
+    // 22. sept 2026: sitet havde i forvejen den samme pakke under navnet
+    // pakke_tale_musik — samme to dele, samme pris — og arkets udgave har
+    // overtaget dens side. Kortet viser delenes billeder (showPartImages), så
+    // der er intet genbrugt løsdelsfoto at skamme sig over.
     id: "pakke_speaker_traadloes_stor",
-    hidden: true,
+    page: "/pakke-tale-musik",
     category: "lyd",
     image: "/images/product-festival-v2-white.webp",
     showPartImages: true,
@@ -1640,6 +1659,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_lysshow",
+    hidden: true,
     page: "/lysshow-pakke",
     category: "lys",
     image: "/images/product-lys-v4-white.webp",
@@ -1661,6 +1681,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_lysshow_stor",
+    hidden: true,
     page: "/lysshow-stor",
     category: "lys",
     image: "/images/product-uplight-4-v2-white.webp",
@@ -1702,8 +1723,11 @@ const rentalProductsRaw: RawRentalProduct[] = [
   { id: "pakke_konference", page: "/pakke-konference", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", image: "/images/product-skaerm-white.webp", name_da: "Konferencepakken", name_en: "Conference bundle", desc_da: "55\" storskærm + trådløst headset + lille højtalerpakke. Klar til konference.", desc_en: "55\" screen + wireless headset + small speaker package. Conference-ready.", contents: ['55" skærm + stativ', "Trådløst headset", '2× 10" højtalere', "Kabler + adapter"], bundle: { usecase_da: "Klar til konference, skærm, headset og lyd.", usecase_en: "Conference-ready, screen, headset and sound.", parts: [ { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 445 }, { productId: "party", label_da: "Lille højtalerpakke", label_en: "Small speakers", price: 595 } ] } },
   { id: "pakke_konference_150", page: "/konferencepakke-150", youtubeUrl: "https://www.youtube.com/watch?v=wIsu3Lo5kK4", category: "av", image: "/images/product-skaerm-white.webp", name_da: "Konferencepakke 150", name_en: "Conference package 150", desc_da: '2× 12" højtalere på stativer + Shure trådløs mikrofon + headset + 55" skærm. Til sale med 100-150 deltagere.', desc_en: 'Two 12" speakers on stands + Shure wireless mic + headset + 55" screen. For rooms with 100-150 attendees.', contents: ['2× EV 12" højtalere + stativer', "Trådløs mikrofon", "Trådløst headset", '55" skærm på stativ', "HDMI + alle kabler"], allowedAddons: ["mikrofon",...DELIVERY_ADDON_IDS], bundle: { usecase_da: "Konference eller generalforsamling hvor både taleren og salen skal kunne høres og se med.", usecase_en: "Conference or general assembly where both the speaker and the room must be heard and seen.", parts: [ { productId: "festival", label_da: 'Mellem højtalerpakke (2× 12")', label_en: 'Medium speaker package (2× 12")', price: 795 }, { productId: "stativer", label_da: "Højtalerstativer", label_en: "Speaker stands", price: 95 }, { productId: "mikrofon", label_da: "Trådløs mikrofon", label_en: "Wireless mic", price: 445 }, { productId: "headset", label_da: "Trådløst headset", label_en: "Wireless headset", price: 445 }, { productId: "skaerm_55", label_da: '55" Storskærm', label_en: '55" Screen', price: 595 } ] } },
   {
+    // Udgået 22. sept 2026: samme to dele og samme pris som arkets
+    // "Speakerpakke trådløs 50-100" (pakke_speaker_traadloes_stor), som har
+    // overtaget siden /pakke-tale-musik.
     id: "pakke_tale_musik",
-    page: "/pakke-tale-musik",
+    hidden: true,
     category: "av",
     image: "/images/product-festival-v2-white.webp",
     showPartImages: true,
@@ -1726,6 +1750,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   { id: "karaoke", page: "/karaoke-maskine", youtubeUrl: "https://www.youtube.com/watch?v=_UaBe_xR3JY", category: "av", price: 695, image: "/images/product-karaoke-v2-white.webp", name_da: "Karaokemaskine", name_en: "Karaoke machine", desc_da: "Singing Machine med indbygget skærm, 2 trådløse mikrofoner og festlys, tilslut TV via HDMI.", desc_en: "Singing Machine with built-in screen, 2 wireless mics and party lights, HDMI for your TV.", contents: ["Singing Machine karaoke-maskine", "2 trådløse mikrofoner", "Indbygget skærm + festlys", "HDMI-kabel + Bluetooth"] },
   {
     id: "pakke_karaoke",
+    hidden: true,
     page: "/pakke-karaoke",
     youtubeUrl: "https://www.youtube.com/watch?v=_UaBe_xR3JY",
     category: "av",
@@ -1748,6 +1773,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_karaoke_fest",
+    hidden: true,
     page: "/pakke-karaoke-fest",
     youtubeUrl: "https://www.youtube.com/watch?v=_UaBe_xR3JY",
     category: "av",
@@ -1832,8 +1858,6 @@ export const AFVENTER_FOTO: string[] = [
   "stikdaase",
   "stikdaase_jord",
   "omformer_udendors",
-  // Arkets fjerde speakerpakke
-  "pakke_speaker_traadloes_stor",
   // Arkets afsnit 5 og 6: 46 anledningspakker, se anledningPakker.ts
   ...ANLEDNING_PAKKE_IDS,
 ];
@@ -1959,61 +1983,173 @@ export const SPEAKERPAKKER = [
 export const KATEGORI_PAKKER: Record<string, string[]> = {
   "/dj-pult": ["dj_pakke_lille", "dj_pakke_mellem", "dj_pakke_stor"],
   ...Object.fromEntries(eventSituations.map(s => [`/events/${s.slug}`, [...s.packageIds]])),
+  // Feststigen + lejlighedspakkerne, de to gitre siden faktisk renderer.
+  // Skrevet ud, fordi FEST_LADDER_IDS og LYD_LEJLIGHEDSPAKKER erklæres
+  // længere nede i filen og derfor ikke kan læses herfra.
   "/lej-hojtaler": [
-    "halloween_lys",
-    "halloween_lille",
-    "halloween_stor",
-    "jul_hygge",
     "pakke_fest_lille",
     "pakke_fest_stor",
     "pakke_fest_150",
     "pakke_fest_250",
-    "pakke_bryllup",
-    "pakke_firmafest",
-    "pakke_udendors",
-    "pakke_student",
+    "halloween_lys",
+    "halloween_lille",
+    "halloween_stor",
+    "jul_hygge",
+    "pakke_elegant",
+    "pakke_fest_100",
+    "pakke_soundboks_lille",
     "pakke_soundboks_lys",
-    "pakke_ungdomsfest",
-    "pakke_ungdomsfest_stor",
-    "pakke_lydmand_fest",
-    "pakke_lydmand_firma",
-    "pakke_lydmand_stor",
+    "pakke_firmafest",
   ],
   // Lyspakkerne bor på /lyspakker, landingssiden der rendrer fra denne liste.
   // /festlys viser dem OGSÅ i sit produktgitter, men kategorisiden er én.
+  // Arkets 2.3: tre lyspakker, ikke seks temanavne for den samme lysbar.
+  // Diskolys, Teenagefest-lys, Festtelt-lys, Bryllupslys og Diskotek-pakken
+  // er udgået, se UDGAAEDE_PAKKER.
   "/lyspakker": [
+    "pakke_festlys_50",
+    "pakke_festlys_100",
     "pakke_stemningslys",
-    "pakke_diskolys",
-    "pakke_teenagefest",
-    "pakke_festtelt",
-    "pakke_bryllupslys",
-    "pakke_diskotek",
   ],
-  "/lysshow": ["pakke_lysshow", "pakke_lysshow_stor"],
-  "/karaoke": ["pakke_karaoke", "pakke_karaoke_fest"],
+  // Lyspakkerne ejes af /lyspakker. /lysshow viser de samme tre, men er ikke
+  // den ansvarlige kategoriside, se LYSSHOW_PAKKER.
+  "/lysshow": [],
+  // Karaokemaskinen lejes for sig. De to karaokepakker står ikke i arket.
+  "/karaoke": [],
   // Speakerpakkerne er arkets afsnit 1.2 og bor på /lydanlaeg, ikke her: det er
   // lyd med mikrofon, ikke skærm og projektor.
-  "/av-udstyr": ["pakke_tale_musik", "pakke_praesentation", "pakke_konference", "pakke_konference_150", "pakke_mikrofon_panel", "pakke_hybrid_teams"],
+  "/av-udstyr": ["pakke_praesentation", "pakke_konference", "pakke_konference_150"],
   "/lydanlaeg": SPEAKERPAKKER,
-  "/lej-projektor": ["pakke_filmaften"],
+  "/lej-projektor": [],
 };
 
+/**
+ * De ti Frederik lejer mest ud, i den rækkefølge han skrev dem i arket.
+ *
+ * Forsiden viste før en anledningsvælger med faneblade: kunden skulle først
+ * gætte hvilken slags fest han holdt, og fik så fire pakker at se. Listen her
+ * er det modsatte greb — de ting der rent faktisk går ud ad døren, pakker og
+ * enkeltprodukter mellem hinanden, så den der kom efter en røgmaskine kan se
+ * prisen uden at vælge en anledning først.
+ *
+ * Kilde: "LejHøjtaler Katalog.xlsx", Frederiks liste 22. september 2026.
+ */
+export const POPULAERE_IDS = [
+  "pakke_speaker_traadloes_lille", // Speakerpakke trådløs 0-50
+  "festival",                      // Mellem højtalerpakke (30-50 personer)
+  "pakke_soundboks_lys",           // Stor soundboks pakke
+  "dj_pakke_stor",                 // DJ Pakke 50-100 personer
+  "pakke_festlys_50",              // Festlys 0-50 personer
+  "pakke_elegant",                 // Elegant festpakke
+  "pakke_fest_stor",               // Festpakke 30-50
+  "rog",                           // Røgmaskine
+  "discokugle",                    // Diskokugle 40 cm komplet inkl. stativ og spot
+  "lys",                           // Lysbar
+];
+
+/**
+ * Pakker der ikke står i det nye prisark — udgået 22. september 2026.
+ *
+ * Frederik: "Fjern produkter/pakker der ikke er med i det nye prisark,
+ * undtaget specialpakker for sæsoner." Arket sælger sit sortiment som
+ * enkeltdele plus de pakker, der står i afsnit 1-3 og 5-6. Alt herunder var
+ * pakker, sitet havde fundet på selv, og hver af dem er det samme udstyr som
+ * en pakke, der ER i arket, under et andet navn: Bryllupspakken er en
+ * Festpakke, Teenagefest-lys er en lyspakke, de tre lydmand-pakker er en
+ * pakke plus arkets teknikertime.
+ *
+ * De er skjult, ikke slettet. `hidden` filtrerer dem væk hos kunden
+ * (useProducts), i søgningen, i DBA-feedet og i serverens prisopslag, så de
+ * hverken kan findes eller betales, og PAUSEDE_SIDER lukker annoncerne for
+ * deres landingssider. Siderne bliver liggende, fordi de har deres plads i
+ * Google — men de siger det selv og sender kunden videre til afløseren.
+ *
+ * Værdien er afløseren: siden man skal hen på i stedet.
+ */
+export const UDGAAEDE_PAKKER: Record<string, string> = {
+  pakke_bryllup: "/bryllup",
+  pakke_udendors: "/havefest",
+  pakke_student: "/studenterkoersel",
+  pakke_filmaften: "/lej-projektor",
+  pakke_diskolys: "/lyspakker",
+  pakke_teenagefest: "/lyspakker",
+  pakke_festtelt: "/lyspakker",
+  pakke_bryllupslys: "/lyspakker",
+  pakke_diskotek: "/lyspakker",
+  pakke_ungdomsfest: "/ungdomsfest",
+  pakke_ungdomsfest_stor: "/ungdomsfest",
+  pakke_lysshow: "/lysshow",
+  pakke_lysshow_stor: "/lysshow",
+  pakke_lydmand_fest: "/lydmand",
+  pakke_lydmand_firma: "/lydmand",
+  pakke_lydmand_stor: "/lydmand",
+  pakke_karaoke: "/karaoke",
+  pakke_karaoke_fest: "/karaoke",
+};
+
+/**
+ * Samme beslutning, men uden en side at sende kunden videre til.
+ *
+ * Mikrofonpakkerne findes kun som kort på /av-udstyr. Arket sælger
+ * mikrofonerne som enkeltlinjer med en mixer ved siden af, og det er den
+ * vej, siden nu anviser.
+ */
+export const UDGAAEDE_UDEN_SIDE: string[] = [
+  // Siden gik videre til arkets egen udgave, så den har ingen at aflevere
+  "pakke_tale_musik",
+  "pakke_mikrofon_batteri",
+  "pakke_mikrofon_traadloes",
+  "pakke_mikrofon_duo",
+  "pakke_mikrofon_av",
+  "pakke_mikrofon_panel",
+  "pakke_hybrid_teams",
+];
+
+/** Alle udgåede pakker, med og uden side. */
+export const UDGAAEDE_IDER: string[] = [...Object.keys(UDGAAEDE_PAKKER), ...UDGAAEDE_UDEN_SIDE];
+
+/** Afløsersiden for en udgået pakke, eller undefined hvis den stadig lejes ud. */
+export function udgaaetPakke(productId: string): string | undefined {
+  return UDGAAEDE_PAKKER[productId];
+}
+
 /** Lejlighedspakkerne, vises under stigen på /lej-hojtaler */
-export const LYD_LEJLIGHEDSPAKKER = ["halloween_lys", "halloween_lille", "halloween_stor", "jul_hygge", "pakke_bryllup", "pakke_firmafest", "pakke_udendors", "pakke_student", "pakke_soundboks_lys", "pakke_ungdomsfest", "pakke_ungdomsfest_stor"];
+export const LYD_LEJLIGHEDSPAKKER = ["halloween_lys", "halloween_lille", "halloween_stor", "jul_hygge", "pakke_elegant", "pakke_fest_100", "pakke_soundboks_lille", "pakke_soundboks_lys", "pakke_firmafest"];
 
-/** Pakkerne med lydmand, vises samlet på /lej-hojtaler. Kørslen er med i alle tre. */
-export const LYDMAND_PAKKER = ["pakke_lydmand_fest", "pakke_lydmand_firma", "pakke_lydmand_stor"];
+/**
+ * Lydmanden er en time i arkets checkout, ikke tre pakker.
+ *
+ * Festpakke med lydmand, Firmaevent med lydmand og Stor fest med lydmand var
+ * en pakke plus en teknikertime plus kørslen, bundtet til ét kort. Arket
+ * sælger teknikertimen for sig, og kunden vælger den i bookingen på hvilken
+ * som helst pakke. Listen står tom, så gitteret på /lej-hojtaler ikke
+ * renderer en overskrift uden kort under.
+ */
+export const LYDMAND_PAKKER: string[] = [];
 
-/** AV-pakkerne, vises samlet på /av-udstyr */
-/** Lysshow-pakkerne, vises samlet på /lysshow */
-export const LYSSHOW_PAKKER = ["pakke_lysshow", "pakke_lysshow_stor", "pakke_stemningslys"];
+/**
+ * Hvad /lysshow viser.
+ *
+ * Lysshow og Lysshow stort er udgået — de var en lysbar og en røgmaskine
+ * under et tredje navn. Siden bliver liggende som landingsside for "lysshow"
+ * og viser arkets tre lyspakker, men KATEGORISIDEN for dem er /lyspakker:
+ * en pakke hører hjemme ét sted, ellers ved ingen hvor den skal rettes.
+ */
+export const LYSSHOW_PAKKER = ["pakke_festlys_50", "pakke_festlys_100", "pakke_stemningslys"];
 
 /** Lydpakker der (også) vises som ekstra på /av-udstyr og i anledningslisten */
 export const LYD_EKSTRAPAKKER = ["pakke_soundboks_lys"];
 
-/** Det der er tilbage på /av-udstyr, når projektor, skærm og lærred er på
- *  pause: højtaler + mikrofon. Se PAUSEDE_PRODUKTER. */
-export const AV_PAKKER = ["pakke_tale_musik", "pakke_praesentation", "pakke_konference", "pakke_konference_150", "pakke_mikrofon_panel", "pakke_hybrid_teams"];
+/**
+ * AV-pakkerne, vises samlet på /av-udstyr.
+ *
+ * Speakerpakke trådløs 30-50 lå her som `pakke_tale_musik` OG i arkets afsnit
+ * 1.2 som `pakke_speaker_traadloes_stor` — samme to dele, samme pris, to kort.
+ * Arkets udgave vandt, og den hører til på /lydanlaeg sammen med de andre
+ * speakerpakker, ikke mellem skærm og projektor. Mikrofonpakkerne er væk med
+ * samme begrundelse: arket sælger mikrofonerne som enkeltlinjer.
+ */
+export const AV_PAKKER = ["pakke_praesentation", "pakke_konference", "pakke_konference_150"];
 
 /* ───── Pakkestigen ─────
  *

@@ -43,13 +43,26 @@ describe("Mikrofonpakker som kan bookes og reserverer de rigtige antal", () => {
     expect(row.bookings.map((x) => x.lane).sort()).toEqual([0, 1]);
     expect(row.bookings.every((x) => x.bookingId === "duo")).toBe(true);
   });
-  it("beregner betaling på serveren fra pakkeprisen", async () => {
+  /**
+   * Mikrofonpakkerne er udgået med prisarket 22. september 2026 — arket
+   * sælger mikrofonerne som enkeltlinjer med en mixer ved siden af.
+   *
+   * Det vigtige er ikke at de er væk fra gitteret, men at de ikke kan betales:
+   * en gammel annonce eller et bogmærke må ikke kunne føre en ordre igennem
+   * på noget, vi ikke udlejer længere.
+   */
+  it("serveren afviser en udgået mikrofonpakke, så den ikke kan betales", async () => {
     const kv = { get: async () => JSON.stringify({ rentalProducts: microphonePackages }) } as unknown as KVNamespace;
     const table = await loadPriceTable(kv);
-    // Beløbet står ikke her: pakkeprisen er udledt af delene, og serveren
-    // regner den ud på samme måde som kataloget.
-    expect(buildLineItems(table, [{ id: "pakke_mikrofon_av" }]).totalOre).toBe(
-      catalogPrice("pakke_mikrofon_av") * 100,
-    );
+    expect(table.has("pakke_mikrofon_av")).toBe(false);
+    // Serveren kaster frem for at prissætte til 0 — en ordre på noget ukendt
+    // skal fejle højlydt, ikke gå igennem gratis
+    expect(() => buildLineItems(table, [{ id: "pakke_mikrofon_av" }])).toThrow(/Unknown product/);
+  });
+
+  it("de er skjult i kataloget — kilden til hvad kunden kan booke", () => {
+    for (const raw of microphonePackages) {
+      expect(rentalProducts.find((p) => p.id === raw.id)!.hidden, `${raw.id} er stadig synlig`).toBe(true);
+    }
   });
 });

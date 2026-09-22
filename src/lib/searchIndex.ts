@@ -11,7 +11,7 @@
  * sitet. Kategorisiderne kommer fra NAV_CATEGORIES, som i forvejen er stedet
  * hvor menuen defineres.
  */
-import { NAV_CATEGORIES } from "@/lib/products";
+import { NAV_CATEGORIES, POPULAERE_IDS } from "@/lib/products";
 import { localizedHref } from "@/lib/enPages";
 import { bookHref } from "@/lib/bookUrl";
 import type { Catalog } from "@/lib/useProducts";
@@ -153,6 +153,36 @@ export function buildSearchIndex(catalog: Catalog, locale: Locale): Entry[] {
   }
 
   return [...set.values()];
+}
+
+/**
+ * Hvad søgefeltet viser, før der er skrevet noget.
+ *
+ * Dialogen åbnede med et tomt felt, en tom liste og en grå linje nederst —
+ * den lignede en fejl mere end et søgefelt. Nu står de mest lejede produkter
+ * der som klikbare rækker, så feltet er en genvej fra første sekund, også for
+ * den der åbnede det uden at vide hvad han ledte efter.
+ *
+ * Bygget af kataloget som resten af indekset. Et produkt uden produktside
+ * (fx Elegant festpakke) peger på bookingen — det er stadig et sted at
+ * komme hen.
+ */
+export function populaere(catalog: Catalog, locale: Locale, limit = 6): SearchResult[] {
+  const ud: SearchResult[] = [];
+  for (const id of POPULAERE_IDS) {
+    if (ud.length >= limit) break;
+    const s = catalog.speakers.find((p) => p.id === id);
+    const a = catalog.addons.find((p) => p.id === id);
+    const r = catalog.rentalProducts.find((p) => p.id === id);
+    if (s) {
+      ud.push({ href: localizedHref(s.page ?? "", locale) || bookHref(s.id, locale), title: s[locale].name, hint: s[locale].size, price: s.price, kind: "produkt" });
+    } else if (a) {
+      ud.push({ href: a.page ? localizedHref(a.page, locale) : bookHref(a.id, locale), title: a[locale].label, hint: a[locale].desc, price: a.price, kind: "produkt", priceUnit: a.priceUnit?.[locale] });
+    } else if (r) {
+      ud.push({ href: r.page ? localizedHref(r.page, locale) : bookHref(r.id, locale), title: locale === "en" ? r.name_en : r.name_da, hint: (locale === "en" ? r.desc_en : r.desc_da) ?? undefined, price: r.price, kind: "produkt" });
+    }
+  }
+  return ud;
 }
 
 /** [sti, titel, ekstra søgeord] */

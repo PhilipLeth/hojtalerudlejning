@@ -86,11 +86,6 @@ export interface OpeningHours {
 const LUKKET: DayHours = { closed: true, open: "10:00", close: "16:00", purpose: "" };
 
 /**
- * Sådan har det været siden starten: åbent fredag eftermiddag og mandag.
- * Begge dage kan bruges til både afhentning og aflevering, derfor står der
- * ikke noget formål på dem. Alt andet aftales i kommentarfeltet.
- */
-/**
  * Linjen under åbningstiderne, som den står som standard.
  *
  * `other` er et frit felt, Frederik selv skriver i /admin/indstillinger, så
@@ -115,14 +110,22 @@ export function otherLine(hours: OpeningHours, locale: "da" | "en" = "da"): stri
   return text;
 }
 
+/**
+ * Butikstider, som Frederik satte dem 22. september 2026: mandag til fredag
+ * 9.30–18 og lørdag 10–14. Før stod der kun mandag 15–17 og fredag 14–18,
+ * to eftermiddage om ugen, og det var ikke længere sandt.
+ *
+ * Begge slags dage kan bruges til både afhentning og aflevering, derfor står
+ * der ikke noget formål på dem.
+ */
 export const DEFAULT_OPENING_HOURS: OpeningHours = {
   days: {
-    mon: { closed: false, open: "15:00", close: "17:00", purpose: "" },
-    tue: { ...LUKKET },
-    wed: { ...LUKKET },
-    thu: { ...LUKKET },
-    fri: { closed: false, open: "14:00", close: "18:00", purpose: "" },
-    sat: { ...LUKKET },
+    mon: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+    tue: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+    wed: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+    thu: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+    fri: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+    sat: { closed: false, open: "10:00", close: "14:00", purpose: "" },
     sun: { ...LUKKET },
   },
   other: DEFAULT_OTHER,
@@ -199,6 +202,48 @@ export function formatRange(day: DayHours, locale: "da" | "en" = "da"): string {
 
 export interface OpenDay extends DayHours {
   day: Weekday;
+}
+
+/**
+ * Åbningstiden på én kort linje: "man–fre 9.30–18 · lør 10–14".
+ *
+ * Båndet øverst har plads til fire ord, ikke til syv ugedage. formatOneLine()
+ * skriver hver dag for sig og fylder en hel skærmbredde, når der er åbent seks
+ * dage om ugen. Her lægges nabodage med samme tider sammen til ét spænd, så
+ * linjen er lige så kort som den, Frederik selv ville skrive.
+ */
+export function kompaktAabningstid(hours: OpeningHours, locale: "da" | "en" = "da"): string {
+  const dage = openDays(hours);
+  if (dage.length === 0) return "";
+
+  // Nabodage med samme åbnings- og lukketid bliver til ét spænd
+  const spænd: OpenDay[][] = [];
+  for (const dag of dage) {
+    const sidste = spænd[spænd.length - 1];
+    const forrige = sidste?.[sidste.length - 1];
+    const naboOgEns =
+      forrige &&
+      forrige.open === dag.open &&
+      forrige.close === dag.close &&
+      WEEKDAYS.indexOf(dag.day) === WEEKDAYS.indexOf(forrige.day) + 1;
+    if (naboOgEns) sidste.push(dag);
+    else spænd.push([dag]);
+  }
+
+  const kort = (day: Weekday) => {
+    const navn = dayName(day, locale);
+    // Dansk forkorter ("man"), engelsk bruger de gængse tre bogstaver ("Mon")
+    return locale === "en" ? navn.slice(0, 3) : navn.slice(0, 3).toLowerCase();
+  };
+
+  return spænd
+    .map((gruppe) => {
+      const første = gruppe[0];
+      const sidste = gruppe[gruppe.length - 1];
+      const navne = gruppe.length > 1 ? `${kort(første.day)}–${kort(sidste.day)}` : kort(første.day);
+      return `${navne} ${formatRange(første, locale)}`;
+    })
+    .join(" · ");
 }
 
 /** Dagene der er åbne, mandag først */

@@ -25,20 +25,28 @@ import {
   type OpeningHours,
 } from "@/lib/openingHours";
 
-/** Standardtiderne i koden: mandag 15–17, fredag 14–18 */
+/** Standardtiderne i koden: man–fre 9.30–18, lørdag 10–14, søndag lukket */
 const hours = DEFAULT_OPENING_HOURS;
 
-/** Som i produktion: man–fre 9.30–18, lørdag 10–14, søndag lukket */
-const rigtigeTider: OpeningHours = {
+/**
+ * Samme som standarden. Navnet står tilbage, fordi tiderne i koden før var
+ * to eftermiddage om ugen og IKKE de rigtige — det er de nu, se
+ * DEFAULT_OPENING_HOURS.
+ */
+const rigtigeTider: OpeningHours = hours;
+
+/**
+ * En åbningstid der ligger helt på den ene side af middag, og en der er for
+ * kort til at dele. Ingen af delene står i standardtiderne længere, men begge
+ * kan sættes i /admin/indstillinger, og så skal knapperne stadig opføre sig
+ * rigtigt.
+ */
+const kunEftermiddag: OpeningHours = {
   ...hours,
   days: {
     ...hours.days,
-    mon: { closed: false, open: "09:30", close: "18:00", purpose: "" },
-    tue: { closed: false, open: "09:30", close: "18:00", purpose: "" },
-    wed: { closed: false, open: "09:30", close: "18:00", purpose: "" },
-    thu: { closed: false, open: "09:30", close: "18:00", purpose: "" },
-    fri: { closed: false, open: "09:30", close: "18:00", purpose: "" },
-    sat: { closed: false, open: "10:00", close: "14:00", purpose: "" },
+    fri: { closed: false, open: "14:00", close: "18:00", purpose: "" },
+    mon: { closed: false, open: "15:00", close: "17:00", purpose: "" },
   },
 };
 
@@ -70,8 +78,8 @@ describe("En åbningstid der strækker sig hen over middag", () => {
 
 describe("En åbningstid der ligger på én side af middag", () => {
   it("deler på midten og taler om først og sidst på dagen", () => {
-    // Fredag 14–18 i standardtiderne — middag ligger uden for
-    const slots = timeSlots(hours, FREDAG);
+    // Fredag 14–18: middag ligger uden for åbningstiden
+    const slots = timeSlots(kunEftermiddag, FREDAG);
     expect(slots[0]).toMatchObject({ label: "Først på dagen", window: "14–16" });
     expect(slots[1]).toMatchObject({ label: "Sidst på dagen", window: "16–18" });
   });
@@ -83,7 +91,7 @@ describe("Når der ikke er noget at spørge om", () => {
   });
 
   it("har en kort åbningstid heller ingen — mandag 15–17 er ikke et valg", () => {
-    expect(timeSlots(hours, "2026-08-31")).toEqual([]);
+    expect(timeSlots(kunEftermiddag, "2026-08-31")).toEqual([]);
   });
 });
 

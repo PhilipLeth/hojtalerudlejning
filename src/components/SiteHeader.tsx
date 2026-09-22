@@ -20,6 +20,6 @@ export default function SiteHeader() {
   <Link key={s.id} href={href(s.href)} className="pro-season" style={{color: s.accent}}>{en ? s.navEn : s.navDa}</Link>
  ))}
  </nav>
- <div className="pro-header-actions"><SiteSearch locale={locale}/><Link className="pro-language" href={sprogskifteSti(pathname || "/", en ? "da" : "en")}>{en ? "DA" : "EN"}</Link><Link className="pro-quote" href={href("/eventloesninger")+"#situationer"}>{en ? "Shop packages" : "Se pakker"}</Link></div>
+ <div className="pro-header-actions"><SiteSearch locale={locale}/><Link className="pro-language" href={sprogskifteSti(pathname || "/", en ? "da" : "en")}>{en ? "DA" : "EN"}</Link><Link className="pro-quote" href={href("/eventloesninger")}>{en ? "Shop packages" : "Se pakker"}</Link></div>
  </div></header>;
 }

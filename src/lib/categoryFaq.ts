@@ -51,6 +51,92 @@ const LEJEPERIODE_EN: FaqItem = {
 };
 
 export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
+  /*
+   * /eventloesninger var en overskrift og seksten kort, og ikke andet. Siden
+   * skal kunne svare på det, en mødebooker spørger om, inden hun tør lægge en
+   * pakke i kurven: hvornår skal der bestilles, hvem stiller op, og hvad sker
+   * der hvis rummet er anderledes end forventet.
+   */
+  "eventloesninger": [
+    {
+      q: "Skal jeg have et tilbud, eller kan jeg bare booke?",
+      a:
+        "Du kan bare booke. Hver anledning har to færdige pakker med prisen skrevet på, og de dækker de fleste " +
+        "arrangementer. Et tilbud er kun nødvendigt, hvis rummet er usædvanligt — en sal uden strøm i den ende " +
+        "hvor scenen skal stå, eller et program med flere talere på samme tid.",
+    },
+    {
+      q: "Hvor lang tid i forvejen skal jeg bestille udstyr til et event?",
+      a:
+        "Book gerne et par uger før, hvis datoen ligger i højsæsonen: september til december og maj til juni. " +
+        "Resten af året kan vi som regel klare et par dages varsel. Ledigheden står i kalenderen, når du har " +
+        "valgt udstyret, så du kan se det med det samme i stedet for at skrive og spørge.",
+    },
+    {
+      q: "Sætter I op, eller skal vi selv?",
+      a:
+        "Begge dele kan vælges. Henter du selv, er det gratis, og vi gennemgår udstyret ved disken. Skal vi køre " +
+        "ud, koster levering " + prisKr("levering_ud") + ", begge veje " + prisKr("levering_begge") + ", og " +
+        "levering med opsætning og nedtagning " + prisKr("levering_begge_opsaetning") + ". Skal en tekniker blive " +
+        "under arrangementet, koster teknikertimen " + prisKr("lydmand") + ".",
+    },
+    {
+      q: "Hvad hvis vi mangler noget på dagen?",
+      a:
+        "Ring. Vi ligger på Vermlandsgade 66 på Amager, og har vi delen på hylden, kan den hentes med det samme. " +
+        "Derfor står alle enkeltprodukter også til leje for sig — en ekstra mikrofon eller en forlængerledning " +
+        "behøver ikke være en ny pakke.",
+    },
+    {
+      q: "Kan vi få mikrofoner til et panel?",
+      a:
+        "Ja. Den trådløse Shure-mikrofon koster " + prisKr("mikrofon") + " og det trådløse headset " +
+        prisKr("headset") + ". Skal flere tale samtidig, lejes der én pr. taler, og en mixer med effekter til " +
+        prisKr("mixer_stor") + " samler dem, så lyden ikke hopper mellem stemmerne.",
+    },
+    AFHENTNING,
+    LEJEPERIODE,
+  ],
+  "en-eventloesninger": [
+    {
+      q: "Do I need a quote, or can I just book?",
+      a:
+        "You can just book. Every occasion has two ready-made packages with the price on the card, and they cover " +
+        "most events. A quote is only needed when the room is unusual — a hall with no power at the stage end, or " +
+        "a programme with several people speaking at once.",
+    },
+    {
+      q: "How far ahead should I book AV for an event?",
+      a:
+        "Book a couple of weeks ahead for dates in the busy months: September to December and May to June. The " +
+        "rest of the year a few days' notice is usually enough. Availability is shown in the calendar once you " +
+        "have picked the equipment, so you can see it straight away instead of writing to ask.",
+    },
+    {
+      q: "Do you set it up, or do we?",
+      a:
+        "Either. Collecting it yourself is free, and we run through the equipment at the counter. If we drive out, " +
+        "delivery is " + prisDkk("levering_ud") + ", both ways " + prisDkk("levering_begge") + ", and delivery " +
+        "with setup and takedown " + prisDkk("levering_begge_opsaetning") + ". A technician who stays for the " +
+        "event is " + prisDkk("lydmand") + " per hour.",
+    },
+    {
+      q: "What if something is missing on the day?",
+      a:
+        "Call us. We are at Vermlandsgade 66 on Amager, and if the part is on the shelf you can collect it " +
+        "straight away. That is why every single product is also for hire on its own — an extra microphone or an " +
+        "extension lead does not have to be a new package.",
+    },
+    {
+      q: "Can we get microphones for a panel?",
+      a:
+        "Yes. The wireless Shure microphone is " + prisDkk("mikrofon") + " and the wireless headset " +
+        prisDkk("headset") + ". If several people speak at once, hire one per speaker, and a mixer with effects " +
+        "at " + prisDkk("mixer_stor") + " brings them together so the sound does not jump between voices.",
+    },
+    AFHENTNING_EN,
+    LEJEPERIODE_EN,
+  ],
   "mixer": [
     {
       q: "Hvad koster det at leje en mixer i København?",

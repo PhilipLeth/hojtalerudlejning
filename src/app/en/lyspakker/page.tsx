@@ -9,9 +9,9 @@ import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: "Party Light Rental Copenhagen, packages from 645 DKK | Lejhøjtaler.dk",
+  title: "Party Light Rental Copenhagen, packages from 590 DKK | Lejhøjtaler.dk",
   description:
-    "Light rental in Copenhagen: ready-made light bars for teen parties, party tents, weddings and dancefloors from 645 DKK. Everything is plug and play, pick up for free or have it delivered.",
+    "Light rental in Copenhagen: ready-made light bars for teen parties, party tents, weddings and dancefloors from 590 DKK. Everything is plug and play, pick up for free or have it delivered.",
   keywords: [
     "party light rental copenhagen",
     "disco light rental",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages(),
-    title: "Party Light Rental Copenhagen, packages from 645 DKK",
+    title: "Party Light Rental Copenhagen, packages from 590 DKK",
     description:
       "Ready-made light packages by occasion: teen party, party tent, wedding, dancefloor, or the whole venue. Plug and play, no technician.",
     url: "https://lejhojtaler.dk/en/lyspakker",
@@ -36,12 +36,9 @@ export const metadata: Metadata = {
 
 const KICKER: Record<string, string> = {
   "halloween_lys": "Halloween",
-  "pakke_festtelt": "Party tent & garden",
-  "pakke_diskolys": "The dancefloor",
-  "pakke_teenagefest": "Teen party",
-  "pakke_stemningslys": "The whole venue",
-  "pakke_bryllupslys": "Wedding",
-  "pakke_diskotek": "Venue with smoke alarm",
+  "pakke_festlys_50": "Up to 50 guests",
+  "pakke_festlys_100": "50-100 guests",
+  "pakke_stemningslys": "The whole room",
 };
 
 function Card({ p, featured }: { p: RentalProduct; featured: boolean }) {

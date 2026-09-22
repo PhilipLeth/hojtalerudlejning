@@ -2,8 +2,11 @@ import EventInquiryForm from "./EventInquiryForm";
 import GoogleReviews from "./GoogleReviews";
 import SituationDirectory from "./SituationDirectory";
 import EventHeroGallery from "./EventHeroGallery";
-import ShopPackagePicker from "./ShopPackagePicker";
+import CategoryProductGrid from "./CategoryProductGrid";
+import FaqSection from "./FaqSection";
+import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import SeasonalStrip from "./SeasonalStrip";
+import { POPULAERE_IDS, prisKr } from "@/lib/products";
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
 import { localizedHref } from "@/lib/enPages";
@@ -11,15 +14,22 @@ import LocalBusinessJsonLd from "./LocalBusinessJsonLd";
 import Footer from "./Footer";
 import styles from "./EventHome.module.css";
 
+/**
+ * Vejene ind i sortimentet, som én linje under de populære produkter.
+ *
+ * Frederik bad om at alt under "Find jeres pakke" røg af forsiden, og Philip
+ * bad samtidig om at udlejningsprodukterne skal være nemme at finde fra
+ * forsiden. Begge dele kan lade sig gøre: ikke et helt afsnit med kasser, men
+ * én række links lige under gitteret, hvor den, der leder efter en bestemt
+ * ting, allerede kigger.
+ */
 const EQUIPMENT = [
-  ["/dj-pult", "DJ-pulte", "DJ controllers"],
-  ["/skaerm", "Skærme", "Displays"],
-  ["/projektor", "Projektorer", "Projectors"],
-  ["/lej-mikrofon", "Mikrofoner", "Microphones"],
   ["/lej-hojtaler", "Højtalere", "Speakers"],
   ["/festlys", "Lys", "Lighting"],
-  ["/uplights", "Uplights", "Uplights"],
-  ["/mixer", "Mixere", "Mixers"],
+  ["/roeg", "Røg", "Fog"],
+  ["/lej-mikrofon", "Mikrofoner", "Microphones"],
+  ["/dj-pult", "DJ-pulte", "DJ controllers"],
+  ["/av-udstyr", "Skærm & projektor", "Screens & projectors"],
 ] as const;
 
 export default function EventHome({locale = "da", detail = false, cases = false}: {locale?: Locale; detail?: boolean; cases?: boolean}) {
@@ -83,8 +93,8 @@ export default function EventHome({locale = "da", detail = false, cases = false}
           <h1>{en ? "Find the package. Book it online." : "Find pakken. Book den online."}</h1>
           <p className={styles.lead}>{en ? "Sixteen occasions with ready-made equipment packages. Compare what is included, then add it to the basket. A quote is only needed for unusual rooms." : "Seksten anledninger med færdige udstyrspakker. Sammenlign indholdet, og læg i kurven. Tilbud er kun nødvendigt ved særlige rum."}</p>
           <div className={styles.actions}>
-            <a className={styles.primary} href="#situationer">{en ? "See occasions" : "Se anledninger"}</a>
-            <Link className={styles.textLink} href={href("/av-udstyr")}>{en ? "Browse equipment" : "Lej enkeltprodukter"}</Link>
+            <Link className={styles.primary} href={href("/av-udstyr")}>{en ? "Hire individual products" : "Lej enkeltprodukter"}</Link>
+            <Link className={styles.textLink} href={href("/kontakt")}>{en ? "Ask about a room we have not seen" : "Spørg om et rum vi ikke har set"} →</Link>
           </div>
         </div>
         <figure className={styles.heroImage}>
@@ -93,6 +103,68 @@ export default function EventHome({locale = "da", detail = false, cases = false}
         </figure>
       </section>
       <SituationDirectory locale={locale} />
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <h2>{en ? "The same three steps every time." : "De samme tre skridt hver gang."}</h2>
+          <p>{en ? "No quote, no waiting for a reply. The price you see is the price you pay." : "Intet tilbud, ingen ventetid på svar. Prisen du ser, er den du betaler."}</p>
+        </div>
+        <ol className={styles.process}>
+          {(en
+            ? [
+                ["Pick the occasion", "Each occasion has two packages: one that covers the basics and one with more sound, light or picture. The contents are listed on the card."],
+                ["Choose your dates", "One price covers one to five days. Most people collect the day before and return the day after."],
+                ["Collect or have it delivered", `Collect free in Copenhagen S, or add delivery from ${prisKr("levering_ud")}. Add setup and a technician if you would rather not touch it.`],
+              ]
+            : [
+                ["Vælg anledningen", "Hver anledning har to pakker: én der dækker det nødvendige, og én med mere lyd, lys eller billede. Indholdet står på kortet."],
+                ["Vælg datoerne", "Én pris dækker fra én til fem dage. De fleste henter dagen før og afleverer dagen efter."],
+                ["Hent selv, eller få det leveret", `Hent gratis i København S, eller tilvælg levering fra ${prisKr("levering_ud")}. Opsætning og tekniker kan lægges oveni, hvis I helst vil slippe for at røre det.`],
+              ]
+          ).map(([titel, tekst], i) => (
+            <li key={titel}>
+              <span aria-hidden>{i + 1}</span>
+              <h3>{titel}</h3>
+              <p>{tekst}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <h2>{en ? "What is in every package." : "Det er med i hver pakke."}</h2>
+          <p>{en ? "Cables and stands are never an extra line on the invoice. If a package needs it to work, it is in the box." : "Kabler og stativer er aldrig en ekstra linje på fakturaen. Skal pakken bruge det for at virke, ligger det i kassen."}</p>
+        </div>
+        <div className={styles.includes}>
+          {(en
+            ? [
+                ["All cables", "Power, jack, XLR and HDMI. Connect your phone or laptop over Bluetooth or cable."],
+                ["Tested before it leaves", "Every item is checked between jobs, and fog fluid and batteries go with the machines that need them."],
+                ["A run-through when you collect", "Two minutes at the counter, and a number you can call while the guests are arriving."],
+                ["Room for extras", "A microphone, a fog machine or a disco ball can be added to any package in the booking."],
+              ]
+            : [
+                ["Alle kabler", "Strøm, jack, XLR og HDMI. Telefon eller computer tilsluttes over Bluetooth eller kabel."],
+                ["Tjekket inden det kører ud", "Hver ting gennemgås mellem opgaverne, og røgvæske og batterier følger de maskiner, der skal bruge dem."],
+                ["Gennemgang ved afhentning", "To minutter ved disken, og et nummer I kan ringe til, mens gæsterne ankommer."],
+                ["Plads til tilvalg", "En mikrofon, en røgmaskine eller en discokugle kan lægges på enhver pakke i bookingen."],
+              ]
+          ).map(([titel, tekst]) => (
+            <div key={titel}>
+              <h3>{titel}</h3>
+              <p>{tekst}</p>
+            </div>
+          ))}
+        </div>
+        <div className={styles.rangeLinks}>
+          <span>{en ? "Or hire the parts on their own:" : "Eller lej delene for sig:"}</span>
+          {EQUIPMENT.map(([sti, da, eng]) => <Link href={href(sti)} key={sti}>{en ? eng : da}</Link>)}
+        </div>
+      </section>
+      <FaqSection
+        items={CATEGORY_FAQ[en ? "en-eventloesninger" : "eventloesninger"]}
+        title={en ? "Questions we get before an event" : "Spørgsmål vi får inden et arrangement"}
+      />
+      <GoogleReviews locale={locale} />
       <section id="foresp" className={styles.shopHelp}>
         <div>
           <h2>{en ? "Need a custom setup?" : "Brug for en særlig opstilling?"}</h2>
@@ -111,39 +183,32 @@ export default function EventHome({locale = "da", detail = false, cases = false}
   return <main className={styles.page} lang={locale}>
     <section className={`${styles.hero} ${styles.shopHero}`}>
       <div className={styles.heroCopy}>
-        <p className={styles.location}>{en ? "Sound, light & AV in Copenhagen" : "Lyd, lys & AV i København"}</p>
-        <h1>{en ? "Sound, light and AV. Ready to book." : "Lyd, lys og AV. Klar til at booke."}</h1>
-        <p className={styles.lead}>{en ? "Choose your occasion, compare packages and book online. From a meeting with a screen to a Friday bar with sound, lights and a DJ." : "Vælg anledning, sammenlign pakker og book online. Fra et møde med skærm til en fredagsbar med lyd, lys og DJ."}</p>
+        <p className={styles.location}>{en ? "Sound, light & AV rental in Copenhagen" : "Lyd, lys & AV-udlejning i København"}</p>
+        <h1>{en ? "Book sound, light and AV in 2 minutes" : "Book lyd, lys og AV på 2 minutter"}</h1>
+        <p className={styles.lead}>{en ? "Compare packages, see prices straight away and book online — for meetings, parties and everything in between." : "Sammenlign pakker, se priser med det samme og book online — til møder, fester og alt derimellem."}</p>
         <div className={styles.actions}>
-          <a className={styles.primary} href="#shop-pakker">{en ? "Shop packages" : "Se pakker og priser"}</a>
-          <Link className={styles.textLink} href={href("/av-udstyr")}>{en ? "Browse equipment" : "Lej enkeltprodukter"} →</Link>
+          <Link className={styles.primary} href={href("/eventloesninger")}>{en ? "See packages by occasion" : "Se pakker til anledninger"}</Link>
+          <Link className={styles.textLink} href={href("/av-udstyr")}>{en ? "Hire individual products" : "Lej enkeltprodukter"} →</Link>
         </div>
-        <p className={styles.heroNote}>{en ? "Prices include VAT. Collect yourself or add delivery." : "Priser inklusive moms. Hent selv eller tilvælg levering."}</p>
+        <p className={styles.heroNote}>{en ? "Prices include VAT. Collect in Copenhagen S or add delivery." : "Priser inklusive moms. Hent i København S eller tilvælg levering."}</p>
       </div>
       <EventHeroGallery locale={locale} />
     </section>
-    <SeasonalStrip locale={locale} />
-    <div className={styles.serviceLine}>
-      <span>{en ? "Book online" : "Book online"}</span>
-      <span>{en ? "Delivery & setup" : "Levering & opsætning"}</span>
-      <span>{en ? "Soundcheck & handover" : "Lydprøve & gennemgang"}</span>
-      <span>{en ? "Technician if you add it" : "Tekniker, hvis I tilvælger det"}</span>
-    </div>
-    <GoogleReviews locale={locale} />
-    <ShopPackagePicker locale={locale} />
-    <section className={styles.equipment}>
-      <h2>{en ? "Hire individual products" : "Lej enkeltprodukter"}</h2>
-      <p>{en ? "Add the equipment you need to your basket." : "Læg det udstyr, I mangler, direkte i kurven."}</p>
-      <div>{EQUIPMENT.map(([p, da, eng]) => <Link href={href(p)} key={p}>{en ? eng : da} <span aria-hidden>↗</span></Link>)}</div>
-      <p className={styles.note}><Link href={href("/festpakke-150")}>{en ? "Party package 150" : "Festpakke 150"}</Link> · <Link href={href("/festpakke-250")}>{en ? "Party package 250" : "Festpakke 250"}</Link> · <Link href={href("/festlys")}>{en ? "Lighting" : "Lys"}</Link></p>
-    </section>
-    <section className={styles.shopHelp}>
-      <div>
-        <h2>{en ? "Need help choosing?" : "Brug for hjælp til at vælge?"}</h2>
-        <p>{en ? "Start with the packages. Contact is for delivery notes, not to replace booking." : "Start med pakkerne. Kontakt er til leveringsnoter, ikke i stedet for booking."}</p>
+    {/* Ankeret hedder stadig shop-pakker: otte sider, blogindlæg og menuen
+        linker til /#shop-pakker, og de skal lande på pakkerne, ikke på toppen. */}
+    <section className={styles.section} id="shop-pakker">
+      <div className={styles.sectionHead}>
+        <h2>{en ? "The ten we hire out most" : "De ti vi lejer mest ud"}</h2>
+        <p>{en ? "Packages and single products side by side. Every price is for up to five days, VAT included." : "Pakker og enkeltprodukter side om side. Alle priser er for op til fem dages leje, inklusive moms."}</p>
       </div>
-      <Link className={styles.textLink} href={href("/kontakt")}>{en ? "Contact" : "Kontakt"}</Link>
+      <CategoryProductGrid locale={locale} tone="light" cols={4} items={POPULAERE_IDS.map((id) => ({ id }))} />
+      <div className={styles.rangeLinks}>
+        <span>{en ? "Browse the range:" : "Se hele sortimentet:"}</span>
+        {EQUIPMENT.map(([p, da, eng]) => <Link href={href(p)} key={p}>{en ? eng : da}</Link>)}
+      </div>
     </section>
+    <SeasonalStrip locale={locale} />
+    <GoogleReviews locale={locale} />
     <LocalBusinessJsonLd extra={{ description: en ? "Sound, light and AV for events in Copenhagen" : "Lyd, lys og AV til events i København" }} />
     <Footer locale={locale} />
   </main>;

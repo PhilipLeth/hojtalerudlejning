@@ -91,8 +91,8 @@ describe("Åbningstider ved 'jeg henter selv'", () => {
       .parentElement!;
     const tekst = selv.textContent ?? "";
     // Fredag hentes, mandag afleveres — standardtiderne, dag for dag
-    expect(tekst).toMatch(/Afhentning:\s*Fredag 14–18/);
-    expect(tekst).toMatch(/Aflevering:\s*Mandag 15–17/);
+    expect(tekst).toMatch(/Afhentning:\s*Fredag 9.30–18/);
+    expect(tekst).toMatch(/Aflevering:\s*Mandag 9.30–18/);
     // Og ingen løfter om at møde uden for tiderne — det gør vi ikke,
     // heller ikke mod betaling
     expect(tekst).not.toMatch(/[Uu]den for åbningstid/);
@@ -100,7 +100,7 @@ describe("Åbningstider ved 'jeg henter selv'", () => {
 
   it("fjerner tiderne igen, når kunden vælger levering", async () => {
     await tilTilvalg();
-    expect(document.body.textContent).toMatch(/Afhentning:\s*Fredag 14–18/);
+    expect(document.body.textContent).toMatch(/Afhentning:\s*Fredag 9.30–18/);
 
     fireEvent.click(screen.getByText("Levering og afhentning (begge veje)").closest("button")!);
 

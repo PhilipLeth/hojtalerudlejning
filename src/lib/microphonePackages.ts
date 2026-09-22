@@ -4,6 +4,7 @@ import type { RawRentalProduct } from "./products";
 export const microphonePackages: RawRentalProduct[] = [
   {
     "id": "pakke_mikrofon_batteri",
+    "hidden": true,
     "category": "av",
     "image": "/images/product-thumpgo-v2-white.webp",
     "showPartImages": true,
@@ -38,6 +39,7 @@ export const microphonePackages: RawRentalProduct[] = [
   },
   {
     "id": "pakke_mikrofon_traadloes",
+    "hidden": true,
     "category": "av",
     "image": "/images/product-thumpgo-v2-white.webp",
     "showPartImages": true,
@@ -72,6 +74,7 @@ export const microphonePackages: RawRentalProduct[] = [
   },
   {
     "id": "pakke_mikrofon_duo",
+    "hidden": true,
     "category": "av",
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
@@ -113,6 +116,7 @@ export const microphonePackages: RawRentalProduct[] = [
   },
   {
     "id": "pakke_mikrofon_av",
+    "hidden": true,
     "category": "av",
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
@@ -168,6 +172,7 @@ export const microphonePackages: RawRentalProduct[] = [
   },
   {
     "id": "pakke_mikrofon_panel",
+    "hidden": true,
     "category": "av",
     "image": "/images/product-party-v2-white.webp",
     "showPartImages": true,
@@ -188,6 +193,7 @@ export const microphonePackages: RawRentalProduct[] = [
   },
   {
     "id": "pakke_hybrid_teams",
+    "hidden": true,
     "category": "av",
     "image": "/images/product-mixer-tmix-1202-fx-usb.jpg",
     "showPartImages": true,
