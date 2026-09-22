@@ -2,6 +2,41 @@
 
 Alle katalog- og pakkefotos skal have hvid sømløs baggrund og en diskret neutral kontaktskygge. Bevar produktmodel, antal, stativer, beslag og mærkning. Funktionslys må gerne være tændt; fjern dekorative farvefelter, badges og baggrundseffekter. Casefotos og billeder af udstyr i brug bevarer deres naturlige omgivelser.
 
+## Et produkt uden eget foto (22. september 2026)
+
+Arket har en kolonne, "Link til produkt indkøb", der peger på varen hos Jem &
+Fix, Thomann eller HiFi Klubben. Den bruges nu som **reference** til
+billedgeneratoren, så vi kan lave vores eget billede af netop den model.
+
+Skellet er hele pointen:
+
+| Felt | Hvad | Vises |
+|------|------|-------|
+| `refFoto` | Leverandørens link fra arket | **Aldrig.** Kun dét modellen ser |
+| `image` | Modellens gengivelse i husstilen | Ja, på sitet |
+
+Leverandørens foto er deres. Vi udgiver det ikke — vi viser det til modellen,
+så den ved hvilken maskine der er tale om, og gemmer så vores egen gengivelse
+på hvid sømløs baggrund. `referencefoto.test.ts` fejler, hvis et `image`-felt
+peger på en fremmed shop.
+
+**Sådan gør Frederik:**
+
+1. `/admin/produkter` → find produktet → sæt linket i feltet
+   "Leverandørlink (kun reference til billedknappen)". Linket fra arket kan
+   kopieres som det er — er det en produktside, følger generatoren `og:image`
+   videre til selve billedet.
+2. Tryk på billedknappen ved "Produktbillede" og vælg scenen `produktfoto`.
+3. Godkend resultatet. Det lander i KV og er live med det samme, uden deploy.
+
+Fra terminalen kræver det `GEMINI_API_KEY` og udgående adgang til shoppen:
+
+```
+node scripts/product-images/generate.mjs --apply --only kabeltromle
+```
+
+De hentede leverandørfotos caches i `gallery/ref/`, som er gitignoreret.
+
 Nye filer får nye URLer, så gamle fotos ikke bliver liggende i kundens browsercache. `src/lib/whiteProductImages.ts` oversætter kendte gamle katalogbilleder; nyere adminuploads bevares.
 
 ## Historisk stil (afløst)

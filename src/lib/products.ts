@@ -43,6 +43,20 @@ export interface Speaker {
    * eller slet ikke sat. Se ER_FORESPOERGSEL i bunden af filen.
    */
   forespoergsel?: boolean;
+  /**
+   * Leverandørens produktside eller -foto, arkets kolonne "Link til produkt
+   * indkøb".
+   *
+   * KUN som reference til billedgeneratoren. Fotoet er leverandørens, og det
+   * bliver aldrig vist på sitet — det bruges til at vise modellen hvilken
+   * maskine der er tale om, så vi kan lave VORES eget billede af den i
+   * husstilen. Se refFotoAldrigUdgivet i galleryPrompt.ts og testen i
+   * referencefoto.test.ts.
+   *
+   * Må gerne være shoppens almindelige produktside: generatoren henter
+   * og:image, og er svaret HTML, finder den og:image og henter det billede i stedet.
+   */
+  refFoto?: string;
 
   /** Produktvideo (instruktion/demo), vist med play-knap i produkt-hero */
   video?: string;
@@ -74,6 +88,20 @@ export interface Addon {
    * eller slet ikke sat. Se ER_FORESPOERGSEL i bunden af filen.
    */
   forespoergsel?: boolean;
+  /**
+   * Leverandørens produktside eller -foto, arkets kolonne "Link til produkt
+   * indkøb".
+   *
+   * KUN som reference til billedgeneratoren. Fotoet er leverandørens, og det
+   * bliver aldrig vist på sitet — det bruges til at vise modellen hvilken
+   * maskine der er tale om, så vi kan lave VORES eget billede af den i
+   * husstilen. Se refFotoAldrigUdgivet i galleryPrompt.ts og testen i
+   * referencefoto.test.ts.
+   *
+   * Må gerne være shoppens almindelige produktside: generatoren henter
+   * og:image, og er svaret HTML, finder den og:image og henter det billede i stedet.
+   */
+  refFoto?: string;
 
   /** Produktvideo (instruktion/demo), vist med play-knap i produkt-hero */
   video?: string;
@@ -159,6 +187,20 @@ export interface RentalProduct {
    * eller slet ikke sat. Se ER_FORESPOERGSEL i bunden af filen.
    */
   forespoergsel?: boolean;
+  /**
+   * Leverandørens produktside eller -foto, arkets kolonne "Link til produkt
+   * indkøb".
+   *
+   * KUN som reference til billedgeneratoren. Fotoet er leverandørens, og det
+   * bliver aldrig vist på sitet — det bruges til at vise modellen hvilken
+   * maskine der er tale om, så vi kan lave VORES eget billede af den i
+   * husstilen. Se refFotoAldrigUdgivet i galleryPrompt.ts og testen i
+   * referencefoto.test.ts.
+   *
+   * Må gerne være shoppens almindelige produktside: generatoren henter
+   * og:image, og er svaret HTML, finder den og:image og henter det billede i stedet.
+   */
+  refFoto?: string;
 
   /** Produktvideo (instruktion/demo), vist med play-knap i produkt-hero */
   video?: string;
@@ -678,6 +720,7 @@ export const addons: Addon[] = [
    */
   {
     id: "kabeltromle",
+    refFoto: "https://www.jemogfix.dk/kabeltromle-m4-udtag-10-meter/7111/9010501/",
     price: 45,
     image: null,
     da: { label: "Kabeltromle 10 m", desc: "Kabeltromle med 4 udtag, 10 meter. Til når stikkontakten ikke er der, hvor anlægget skal stå" },
@@ -685,6 +728,7 @@ export const addons: Addon[] = [
   },
   {
     id: "kabeltromle_jord",
+    refFoto: "https://www.jemogfix.dk/kabeltromle-m4-udtag-og-jord-25-meter/7111/9043474/",
     price: 95,
     image: null,
     da: { label: "Kabeltromle med jord, 25 m", desc: "Kabeltromle med 4 udtag og jord, 25 meter. Til udendørs og til telt" },
@@ -692,6 +736,7 @@ export const addons: Addon[] = [
   },
   {
     id: "stikdaase",
+    refFoto: "https://www.jemogfix.dk/4-stikdaase-med-5-0-m-ledning-hvid-elworks/7110/9047737/",
     price: 25,
     image: null,
     da: { label: "Stikdåse, 4 udtag", desc: "4-stikdåse med 5 meter ledning. Ét udtag bliver hurtigt for lidt til højtaler, lys og røg" },
@@ -699,6 +744,7 @@ export const addons: Addon[] = [
   },
   {
     id: "stikdaase_jord",
+    refFoto: "https://www.jemogfix.dk/5-stikdaase-med-jord-og-5-meter-ledning-sort-elworks/7110/9079226/",
     price: 25,
     image: null,
     da: { label: "Stikdåse med jord, 5 udtag", desc: "5-stikdåse med jord og 5 meter ledning. Til udstyr der kræver jordforbindelse" },
@@ -706,6 +752,7 @@ export const addons: Addon[] = [
   },
   {
     id: "omformer_udendors",
+    refFoto: "https://www.jemogfix.dk/hybridstikprop-hvid-dansk-jord-elworks/7110/9042128/",
     price: 10,
     image: null,
     da: { label: "Omformer til udendørs stik", desc: "Hybridstikprop til dansk jord. Passer vores stik til et udendørsstik i telt eller på terrasse" },

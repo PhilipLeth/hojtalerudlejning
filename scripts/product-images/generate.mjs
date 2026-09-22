@@ -39,6 +39,8 @@ const HER = dirname(fileURLToPath(import.meta.url));
 const ROD = resolve(HER, "..", "..");
 const CONFIG = join(ROD, "gallery", "scenes.json");
 const RAA_DIR = join(ROD, "gallery", "raw");
+/** Hentede leverandørfotos — kun referencer, hverken udgivet eller committet */
+const REF_DIR = join(ROD, "gallery", "ref");
 const UD_DIR = join(ROD, "public", "images", "gallery");
 const MANIFEST = join(ROD, "src", "lib", "productGallery.ts");
 
@@ -49,6 +51,9 @@ const MANIFEST = join(ROD, "src", "lib", "productGallery.ts");
  * den direkte. Alternativet — at parse filen med regex eller at vedligeholde en
  * kopi af kataloget her — ville drive fra hinanden ved første prisændring.
  */
+/** Sat af laesModuler() — hentRefFoto kaldes efter, at modulerne er indlæst */
+let pmRef = null;
+
 async function laesModuler() {
   const { createServer } = await import("vite");
   const server = await createServer({
@@ -60,9 +65,11 @@ async function laesModuler() {
     resolve: { alias: { "@": join(ROD, "src") } },
   });
   try {
+    const prompt = await server.ssrLoadModule("/src/lib/galleryPrompt.ts");
+    pmRef = prompt;
     return {
       katalog: await server.ssrLoadModule("/src/lib/products.ts"),
-      prompt: await server.ssrLoadModule("/src/lib/galleryPrompt.ts"),
+      prompt,
     };
   } finally {
     await server.close();
@@ -79,6 +86,42 @@ function stiTilBillede(rel) {
   if (!rel || !rel.startsWith("/images/")) return null;
   const fil = join(ROD, "public", rel.replace(/^\//, ""));
   return existsSync(fil) ? fil : null;
+}
+
+/**
+ * Leverandørens foto, hentet ned som reference.
+ *
+ * Arkets kolonne "Link til produkt indkøb" peger på produktSIDEN hos Jem &
+ * Fix eller Thomann. Er svaret HTML, følges og:image ét skridt videre — så
+ * Frederik kan nøjes med at kopiere linket, som det står i arket.
+ *
+ * Fotoet er leverandørens og bliver ALDRIG udgivet. Det er dét, modellen ser;
+ * det vi gemmer i public/images/, er modellens gengivelse i husstilen. Filen
+ * caches i gallery/ref/, som er gitignoreret — så en ny kørsel ikke henter den
+ * igen, og så den ikke havner i repoet.
+ */
+async function hentRefFoto(url, id) {
+  const cache = join(REF_DIR, `${id}${extnavn(url)}`);
+  if (existsSync(cache)) return cache;
+  const svar = await fetch(url, { headers: { "User-Agent": "lejhojtaler-billedreference/1.0" } });
+  if (!svar.ok) throw new Error(`${svar.status} ${svar.statusText}`);
+  const type = svar.headers.get("content-type") || "";
+  if (type.includes("text/html")) {
+    const html = (await svar.text()).slice(0, 200_000);
+    const billede = pmRef.billedeUrlFraHtml(html, url);
+    if (!billede) throw new Error("fandt intet og:image på siden");
+    return hentRefFoto(billede, id);
+  }
+  const bytes = Buffer.from(await svar.arrayBuffer());
+  if (bytes.length === 0 || bytes.length > 5_000_000) throw new Error(`ubrugelig størrelse: ${bytes.length} bytes`);
+  mkdirSync(dirname(cache), { recursive: true });
+  writeFileSync(cache, bytes);
+  return cache;
+}
+
+function extnavn(url) {
+  const m = /\.(png|jpe?g|webp)(?:[?#]|$)/i.exec(url);
+  return m ? `.${m[1].toLowerCase().replace("jpeg", "jpg")}` : ".jpg";
 }
 
 /* ───── API ───── */
@@ -105,7 +148,15 @@ function mimeFor(sti) {
 async function generer(opgave, cfg, noegle) {
   const input = [{ type: "text", text: opgave.prompt }];
   for (const r of opgave.referencer) {
-    const sti = stiTilBillede(r.billede);
+    let sti = stiTilBillede(r.billede);
+    if (!sti && pmRef?.refFotoAldrigUdgivet(r.billede)) {
+      try {
+        sti = await hentRefFoto(r.billede, r.id);
+        console.log(`  reference hentet hos leverandøren: ${r.id}`);
+      } catch (fejl) {
+        console.warn(`  kunne ikke hente reference for ${r.id}: ${fejl.message}`);
+      }
+    }
     if (!sti) continue;
     input.push({ type: "image", mime_type: mimeFor(sti), data: readFileSync(sti).toString("base64") });
   }
@@ -281,7 +332,10 @@ function byggeplan(cfg, pm, flad, filter) {
       if (!bygget) continue; // intet produktfoto at vise modellen
       // Referencer der peger på R2 (/api/image/…) kan kun hentes af knappen i
       // admin, ikke af et script på en bærbar uden netværk til produktionen.
-      const lokale = bygget.referencer.filter((r) => stiTilBillede(r.billede));
+      // Leverandørlinks (http…) kan derimod hentes — se hentRefFoto.
+      const lokale = bygget.referencer.filter(
+        (r) => stiTilBillede(r.billede) || pm.refFotoAldrigUdgivet(r.billede),
+      );
       if (lokale.length === 0) continue;
       opgaver.push({
         produkt: p,

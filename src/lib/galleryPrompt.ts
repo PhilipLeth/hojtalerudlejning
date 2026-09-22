@@ -78,7 +78,16 @@ export interface FladtProdukt {
   hidden: boolean;
   navn: string;
   navn_en: string;
-  /** Sti til produktfotoet, fx /images/product-festival-v2-white.webp eller /api/image/<key> */
+  /**
+   * Hvad modellen får at se.
+   *
+   * Som regel vores eget produktfoto: /images/product-festival-v2-white.webp
+   * eller /api/image/<key> fra admin. Har produktet ikke et endnu, bruges
+   * leverandørens link fra arket (refFoto) — en absolut URL. Det er stadig
+   * KUN en reference: leverandørens foto bliver aldrig udgivet, det viser
+   * modellen hvilken maskine der er tale om, så vi kan lave vores eget
+   * billede af den. Se refFotoAldrigUdgivet nedenfor.
+   */
   billede: string | null;
   kapacitet: string | null;
   kapacitet_en: string | null;
@@ -99,7 +108,7 @@ export function fladtKatalog(kat: Katalog): Map<string, FladtProdukt> {
   for (const s of kat.speakers) {
     ud.set(s.id, {
       id: s.id, page: s.page, hidden: !!s.hidden,
-      navn: s.da.name, navn_en: s.en.name, billede: s.product,
+      navn: s.da.name, navn_en: s.en.name, billede: s.product || s.refFoto || null,
       kapacitet: s.da.capacity, kapacitet_en: s.en.capacity,
       indhold: s.contents ?? [], dele: null, kategori: "lyd",
     });
@@ -108,7 +117,7 @@ export function fladtKatalog(kat: Katalog): Map<string, FladtProdukt> {
     if (isInternalAddon(a) || isServiceAddon(a)) continue; // ingen vare at fotografere
     ud.set(a.id, {
       id: a.id, page: a.page, hidden: !!a.hidden,
-      navn: a.da.label, navn_en: a.en.label, billede: a.image,
+      navn: a.da.label, navn_en: a.en.label, billede: a.image || a.refFoto || null,
       kapacitet: null, kapacitet_en: null,
       indhold: a.contents ?? [], dele: null, kategori: "lyd",
     });
@@ -116,7 +125,7 @@ export function fladtKatalog(kat: Katalog): Map<string, FladtProdukt> {
   for (const r of kat.rentalProducts) {
     ud.set(r.id, {
       id: r.id, page: r.page, hidden: !!r.hidden,
-      navn: r.name_da, navn_en: r.name_en, billede: r.image,
+      navn: r.name_da, navn_en: r.name_en, billede: r.image || r.refFoto || null,
       kapacitet: null, kapacitet_en: null,
       indhold: r.contents ?? [],
       dele: r.bundle?.parts?.length ? r.bundle.parts.map((d) => d.productId) : null,
@@ -171,6 +180,48 @@ export function referencerFor(
     else mangler.push(id);
   }
   return { billeder: fundet.slice(0, maks), skaaret: fundet.slice(maks).map((r) => r.id), mangler };
+}
+
+/**
+ * Er referencen leverandørens foto frem for vores eget?
+ *
+ * Skellet skal kunne ses ét sted, for det afgør to ting: at den skal hentes
+ * over nettet i stedet for fra disken, og at den ALDRIG må ende som et
+ * billede på sitet. Det vi udgiver, er modellens gengivelse i husstilen —
+ * ikke shoppens foto.
+ */
+export function refFotoAldrigUdgivet(billede: string | null | undefined): boolean {
+  return !!billede && /^https?:\/\//i.test(billede);
+}
+
+/**
+ * Fandt vi en shopside i stedet for et billede? Så find billedet i den.
+ *
+ * Arkets kolonne "Link til produkt indkøb" peger på produktSIDEN hos Jem &
+ * Fix eller Thomann, ikke på en .jpg. Frederik skal ikke først højreklikke
+ * sig frem til billed-URL'en — vi læser og:image ud af siden, som enhver
+ * anden der deler et link.
+ *
+ * Bevidst en regex og ikke en HTML-parser: den kører både i Cloudflares
+ * worker og i node-scriptet, og den skal kun finde ét meta-tag.
+ */
+export function billedeUrlFraHtml(html: string, base: string): string | null {
+  const kandidater = [
+    /<meta[^>]+property=["']og:image(?::secure_url)?["'][^>]+content=["']([^"']+)["']/i,
+    /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image(?::secure_url)?["']/i,
+    /<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i,
+    /<link[^>]+rel=["']image_src["'][^>]+href=["']([^"']+)["']/i,
+  ];
+  for (const re of kandidater) {
+    const m = re.exec(html);
+    if (!m?.[1]) continue;
+    try {
+      return new URL(m[1].replace(/&amp;/g, "&"), base).toString();
+    } catch {
+      // En ugyldig URL i et meta-tag er ikke værd at fejle på — prøv næste
+    }
+  }
+  return null;
 }
 
 function udfyld(skabelon: string, felter: Record<string, string>): string {

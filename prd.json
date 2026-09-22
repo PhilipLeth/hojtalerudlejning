@@ -4278,11 +4278,14 @@
       "struktur": "Afsnit 7 er fjernet fra katalogStruktur.ts — strukturen ER arket, og arket har det ikke. katalog-struktur.test.ts undtager forespørgselsvarer fra kravet om en plads i arket: de står uden for det pr. definition, og det er netop derfor, de ikke kan bookes."
     },
     "produktfotos": {
-      "spoergsmaalet": "Philip: 'Du må gerne generere noget i samme stil med AI som dem der findes hos [Thomann, Jem & Fix, HiFi Klubben].'",
-      "svaret": "Kan ikke lade sig gøre for de varer, det handler om. scripts/product-images/generate.mjs bygger prompten af VORES egne produktfotos som referencer, og prompten siger udtrykkeligt 'Do not invent or substitute equipment'. Et produkt uden et referencefoto får derfor nul billeder i planen — prøvet med både slushice og kabeltromle. Det er ikke en fejl, det er husreglen: en udlejningsforretning reklamerer ikke med udstyr, den ikke har.",
-      "konsekvens": "Slushicemaskinen og fadølsanlægget står uden foto, og kortet og siden tegner en ren tekstflade i stedet. products.test.ts undtager dem sammen med kørsel og strøm.",
-      "naar_de_staar_paa_lageret": "Tag ét billede af maskinen, læg det i /public/images/, og kør: node scripts/product-images/generate.mjs --apply --only slushice --scene produktfoto. Eller tryk på billedknappen i /admin/produkter, som kører den samme prompt gennem functions/api/gallery.ts. Cloudflare har GEMINI_API_KEY som secret; dette udviklingsmiljø har den ikke.",
-      "strømvarerne": "kabeltromle, stikdåse og omformer har samme problem og samme svar. De vises som afkrydsninger i checkout uden foto, hvilket alligevel er den rigtige brugerflade for en stikdåse til 25 kr."
+      "spoergsmaalet": "Philip: 'Du skal tage billedet fra linket og lave et billede der minder om, men i samme stil som vores.'",
+      "loesningen": "refFoto-feltet: arkets kolonne 'Link til produkt indkøb' som REFERENCE til billedgeneratoren. Leverandørens foto vises aldrig på sitet — det er dét, modellen ser, så den ved hvilken maskine der er tale om, og det vi gemmer, er dens gengivelse på hvid sømløs baggrund i husstilen.",
+      "skellet": "refFoto = shoppens link, aldrig udgivet. image = vores eget, udgivet. referencefoto.test.ts fejler, hvis et image-felt peger på en fremmed shop, og holder de to adskilt.",
+      "shopsiden": "Arkets link peger på produktSIDEN, ikke på en .jpg. billedeUrlFraHtml() i galleryPrompt.ts læser og:image (med fallback til twitter:image og image_src) ud af siden, så linket kan kopieres som det står i arket. Begge veje ind bruger den: knappen i /admin/produkter gennem functions/api/gallery.ts, og scriptet gennem hentRefFoto(), som cacher i gallery/ref/ (gitignoreret).",
+      "admin": "Nyt felt i /admin/produkter: 'Leverandørlink (kun reference til billedknappen)'. Frederik sætter linket ind, trykker på billedknappen, godkender — resultatet lander i KV og er live uden deploy.",
+      "gjort": "De fem strømvarer fra arkets afsnit 4 (kabeltromle, kabeltromle m. jord, stikdåse, stikdåse m. jord, omformer) har nu deres Jem & Fix-link med, og byggPrompt() kan generere dem. Før gav de nul billeder i planen.",
+      "mangler": "Slushicemaskinen og fadølsanlægget står ikke i arket og har derfor intet leverandørlink. Frederik sætter linket ind fra den shop, han vil skaffe dem hos, og trykker på knappen — så er de med.",
+      "ikke_gjort_i_denne_session": "Selve genereringen. Sandkassen har ingen GEMINI_API_KEY, og proxyen afviser jemogfix.dk, thomann.dk og hifiklubben.dk med 403. Pipelinen er bygget og testet (12 tests), men billederne skal laves fra admin eller fra en maskine med nøgle og netadgang."
     }
   }
 }

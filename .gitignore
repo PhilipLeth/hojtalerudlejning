@@ -22,3 +22,6 @@ ads/assets/
 # ER committet — dem shipper sitet. Råfilerne ligger her, så en ny beskæring
 # eller komprimering ikke koster et nyt API-kald.
 gallery/raw/
+# Leverandørfotos hentet som reference til generatoren. Deres billeder, ikke
+# vores — de må hverken udgives eller committes. Se refFoto i products.ts.
+gallery/ref/

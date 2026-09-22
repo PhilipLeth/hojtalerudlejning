@@ -674,6 +674,18 @@ export default function AdminProdukterPage() {
                   </select>
                 </div>
                 <ImageField label="Produktbillede" value={r.image} onChange={(v) => updateRental(i, { image: v })} aiProductId={r.id} />
+                {/*
+                  Leverandørens link fra prisarkets kolonne "Link til produkt
+                  indkøb". Bruges KUN som reference, når billedknappen ovenfor
+                  skal lave vores eget foto af en vare, vi ikke har fotograferet
+                  endnu — shoppens billede bliver aldrig vist på sitet. Er
+                  linket en produktside, følger generatoren og:image videre.
+                */}
+                <Field
+                  label="Leverandørlink (kun reference til billedknappen)"
+                  value={r.refFoto ?? ""}
+                  onChange={(v) => updateRental(i, { refFoto: v.trim() || undefined })}
+                />
                 <VideoField label="Produktvideo (instruktion/demo)" value={r.video ?? ""} onChange={(v) => updateRental(i, { video: v || undefined })} />
                 <Field
                   label="YouTube-URL (producentvideo)"
@@ -747,6 +759,18 @@ export default function AdminProdukterPage() {
                   />
                 )}
                 <ImageField label="Billede (tom = intet)" value={a.image ?? ""} onChange={(v) => updateAddon(i, { image: v || null })} aiProductId={a.id} />
+                {/*
+                  Leverandørens link fra prisarkets kolonne "Link til produkt
+                  indkøb". Bruges KUN som reference, når billedknappen ovenfor
+                  skal lave vores eget foto af en vare, vi ikke har fotograferet
+                  endnu — shoppens billede bliver aldrig vist på sitet. Er
+                  linket en produktside, følger generatoren og:image videre.
+                */}
+                <Field
+                  label="Leverandørlink (kun reference til billedknappen)"
+                  value={a.refFoto ?? ""}
+                  onChange={(v) => updateAddon(i, { refFoto: v.trim() || undefined })}
+                />
                 <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", alignSelf: "end", paddingBottom: "8px" }}>
                   <input type="checkbox" checked={!!a.hidden} onChange={(e) => updateAddon(i, { hidden: e.target.checked })} />
                   Skjul på siden
