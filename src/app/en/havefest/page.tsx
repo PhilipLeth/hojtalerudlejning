@@ -54,7 +54,7 @@ export default function Page() {
         { q: "How many guests does the small party package cover?", a: "Up to about 40 people. If you are more, or the garden is large, take the large party package with 12\" speakers and the full light package at " + prisDkk("pakke_fest_stor") + "." },
       ]}
       related={[
-        { href: "/udendorspakke", label: "The outdoor package", priceId: "pakke_udendors" },
+        { href: "/soundboks-4", label: "Soundboks 4, on battery", priceId: "soundboks" },
         { href: "/foedselsdag", label: "Sound for a birthday" },
         { href: "/soundboks-4", label: "Soundboks 4" },
         { href: "/lyskaeder", label: "Fairy lights" },

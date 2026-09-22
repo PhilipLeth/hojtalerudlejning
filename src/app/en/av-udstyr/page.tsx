@@ -8,7 +8,7 @@ import { AV_PAKKER } from "@/lib/products";
 
 export const metadata: Metadata = {
   title: "AV equipment rental Copenhagen | Screens, lighting, mics and speakers",
-  description: "Hire displays, projectors, lighting, microphones and speakers in Copenhagen. Book packages online, including panels and Teams/Zoom.",
+  description: "Hire displays, projectors, lighting, microphones and speakers in Copenhagen. Book online for meetings, conferences and presentations.",
   alternates: { canonical: "https://lejhojtaler.dk/en/av-udstyr", languages: localeAlternates("/av-udstyr") },
 };
 
@@ -18,13 +18,13 @@ export default function Page() {
       <section className="mx-auto max-w-6xl px-5 py-16">
         <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">Equipment rental · Copenhagen</p>
         <h1 className="mt-4 max-w-3xl text-4xl font-bold sm:text-6xl">Screens, lighting, mics and speakers. Book online.</h1>
-        <p className="mt-6 max-w-2xl text-lg text-slate-600">Ready-made packages and individual items. Panel and Teams/Zoom setups are booked as packages, not by phone.</p>
+        <p className="mt-6 max-w-2xl text-lg text-slate-600">For the meeting, the conference and the party: picture, sound and lighting can be hired separately or as a ready-made package. Every price covers up to five days and includes VAT.</p>
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <a href="#screens" className="rounded-full border border-transparent bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400">See screens and projectors</a>
           <a href="#lighting" className="rounded-full border border-brand-500/30 px-6 py-3 font-semibold text-brand-400 transition hover:bg-brand-500/10">See lighting →</a>
         </div>
       </section>
-      <BundleGrid locale="en" ids={AV_PAKKER} eyebrow="AV packages" title="Ready to book" subtitle="Panel and hybrid-meeting packages are here. VAT included." />
+      <BundleGrid locale="en" ids={AV_PAKKER} eyebrow="AV packages" title="Ready to book" subtitle="Projector, screen, microphone and sound put together in advance — and cheaper than hiring the parts separately." />
       <section id="screens" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-16">
         <h2 className="mb-6 text-3xl font-bold">Screens & projectors</h2>
         <CategoryProductGrid tone="light" locale="en" items={[{id:"skaerm_55",tag:"Easiest"},{id:"skaerm_32"},{id:"projektor"},{id:"projektor_pro",tag:"Sharp in daylight"},{id:"laerred_160"}]} />

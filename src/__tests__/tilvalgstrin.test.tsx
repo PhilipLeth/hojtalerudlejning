@@ -30,7 +30,7 @@ async function tilTilvalg() {
 }
 
 describe("Tilvalgstrinnet", () => {
-  it("viser fem tilvalg, ikke hele sortimentet", async () => {
+  it("viser de relevante tilvalg, ikke hele sortimentet", async () => {
     await tilTilvalg();
     // De fem der faktisk tilføjes til en Soundboks. Produktarket 17. sept 2026:
     // Soundboks 4 har nu sin egen liste af tilvalg (lysbar, batteri, mikrofon med
@@ -45,13 +45,34 @@ describe("Tilvalgstrinnet", () => {
   it("folder resten ud, når man beder om det", async () => {
     await tilTilvalg();
     const knap = screen.getByText(/Vis alle tilvalg/);
-    // Bæretasken er sat på pause (produktarket 17. sept 2026). Lydmanden er nu
-    // nederst i rækkefølgen for en Soundboks og kommer først frem, når man folder ud
-    expect(screen.queryByText("Lydmand")).not.toBeInTheDocument();
+    // Stroboskopet er sidst i rækkefølgen og kommer først frem, når man folder ud
+    expect(screen.queryByText("Stroboskop")).not.toBeInTheDocument();
     fireEvent.click(knap);
     await waitFor(() => expect(screen.queryByText(/Vis alle tilvalg/)).not.toBeInTheDocument());
-    expect(screen.getAllByText("Lydmand").length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Stroboskop/i).length).toBeGreaterThan(0);
+    // Bæretasken er sat på pause (produktarket 17. sept 2026) og kommer aldrig frem
     expect(screen.queryByText(/taske/i)).not.toBeInTheDocument();
+  }, 20000);
+
+  /**
+   * Arkets afsnit 0 rummer teknikertimen, og Frederik bad om at kunden tager
+   * stilling til den. Den lå bag "Vis alle tilvalg", hvor ingen så den.
+   */
+  it("teknikertimen står fremme uden at man skal folde ud", async () => {
+    await tilTilvalg();
+    expect(screen.getAllByText(/Lydmand/i).length).toBeGreaterThan(0);
+  }, 20000);
+
+  /**
+   * Arkets afsnit 4: forlængerledninger og stikdåser. De har ingen fotos og
+   * skal ikke fylde som et tilvalgskort — men de skal være der, for det er
+   * dem kunden opdager mangler, når teltet står tyve meter fra stikkontakten.
+   */
+  it("tilbyder strøm i et sammenfoldet afsnit for sig", async () => {
+    await tilTilvalg();
+    expect(screen.getByText("Mangler I strøm?")).toBeInTheDocument();
+    expect(screen.getByText(/Kabeltromle 10 m/)).toBeInTheDocument();
+    expect(screen.getByText(/Stikdåse, 4 udtag/)).toBeInTheDocument();
   }, 20000);
 
   it("sætter kørsel før tilvalgene — det er dét, kunden skal svare på", async () => {

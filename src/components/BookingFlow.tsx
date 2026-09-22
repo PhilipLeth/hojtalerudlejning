@@ -10,7 +10,7 @@ import { rapporterFejl } from "@/lib/errorReport";
 import { type Locale, t } from "@/lib/i18n";
 import { localizedHref } from "@/lib/enPages";
 
-import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, isInternalAddon, isServiceAddon, bundleIncludesDelivery, DELIVERY_ADDON_IDS } from "@/lib/products";
+import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, isInternalAddon, isServiceAddon, bundleIncludesDelivery, DELIVERY_ADDON_IDS, STROEM_ADDON_IDS } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
 import CapacityBadge, { capacityLevel } from "@/components/CapacityBadge";
@@ -585,8 +585,21 @@ const KVITTERING_NØGLE = "booking_kvittering_";
  * til en fest. Resten er ikke væk, men foldet sammen: en liste på otte plus
  * seks krydssalg bliver ikke læst, den bliver scrollet forbi.
  */
-const TILVALG_RELEVANS = ["lys", "rog", "stativer", "stativ_enkelt", "subwoofer", "mikrofon", "mikrofon_kabel", "batteri", "lyseffekt", "mixer_stor", "mikrofonstativ"];
-const ANTAL_SYNLIGE_TILVALG = 5;
+/*
+ * Rækkefølgen følger arkets "Ved chek"-kolonne, der siger hvad der skal
+ * tilbydes under hvad: subwooferen står ved alle tre højtalerpakker, den
+ * enkelte lyseffekt og lysbaren ved de små, og det ekstra batteri ved
+ * Soundboksen.
+ */
+const TILVALG_RELEVANS = ["lys", "rog", "stativer", "stativ_enkelt", "subwoofer", "lyseffekt", "mikrofon", "mikrofon_kabel", "lydmand", "batteri", "mixer_stor", "mikrofonstativ"];
+/**
+ * Syv og ikke fem: arkets teknikertime er en af varerne i afsnit 0, kunden
+ * skal tage stilling til, og den lå bag "Vis alle tilvalg". Den står sidst af
+ * de synlige — et tilbud til den, der helst ikke vil røre noget selv, ikke
+ * det første man skal skræmmes af. Subwooferen kom til af samme grund, og de
+ * to må ikke skubbe lyseffekten og mikrofonen ud, som arket også peger på.
+ */
+const ANTAL_SYNLIGE_TILVALG = 7;
 
 /**
  * Tidsvalget på dagen (før 12 / efter 12) er sat på pause 13. sept 2026.
@@ -2292,6 +2305,7 @@ export default function BookingFlow({
                 };
                 const alle = visibleAddons
                   .filter((a) => !DELIVERY_IDS.includes(a.id))
+                  .filter((a) => !STROEM_ADDON_IDS.includes(a.id))
                   .filter((a) => !(orderHasDj && isDjLight(a.id)))
                   .filter((a) => !q || a.label.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q))
                   .sort((a, b) => rang(a.id) - rang(b.id));
@@ -2386,7 +2400,8 @@ export default function BookingFlow({
               {/* Resten er ét tryk væk, ikke skjult, bare ikke i vejen */}
               {(() => {
                 const antalSkjulte =
-                  visibleAddons.filter((a) => !DELIVERY_IDS.includes(a.id)).length - ANTAL_SYNLIGE_TILVALG;
+                  visibleAddons.filter((a) => !DELIVERY_IDS.includes(a.id) && !STROEM_ADDON_IDS.includes(a.id)).length -
+                  ANTAL_SYNLIGE_TILVALG;
                 if (visAlleTilvalg || addonSearch.trim() || antalSkjulte <= 0) return null;
                 return (
                   <button
@@ -2399,6 +2414,68 @@ export default function BookingFlow({
                 );
               })()}
             </div>
+
+            {/*
+              Strøm, prisarkets afsnit 4.
+
+              Et sammenfoldet afsnit og ikke fem kort: en stikdåse til 25 kr
+              skal ikke fylde lige så meget som lysbaren, men den skal være
+              der — det er den, kunden opdager mangler, når teltet står tyve
+              meter fra stikkontakten. Ingen billeder; en forlængerledning
+              sælger ikke sig selv på et foto.
+            */}
+            {(() => {
+              const stroem = STROEM_ADDON_IDS
+                .map((id) => addons.find((a) => a.id === id))
+                .filter((a): a is NonNullable<typeof a> => !!a);
+              if (stroem.length === 0) return null;
+              const valgte = stroem.filter((a) => selectedAddons.includes(a.id)).length;
+              return (
+                <details open={valgte > 0} className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-2.5">
+                  <summary className="flex cursor-pointer items-center justify-between gap-3 text-left">
+                    <span className="min-w-0">
+                      <span className="block text-sm font-semibold">{s.stroemTitle}</span>
+                      <span className="block truncate text-xs text-white/40">{s.stroemHint}</span>
+                    </span>
+                    <span className="shrink-0 text-xs text-brand-400">
+                      {valgte > 0 ? `${valgte} ✓` : s.stroemOpen}
+                    </span>
+                  </summary>
+                  <div className="mt-2 space-y-1.5">
+                    {stroem.map((a) => {
+                      const selected = selectedAddons.includes(a.id);
+                      return (
+                        <button
+                          key={a.id}
+                          onClick={() => toggleAddon(a.id)}
+                          className={`flex w-full items-center gap-3 rounded-lg border px-3 py-2 text-left transition active:scale-[0.99] ${
+                            selected ? "border-brand-500 bg-brand-500/10" : "border-white/10 bg-white/[0.03] hover:border-white/25"
+                          }`}
+                        >
+                          <span
+                            className={`flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded border transition ${
+                              selected ? "border-brand-500 bg-brand-500" : "border-white/20 bg-white/5"
+                            }`}
+                            style={{ height: 18, width: 18 }}
+                          >
+                            {selected && (
+                              <svg className="h-3 w-3 text-black" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                          </span>
+                          <span className="min-w-0 flex-1">
+                            <span className="block truncate text-sm">{a.label}</span>
+                            <span className="block truncate text-xs text-white/35">{a.desc}</span>
+                          </span>
+                          <span className="shrink-0 text-sm font-bold text-brand-400">+{a.price},-</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </details>
+              );
+            })()}
 
             {/* Søgningen finder resten af sortimentet, den hører hjemme
                 efter de relevante tilvalg, ikke før dem */}

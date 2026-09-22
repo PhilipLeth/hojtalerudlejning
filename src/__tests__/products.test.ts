@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { existsSync } from "node:fs";
-import { bundleListPrice, bundlePrice, catalogPrice, speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice, bundleIncludesDelivery, LYDMAND_PAKKER, KATEGORI_PAKKER, DELIVERY_ADDON_IDS } from "@/lib/products";
+import { bundleListPrice, bundlePrice, catalogPrice, speakers, addons, rentalProducts, dayMultiplier, startPrice, cheapestSpeakerPrice, bundleIncludesDelivery, LYDMAND_PAKKER, KATEGORI_PAKKER, DELIVERY_ADDON_IDS, STROEM_ADDON_IDS } from "@/lib/products";
 import { stockItems } from "@/lib/stock";
 import { mergeAddonsForTest } from "@/lib/useProducts";
 
@@ -264,8 +264,10 @@ describe("Addons data", () => {
 
   it("visible equipment addons have an image", () => {
     // Kun ydelser behøver ikke et produktfoto.
-    // Kørsel er en ydelse, ikke et stykke grej — den har intet produktfoto
-    const udenFoto = [...DELIVERY_ADDON_IDS];
+    // Kørsel er en ydelse, ikke et stykke grej — den har intet produktfoto.
+    // Strømvarerne heller ikke: en stikdåse til 25 kr sælger ikke sig selv på
+    // et foto, og de vises som afkrydsninger i checkout, ikke som kort.
+    const udenFoto = [...DELIVERY_ADDON_IDS, ...STROEM_ADDON_IDS];
     for (const a of addons) {
       if (a.hidden) continue; // skjulte kladder kan afvente model og foto
       if (a.ydelse) continue; // en ydelse må have et foto (lydmand har), men skal ikke

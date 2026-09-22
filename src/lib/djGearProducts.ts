@@ -27,7 +27,7 @@ export const djGearProducts: RawRentalProduct[] = [
     "name_en": "DJ package 0-30",
     "desc_da": "Pult og to højtalere til mindre fester og baggrundsmusik. DJ/musikafvikler tilvælges pr. time.",
     "desc_en": "Controller and two speakers for smaller parties and background music. Add a DJ/music host by the hour.",
-    "allowedAddons": ["rog", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
+    "allowedAddons": ["x_stativ", "rog", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
     "contents": [
       "DJ-pult · AlphaTheta XDJ",
       "Lille højtalerpakke",
@@ -82,7 +82,7 @@ export const djGearProducts: RawRentalProduct[] = [
     "name_en": "DJ package 30-50",
     "desc_da": "Pult, to større højtalere og subwoofer til dansegulvet. DJ/musikafvikler tilvælges pr. time.",
     "desc_en": "Controller, two larger speakers and a subwoofer for the dance floor. Add a DJ/music host by the hour.",
-    "allowedAddons": ["rog", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
+    "allowedAddons": ["x_stativ", "rog", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
     "contents": [
       "DJ-pult · AlphaTheta XDJ",
       "Mellem højtalerpakke",

@@ -48,9 +48,9 @@ export default function Page() {
         { q: "Hvornår skal jeg hente og aflevere?", a: "Standard er afhentning fredag og aflevering mandag, samme pris uanset om festen er fredag eller lørdag. Du vælger selv datoerne i bookingen, og vi kan levere og sætte op i København for " + prisKr("levering_ud") + "." },
       ]}
       related={[
-        { href: "/ungdomsfest-pakke", label: "Ungdomsfest-pakken", priceId: "pakke_ungdomsfest" },
-        { href: "/ungdomsfest-pakke-stor", label: "Stor ungdomsfest-pakke", priceId: "pakke_ungdomsfest_stor" },
-        { href: "/teenagefest-lys", label: "Teenagefest-lys, kun lys", priceId: "pakke_teenagefest" },
+        { href: "/festpakke-stor", label: "Festpakke 30-50", priceId: "pakke_fest_stor" },
+        { href: "/festpakke-150", label: "Festpakke 150", priceId: "pakke_fest_150" },
+        { href: "/lyspakker", label: "Lyspakker, kun lys", priceId: "pakke_festlys_50" },
         { href: "/foedselsdag", label: "Lyd til fødselsdag" },
         { href: "/studenterkoersel", label: "Lyd til studenterkørsel" },
         { href: "/festlys", label: "Alt om festlys" },

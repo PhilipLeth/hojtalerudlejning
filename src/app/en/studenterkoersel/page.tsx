@@ -63,7 +63,7 @@ export default function Page() {
         { q: "Who is liable if it gets damaged?", a: "The renter is liable for damage beyond ordinary wear, see the rental terms. So: strap it down, and do not leave it unattended." },
       ]}
       related={[
-        { href: "/studenterpakke", label: "The graduation package", priceId: "pakke_student" },
+        { href: "/soundboks-4", label: "Soundboks 4", priceId: "soundboks" },
         { href: "/soundboks-4", label: "Soundboks 4" },
         { href: "/ungdomsfest", label: "Sound and lights for the graduation party" },
         { href: "/lej-hojtaler", label: "All speakers" },

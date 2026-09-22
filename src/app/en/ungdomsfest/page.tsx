@@ -56,9 +56,9 @@ export default function Page() {
         { q: "When do I collect and return?", a: "The standard is collection on Friday and return on Monday, the same price whether the party is Friday or Saturday. You choose the dates in the booking, and we can deliver and set up in Copenhagen for " + prisDkk("levering_ud") + "." },
       ]}
       related={[
-        { href: "/ungdomsfest-pakke", label: "Youth party package", priceId: "pakke_ungdomsfest" },
-        { href: "/ungdomsfest-pakke-stor", label: "Large youth party package", priceId: "pakke_ungdomsfest_stor" },
-        { href: "/teenagefest-lys", label: "Teen party lights, lights only", priceId: "pakke_teenagefest" },
+        { href: "/festpakke-stor", label: "Party package 30-50", priceId: "pakke_fest_stor" },
+        { href: "/festpakke-150", label: "Party package 150", priceId: "pakke_fest_150" },
+        { href: "/lyspakker", label: "Party lights, lights only", priceId: "pakke_festlys_50" },
         { href: "/foedselsdag", label: "Sound for a birthday" },
         { href: "/festlys", label: "All about party lights" },
       ]}

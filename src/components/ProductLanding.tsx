@@ -9,7 +9,7 @@ import { bookHref as toBook } from "@/lib/bookUrl";
 import { PhoneText } from "@/components/PhoneLink";
 import { buildProductFaq } from "@/lib/productFaq";
 import { localizedHref } from "@/lib/enPages";
-import { catalogImage, catalogPrice, erPaaPause, erGenereretBillede, udgaaetPakke } from "@/lib/products";
+import { catalogBundleParts, catalogImage, catalogPrice, erPaaPause, erGenereretBillede, udgaaetPakke } from "@/lib/products";
 import ProductGallery from "@/components/ProductGallery";
 import type { Locale } from "@/lib/i18n";
 
@@ -184,6 +184,12 @@ export default function ProductLanding({
   // Pakkeprisen er udledt af delene, så den findes kun ét sted: kataloget.
   const price = prisProp ?? catalogPrice(productId);
   const image = billedeProp ?? catalogImage(productId);
+  /**
+   * Er pakken sat sammen af dele uden sit eget pakkefoto, viser siden delene
+   * i stedet for ét af dem. Ellers står Præsentationspakken med et billede af
+   * en projektor og intet om lærredet og mikrofonen.
+   */
+  const dele = billedeProp ? [] : catalogBundleParts(productId);
 
   const bookHref = toBook(productId, locale);
   const c = COPY[locale];
@@ -326,16 +332,44 @@ export default function ProductLanding({
         <section className="mx-auto max-w-4xl px-4 py-24">
           <div className="grid items-center gap-8 sm:grid-cols-2">
             <div className="relative overflow-hidden rounded-2xl bg-[#0d0c12]">
-              <img
-                src={image}
-                alt={imageAlt}
-                width={600}
-                height={400}
-                className="w-full object-contain p-6"
-              />
+              {dele.length > 0 ? (
+                <ul className="grid grid-cols-2 gap-3 p-5">
+                  {dele.map((del) => (
+                    <li key={del.productId} className="text-center">
+                      {del.image ? (
+                        <span className="flex h-24 items-center justify-center rounded-lg bg-white p-2">
+                          <img
+                            src={del.image}
+                            alt={locale === "en" ? del.label_en : del.label_da}
+                            width={200}
+                            height={200}
+                            className="h-full w-full object-contain"
+                          />
+                        </span>
+                      ) : (
+                        <span className="flex h-24 items-center justify-center rounded-lg border border-dashed border-white/15 px-2 text-xs text-white/50">
+                          {locale === "en" ? del.label_en : del.label_da}
+                        </span>
+                      )}
+                      <span className="mt-2 block text-xs text-white/50">
+                        {del.qty > 1 && <span className="text-brand-400">{del.qty}× </span>}
+                        {locale === "en" ? del.label_en : del.label_da}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <img
+                  src={image}
+                  alt={imageAlt}
+                  width={600}
+                  height={400}
+                  className="w-full object-contain p-6"
+                />
+              )}
               {/* Under billedet, ikke henover det: oplysningen skal være der,
                   uden at en mærkat lægger sig på produktet. */}
-              {erGenereretBillede(image) && (
+              {dele.length === 0 && erGenereretBillede(image) && (
                 <p className="px-6 pb-4 text-center text-xs text-white/35">{c.genereretBillede}</p>
               )}
               {/* Videoerne er slået fra 26. august 2026, se kommentaren ved

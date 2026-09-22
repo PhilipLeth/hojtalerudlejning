@@ -20,6 +20,7 @@ const COPY = {
       sub: "Tre Halloween-pakker. Heksetimen, Monsterfesten og Midnatsklubben.",
       featured: "Til festen derhjemme",
       book: "Book pakken",
+      bookItem: "Book",
       details: "Se alt i pakken",
       currency: "kr",
       period: "/ op til 5 dage",
@@ -38,6 +39,7 @@ const COPY = {
       sub: "Three Halloween packages. The Witching Hour, Monster Party and the Midnight Club.",
       featured: "Made for house parties",
       book: "Book package",
+      bookItem: "Book",
       details: "See what’s included",
       currency: "DKK",
       period: "/ up to 5 days",
@@ -58,6 +60,7 @@ const COPY = {
       sub: "Kontorets hygge, kantinens tale og dansegulv, eller fredagsbaren i december.",
       featured: "Anbefalet til firmajulefrokost",
       book: "Book pakken",
+      bookItem: "Book",
       details: "Se alt i pakken",
       currency: "kr",
       period: "/ op til 5 dage",
@@ -76,6 +79,7 @@ const COPY = {
       sub: "Office hygge, a canteen speech and dance floor, or the December Friday bar.",
       featured: "Recommended for the company lunch",
       book: "Book package",
+      bookItem: "Book",
       details: "See what’s included",
       currency: "DKK",
       period: "/ up to 5 days",
@@ -194,7 +198,8 @@ export default function SeasonCampaign({
                     </Link>
                     <h3>{p.name}</h3>
                     <strong>{p.price.toLocaleString("da-DK")} {c.currency}</strong>
-                    <Link href={bookHref(p.id, locale)} className={styles.extraBook}>{c.book}</Link>
+                    {/* Enkeltprodukterne er ikke pakker — der skal ikke stå "Book pakken" på en røgmaskine */}
+                    <Link href={bookHref(p.id, locale)} className={styles.extraBook}>{c.bookItem}</Link>
                   </article>
                 ))}
               </div>

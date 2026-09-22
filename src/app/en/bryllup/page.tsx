@@ -55,7 +55,7 @@ export default function Page() {
         { q: "What about music for an outdoor ceremony?", a: "For an outdoor ceremony with no power we recommend a battery-powered Soundboks 4, it can stand discreetly to the side and plays through the whole ceremony." },
       ]}
       related={[
-        { href: "/bryllupspakke", label: "The wedding package", priceId: "pakke_bryllup" },
+        { href: "/festpakke-stor", label: "Party package 30-50", priceId: "pakke_fest_stor" },
         { href: "/festpakke-stor", label: "Party package 30-50" },
         { href: "/traadloes-mikrofon-pro", label: "Wireless microphone PRO" },
         { href: "/bryllupslys", label: "Wedding lighting" },
