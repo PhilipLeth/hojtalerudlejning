@@ -50,6 +50,7 @@ export const EN_PAGES = [
   "/ekstra-batteri",
   "/enkelt-lyseffekt",
   "/festlys",
+  "/festpakke-100",
   "/festpakke-150",
   "/festpakke-250",
   "/festpakke-lille",

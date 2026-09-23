@@ -242,7 +242,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvor kraftige højtalere skal jeg bruge til min fest?",
       a:
         "Op til 30 gæster rækker Mackie Thump GO eller den lille højtalerpakke. Til 30-50 gæster tager du Soundboks 4 " +
-        "eller Mellem højtalerpakke. Er I flere, giver Festpakke 150 (" + prisKr("pakke_fest_150") + ") og Festpakke 250 (" + prisKr("pakke_fest_250") + ") " +
+        "eller Mellem højtalerpakke. Er I flere, giver Festpakke 50-100 (" + prisKr("pakke_fest_100") + ") " +
         "subwoofer og stativer med. Gæstetallene gælder indendørs — udendørs bærer lyden kortere.",
     },
     {
@@ -298,7 +298,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Hvad koster det at leje et PA-anlæg i København?",
       a:
         "Mellem højtalerpakke med to aktive 12\" EV-højtalere koster 995 kr for en weekend. Skal der mere tryk på, " +
-        "giver Festpakke 150 (" + prisKr("pakke_fest_150") + ") dig samme højtalere plus subwoofer, stativer, lys og røg.",
+        "giver Festpakke 50-100 (" + prisKr("pakke_fest_100") + ") dig den store højtalerpakke med subwoofer og to lysbarer.",
     },
     {
       q: "Hvad er inkluderet i PA-anlægget?",
@@ -594,8 +594,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "How powerful a speaker do I need for my party?",
       a:
         "Up to 30 guests, the Mackie Thump GO or the small speaker package is enough. For 30-50 guests take the " +
-        "Soundboks 4 or the medium speaker package. If you are more, Party package 150 (" + prisKr("pakke_fest_150") + ") and Party package 250 " +
-        "(" + prisKr("pakke_fest_250") + ") bring a subwoofer and stands with them. The guest numbers are for indoor use — outdoors the sound " +
+        "Soundboks 4 or the medium speaker package. If you are more, Party package 50-100 (" + prisKr("pakke_fest_100") + ") " +
+        "brings a subwoofer and two light bars with it. The guest numbers are for indoor use — outdoors the sound " +
         "carries less far.",
     },
     {

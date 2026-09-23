@@ -12,6 +12,8 @@ import {
   LYDMAND_PAKKER,
   OCCASION_PACKAGES,
   SPEAKERPAKKER,
+  erForespoergsel,
+  udgaaetPakke,
   addons,
   bundleListPrice,
   isBundleProduct,
@@ -100,6 +102,23 @@ describe("Pakkestigen", () => {
       const p = findProdukt(id);
       expect(p, `${anledning} peger på ${id}, som ikke findes`).toBeTruthy();
       expect(isBundleProduct(p!), `${anledning} anbefaler ${id}, som ikke er en pakke`).toBe(true);
+    }
+  });
+
+  /**
+   * Anledningssidens store knap hedder "Book <pakken>, <pris>" og fører til
+   * /?product=<id>. Er pakken udgået eller en forespørgselsvare, er knappen en
+   * blindgyde: prisen kan ikke slås op hos kunden, og serveren afviser
+   * betalingen. Det skete for fem sider, da 25 pakker blev skjult 22. sept
+   * 2026 — bryllup, havefest, polterabend, studenterkørsel og ungdomsfest
+   * anbefalede alle en pakke, der ikke længere kunne bookes.
+   */
+  it("anledningens pakke kan rent faktisk bookes", () => {
+    for (const [anledning, id] of Object.entries(OCCASION_PACKAGES)) {
+      const p = findProdukt(id)!;
+      expect(p.hidden, `${anledning} anbefaler ${id}, som er skjult`).toBeFalsy();
+      expect(udgaaetPakke(id), `${anledning} anbefaler ${id}, som er udgået`).toBeUndefined();
+      expect(erForespoergsel(id), `${anledning} anbefaler ${id}, som kun kan forespørges`).toBe(false);
     }
   });
 

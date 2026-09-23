@@ -171,8 +171,6 @@ export const KATALOG_AFSNIT: KatalogAfsnit[] = [
           "pakke_fest_lille",
           "pakke_fest_stor",
           "pakke_fest_100",
-          "pakke_fest_150",
-          "pakke_fest_250",
           "pakke_soundboks_lille",
           "pakke_soundboks_lys",
         ],

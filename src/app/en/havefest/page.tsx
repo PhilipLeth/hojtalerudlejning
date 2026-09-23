@@ -37,9 +37,9 @@ export default function Page() {
       headline={"Sound for a garden party"}
       headlinePriceId="pakke_fest_lille"
       intro={"Music in the garden without upsetting the neighbours. We help you pick the right system for the distance, the number of guests, and whether there is any power out there at all."}
-      primaryProductId="pakke_udendors"
-      primaryName={"outdoor package"}
-      primaryWhy={"There is rarely a socket in the garden. The Soundboks 4 runs on battery, the spare battery keeps the party going past midnight, and the fairy lights give you light once the sun is down."}
+      primaryProductId="pakke_soundboks_lys"
+      primaryName={"large Soundboks package"}
+      primaryWhy={"There is rarely a socket in the garden. The Soundboks 4 runs on battery, and the light bar gives the garden colour once the sun is down. Add a spare battery and fairy lights when you book."}
       gridItems={[{ id: "pakke_udendors", tag: "Recommended" }, { id: "pakke_fest_lille" }, { id: "thumpgo" }, { id: "lyskaeder" }, { id: "lyskaeder_farvet" }]}
       tips={[
         { title: "Two speakers beat one big one", text: "Outdoors there are no walls to bounce the sound back. Two speakers spread across the garden give even sound at a lower volume, and therefore fewer complaints." },

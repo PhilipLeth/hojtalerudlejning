@@ -46,9 +46,9 @@ export default function Page() {
       headline={"A speaker for the graduation truck"}
       headlinePriceId="soundboks"
       intro={"Music that carries over the engine and 30 singing students. Battery-powered, so it only has to be strapped to the truck."}
-      primaryProductId="pakke_student"
-      primaryName={"graduation package"}
-      primaryWhy={"There is no power on the flatbed, and the speaker gets lifted on and off all day. Two batteries last from morning to the last address, and the padded bag is what gets the Soundboks through the trip."}
+      primaryProductId="pakke_soundboks_lys"
+      primaryName={"large Soundboks package"}
+      primaryWhy={"There is no power on the flatbed. The Soundboks 4 runs on battery all day and is loud enough to beat the wind on the motorway. Add a spare battery for the long routes when you book."}
       gridItems={[{ id: "pakke_student", tag: "Recommended" }, { id: "soundboks" }, { id: "thumpgo" }, { id: "batteri" }, { id: "mikrofon" }]}
       tips={[
         { title: "Strap it down properly", text: "The Soundboks has to be lashed to the truck with straps, it weighs 11 kg and must not be able to slide under braking. We are happy to lend you straps." },

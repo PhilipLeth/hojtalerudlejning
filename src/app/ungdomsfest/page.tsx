@@ -30,9 +30,9 @@ export default function Page() {
       headline={"Lyd og lys til ungdomsfest"}
       headlinePriceId="pakke_ungdomsfest"
       intro={"En ungdomsfest er lyd, der kan mærkes, og lys, der gør kælderen til en klub. Vi udlejer det samlet i to pakker, den lille kører på batteri, den store fylder et forsamlingshus. Forældre booker, de unge godkender."}
-      primaryProductId="pakke_ungdomsfest"
-      primaryName={"Ungdomsfest-pakken"}
-      primaryWhy={"Soundboks 4 spiller højt nok til 50 gæster og kører på batteri, så den kan stå hvor som helst. Diskolyseffekten og discokuglen laver dansegulvet, sluk loftslyset, og rummet er et andet. Sat op på ti minutter, uden en tekniker."}
+      primaryProductId="pakke_fest_stor"
+      primaryName={"Festpakke 30-50"}
+      primaryWhy={"To 12\" EV-højtalere spiller højt nok til 50 gæster uden at blive skingre, og lysbaren laver dansegulvet: sluk loftslyset, og rummet er et andet. Sat op på ti minutter, uden en tekniker."}
       gridItems={[{ id: "pakke_ungdomsfest", tag: "Anbefalet" }, { id: "pakke_ungdomsfest_stor", tag: "Til 100 gæster" }, { id: "pakke_teenagefest" }, { id: "soundboks" }, { id: "rog" }, { id: "discokugle" }]}
       tips={[
         { title: "Sluk loftslyset, det er hele tricket", text: "Diskolys virker kun i et mørkt rum. Ét LED-par-lys og en discokugle med spot er nok til at forvandle en kælder, hvis loftslyset er slukket. I et oplyst rum ser det samme grej ud af ingenting." },
@@ -49,7 +49,7 @@ export default function Page() {
       ]}
       related={[
         { href: "/festpakke-stor", label: "Festpakke 30-50", priceId: "pakke_fest_stor" },
-        { href: "/festpakke-150", label: "Festpakke 150", priceId: "pakke_fest_150" },
+        { href: "/festpakke-100", label: "Festpakke 50-100", priceId: "pakke_fest_100" },
         { href: "/lyspakker", label: "Lyspakker, kun lys", priceId: "pakke_festlys_50" },
         { href: "/foedselsdag", label: "Lyd til fødselsdag" },
         { href: "/studenterkoersel", label: "Lyd til studenterkørsel" },

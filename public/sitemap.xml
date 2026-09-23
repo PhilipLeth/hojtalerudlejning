@@ -361,6 +361,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/en/festpakke-100</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en/festpakke-150</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -853,6 +858,11 @@
   <url>
     <loc>https://lejhojtaler.dk/festlys</loc>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/festpakke-100</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>

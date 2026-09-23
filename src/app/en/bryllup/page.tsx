@@ -38,9 +38,9 @@ export default function Page() {
       headline={"Sound for your wedding"}
       headlinePriceId="pakke_fest_stor"
       intro={"Speeches everyone can hear, and a dancefloor that holds up well past midnight. We deliver and set it up, so you can concentrate on the day."}
-      primaryProductId="pakke_bryllup"
-      primaryName={"wedding package"}
-      primaryWhy={"The day has two halves, and the package covers both: a wireless microphone so the speeches reach the back table during dinner, and lighting, fairy lights and low fog once the tables are cleared. Two 12\" EV speakers on stands handle up to 100 guests."}
+      primaryProductId="pakke_elegant"
+      primaryName={"elegant party package"}
+      primaryWhy={"The day has two halves, and the package covers both: two 12\" EV speakers carry the speeches to the back table during dinner, and the mirror ball takes over once the tables are cleared. Add a wireless microphone and uplights when you book."}
       gridItems={[{ id: "pakke_bryllup", tag: "Recommended" }, { id: "pakke_fest_stor" }, { id: "traadloes_mikrofon_pro" }, { id: "lyskaeder" }, { id: "low_fog" }]}
       tips={[
         { title: "Two microphones is peace of mind", text: "One microphone is enough for dinner speeches, but a second one means the next speaker can get ready while the previous one is still talking, and you have a spare if a battery dies." },

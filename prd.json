@@ -4287,5 +4287,18 @@
       "mangler": "Slushicemaskinen og fadølsanlægget står ikke i arket og har derfor intet leverandørlink. Frederik sætter linket ind fra den shop, han vil skaffe dem hos, og trykker på knappen — så er de med.",
       "ikke_gjort_i_denne_session": "Selve genereringen. Sandkassen har ingen GEMINI_API_KEY, og proxyen afviser jemogfix.dk, thomann.dk og hifiklubben.dk med 403. Pipelinen er bygget og testet (12 tests), men billederne skal laves fra admin eller fra en maskine med nøgle og netadgang."
     }
+  },
+  "store_festpakker_ud_2026_09_23": {
+    "beslutning": "Philip: 'Du må gerne fjerne de store pakker.' Festpakke 150 og 250 står ikke i det nye prisark — de var vores egne, sat sammen af dobbelte højtalerpakker og subs. Arkets afsnit 3 stopper ved Festpakke 50-100.",
+    "udgaaet": "pakke_fest_150 → /festpakke-100, pakke_fest_250 → /erhverv. Samme mekanik som de 25 andre: skjult i kataloget, afvist af serverens pristabel, annoncerne lukket gennem PAUSEDE_SIDER, og siden bliver liggende og siger 'Denne pakke udgår' med et link til afløseren.",
+    "ny_side": "/festpakke-100 og /en/festpakke-100. Arkets Festpakke 50-100 (1.920 kr) var den største, man kunne booke online, og den havde ingen side. Nu er den øverste trin på feststigen med en pris på.",
+    "stigen": "LADDER_FEST er nu 0-30, 30-50, 50-100 og 'Over 100 gæster' som tilbud. Før sprang den fra 50 til 150 og sluttede ved 250.",
+    "fejl_fundet": {
+      "hvad": "Fem anledningssider anbefalede stadig en pakke, der blev skjult 22. september: /bryllup (Bryllupspakken), /havefest og /polterabend (Udendørspakken), /studenterkoersel (Studenterpakken) og /ungdomsfest (Ungdomsfest-pakken).",
+      "konsekvens": "OccasionLanding bygger sidens store knap af primaryProductId: 'Book <pakken>, <pris>' med et link til /?product=<id>. Med pakken skjult kunne prisen ikke slås op hos kunden, og serveren ville afvise betalingen. En blindgyde på fem sider.",
+      "rettet": "OCCASION_PACKAGES peger nu på pakker fra arket: bryllup → Elegant festpakke, havefest og studenterkørsel → Stor soundboks pakke, polterabend → Lille soundboks pakke, ungdomsfest → Festpakke 30-50, nytår → Festpakke 50-100. Teksterne på siderne er skrevet om, så de beskriver den pakke, der nu anbefales — på begge sprog.",
+      "vagt": "Ny test i pakkestige.test.ts: 'anledningens pakke kan rent faktisk bookes'. Den fejler, hvis en anledning kommer til at pege på noget skjult, udgået eller en forespørgselsvare."
+    },
+    "ikke_redirects": "Ingen 301'er. Siderne er ikke slettet, så der er ingen døde URL'er — og et redirect fra en side, der findes som statisk fil, er ikke til at regne med på Pages. 'Denne pakke udgår' med et link til afløseren holder bedre på placeringen end et 301 fra en side, der rangerer."
   }
 }

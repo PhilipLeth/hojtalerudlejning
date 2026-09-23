@@ -40,7 +40,7 @@ export default function Page() {
       primaryProductId="pakke_fest_stor"
       primaryName={"large party package"}
       primaryWhy={"Two 12\" EV speakers on stands fill a living room or a venue without turning shrill, and the light bar puts a difference between the dinner and the party afterwards. Enough for up to 100 guests."}
-      gridItems={[{ id: "pakke_fest_stor", tag: "Recommended" }, { id: "pakke_fest_lille" }, { id: "thumpgo", tag: "The small birthday" }, { id: "mikrofon" }, { id: "discokugle" }, { id: "pakke_fest_150", tag: "100-150 guests" }]}
+      gridItems={[{ id: "pakke_fest_stor", tag: "Recommended" }, { id: "pakke_fest_lille" }, { id: "thumpgo", tag: "The small birthday" }, { id: "mikrofon" }, { id: "discokugle" }, { id: "pakke_fest_100", tag: "50-100 guests" }]}
       tips={[
         { title: "The small birthday: a battery-powered Mackie", text: "If you only need music for cake and presents, a Mackie Thump GO is enough. It is " + prisDkk("thumpgo") + ", runs on battery for hours and sits on the table or comes out into the garden. No mains, no cables, no setup." },
         { title: "For the milestone ones: bring a microphone", text: "50th and 60th birthdays are speech parties. A wireless microphone makes sure every speech is heard, including the one where the voice goes thin." },

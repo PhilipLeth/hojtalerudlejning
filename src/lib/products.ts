@@ -974,6 +974,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_fest_100",
+    page: "/festpakke-100",
     category: "lyd",
     image: "/images/product-festival-bas-v2-white.webp",
     showPartImages: true,
@@ -1292,6 +1293,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   // skal med i prisen på sigt, og hvad der mangler i flowet før det kan lade sig gøre.
   {
     id: "pakke_fest_150",
+    hidden: true,
     page: "/festpakke-150",
     youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0",
     category: "lyd",
@@ -1316,6 +1318,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   },
   {
     id: "pakke_fest_250",
+    hidden: true,
     page: "/festpakke-250",
     youtubeUrl: "https://www.youtube.com/watch?v=h1nMZO7giU0",
     category: "lyd",
@@ -2168,14 +2171,12 @@ export const KATEGORI_PAKKER: Record<string, string[]> = {
   "/lej-hojtaler": [
     "pakke_fest_lille",
     "pakke_fest_stor",
-    "pakke_fest_150",
-    "pakke_fest_250",
+    "pakke_fest_100",
     "halloween_lys",
     "halloween_lille",
     "halloween_stor",
     "jul_hygge",
     "pakke_elegant",
-    "pakke_fest_100",
     "pakke_soundboks_lille",
     "pakke_soundboks_lys",
     "pakke_firmafest",
@@ -2246,6 +2247,11 @@ export const POPULAERE_IDS = [
  * Værdien er afløseren: siden man skal hen på i stedet.
  */
 export const UDGAAEDE_PAKKER: Record<string, string> = {
+  // Arkets afsnit 3 stopper ved Festpakke 50-100. Over hundrede gæster er et
+  // tilbud, ikke en hyldevare: 150 og 250 var vores egne, sat sammen af
+  // dobbelte højtalerpakker og subs, og ingen af dem står i arket.
+  pakke_fest_150: "/festpakke-100",
+  pakke_fest_250: "/erhverv",
   pakke_bryllup: "/bryllup",
   pakke_udendors: "/havefest",
   pakke_student: "/studenterkoersel",
@@ -2293,7 +2299,7 @@ export function udgaaetPakke(productId: string): string | undefined {
 }
 
 /** Lejlighedspakkerne, vises under stigen på /lej-hojtaler */
-export const LYD_LEJLIGHEDSPAKKER = ["halloween_lys", "halloween_lille", "halloween_stor", "jul_hygge", "pakke_elegant", "pakke_fest_100", "pakke_soundboks_lille", "pakke_soundboks_lys", "pakke_firmafest"];
+export const LYD_LEJLIGHEDSPAKKER = ["halloween_lys", "halloween_lille", "halloween_stor", "jul_hygge", "pakke_elegant", "pakke_soundboks_lille", "pakke_soundboks_lys", "pakke_firmafest"];
 
 /**
  * Lydmanden er en time i arkets checkout, ikke tre pakker.
@@ -2364,14 +2370,14 @@ export interface LadderStep {
  * siden rent faktisk bruger den.
  */
 export const OCCASION_PACKAGES: Record<string, string> = {
-  bryllup: "pakke_bryllup",
-  havefest: "pakke_udendors",
-  polterabend: "pakke_udendors",
-  studenterkoersel: "pakke_student",
+  bryllup: "pakke_elegant",
+  havefest: "pakke_soundboks_lys",
+  polterabend: "pakke_soundboks_lille",
+  studenterkoersel: "pakke_soundboks_lys",
   foedselsdag: "pakke_fest_stor",
   konfirmation: "pakke_fest_stor",
-  ungdomsfest: "pakke_ungdomsfest",
-  nytaar: "pakke_fest_150",
+  ungdomsfest: "pakke_fest_stor",
+  nytaar: "pakke_fest_100",
 };
 
 /**
@@ -2409,9 +2415,8 @@ export const LYD_LADDER_IDS: string[] = LADDER_LYD.map((t) => t.productId).filte
 export const LADDER_FEST: LadderStep[] = [
   { productId: "pakke_fest_lille", navn: "Festpakke 0-30", navn_en: "Party package 0-30", gaester: "op til 30", gaester_en: "up to 30", maxGaester: 30, href: "/festpakke-lille", hvad: '2× 10" højtalere + lysbar', hvad_en: '2× 10" speakers + light bar', koersel: "tilvalg" },
   { productId: "pakke_fest_stor", navn: "Festpakke 30-50", navn_en: "Party package 30-50", gaester: "30-50", gaester_en: "30-50", maxGaester: 50, href: "/festpakke-stor", hvad: '2× 12" højtalere + lysbar', hvad_en: '2× 12" speakers + light bar', koersel: "tilvalg" },
-  { productId: "pakke_fest_150", navn: "Festpakke 150", navn_en: "Party package 150", gaester: "50-150", gaester_en: "50-150", maxGaester: 150, href: "/festpakke-150", hvad: '2× 12" + sub + stativer + lys + røg', hvad_en: '2× 12" + sub + stands + lights + fog', koersel: "anbefalet" },
-  { productId: "pakke_fest_250", navn: "Festpakke 250", navn_en: "Party package 250", gaester: "150-250", gaester_en: "150-250", maxGaester: 250, href: "/festpakke-250", hvad: '4× 12" + 2 subs + stativer + lys + røg', hvad_en: '4× 12" + 2 subs + stands + lights + fog', koersel: "anbefalet" },
-  { productId: null, navn: "Over 250 gæster", navn_en: "More than 250 guests", gaester: "250+", gaester_en: "250+", maxGaester: 9999, href: "/erhverv#tilbud", hvad: "Større tops og subs skaffes, tekniker med på dagen", hvad_en: "We source larger tops and subs, a technician comes on the day", koersel: "tilbud" },
+  { productId: "pakke_fest_100", navn: "Festpakke 50-100", navn_en: "Party package 50-100", gaester: "50-100", gaester_en: "50-100", maxGaester: 100, href: "/festpakke-100", hvad: '2× 12" + sub + to lysbarer', hvad_en: '2× 12" + sub + two light bars', koersel: "anbefalet" },
+  { productId: null, navn: "Over 100 gæster", navn_en: "More than 100 guests", gaester: "100+", gaester_en: "100+", maxGaester: 9999, href: "/erhverv#tilbud", hvad: "Større tops og subs skaffes, tekniker med på dagen", hvad_en: "We source larger tops and subs, a technician comes on the day", koersel: "tilbud" },
 ];
 
 /** Pakkerne fra feststigen, i rækkefølge, det forsiden viser. Lejlighedspakkerne

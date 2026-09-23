@@ -38,9 +38,9 @@ export default function Page() {
       headline={"Sound and lights for a youth party"}
       headlinePriceId="pakke_ungdomsfest"
       intro={"A youth party is sound you can feel and lights that turn the basement into a club. We rent it as two packages, the small one runs on battery, the large one fills a hall. Parents book, the young ones approve."}
-      primaryProductId="pakke_ungdomsfest"
-      primaryName={"youth party package"}
-      primaryWhy={"The Soundboks 4 is loud enough for 50 guests and runs on battery, so it can stand anywhere. The disco light effect and the mirror ball make the dancefloor, kill the ceiling light and it is a different room. Set up in ten minutes, no technician."}
+      primaryProductId="pakke_fest_stor"
+      primaryName={"party package 30-50"}
+      primaryWhy={"Two 12\" EV speakers are loud enough for 50 guests without turning shrill, and the light bar makes the dancefloor: kill the ceiling light and it is a different room. Set up in ten minutes, no technician."}
       gridItems={[{ id: "pakke_ungdomsfest", tag: "Recommended" }, { id: "pakke_ungdomsfest_stor", tag: "For 100 guests" }, { id: "pakke_teenagefest" }, { id: "soundboks" }, { id: "rog" }, { id: "discokugle" }]}
       tips={[
         { title: "Turn off the ceiling light, that is the whole trick", text: "Disco lights only work in a dark room. One LED par light and a mirror ball with a spotlight are enough to transform a basement if the ceiling light is off. In a lit room the same gear looks like nothing." },
@@ -57,7 +57,7 @@ export default function Page() {
       ]}
       related={[
         { href: "/festpakke-stor", label: "Party package 30-50", priceId: "pakke_fest_stor" },
-        { href: "/festpakke-150", label: "Party package 150", priceId: "pakke_fest_150" },
+        { href: "/festpakke-100", label: "Party package 50-100", priceId: "pakke_fest_100" },
         { href: "/lyspakker", label: "Party lights, lights only", priceId: "pakke_festlys_50" },
         { href: "/foedselsdag", label: "Sound for a birthday" },
         { href: "/festlys", label: "All about party lights" },
