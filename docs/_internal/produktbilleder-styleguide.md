@@ -39,6 +39,48 @@ De hentede leverandørfotos caches i `gallery/ref/`, som er gitignoreret.
 
 Nye filer får nye URLer, så gamle fotos ikke bliver liggende i kundens browsercache. `src/lib/whiteProductImages.ts` oversætter kendte gamle katalogbilleder; nyere adminuploads bevares.
 
+## Når der heller ikke er et leverandørfoto (23. september 2026)
+
+`generate.mjs` nægter at køre uden mindst én reference. Det er rigtigt for en
+højtaler: uden et foto af netop den model bliver resultatet en opdigtet kasse
+med et volapyk-logo på grillen.
+
+Men reglen spærrede også for de varer, hvor der ikke ER noget at digte. En hvid
+firevejs stikdåse er en hvid firevejs stikdåse, og leverandørens side kunne
+ikke hentes herfra — netværket afviser jemogfix.dk. Derfor `fra-beskrivelse.mjs`:
+husstilen som fast ramme, formen som fri tekst.
+
+```
+node scripts/product-images/fra-beskrivelse.mjs                    # plan + estimat
+node scripts/product-images/fra-beskrivelse.mjs --apply
+node scripts/product-images/fra-beskrivelse.mjs --apply --only slushice --force
+```
+
+Motiverne står i `OPGAVER` øverst i scriptet, ét pr. produkt-id. Råfilerne
+lander i `gallery/raw/katalogfoto/`, WebP'en i `public/images/`, og stien skal
+sættes i `image` i `src/lib/products.ts` bagefter — scriptet rører ikke
+katalogget.
+
+**Hvornår det er det rigtige værktøj:** hyldevarer uden mærke — kabeltromler,
+stikdåser, omformere — og skaffevarer, vi ikke selv ejer, hvor det er formen og
+ikke producenten, kunden skal kunne genkende. **Hvornår det ikke er:** alt vi
+ejer og udlejer som en bestemt model. Der tager vi et foto eller bruger
+`generate.mjs` med en reference.
+
+To ting skulle rettes i prompten, før den blev brugelig, og de står der stadig
+af en grund:
+
+- **Ingen studieudstyr i billedet.** Første forsøg havde softboksene med, som om
+  kameraet var trukket et skridt for langt tilbage. Stilen siger nu eksplicit
+  nej til softbokse, lyspaneler, reflekser, stativer, baggrundskanter og
+  bordkant.
+- **Danske stik.** Modellen tegner britiske trebenede stik, hvis man ikke siger
+  fra. Hvert motiv med en stikkontakt beskriver derfor den danske type —
+  rund fordybning med to runde huller — og forbyder den britiske udtrykkeligt.
+
+Hver fil er set efter i fuld størrelse, før stien kom i katalogget. Det tager et
+minut og fanger netop den slags.
+
 ## Historisk stil (afløst)
 
 # Produktbilleder — Style Guide
