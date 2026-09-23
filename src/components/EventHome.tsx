@@ -183,9 +183,9 @@ export default function EventHome({locale = "da", detail = false, cases = false}
   return <main className={styles.page} lang={locale}>
     <section className={`${styles.hero} ${styles.shopHero}`}>
       <div className={styles.heroCopy}>
-        <p className={styles.location}>{en ? "Sound, light & AV rental in Copenhagen" : "Lyd, lys & AV-udlejning i København"}</p>
-        <h1>{en ? "Book sound, light and AV in 2 minutes" : "Book lyd, lys og AV på 2 minutter"}</h1>
-        <p className={styles.lead}>{en ? "Compare packages, see prices straight away and book online — for meetings, parties and everything in between." : "Sammenlign pakker, se priser med det samme og book online — til møder, fester og alt derimellem."}</p>
+        <p className={styles.location}>{en ? "Party equipment rental in Copenhagen" : "Udlejning af festudstyr i København"}</p>
+        <h1>{en ? "Rent sound, light and party equipment in 2 minutes" : "Lej lyd, lys og festudstyr på 2 minutter"}</h1>
+        <p className={styles.lead}>{en ? "Equipment for parties, meetings and events: compare packages, see the price straight away and book online." : "Udstyr til fest, møde og event: sammenlign pakker, se prisen med det samme og book online."}</p>
         <div className={styles.actions}>
           <Link className={styles.primary} href={href("/eventloesninger")}>{en ? "See packages by occasion" : "Se pakker til anledninger"}</Link>
           <Link className={styles.textLink} href={href("/av-udstyr")}>{en ? "Hire individual products" : "Lej enkeltprodukter"} →</Link>
@@ -199,7 +199,7 @@ export default function EventHome({locale = "da", detail = false, cases = false}
     <section className={styles.section} id="shop-pakker">
       <div className={styles.sectionHead}>
         <h2>{en ? "The ten we hire out most" : "De ti vi lejer mest ud"}</h2>
-        <p>{en ? "Packages and single products side by side. Every price is for up to five days, VAT included." : "Pakker og enkeltprodukter side om side. Alle priser er for op til fem dages leje, inklusive moms."}</p>
+        <p>{en ? "The party equipment people book most often, packages and single products side by side. Every price is for up to five days, VAT included." : "Det festudstyr der bliver lejet oftest, pakker og enkeltprodukter side om side. Alle priser er for op til fem dages leje, inklusive moms."}</p>
       </div>
       <CategoryProductGrid locale={locale} tone="light" cols={4} items={POPULAERE_IDS.map((id) => ({ id }))} />
       <div className={styles.rangeLinks}>
@@ -208,6 +208,10 @@ export default function EventHome({locale = "da", detail = false, cases = false}
       </div>
     </section>
     <SeasonalStrip locale={locale} />
+    <FaqSection
+      items={CATEGORY_FAQ[en ? "en-forside" : "forside"]}
+      title={en ? "Before you book party equipment" : "Inden du lejer festudstyr"}
+    />
     <GoogleReviews locale={locale} />
     <LocalBusinessJsonLd extra={{ description: en ? "Sound, light and AV for events in Copenhagen" : "Lyd, lys og AV til events i København" }} />
     <Footer locale={locale} />

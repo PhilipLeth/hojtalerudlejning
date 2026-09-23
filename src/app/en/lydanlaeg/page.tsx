@@ -116,7 +116,7 @@ export default function Page() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       <section className="relative px-4 pb-10 pt-24 text-center">
-        <p className="mb-3 text-sm font-medium uppercase tracking-widest text-brand-400">Copenhagen · Sound for events</p>
+        <p className="mb-3 text-sm font-medium uppercase tracking-widest text-brand-400">Sound system rental in Copenhagen</p>
         <h1 className="mx-auto max-w-3xl text-4xl font-bold sm:text-5xl">
           Choose a system by how many are coming
         </h1>

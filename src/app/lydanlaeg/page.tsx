@@ -12,7 +12,7 @@ import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Lydanlæg til leje, anlæg efter antal gæster | Fra ${prisKr("party")} | Lejhøjtaler.dk`,
   description:
-    `Lej lydanlæg i København efter hvor mange gæster der kommer: op til 30, 30-50 eller 50-100 personer. Højtalere, subwoofer og alle kabler, fra ${prisKr("party")} pr. weekend. Mikrofon og lys kan tilvælges.`,
+    `Lydudlejning i København efter hvor mange gæster der kommer: op til 30, 30-50 eller 50-100 personer. Lej lydanlæg, musikanlæg og PA-anlæg med højtalere, subwoofer og alle kabler, fra ${prisKr("party")} pr. weekend. Mikrofon og lys kan tilvælges.`,
   keywords: [
     "lej lydanlæg",
     "lydanlæg til fest",
@@ -113,7 +113,7 @@ export default function LydanlaegPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       <section className="relative px-4 pb-10 pt-24 text-center">
-        <p className="mb-3 text-sm font-medium uppercase tracking-widest text-brand-400">København · Lyd til events</p>
+        <p className="mb-3 text-sm font-medium uppercase tracking-widest text-brand-400">Lydudlejning i København</p>
         <h1 className="mx-auto max-w-3xl text-4xl font-bold sm:text-5xl">
           Vælg anlæg efter hvor mange der kommer
         </h1>
@@ -127,7 +127,8 @@ export default function LydanlaegPage() {
         <h2 className="mb-2 text-2xl font-bold">Anlægget</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">
           Højtalere, subwoofer fra 50 gæster, og alle kabler. Det er lyden alene, så du kan vælge lys til eller lade
-          det være.
+          det være. Samme musikanlæg uanset om det skal spille til en firmafest eller en fødselsdag — det er
+          gæstetallet, der afgør størrelsen, ikke anledningen.
         </p>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {LADDER_LYD.map((step) => (
