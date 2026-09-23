@@ -71,7 +71,7 @@ export default function LejHojtalerPage() {
       />
 
       {/* Hero */}
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+      <section className="relative flex min-h-[56vh] sm:min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-55"
           style={{ backgroundImage: "url(/images/hero.webp)" }}
@@ -152,7 +152,7 @@ export default function LejHojtalerPage() {
         <SpeakerCompare bookLinks="booking" />
 
         {/* USP section */}
-        <section className="mx-auto max-w-4xl px-4 pb-24">
+        <section className="mx-auto max-w-4xl px-4 pb-12 sm:pb-24">
           <h2 className="mb-12 text-center text-3xl font-bold sm:text-4xl">
             Alt er inkluderet
           </h2>
@@ -194,7 +194,7 @@ export default function LejHojtalerPage() {
         </section>
 
         {/* Cross-sell */}
-        <section className="mx-auto max-w-3xl px-4 pb-24">
+        <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">
               Tilføj lys eller røg til din fest
@@ -225,7 +225,7 @@ export default function LejHojtalerPage() {
         <GoogleReviews />
 
         {/* Final CTA */}
-        <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
+        <section className="mx-auto max-w-2xl px-4 pb-12 sm:pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">
             Klar til at leje højtalere?
           </h2>

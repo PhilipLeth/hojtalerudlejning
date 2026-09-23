@@ -48,7 +48,7 @@ export default function HowItWorks({ locale = "da" }: { locale?: Locale }) {
     text: step.text.replaceAll("ADRESSE", pickupAddress),
   }));
   return (
-    <section id="about" className="relative z-20 mx-auto max-w-4xl px-4 py-24">
+    <section id="about" className="relative z-20 mx-auto max-w-4xl px-4 py-12 sm:py-24">
       <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
         {s.title}
       </h2>

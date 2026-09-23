@@ -124,6 +124,37 @@ function mergeSpeakers(fromKv: Speaker[]): Speaker[] {
 }
 
 let cached: CatalogResponse | null = null;
+let inflight: Promise<CatalogResponse> | null = null;
+
+/**
+ * Ét kald til /api/products pr. sideindlæsning, uanset hvor mange komponenter
+ * der spørger.
+ *
+ * 22 komponenter bruger useProducts(). De mounter i samme tick, og med kun en
+ * `cached`-variabel så de alle sammen null og hentede hver for sig: ti kald til
+ * det samme endpoint på /festlys, fem på /lyskaeder. Priserne på siden venter
+ * på det svar, så det er ikke bare spildt trafik — det er ti gange rundtur,
+ * før kortene står rigtigt.
+ *
+ * useSiteSettings har haft den her `inflight` hele tiden; useProducts manglede den.
+ */
+function loadCatalog(): Promise<CatalogResponse> {
+  if (cached) return Promise.resolve(cached);
+  if (!inflight) {
+    inflight = fetch("/api/products")
+      .then((r) => r.json())
+      .then((data: CatalogResponse) => {
+        cached = data;
+        return data;
+      })
+      .catch((err) => {
+        // Lad en senere mount prøve igen i stedet for at arve fejlen
+        inflight = null;
+        throw err;
+      });
+  }
+  return inflight;
+}
 
 /**
  * Live product catalog: starts with the hardcoded defaults (so SSG/first
@@ -159,17 +190,8 @@ export function useProducts(): Catalog {
       setCatalog({ speakers, addons, rentalProducts: pricedRentals, startPrice: cheapestSpeakerPrice(speakers) });
     };
 
-    if (cached) {
-      apply(cached);
-      return;
-    }
-
-    fetch("/api/products")
-      .then((r) => r.json())
-      .then((data: CatalogResponse) => {
-        cached = data;
-        apply(data);
-      })
+    loadCatalog()
+      .then(apply)
       .catch(() => {
         // Keep defaults on failure
       });

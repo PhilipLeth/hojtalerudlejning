@@ -14,6 +14,23 @@ const corsHeaders = {
   "Content-Type": "application/json",
 };
 
+/**
+ * Kataloget må gerne ligge et minut i browserens cache.
+ *
+ * Svaret blev sendt med no-store, så hver eneste sidevisning hentede det
+ * forfra — og kortenes priser venter på det. En kunde, der klikker rundt
+ * mellem fem sider, betalte fem rundture for et svar, der næsten altid er
+ * det samme.
+ *
+ * Et minut er valgt, så en adminrettelse stadig slår igennem med det samme,
+ * kunden oplever det: stale-while-revalidate lader den næste besøgende få det
+ * gamle svar med det samme og henter det nye i baggrunden.
+ *
+ * Priserne er ikke i fare ved et forældet svar: serveren regner ALTID beløbet
+ * ud af kataloget ved checkout, aldrig af det klienten sender.
+ */
+const CACHE = "public, max-age=60, stale-while-revalidate=300";
+
 export const onRequestOptions: PagesFunction<Env> = async () => {
   return new Response(null, { status: 204, headers: corsHeaders });
 };
@@ -26,10 +43,10 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     if (!raw) {
       return new Response(JSON.stringify({ speakers: null, addons: null, rentalProducts: null }), {
         status: 200,
-        headers: corsHeaders,
+        headers: { ...corsHeaders, "Cache-Control": CACHE },
       });
     }
-    return new Response(raw, { status: 200, headers: corsHeaders });
+    return new Response(raw, { status: 200, headers: { ...corsHeaders, "Cache-Control": CACHE } });
   } catch (e) {
     console.error("Products GET error:", e);
     return new Response(JSON.stringify({ error: "Failed to load products" }), {

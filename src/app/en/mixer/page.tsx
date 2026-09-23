@@ -80,7 +80,7 @@ export default function Page() {
         {/* Valget står ikke på kanaler, det står på om der bliver sunget */}
         <MixerRange locale="en" />
 
-        <section className="mx-auto max-w-3xl px-4 pb-24">
+        <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Missing microphones or speakers?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">

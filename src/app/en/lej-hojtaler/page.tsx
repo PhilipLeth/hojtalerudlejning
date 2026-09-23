@@ -66,7 +66,7 @@ export default function Page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+      <section className="relative flex min-h-[56vh] sm:min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-55"
           style={{ backgroundImage: "url(/images/hero.webp)" }}
@@ -148,7 +148,7 @@ export default function Page() {
 
         <SpeakerCompare locale="en" bookLinks="booking" />
 
-        <section className="mx-auto max-w-4xl px-4 pb-24">
+        <section className="mx-auto max-w-4xl px-4 pb-12 sm:pb-24">
           <h2 className="mb-12 text-center text-3xl font-bold sm:text-4xl">Everything is included</h2>
           <div className="grid gap-6 sm:grid-cols-3">
             <div className="glass rounded-2xl p-6 text-center">
@@ -187,7 +187,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-3xl px-4 pb-24">
+        <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Add lights or fog to the party</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
@@ -214,7 +214,7 @@ export default function Page() {
 
         <GoogleReviews locale="en" />
 
-        <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
+        <section className="mx-auto max-w-2xl px-4 pb-12 sm:pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Ready to rent speakers?</h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
             Book online in 2 minutes. Collect on Friday in Copenhagen S, return Monday.{" "}

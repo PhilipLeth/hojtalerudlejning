@@ -305,7 +305,7 @@ export default function ProductLanding({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
       />
 
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+      <section className="relative flex min-h-[56vh] sm:min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-55"
           style={{ backgroundImage: "url(/images/hero.webp)" }}
@@ -357,7 +357,7 @@ export default function ProductLanding({
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        <section className="mx-auto max-w-4xl px-4 py-24">
+        <section className="mx-auto max-w-4xl px-4 py-12 sm:py-24">
           <div className="grid items-center gap-8 sm:grid-cols-2">
             <div className="relative overflow-hidden rounded-2xl bg-[#0d0c12]">
               {dele.length > 0 ? (
@@ -462,7 +462,7 @@ export default function ProductLanding({
 
         <GoogleReviews />
 
-        <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
+        <section className="mx-auto max-w-2xl px-4 pb-12 sm:pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">{lukket ? (udgaaet ? c.udgaaetTitle : c.pausedTitle) : foresporg ? c.foresporgTitle : c.ctaTitle}</h2>
           {lukket ? (
             <>

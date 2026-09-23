@@ -68,7 +68,7 @@ export default function FestlydPage() {
       />
 
       {/* Hero */}
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+      <section className="relative flex min-h-[56vh] sm:min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-55"
           style={{ backgroundImage: "url(/images/hero.webp)" }}
@@ -114,7 +114,7 @@ export default function FestlydPage() {
         </section>
 
         {/* Scenario cards */}
-        <section className="mx-auto max-w-4xl px-4 py-24">
+        <section className="mx-auto max-w-4xl px-4 py-12 sm:py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
             Find den rigtige lyd til din fest
           </h2>
@@ -180,7 +180,7 @@ export default function FestlydPage() {
         </section>
 
         {/* Alt inkluderet checklist */}
-        <section className="mx-auto max-w-3xl px-4 pb-24">
+        <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">
           <div className="glass rounded-2xl p-8">
             <h2 className="mb-6 text-2xl font-bold text-white">
               Alt inkluderet – ingen overraskelser
@@ -224,7 +224,7 @@ export default function FestlydPage() {
         <GoogleReviews />
 
         {/* Final CTA */}
-        <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
+        <section className="mx-auto max-w-2xl px-4 pb-12 sm:pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">
             Klar til festlyd?
           </h2>

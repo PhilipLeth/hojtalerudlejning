@@ -214,7 +214,7 @@ export default function OccasionLanding({
         <GoogleReviews locale={locale} />
 
         {/* CTA + interne links */}
-        <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
+        <section className="mx-auto max-w-2xl px-4 pb-12 sm:pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">{c.ctaTitle}</h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">{c.ctaText}</p>
           <a

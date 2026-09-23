@@ -109,7 +109,7 @@ export default function RentalTermsEn() {
       </div>
 
       {/* Sections */}
-      <div className="mx-auto max-w-3xl px-4 pb-24 space-y-6">
+      <div className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24 space-y-6">
         {sections.map((section, i) => (
           <div key={i} className="glass rounded-2xl p-6 sm:p-8">
             <h2 className="text-xl font-semibold mb-4">{section.title}</h2>

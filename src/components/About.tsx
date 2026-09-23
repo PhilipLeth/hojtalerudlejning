@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <section id="om" className="relative z-20 mx-auto max-w-4xl px-4 py-24">
+    <section id="om" className="relative z-20 mx-auto max-w-4xl px-4 py-12 sm:py-24">
       {/* Main heading */}
       <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl md:text-5xl">
         Lej h&oslash;jtalere i K&oslash;benhavn{" "}
