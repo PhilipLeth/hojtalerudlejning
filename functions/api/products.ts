@@ -14,22 +14,23 @@ const corsHeaders = {
   "Content-Type": "application/json",
 };
 
-/**
- * Kataloget må gerne ligge et minut i browserens cache.
+/*
+ * Kataloget kan IKKE caches i browseren herfra.
  *
- * Svaret blev sendt med no-store, så hver eneste sidevisning hentede det
- * forfra — og kortenes priser venter på det. En kunde, der klikker rundt
- * mellem fem sider, betalte fem rundture for et svar, der næsten altid er
- * det samme.
+ * Forsøgt 23. sept 2026: sat Cache-Control til
+ * "public, max-age=60, stale-while-revalidate=300" på svaret. Cloudflare Pages
+ * overskriver headeren på Functions-svar og sender no-store uanset — den
+ * skriver også Content-Type om til text/html, selvom vi sætter
+ * application/json. At handleren kører, kan ses på CORS-headeren, som kommer
+ * igennem.
  *
- * Et minut er valgt, så en adminrettelse stadig slår igennem med det samme,
- * kunden oplever det: stale-while-revalidate lader den næste besøgende få det
- * gamle svar med det samme og henter det nye i baggrunden.
+ * Skal svaret cache'es, skal det ske med en Cache Rule i Cloudflare-dashboardet
+ * for /api/products, ikke i koden. Gevinsten er ét lille kald pr. sidevisning
+ * (svaret er 60 bytes, når KV er tomt), så det haster ikke.
  *
- * Priserne er ikke i fare ved et forældet svar: serveren regner ALTID beløbet
- * ud af kataloget ved checkout, aldrig af det klienten sender.
+ * useProducts() deler i forvejen ét kald mellem alle komponenter på siden —
+ * se katalog-et-kald.test.ts. Det var de ti kald, der betød noget.
  */
-const CACHE = "public, max-age=60, stale-while-revalidate=300";
 
 export const onRequestOptions: PagesFunction<Env> = async () => {
   return new Response(null, { status: 204, headers: corsHeaders });
@@ -43,10 +44,10 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     if (!raw) {
       return new Response(JSON.stringify({ speakers: null, addons: null, rentalProducts: null }), {
         status: 200,
-        headers: { ...corsHeaders, "Cache-Control": CACHE },
+        headers: corsHeaders,
       });
     }
-    return new Response(raw, { status: 200, headers: { ...corsHeaders, "Cache-Control": CACHE } });
+    return new Response(raw, { status: 200, headers: corsHeaders });
   } catch (e) {
     console.error("Products GET error:", e);
     return new Response(JSON.stringify({ error: "Failed to load products" }), {
