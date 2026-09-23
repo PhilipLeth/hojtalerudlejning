@@ -90,7 +90,7 @@ export default function RoegPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        <section id="produkter" className="mx-auto max-w-4xl px-4 py-24">
+        <section id="produkter" className="mx-auto max-w-4xl px-4 py-12 sm:py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
             Vælg din røgmaskine
           </h2>
@@ -104,7 +104,7 @@ export default function RoegPage() {
         </section>
 
         {/* Upsell */}
-        <section className="mx-auto max-w-3xl px-4 pb-24">
+        <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">
               Røg er bedst med lys og lyd

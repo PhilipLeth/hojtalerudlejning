@@ -62,7 +62,7 @@ export default function FAQ() {
 
   return (
     <>
-      <section id="faq" className="relative z-20 mx-auto max-w-4xl px-4 py-24">
+      <section id="faq" className="relative z-20 mx-auto max-w-4xl px-4 py-12 sm:py-24">
         <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
           Ofte stillede spørgsmål
         </h2>

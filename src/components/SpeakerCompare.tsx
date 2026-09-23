@@ -45,7 +45,7 @@ export default function SpeakerCompare({
   }, [speakers, c]);
 
   return (
-    <section id="anlaeg" className="relative z-20 mx-auto max-w-4xl px-4 py-24">
+    <section id="anlaeg" className="relative z-20 mx-auto max-w-4xl px-4 py-12 sm:py-24">
       <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">{c.title}</h2>
       <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">{c.subtitle}</p>
 

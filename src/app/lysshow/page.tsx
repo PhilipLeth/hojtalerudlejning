@@ -133,7 +133,7 @@ export default function LysshowPage() {
           />
         </section>
 
-        <section className="mx-auto max-w-3xl px-4 pb-24">
+        <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Skal der også være lyd?</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">

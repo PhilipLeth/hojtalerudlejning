@@ -74,7 +74,7 @@ export default function Page() {
       />
 
       {/* Hero */}
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+      <section className="relative flex min-h-[56vh] sm:min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-55"
           style={{ backgroundImage: "url(/images/hero.webp)" }}
@@ -109,7 +109,7 @@ export default function Page() {
 
       <main className="relative z-20 bg-[#07060b]">
         {/* Product cards */}
-        <section className="mx-auto max-w-4xl px-4 py-24">
+        <section className="mx-auto max-w-4xl px-4 py-12 sm:py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">
             Lights and fog for your party
           </h2>
@@ -153,7 +153,7 @@ export default function Page() {
         </section>
 
         {/* Upsell */}
-        <section className="mx-auto max-w-3xl px-4 pb-24">
+        <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">
               Add sound, a complete party package from {KOMPLET_FEST} DKK
@@ -190,7 +190,7 @@ export default function Page() {
         <GoogleReviews locale="en" />
 
         {/* Final CTA */}
-        <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
+        <section className="mx-auto max-w-2xl px-4 pb-12 sm:pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">
             Ready to light up the party?
           </h2>

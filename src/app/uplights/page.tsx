@@ -55,7 +55,7 @@ export default function UplightsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+      <section className="relative flex min-h-[56vh] sm:min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
         <div
           className="fixed inset-0 bg-cover bg-center opacity-55"
           style={{ backgroundImage: "url(/images/hero.webp)" }}
@@ -86,7 +86,7 @@ export default function UplightsPage() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        <section id="produkter" className="mx-auto max-w-4xl px-4 py-24">
+        <section id="produkter" className="mx-auto max-w-4xl px-4 py-12 sm:py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Vælg antal uplights</h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
             Enkelt uplight til små rum, eller 4-pak til festlokale, bryllup og konfirmation.
@@ -100,7 +100,7 @@ export default function UplightsPage() {
           />
         </section>
 
-        <section className="mx-auto max-w-3xl px-4 pb-24">
+        <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Kombiner med lyd og røg</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">
@@ -130,7 +130,7 @@ export default function UplightsPage() {
 
         <GoogleReviews />
 
-        <section className="mx-auto max-w-2xl px-4 pb-24 text-center">
+        <section className="mx-auto max-w-2xl px-4 pb-12 sm:pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Klar til at lyse lokalet op?</h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
             Book online på 2 minutter. Hent fredag i København S, aflever mandag.

@@ -86,7 +86,7 @@ export default function Page() {
       </section>
 
       <main className="relative z-20 bg-[#07060b]">
-        <section id="products" className="mx-auto max-w-4xl px-4 py-24">
+        <section id="products" className="mx-auto max-w-4xl px-4 py-12 sm:py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Choose your fog machine</h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
             The classic fog machine fills the room and makes the light show ten
@@ -100,7 +100,7 @@ export default function Page() {
           />
         </section>
 
-        <section className="mx-auto max-w-3xl px-4 pb-24">
+        <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-4 text-2xl font-bold text-white">Fog is best with light and sound</h2>
             <p className="mx-auto mb-6 max-w-md text-white/50">

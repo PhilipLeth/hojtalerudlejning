@@ -1920,7 +1920,7 @@ export default function BookingFlow({
 
 
       {/* ── Content ── */}
-      <div className={variant === "page" ? "relative z-20 mx-auto max-w-2xl px-4 py-4 pb-16" : inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-4 pb-16" : "relative z-20 mx-auto max-w-lg px-4 py-24"}>
+      <div className={variant === "page" ? "relative z-20 mx-auto max-w-2xl px-4 py-4 pb-16" : inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-4 pb-16" : "relative z-20 mx-auto max-w-lg px-4 py-12 sm:py-24"}>
         {tomKurv ? (
           <div className="space-y-5 py-16 text-center">
             <h2 className="text-2xl font-bold">{s.emptyCartTitle}</h2>

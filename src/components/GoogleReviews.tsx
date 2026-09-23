@@ -188,7 +188,7 @@ export default function GoogleReviews({ locale = "da" }: GoogleReviewsProps) {
   const kolonner = data.reviews.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2";
 
   return (
-    <section className="relative z-20 mx-auto max-w-5xl px-4 py-24">
+    <section className="relative z-20 mx-auto max-w-5xl px-4 py-12 sm:py-24">
       <div className="flex flex-col items-center text-center">
         <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-white/60">
           <GoogleLogo />
