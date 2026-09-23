@@ -23,7 +23,7 @@ const AFHENTNING: FaqItem = {
   q: "Skal jeg selv hente udstyret, eller kan I levere?",
   a:
     "Du kan hente gratis hos os på Vermlandsgade 66, 2300 København. Vil du hellere have det leveret, kører vi ud i " +
-    "hele København: 495 kr for levering og opsætning, hvor du selv afleverer bagefter, eller 795 kr hvis vi både " +
+    `hele København: ${prisKr("levering_ud")} for levering og opsætning, hvor du selv afleverer bagefter, eller ${prisKr("levering_begge")} hvis vi både ` +
     "skal levere og hente igen efter festen. Du vælger det i bookingen.",
 };
 
@@ -39,8 +39,8 @@ const AFHENTNING_EN: FaqItem = {
   q: "Do I collect the equipment myself, or can you deliver?",
   a:
     "You can collect it for free at Vermlandsgade 66, 2300 Copenhagen. If you would rather have it " +
-    "delivered, we drive anywhere in Copenhagen: 495 DKK for delivery and setup, where you return it " +
-    "yourself, or 795 DKK if we both deliver and collect it again after the party. You choose in the booking.",
+    `delivered, we drive anywhere in Copenhagen: ${prisDkk("levering_ud")} for delivery and setup, where you return it ` +
+    `yourself, or ${prisDkk("levering_begge")} if we both deliver and collect it again after the party. You choose in the booking.`,
 };
 
 const LEJEPERIODE_EN: FaqItem = {
@@ -50,7 +50,110 @@ const LEJEPERIODE_EN: FaqItem = {
     "return on Monday. If you need it for longer, call us on 31 13 28 52 and we will work it out.",
 };
 
+/**
+ * "Hvordan foregår udlejning af …?" — kategorisidernes modstykke til det
+ * spørgsmål, produktsiderne får bygget i productFaq.ts.
+ *
+ * Skrevet fordi annoncerne bliver søgt på substantivet — "højtaler udlejning",
+ * "lydudlejning", "røgmaskine leje" — mens siderne kun skrev verbet: "lej".
+ * Selve fremgangsmåden er den samme uanset hvad der lejes, så svaret er ét
+ * sted; kun spørgsmålet formuleres efter siden.
+ */
+const udlejning = (q: string): FaqItem => ({
+  q,
+  a:
+    "Du vælger datoerne på siden og booker online — vi skriver ikke et tilbud, og du behøver ikke ringe " +
+    "først. Ledigheden står i kalenderen, så du kan se med det samme, om det er ledigt den weekend. " +
+    "Bagefter henter du udstyret på Vermlandsgade 66, 2300 København, og betaler ved afhentning eller " +
+    "med kort online. Hverken depositum eller kaution.",
+});
+
+const udlejningEn = (q: string): FaqItem => ({
+  q,
+  a:
+    "You pick your dates on the page and book online — we do not write a quote, and you do not have to " +
+    "call first. Availability is in the calendar, so you can see straight away whether it is free that " +
+    "weekend. You then collect at Vermlandsgade 66, 2300 Copenhagen, and pay on collection or by card " +
+    "online. No deposit and no security bond.",
+});
+
 export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
+  /*
+   * Forsiden havde ingen FAQ overhovedet, og den tager alligevel de bredeste
+   * annonceklik: "fest udstyr", "lej festudstyr", "lyd og lys udlejning".
+   * Den, der søger sådan, ved endnu ikke hvad hun skal bruge — hun skal have
+   * svar på hvad det koster, og hvad der skal til ved x antal gæster, før hun
+   * overhovedet kan vælge en pakke.
+   */
+  "forside": [
+    {
+      q: "Hvad koster det at leje festudstyr i København?",
+      a:
+        `Det billigste anlæg starter ved ${startPrisKr()} for hele weekenden, og en lysbar koster ` +
+        `${prisKr("lys")}. Vil du have lyd og lys samlet, ligger de små festpakker fra ` +
+        `${prisKr("pakke_fest_lille")}. Alle priser er inklusive moms og dækker fra 1 til 5 dages leje, ` +
+        `så en fredag-til-mandag koster det samme som én dag.`,
+    },
+    {
+      q: "Hvilket udstyr til fest skal jeg bruge?",
+      a:
+        "Regn efter gæsterne. Op til 30 personer klarer én batterihøjtaler musikken. Mellem 30 og 50 skal " +
+        "der en subwoofer på, ellers forsvinder bassen i snakken. Over 50 gæster skal du have et rigtigt " +
+        "lydanlæg på stativer. Skal der holdes tale, så læg en mikrofon oveni — og vil I have stemning, er " +
+        "en lysbar og en røgmaskine det, der flytter mest for pengene.",
+    },
+    {
+      q: "Hvad kan jeg leje hos jer?",
+      a:
+        "Lyd og lys udlejning er kernen: højtalere, lydanlæg, festlys, diskokugle, uplights, lyskæder og " +
+        "røgmaskiner. Dertil mikrofoner, DJ-pulte, projektor, lærred og storskærm. Du kan leje delene hver " +
+        "for sig eller tage en færdig pakke, hvor kabler og stativer allerede er med.",
+    },
+    LEJEPERIODE,
+    AFHENTNING,
+    {
+      q: "Skal jeg betale depositum?",
+      a:
+        "Nej. Vi opkræver hverken depositum eller kaution. Du booker online, og du betaler, når du henter " +
+        "udstyret. Du hæfter for grejet fra afhentning til aflevering, men du skal ikke lægge penge ud på forhånd.",
+    },
+  ],
+
+  "en-forside": [
+    {
+      q: "What does it cost to rent party equipment in Copenhagen?",
+      a:
+        `The cheapest speaker starts at ${startPrisKr()} for the whole weekend, and a light bar is ` +
+        `${prisKr("lys")}. If you want sound and light together, the small party packages start at ` +
+        `${prisKr("pakke_fest_lille")}. All prices include VAT and cover 1 to 5 days, so Friday to Monday ` +
+        `costs the same as a single day.`,
+    },
+    {
+      q: "What equipment do I need for a party?",
+      a:
+        "Count the guests. Up to 30 people, one battery speaker handles the music. Between 30 and 50 you " +
+        "want a subwoofer, or the bass disappears under the talking. Above 50 guests you need a proper PA " +
+        "on stands. If there are speeches, add a microphone — and for atmosphere, a light bar and a fog " +
+        "machine move the most for the money.",
+    },
+    {
+      q: "What can I rent from you?",
+      a:
+        "Sound and light rental is the core: speakers, PA systems, party lighting, disco balls, uplights, " +
+        "string lights and fog machines. On top of that microphones, DJ controllers, projectors, screens " +
+        "and a large TV. You can rent the parts on their own or take a finished package where cables and " +
+        "stands are already included.",
+    },
+    LEJEPERIODE_EN,
+    AFHENTNING_EN,
+    {
+      q: "Do I have to pay a deposit?",
+      a:
+        "No. We charge neither a deposit nor a security bond. You book online and pay when you collect the " +
+        "equipment. You are liable for the gear from collection to return, but you do not put money down up front.",
+    },
+  ],
+
   /*
    * /eventloesninger var en overskrift og seksten kort, og ikke andet. Siden
    * skal kunne svare på det, en mødebooker spørger om, inden hun tør lægge en
@@ -141,8 +244,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje en mixer i København?",
       a:
-        "Vores mixer med effekter, t.mix xmix 1202 FXMP USB, koster 345 kr. En mindre (Mackie Mix12FX) og en større (t.mix 1402 FXMP USB) " +
-        "tilbydes på forespørgsel fra 295 kr. Priserne gælder 1–5 dage.",
+        `Vores mixer med effekter, t.mix xmix 1202 FXMP USB, koster ${prisKr("mixer_stor")}. En mindre (Mackie Mix12FX) og en større (t.mix 1402 FXMP USB) ` +
+        `tilbydes på forespørgsel fra ${prisKr("mixer_lille")}. Priserne gælder 1–5 dage.`,
     },
     {
       q: "Hvornår har jeg brug for en mixer?",
@@ -167,12 +270,13 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     LEJEPERIODE,
   ],
   "lej-mikrofon": [
+    udlejning("Hvordan foregår udlejning af mikrofoner?"),
     {
       q: "Hvad koster det at leje en mikrofon i København?",
       a:
-        "En håndholdt mikrofon med kabel koster 95 kr for hele lejeperioden, og Shure-udgaven 395 kr. " +
-        "Skal du kunne bevæge dig, koster en trådløs mikrofon 445 kr og Shure BLX i scenekvalitet 595 kr. " +
-        "Et trådløst headset koster 445 kr, og PRO-udgaven 595 kr.",
+        `En håndholdt mikrofon med kabel koster ${prisKr("mikrofon_kabel")} for hele lejeperioden, og Shure-udgaven ${prisKr("haandholdt_mikrofon_pro")}. ` +
+        `Skal du kunne bevæge dig, koster en trådløs mikrofon ${prisKr("mikrofon")} og Shure BLX i scenekvalitet ${prisKr("traadloes_mikrofon_pro")}. ` +
+        `Et trådløst headset koster ${prisKr("headset")}, og PRO-udgaven ${prisKr("headset_pro")}.`,
     },
     {
       q: "Hvilken mikrofon skal jeg vælge til taler?",
@@ -202,8 +306,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster et lysshow?",
       a:
-        "Lysshow med lysbar, discokugle og røgmaskine koster 1.140 kr. Det store lysshow med fire uplights " +
-        "og low fog i stedet koster 1.910 kr. Vil du have lys uden røg, er Stemningslys-pakken " + prisKr("pakke_stemningslys") + ". " +
+        `Lysshow med lysbar, discokugle og røgmaskine koster ${prisKr("pakke_lysshow")}. Det store lysshow med fire uplights ` +
+        `og low fog i stedet koster ${prisKr("pakke_lysshow_stor")}. Vil du have lys uden røg, er Stemningslys-pakken ${prisKr("pakke_stemningslys")}. ` +
         "Alle priser er for hele lejeperioden, ikke pr. dag.",
     },
     {
@@ -216,14 +320,14 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er forskellen på røgmaskine og low fog?",
       a:
-        "En almindelig røgmaskine (245 kr) fylder rummet med røg, der driver op i luften og gør lyset synligt. " +
-        "Low fog-maskinen (545 kr) bruger is og lægger røgen som et tæppe på gulvet — den er til første dans " +
+        `En almindelig røgmaskine (${prisKr("rog")}) fylder rummet med røg, der driver op i luften og gør lyset synligt. ` +
+        `Low fog-maskinen (${prisKr("low_fog")}) bruger is og lægger røgen som et tæppe på gulvet — den er til første dans ` +
         "og til lokaler, hvor en røgalarm ikke må gå i gang.",
     },
     {
       q: "Kan jeg få lysshowet sat op?",
       a:
-        "Ja. Levering og opsætning i København koster 495 kr, og 795 kr hvis vi også henter igen bagefter. " +
+        `Ja. Levering og opsætning i København koster ${prisKr("levering_ud")}, og ${prisKr("levering_begge")} hvis vi også henter igen bagefter. ` +
         "Til det store lysshow med uplights er det pengene værd — uplights skal placeres i hjørner og langs " +
         "vægge for at virke, og det tager tid at finde de rigtige steder.",
     },
@@ -231,6 +335,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     LEJEPERIODE,
   ],
   "lej-hojtaler": [
+    udlejning("Hvordan foregår højtaler udlejning hos jer?"),
     {
       q: "Hvad koster det at leje højtalere i København?",
       a:
@@ -248,19 +353,20 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan jeg leje en højtaler uden strøm?",
       a:
-        "Ja. Mackie Thump GO (495 kr) og Soundboks 4 (695 kr) er batteridrevne med op til 12 timers spilletid, så de " +
+        `Ja. Mackie Thump GO (${prisKr("thumpgo")}) og Soundboks 4 (${prisKr("soundboks")}) er batteridrevne med op til 12 timers spilletid, så de ` +
         "kan bruges i parken, på stranden eller i baggården, hvor der ikke er en stikkontakt.",
     },
     {
       q: "Kan jeg have højtalerne med på cyklen?",
       a:
         "Ja. Mackie Thump GO vejer 10 kg og den lille højtalerpakke 12 kg — begge kan være bag på cyklen. En polstret " +
-        "bæretaske kan tilkøbes for 95 kr. Mellem højtalerpakke vejer 2× 16 kg og er nemmere i bil.",
+        `bæretaske kan tilkøbes for ${prisKr("taske")}. Mellem højtalerpakke vejer 2× 16 kg og er nemmere i bil.`,
     },
     AFHENTNING,
   ],
 
   lydanlaeg: [
+    udlejning("Hvad dækker jeres lydudlejning?"),
     {
       q: "Hvilket lydanlæg passer til antallet af gæster?",
       a:
@@ -294,22 +400,23 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
   ],
 
   lydudstyr: [
+    udlejning("Hvordan foregår leje af lydudstyr?"),
     {
       q: "Hvad koster det at leje et PA-anlæg i København?",
       a:
-        "Mellem højtalerpakke med to aktive 12\" EV-højtalere koster 995 kr for en weekend. Skal der mere tryk på, " +
+        `Mellem højtalerpakke med to aktive 12" EV-højtalere koster ${prisKr("festival")} for en weekend. Skal der mere tryk på, ` +
         "giver Festpakke 50-100 (" + prisKr("pakke_fest_100") + ") dig den store højtalerpakke med subwoofer og to lysbarer.",
     },
     {
       q: "Hvad er inkluderet i PA-anlægget?",
       a:
         "To 12\" EV aktive højtalere med Bluetooth, AUX- og strømkabler samt USB-C/iPhone-adapter. Højtalerstativer " +
-        "kan tilkøbes for 95 kr og en 12\" subwoofer for 495 kr.",
+        `kan tilkøbes for ${prisKr("taske")} og en 12" subwoofer for ${prisKr("subwoofer")}.`,
     },
     {
       q: "Kan jeg tilslutte mikrofon til anlægget?",
       a:
-        "Ja. En trådløs mikrofon (445 kr) eller en Shure BLX PRO (595 kr) forbindes direkte til højtaleren med det " +
+        `Ja. En trådløs mikrofon (${prisKr("mikrofon")}) eller en Shure BLX PRO (${prisKr("traadloes_mikrofon_pro")}) forbindes direkte til højtaleren med det ` +
         "medfølgende kabel. Fire mikrofoner til et panel booker I som Panelpakken. Skal lyden også på Teams eller " +
         "Zoom, så book Teams- og Zoom-pakken. Begge ligger på /av-udstyr og bookes online.",
     },
@@ -326,7 +433,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster lyd til en fest?",
       a:
-        "Den lille højtalerpakke koster 595 kr for en weekend. Vil du have lys med, koster Festpakke 0-30 med to " +
+        `Den lille højtalerpakke koster ${prisKr("party")} for en weekend. Vil du have lys med, koster Festpakke 0-30 med to ` +
         "højtalere og en lysbar " + prisKr("pakke_fest_lille") + ", og Festpakke 30-50 med større højtalere og lysbar " + prisKr("pakke_fest_stor") + ".",
     },
     {
@@ -338,7 +445,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan vi holde festen udenfor, hvor der ikke er strøm?",
       a:
-        "Ja. Mackie Thump GO (495 kr) og Soundboks 4 (695 kr) kører på batteri i op til 12 timer. De resterende " +
+        `Ja. Mackie Thump GO (${prisKr("thumpgo")}) og Soundboks 4 (${prisKr("soundboks")}) kører på batteri i op til 12 timer. De resterende ` +
         "pakker kræver en stikkontakt.",
     },
     {
@@ -355,7 +462,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad koster det at leje en lyspakke?",
       a:
-        "Fra 645 kr for en weekend. Festtelt-lys med to lyskæder og fire uplights koster " + prisKr("pakke_festtelt") + ", Diskolys-pakken med " +
+        `Fra ${prisKr("pakke_festlys_50")} for en weekend. Festtelt-lys med to lyskæder og fire uplights koster ${prisKr("pakke_festtelt")}, Diskolys-pakken med ` +
         "lyseffekt og discokugle " + prisKr("pakke_diskolys") + ", Teenagefest-lys " + prisKr("pakke_teenagefest") + " og Stemningslys-pakken " + prisKr("pakke_stemningslys") + ". Bryllupslys med low fog " +
         "til brudevalsen koster " + prisKr("pakke_bryllupslys") + ", og Diskotek-pakken — det fulde dansegulv uden røg — " + prisKr("pakke_diskotek") + ".",
     },
@@ -380,19 +487,26 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     },
   ],
   festlys: [
+    udlejning("Hvordan foregår udlejning af lys til fest?"),
     {
       q: "Hvad koster det at leje festlys?",
+      // Tallene stod i hånden og var drevet fra kataloget: svaret sagde 495 kr
+      // for lysbaren, mens heroen ti linjer højere oppe skrev 395, og
+      // discokuglen stod til 495/595 mod katalogets 545/645. Sidens egen pris
+      // og sidens eget svar må ikke kunne modsige hinanden.
       a:
-        "En enkelt lyseffekt koster 195 kr, en uplight 195 kr (fire stk. 595 kr), en discokugle 495 kr (30 cm) eller 595 kr (40 cm) og en 10 m " +
-        "lyskæde 195 kr. Lysbaren med to farvede LED-lamper, centereffekt og stativ koster 495 kr. Røgmaskine " +
-        "koster 245 kr og low fog-maskinen, der laver et røggulv, 545 kr.",
+        `En enkelt lyseffekt koster ${prisKr("lyseffekt")}, en uplight ${prisKr("uplight")} ` +
+        `(fire stk. ${prisKr("uplight_4")}), en discokugle ${prisKr("discokugle_30")} (30 cm) eller ` +
+        `${prisKr("discokugle")} (40 cm) og en 10 m lyskæde ${prisKr("lyskaeder")}. Lysbaren med to farvede ` +
+        `LED-lamper, centereffekt og stativ koster ${prisKr("lys")}. Røgmaskine koster ${prisKr("rog")} og ` +
+        `low fog-maskinen, der laver et røggulv, ${prisKr("low_fog")}.`,
     },
     {
       q: "Skal jeg bruge røg for at lyset virker?",
       a:
         "Ikke nødvendigvis, men det gør en stor forskel. Lysstrålerne bliver først synlige i luften, når der er " +
         "lidt røg eller dis i rummet — uden røg ser du kun de farvede pletter, lyset rammer. En røgmaskine koster " +
-        "245 kr og har røgvæske med.",
+        `${prisKr("rog")} og har røgvæske med.`,
     },
     {
       q: "Er festlys svært at sætte op?",
@@ -403,7 +517,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad er forskellen på en røgmaskine og low fog?",
       a:
-        "En almindelig røgmaskine (245 kr) fylder rummet med røg, der gør lyset synligt. Low fog-maskinen (545 kr) " +
+        `En almindelig røgmaskine (${prisKr("rog")}) fylder rummet med røg, der gør lyset synligt. Low fog-maskinen (${prisKr("low_fog")}) ` +
         "køler røgen med is, så den bliver liggende som et tæppe langs gulvet — 'dansen på skyer'-effekten fra " +
         "bryllupper og musikvideoer.",
     },
@@ -412,11 +526,12 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
 
 
   roeg: [
+    udlejning("Hvordan foregår leje af en røgmaskine?"),
     {
       q: "Hvad er forskellen på en røgmaskine og en low fog-maskine?",
       a:
-        "En almindelig røgmaskine (245 kr) sender røgen op i luften, hvor den gør lysstrålerne synlige og får " +
-        "festen til at se ud som en klub. En low fog-maskine (545 kr) køler røgen med is, så den lægger sig som et " +
+        `En almindelig røgmaskine (${prisKr("rog")}) sender røgen op i luften, hvor den gør lysstrålerne synlige og får ` +
+        `festen til at se ud som en klub. En low fog-maskine (${prisKr("low_fog")}) køler røgen med is, så den lægger sig som et ` +
         "tæppe langs gulvet og bliver liggende — effekten man kender fra første dans til bryllupper.",
     },
     {
@@ -446,19 +561,21 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
      i udlejning igen 8. september 2026 efter en pause — spørgsmålet om billedet
      står først, fordi det er dét, folk kommer for at spørge om. */
   "av-udstyr": [
+    udlejning("Hvordan foregår udlejning af AV-udstyr?"),
     {
       q: "Hvad koster det at leje mikrofon til et møde i København?",
       a:
-        "En trådløs håndholdt mikrofon koster 295 kr for hele lejeperioden, en Shure BLX i scenekvalitet " +
-        "595 kr, et trådløst headset 445 kr og et PRO-headset 595 kr. Skal der også være lyd, koster Tale & " +
+        `En trådløs håndholdt mikrofon koster ${prisKr("mikrofon")} for hele lejeperioden, en Shure BLX i ` +
+        `scenekvalitet ${prisKr("traadloes_mikrofon_pro")}, et trådløst headset ${prisKr("headset")} og et ` +
+        `PRO-headset ${prisKr("headset_pro")}. Skal der også være lyd, koster Tale & ` +
         "musik-pakken med to 12\" højtalere og trådløs mikrofon " + prisKr("pakke_tale_musik") + ".",
     },
     {
       q: "Hvad koster det at leje projektor, lærred og storskærm?",
       a:
-        "En Full HD-projektor koster 495 kr for hele lejeperioden, en 5000 lumen PRO-projektor 795 kr, og et " +
-        "lærred på 160 cm 195 kr. Foretrækker du en skærm, koster en 55\" storskærm på stativ 595 kr og en " +
-        "32\" 395 kr. Alle priser gælder 1 til 5 dage — der er ingen dagstillæg.",
+        `En Full HD-projektor koster ${prisKr("projektor")} for hele lejeperioden, en 5000 lumen PRO-projektor ${prisKr("projektor_pro")}, og et ` +
+        `lærred på 160 cm ${prisKr("laerred_160")}. Foretrækker du en skærm, koster en 55" storskærm på stativ ${prisKr("skaerm_55")} og en ` +
+        `32" ${prisKr("skaerm_32")}. Alle priser gælder 1 til 5 dage — der er ingen dagstillæg.`,
     },
     {
       q: "Skal jeg vælge projektor eller storskærm?",
@@ -485,10 +602,11 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
   /* Karaoke kom i udlejning igen 8. september 2026. Spørgsmålene er dem, der
      afgør købet: hvad koster det, skal der en skærm til, og rækker lyden. */
   karaoke: [
+    udlejning("Hvordan foregår udlejning af karaokeanlæg?"),
     {
       q: "Hvad koster det at leje karaoke i København?",
       a:
-        "Karaokemaskinen alene koster 695 kr for hele lejeperioden — den har indbygget skærm, to trådløse " +
+        `Karaokemaskinen alene koster ${prisKr("karaoke")} for hele lejeperioden — den har indbygget skærm, to trådløse ` +
         "mikrofoner og festlys. Karaokepakken med 32\" skærm og to højtalere koster " + prisKr("pakke_karaoke") + ", og " +
         "Karaoke-festpakken med 55\" storskærm og de store højtalere " + prisKr("pakke_karaoke_fest") + ". Priserne gælder 1 til 5 dage.",
     },
@@ -496,7 +614,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Skal jeg leje en skærm til, eller er maskinens egen nok?",
       a:
         "Maskinens indbyggede skærm rækker til to-tre personer, der står tæt på. Skal hele selskabet kunne " +
-        "læse teksten, skal der en skærm på stativ til — en 32\" til 395 kr klarer stuen, en 55\" til 595 kr " +
+        `læse teksten, skal der en skærm på stativ til — en 32" til ${prisKr("skaerm_32")} klarer stuen, en 55" til ${prisKr("skaerm_55")} ` +
         "hele festen.",
     },
     {
@@ -509,7 +627,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Er der mikrofoner med i karaokemaskinen?",
       a:
         "Ja, to trådløse mikrofoner følger med maskinen. Skal I være flere om at synge, eller skal der også " +
-        "holdes tale, kan der lejes ekstra mikrofoner til fra 95 kr.",
+        `holdes tale, kan der lejes ekstra mikrofoner til fra ${prisKr("mikrofon_kabel")}.`,
     },
     AFHENTNING,
   ],
@@ -524,8 +642,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Leverer I i hele København?",
       a:
-        "Ja. Levering og opsætning koster 495 kr, hvor vi kører ud og sætter op klar til brug, og du selv " +
-        "afleverer bagefter. Skal vi også hente igen efter festen, koster begge veje 795 kr.",
+        `Ja. Levering og opsætning koster ${prisKr("levering_ud")}, hvor vi kører ud og sætter op klar til brug, og du selv ` +
+        `afleverer bagefter. Skal vi også hente igen efter festen, koster begge veje ${prisKr("levering_begge")}.`,
     },
     {
       q: "Hvad er det billigste anlæg, I har?",
@@ -537,7 +655,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Kan jeg hente udstyret på cykel?",
       a:
         "Ja — det er sådan de fleste af vores kunder gør. Mackie Thump GO vejer 10 kg og den lille højtalerpakke " +
-        "12 kg, og en polstret bæretaske kan tilkøbes for 95 kr.",
+        `12 kg, og en polstret bæretaske kan tilkøbes for ${prisKr("taske")}.`,
     },
     LEJEPERIODE,
   ],
@@ -546,7 +664,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Kan I levere og sætte op til vores firmaevent?",
       a:
-        "Ja. Levering og opsætning i København koster 495 kr, og 795 kr hvis vi både leverer og henter igen efter " +
+        `Ja. Levering og opsætning i København koster ${prisKr("levering_ud")}, og ${prisKr("levering_begge")} hvis vi både leverer og henter igen efter ` +
         "arrangementet. Til større events kommer vi gerne ud i forvejen og ser lokalet.",
     },
     {
@@ -583,6 +701,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
    * Tallene er de samme som på dansk, fordi priserne er de samme.
    */
   "en-lej-hojtaler": [
+    udlejningEn("How does speaker rental work?"),
     {
       q: "How much does it cost to rent speakers in Copenhagen?",
       a:
@@ -601,18 +720,19 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Can I rent a speaker that works without power?",
       a:
-        "Yes. The Mackie Thump GO (495 kr) and Soundboks 4 (695 kr) run on battery for up to 12 hours, so they work " +
+        `Yes. The Mackie Thump GO (${prisDkk("thumpgo")}) and Soundboks 4 (${prisDkk("soundboks")}) run on battery for up to 12 hours, so they work ` +
         "in the park, on the beach or in a courtyard with no socket.",
     },
     {
       q: "Can I carry the speakers on a bike?",
       a:
         "Yes. The Mackie Thump GO weighs 10 kg and the small speaker package 12 kg — both fit on the back of a bike. " +
-        "A padded carry bag can be added for 95 kr. The medium speaker package is 2× 16 kg and is easier in a car.",
+        `A padded carry bag can be added for ${prisDkk("taske")}. The medium speaker package is 2× 16 kg and is easier in a car.`,
     },
     AFHENTNING_EN,
   ],
   "en-lydanlaeg": [
+    udlejningEn("How does PA system rental work?"),
     {
       q: "Which PA system fits the number of guests?",
       a:
@@ -648,8 +768,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How much does it cost to rent a mixer in Copenhagen?",
       a:
-        "Our mixer with effects, the t.mix xmix 1202 FXMP USB, is 345 DKK. A smaller (Mackie Mix12FX) and a larger (t.mix 1402 FXMP USB) model " +
-        "are on request from 295 DKK. Prices cover 1–5 days.",
+        `Our mixer with effects, the t.mix xmix 1202 FXMP USB, is ${prisDkk("mixer_stor")}. A smaller (Mackie Mix12FX) and a larger (t.mix 1402 FXMP USB) model ` +
+        `are on request from ${prisDkk("mixer_lille")}. Prices cover 1–5 days.`,
     },
     {
       q: "When do I actually need a mixer?",
@@ -674,11 +794,12 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     LEJEPERIODE_EN,
   ],
   "en-roeg": [
+    udlejningEn("How does fog machine rental work?"),
     {
       q: "What is the difference between a fog machine and a low fog machine?",
       a:
-        "An ordinary fog machine (245 kr) sends the fog up into the air, where it makes the light beams visible and " +
-        "the party look like a club. A low fog machine (545 kr) cools the fog with ice so it settles as a carpet along " +
+        `An ordinary fog machine (${prisDkk("rog")}) sends the fog up into the air, where it makes the light beams visible and ` +
+        `the party look like a club. A low fog machine (${prisDkk("low_fog")}) cools the fog with ice so it settles as a carpet along ` +
         "the floor and stays there — the effect you know from a wedding's first dance.",
     },
     {
@@ -703,12 +824,13 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     AFHENTNING_EN,
   ],
   "en-lej-mikrofon": [
+    udlejningEn("How does microphone rental work?"),
     {
       q: "How much does it cost to rent a microphone in Copenhagen?",
       a:
-        "A wired handheld microphone is 95 DKK for the whole rental period, and the Shure version 395 DKK. " +
-        "If you need to move around, a wireless handheld is 295 DKK and the stage-quality Shure BLX 595 DKK. " +
-        "A wireless headset is 445 DKK, and the PRO version 595 DKK.",
+        `A wired handheld microphone is ${prisDkk("mikrofon_kabel")} for the whole rental period, and the Shure version ${prisDkk("haandholdt_mikrofon_pro")}. ` +
+        `If you need to move around, a wireless handheld is ${prisDkk("mikrofon")} and the stage-quality Shure BLX ${prisDkk("traadloes_mikrofon_pro")}. ` +
+        `A wireless headset is ${prisDkk("headset")}, and the PRO version ${prisDkk("headset_pro")}.`,
     },
     {
       q: "Which microphone should I choose for speeches at a dinner?",
@@ -735,20 +857,22 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     LEJEPERIODE_EN,
   ],
   "en-festlys": [
+    udlejningEn("How does party light rental work?"),
     {
       q: "How much does it cost to rent party lights in Copenhagen?",
       a:
-        "A single light effect is 195 DKK, one uplight 195 DKK (four of them 595 DKK), a disco ball 495 DKK " +
-        "(30 cm) or 595 DKK (40 cm) and 10 m of fairy lights 195 DKK. The light bar with two coloured LED " +
-        "lamps, a centre effect and a stand is 495 DKK. A fog machine is 245 DKK, and the low fog machine that " +
-        "lays fog along the floor 795 DKK.",
+        `A single light effect is ${prisDkk("lyseffekt")}, one uplight ${prisDkk("uplight")} (four of them ` +
+        `${prisDkk("uplight_4")}), a disco ball ${prisDkk("discokugle_30")} (30 cm) or ${prisDkk("discokugle")} ` +
+        `(40 cm) and 10 m of fairy lights ${prisDkk("lyskaeder")}. The light bar with two coloured LED lamps, a ` +
+        `centre effect and a stand is ${prisDkk("lys")}. A fog machine is ${prisDkk("rog")}, and the low fog ` +
+        `machine that lays fog along the floor ${prisDkk("low_fog")}.`,
     },
     {
       q: "Do I need fog for the lights to work?",
       a:
         "Not strictly, but it makes a big difference. A light beam only becomes visible when there is " +
         "something in the air to catch it — without fog you just see the coloured dots the light lands on. " +
-        "A fog machine is 245 DKK and comes with fluid.",
+        `A fog machine is ${prisDkk("rog")} and comes with fluid.`,
     },
     {
       q: "Are party lights hard to set up?",
@@ -760,8 +884,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "What is the difference between a fog machine and low fog?",
       a:
-        "An ordinary fog machine (245 DKK) fills the room with fog that drifts upwards and makes the light " +
-        "visible. The low fog machine (545 DKK) cools the fog with ice so it stays as a carpet along the " +
+        `An ordinary fog machine (${prisDkk("rog")}) fills the room with fog that drifts upwards and makes the light ` +
+        `visible. The low fog machine (${prisDkk("low_fog")}) cools the fog with ice so it stays as a carpet along the ` +
         "floor — the 'dancing on clouds' effect from weddings and music videos.",
     },
     AFHENTNING_EN,
@@ -770,9 +894,10 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How much does a light show cost to rent?",
       a:
-        "The light show with the light bar, a disco ball and a fog machine is 1.140 DKK. The large light " +
-        "show, with four uplights and low fog instead, is 1.910 DKK. If you want light without fog, the " +
-        "ambient light package is 1.295 DKK. All prices are for the whole rental period, not per day.",
+        `The light show with the light bar, a disco ball and a fog machine is ${prisDkk("pakke_lysshow")}. The ` +
+        `large light show, with four uplights and low fog instead, is ${prisDkk("pakke_lysshow_stor")}. If you ` +
+        `want light without fog, the ambient light package is ${prisDkk("pakke_stemningslys")}. All prices are ` +
+        `for the whole rental period, not per day.`,
     },
     {
       q: "Why is fog part of a light show?",
@@ -784,14 +909,14 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "What is the difference between a fog machine and low fog?",
       a:
-        "An ordinary fog machine (245 DKK) fills the room with fog that makes the light visible. The low fog " +
-        "machine (545 DKK) uses ice to cool the fog so it lies like a carpet on the floor — for the first " +
+        `An ordinary fog machine (${prisDkk("rog")}) fills the room with fog that makes the light visible. The low fog ` +
+        `machine (${prisDkk("low_fog")}) uses ice to cool the fog so it lies like a carpet on the floor — for the first ` +
         "dance, and for venues where the smoke alarm must stay quiet.",
     },
     {
       q: "Can you set the light show up for me?",
       a:
-        "Yes. Delivery and setup in Copenhagen is 495 DKK, and 795 DKK if we collect it again afterwards. " +
+        `Yes. Delivery and setup in Copenhagen is ${prisDkk("levering_ud")}, and ${prisDkk("levering_begge")} if we collect it again afterwards. ` +
         "For the large light show with uplights it is worth the money — uplights have to be placed in corners " +
         "and along walls to work, and finding the right spots takes time.",
     },
@@ -815,12 +940,12 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       q: "Do you deliver, or do I pick the speakers up myself?",
       a:
         "Both. Pick-up is free at Vermlandsgade 66, 2300 Copenhagen. Delivery and setup anywhere in Copenhagen is " +
-        "495 kr, where you return the gear yourself, or 795 kr if we both deliver and collect it afterwards.",
+        `${prisDkk("levering_ud")}, where you return the gear yourself, or ${prisDkk("levering_begge")} if we both deliver and collect it afterwards.`,
     },
     {
       q: "Can I rent a speaker that works without power?",
       a:
-        "Yes. The Mackie Thump GO (495 kr) and Soundboks 4 (695 kr) run on battery for up to 12 hours, so they " +
+        `Yes. The Mackie Thump GO (${prisDkk("thumpgo")}) and Soundboks 4 (${prisDkk("soundboks")}) run on battery for up to 12 hours, so they ` +
         "work in the park, on the beach or in a courtyard with no power outlet.",
     },
     {
