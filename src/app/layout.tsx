@@ -73,15 +73,21 @@ export default function RootLayout({
   return (
     <html lang="da">
       <head>
-        {/* The hero is the LCP element on the front page, every product page
-            and every occasion page, but it is applied as a CSS background, so
-            the browser only discovers it after the stylesheet has parsed and
-            laid out. Preloading moves that discovery to the first bytes of the
-            document. */}
+        {/* Hero'en er LCP-elementet på produktsiderne, kategorisiderne og
+            anledningssiderne, men den er sat som CSS-baggrund, så browseren
+            opdager den først når stylesheetet er parset og layoutet lagt.
+            Preloadet flytter den opdagelse op i dokumentets første bytes.
+
+            Filen SKAL være den, siderne faktisk viser. Her stod
+            events/reception-detail.webp — forsidens galleribillede, 533 kB — og
+            det blev hentet med høj prioritet på alle 250 sider, mens de 165
+            sider, der virkelig bruger hero.webp (30 kB), ikke preloadede noget.
+            Forsiden preloader sit eget galleribillede via fetchPriority på
+            <img> i EventHeroGallery, så den er dækket uden det her. */}
         <link
           rel="preload"
           as="image"
-          href="/images/events/reception-detail.webp"
+          href="/images/hero.webp"
           type="image/webp"
           fetchPriority="high"
         />
