@@ -49,7 +49,7 @@ export default function EventHome({locale = "da", detail = false, cases = false}
           </div>
         </div>
         <figure className={styles.heroImage}>
-          <img src="/images/events/reception-front.webp" width="1200" height="1600" alt={en ? "Two EV speakers beside a restaurant bar" : "To EV-højtalere ved en restaurantbar"} />
+          <img src="/images/events/reception-front-v2.webp" width="1200" height="1600" alt={en ? "Two EV speakers beside a restaurant bar" : "To EV-højtalere ved en restaurantbar"} />
           <figcaption><span>{en ? "Reception · actual setup" : "Reception · konkret opstilling"}</span></figcaption>
         </figure>
       </section>
@@ -60,8 +60,8 @@ export default function EventHome({locale = "da", detail = false, cases = false}
         </div>
         <div className={styles.caseGallery}>
           {[
-            {img: "reception-front", title: en ? "Speakers at the bar" : "Højtalere ved baren", body: en ? "Two EV speakers on stands, mixer to the side. Background music and speeches without filling the room." : "To EV-højtalere på stativer, mixer til siden. Baggrundsmusik og taler uden at fylde rummet.", href: "/events/reception"},
-            {img: "reception-detail", title: en ? "Close-up of the same job" : "Nærbillede af samme opgave", body: en ? "Placement follows the furniture and guest flow. Book the reception packages online." : "Placeringen følger møbler og gæsternes færden. Book receptionspakkerne online.", href: "/events/reception"},
+            {img: "reception-front-v2", title: en ? "Speakers at the bar" : "Højtalere ved baren", body: en ? "Two EV speakers on stands, mixer to the side. Background music and speeches without filling the room." : "To EV-højtalere på stativer, mixer til siden. Baggrundsmusik og taler uden at fylde rummet.", href: "/events/reception"},
+            {img: "reception-detail-v2", title: en ? "Close-up of the same job" : "Nærbillede af samme opgave", body: en ? "Placement follows the furniture and guest flow. Book the reception packages online." : "Placeringen følger møbler og gæsternes færden. Book receptionspakkerne online.", href: "/events/reception"},
             {img: "concert", title: en ? "A small stage" : "En lille scene", body: en ? "Starting point for a duo or a short live set. Compare concert packages and book." : "Udgangspunkt for en duo eller et kort livesæt. Sammenlign koncertpakker og book.", href: "/events/koncert"},
           ].map((c) => (
             <Link className={styles.caseCard} href={href(c.href)} key={c.img}>

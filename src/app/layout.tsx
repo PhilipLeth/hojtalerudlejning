@@ -79,7 +79,7 @@ export default function RootLayout({
             Preloadet flytter den opdagelse op i dokumentets første bytes.
 
             Filen SKAL være den, siderne faktisk viser. Her stod
-            events/reception-detail.webp — forsidens galleribillede, 533 kB — og
+            events/reception-detail-v2.webp — forsidens galleribillede, 533 kB — og
             det blev hentet med høj prioritet på alle 250 sider, mens de 165
             sider, der virkelig bruger hero.webp (30 kB), ikke preloadede noget.
             Forsiden preloader sit eget galleribillede via fetchPriority på
