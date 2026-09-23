@@ -92,14 +92,17 @@ describe("Forespørgselsvarer", () => {
   });
 
   /**
-   * En vare vi ikke har på hylden, må ikke vises med et foto: vi reklamerer
-   * ikke med udstyr, vi ikke har. Derfor er tom billedsti tilladt netop her,
-   * og produktsiden tegner en tekstflade i stedet.
+   * Skaffevarerne har fået deres eget billede 23. september 2026, genereret i
+   * husstilen ud fra en beskrivelse af maskinen — se
+   * scripts/product-images/fra-beskrivelse.mjs. Det er VORES billede på hvid
+   * baggrund, ikke en shops foto, og det viser maskinens form uden et mærke.
+   *
+   * Prisen er stadig ikke sat: den afhænger af dato, antal og leverandør.
    */
-  it("en skaffevare uden foto er tilladt, og prisen er ikke sat", () => {
+  it("en skaffevare har sit eget billede, men ingen pris", () => {
     for (const id of ["slushice", "fadoel"]) {
       const p = rentalProducts.find((r) => r.id === id)!;
-      expect(p.image, `${id} viser et foto af udstyr vi ikke har`).toBe("");
+      expect(p.image, `${id} mangler et billede`).toMatch(/^\/images\/product-.+-white\.webp$/);
       expect(p.price, `${id} har en pris, men prisen aftales`).toBe(0);
       expect(p.hidden, `${id} er skjult`).toBeFalsy();
     }

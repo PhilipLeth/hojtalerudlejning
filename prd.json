@@ -4285,7 +4285,15 @@
       "admin": "Nyt felt i /admin/produkter: 'Leverandørlink (kun reference til billedknappen)'. Frederik sætter linket ind, trykker på billedknappen, godkender — resultatet lander i KV og er live uden deploy.",
       "gjort": "De fem strømvarer fra arkets afsnit 4 (kabeltromle, kabeltromle m. jord, stikdåse, stikdåse m. jord, omformer) har nu deres Jem & Fix-link med, og byggPrompt() kan generere dem. Før gav de nul billeder i planen.",
       "mangler": "Slushicemaskinen og fadølsanlægget står ikke i arket og har derfor intet leverandørlink. Frederik sætter linket ind fra den shop, han vil skaffe dem hos, og trykker på knappen — så er de med.",
-      "ikke_gjort_i_denne_session": "Selve genereringen. Sandkassen har ingen GEMINI_API_KEY, og proxyen afviser jemogfix.dk, thomann.dk og hifiklubben.dk med 403. Pipelinen er bygget og testet (12 tests), men billederne skal laves fra admin eller fra en maskine med nøgle og netadgang."
+      "ikke_gjort_i_denne_session": "Selve genereringen. Sandkassen har ingen GEMINI_API_KEY, og proxyen afviser jemogfix.dk, thomann.dk og hifiklubben.dk med 403. Pipelinen er bygget og testet (12 tests), men billederne skal laves fra admin eller fra en maskine med nøgle og netadgang.",
+      "lavet_23_sept": {
+        "hvad": "Syv katalogfotos genereret i husstilen: de fem strømvarer fra arkets afsnit 4 (kabeltromle, kabeltromle m. jord, stikdåse, stikdåse m. jord, omformer) og de to skaffevarer (slushicemaskine, fadølsanlæg).",
+        "hvordan": "scripts/product-images/fra-beskrivelse.mjs — et sidestykke til generate.mjs for de varer, der ikke har et referencefoto. Prompten er husstilen (hvid sømløs baggrund, blødt lys fra øverste venstre, kontaktskygge, trekvart forfra) plus en beskrivelse af formen. Leverandørens foto kunne ikke hentes herfra: netværkspolitikken afviser jemogfix.dk med 403.",
+        "reglen_der_blev_staaende": "Intet mærke, intet logo, ingen tekst i billedet. Vi viser formen på den vare, kunden får, ikke en bestemt producents kasse. Prompten forbyder det udtrykkeligt, og billederne er kontrolleret ét for ét.",
+        "to_ting_at_rette_i_prompten": "Første forsøg havde softboksene med i billedet og BRITISKE stik. Stilen siger nu 'no studio equipment visible' og 'Danish/European round-pin sockets, never the British rectangular three-pin type'.",
+        "pris": "Otte kald à 0,134 $ = 1,07 $ inkl. det ene forsøg, der blev lavet om.",
+        "refFoto_bliver": "Leverandørlinket bliver stående på strømvarerne som kilden: skal billedet laves om, ved vi hvilken model det er. referencefoto.test.ts vogter stadig, at image aldrig peger på en fremmed shop."
+      }
     }
   },
   "store_festpakker_ud_2026_09_23": {

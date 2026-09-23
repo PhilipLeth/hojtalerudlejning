@@ -41,22 +41,30 @@ describe("Leverandørfotos bruges som reference, aldrig som produktbillede", () 
     }
   });
 
-  it("de fem strømvarer fra arkets afsnit 4 har deres link med", () => {
-    // De har ingen egne fotos, og arket har leverandørlinket til hver af dem.
-    // Uden linket kan billedknappen i admin ikke lave et billede af dem.
+  it("de fem strømvarer fra arkets afsnit 4 har både vores billede og arkets link", () => {
+    // Billedet er vores eget, lavet i husstilen 23. sept 2026. Linket bliver
+    // stående som kilden: skal billedet laves om, ved vi hvilken model det er.
     for (const id of ["kabeltromle", "kabeltromle_jord", "stikdaase", "stikdaase_jord", "omformer_udendors"]) {
       const p = alle.find((x) => x.id === id);
       expect(p, `${id} findes ikke`).toBeTruthy();
-      expect(p!.image, `${id} har fået et foto — så må refFoto gerne blive`).toBeFalsy();
+      expect(p!.image, `${id} mangler vores eget billede`).toMatch(/^\/images\/product-.+-white\.webp$/);
       expect(p!.refFoto, `${id} mangler leverandørlinket fra arket`).toMatch(/^https:\/\/www\.jemogfix\.dk\//);
     }
   });
 
-  it("et produkt med kun et leverandørlink kan nu genereres", () => {
+  /**
+   * Vores eget foto vinder, når vi har et — leverandørens link er reserven.
+   * Testen bygger et produkt uden eget billede for at vise, at reserven
+   * stadig virker; alle rigtige produkter har nu deres eget.
+   */
+  it("et produkt med kun et leverandørlink kan stadig genereres", () => {
     const flad = fladtKatalog({ speakers, addons, rentalProducts });
     const scene = sceneMedId("produktfoto")!;
-    const bygget = byggPrompt(flad.get("kabeltromle")!, scene, flad);
-    expect(bygget, "kabeltromle kan stadig ikke genereres").toBeTruthy();
+    const uden = { ...flad.get("kabeltromle")!, id: "uden_eget_foto", billede: "https://www.jemogfix.dk/en-vare/1/" };
+    const medUden = new Map(flad);
+    medUden.set("uden_eget_foto", uden);
+    const bygget = byggPrompt(uden, scene, medUden);
+    expect(bygget, "et produkt med kun et leverandørlink kan ikke genereres").toBeTruthy();
     expect(bygget!.referencer).toHaveLength(1);
     expect(refFotoAldrigUdgivet(bygget!.referencer[0].billede)).toBe(true);
   });
