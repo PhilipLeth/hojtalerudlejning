@@ -18,7 +18,7 @@ export default function SeasonalStrip({ locale }: { locale: Locale }) {
           data-season={s.id}
           style={{ ["--season-accent" as string]: s.accent }}
         >
-          <img src={s.hero} alt="" width="1280" height="720" />
+          <img src={s.hero} alt="" width="1280" height="720" loading="lazy" />
           <div>
             <p>{en ? s.kickerEn : s.kickerDa}</p>
             <h2>{seasonNavLabel(s, locale)}</h2>

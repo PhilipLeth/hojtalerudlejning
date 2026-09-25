@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import EventHome from "@/components/EventHome";
 import { localeAlternates } from "@/lib/hreflang";
 export const metadata: Metadata = {
- title: "Lyd, lys og AV til events i København | Lejhøjtaler.dk",
- description: "Book lyd, skærm, mikrofon og lys online i København. Vælg pakke, læg i kurven. Levering og opsætning kan tilvælges.",
+ title: "Lej festudstyr i København | Lyd og lys udlejning | Lejhøjtaler.dk",
+ description: "Udlejning af festudstyr i København: højtalere, festlys, røgmaskine, mikrofon og projektor. Se prisen med det samme og book online. Hent i København S, eller tilvælg levering og opsætning.",
  alternates: { canonical: "https://lejhojtaler.dk", languages: localeAlternates("/") },
- openGraph: { title: "Lyd, lys og AV til events i København", description: "Book lyd, skærm, mikrofon og lys online. Vælg pakke og læg i kurven.", url: "https://lejhojtaler.dk", images: ["/images/events/reception-detail.webp"], locale: "da_DK" },
+ openGraph: { title: "Lej festudstyr i København | Lyd og lys udlejning", description: "Udlejning af festudstyr: lyd, lys, røg, mikrofon og skærm. Se prisen med det samme og book online.", url: "https://lejhojtaler.dk", images: ["/images/events/reception-detail-v2.webp"], locale: "da_DK" },
 };
 export default function Page() { return <EventHome locale="da"/>; }

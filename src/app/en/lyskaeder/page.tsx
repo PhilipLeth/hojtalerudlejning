@@ -8,12 +8,13 @@ import { buildProductFaq } from "@/lib/productFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
+import { catalogPrice, prisDkk } from "@/lib/products";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Fairy Light Rental Copenhagen | From 195 DKK | Lejhøjtaler.dk",
+  title: `Fairy Light Rental Copenhagen | From ${prisDkk("lyskaeder")} | Lejhøjtaler.dk`,
   description:
-    "Rent fairy lights in Copenhagen from 195 DKK per weekend. 10 m string lights in warm white or colour, for garden parties, weddings and birthdays. Pay on pickup.",
+    `Rent fairy lights in Copenhagen from ${prisDkk("lyskaeder")} per weekend. 10 m string lights in warm white or colour, for outdoor use in a garden, a marquee or over the dance floor. Pay on pickup.`,
   keywords: [
     "fairy lights rental copenhagen",
     "string lights hire copenhagen",
@@ -27,9 +28,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages(),
-    title: "Fairy Light Rental Copenhagen | From 195 DKK",
+    title: `Fairy Light Rental Copenhagen | From ${prisDkk("lyskaeder")}`,
     description:
-      "10 m of fairy lights, warm white or coloured. From 195 DKK per weekend. Book online.",
+      `10 m of fairy lights, warm white or coloured. From ${prisDkk("lyskaeder")} per weekend. Book online.`,
     url: "https://lejhojtaler.dk/en/lyskaeder",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -69,11 +70,12 @@ export default function Page() {
             Fairy light rental in Copenhagen
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              from 195 DKK
+              from {prisDkk("lyskaeder")}
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            10 m string lights, choose warm white or coloured bulbs. Right for any party.
+            10 m string lights, choose warm white or coloured bulbs. For outdoor use in the garden,
+            along a marquee or over the dance floor.
           </p>
           <a
             href="/en/book?product=lyskaeder"
@@ -122,7 +124,7 @@ export default function Page() {
           items={buildProductFaq({
             locale: "en",
             name: "Fairy lights",
-            price: 195,
+            price: catalogPrice("lyskaeder"),
             productId: "lyskaeder",
             phrase: "fairy lights",
           })}

@@ -136,6 +136,15 @@ function buildDa({ it, price, included, guests, extra }: Bygget): FaqItem[] {
       `og alle nødvendige kabler er med i prisen. Du kan betale online med kort eller ved afhentning.`,
   });
 
+  items.push({
+    q: `Hvordan foregår udlejning af ${it}?`,
+    a:
+      `Du vælger datoerne her på siden og booker online — vi skriver ikke et tilbud, og du skal ikke ringe ` +
+      `først. Ledigheden står i kalenderen, så du kan se med det samme, om ${it} er ledig. Bagefter henter du ` +
+      `udstyret på ${DEFAULT_PICKUP_ADDRESS} og betaler ved afhentning, eller med kort online. Der er hverken ` +
+      `depositum eller kaution.`,
+  });
+
   if (included) {
     items.push({
       q: `Hvad er inkluderet, når jeg lejer ${it}?`,
@@ -180,6 +189,15 @@ function buildEn({ it, price, included, guests, extra }: Bygget): FaqItem[] {
       `${upperFirst(it)} costs ${price} DKK for a weekend from Lejhøjtaler.dk in Copenhagen. ` +
       `The price is the same whether you keep it for 1 or ${MAX_RENTAL_DAYS} days, and all the cables you need ` +
       `are included. You can pay by card online or in cash when you collect.`,
+  });
+
+  items.push({
+    q: `How does renting ${it} work?`,
+    a:
+      `You pick your dates on this page and book online — we do not write a quote, and you do not have to call ` +
+      `first. Availability is in the calendar, so you can see straight away whether ${it} is free. You then ` +
+      `collect the gear at ${DEFAULT_PICKUP_ADDRESS} and pay on collection, or by card online. There is no ` +
+      `deposit and no security bond.`,
   });
 
   if (included) {

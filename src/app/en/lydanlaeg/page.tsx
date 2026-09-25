@@ -4,16 +4,17 @@ import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import BundleGrid from "@/components/BundleGrid";
-import { LADDER_LYD, SPEAKERPAKKER, ladderPrice, prisDkk, type LadderStep } from "@/lib/products";
+import { BATTERIHOJTALERE, LADDER_LYD, SPEAKERPAKKER, ladderPrice, prisDkk, type LadderStep } from "@/lib/products";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { bookHref } from "@/lib/bookUrl";
 import { localizedHref } from "@/lib/enPages";
 import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: `PA System Rental Copenhagen, by guest count | From ${prisDkk("party")} | Lejhøjtaler.dk`,
+  title: `PA System Rental Copenhagen, by guest count | From ${prisDkk("thumpgo")} | Lejhøjtaler.dk`,
   description:
-    `Rent a PA system in Copenhagen by how many guests are coming: up to 30, 30-50 or 50-100 people. Speakers, subwoofer and every cable, from ${prisDkk("party")} per weekend. Microphones and lighting can be added.`,
+    `Rent a PA system in Copenhagen by how many guests are coming: up to 30, 30-50 or 50-100 people. Speakers, subwoofer and every cable, from ${prisDkk("party")} per weekend — or a battery speaker from ${prisDkk("thumpgo")} where there is no power. Microphones and lighting can be added.`,
   keywords: [
     "pa system rental copenhagen",
     "sound system rental copenhagen",
@@ -116,13 +117,14 @@ export default function Page() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       <section className="relative px-4 pb-10 pt-24 text-center">
-        <p className="mb-3 text-sm font-medium uppercase tracking-widest text-brand-400">Copenhagen · Sound for events</p>
+        <p className="mb-3 text-sm font-medium uppercase tracking-widest text-brand-400">Sound system rental in Copenhagen</p>
         <h1 className="mx-auto max-w-3xl text-4xl font-bold sm:text-5xl">
           Choose a system by how many are coming
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
           You should not have to guess at inches and watts. Tell us how many guests are coming and the speakers, the
-          bass and the cables are already put together. Microphones and lighting you add yourself below.
+          bass and the cables are already put together. If there is no socket where you are holding it, take a battery
+          speaker instead. Microphones and lighting you add yourself below.
         </p>
       </section>
 
@@ -147,6 +149,18 @@ export default function Page() {
         title="A system with a microphone"
         subtitle="The same system, with the microphone included. It plugs straight into the speaker, so no mixer is needed in between. Wireless if the speaker needs to move around."
       />
+
+      {/* Arkets afsnit 1.3: batterihøjtalere. Se den danske side. */}
+      <section className="mx-auto max-w-6xl px-4 py-12">
+        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">No power on site?</p>
+        <h2 className="mb-2 text-2xl font-bold">Battery speakers</h2>
+        <p className="mb-6 max-w-2xl text-sm text-white/50">
+          For a garden, a beach, a park or a backyard, where there is no socket within reach. Both play for up to 12
+          hours on one charge and connect over Bluetooth, so no cables have to be run. If the party is going to last
+          longer, take a spare battery with you.
+        </p>
+        <CategoryProductGrid locale="en" items={BATTERIHOJTALERE.map((id) => ({ id }))} />
+      </section>
 
       {/* Festpakkerne har lysbar og røg med og hører derfor i arkets afsnit 3,
           ikke på en lydside. Her er det et link, ikke et kort. */}

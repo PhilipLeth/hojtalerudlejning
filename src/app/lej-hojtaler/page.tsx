@@ -16,7 +16,7 @@ import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Lej Højtalere København | Fra ${startPrisKr()}/weekend | Lejhøjtaler.dk`,
   description:
-    `Lej højtalere i København fra ${startPrisKr()}/weekend. Batterihøjtalere (Mackie Thump GO, Soundboks 4) og PA-pakker. Betal ved afhentning, kabler inkluderet. Book online.`,
+    `Højtaler udlejning i København fra ${startPrisKr()}/weekend. Lej højtaler til fest: batterihøjtalere (Mackie Thump GO, Soundboks 4) og PA-pakker. Betal ved afhentning, kabler inkluderet. Book online.`,
   keywords: [
     "lej højtalere københavn",
     "lej højtaler",
@@ -116,7 +116,8 @@ export default function LejHojtalerPage() {
           <h2 className="mb-2 text-3xl font-bold sm:text-4xl">Lej højtalerne alene</h2>
           <p className="mb-8 max-w-2xl text-white/50">
             Batterihøjtalere til hvor der ikke er et stik, og kabelanlæg til hvor der er. Mikrofon, stativer
-            og lys kan lægges til i kurven.
+            og lys kan lægges til i kurven. Skal du bruge en højtaler til fest, så vælg efter gæstetallet:
+            under 30 gæster rækker én højtaler, over 50 skal der subwoofer på.
           </p>
           <CategoryProductGrid
             items={[

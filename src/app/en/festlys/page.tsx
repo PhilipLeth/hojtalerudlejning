@@ -9,6 +9,7 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
+import LysValg from "@/components/LysValg";
 import { ogImages } from "@/lib/og";
 
 /** Højtaler + lysbar + røgmaskine hver for sig, tallet i "complete party package from …". */
@@ -151,6 +152,8 @@ export default function Page() {
             </Link>
           </div>
         </section>
+
+        <LysValg locale="en" />
 
         {/* Upsell */}
         <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">
