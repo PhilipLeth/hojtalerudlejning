@@ -4,15 +4,16 @@ import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import BundleGrid from "@/components/BundleGrid";
-import { LADDER_LYD, SPEAKERPAKKER, ladderPrice, prisKr, type LadderStep } from "@/lib/products";
+import { BATTERIHOJTALERE, LADDER_LYD, SPEAKERPAKKER, ladderPrice, prisKr, type LadderStep } from "@/lib/products";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { bookHref } from "@/lib/bookUrl";
 import { localeAlternates } from "@/lib/hreflang";
 import { ogImages } from "@/lib/og";
 
 export const metadata: Metadata = {
-  title: `Lydanlæg til leje, anlæg efter antal gæster | Fra ${prisKr("party")} | Lejhøjtaler.dk`,
+  title: `Lydanlæg til leje, anlæg efter antal gæster | Fra ${prisKr("thumpgo")} | Lejhøjtaler.dk`,
   description:
-    `Lydudlejning i København efter hvor mange gæster der kommer: op til 30, 30-50 eller 50-100 personer. Lej lydanlæg, musikanlæg og PA-anlæg med højtalere, subwoofer og alle kabler, fra ${prisKr("party")} pr. weekend. Mikrofon og lys kan tilvælges.`,
+    `Lydudlejning i København efter hvor mange gæster der kommer: op til 30, 30-50 eller 50-100 personer. Lej lydanlæg, musikanlæg og PA-anlæg med højtalere, subwoofer og alle kabler, fra ${prisKr("party")} pr. weekend — eller en batterihøjtaler fra ${prisKr("thumpgo")}, hvor der ikke er strøm. Mikrofon og lys kan tilvælges.`,
   keywords: [
     "lej lydanlæg",
     "lydanlæg til fest",
@@ -119,7 +120,8 @@ export default function LydanlaegPage() {
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-white/60">
           Du skal ikke gætte på tommer og watt. Sig hvor mange gæster der kommer, så er højtalerne, bassen og kablerne
-          sat sammen på forhånd. Mikrofon og lys vælger du selv til nedenfor.
+          sat sammen på forhånd. Er der ingen stikkontakt, hvor I holder den, så tag en batterihøjtaler i stedet.
+          Mikrofon og lys vælger du selv til nedenfor.
         </p>
       </section>
 
@@ -144,6 +146,20 @@ export default function LydanlaegPage() {
         title="Anlæg med mikrofon"
         subtitle="Samme anlæg, med mikrofonen i. Den går direkte i højtaleren, så der ikke skal en mixer imellem. Trådløs, hvis taleren skal kunne gå rundt."
       />
+
+      {/* Arkets afsnit 1.3: batterihøjtalere. Stigen ovenfor spørger om
+          gæstetallet, men det første, der afgør valget udendørs, er om der er
+          en stikkontakt. Den her sektion er svaret, når der ikke er. */}
+      <section className="mx-auto max-w-6xl px-4 py-12">
+        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">Er der ikke strøm?</p>
+        <h2 className="mb-2 text-2xl font-bold">Batterihøjtalere</h2>
+        <p className="mb-6 max-w-2xl text-sm text-white/50">
+          Til haven, stranden, parken eller baggården, hvor der ikke er en stikkontakt at nå. Begge spiller op til
+          12 timer på en opladning og forbindes over Bluetooth, så der ikke skal trækkes kabler. Skal festen vare
+          længere, tager du et ekstra batteri med.
+        </p>
+        <CategoryProductGrid items={BATTERIHOJTALERE.map((id) => ({ id }))} />
+      </section>
 
       {/* Festpakkerne har lysbar og røg med og hører derfor i arkets afsnit 3,
           ikke på en lydside. Her er det et link, ikke et kort. */}

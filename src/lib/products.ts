@@ -2162,6 +2162,22 @@ export const SPEAKERPAKKER = [
   "pakke_speaker_traadloes_stor",
 ];
 
+/**
+ * Prisarkets afsnit 1.3: batterihøjtalere. Også ren lyd, så de hører på
+ * /lydanlaeg ved siden af 1.1 og 1.2.
+ *
+ * Siden byggede 1.1 og 1.2 og sprang 1.3 over. Den spurgte "hvor mange gæster
+ * kommer der?" og svarede med kabelanlæg hele vejen — men det første, der
+ * afgør valget til en havefest, en strand eller en baggård, er om der
+ * overhovedet er en stikkontakt. Den kunde fik anbefalet et anlæg, der ikke
+ * kan tændes, og Soundboks 4 og Thump GO — de to mest klikkede produkter i
+ * annoncerne — fandtes slet ikke på sitets lydside.
+ *
+ * Ekstrabatteriet står med, fordi det er svaret på det spørgsmål, der kommer
+ * lige efter: rækker batteriet aftenen ud?
+ */
+export const BATTERIHOJTALERE = ["thumpgo", "soundboks", "batteri"];
+
 export const KATEGORI_PAKKER: Record<string, string[]> = {
   "/dj-pult": ["dj_pakke_lille", "dj_pakke_mellem", "dj_pakke_stor"],
   ...Object.fromEntries(eventSituations.map(s => [`/events/${s.slug}`, [...s.packageIds]])),
