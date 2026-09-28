@@ -59,7 +59,7 @@ export default function DjProduct({ locale = "da" }: { locale?: Locale }) {
           </p>
         </div>
         <figure className={styles.heroImage}>
-          <img src="/images/product-dj-pult-white.webp" alt={en ? "AlphaTheta XDJ all-in-one DJ system" : "AlphaTheta XDJ all-in-one DJ-pult"} width="1024" height="1024" style={{ objectFit: "contain", background: "white" }} />
+          <img src="/images/product-dj-pult-v2-white.webp" alt={en ? "AlphaTheta XDJ all-in-one DJ system" : "AlphaTheta XDJ all-in-one DJ-pult"} width="1024" height="1024" style={{ objectFit: "contain", background: "white" }} />
           <figcaption>{en ? "Illustration of the DJ controller in the equipment packages" : "Illustration af DJ-pulten i udstyrspakkerne"}</figcaption>
         </figure>
       </section>

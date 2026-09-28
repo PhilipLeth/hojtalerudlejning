@@ -42,6 +42,25 @@ const UD_DIR = join(ROD, "public", "images");
  */
 const OPGAVER = [
   {
+    // Philip 28. sept 2026: "lav det ud fra en AlphaTheta XDJ-AZ". Det gamle
+    // billede var en opdigtet pult med en tablet på en stander. -v2, så CDN'en
+    // ikke bliver ved med at servere det gamle, se billede-cache-kraever-nyt-navn.
+    id: "dj_pult",
+    fil: "product-dj-pult-v2-white.webp",
+    motiv:
+      "a professional four-channel all-in-one standalone DJ system in matte black, seen from the front " +
+      "and slightly above. One wide, low, flat rectangular console, about 90 cm wide, with a slightly " +
+      "raised rear edge. In the top centre a large flat 10-inch colour touchscreen set flush into the " +
+      "panel, showing a track list and two waveforms. Directly below the screen a four-channel club " +
+      "mixer section: four vertical channel strips each with a column of small round EQ knobs and a " +
+      "long vertical channel fader, a horizontal crossfader at the front, and a small effects section " +
+      "beside the screen. On the left and on the right a large full-size round jog wheel with a small " +
+      "round display in its centre, and below each jog wheel a row of eight rubber performance pads, " +
+      "big round play and cue buttons at the front corners, and a long tempo slider at the outer edge. " +
+      "Everything is built into the one console: no laptop, no tablet on a stand, no separate mixer, " +
+      "no headphones, no cables",
+  },
+  {
     id: "kabeltromle",
     fil: "product-kabeltromle-white.webp",
     motiv:
