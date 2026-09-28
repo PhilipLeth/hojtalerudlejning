@@ -40,11 +40,11 @@ function devVar(name: string): string | null {
 }
 
 describe("Server-side prisberegning (pricing)", () => {
-  it("bruger katalogets priser — party = 595 kr", async () => {
+  it("bruger katalogets priser — party = 395 kr (prisarket 28. sept 2026)", async () => {
     const table = await loadPriceTable(fakeKv());
     const { lineItems, totalOre } = buildLineItems(table, [{ id: "party" }]);
-    expect(totalOre).toBe(59500);
-    expect(lineItems[0].price_data.unit_amount).toBe(59500);
+    expect(totalOre).toBe(39500);
+    expect(lineItems[0].price_data.unit_amount).toBe(39500);
     expect(lineItems[0].price_data.currency).toBe("dkk");
   });
 
@@ -60,8 +60,8 @@ describe("Server-side prisberegning (pricing)", () => {
   it("flere varer summeres korrekt (party + lys + rog)", async () => {
     const table = await loadPriceTable(fakeKv());
     const { totalOre } = buildLineItems(table, [{ id: "party" }, { id: "lys" }, { id: "rog" }]);
-    // produktarket 17. sept 2026: lysbar 395 (før 495), røgmaskine 245 (før 595)
-    expect(totalOre).toBe((595 + 395 + 245) * 100);
+    // prisarket 28. sept 2026: lille højtalerpakke 395, lysbar 295, røgmaskine 245
+    expect(totalOre).toBe((395 + 295 + 245) * 100);
   });
 
   it("KV-katalog (admin-priser) overskriver defaults", async () => {
@@ -83,7 +83,7 @@ describe("Server-side prisberegning (pricing)", () => {
     const table = await loadPriceTable(fakeKv());
     const evil = [{ id: "party", price: 1, unitAmount: 1 } as any];
     const { totalOre } = buildLineItems(table, evil);
-    expect(totalOre).toBe(59500); // katalogpris — det medsendte beløb ignoreres
+    expect(totalOre).toBe(39500); // katalogpris — det medsendte beløb ignoreres
   });
 
   it("afviser tom og absurd lang kurv", async () => {
@@ -118,12 +118,12 @@ describe("Checkout Session (ægte Stripe testmode)", () => {
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.clientSecret).toMatch(/^cs_test_/);
-    expect(body.amount).toBe((595 + 495) * 100);
+    expect(body.amount).toBe((catalogPrice("party") + catalogPrice("lys")) * 100);
 
     // Verificér mod Stripe: sessionens beløb og metadata
     const stripe = new Stripe(sk!);
     const session = await stripe.checkout.sessions.retrieve(body.sessionId);
-    expect(session.amount_total).toBe((595 + 495) * 100);
+    expect(session.amount_total).toBe((catalogPrice("party") + catalogPrice("lys")) * 100);
     expect(session.currency).toBe("dkk");
     expect(session.metadata?.bookingId).toBe("booking_test_vitest");
   }, 30000);

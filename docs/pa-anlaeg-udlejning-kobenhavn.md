@@ -50,7 +50,7 @@ Vi holder til på Vermlandsgade 66, 2300 København. Du henter udstyret fredag o
 
 ## Hvad koster det?
 
-Vores priser starter fra **445 kr for en weekend** — den lille højtalerpakke koster 595 kr, den store 795 kr. Alle kabler er med i prisen, og der er ingen skjulte gebyrer; subwoofer, mixer, mikrofon og stativer lejes til efter behov.
+Vores priser starter fra **445 kr for en weekend** — den lille højtalerpakke koster 395 kr, den store 795 kr. Alle kabler er med i prisen, og der er ingen skjulte gebyrer; subwoofer, mixer, mikrofon og stativer lejes til efter behov.
 
 Prisen er flad for 1-5 dages leje: en enkelt hverdag koster det samme som hele weekenden, og fredag-mandag tæller som én weekend.
 

@@ -25,15 +25,14 @@ export const djGearProducts: RawRentalProduct[] = [
     "showPartImages": true,
     "name_da": "DJ Pakke 0-30",
     "name_en": "DJ package 0-30",
-    "desc_da": "Pult og to højtalere til mindre fester og baggrundsmusik. DJ/musikafvikler tilvælges pr. time.",
-    "desc_en": "Controller and two speakers for smaller parties and background music. Add a DJ/music host by the hour.",
+    "desc_da": "Pult, to højtalere på stativer og en lysbar til mindre fester. DJ/musikafvikler tilvælges pr. time.",
+    "desc_en": "Controller, two speakers on stands and a light bar for smaller parties. Add a DJ/music host by the hour.",
     "allowedAddons": ["x_stativ", "rog", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
     "contents": [
       "DJ-pult · AlphaTheta XDJ",
       "Lille højtalerpakke",
       "Højtalerstativer",
-      "Lysbar",
-      "X-stativ"
+      "Lysbar"
     ],
     "bundle": {
       "parts": [
@@ -45,7 +44,7 @@ export const djGearProducts: RawRentalProduct[] = [
         },
         {
           "productId": "party",
-          "price": 595,
+          "price": 395,
           "label_da": "Lille højtalerpakke",
           "label_en": "Small speaker package"
         },
@@ -57,19 +56,13 @@ export const djGearProducts: RawRentalProduct[] = [
         },
         {
           "productId": "lys",
-          "price": 395,
+          "price": 295,
           "label_da": "Lysbar",
           "label_en": "Light bar"
-        },
-        {
-          "productId": "x_stativ",
-          "price": 95,
-          "label_da": "X-stativ",
-          "label_en": "X-stand"
         }
       ],
-      "usecase_da": "Pult og to højtalere til mindre fester og baggrundsmusik.",
-      "usecase_en": "Controller and two speakers for smaller parties and background music."
+      "usecase_da": "Pult, to højtalere på stativer og en lysbar til mindre fester.",
+      "usecase_en": "Controller, two speakers on stands and a light bar for smaller parties."
     }
   },
   {
@@ -80,15 +73,14 @@ export const djGearProducts: RawRentalProduct[] = [
     "showPartImages": true,
     "name_da": "DJ Pakke 30-50",
     "name_en": "DJ package 30-50",
-    "desc_da": "Pult, to større højtalere og subwoofer til dansegulvet. DJ/musikafvikler tilvælges pr. time.",
-    "desc_en": "Controller, two larger speakers and a subwoofer for the dance floor. Add a DJ/music host by the hour.",
+    "desc_da": "Pult, to større højtalere på stativer og to lysbarer til dansegulvet. DJ/musikafvikler tilvælges pr. time.",
+    "desc_en": "Controller, two larger speakers on stands and two light bars for the dance floor. Add a DJ/music host by the hour.",
     "allowedAddons": ["x_stativ", "rog", "dj_stativ", "levering_ud", "afhentning_retur", "levering_begge"],
     "contents": [
       "DJ-pult · AlphaTheta XDJ",
       "Mellem højtalerpakke",
       "Højtalerstativer",
-      "Lysbar",
-      "X-stativ"
+      "2× lysbar"
     ],
     "bundle": {
       "parts": [
@@ -100,7 +92,7 @@ export const djGearProducts: RawRentalProduct[] = [
         },
         {
           "productId": "festival",
-          "price": 795,
+          "price": 595,
           "label_da": "Mellem højtalerpakke",
           "label_en": "Medium speaker package"
         },
@@ -112,19 +104,14 @@ export const djGearProducts: RawRentalProduct[] = [
         },
         {
           "productId": "lys",
-          "price": 395,
-          "label_da": "Lysbar",
-          "label_en": "Light bar"
-        },
-        {
-          "productId": "x_stativ",
-          "price": 95,
-          "label_da": "X-stativ",
-          "label_en": "X-stand"
+          "qty": 2,
+          "price": 590,
+          "label_da": "2× lysbar",
+          "label_en": "2× light bar"
         }
       ],
-      "usecase_da": "Pult, to større højtalere og subwoofer til dansegulvet.",
-      "usecase_en": "Controller, two larger speakers and a subwoofer for the dance floor."
+      "usecase_da": "Pult, to større højtalere på stativer og to lysbarer til dansegulvet.",
+      "usecase_en": "Controller, two larger speakers on stands and two light bars for the dance floor."
     }
   },
   {
@@ -133,17 +120,15 @@ export const djGearProducts: RawRentalProduct[] = [
     "category": "lyd",
     "image": "/images/product-dj-pult-v2-white.webp",
     "showPartImages": true,
-    "name_da": "Stor DJ-pakke",
-    "name_en": "Large DJ package",
-    "desc_da": "Pult, lyd, subwoofer, lys og mikrofon til en hel aften. DJ/musikafvikler tilvælges pr. time.",
-    "desc_en": "Controller, speakers, subwoofer, lights and a microphone for the whole evening. Add a DJ/music host by the hour.",
+    "name_da": "DJ Pakke 50-100",
+    "name_en": "DJ package 50-100",
+    "desc_da": "Pult, den store højtalerpakke med subwoofer og to lysbarer til en hel aften. DJ/musikafvikler tilvælges pr. time.",
+    "desc_en": "Controller, the large speaker package with subwoofer and two light bars for the whole evening. Add a DJ/music host by the hour.",
     "contents": [
       "DJ-pult · AlphaTheta XDJ",
-      "Mellem højtalerpakke",
+      "Stor højtalerpakke",
       "Højtalerstativer",
-      "Subwoofer 12”",
-      "Lysbar",
-      "Trådløs mikrofon"
+      "2× lysbar"
     ],
     "bundle": {
       "parts": [
@@ -154,10 +139,10 @@ export const djGearProducts: RawRentalProduct[] = [
           "label_en": "DJ system · AlphaTheta XDJ"
         },
         {
-          "productId": "festival",
-          "price": 795,
-          "label_da": "Mellem højtalerpakke",
-          "label_en": "Medium Speaker Package"
+          "productId": "hojtaler_100",
+          "price": 1195,
+          "label_da": "Stor højtalerpakke",
+          "label_en": "Large speaker package"
         },
         {
           "productId": "stativer",
@@ -166,26 +151,15 @@ export const djGearProducts: RawRentalProduct[] = [
           "label_en": "Speaker stands"
         },
         {
-          "productId": "subwoofer",
-          "price": 495,
-          "label_da": "Subwoofer 12”",
-          "label_en": "Subwoofer 12 inch"
-        },
-        {
           "productId": "lys",
-          "price": 395,
-          "label_da": "Lysbar",
-          "label_en": "Lighting Package"
-        },
-        {
-          "productId": "mikrofon",
-          "price": 445,
-          "label_da": "Trådløs mikrofon",
-          "label_en": "Wireless microphone"
+          "qty": 2,
+          "price": 590,
+          "label_da": "2× lysbar",
+          "label_en": "2× light bar"
         }
       ],
-      "usecase_da": "Pult, lyd, subwoofer, lys og mikrofon til en hel aften.",
-      "usecase_en": "Controller, speakers, subwoofer, lights and a microphone for the whole evening."
+      "usecase_da": "Pult, den store højtalerpakke med subwoofer og to lysbarer til en hel aften.",
+      "usecase_en": "Controller, the large speaker package with subwoofer and two light bars for the whole evening."
     }
   }
 ];

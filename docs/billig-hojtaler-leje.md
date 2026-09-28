@@ -18,11 +18,11 @@ Du skal holde fest, men du har ikke brug for at eje et PA-anlæg. Du skal bruge 
 
 | Pakke | Weekend-pris | Inkluderer |
 |-------|-------------|------------|
-| Mackie Thump GO | 445 kr | 8" batterihøjtaler, oplader, AUX, Bluetooth |
-| Lille højtalerpakke | 595 kr | 2× 10" Alto, alle kabler, Bluetooth |
-| Mellem højtalerpakke | 795 kr | 2× 12" EV, alle kabler, Bluetooth |
-| Soundboks 4 | 695 kr | Batteridrevet, oplader, AUX, Bluetooth |
-| Lysbar | 395 kr | 2 farvede LED-lamper, centereffekt, stativ |
+| Mackie Thump GO | 395 kr | 8" batterihøjtaler, oplader, AUX, Bluetooth |
+| Lille højtalerpakke | 395 kr | 2× 10" Alto, alle kabler, Bluetooth |
+| Mellem højtalerpakke | 595 kr | 2× 12" EV, alle kabler, Bluetooth |
+| Soundboks 4 | 595 kr | Batteridrevet, oplader, AUX, Bluetooth |
+| Lysbar | 295 kr | 2 farvede LED-lamper, centereffekt, stativ |
 
 **Weekend = hent fredag, aflever mandag.** Du får altså udstyret i 3 dage for prisen af en.
 

@@ -124,7 +124,7 @@ describe("Lydmand i bookingen", () => {
     // Ikke også som tilvalg — så stod den to gange på ordren
     expect(body.addonIds).not.toContain("lydmand");
     expect(body.addons).not.toContain("Lydmand");
-    expect(body.total).toBe(795 + catalogPrice("lydmand") * 5);
+    expect(body.total).toBe(catalogPrice("festival") + catalogPrice("lydmand") * 5);
   });
 
   it("betaler pr. time hos Stripe — id'et sendes én gang pr. time", async () => {

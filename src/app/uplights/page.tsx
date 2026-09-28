@@ -13,7 +13,7 @@ import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: "Lej Uplights København | Fra 195 kr | Lejhøjtaler.dk",
   description:
-    "Lej uplights i København fra 195 kr/stk eller 595 kr for 4-pak. Simple LED uplights på gulv, plug and play til bryllup, konfirmation og fest. Betal ved afhentning.",
+    "Lej uplights i København fra 195 kr/stk eller 495 kr for 4-pak. Simple LED uplights på gulv, plug and play til bryllup, konfirmation og fest. Betal ved afhentning.",
   keywords: [
     "lej uplights københavn",
     "uplight udlejning",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     images: ogImages(),
     title: "Lej Uplights København | Fra 195 kr",
     description:
-      "Simple LED uplights på gulv, 195 kr/stk eller 595 kr for 4-pak. Book online.",
+      "Simple LED uplights på gulv, 195 kr/stk eller 495 kr for 4-pak. Book online.",
     url: "https://lejhojtaler.dk/uplights",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",

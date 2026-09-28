@@ -93,7 +93,8 @@ describe("Pakkeprisen følger delene", () => {
   it("retter man prisen på en lysbar, flytter hver pakke med lysbar sig", () => {
     const med = pakker.filter((p) => p.bundle!.parts.some((d) => d.productId === "lys"));
     expect(med.length).toBeGreaterThan(5);
-    const dyrere = katalog.map((i) => (i.id === "lys" ? { ...i, price: 495 } : i));
+    // Lysbaren 100 kr dyrere end i dag, uanset hvad arket siger den koster
+    const dyrere = katalog.map((i) => (i.id === "lys" ? { ...i, price: i.price + 100 } : i));
     const efter = refreshBundlePrices(rentalProducts, dyrere);
     for (const før of med) {
       const nu = efter.find((p) => p.id === før.id)!;

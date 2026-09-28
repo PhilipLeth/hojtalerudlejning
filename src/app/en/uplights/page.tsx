@@ -17,7 +17,7 @@ const SPAR_UPLIGHT_4 = `Save ${prisTekst(4 * catalogPrice("uplight") - catalogPr
 export const metadata: Metadata = {
   title: "Uplighting Rental Copenhagen | From 195 DKK | Lejhøjtaler.dk",
   description:
-    "Rent uplights in Copenhagen from 195 DKK each, or 595 DKK for a 4-pack. Simple LED floor uplights, plug and play for weddings, confirmations and parties. Pay on pickup.",
+    "Rent uplights in Copenhagen from 195 DKK each, or 495 DKK for a 4-pack. Simple LED floor uplights, plug and play for weddings, confirmations and parties. Pay on pickup.",
   keywords: [
     "uplighting rental copenhagen",
     "uplight rental copenhagen",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     images: ogImages(),
     title: "Uplighting Rental Copenhagen | From 195 DKK",
     description:
-      "Simple LED floor uplights, 195 DKK each or 595 DKK for a 4-pack. Book online.",
+      "Simple LED floor uplights, 195 DKK each or 495 DKK for a 4-pack. Book online.",
     url: "https://lejhojtaler.dk/en/uplights",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",

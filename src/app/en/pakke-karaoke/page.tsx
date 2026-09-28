@@ -39,7 +39,7 @@ export default function Page() {
         "32\" LED screen on a tripod stand for the lyrics",
         "2× Alto 10\" speakers with Bluetooth",
         "HDMI + all cables",
-        `Save ${rabatDkk("pakke_karaoke")} compared to single prices (1,685 DKK)`,
+        `Save ${rabatDkk("pakke_karaoke")} compared to single prices (1,485 DKK)`,
         "Karaoke for up to 40 people",
       ]}
     />

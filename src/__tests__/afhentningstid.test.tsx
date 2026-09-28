@@ -220,8 +220,8 @@ describe("tidsvalget i checkout", () => {
       expect(body.returnSlot).toBe("unknown");
       // Kalenderdagen sendes med, så serveren ikke skal gætte ud fra et UTC-tidspunkt
       expect(body.pickupDay).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      // Mellem højtalerpakke 795 (produktarket 17. sept 2026) — og ikke en krone mere for tidspunktet
-      expect(body.total).toBe(795);
+      // Mellem højtalerpakke 595 (prisarket 28. sept 2026) — og ikke en krone mere for tidspunktet
+      expect(body.total).toBe(595);
     });
   });
 });

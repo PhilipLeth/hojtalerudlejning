@@ -49,8 +49,8 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
     expect(screen.getByText("Uden højtalere?")).toBeInTheDocument();
     expect(screen.getByText("Lysbar")).toBeInTheDocument();
     expect(screen.getByText("Røgmaskine")).toBeInTheDocument();
-    // produktarket 17. sept 2026: lysbar 395 kr, røgmaskine 245 kr
-    expect(screen.getByText("Fra 395,-")).toBeInTheDocument();
+    // prisarket 28. sept 2026: lysbar 295 kr, røgmaskine 245 kr
+    expect(screen.getByText("Fra 295,-")).toBeInTheDocument();
     expect(screen.getByText("Fra 245,-")).toBeInTheDocument();
   });
 
@@ -74,7 +74,7 @@ describe("BookingFlow - Step 1: Speaker selection", () => {
 
   it("advances to step 2 in effects-only mode when clicking lys", async () => {
     render(<BookingFlow />);
-    const lysButton = screen.getByText("Fra 395,-").closest("button")!;
+    const lysButton = screen.getByText("Fra 295,-").closest("button")!;
     fireEvent.click(lysButton);
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();

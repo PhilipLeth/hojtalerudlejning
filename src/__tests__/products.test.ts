@@ -10,36 +10,36 @@ describe("Products data", () => {
     expect(speakers.filter((s) => s.hidden)).toHaveLength(0);
     // Trinnet til 50-100 kom til 25. august 2026 og har sin egen side
     const stor = speakers.find((s) => s.id === "hojtaler_100")!;
-    expect(stor.price).toBe(1295); // produktarket 17. sept 2026 (før 1495)
+    expect(stor.price).toBe(1195); // prisarket 28. sept 2026 (før 1295)
     expect(stor.da.capacity).toBe("50-100 pers.");
     expect(stor.page).toBe("/hojtalerpakke-bas");
   });
 
-  it("thump go is 445 kr (prisarket 21. sept 2026, arkets lille batterihøjtaler)", () => {
-    expect(speakers.find((s) => s.id === "thumpgo")!.price).toBe(445);
+  it("thump go is 395 kr (prisarket 28. sept 2026, arkets lille batterihøjtaler)", () => {
+    expect(speakers.find((s) => s.id === "thumpgo")!.price).toBe(395);
   });
 
-  it("party speaker is 595 kr", () => {
-    expect(speakers.find((s) => s.id === "party")!.price).toBe(595);
+  it("party speaker is 395 kr (prisarket 28. sept 2026)", () => {
+    expect(speakers.find((s) => s.id === "party")!.price).toBe(395);
   });
 
-  it("soundboks koster 695 kr (produktarket 17. sept 2026)", () => {
-    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(695);
+  it("soundboks koster 595 kr (prisarket 28. sept 2026)", () => {
+    expect(speakers.find((s) => s.id === "soundboks")!.price).toBe(595);
   });
 
-  it("festival speaker is 795 kr (højtaler 30-50, produktarket 17. sept 2026)", () => {
-    expect(speakers.find((s) => s.id === "festival")!.price).toBe(795);
+  it("festival speaker is 595 kr (højtaler 30-50, prisarket 28. sept 2026)", () => {
+    expect(speakers.find((s) => s.id === "festival")!.price).toBe(595);
   });
 
   it("startPrice matches cheapest speaker", () => {
     const cheapest = Math.min(...speakers.map((s) => s.price));
     expect(startPrice).toBe(cheapest);
-    expect(startPrice).toBe(445); // prisarket 21. sept 2026: Thump GO er billigst
+    expect(startPrice).toBe(395); // prisarket 28. sept 2026: Thump GO og lille højtalerpakke, begge 395
   });
 
   it("cheapestSpeakerPrice ignores hidden speakers", () => {
     const list = speakers.map((s) => (s.id === "thumpgo" ? { ...s, hidden: true } : s));
-    expect(cheapestSpeakerPrice(list)).toBe(595);
+    expect(cheapestSpeakerPrice(list)).toBe(395); // lille højtalerpakke koster også 395 (28. sept 2026)
   });
 
   it("all speakers have product and mood images", () => {
@@ -93,8 +93,8 @@ describe("Addons data", () => {
     expect(ids).not.toContain("levering_opsaetning");
   });
 
-  it("lys is 395 kr (produktarket 17. sept 2026)", () => {
-    expect(addons.find((a) => a.id === "lys")!.price).toBe(395);
+  it("lys is 295 kr (prisarket 28. sept 2026)", () => {
+    expect(addons.find((a) => a.id === "lys")!.price).toBe(295);
   });
 
   it("rog is 245 kr (produktarket 17. sept 2026)", () => {
@@ -147,11 +147,11 @@ describe("Addons data", () => {
     expect(farvet.price).toBe(195);
   });
 
-  it("uplights: enkelt 195 kr og 4-pak 595 kr (produktarket 17. sept 2026)", () => {
+  it("uplights: enkelt 195 kr og 4-pak 495 kr (prisarket 28. sept 2026)", () => {
     const single = rentalProducts.find((p) => p.id === "uplight")!;
     const pack = rentalProducts.find((p) => p.id === "uplight_4")!;
     expect(single.price).toBe(195);
-    expect(pack.price).toBe(595);
+    expect(pack.price).toBe(495);
     expect(single.page).toBe("/uplights");
     expect(pack.page).toBe("/uplights");
     expect(pack.contents?.join(" ")).toContain("4×");
@@ -169,7 +169,7 @@ describe("Addons data", () => {
   it("subwoofer findes som tilvalg med Behringer 12\" og egen produktside", () => {
     const sub = addons.find((a) => a.id === "subwoofer")!;
     expect(sub).toBeDefined();
-    expect(sub.price).toBe(495); // produktarket 17. sept 2026
+    expect(sub.price).toBe(695); // prisarket 28. sept 2026 (før 495)
     expect(sub.page).toBe("/subwoofer");
     expect(sub.image).toBe("/images/product-subwoofer-v2-white.webp");
     expect(sub.da.label).toContain("Subwoofer");
@@ -386,6 +386,6 @@ describe("Katalog-merge: nye tilvalg overlever et gammelt KV-katalog", () => {
     const { mergeAddonsForTest } = await import("@/lib/useProducts");
     const merged = mergeAddonsForTest(kvCatalog);
     expect(merged.some((a) => a.id === "subwoofer")).toBe(true);
-    expect(merged.find((a) => a.id === "subwoofer")!.price).toBe(495); // produktarket 17. sept 2026
+    expect(merged.find((a) => a.id === "subwoofer")!.price).toBe(695); // prisarket 28. sept 2026
   });
 });

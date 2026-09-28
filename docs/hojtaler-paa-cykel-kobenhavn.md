@@ -50,7 +50,7 @@ Her er et par gode råd når du henter udstyret på cykel:
 
 ## Fra 595 kr. for en hel weekend
 
-Prisen for den lille højtalerpakke starter fra **595 kr.** for en weekend. Alle kabler er inkluderet, og der er ingen skjulte gebyrer. Du betaler først ved afhentning.
+Prisen for den lille højtalerpakke starter fra **395 kr.** for en weekend. Alle kabler er inkluderet, og der er ingen skjulte gebyrer. Du betaler først ved afhentning.
 
 Det er billigere end de fleste alternativer - og du slipper for at bøvle med batterier, dyre lejeaftaler eller tungt udstyr du ikke kan transportere.
 

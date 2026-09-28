@@ -4346,5 +4346,13 @@
     "billeder_fra_arket": "Produktfotos genereres nu ud fra leverandørens billede i arkets kolonne J (refUrl i fra-beskrivelse.mjs). Enkelt lyseffekt = Eurolite LED Mini Z-20 fra thomann (product-lyseffekt-v4-white), Soundboks-batteri = Soundboks The Battery fra hifiklubben (product-soundboks-batteri-v3-white). v3/v2 fra samme dag var lavet ud fra tekst og lignede ikke.",
     "claude_md": "CLAUDE.md har fået afsnittet 'Produkterne står i prisarket': kig i arket ved tvivl, sådan læses det, og billeder laves ud fra kolonne J.",
     "mixer": "Afklaret: én mixer (arkets t.mix 1202). Mackie og t.mix 1402 forbliver på pause."
+  },
+  "priser_fra_arket_2026_09_28": {
+    "kilde": "Frederiks prisark hentet 28. sept 2026 eftermiddag: 34 prisændringer siden formiddagen (prisnedsættelse). Efter opdateringen stemmer 75 af arkets 76 prisrækker med kataloget.",
+    "enkeltpriser": "Lille højtalerpakke 595→395, Mellem 795→595, Stor 1295→1195, Soundboks 4 695→595, Mackie Thump GO 445→395, Lysbar 395→295, Up-light 4-pak 595→495, Scenelys 695→595, Discokugle 30 545→345, 40 645→445, guld 645→545, Subwoofer 495→695 (op), Monitor 495→295.",
+    "pakker": "Pakkepriserne udledes stadig af delene med 8 % rabat og matcher arkets kolonne P. DJ-pakkerne har fået arkets dele: 0-30 uden X-stativ; 30-50 med 2 lysbarer, uden X-stativ; 50-100 = stor højtalerpakke + stativer + 2 lysbarer (før mellem + sub + mikrofon). 'Stor DJ-pakke' hedder nu 'DJ Pakke 50-100'.",
+    "monitor": "Arket har Monitor to gange: DJ-afsnittet 495 og Tilbehør lyd 295 (ændret i dag). Kataloget bruger 295 — afventer at Frederik retter den anden række.",
+    "tekster": "Beløb i 9 blogindlæg, uplights-sidens meta, udgåede pakkers beskrivelser og karaoke-pakkens enkeltpris er rettet. DJ-timeprisen på anledningssiderne læses nu fra DJ_HOUR_RATE (stod som 1.800).",
+    "ikke_rettet": "Google Ads-annoncerne bærer priser i teksten og kan ikke redigeres fra koden, se ads-rsa-kan-ikke-redigeres."
   }
 }
