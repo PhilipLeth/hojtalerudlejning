@@ -42,6 +42,7 @@ export default function LargePartyPackageEn() {
       sub={`2× EV 12" speakers + the full light package. A proper party, save ${rabatDkk("pakke_fest_stor")}.`}
       imageAlt="Party package 30-50 with EV speakers and light bar"
       productId="pakke_fest_stor"
+      heroImage="/images/hero/festpakke-stor.webp"
       faqPhrase="the party package 30-50"
       bullets={[
         '2× EV 12" active speakers with Bluetooth (30-50 guests)',

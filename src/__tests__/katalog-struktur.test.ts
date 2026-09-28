@@ -161,7 +161,13 @@ describe("En lydside viser lyd, ikke lys", () => {
   it("/lydanlaeg viser arkets tre anlægsafsnit, ikke kun to", () => {
     const lyd = KATALOG_AFSNIT.find((a) => a.id === "lyd")!;
     const batteri = lyd.grupper.find((g) => g.nr === "1.3")!;
-    expect(batteri.ids.sort()).toEqual([...BATTERIHOJTALERE].sort());
+    // Arkets 1.3 har også det ekstra Soundboks-batteri, men det er et tilvalg på
+    // Soundboksen, ikke en højtaler på lydsiden (Philip, 28. sept 2026)
+    expect(batteri.ids.filter((id) => id !== "batteri").sort()).toEqual([...BATTERIHOJTALERE].sort());
+    expect(BATTERIHOJTALERE).not.toContain("batteri");
+    for (const sti of ["src/app/soundboks-4/page.tsx", "src/app/en/soundboks-4/page.tsx"]) {
+      expect(readFileSync(sti, "utf8"), `${sti} tilbyder ikke batteriet`).toContain('id: "batteri"');
+    }
 
     for (const sti of ["src/app/lydanlaeg/page.tsx", "src/app/en/lydanlaeg/page.tsx"]) {
       const kilde = readFileSync(sti, "utf8");

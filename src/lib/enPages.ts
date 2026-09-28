@@ -35,6 +35,7 @@ export const EN_PAGES = [
 
   "/av-udstyr",
   "/tilbehoer",
+  "/lyd-og-lyspakker",
   "/eventloesninger",
   "/cases",
   "/erhverv",

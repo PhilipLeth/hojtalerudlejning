@@ -32,7 +32,7 @@ export default function FestpakkeLillePage() {
       slug="festpakke-lille"
       name="Festpakke 0-30"
       headline="Festpakke 0-30, lyd og lys"
-      sub={`2× Alto 10&quot; højtalere + lysbar. Alt til festen med op til 30 gæster, spar ${rabatKr("pakke_fest_lille")}.`}
+      sub={`2× Alto 10" højtalere + lysbar. Alt til festen med op til 30 gæster, spar ${rabatKr("pakke_fest_lille")}.`}
       imageAlt="Festpakke 0-30 med Alto højtalere og lysbar"
       productId="pakke_fest_lille"
       faqPhrase="Festpakke 0-30"

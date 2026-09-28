@@ -42,6 +42,34 @@ const UD_DIR = join(ROD, "public", "images");
  */
 const OPGAVER = [
   {
+    // Philip 28. sept 2026: "Enkelt lyseffekt viser et spejlkuglespot. Det skal
+    // være en lyseffekt." Arket: Eurolite LED Mini Z-20 beam-effekt.
+    id: "lyseffekt",
+    fil: "product-lyseffekt-v3-white.webp",
+    motiv:
+      "a small compact LED party light effect, a matte black box about the size of a hand, with a " +
+      "short U-shaped mounting bracket underneath and a small power cable. The front face is a clear " +
+      "domed multi-lens cluster with many small facets, lit from inside with separate red, green, blue " +
+      "and white LED points, so that thin coloured beams fan out from the front in several directions " +
+      "across the white background. Not a spotlight, not a single round lens, not a pinspot, no " +
+      "mirror ball, no disco ball",
+  },
+  {
+    // Philip 28. sept 2026: "Soundboks batteri skal være et billede af et reelt
+    // SB-batteri." Beskrivelsen er Soundboks' egen: murstensformet sort
+    // ABS-kasse, 15 × 6,4 × 9,4 cm, stofstrop til at trække den ud, gummiknap
+    // og fem LED'er til batteriniveau, kraftigt DC-stik.
+    id: "batteri",
+    fil: "product-soundboks-batteri-v2-white.webp",
+    motiv:
+      "a rechargeable battery pack for a portable party speaker: a brick-shaped matte black moulded " +
+      "plastic box, about 15 cm tall, 6 cm wide and 9 cm deep, with softly rounded edges, standing " +
+      "upright. A short loop of black woven fabric strap sticks out of the top, used to pull the battery " +
+      "out of the speaker. On the top face a small round black rubber push button next to a short row " +
+      "of five tiny green LED dots, all lit. On the bottom edge a sturdy recessed DC connector. Plain " +
+      "surfaces with no text, no logo, no labels. Not a phone power bank, no cable, no speaker",
+  },
+  {
     // Philip 28. sept 2026: "lav det ud fra en AlphaTheta XDJ-AZ". Det gamle
     // billede var en opdigtet pult med en tablet på en stander. -v2, så CDN'en
     // ikke bliver ved med at servere det gamle, se billede-cache-kraever-nyt-navn.

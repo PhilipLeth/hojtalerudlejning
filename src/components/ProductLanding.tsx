@@ -96,6 +96,12 @@ export interface ProductLandingProps {
    * end kortet i gitteret.
    */
   image?: string;
+  /**
+   * Stemningsbillede bag overskriften i stedet for det fælles hero.webp.
+   * Genereret med scripts/product-images/hero-stemning.mjs, som også lægger
+   * en -800-udgave til mobil ved siden af. Første eksempel: /festpakke-stor.
+   */
+  heroImage?: string;
   imageAlt: string;
   bullets: string[];
   /** Booking product id for /?product=ID */
@@ -178,6 +184,7 @@ export default function ProductLanding({
   headline,
   sub,
   image: billedeProp,
+  heroImage,
   imageAlt,
   bullets,
   productId,
@@ -305,12 +312,23 @@ export default function ProductLanding({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
       />
 
-      <section className="relative flex min-h-[56vh] sm:min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
-        <div
-          className="fixed inset-0 bg-cover bg-center opacity-55"
-          style={{ backgroundImage: "url(/images/hero.webp)" }}
-        />
-        <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
+      <section className={`relative flex min-h-[56vh] sm:min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden${heroImage ? " stemnings-hero" : ""}`}>
+        {heroImage ? (
+          <img
+            src={heroImage}
+            srcSet={`${heroImage.replace(/\.webp$/, "-800.webp")} 800w, ${heroImage} 1920w`}
+            sizes="100vw"
+            alt=""
+            fetchPriority="high"
+            className="stemnings-hero-billede"
+          />
+        ) : (
+          <div
+            className="fixed inset-0 bg-cover bg-center opacity-55"
+            style={{ backgroundImage: "url(/images/hero.webp)" }}
+          />
+        )}
+        {!heroImage && <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />}
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">

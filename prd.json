@@ -4322,5 +4322,12 @@
     "fold_ud": "Eventløsninger, Opstillinger & cases og de aktive sæsoner (julefrokost, halloween) ligger under 'Events & sæson' (TOPMENU_MERE), i headeren som fold-ud-panel og i mobilmenuen som <details>.",
     "cta": "Headerens knap hedder 'Mest udlejede' og peger på /#shop-pakker; forsidens hovedknap peger på /lej-hojtaler i stedet for /eventloesninger.",
     "test": "topmenu.test.ts låser de fire kategorier, at de findes på begge sprog, og at events/sæsoner kun står i fold-ud-menuen."
+  },
+  "lyd_lys_sider_2026_09_28": {
+    "stemningshero": "Første produktside med et genereret stemningsbillede i hero: /festpakke-stor (da+en), også brugt på /lyd-og-lyspakker. Genereret med scripts/product-images/hero-stemning.mjs (Gemini, vores egne produktfotos som reference), ProductLanding tager heroImage. Temaet gør ellers heroen lys; .stemnings-hero i pro-theme.css giver mørkt slør og hvid tekst.",
+    "lyd_og_lyspakker": "Ny side /lyd-og-lyspakker (da+en) med arkets afsnit 3: festpakkerne, lejlighedspakkerne og DJ-pakkerne. Topmenuen peger dertil; /lej-hojtaler er stadig højtalersiden og annoncelandingsside. KATEGORI_PAKKER: pakkerne ejes nu af /lyd-og-lyspakker.",
+    "lydanlaeg": "Batterihøjtalere står før speakerpakkerne. Mikrofoner, mixer, sub, monitor og stativer (LYD_UDSTYR) står på /lydanlaeg i stedet for på /tilbehoer. Soundboks-batteriet er taget ud af BATTERIHOJTALERE og står som tilvalg på /soundboks-4.",
+    "tilbehoer": "Kun lys- og DJ-stativer, væsker og strøm.",
+    "billeder": "Enkelt lyseffekt: nyt genereret foto (product-lyseffekt-v3-white). Soundboks-batteri: genereret efter Soundboks' beskrivelse af Batteryboks (product-soundboks-batteri-v2-white). Festlys 0-50 og 50-100: sat sammen af de ægte studiefotos med scripts/product-images/festlys_pakker.py (1 hhv. 2 lysbarer + røgmaskine)."
   }
 }

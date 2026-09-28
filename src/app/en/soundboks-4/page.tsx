@@ -1,6 +1,7 @@
 import { prisDkk } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
@@ -66,6 +67,16 @@ export default function Soundboks4En() {
         "Charger and cables included",
         "Collect Friday, return Monday",
       ]}
-    />
+    >
+      {/* The battery is an add-on to the Soundboks, see the Danish page */}
+      <section className="mx-auto max-w-3xl px-4 pb-16">
+        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">Add-on</p>
+        <h2 className="mb-2 text-2xl font-bold">A spare battery for a longer party</h2>
+        <p className="mb-6 max-w-xl text-sm text-white/50">
+          Swap the battery when the first one runs low and keep playing without a socket. Choose it in the booking, or book it here.
+        </p>
+        <CategoryProductGrid locale="en" items={[{ id: "batteri" }]} />
+      </section>
+    </ProductLanding>
   );
 }

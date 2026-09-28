@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import BundleGrid from "@/components/BundleGrid";
-import { BATTERIHOJTALERE, LADDER_LYD, SPEAKERPAKKER, ladderPrice, prisKr, type LadderStep } from "@/lib/products";
+import { BATTERIHOJTALERE, LADDER_LYD, LYD_UDSTYR, SPEAKERPAKKER, ladderPrice, prisKr, type LadderStep } from "@/lib/products";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { bookHref } from "@/lib/bookUrl";
 import { localeAlternates } from "@/lib/hreflang";
@@ -139,14 +139,6 @@ export default function LydanlaegPage() {
         </div>
       </section>
 
-      {/* Arkets afsnit 1.2: anlæg + mikrofon. Stadig ren lyd, så den hører her. */}
-      <BundleGrid
-        ids={SPEAKERPAKKER}
-        eyebrow="Skal der holdes tale?"
-        title="Anlæg med mikrofon"
-        subtitle="Samme anlæg, med mikrofonen i. Den går direkte i højtaleren, så der ikke skal en mixer imellem. Trådløs, hvis taleren skal kunne gå rundt."
-      />
-
       {/* Arkets afsnit 1.3: batterihøjtalere. Stigen ovenfor spørger om
           gæstetallet, men det første, der afgør valget udendørs, er om der er
           en stikkontakt. Den her sektion er svaret, når der ikke er. */}
@@ -161,6 +153,14 @@ export default function LydanlaegPage() {
         <CategoryProductGrid items={BATTERIHOJTALERE.map((id) => ({ id }))} />
       </section>
 
+      {/* Arkets afsnit 1.2: anlæg + mikrofon. Stadig ren lyd, så den hører her. */}
+      <BundleGrid
+        ids={SPEAKERPAKKER}
+        eyebrow="Skal der holdes tale?"
+        title="Anlæg med mikrofon"
+        subtitle="Samme anlæg, med mikrofonen i. Den går direkte i højtaleren, så der ikke skal en mixer imellem. Trådløs, hvis taleren skal kunne gå rundt."
+      />
+
       {/* Festpakkerne har lysbar og røg med og hører derfor i arkets afsnit 3,
           ikke på en lydside. Her er det et link, ikke et kort. */}
       <section className="mx-auto max-w-6xl px-4 py-12">
@@ -172,7 +172,7 @@ export default function LydanlaegPage() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/lej-hojtaler"
+              href="/lyd-og-lyspakker"
               className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
             >
               Se lyd og lys-pakkerne
@@ -187,32 +187,20 @@ export default function LydanlaegPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 pb-12">
-        <h2 className="mb-2 text-2xl font-bold">Til taler og møder</h2>
+      {/* Alt lydudstyret, fra mikrofoner til mixer, sub og monitor. Philip 28.
+          sept 2026: "Du skal vise alt fra mixere til mics på Lyd". Det stod
+          under Tilbehør, men det er lyd — arkets 1.5 og 1.6. */}
+      <section id="udstyr" className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-12">
+        <h2 className="mb-2 text-2xl font-bold">Mikrofoner, mixer, sub og monitor</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">
-          Skal der siges noget, er mikrofonen vigtigere end bassen. Vi udlejer både lyden og billedet
-          mikrofon, højtalere, projektor, lærred og storskærm.
+          Lej delene for sig eller læg dem oven i et anlæg. Én eller to mikrofoner går direkte i højtaleren; skal
+          flere tale samtidig, eller skal en DJ med, samler mixeren det hele.
         </p>
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/pakke-tale-musik"
-            className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
-          >
-            Tale &amp; musik-pakken
-          </Link>
-          <Link
-            href="/lej-mikrofon"
-            className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
-          >
-            Se alle mikrofoner
-          </Link>
-          <Link
-            href="/erhverv#tilbud"
-            className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
-          >
-            Flere end to mikrofoner? Få et tilbud
-          </Link>
-        </div>
+        <CategoryProductGrid cols={4} items={LYD_UDSTYR.map((id) => ({ id }))} />
+        <p className="mt-6 text-sm text-white/50">
+          Flere end to mikrofoner eller en tekniker på dagen?{" "}
+          <Link href="/erhverv#tilbud" className="font-semibold text-brand-400">Få et tilbud →</Link>
+        </p>
       </section>
 
       <section className="mx-auto max-w-3xl px-4 pb-20">

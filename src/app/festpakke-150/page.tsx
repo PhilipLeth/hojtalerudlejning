@@ -31,7 +31,7 @@ export default function Festpakke150Page() {
       slug="festpakke-150"
       name="Festpakke 150"
       headline="Festpakke 150, når dansegulvet skal fungere"
-      sub={`2× EV 12&quot; højtalere, subwoofer, stativer, lysbar og røgmaskine. Til op til 150 gæster, spar ${rabatKr("pakke_fest_150")}.`}
+      sub={`2× EV 12" højtalere, subwoofer, stativer, lysbar og røgmaskine. Til op til 150 gæster, spar ${rabatKr("pakke_fest_150")}.`}
       imageAlt="Festpakke 150: to EV 12&quot; højtalere på stativer, 12&quot; subwoofer, lysbar og røgmaskine"
       productId="pakke_fest_150"
       capacity={{ level: 3, label: "100-150 pers." }}

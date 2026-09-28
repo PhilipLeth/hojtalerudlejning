@@ -518,7 +518,7 @@ export const addons: Addon[] = [
     page: "/enkelt-lyseffekt",
     youtubeUrl: "https://www.youtube.com/watch?v=XhecuXfY0vo",
     price: 195,
-    image: "/images/product-lyseffekt-z20-white.webp",
+    image: "/images/product-lyseffekt-v3-white.webp",
     allowedAddons: ["lys", "rog", "lysstativ", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ["Eurolite LED Mini Z-20 beam-effekt", "USB-strømkabel", "Automatiske effekter"],
     da: { label: "Enkelt lyseffekt", desc: "Eurolite LED Mini Z-20, lille USB-drevet beam-effekt med roterende farvede stråler, plug and play" },
@@ -580,7 +580,7 @@ export const addons: Addon[] = [
     id: "batteri",
     page: "/ekstra-batteri",
     price: 395,
-    image: "/images/product-soundboks-batteri-white.webp",
+    image: "/images/product-soundboks-batteri-v2-white.webp",
     contents: ["Soundboks batteri (USB-C)", "Opladet ved afhentning"],
     da: { label: "Soundboks batteri", desc: "Ekstra batteri til Soundboks 4, dobbelt spilletid uden strøm" },
     en: { label: "Soundboks battery", desc: "Extra battery for the Soundboks 4, twice the playtime without power" },
@@ -1036,7 +1036,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   {
     id: "pakke_festlys_50",
     category: "lys",
-    image: "/images/product-lys-v4-white.webp",
+    image: "/images/product-pakke-festlys-50-white.webp",
     showPartImages: true,
     name_da: "Festlys 0-50",
     name_en: "Party lights 0-50",
@@ -1056,7 +1056,7 @@ const rentalProductsRaw: RawRentalProduct[] = [
   {
     id: "pakke_festlys_100",
     category: "lys",
-    image: "/images/product-lys-v4-white.webp",
+    image: "/images/product-pakke-festlys-100-white.webp",
     showPartImages: true,
     name_da: "Festlys 50-100",
     name_en: "Party lights 50-100",
@@ -2086,7 +2086,7 @@ export function anledningPaaPause(slug: string): boolean {
 export const TOPMENU: NavLink[] = [
   { href: "/lydanlaeg", label: "Lyd", label_en: "Sound" },
   { href: "/festlys", label: "Lys & effekter", label_en: "Lights & effects" },
-  { href: "/lej-hojtaler", label: "Lyd- og lyspakker", label_en: "Sound & light packages" },
+  { href: "/lyd-og-lyspakker", label: "Lyd- og lyspakker", label_en: "Sound & light packages" },
   { href: "/tilbehoer", label: "Tilbehør", label_en: "Accessories" },
 ];
 
@@ -2208,15 +2208,24 @@ export const SPEAKERPAKKER = [
  * Ekstrabatteriet står med, fordi det er svaret på det spørgsmål, der kommer
  * lige efter: rækker batteriet aftenen ud?
  */
-export const BATTERIHOJTALERE = ["thumpgo", "soundboks", "batteri"];
+// Batteriet er et tilvalg på Soundboksen, ikke en højtaler (Philip, 28. sept 2026)
+export const BATTERIHOJTALERE = ["thumpgo", "soundboks"];
+
+/** Lydsidens udstyr: arkets 1.5 mikrofoner og 1.6 tilbehør til lyd, plus monitoren. */
+export const LYD_UDSTYR = [
+  "mikrofon", "headset", "mikrofon_kabel", "haandholdt_mikrofon_pro",
+  "mixer_stor", "subwoofer", "monitor", "stativer", "stativ_enkelt", "mikrofonstativ",
+];
 
 export const KATEGORI_PAKKER: Record<string, string[]> = {
   "/dj-pult": ["dj_pakke_lille", "dj_pakke_mellem", "dj_pakke_stor"],
   ...Object.fromEntries(eventSituations.map(s => [`/events/${s.slug}`, [...s.packageIds]])),
-  // Feststigen + lejlighedspakkerne, de to gitre siden faktisk renderer.
-  // Skrevet ud, fordi FEST_LADDER_IDS og LYD_LEJLIGHEDSPAKKER erklæres
-  // længere nede i filen og derfor ikke kan læses herfra.
-  "/lej-hojtaler": [
+  // Feststigen + lejlighedspakkerne. Siden 28. sept 2026 ejes de af
+  // /lyd-og-lyspakker, topmenuens side for prisarkets afsnit 3; /lej-hojtaler
+  // viser dem stadig under højtalerne. Skrevet ud, fordi FEST_LADDER_IDS og
+  // LYD_LEJLIGHEDSPAKKER erklæres længere nede og ikke kan læses herfra.
+  "/lej-hojtaler": [],
+  "/lyd-og-lyspakker": [
     "pakke_fest_lille",
     "pakke_fest_stor",
     "pakke_fest_100",

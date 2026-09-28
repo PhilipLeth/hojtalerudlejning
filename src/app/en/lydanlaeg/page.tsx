@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import BundleGrid from "@/components/BundleGrid";
-import { BATTERIHOJTALERE, LADDER_LYD, SPEAKERPAKKER, ladderPrice, prisDkk, type LadderStep } from "@/lib/products";
+import { BATTERIHOJTALERE, LADDER_LYD, LYD_UDSTYR, SPEAKERPAKKER, ladderPrice, prisDkk, type LadderStep } from "@/lib/products";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { bookHref } from "@/lib/bookUrl";
 import { localizedHref } from "@/lib/enPages";
@@ -141,6 +141,18 @@ export default function Page() {
         </div>
       </section>
 
+      {/* Arkets afsnit 1.3: batterihøjtalere. Se den danske side. */}
+      <section className="mx-auto max-w-6xl px-4 py-12">
+        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">No power on site?</p>
+        <h2 className="mb-2 text-2xl font-bold">Battery speakers</h2>
+        <p className="mb-6 max-w-2xl text-sm text-white/50">
+          For a garden, a beach, a park or a backyard, where there is no socket within reach. Both play for up to 12
+          hours on one charge and connect over Bluetooth, so no cables have to be run. If the party is going to last
+          longer, add a spare battery to the Soundboks when you book.
+        </p>
+        <CategoryProductGrid locale="en" items={BATTERIHOJTALERE.map((id) => ({ id }))} />
+      </section>
+
       {/* Arkets afsnit 1.2: anlæg + mikrofon. Stadig ren lyd, så den hører her. */}
       <BundleGrid
         locale="en"
@@ -149,18 +161,6 @@ export default function Page() {
         title="A system with a microphone"
         subtitle="The same system, with the microphone included. It plugs straight into the speaker, so no mixer is needed in between. Wireless if the speaker needs to move around."
       />
-
-      {/* Arkets afsnit 1.3: batterihøjtalere. Se den danske side. */}
-      <section className="mx-auto max-w-6xl px-4 py-12">
-        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">No power on site?</p>
-        <h2 className="mb-2 text-2xl font-bold">Battery speakers</h2>
-        <p className="mb-6 max-w-2xl text-sm text-white/50">
-          For a garden, a beach, a park or a backyard, where there is no socket within reach. Both play for up to 12
-          hours on one charge and connect over Bluetooth, so no cables have to be run. If the party is going to last
-          longer, take a spare battery with you.
-        </p>
-        <CategoryProductGrid locale="en" items={BATTERIHOJTALERE.map((id) => ({ id }))} />
-      </section>
 
       {/* Festpakkerne har lysbar og røg med og hører derfor i arkets afsnit 3,
           ikke på en lydside. Her er det et link, ikke et kort. */}
@@ -173,7 +173,7 @@ export default function Page() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/en/lej-hojtaler"
+              href="/en/lyd-og-lyspakker"
               className="rounded-full bg-brand-500 px-6 py-3 font-semibold text-black transition hover:bg-brand-400"
             >
               See the sound and light packages
@@ -188,32 +188,18 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 pb-12">
-        <h2 className="mb-2 text-2xl font-bold">For speeches and meetings</h2>
+      {/* Alt lydudstyret, se den danske side */}
+      <section id="udstyr" className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-12">
+        <h2 className="mb-2 text-2xl font-bold">Microphones, mixer, sub and monitor</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">
-          If something has to be said, the microphone matters more than the bass. We rent out the sound and the
-          microphone, projectors, screens and projector screens are paused, so those you will need elsewhere.
+          Rent the parts on their own or add them to a system. One or two microphones plug straight into the
+          speaker; if several people speak at once, or a DJ joins, the mixer brings it all together.
         </p>
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href={localizedHref("/pakke-tale-musik", "en")}
-            className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
-          >
-            The speech &amp; music package
-          </Link>
-          <Link
-            href="/en/lej-mikrofon"
-            className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
-          >
-            See all microphones
-          </Link>
-          <Link
-            href="/en#foresp"
-            className="rounded-full border border-white/15 px-6 py-3 font-semibold text-white/80 transition hover:border-brand-500/40 hover:text-white"
-          >
-            More than two microphones? Get a quote
-          </Link>
-        </div>
+        <CategoryProductGrid locale="en" cols={4} items={LYD_UDSTYR.map((id) => ({ id }))} />
+        <p className="mt-6 text-sm text-white/50">
+          More than two microphones or a technician on the day?{" "}
+          <Link href="/en#foresp" className="font-semibold text-brand-400">Get a quote →</Link>
+        </p>
       </section>
 
       <section className="mx-auto max-w-3xl px-4 pb-20">

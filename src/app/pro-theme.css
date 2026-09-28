@@ -67,3 +67,13 @@ body:not(:has(.admin-shell)) .fixed[style*="hero.webp"]{display:none;}
 body:not(:has(.admin-shell)) input,body:not(:has(.admin-shell)) textarea,body:not(:has(.admin-shell)) select{color:#12284a;color-scheme:light;}
 body:not(:has(.admin-shell))  :focus-visible{outline:2px solid #1249cf;outline-offset:3px;}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+
+/* Stemningsbillede i hero (28. sept 2026, første eksempel /festpakke-stor).
+   Temaet gør ellers mørke flader lyse og teksten mørk — oven på et foto
+   skal det være omvendt: mørkt slør over billedet og hvid tekst. */
+.stemnings-hero{background:#07060b}
+.stemnings-hero-billede{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stemnings-hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,6,11,.55) 0%,rgba(7,6,11,.45) 45%,rgba(7,6,11,.8) 100%)}
+body:not(:has(.admin-shell)) .stemnings-hero h1,body:not(:has(.admin-shell)) .stemnings-hero>div>p{color:#fff}
+body:not(:has(.admin-shell)) .stemnings-hero>div>p.text-brand-400{color:#9db8ff}
+body:not(:has(.admin-shell)) .stemnings-hero h1 span.bg-clip-text{background:none;-webkit-text-fill-color:#b9ccff;color:#b9ccff}

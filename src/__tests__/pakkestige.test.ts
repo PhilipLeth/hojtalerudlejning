@@ -169,7 +169,9 @@ describe("Pakkestigen", () => {
 
   it("kategorisiden viser rent faktisk de pakker den er ansvarlig for", () => {
     for (const [side, ids] of Object.entries(KATEGORI_PAKKER)) {
-      const kilde = fs.readFileSync(`src/app${side}/page.tsx`, "utf8");
+      let kilde = fs.readFileSync(`src/app${side}/page.tsx`, "utf8");
+      // Siden kan være en tynd skal om en komponent, der deles af begge sprog
+      if (kilde.includes("LydOgLysPakkerSide")) kilde += fs.readFileSync("src/components/LydOgLysPakkerSide.tsx", "utf8");
       for (const id of ids) {
         const nævnt =
           (kilde.includes("SituationPage") && eventSituations.some(s => `/events/${s.slug}` === side && (s.packageIds as readonly string[]).includes(id))) ||

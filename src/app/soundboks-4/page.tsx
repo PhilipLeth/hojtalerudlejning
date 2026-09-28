@@ -1,6 +1,7 @@
 import { prisKr } from "@/lib/products";
 import { Metadata } from "next";
 import ProductLanding from "@/components/ProductLanding";
+import CategoryProductGrid from "@/components/CategoryProductGrid";
 import SoundboksAltPopup from "@/components/SoundboksAltPopup";
 import Link from "next/link";
 import LivePrice from "@/components/LivePrice";
@@ -61,6 +62,15 @@ export default function Soundboks4Page() {
           "Hent fredag, aflever mandag",
         ]}
       >
+        {/* Batteriet er et tilvalg på Soundboksen, ikke et produkt for sig på /lydanlaeg (28. sept 2026) */}
+        <section className="mx-auto max-w-3xl px-4 pb-16">
+          <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">Tilvalg</p>
+          <h2 className="mb-2 text-2xl font-bold">Ekstra batteri til en længere fest</h2>
+          <p className="mb-6 max-w-xl text-sm text-white/50">
+            Skift batteriet, når det første er ved at løbe tør, og spil videre uden stikkontakt. Vælg det i bookingen, eller book det her.
+          </p>
+          <CategoryProductGrid items={[{ id: "batteri" }]} />
+        </section>
         <section className="mx-auto max-w-3xl px-4 pb-16">
           <div className="glass rounded-2xl p-8 text-center">
             <h2 className="mb-3 text-2xl font-bold">Billigere alternativ?</h2>

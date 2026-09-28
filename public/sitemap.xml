@@ -541,6 +541,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/en/lyd-og-lyspakker</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en/lydanlaeg</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1057,6 +1062,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/levering</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/lyd-og-lyspakker</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

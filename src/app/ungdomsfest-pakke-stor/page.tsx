@@ -30,7 +30,7 @@ export default function Side() {
       slug="ungdomsfest-pakke-stor"
       name="Stor ungdomsfest-pakke"
       headline="Stor ungdomsfest-pakke, et rigtigt diskotek"
-      sub={`To 12&quot; højtalere, lysbar på stativ, discokugle 40 cm og røgmaskine. Forsamlingshuset bliver til en klub, spar ${rabatKr("pakke_ungdomsfest_stor")}.`}
+      sub={`To 12" højtalere, lysbar på stativ, discokugle 40 cm og røgmaskine. Forsamlingshuset bliver til en klub, spar ${rabatKr("pakke_ungdomsfest_stor")}.`}
       imageAlt="Stor ungdomsfest-pakke tændt: to 12-tommer højtalere, lysbar på stativ, discokugle med spot og røgmaskine"
       productId="pakke_ungdomsfest_stor"
       faqPhrase="den store ungdomsfest-pakke"
