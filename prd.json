@@ -4316,5 +4316,11 @@
     "forsiden": "'De ti vi lejer mest ud' hedder 'Mest udlejede' / 'Most rented'. Kategorierne (Højtalere, Lys, Røg, Mikrofoner, DJ-pulte) står som kort med produktfoto over produktgitteret i stedet for som linkrække under det.",
     "kurven": "Datotrinnet på /book viser nu hele kurven (KurvListe), når der ligger mere end det aktuelle produkt. Før viste det kun det sidst valgte, selv om tælleren sagde 2. Kurvlinjen for et rent tilvalg (fx røgmaskine) viste 0 kr — den viser nu tilvalgets pris.",
     "gaeld": "/erhverv lover stadig skærme og projektorer i titel/beskrivelse. Gamle event_*- og halloween/jul-pakker, der står uden for arket men kun består af arkets dele, er IKKE pauset — det kræver en beslutning."
+  },
+  "topmenu_produktshop_2026_09_28": {
+    "beslutning": "Philip 28. sept 2026: 'Vi er en produktshop fremover.' Topmenuen har fire produktkategorier: Lyd (/lydanlaeg), Lys & effekter (/festlys), Lyd- og lyspakker (/lej-hojtaler) og Tilbehør (/tilbehoer, ny side på begge sprog). Data i TOPMENU i products.ts.",
+    "fold_ud": "Eventløsninger, Opstillinger & cases og de aktive sæsoner (julefrokost, halloween) ligger under 'Events & sæson' (TOPMENU_MERE), i headeren som fold-ud-panel og i mobilmenuen som <details>.",
+    "cta": "Headerens knap hedder 'Mest udlejede' og peger på /#shop-pakker; forsidens hovedknap peger på /lej-hojtaler i stedet for /eventloesninger.",
+    "test": "topmenu.test.ts låser de fire kategorier, at de findes på begge sprog, og at events/sæsoner kun står i fold-ud-menuen."
   }
 }

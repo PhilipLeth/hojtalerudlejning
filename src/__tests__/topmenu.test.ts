@@ -1,0 +1,36 @@
+/**
+ * Topmenuen er en produktshop (Philip, 28. sept 2026): "Lyd, Lys & effekter,
+ * Lyd- og lyspakker, Tilbehør skal op i topmenuen", mens eventløsninger, cases,
+ * julefrokost og halloween "pakkes lidt ind under fold ud menu".
+ */
+import { describe, it, expect } from "vitest";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { TOPMENU, TOPMENU_MERE } from "@/lib/products";
+import { EN_PAGES } from "@/lib/enPages";
+
+const header = readFileSync(join(process.cwd(), "src/components/SiteHeader.tsx"), "utf8");
+
+describe("Topmenuen", () => {
+  it("har de fire produktkategorier i den rækkefølge", () => {
+    expect(TOPMENU.map((l) => l.label)).toEqual(["Lyd", "Lys & effekter", "Lyd- og lyspakker", "Tilbehør"]);
+  });
+
+  it("hver kategori har en side på begge sprog", () => {
+    for (const { href } of TOPMENU) {
+      expect(existsSync(join(process.cwd(), `src/app${href}/page.tsx`)), `${href} mangler`).toBe(true);
+      expect(EN_PAGES, `${href} mangler på engelsk`).toContain(href);
+    }
+  });
+
+  it("events og sæsoner står i fold-ud-menuen, ikke fremme", () => {
+    expect(TOPMENU_MERE.links.map((l) => l.href)).toEqual(["/eventloesninger", "/cases"]);
+    for (const sti of ["/eventloesninger", "/cases", "/julefrokost", "/halloween"]) {
+      expect(TOPMENU.map((l) => l.href)).not.toContain(sti);
+    }
+    // Sæsonerne kommer ind i panelet, ikke i selve navigationen
+    const panel = header.slice(header.indexOf('className="pro-more-panel"'));
+    expect(panel).toContain("activeSeasons()");
+    expect(header.slice(0, header.indexOf('className="pro-more"'))).not.toContain("activeSeasons().map");
+  });
+});

@@ -2076,6 +2076,30 @@ export function anledningPaaPause(slug: string): boolean {
   return !!s && s.packageIds.every((id) => rentalProducts.find((p) => p.id === id)?.hidden);
 }
 
+/**
+ * Topmenuen: vi er en produktshop (Philip, 28. sept 2026).
+ *
+ * Fire indgange til sortimentet, i prisarkets rækkefølge: lyd (afsnit 1), lys
+ * og effekter (2 og 2.5), lyd og lys i pakke (3) og tilbehøret. Eventløsninger,
+ * cases og sæsonerne er ikke væk, men foldet ind under TOPMENU_MERE.
+ */
+export const TOPMENU: NavLink[] = [
+  { href: "/lydanlaeg", label: "Lyd", label_en: "Sound" },
+  { href: "/festlys", label: "Lys & effekter", label_en: "Lights & effects" },
+  { href: "/lej-hojtaler", label: "Lyd- og lyspakker", label_en: "Sound & light packages" },
+  { href: "/tilbehoer", label: "Tilbehør", label_en: "Accessories" },
+];
+
+/** Fold-ud-menuen. Sæsonerne (julefrokost, halloween) lægges på, mens de er aktive. */
+export const TOPMENU_MERE: { label: string; label_en: string; links: NavLink[] } = {
+  label: "Events & sæson",
+  label_en: "Events & seasons",
+  links: [
+    { href: "/eventloesninger", label: "Eventløsninger", label_en: "Event solutions" },
+    { href: "/cases", label: "Opstillinger & cases", label_en: "Setups & cases" },
+  ],
+};
+
 /** Navigation categories, single source of truth used by BurgerMenu and admin */
 export interface NavLink { href: string; label: string; label_en: string }
 export interface NavCategory { id: string; title: string; title_en: string; href: string; links: NavLink[] }

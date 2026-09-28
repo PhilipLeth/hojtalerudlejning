@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NAV_CATEGORIES } from "@/lib/products";
+import { NAV_CATEGORIES, TOPMENU, TOPMENU_MERE } from "@/lib/products";
 import { activeSeasons } from "@/lib/seasons";
 import PhoneLink from "@/components/PhoneLink";
 import { localizedHref, sprogskifteSti } from "@/lib/enPages";
@@ -140,32 +140,46 @@ export default function BurgerMenu() {
             Lejhøjtaler.dk
           </Link>
 
-          {/* Pro-request øverst: firmafest, bryllup og større events skal kunne
-              komme direkte til os uden at gå gennem det almindelige bookingflow */}
-          <Link
-            href={nav("/eventloesninger")}
-            onClick={() => setOpen(false)}
-            className="mb-7 block rounded-2xl border border-brand-500/30 bg-brand-500/[0.07] p-4 transition hover:border-brand-500/60 hover:bg-brand-500/[0.12]"
-          >
-            <span className="flex items-center gap-2 text-sm font-semibold text-brand-400">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">
-                <path d="M4 4h16v12H5.17L4 17.17V4z" />
-              </svg>
-              {c.proTitle}
-            </span>
-            <span className="mt-1 block text-sm text-white/55">{c.proText}</span>
-            <span className="mt-2 inline-block text-xs font-semibold text-white/70">{c.proCta}</span>
-          </Link>
-
+          {/* Produktshop (28. sept 2026): kategorierne øverst, som i topmenuen */}
           <div className="mb-5 flex flex-col gap-3 text-lg font-semibold text-brand-500">
-            {activeSeasons().map((s) => (
-              <Link key={s.id} href={nav(s.href)} onClick={() => setOpen(false)} style={{color: s.accent}}>{locale === "en" ? s.navEn : s.navDa}</Link>
+            {TOPMENU.map((l) => (
+              <Link key={l.href} href={nav(l.href)} onClick={() => setOpen(false)}>{locale === "en" ? l.label_en : l.label}</Link>
             ))}
             <Link href={localizedHref("/dj-pult", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "DJ equipment" : "DJ-pult & pakker"}</Link>
             <Link href={localizedHref("/dj", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "Hire a DJ" : "Lej en DJ"}</Link>
-            <Link href={localizedHref("/eventloesninger", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "Event solutions" : "Eventløsninger"}</Link>
-            <Link href={localizedHref("/cases", locale)} onClick={() => setOpen(false)}>{locale === "en" ? "Setups & cases" : "Opstillinger & cases"}</Link>
           </div>
+          {/* Eventløsninger, cases og sæsonerne er foldet ind */}
+          <details className="group mb-7 rounded-xl border border-white/10 px-4 py-3">
+            <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold text-white/70">
+              {locale === "en" ? TOPMENU_MERE.label_en : TOPMENU_MERE.label}
+              <span aria-hidden className="transition group-open:rotate-180">▾</span>
+            </summary>
+            <div className="mt-4">
+              {/* Pro-request: firmafest, bryllup og større events kan komme direkte til os */}
+              <Link
+                href={nav("/eventloesninger")}
+                onClick={() => setOpen(false)}
+                className="mb-3 block rounded-2xl border border-brand-500/30 bg-brand-500/[0.07] p-4 transition hover:border-brand-500/60 hover:bg-brand-500/[0.12]"
+              >
+                <span className="flex items-center gap-2 text-sm font-semibold text-brand-400">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">
+                    <path d="M4 4h16v12H5.17L4 17.17V4z" />
+                  </svg>
+                  {c.proTitle}
+                </span>
+                <span className="mt-1 block text-sm text-white/55">{c.proText}</span>
+                <span className="mt-2 inline-block text-xs font-semibold text-white/70">{c.proCta}</span>
+              </Link>
+              <div className="flex flex-col gap-2 text-sm">
+                {activeSeasons().map((s) => (
+                  <Link key={s.id} href={nav(s.href)} onClick={() => setOpen(false)} className="font-semibold" style={{color: s.accent}}>{locale === "en" ? s.navEn : s.navDa}</Link>
+                ))}
+                {TOPMENU_MERE.links.map((l) => (
+                  <Link key={l.href} href={nav(l.href)} onClick={() => setOpen(false)} className="text-white/70 hover:text-white">{locale === "en" ? l.label_en : l.label}</Link>
+                ))}
+              </div>
+            </div>
+          </details>
           {NAV_CATEGORIES.map((section) => (
             <div key={section.id} className="mb-6">
               <Link

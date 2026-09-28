@@ -187,7 +187,7 @@ export default function EventHome({locale = "da", detail = false, cases = false}
         <h1>{en ? "Rent sound, light and party equipment in 2 minutes" : "Lej lyd, lys og festudstyr på 2 minutter"}</h1>
         <p className={styles.lead}>{en ? "Equipment for parties, meetings and events: compare packages, see the price straight away and book online." : "Udstyr til fest, møde og event: sammenlign pakker, se prisen med det samme og book online."}</p>
         <div className={styles.actions}>
-          <Link className={styles.primary} href={href("/eventloesninger")}>{en ? "See packages by occasion" : "Se pakker til anledninger"}</Link>
+          <Link className={styles.primary} href={href("/lej-hojtaler")}>{en ? "See sound & light packages" : "Se lyd- og lyspakker"}</Link>
           <Link className={styles.textLink} href={href("/av-udstyr")}>{en ? "Hire individual products" : "Lej enkeltprodukter"} →</Link>
         </div>
         <p className={styles.heroNote}>{en ? "Prices include VAT. Collect in Copenhagen S or add delivery." : "Priser inklusive moms. Hent i København S eller tilvælg levering."}</p>

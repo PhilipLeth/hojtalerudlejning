@@ -34,6 +34,7 @@ export const EN_PAGES = [
   "/events/forening",
 
   "/av-udstyr",
+  "/tilbehoer",
   "/eventloesninger",
   "/cases",
   "/erhverv",

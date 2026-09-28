@@ -716,6 +716,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lejhojtaler.dk/en/tilbehoer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lejhojtaler.dk/en/traadloes-mikrofon</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1242,6 +1247,11 @@
   </url>
   <url>
     <loc>https://lejhojtaler.dk/teenagefest-lys</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lejhojtaler.dk/tilbehoer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
