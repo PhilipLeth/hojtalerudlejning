@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/enkelt-lyseffekt"),
   },
   openGraph: {
-    images: ogImages("/images/product-lyseffekt-v3-white.webp"),
+    images: ogImages("/images/product-lyseffekt-v4-white.webp"),
     title: `Lej Enkelt Lyseffekt København | ${prisKr("lyseffekt")}`,
     description:
       "1 LED-par-lys (uden stativ), plug and play farveeffekt til din fest. Book online, betal ved afhentning.",

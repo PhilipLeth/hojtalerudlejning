@@ -4339,6 +4339,12 @@
     "forside": "Mest udlejede viser de 8 øverste af POPULAERE_IDS (MEST_UDLEJEDE_ANTAL i EventHome). FAQ'en 'Inden du lejer festudstyr' har fået luft over sig.",
     "stativbilleder": "Genereret efter arkets indkøbsnavne: 1 højtalerstativ = Millenium BS-2211B (product-hojtalerstativ-1-white, også lysstativets billede — arkets lysstativ er et almindeligt 3-fodsstativ med T-bar), mikrofonstativ = Fun Generation Mic Stand (-v2), X-stativ = Gravity KSX 2 (-v2, var et bord).",
     "galleri_kontrast": "Temaet gør .text-white mørkeblå overalt, så galleriets billedtekster stod mørkt på sort gradient. .moerk-flade i pro-theme.css holder teksten lys; brug klassen på tekst oven på fotos.",
-    "mixer": "Prisarket har kun én mixer (t.mix 1202 'Mixer med effekter', står to gange). /lej-mikrofon viser den ene; linkteksten 'Sammenlign tre mixerklasser' er rettet. Mackie Mix12FX og t.mix 1402 står stadig på pause — afventer Philips svar om de skal tilbage."
+    "mixer": "Prisarket har kun én mixer (t.mix 1202). Philip: 'Fint med mix, kig i arket når du er i tvivl'. De to andre forbliver på pause."
+  },
+  "topmenu_dropdowns_og_arkets_billeder_2026_09_28": {
+    "topmenu": "Hver af de fire kategorier har en dropdown med undersiderne (TOPMENU[].links, hover + :focus-within). Knappen 'Mest udlejede' er fjernet fra headeren. topmenu.test.ts tjekker at alle links findes på begge sprog.",
+    "billeder_fra_arket": "Produktfotos genereres nu ud fra leverandørens billede i arkets kolonne J (refUrl i fra-beskrivelse.mjs). Enkelt lyseffekt = Eurolite LED Mini Z-20 fra thomann (product-lyseffekt-v4-white), Soundboks-batteri = Soundboks The Battery fra hifiklubben (product-soundboks-batteri-v3-white). v3/v2 fra samme dag var lavet ud fra tekst og lignede ikke.",
+    "claude_md": "CLAUDE.md har fået afsnittet 'Produkterne står i prisarket': kig i arket ved tvivl, sådan læses det, og billeder laves ud fra kolonne J.",
+    "mixer": "Afklaret: én mixer (arkets t.mix 1202). Mackie og t.mix 1402 forbliver på pause."
   }
 }

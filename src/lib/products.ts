@@ -518,7 +518,7 @@ export const addons: Addon[] = [
     page: "/enkelt-lyseffekt",
     youtubeUrl: "https://www.youtube.com/watch?v=XhecuXfY0vo",
     price: 195,
-    image: "/images/product-lyseffekt-v3-white.webp",
+    image: "/images/product-lyseffekt-v4-white.webp",
     allowedAddons: ["lys", "rog", "lysstativ", "levering_ud", "afhentning_retur", "levering_begge"],
     contents: ["Eurolite LED Mini Z-20 beam-effekt", "USB-strømkabel", "Automatiske effekter"],
     da: { label: "Enkelt lyseffekt", desc: "Eurolite LED Mini Z-20, lille USB-drevet beam-effekt med roterende farvede stråler, plug and play" },
@@ -580,7 +580,7 @@ export const addons: Addon[] = [
     id: "batteri",
     page: "/ekstra-batteri",
     price: 395,
-    image: "/images/product-soundboks-batteri-v2-white.webp",
+    image: "/images/product-soundboks-batteri-v3-white.webp",
     contents: ["Soundboks batteri (USB-C)", "Opladet ved afhentning"],
     da: { label: "Soundboks batteri", desc: "Ekstra batteri til Soundboks 4, dobbelt spilletid uden strøm" },
     en: { label: "Soundboks battery", desc: "Extra battery for the Soundboks 4, twice the playtime without power" },
@@ -2080,14 +2080,58 @@ export function anledningPaaPause(slug: string): boolean {
  * Topmenuen: vi er en produktshop (Philip, 28. sept 2026).
  *
  * Fire indgange til sortimentet, i prisarkets rækkefølge: lyd (afsnit 1), lys
- * og effekter (2 og 2.5), lyd og lys i pakke (3) og tilbehøret. Eventløsninger,
- * cases og sæsonerne er ikke væk, men foldet ind under TOPMENU_MERE.
+ * og effekter (2 og 2.5), lyd og lys i pakke (3) og tilbehøret. Hver har en
+ * dropdown med undersiderne (Philip: "Lav drop downs i topmenuen"). Eventløsninger,
+ * cases og sæsonerne står i burgermenuen under TOPMENU_MERE.
  */
-export const TOPMENU: NavLink[] = [
-  { href: "/lydanlaeg", label: "Lyd", label_en: "Sound" },
-  { href: "/festlys", label: "Lys & effekter", label_en: "Lights & effects" },
-  { href: "/lyd-og-lyspakker", label: "Lyd- og lyspakker", label_en: "Sound & light packages" },
-  { href: "/tilbehoer", label: "Tilbehør", label_en: "Accessories" },
+export const TOPMENU: (NavLink & { links: NavLink[] })[] = [
+  {
+    href: "/lydanlaeg", label: "Lyd", label_en: "Sound",
+    links: [
+      { href: "/lydanlaeg", label: "Anlæg efter antal gæster", label_en: "Systems by guest count" },
+      { href: "/soundboks-4", label: "Soundboks 4", label_en: "Soundboks 4" },
+      { href: "/mackie-thump-go", label: "Mackie Thump GO", label_en: "Mackie Thump GO" },
+      { href: "/lej-mikrofon", label: "Mikrofoner", label_en: "Microphones" },
+      { href: "/mixer", label: "Mixer", label_en: "Mixer" },
+      { href: "/subwoofer", label: "Subwoofer", label_en: "Subwoofer" },
+      { href: "/hojtalerstativer", label: "Højtalerstativer", label_en: "Speaker stands" },
+      { href: "/dj-pult", label: "DJ-pult", label_en: "DJ controller" },
+      { href: "/dj", label: "Lej en DJ", label_en: "Hire a DJ" },
+    ],
+  },
+  {
+    href: "/festlys", label: "Lys & effekter", label_en: "Lights & effects",
+    links: [
+      { href: "/lyspakker", label: "Lyspakker", label_en: "Light packages" },
+      { href: "/lys-pakke", label: "Lysbar", label_en: "Light bar" },
+      { href: "/stemningslys", label: "Stemningslys", label_en: "Ambient lighting" },
+      { href: "/uplights", label: "Uplights", label_en: "Uplights" },
+      { href: "/lyskaeder", label: "Lyskæder", label_en: "String lights" },
+      { href: "/discokugle", label: "Discokugle", label_en: "Disco ball" },
+      { href: "/enkelt-lyseffekt", label: "Enkelt lyseffekt", label_en: "Single light effect" },
+      { href: "/roegmaskine", label: "Røgmaskine", label_en: "Fog machine" },
+      { href: "/roeg", label: "Low fog og effekter", label_en: "Low fog and effects" },
+    ],
+  },
+  {
+    href: "/lyd-og-lyspakker", label: "Lyd- og lyspakker", label_en: "Sound & light packages",
+    links: [
+      { href: "/festpakke-lille", label: "Festpakke 0-30", label_en: "Party package 0-30" },
+      { href: "/festpakke-stor", label: "Festpakke 30-50", label_en: "Party package 30-50" },
+      { href: "/festpakke-100", label: "Festpakke 50-100", label_en: "Party package 50-100" },
+      { href: "/firmafestpakke", label: "Firmafestpakke", label_en: "Company party package" },
+      { href: "/lyd-og-lyspakker#anledning", label: "Pakker til anledningen", label_en: "Packages for the occasion" },
+      { href: "/lyd-og-lyspakker#dj", label: "DJ-pakker", label_en: "DJ packages" },
+    ],
+  },
+  {
+    href: "/tilbehoer", label: "Tilbehør", label_en: "Accessories",
+    links: [
+      { href: "/tilbehoer#stativer", label: "Lys- og DJ-stativer", label_en: "Lighting and DJ stands" },
+      { href: "/tilbehoer#vaesker", label: "Røg-, sne- og boblevæske", label_en: "Fog, snow and bubble fluid" },
+      { href: "/tilbehoer#stroem", label: "Strøm og forlængerledninger", label_en: "Power and extension leads" },
+    ],
+  },
 ];
 
 /** Burgermenuens "Events & sæson". Sæsonerne (julefrokost, halloween) lægges på, mens de er aktive. */

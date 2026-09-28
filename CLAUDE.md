@@ -55,6 +55,27 @@ Konkret:
 Er der dansk indhold uden engelsk modstykke, er det gæld, ikke en beslutning.
 Nævn det i svaret, så det ikke bliver glemt.
 
+## Produkterne står i prisarket
+
+**Er du i tvivl om et produkt, så kig i arket.** Frederiks prisark er sandheden
+om sortimentet: hvad vi udlejer, hvilken model det er, hvad det koster, og hvad
+der er i en pakke. Står en ting ikke i arket, udlejer vi den ikke.
+
+- **Filen:** "LejHøjtaler Katalog.xlsx" i Drive, id
+  `1cwSg1SEc5n-IiMKoi43cv43ATHG4esOW`, fanen **Basis**. Det er en xlsx, ikke et
+  Google Sheet: hent den med Drive-connectorens `download_file_content`
+  (base64) og læs den med `openpyxl`.
+- **Kolonnerne:** A kategori, B produktnavn, C-H delene i en pakke, I
+  indkøbsnavn (den præcise model), J link til produktet hos leverandøren,
+  K relevante tilvalg, P den gældende pris.
+- **Produktbilleder laves ud fra kolonne J.** Et foto genereret ud fra en
+  beskrivelse bliver en opdigtet ting. Hent leverandørens billede fra linket og
+  giv det som reference (`refUrl` i `scripts/product-images/fra-beskrivelse.mjs`).
+  Husstilen og forbuddet mod logoer står i prompten.
+- **Strukturen** (afsnittene og hvilket produkt der hører hvor) er skrevet ind i
+  `src/lib/katalogStruktur.ts`, og priserne i `src/lib/products.ts`. Retter du
+  en af dem, så tjek arket først.
+
 ## Om projektet
 
 - **Stack:** Next.js (`output: "export"`) + Cloudflare Pages Functions i

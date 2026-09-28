@@ -41,6 +41,27 @@ const UD_DIR = join(ROD, "public", "images");
  * producentens emballage.
  */
 const OPGAVER = [
+  {
+    // v3 (beskrivelse alene) var "utroligt grim". Nu ud fra arkets link.
+    id: "lyseffekt_ref",
+    fil: "product-lyseffekt-v4-white.webp",
+    refUrl: "https://thumbs.static-thomann.de/thumb//bdbmagic/pics/prod/519879.jpg",
+    motiv:
+      "a small LED beam light effect: a round black housing with a flat circular front face set with " +
+      "about fifteen small square lenses glowing blue, mounted in a black U-shaped hanging bracket with " +
+      "a knob on the side",
+  },
+  {
+    // Philip: "Sådan ser et Soundboks-batteri ud" (Elgiganten, Soundboks The Battery).
+    // Arkets link er hifiklubben; fotoet derfra er det samme batteri.
+    id: "batteri_ref",
+    fil: "product-soundboks-batteri-v3-white.webp",
+    refUrl: "https://images.hifiklubben.com/image/82e215d3-d4fd-44ee-ac52-f528e639f285/pdp_h/soundbatteryboksusbc.jpg",
+    motiv:
+      "a rechargeable battery for a portable party speaker: a matte black rectangular box, wider than it " +
+      "is tall, with a black webbing carry strap looped across the top and a short cable with a round " +
+      "DC plug coming out of the top. Plain black surfaces with no logo or embossed name",
+  },
   // ── 28. sept 2026: stativerne. Modellerne er arkets indkøbsnavne. ──
   {
     // Arket: Millenium BS-2211B. "1 højtalerstativ skal kun vise et billede af 1 stativ."
@@ -228,7 +249,31 @@ function udtrækBillede(json) {
   return null;
 }
 
-async function generer(prompt, cfg, noegle) {
+/**
+ * Leverandørens eget produktfoto som reference, når opgaven har `refUrl`.
+ *
+ * Philip 28. sept 2026: "Lyseffekten du har lavet er utroligt grim. Kan du ikke
+ * se i arket hvad der er linket til og lave noget ud fra originalen?" En
+ * beskrivelse alene gav en opdigtet lampe. Arkets kolonne J linker til varen;
+ * fotoet derfra er referencen for formen, og vores prompt sætter husstilen og
+ * forbyder mærket. Filen gemmes i gallery/raw/ref (gitignoreret).
+ */
+async function hentReference(o) {
+  if (!o.refUrl) return null;
+  const sti = join(ROD, "gallery", "raw", "ref", `${o.id}.img`);
+  if (!existsSync(sti)) {
+    const svar = await fetch(o.refUrl, { headers: { "User-Agent": "Mozilla/5.0 (Macintosh) AppleWebKit/537.36 Chrome/128 Safari/537.36" } });
+    if (!svar.ok) throw new Error(`reference ${o.refUrl}: ${svar.status}`);
+    mkdirSync(dirname(sti), { recursive: true });
+    writeFileSync(sti, Buffer.from(await svar.arrayBuffer()));
+  }
+  const sharp = (await import("sharp")).default;
+  // Gennemsigtig baggrund (webp/png) lægges på hvidt, så modellen ikke tager den sorte bund med
+  const jpg = await sharp(readFileSync(sti)).flatten({ background: "#ffffff" }).jpeg({ quality: 90 }).toBuffer();
+  return { type: "image", mime_type: "image/jpeg", data: jpg.toString("base64") };
+}
+
+async function generer(prompt, cfg, noegle, ref = null) {
   const svar = await fetch(cfg.spec.endpoint, {
     method: "POST",
     headers: {
@@ -238,7 +283,7 @@ async function generer(prompt, cfg, noegle) {
     },
     body: JSON.stringify({
       model: cfg.spec.model,
-      input: [{ type: "text", text: prompt }],
+      input: ref ? [{ type: "text", text: prompt }, ref] : [{ type: "text", text: prompt }],
       // Kvadratisk som resten af katalogfotoerne
       response_format: { type: "image", aspect_ratio: "1:1", image_size: cfg.spec.image_size },
     }),
@@ -288,9 +333,11 @@ async function main() {
   let lavet = 0;
   let fejl = 0;
   for (const o of opgaver) {
-    const prompt = `A clean catalogue product photo of ${o.motiv}, ${STIL}`;
+    const prompt = o.refUrl
+      ? `A clean catalogue product photo of ${o.motiv}. Reproduce the product in the attached reference photo faithfully: the same shape, proportions, colours and details, but remove every logo, brand name and printed text from it. ${STIL}`
+      : `A clean catalogue product photo of ${o.motiv}, ${STIL}`;
     try {
-      const raa = await generer(prompt, cfg, noegle);
+      const raa = await generer(prompt, cfg, noegle, await hentReference(o));
       const raaSti = join(RAA_DIR, `${o.id}.png`);
       mkdirSync(dirname(raaSti), { recursive: true });
       writeFileSync(raaSti, raa);

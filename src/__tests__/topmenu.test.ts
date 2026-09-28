@@ -23,6 +23,23 @@ describe("Topmenuen", () => {
     }
   });
 
+  it("hver dropdown fører til sider, der findes på begge sprog", () => {
+    for (const k of TOPMENU) {
+      expect(k.links.length, `${k.label} har ingen dropdown`).toBeGreaterThan(0);
+      for (const { href } of k.links) {
+        const sti = href.split("#")[0];
+        expect(existsSync(join(process.cwd(), `src/app${sti}/page.tsx`)), `${href} mangler`).toBe(true);
+        expect(EN_PAGES, `${href} mangler på engelsk`).toContain(sti);
+      }
+    }
+  });
+
+  it("topmenuen har ingen 'Mest udlejede'-knap", () => {
+    // Philip 28. sept 2026: "Fjern 'mest udlejede' fra top menu"
+    expect(header).not.toMatch(/>\{en \? "Most rented" : "Mest udlejede"\}</);
+    expect(header).not.toContain("pro-quote");
+  });
+
   it("events og sæsoner står i burgermenuen, ikke i topmenuen", () => {
     expect(TOPMENU_MERE.links.map((l) => l.href)).toEqual(["/eventloesninger", "/cases"]);
     for (const sti of ["/eventloesninger", "/cases", "/julefrokost", "/halloween"]) {

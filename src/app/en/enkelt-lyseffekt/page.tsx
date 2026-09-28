@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     languages: localeAlternates("/enkelt-lyseffekt"),
   },
   openGraph: {
-    images: ogImages("/images/product-lyseffekt-v3-white.webp"),
+    images: ogImages("/images/product-lyseffekt-v4-white.webp"),
     title: `Single Light Effect Rental Copenhagen | ${prisDkk("lyseffekt")}`,
     description:
       "One LED par light (no stand), a plug-and-play colour effect for your party. Book online, pay on pickup.",
