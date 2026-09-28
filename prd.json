@@ -4308,5 +4308,13 @@
       "vagt": "Ny test i pakkestige.test.ts: 'anledningens pakke kan rent faktisk bookes'. Den fejler, hvis en anledning kommer til at pege på noget skjult, udgået eller en forespørgselsvare."
     },
     "ikke_redirects": "Ingen 301'er. Siderne er ikke slettet, så der er ingen døde URL'er — og et redirect fra en side, der findes som statisk fil, er ikke til at regne med på Pages. 'Denne pakke udgår' med et link til afløseren holder bedre på placeringen end et 301 fra en side, der rangerer."
+  },
+  "sortiment_og_kurv_2026_09_28": {
+    "beslutning": "Philip 28. sept 2026: 'deaktivér alle ting der ikke er i excel og fjern dem fra siden (fjern Skærm & projektor)'. Skærm 55/32, projektor, projektor PRO, lærred, karaoke, slush ice og fadøl er sat hidden og står i PAUSEDE_PRODUKTER — forespørgselsløsningen fra 22. sept (forespoergselsvarer_2026_09_22) er lagt til side indtil videre, men mekanikken er intakt.",
+    "pakker": "Alle pakker med en af de ting som del er også på pause: pakke_praesentation, pakke_konference, pakke_konference_150 og 15 event_*-pakker. Seks anledninger (møde, præsentation, messe, produktlancering, filmaften, konference) har ingen bookbar pakke tilbage; anledningPaaPause() skjuler dem i oversigten, og SituationPage siger 'udlejes ikke lige nu'.",
+    "fjernet_fra_siden": "Menuens 'Billede & Karaoke', forsidens 'Skærm & projektor', billede/AV-pakker/skaffevarer på /av-udstyr (begge sprog), footerens 'Skærme og karaoke'. Produktsiderne ligger der stadig og viser pausen; kun de pausede sider linker til hinanden.",
+    "forsiden": "'De ti vi lejer mest ud' hedder 'Mest udlejede' / 'Most rented'. Kategorierne (Højtalere, Lys, Røg, Mikrofoner, DJ-pulte) står som kort med produktfoto over produktgitteret i stedet for som linkrække under det.",
+    "kurven": "Datotrinnet på /book viser nu hele kurven (KurvListe), når der ligger mere end det aktuelle produkt. Før viste det kun det sidst valgte, selv om tælleren sagde 2. Kurvlinjen for et rent tilvalg (fx røgmaskine) viste 0 kr — den viser nu tilvalgets pris.",
+    "gaeld": "/erhverv lover stadig skærme og projektorer i titel/beskrivelse. Gamle event_*- og halloween/jul-pakker, der står uden for arket men kun består af arkets dele, er IKKE pauset — det kræver en beslutning."
   }
 }

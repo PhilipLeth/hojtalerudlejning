@@ -11,6 +11,10 @@
  * serveren afviser varen i pristabellen. Testen her vogter netop det skel —
  * for skellet er ét felt i kataloget fra at blive utæt, og så kan en kunde
  * betale for noget, vi ikke har sat en pris på.
+ *
+ * 28. sept 2026 er de alle sat på pause (hidden) indtil videre — Philip:
+ * "deaktivér alle ting der ikke er i excel". Forespørgselsmekanikken bliver
+ * stående, så de kan komme tilbage som forespørgsler ved at fjerne pausen.
  */
 import { describe, it, expect } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
@@ -58,7 +62,8 @@ describe("Forespørgselsvarer", () => {
 
   it("serveren afviser dem, så de aldrig kan betales online", async () => {
     const table = await loadPriceTable({ get: async () => null } as never);
-    const alle = katalog.filter((p) => !p.hidden && erForespoergsel(p.id));
+    // Også mens de er på pause: skjult eller ej, må de aldrig kunne betales
+    const alle = katalog.filter((p) => erForespoergsel(p.id));
     expect(alle.length).toBeGreaterThan(5);
     for (const p of alle) {
       expect(table.has(p.id), `${p.id} kan betales online`).toBe(false);
@@ -104,7 +109,6 @@ describe("Forespørgselsvarer", () => {
       const p = rentalProducts.find((r) => r.id === id)!;
       expect(p.image, `${id} mangler et billede`).toMatch(/^\/images\/product-.+-white\.webp$/);
       expect(p.price, `${id} har en pris, men prisen aftales`).toBe(0);
-      expect(p.hidden, `${id} er skjult`).toBeFalsy();
     }
   });
 

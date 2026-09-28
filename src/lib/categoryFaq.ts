@@ -442,9 +442,8 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
   ],
 
 
-  /* Siden dækker hele mødet: billedet og lyden. Projektor, skærm og lærred kom
-     i udlejning igen 8. september 2026 efter en pause — spørgsmålet om billedet
-     står først, fordi det er dét, folk kommer for at spørge om. */
+  /* Billedet (projektor, skærm, lærred) er taget af siden 28. sept 2026 — det
+     står ikke i prisarket. Spørgsmålene handler nu om lyd og mikrofoner. */
   "av-udstyr": [
     {
       q: "Hvad koster det at leje mikrofon til et møde i København?",
@@ -452,20 +451,6 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
         "En trådløs håndholdt mikrofon koster 295 kr for hele lejeperioden, en Shure BLX i scenekvalitet " +
         "595 kr, et trådløst headset 445 kr og et PRO-headset 595 kr. Skal der også være lyd, koster Tale & " +
         "musik-pakken med to 12\" højtalere og trådløs mikrofon " + prisKr("pakke_tale_musik") + ".",
-    },
-    {
-      q: "Hvad koster det at leje projektor, lærred og storskærm?",
-      a:
-        "En Full HD-projektor koster 495 kr for hele lejeperioden, en 5000 lumen PRO-projektor 795 kr, og et " +
-        "lærred på 160 cm 195 kr. Foretrækker du en skærm, koster en 55\" storskærm på stativ 595 kr og en " +
-        "32\" 395 kr. Alle priser gælder 1 til 5 dage — der er ingen dagstillæg.",
-    },
-    {
-      q: "Skal jeg vælge projektor eller storskærm?",
-      a:
-        "Storskærmen er nemmest: den skal bare have strøm og et HDMI-kabel, og den virker i fuldt dagslys. " +
-        "Projektoren giver et meget større billede og er bedre til film og til en sal, men den vil helst have " +
-        "mørke — skal den bruges om dagen, så tag PRO-modellen på 5000 lumen.",
     },
     {
       q: "Skal der en mixer imellem mikrofonen og højtaleren?",

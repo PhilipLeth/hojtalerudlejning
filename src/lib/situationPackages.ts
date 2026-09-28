@@ -3,6 +3,7 @@ import type { RawRentalProduct } from "./products";
 export const situationPackages: RawRentalProduct[] = [
   {
     "id": "event_konference_1",
+    "hidden": true,
     "page": "/events/konference",
     "category": "av",
     "image": "/images/product-festival-v2-white.webp",
@@ -57,6 +58,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_konference_2",
+    "hidden": true,
     "page": "/events/konference",
     "category": "av",
     "image": "/images/product-festival-v2-white.webp",
@@ -125,6 +127,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_moede_1",
+    "hidden": true,
     "page": "/events/moede",
     "category": "av",
     "image": "/images/product-skaerm-white.webp",
@@ -151,6 +154,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_moede_2",
+    "hidden": true,
     "page": "/events/moede",
     "category": "av",
     "image": "/images/product-skaerm-white.webp",
@@ -191,6 +195,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_praesentation_1",
+    "hidden": true,
     "page": "/events/praesentation",
     "category": "av",
     "image": "/images/product-skaerm-white.webp",
@@ -217,6 +222,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_praesentation_2",
+    "hidden": true,
     "page": "/events/praesentation",
     "category": "av",
     "image": "/images/product-projektor-pro-v2-white.webp",
@@ -304,6 +310,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_generalforsamling_2",
+    "hidden": true,
     "page": "/events/generalforsamling",
     "category": "av",
     "image": "/images/product-festival-v2-white.webp",
@@ -405,6 +412,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_foredrag_2",
+    "hidden": true,
     "page": "/events/foredrag",
     "category": "av",
     "image": "/images/product-festival-v2-white.webp",
@@ -466,6 +474,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_messe_1",
+    "hidden": true,
     "page": "/events/messe",
     "category": "av",
     "image": "/images/product-skaerm-white.webp",
@@ -492,6 +501,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_messe_2",
+    "hidden": true,
     "page": "/events/messe",
     "category": "av",
     "image": "/images/product-skaerm-white.webp",
@@ -539,6 +549,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_produktlancering_1",
+    "hidden": true,
     "page": "/events/produktlancering",
     "category": "av",
     "image": "/images/product-skaerm-white.webp",
@@ -579,6 +590,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_produktlancering_2",
+    "hidden": true,
     "page": "/events/produktlancering",
     "category": "av",
     "image": "/images/product-skaerm-white.webp",
@@ -1253,6 +1265,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_filmaften_1",
+    "hidden": true,
     "page": "/events/filmaften",
     "category": "av",
     "image": "/images/product-skaerm-white.webp",
@@ -1286,6 +1299,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_filmaften_2",
+    "hidden": true,
     "page": "/events/filmaften",
     "category": "av",
     "image": "/images/product-projektor-pro-v2-white.webp",
@@ -1432,6 +1446,7 @@ export const situationPackages: RawRentalProduct[] = [
   },
   {
     "id": "event_forening_2",
+    "hidden": true,
     "page": "/events/forening",
     "category": "lyd",
     "image": "/images/product-festival-v2-white.webp",

@@ -6,7 +6,8 @@ import CategoryProductGrid from "./CategoryProductGrid";
 import FaqSection from "./FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import SeasonalStrip from "./SeasonalStrip";
-import { POPULAERE_IDS, prisKr } from "@/lib/products";
+import { POPULAERE_IDS, catalogImage, prisKr } from "@/lib/products";
+import { whiteProductImage } from "@/lib/whiteProductImages";
 import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
 import { localizedHref } from "@/lib/enPages";
@@ -15,21 +16,20 @@ import Footer from "./Footer";
 import styles from "./EventHome.module.css";
 
 /**
- * Vejene ind i sortimentet, som én linje under de populære produkter.
+ * Vejene ind i sortimentet.
  *
  * Frederik bad om at alt under "Find jeres pakke" røg af forsiden, og Philip
- * bad samtidig om at udlejningsprodukterne skal være nemme at finde fra
- * forsiden. Begge dele kan lade sig gøre: ikke et helt afsnit med kasser, men
- * én række links lige under gitteret, hvor den, der leder efter en bestemt
- * ting, allerede kigger.
+ * bad samtidig om at udlejningsprodukterne skal være nemme at finde. 28. sept
+ * 2026 kom kategorierne op over produkterne på forsiden, som en række kort med
+ * et produktfoto, så den der leder efter en bestemt ting, ser vejen først.
+ * Det sidste felt er produktet, hvis foto repræsenterer kategorien.
  */
 const EQUIPMENT = [
-  ["/lej-hojtaler", "Højtalere", "Speakers"],
-  ["/festlys", "Lys", "Lighting"],
-  ["/roeg", "Røg", "Fog"],
-  ["/lej-mikrofon", "Mikrofoner", "Microphones"],
-  ["/dj-pult", "DJ-pulte", "DJ controllers"],
-  ["/av-udstyr", "Skærm & projektor", "Screens & projectors"],
+  ["/lej-hojtaler", "Højtalere", "Speakers", "festival"],
+  ["/festlys", "Lys", "Lighting", "lys"],
+  ["/roeg", "Røg", "Fog", "rog"],
+  ["/lej-mikrofon", "Mikrofoner", "Microphones", "mikrofon"],
+  ["/dj-pult", "DJ-pulte", "DJ controllers", "dj_pult"],
 ] as const;
 
 export default function EventHome({locale = "da", detail = false, cases = false}: {locale?: Locale; detail?: boolean; cases?: boolean}) {
@@ -91,7 +91,7 @@ export default function EventHome({locale = "da", detail = false, cases = false}
         <div className={styles.heroCopy}>
           <p className={styles.location}>{en ? "Packages by occasion" : "Pakker efter anledning"}</p>
           <h1>{en ? "Find the package. Book it online." : "Find pakken. Book den online."}</h1>
-          <p className={styles.lead}>{en ? "Sixteen occasions with ready-made equipment packages. Compare what is included, then add it to the basket. A quote is only needed for unusual rooms." : "Seksten anledninger med færdige udstyrspakker. Sammenlign indholdet, og læg i kurven. Tilbud er kun nødvendigt ved særlige rum."}</p>
+          <p className={styles.lead}>{en ? "Occasions with ready-made equipment packages. Compare what is included, then add it to the basket. A quote is only needed for unusual rooms." : "Anledninger med færdige udstyrspakker. Sammenlign indholdet, og læg i kurven. Tilbud er kun nødvendigt ved særlige rum."}</p>
           <div className={styles.actions}>
             <Link className={styles.primary} href={href("/av-udstyr")}>{en ? "Hire individual products" : "Lej enkeltprodukter"}</Link>
             <Link className={styles.textLink} href={href("/kontakt")}>{en ? "Ask about a room we have not seen" : "Spørg om et rum vi ikke har set"} →</Link>
@@ -197,15 +197,19 @@ export default function EventHome({locale = "da", detail = false, cases = false}
     {/* Ankeret hedder stadig shop-pakker: otte sider, blogindlæg og menuen
         linker til /#shop-pakker, og de skal lande på pakkerne, ikke på toppen. */}
     <section className={styles.section} id="shop-pakker">
+      <nav className={styles.categoryBar} aria-label={en ? "Categories" : "Kategorier"}>
+        {EQUIPMENT.map(([p, da, eng, id]) => (
+          <Link href={href(p)} key={p} className={styles.categoryTile}>
+            <img src={whiteProductImage(catalogImage(id))} alt="" width="96" height="96" loading="lazy" />
+            <span>{en ? eng : da}</span>
+          </Link>
+        ))}
+      </nav>
       <div className={styles.sectionHead}>
-        <h2>{en ? "The ten we hire out most" : "De ti vi lejer mest ud"}</h2>
+        <h2>{en ? "Most rented" : "Mest udlejede"}</h2>
         <p>{en ? "Packages and single products side by side. Every price is for up to five days, VAT included." : "Pakker og enkeltprodukter side om side. Alle priser er for op til fem dages leje, inklusive moms."}</p>
       </div>
       <CategoryProductGrid locale={locale} tone="light" cols={4} items={POPULAERE_IDS.map((id) => ({ id }))} />
-      <div className={styles.rangeLinks}>
-        <span>{en ? "Browse the range:" : "Se hele sortimentet:"}</span>
-        {EQUIPMENT.map(([p, da, eng]) => <Link href={href(p)} key={p}>{en ? eng : da}</Link>)}
-      </div>
     </section>
     <SeasonalStrip locale={locale} />
     <GoogleReviews locale={locale} />

@@ -81,7 +81,8 @@ describe("Pakkeprisen følger delene", () => {
 
   it("en forespørgselspakke kan ikke betales, hverken direkte eller som del", async () => {
     const table = await loadPriceTable({ get: async () => null } as never);
-    const foresporg = pakker.filter((p) => !p.hidden && erForespoergsel(p.id));
+    // Også de pausede: skjult eller ej, må en forespørgselspakke aldrig kunne betales
+    const foresporg = pakker.filter((p) => erForespoergsel(p.id));
     expect(foresporg.length).toBeGreaterThan(0);
     for (const p of foresporg) {
       expect(table.has(p.id), `${p.id} kan betales online`).toBe(false);

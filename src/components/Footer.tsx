@@ -154,8 +154,8 @@ interface FooterColumn {
 /** Katalogets indgange. localizedHref beholder den danske sti, hvis siden ikke findes på engelsk. */
 const SPALTER: FooterColumn[] = [
   {
-    da: "Lyd, lys & AV",
-    en: "Sound, light & AV",
+    da: "Lyd & lys",
+    en: "Sound & light",
     links: [
       { href: "/lej-hojtaler", da: "Højtalere og pakker", en: "Speakers and packages" },
       { href: "/lydanlaeg", da: "Anlæg efter antal gæster", en: "Systems by guest count" },
@@ -163,7 +163,7 @@ const SPALTER: FooterColumn[] = [
       { href: "/roeg", da: "Røg og low fog", en: "Fog and low fog" },
       { href: "/lej-mikrofon", da: "Mikrofoner", en: "Microphones" },
       { href: "/dj-pult", da: "DJ-pulte", en: "DJ booths" },
-      { href: "/av-udstyr", da: "Skærme og karaoke", en: "Screens and karaoke" },
+      { href: "/av-udstyr", da: "Alt udstyr", en: "All equipment" },
     ],
   },
   {

@@ -1267,6 +1267,10 @@ export default function BookingFlow({
     .filter((a) => selectedAddons.includes(a.id))
     .reduce((sum, a) => sum + addonPris(a), 0);
   const addonsPrice = summer ? applyDiscount(addonsBasePrice - (harDj ? djPris : 0)) + (harDj ? djPris : 0) : addonsBasePrice;
+  // Bookes der kun tilvalg (fx en røgmaskine), står de som hovedlinjen i kurven,
+  // og speakerPrice er 0 — linjen skal vise tilvalgenes pris, ikke "0 kr"
+  const soloBase = soloAddons.reduce((sum, a) => sum + addonPris(a), 0);
+  const soloPris = summer ? applyDiscount(soloBase - (harDj ? djPris : 0)) + (harDj ? djPris : 0) : soloBase;
   const cartTotal = cartItems.reduce((sum, item) => sum + item.price, 0);
   const subtotal = speakerPrice + addonsPrice + cartTotal;
   // Rabatkode: procenten kommer fra /api/discount og er kun til visning
@@ -1683,6 +1687,93 @@ export default function BookingFlow({
       checkout?.destroy();
     };
   }, [checkoutSecret, s.errorRetry]);
+
+  /* ── Kurven (trin 2 og 3) ──
+   * Hovedproduktet står øverst og kan fjernes som resten. Står den også på
+   * datotrinnet, kan kunden se, at det første produkt stadig er med, når de
+   * kommer tilbage fra "Fortsæt med at shoppe" og booker en ting mere. */
+  function KurvListe() {
+    if (cartItems.length === 0 && !speaker) return null;
+    return (
+      <div className="glass rounded-xl p-4">
+        <p className="text-xs text-white/40 mb-2">{locale === "en" ? "In your cart:" : "I din kurv:"}</p>
+        {/* Hovedproduktet, ekstra enheder af samme produkt er kurvlinjer og vises her som ét antal */}
+        {!!speaker && (() => {
+          const ekstra = cartItems.filter((c) => c.productId === speaker);
+          const antal = 1 + ekstra.length;
+          const pris = (isEffectsOnly ? soloPris : speakerPrice) + ekstra.reduce((sum, c) => sum + c.price, 0);
+          return (
+            <div className="flex items-center justify-between gap-2 text-sm py-1">
+              <span className="min-w-0 flex-1 truncate text-white/70">
+                {isEffectsOnly ? effectsLabel : isRentalOnly ? rentalName : selectedSpeaker?.name}
+              </span>
+              {!isEffectsOnly && (
+                <AntalVælger
+                  antal={antal}
+                  onMinus={() => (ekstra.length ? fjernEnhed(speaker) : fjernHovedprodukt())}
+                  onPlus={kanLæggeTil(speaker) ? () => lægEnhedTil(speaker) : undefined}
+                  locale={locale}
+                />
+              )}
+              <span className="flex shrink-0 items-center gap-3">
+                <span className="text-brand-400">{pris} kr</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCartItems((prev) => prev.filter((c) => c.productId !== speaker));
+                    fjernHovedprodukt();
+                  }}
+                  aria-label={locale === "en" ? "Remove" : "Fjern"}
+                  className="text-white/30 hover:text-red-400 text-xs"
+                >
+                  ✕
+                </button>
+              </span>
+            </div>
+          );
+        })()}
+        {/* Resten af kurven, én linje pr. produkt med antal */}
+        {(() => {
+          const grupper = new Map<string, { navn: string; antal: number; pris: number }>();
+          for (const c of cartItems) {
+            if (c.productId === speaker) continue;
+            const g = grupper.get(c.productId);
+            if (g) {
+              g.antal += 1;
+              g.pris += c.price;
+            } else {
+              grupper.set(c.productId, { navn: c.name, antal: 1, pris: c.price });
+            }
+          }
+          return [...grupper.entries()].map(([id, g]) => (
+            <div key={id} className="flex items-center justify-between gap-2 text-sm py-1">
+              <span className="min-w-0 flex-1 truncate text-white/70">{g.navn}</span>
+              <AntalVælger
+                antal={g.antal}
+                onMinus={() => fjernEnhed(id)}
+                onPlus={kanLæggeTil(id) ? () => lægEnhedTil(id) : undefined}
+                locale={locale}
+              />
+              <span className="flex shrink-0 items-center gap-3">
+                <span className="text-brand-400">{g.pris} kr</span>
+                <button
+                  type="button"
+                  onClick={() => setCartItems((prev) => prev.filter((x) => x.productId !== id))}
+                  aria-label={locale === "en" ? "Remove" : "Fjern"}
+                  className="text-white/30 hover:text-red-400 text-xs"
+                >
+                  ✕
+                </button>
+              </span>
+            </div>
+          ));
+        })()}
+        <p className="mt-1 text-[11px] text-white/30">
+          {locale === "en" ? "Use + to rent more than one of the same product" : "Brug + til at leje flere af samme produkt"}
+        </p>
+      </div>
+    );
+  }
 
   /* ── Price Summary (reused) ── */
   function PriceSummary() {
@@ -2108,6 +2199,10 @@ export default function BookingFlow({
                 </button>
               </div>
             )}
+
+            {/* Ligger der allerede noget i kurven, skal det stå her — ellers ser
+                det ud, som om den nye vare har erstattet den første */}
+            {cartItems.length > 0 && <KurvListe />}
 
             {/* Produktinfo: beskrivelse + indhold, især vigtigt for pakker */}
             {(selectedRental || selectedSpeaker) && (
@@ -2555,86 +2650,7 @@ export default function BookingFlow({
               );
             })()}
 
-            {/* Kurven, hovedproduktet står øverst og kan fjernes som resten */}
-            {(cartItems.length > 0 || !!speaker) && (
-              <div className="glass rounded-xl p-4">
-                <p className="text-xs text-white/40 mb-2">{locale === "en" ? "In your cart:" : "I din kurv:"}</p>
-                {/* Hovedproduktet, ekstra enheder af samme produkt er kurvlinjer og vises her som ét antal */}
-                {!!speaker && (() => {
-                  const ekstra = cartItems.filter((c) => c.productId === speaker);
-                  const antal = 1 + ekstra.length;
-                  const pris = speakerPrice + ekstra.reduce((sum, c) => sum + c.price, 0);
-                  return (
-                    <div className="flex items-center justify-between gap-2 text-sm py-1">
-                      <span className="min-w-0 flex-1 truncate text-white/70">
-                        {isEffectsOnly ? effectsLabel : isRentalOnly ? rentalName : selectedSpeaker?.name}
-                      </span>
-                      {!isEffectsOnly && (
-                        <AntalVælger
-                          antal={antal}
-                          onMinus={() => (ekstra.length ? fjernEnhed(speaker) : fjernHovedprodukt())}
-                          onPlus={kanLæggeTil(speaker) ? () => lægEnhedTil(speaker) : undefined}
-                          locale={locale}
-                        />
-                      )}
-                      <span className="flex shrink-0 items-center gap-3">
-                        <span className="text-brand-400">{pris} kr</span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setCartItems((prev) => prev.filter((c) => c.productId !== speaker));
-                            fjernHovedprodukt();
-                          }}
-                          aria-label={locale === "en" ? "Remove" : "Fjern"}
-                          className="text-white/30 hover:text-red-400 text-xs"
-                        >
-                          ✕
-                        </button>
-                      </span>
-                    </div>
-                  );
-                })()}
-                {/* Resten af kurven, én linje pr. produkt med antal */}
-                {(() => {
-                  const grupper = new Map<string, { navn: string; antal: number; pris: number }>();
-                  for (const c of cartItems) {
-                    if (c.productId === speaker) continue;
-                    const g = grupper.get(c.productId);
-                    if (g) {
-                      g.antal += 1;
-                      g.pris += c.price;
-                    } else {
-                      grupper.set(c.productId, { navn: c.name, antal: 1, pris: c.price });
-                    }
-                  }
-                  return [...grupper.entries()].map(([id, g]) => (
-                    <div key={id} className="flex items-center justify-between gap-2 text-sm py-1">
-                      <span className="min-w-0 flex-1 truncate text-white/70">{g.navn}</span>
-                      <AntalVælger
-                        antal={g.antal}
-                        onMinus={() => fjernEnhed(id)}
-                        onPlus={kanLæggeTil(id) ? () => lægEnhedTil(id) : undefined}
-                        locale={locale}
-                      />
-                      <span className="flex shrink-0 items-center gap-3">
-                        <span className="text-brand-400">{g.pris} kr</span>
-                        <button
-                          type="button"
-                          onClick={() => setCartItems((prev) => prev.filter((x) => x.productId !== id))}
-                          aria-label={locale === "en" ? "Remove" : "Fjern"}
-                          className="text-white/30 hover:text-red-400 text-xs"
-                        >
-                          ✕
-                        </button>
-                      </span>
-                    </div>
-                  ));
-                })()}
-                <p className="mt-1 text-[11px] text-white/30">
-                  {locale === "en" ? "Use + to rent more than one of the same product" : "Brug + til at leje flere af samme produkt"}
-                </p>
-              </div>
-            )}
+            <KurvListe />
 
             <PriceSummary />
 

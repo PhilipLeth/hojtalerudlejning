@@ -107,14 +107,13 @@ describe("hidden virker hele vejen ud", () => {
     }
   });
 
-  it("menuen har en vej ind til AV-udstyret igen", () => {
-    // Under pausen var kategorien væk med vilje. Nu kan produkterne bookes, og
-    // uden en vej ind lå siderne som blindgyder uden intern linkværdi.
-    const av = NAV_CATEGORIES.find((c) => c.id === "av");
-    expect(av, "AV-kategorien mangler i menuen").toBeTruthy();
-    const href = av!.links.map((l) => l.href);
-    expect(href).toContain("/skaerm");
-    expect(href).toContain("/karaoke");
+  it("menuen fører ikke ind til det, der er på pause", () => {
+    // 28. sept 2026: skærm, projektor, lærred, karaoke, slush ice og fadøl står
+    // ikke i prisarket og er sat på pause. "Billede & Karaoke" er taget ud af
+    // menuen; kommer produkterne tilbage, skal kategorien med.
+    expect(NAV_CATEGORIES.find((c) => c.id === "av"), "AV-kategorien står stadig i menuen").toBeUndefined();
+    const hrefs = NAV_CATEGORIES.flatMap((c) => [c.href, ...c.links.map((l) => l.href)]);
+    for (const sti of PAUSEDE_SIDER) expect(hrefs, `menuen linker til ${sti}, som er på pause`).not.toContain(sti);
     // Mikrofonerne blev i Lyd, hvor de hører til: de lejes til talen, hvor
     // højtaleren alligevel er med
     const lyd = NAV_CATEGORIES.find((c) => c.id === "lyd")!;
@@ -132,6 +131,8 @@ describe("hidden virker hele vejen ud", () => {
       const siger =
         kilde.includes("ProductLanding") ||
         kilde.includes("PausetKategori") ||
+        // Anledningssiderne siger det gennem SituationPage, når alle pakker er på pause
+        kilde.includes("SituationPage") ||
         kilde.includes("udlejes ikke lige nu");
       expect(siger, `${sti} står uden besked om pausen`).toBe(true);
     }
