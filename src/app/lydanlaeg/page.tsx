@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import StemningsBaggrund from "@/components/StemningsBaggrund";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import BundleGrid from "@/components/BundleGrid";
@@ -113,16 +114,19 @@ export default function LydanlaegPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
-      <section className="relative px-4 pb-10 pt-24 text-center">
-        <p className="mb-3 text-sm font-medium uppercase tracking-widest text-brand-400">Lydudlejning i København</p>
-        <h1 className="mx-auto max-w-3xl text-4xl font-bold sm:text-5xl">
-          Vælg anlæg efter hvor mange der kommer
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-white/60">
-          Du skal ikke gætte på tommer og watt. Sig hvor mange gæster der kommer, så er højtalerne, bassen og kablerne
-          sat sammen på forhånd. Er der ingen stikkontakt, hvor I holder den, så tag en batterihøjtaler i stedet.
-          Mikrofon og lys vælger du selv til nedenfor.
-        </p>
+      <section className="stemnings-hero moerk-flade relative flex min-h-[48vh] flex-col items-center justify-center overflow-hidden px-4 pb-12 pt-20 text-center">
+        <StemningsBaggrund sti="/lydanlaeg" />
+        <div className="relative z-10">
+          <p className="mb-3 text-sm font-medium uppercase tracking-widest text-brand-400">Lydudlejning i København</p>
+          <h1 className="mx-auto max-w-3xl text-4xl font-bold sm:text-5xl">
+            Vælg anlæg efter hvor mange der kommer
+          </h1>
+          <p className="mx-auto mt-4 max-w-xl text-white/60">
+            Du skal ikke gætte på tommer og watt. Sig hvor mange gæster der kommer, så er højtalerne, bassen og kablerne
+            sat sammen på forhånd. Er der ingen stikkontakt, hvor I holder den, så tag en batterihøjtaler i stedet.
+            Mikrofon og lys vælger du selv til nedenfor.
+          </p>
+        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-4">
@@ -142,7 +146,7 @@ export default function LydanlaegPage() {
       {/* Arkets afsnit 1.3: batterihøjtalere. Stigen ovenfor spørger om
           gæstetallet, men det første, der afgør valget udendørs, er om der er
           en stikkontakt. Den her sektion er svaret, når der ikke er. */}
-      <section className="mx-auto max-w-6xl px-4 py-12">
+      <section id="batterihojtalere" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-12">
         <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">Er der ikke strøm?</p>
         <h2 className="mb-2 text-2xl font-bold">Batterihøjtalere</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">

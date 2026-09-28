@@ -1,4 +1,5 @@
 import Link from "next/link";
+import StemningsBaggrund from "@/components/StemningsBaggrund";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
@@ -45,29 +46,32 @@ export default function TilbehoerSide({ locale = "da" }: { locale?: Locale }) {
   const en = locale === "en";
   return (
     <main className="bg-white text-slate-900">
-      <section className="mx-auto max-w-6xl px-5 py-16">
-        <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">
-          {en ? "Accessories · Copenhagen" : "Tilbehør · København"}
-        </p>
-        <h1 className="mt-4 max-w-3xl text-4xl font-bold sm:text-6xl">
-          {en ? "Accessory rental: stands, fluids and power." : "Lej tilbehør: stativer, væsker og strøm."}
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg text-slate-600">
-          {en
-            ? "The small things that make the setup work. Microphones, mixers and subs are under Sound. Every price covers up to five days, VAT included."
-            : "De små ting, der får opstillingen til at virke. Mikrofoner, mixer og sub finder du under Lyd. Alle priser gælder op til fem dages leje, inklusive moms."}
-        </p>
-        <p className="mt-3 text-sm">
-          <Link href={localizedHref("/lydanlaeg", locale) + "#udstyr"} className="font-semibold text-brand-600">
-            {en ? "Microphones, mixer, sub and monitor →" : "Mikrofoner, mixer, sub og monitor →"}
-          </Link>
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          {AFSNIT.map((a) => (
-            <a key={a.id} href={`#${a.id}`} className="rounded-full border border-slate-200 px-5 py-2.5 text-sm font-semibold text-brand-600 transition hover:border-brand-500">
-              {en ? a.en : a.da}
-            </a>
-          ))}
+      <section className="stemnings-hero moerk-flade relative overflow-hidden">
+        <StemningsBaggrund sti="/tilbehoer" />
+        <div className="relative z-10 mx-auto max-w-6xl px-5 py-20">
+          <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">
+            {en ? "Accessories · Copenhagen" : "Tilbehør · København"}
+          </p>
+          <h1 className="mt-4 max-w-3xl text-4xl font-bold sm:text-6xl">
+            {en ? "Accessory rental: stands, fluids and power." : "Lej tilbehør: stativer, væsker og strøm."}
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg text-white/80">
+            {en
+              ? "The small things that make the setup work. Microphones, mixers and subs are under Sound. Every price covers up to five days, VAT included."
+              : "De små ting, der får opstillingen til at virke. Mikrofoner, mixer og sub finder du under Lyd. Alle priser gælder op til fem dages leje, inklusive moms."}
+          </p>
+          <p className="mt-3 text-sm">
+            <Link href={localizedHref("/lydanlaeg", locale) + "#udstyr"} className="font-semibold text-white underline underline-offset-4">
+              {en ? "Microphones, mixer, sub and monitor →" : "Mikrofoner, mixer, sub og monitor →"}
+            </Link>
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            {AFSNIT.map((a) => (
+              <a key={a.id} href={`#${a.id}`} className="rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white">
+                {en ? a.en : a.da}
+              </a>
+            ))}
+          </div>
         </div>
       </section>
       {AFSNIT.map((a) => (

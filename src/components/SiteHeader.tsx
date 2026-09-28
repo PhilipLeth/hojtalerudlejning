@@ -32,7 +32,12 @@ export default function SiteHeader() {
     {en ? l.label_en : l.label}<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6"/></svg>
    </Link>
    <div className="pro-drop-panel">
-    {l.links.map((u) => <Link key={u.href} href={href(u.href)} onClick={luk}>{en ? u.label_en : u.label}</Link>)}
+    {l.links.map((u) => (
+     <div key={u.href} className="contents">
+      <Link href={href(u.href)} onClick={luk} className={u.under ? "pro-drop-gruppe" : undefined}>{en ? u.label_en : u.label}</Link>
+      {u.under?.map((b) => <Link key={b.href} href={href(b.href)} onClick={luk} className="pro-drop-under">{en ? b.label_en : b.label}</Link>)}
+     </div>
+    ))}
    </div>
   </div>
  ))}

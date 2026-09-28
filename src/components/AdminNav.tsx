@@ -43,6 +43,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
     group: "Katalog & priser",
     items: [
       { href: "/admin/produkter", label: "Produkter", hint: "Navne, priser, billeder, video" },
+      { href: "/admin/stemningsbilleder", label: "Stemningsbilleder", hint: "Billedet bag overskriften på siderne" },
       { href: "/admin/rabatkoder", label: "Rabatkoder", hint: "Koder kunden kan taste" },
       { href: "/admin/udsalg", label: "Udsalg", hint: "Weekendudsalg på det der står tilbage" },
     ],

@@ -11,6 +11,7 @@ import { localeAlternates } from "@/lib/hreflang";
 import { catalogPrice, prisKr } from "@/lib/products";
 
 import { ogImages } from "@/lib/og";
+import StemningsBaggrund from "@/components/StemningsBaggrund";
 export const metadata: Metadata = {
   title: `Leje af lyskæder i København | Fra ${prisKr("lyskaeder")} | Lejhøjtaler.dk`,
   description:
@@ -67,12 +68,8 @@ export default function LyskaederPage() {
       />
 
       {/* Hero */}
-      <section className="relative flex min-h-[56vh] sm:min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
-        <div
-          className="fixed inset-0 bg-cover bg-center opacity-55"
-          style={{ backgroundImage: "url(/images/hero.webp)" }}
-        />
-        <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
+      <section className="stemnings-hero moerk-flade relative flex min-h-[56vh] sm:min-h-[70vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+        <StemningsBaggrund sti="/lyskaeder" />
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">

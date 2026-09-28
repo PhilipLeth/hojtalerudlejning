@@ -42,7 +42,56 @@ function erSideskift(request: Request): boolean {
   return (request.headers.get("accept") || "").includes("text/html");
 }
 
-export const onRequest: PagesFunction = async (context) => {
+/* ── Stemningsbilleder i hero ──────────────────────────────────────────────
+ *
+ * Et billede godkendt i /admin/stemningsbilleder ligger i KV. Sitet er en
+ * statisk eksport, så siden kender det ikke — men alle sider går gennem her
+ * (_routes.json), og så kan vi skrive det ind i HTML'en på vej ud:
+ *   - <img data-hero-sti="/sti"> får det godkendte billede som src
+ *   - <head> får window.__HERO__, så et klik videre til en anden side (som
+ *     Next tegner i browseren uden ny HTML) også viser det rigtige billede
+ * Fejler KV, går siden ud med kodens standardbillede — aldrig en fejlside.
+ * Nøglen er den samme som HERO_MANIFEST_KEY i src/lib/heroBilleder.ts.
+ */
+interface MiddlewareEnv {
+  BOOKINGS?: KVNamespace;
+}
+
+let heroCache: { tid: number; data: Record<string, string> } | null = null;
+
+async function heroManifest(env: MiddlewareEnv): Promise<Record<string, string>> {
+  if (heroCache && Date.now() - heroCache.tid < 60_000) return heroCache.data;
+  const ud: Record<string, string> = {};
+  try {
+    const m = (await env.BOOKINGS?.get("hero_manifest", { type: "json", cacheTtl: 60 })) as Record<string, { src?: string }> | null;
+    for (const [sti, e] of Object.entries(m ?? {})) if (e?.src) ud[sti] = e.src;
+  } catch {
+    /* KV nede — kodens standard gælder */
+  }
+  heroCache = { tid: Date.now(), data: ud };
+  return ud;
+}
+
+function medHero(res: Response, manifest: Record<string, string>): Response {
+  const json = JSON.stringify(manifest).replace(/</g, "\\u003c");
+  return new HTMLRewriter()
+    .on("head", {
+      element(el) {
+        el.append(`<script>window.__HERO__=${json}</script>`, { html: true });
+      },
+    })
+    .on("img[data-hero-sti]", {
+      element(el) {
+        const src = manifest[el.getAttribute("data-hero-sti") ?? ""];
+        if (!src) return;
+        el.setAttribute("src", src);
+        el.removeAttribute("srcset");
+      },
+    })
+    .transform(res);
+}
+
+export const onRequest: PagesFunction<MiddlewareEnv> = async (context) => {
   const url = new URL(context.request.url);
   if (url.hostname === "speaker-rental.pages.dev") {
     return Response.redirect(`https://lejhojtaler.dk${url.pathname}${url.search}`, 301);
@@ -68,5 +117,15 @@ export const onRequest: PagesFunction = async (context) => {
     });
   }
 
-  return context.next();
+  const res = await context.next();
+  const type = res.headers.get("Content-Type") || "";
+  if (
+    context.request.method !== "GET" ||
+    !type.includes("text/html") ||
+    url.pathname.startsWith("/admin") ||
+    url.pathname.startsWith("/api/")
+  ) {
+    return res;
+  }
+  return medHero(res, await heroManifest(context.env));
 };

@@ -110,7 +110,8 @@ describe("Shopsiden følges ét skridt videre til billedet", () => {
   });
 
   it("begge veje ind følger siden — knappen i admin og scriptet", () => {
-    const api = readFileSync(join(process.cwd(), "functions/api/gallery.ts"), "utf8");
+    // hentReference bor i _lib/billedModel.ts siden 28. sept 2026 (deles med /api/hero)
+    const api = readFileSync(join(process.cwd(), "functions/api/_lib/billedModel.ts"), "utf8");
     expect(api).toContain("billedeUrlFraHtml");
     expect(api).toContain('type.includes("text/html")');
     const script = readFileSync(join(process.cwd(), "scripts/product-images/generate.mjs"), "utf8");

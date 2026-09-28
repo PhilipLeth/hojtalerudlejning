@@ -2084,17 +2084,24 @@ export function anledningPaaPause(slug: string): boolean {
  * dropdown med undersiderne (Philip: "Lav drop downs i topmenuen"). Eventløsninger,
  * cases og sæsonerne står i burgermenuen under TOPMENU_MERE.
  */
-export const TOPMENU: (NavLink & { links: NavLink[] })[] = [
+/** Et punkt i en dropdown. `under` er undersider, der vises indrykket under det. */
+export type TopmenuLink = NavLink & { under?: NavLink[] };
+
+export const TOPMENU: (NavLink & { links: TopmenuLink[] })[] = [
   {
+    // Kun det man lejer som anlæg. Stativer, sub og mixer er tilbehør og står
+    // på lydsiden, ikke som egne menupunkter (Philip, 28. sept 2026).
     href: "/lydanlaeg", label: "Lyd", label_en: "Sound",
     links: [
       { href: "/lydanlaeg", label: "Anlæg efter antal gæster", label_en: "Systems by guest count" },
-      { href: "/soundboks-4", label: "Soundboks 4", label_en: "Soundboks 4" },
-      { href: "/mackie-thump-go", label: "Mackie Thump GO", label_en: "Mackie Thump GO" },
+      {
+        href: "/lydanlaeg#batterihojtalere", label: "Batterihøjtalere", label_en: "Battery speakers",
+        under: [
+          { href: "/soundboks-4", label: "Soundboks 4", label_en: "Soundboks 4" },
+          { href: "/mackie-thump-go", label: "Mackie Thump GO", label_en: "Mackie Thump GO" },
+        ],
+      },
       { href: "/lej-mikrofon", label: "Mikrofoner", label_en: "Microphones" },
-      { href: "/mixer", label: "Mixer", label_en: "Mixer" },
-      { href: "/subwoofer", label: "Subwoofer", label_en: "Subwoofer" },
-      { href: "/hojtalerstativer", label: "Højtalerstativer", label_en: "Speaker stands" },
       { href: "/dj-pult", label: "DJ-pult", label_en: "DJ controller" },
       { href: "/dj", label: "Lej en DJ", label_en: "Hire a DJ" },
     ],

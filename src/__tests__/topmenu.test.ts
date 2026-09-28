@@ -26,12 +26,21 @@ describe("Topmenuen", () => {
   it("hver dropdown fører til sider, der findes på begge sprog", () => {
     for (const k of TOPMENU) {
       expect(k.links.length, `${k.label} har ingen dropdown`).toBeGreaterThan(0);
-      for (const { href } of k.links) {
+      for (const { href } of k.links.flatMap((l) => [l, ...(l.under ?? [])])) {
         const sti = href.split("#")[0];
         expect(existsSync(join(process.cwd(), `src/app${sti}/page.tsx`)), `${href} mangler`).toBe(true);
         expect(EN_PAGES, `${href} mangler på engelsk`).toContain(sti);
       }
     }
+  });
+
+  it("tilbehør har ikke egne menupunkter under Lyd", () => {
+    // Philip 28. sept 2026: "Højtalerstativer, sub osv. skal ikke have sit eget menupunkt"
+    const lyd = TOPMENU.find((k) => k.href === "/lydanlaeg")!;
+    const alle = lyd.links.flatMap((l) => [l.href, ...(l.under ?? []).map((u) => u.href)]);
+    for (const sti of ["/hojtalerstativer", "/subwoofer", "/mixer"]) expect(alle).not.toContain(sti);
+    const batteri = lyd.links.find((l) => l.label === "Batterihøjtalere");
+    expect(batteri?.under?.map((u) => u.href)).toEqual(["/soundboks-4", "/mackie-thump-go"]);
   });
 
   it("topmenuen har ingen 'Mest udlejede'-knap", () => {

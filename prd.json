@@ -4354,5 +4354,15 @@
     "monitor": "Arket har Monitor to gange: DJ-afsnittet 495 og Tilbehør lyd 295 (ændret i dag). Kataloget bruger 295 — afventer at Frederik retter den anden række.",
     "tekster": "Beløb i 9 blogindlæg, uplights-sidens meta, udgåede pakkers beskrivelser og karaoke-pakkens enkeltpris er rettet. DJ-timeprisen på anledningssiderne læses nu fra DJ_HOUR_RATE (stod som 1.800).",
     "ikke_rettet": "Google Ads-annoncerne bærer priser i teksten og kan ikke redigeres fra koden, se ads-rsa-kan-ikke-redigeres."
+  },
+  "stemningsbilleder_hero_2026_09_28": {
+    "beslutning": "Philip: 'Stemningsbillede i hero ser godt ud. Skal vi rulle det ud på alle kategorier og produkt-siderne? Sørg for at bygge løsning til at editere dem på backend efterfølgende.' Rullet ud: alle produktsider (ProductLanding), anledningssiderne (OccasionLanding) og kategorisiderne (lyd, lys, lyd- og lyspakker, tilbehør, lej-hojtaler, røg, mikrofoner, lysshow, uplights, lyskæder, mixer, festlyd, lydudstyr, københavn) — 45 sider i admin, begge sprog.",
+    "lag": "1) Godkendt i /admin/stemningsbilleder → KV hero_manifest, billedet i R2. 2) HERO_STANDARD i src/lib/heroStandard.ts (kodens billeder, fx /festpakke-stor). 3) HERO_FALLBACK = /images/hero.webp.",
+    "visning": "StemningsBaggrund (<img data-hero-sti>) i en sektion med .stemnings-hero .moerk-flade. functions/_middleware.ts læser hero_manifest (60 s cache) og skriver src ind i HTML'en med HTMLRewriter + window.__HERO__ i <head>, så et godkendt billede står der fra første billede uden deploy og uden blink — også efter klik mellem sider.",
+    "admin": "/admin/stemningsbilleder: én side ad gangen, valgfrit ønske i tekst, 'Lav forslag (0,13 $)', se det ved siden af det nuværende, 'Brug det' eller 'Kassér'; 'Fjern (brug standard)'. Forslag gemmes ingen steder. Loft HERO_MAANEDSLOFT = 120/md i functions/api/hero.ts. Ingen 'lav alle'-knap — bulk er Philips beslutning.",
+    "prompt": "heroPrompt() i src/lib/heroBilleder.ts: sidens produktfotos som reference (heroReferencer), galleriets stil og forbud fra gallery/scenes.json, 16:9, roligt øverst i midten, aldrig tekst i billedet.",
+    "undtaget": "/dj og halloween-siderne har eget hero-design (UDEN_STEMNINGSHERO). /lej-projektor og /karaoke er på pause og viser bare standardbilledet.",
+    "topmenu": "Lyd-dropdown: Højtalerstativer, Subwoofer og Mixer er taget ud; Soundboks 4 og Mackie Thump GO står under 'Batterihøjtalere' (anker #batterihojtalere på /lydanlaeg).",
+    "refaktor": "hentReference og udtrækBillede flyttet fra functions/api/gallery.ts til functions/api/_lib/billedModel.ts, så /api/gallery og /api/hero deler dem."
   }
 }

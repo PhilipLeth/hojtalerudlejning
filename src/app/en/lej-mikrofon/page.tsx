@@ -10,6 +10,7 @@ import { localeAlternates } from "@/lib/hreflang";
 import { localizedHref } from "@/lib/enPages";
 
 import { ogImages } from "@/lib/og";
+import StemningsBaggrund from "@/components/StemningsBaggrund";
 /**
  * /en/lej-mikrofon, den engelske udgave af mikrofon-kategorisiden.
  *
@@ -84,9 +85,8 @@ export default function Page() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
-      <section className="relative flex min-h-[60vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
-        <div className="fixed inset-0 bg-cover bg-center opacity-55" style={{ backgroundImage: "url(/images/hero.webp)" }} />
-        <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
+      <section className="stemnings-hero moerk-flade relative flex min-h-[60vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+        <StemningsBaggrund sti="/lej-mikrofon" />
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
             <LocationKicker locale="en" extra="Pay on pickup" />

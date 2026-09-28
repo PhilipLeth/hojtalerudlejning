@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BundleGrid from "@/components/BundleGrid";
+import StemningsBaggrund from "@/components/StemningsBaggrund";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
 import { FEST_LADDER_IDS, LYD_LEJLIGHEDSPAKKER } from "@/lib/products";
@@ -21,15 +22,8 @@ export default function LydOgLysPakkerSide({ locale = "da" }: { locale?: Locale 
   const en = locale === "en";
   return (
     <>
-      <section className="stemnings-hero relative flex min-h-[48vh] sm:min-h-[60vh] flex-col items-center justify-center overflow-hidden px-4 text-center">
-        <img
-          src="/images/hero/festpakke-stor.webp"
-          srcSet="/images/hero/festpakke-stor-800.webp 800w, /images/hero/festpakke-stor.webp 1920w"
-          sizes="100vw"
-          alt=""
-          fetchPriority="high"
-          className="stemnings-hero-billede"
-        />
+      <section className="stemnings-hero moerk-flade relative flex min-h-[48vh] sm:min-h-[60vh] flex-col items-center justify-center overflow-hidden px-4 text-center">
+        <StemningsBaggrund sti="/lyd-og-lyspakker" />
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">
             {en ? "Sound & light packages · Copenhagen" : "Lyd- og lyspakker · København"}

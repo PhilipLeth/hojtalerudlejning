@@ -35,7 +35,6 @@ export default function FestpakkeStorPage() {
       sub={`2× EV 12" højtalere + lysbar. Fuld fest, spar ${rabatKr("pakke_fest_stor")}.`}
       imageAlt="Festpakke 30-50 med store EV højtalere og lysbar"
       productId="pakke_fest_stor"
-      heroImage="/images/hero/festpakke-stor.webp"
       faqPhrase="Festpakke 30-50"
       bullets={[
         "2× EV 12\" aktive højtalere med Bluetooth (30-50 gæster)",

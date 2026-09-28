@@ -8,6 +8,8 @@ import { bookHref } from "@/lib/bookUrl";
 import { PhoneText, LiveCopy } from "@/components/PhoneLink";
 import { localizedHref } from "@/lib/enPages";
 import type { Locale } from "@/lib/i18n";
+import StemningsBaggrund from "@/components/StemningsBaggrund";
+import { heroSti } from "@/lib/heroStandard";
 
 /**
  * Sidens faste tekster på begge sprog.
@@ -143,9 +145,8 @@ export default function OccasionLanding({
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       {/* Hero */}
-      <section className="relative flex min-h-[60vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
-        <div className="fixed inset-0 bg-cover bg-center opacity-55" style={{ backgroundImage: "url(/images/hero.webp)" }} />
-        <div className="fixed inset-0 bg-gradient-to-b from-[#07060b]/40 via-transparent to-[#07060b]/80" />
+      <section className="stemnings-hero moerk-flade relative flex min-h-[60vh] flex-col items-center justify-center px-4 text-center overflow-hidden">
+        <StemningsBaggrund sti={heroSti(`/${slug}`)} />
 
         <div className="relative z-10 max-w-2xl">
           <p className="mb-4 text-sm font-medium uppercase tracking-widest text-brand-400">

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import StemningsBaggrund from "@/components/StemningsBaggrund";
 import FaqSection from "@/components/FaqSection";
 import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import BundleGrid from "@/components/BundleGrid";
@@ -116,16 +117,19 @@ export default function Page() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
-      <section className="relative px-4 pb-10 pt-24 text-center">
-        <p className="mb-3 text-sm font-medium uppercase tracking-widest text-brand-400">Sound system rental in Copenhagen</p>
-        <h1 className="mx-auto max-w-3xl text-4xl font-bold sm:text-5xl">
-          Choose a system by how many are coming
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-white/60">
-          You should not have to guess at inches and watts. Tell us how many guests are coming and the speakers, the
-          bass and the cables are already put together. If there is no socket where you are holding it, take a battery
-          speaker instead. Microphones and lighting you add yourself below.
-        </p>
+      <section className="stemnings-hero moerk-flade relative flex min-h-[48vh] flex-col items-center justify-center overflow-hidden px-4 pb-12 pt-20 text-center">
+        <StemningsBaggrund sti="/lydanlaeg" />
+        <div className="relative z-10">
+          <p className="mb-3 text-sm font-medium uppercase tracking-widest text-brand-400">Sound system rental in Copenhagen</p>
+          <h1 className="mx-auto max-w-3xl text-4xl font-bold sm:text-5xl">
+            Choose a system by how many are coming
+          </h1>
+          <p className="mx-auto mt-4 max-w-xl text-white/60">
+            You should not have to guess at inches and watts. Tell us how many guests are coming and the speakers, the
+            bass and the cables are already put together. If there is no socket where you are holding it, take a battery
+            speaker instead. Microphones and lighting you add yourself below.
+          </p>
+        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-4">
@@ -142,7 +146,7 @@ export default function Page() {
       </section>
 
       {/* Arkets afsnit 1.3: batterihøjtalere. Se den danske side. */}
-      <section className="mx-auto max-w-6xl px-4 py-12">
+      <section id="batterihojtalere" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-12">
         <p className="mb-2 text-xs font-bold uppercase tracking-widest text-brand-400">No power on site?</p>
         <h2 className="mb-2 text-2xl font-bold">Battery speakers</h2>
         <p className="mb-6 max-w-2xl text-sm text-white/50">
