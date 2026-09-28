@@ -4329,5 +4329,16 @@
     "lydanlaeg": "Batterihøjtalere står før speakerpakkerne. Mikrofoner, mixer, sub, monitor og stativer (LYD_UDSTYR) står på /lydanlaeg i stedet for på /tilbehoer. Soundboks-batteriet er taget ud af BATTERIHOJTALERE og står som tilvalg på /soundboks-4.",
     "tilbehoer": "Kun lys- og DJ-stativer, væsker og strøm.",
     "billeder": "Enkelt lyseffekt: nyt genereret foto (product-lyseffekt-v3-white). Soundboks-batteri: genereret efter Soundboks' beskrivelse af Batteryboks (product-soundboks-batteri-v2-white). Festlys 0-50 og 50-100: sat sammen af de ægte studiefotos med scripts/product-images/festlys_pakker.py (1 hhv. 2 lysbarer + røgmaskine)."
+  },
+  "dj_billede_og_hero_2026_09_28": {
+    "dj_pult": "DJ-pultens foto er genereret ud fra AlphaTheta XDJ-AZ (10\" skærm, fire kanaler, fulde jogwheels, pads), uden logo: product-dj-pult-v2-white.webp. Bruges også af de tre DJ-pakker. Produktnavnet siger stadig 'AlphaTheta XDJ'.",
+    "hero_galleri": "Forsidens hero viser kun de to rigtige receptionsfotos. Messe, koncert (28/9 formiddag) og møde (28/9 eftermiddag, viste en skærm) er fjernet."
+  },
+  "diverse_2026_09_28_eftermiddag": {
+    "topmenu": "'Events & sæson' er taget ud af topmenuen — det står i burgermenuen. Burger-knappen er kun ikonet; 'Produkter' står i aria-label.",
+    "forside": "Mest udlejede viser de 8 øverste af POPULAERE_IDS (MEST_UDLEJEDE_ANTAL i EventHome). FAQ'en 'Inden du lejer festudstyr' har fået luft over sig.",
+    "stativbilleder": "Genereret efter arkets indkøbsnavne: 1 højtalerstativ = Millenium BS-2211B (product-hojtalerstativ-1-white, også lysstativets billede — arkets lysstativ er et almindeligt 3-fodsstativ med T-bar), mikrofonstativ = Fun Generation Mic Stand (-v2), X-stativ = Gravity KSX 2 (-v2, var et bord).",
+    "galleri_kontrast": "Temaet gør .text-white mørkeblå overalt, så galleriets billedtekster stod mørkt på sort gradient. .moerk-flade i pro-theme.css holder teksten lys; brug klassen på tekst oven på fotos.",
+    "mixer": "Prisarket har kun én mixer (t.mix 1202 'Mixer med effekter', står to gange). /lej-mikrofon viser den ene; linkteksten 'Sammenlign tre mixerklasser' er rettet. Mackie Mix12FX og t.mix 1402 står stadig på pause — afventer Philips svar om de skal tilbage."
   }
 }

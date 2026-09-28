@@ -153,7 +153,7 @@ export default function Page() {
           <div className="mb-2 flex flex-wrap items-baseline justify-center gap-3">
             <h2 className="text-center text-3xl font-bold">More than one microphone at a time?</h2>
             <a href={localizedHref("/mixer", "en")} className="text-sm text-brand-400 hover:underline">
-              Compare three mixer sizes →
+              More about the mixer →
             </a>
           </div>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">

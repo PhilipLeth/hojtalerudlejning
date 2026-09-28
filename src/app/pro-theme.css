@@ -77,3 +77,11 @@ body:not(:has(.admin-shell))  :focus-visible{outline:2px solid #1249cf;outline-o
 body:not(:has(.admin-shell)) .stemnings-hero h1,body:not(:has(.admin-shell)) .stemnings-hero>div>p{color:#fff}
 body:not(:has(.admin-shell)) .stemnings-hero>div>p.text-brand-400{color:#9db8ff}
 body:not(:has(.admin-shell)) .stemnings-hero h1 span.bg-clip-text{background:none;-webkit-text-fill-color:#b9ccff;color:#b9ccff}
+
+/* Tekst oven på et foto eller en sort flade (galleriets billedtekster og
+   lightbox). Temaet gør .text-white mørkeblå på hele sitet — her gav det
+   mørk tekst på mørk gradient (Philip, 28. sept 2026). Sæt .moerk-flade på
+   fladen, så beholder teksten sin lyse farve. */
+body:not(:has(.admin-shell)) .moerk-flade .text-white,body:not(:has(.admin-shell)) .moerk-flade.text-white,body:not(:has(.admin-shell)) .moerk-flade .hover\:text-white:hover{color:#fff}
+body:not(:has(.admin-shell)) .moerk-flade .text-white\/60,body:not(:has(.admin-shell)) .moerk-flade .text-white\/70,body:not(:has(.admin-shell)) .moerk-flade.text-white\/70{color:rgba(255,255,255,.78)}
+body:not(:has(.admin-shell)) .moerk-flade .text-white\/35,body:not(:has(.admin-shell)) .moerk-flade .text-white\/40,body:not(:has(.admin-shell)) .moerk-flade .text-white\/50{color:rgba(255,255,255,.6)}

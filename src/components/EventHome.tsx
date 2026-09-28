@@ -24,6 +24,9 @@ import styles from "./EventHome.module.css";
  * et produktfoto, så den der leder efter en bestemt ting, ser vejen først.
  * Det sidste felt er produktet, hvis foto repræsenterer kategorien.
  */
+/** Forsiden viser de otte øverste af Frederiks liste: to hele rækker à fire (28. sept 2026) */
+const MEST_UDLEJEDE_ANTAL = 8;
+
 const EQUIPMENT = [
   ["/lej-hojtaler", "Højtalere", "Speakers", "festival"],
   ["/festlys", "Lys", "Lighting", "lys"],
@@ -209,10 +212,12 @@ export default function EventHome({locale = "da", detail = false, cases = false}
         <h2>{en ? "Most rented" : "Mest udlejede"}</h2>
         <p>{en ? "The party equipment people book most often, packages and single products side by side. Every price is for up to five days, VAT included." : "Det festudstyr der bliver lejet oftest, pakker og enkeltprodukter side om side. Alle priser er for op til fem dages leje, inklusive moms."}</p>
       </div>
-      <CategoryProductGrid locale={locale} tone="light" cols={4} items={POPULAERE_IDS.map((id) => ({ id }))} />
+      <CategoryProductGrid locale={locale} tone="light" cols={4} items={POPULAERE_IDS.slice(0, MEST_UDLEJEDE_ANTAL).map((id) => ({ id }))} />
     </section>
     <SeasonalStrip locale={locale} />
+    {/* Luft over FAQ'en: den stod klistret op ad sæsonkortene */}
     <FaqSection
+      className="mx-auto max-w-3xl px-4 pb-20 pt-20 sm:pt-28"
       items={CATEGORY_FAQ[en ? "en-forside" : "forside"]}
       title={en ? "Before you book party equipment" : "Inden du lejer festudstyr"}
     />

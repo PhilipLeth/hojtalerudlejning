@@ -151,7 +151,7 @@ export default function LejMikrofonPage() {
           <div className="mb-2 flex flex-wrap items-baseline justify-center gap-3">
             <h2 className="text-center text-3xl font-bold">Flere mikrofoner på én gang?</h2>
             <a href="/mixer" className="text-sm text-brand-400 hover:underline">
-              Sammenlign tre mixerklasser →
+              Mere om mixeren →
             </a>
           </div>
           <p className="mx-auto mb-10 max-w-xl text-center text-white/50">

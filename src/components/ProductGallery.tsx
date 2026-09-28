@@ -125,10 +125,10 @@ export default function ProductGallery({
                 style={{ aspectRatio: String(ratioTal(b.ratio)) }}
                 className="w-full object-cover transition duration-500 group-hover:scale-[1.03]"
               />
-              <span className="absolute right-3 top-3 rounded-full bg-black/65 px-2.5 py-1 text-[11px] font-medium text-white/70 backdrop-blur-sm">
+              <span className="moerk-flade absolute right-3 top-3 rounded-full bg-black/65 px-2.5 py-1 text-[11px] font-medium text-white/70 backdrop-blur-sm">
                 {c.label}
               </span>
-              <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10">
+              <span className="moerk-flade pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 pb-3 pt-10">
                 <span className="block text-sm font-semibold text-white">{t.titel}</span>
                 <span className="mt-0.5 block text-sm text-white/60">{t.caption}</span>
               </span>
@@ -142,7 +142,7 @@ export default function ProductGallery({
           role="dialog"
           aria-modal="true"
           aria-label={tekst(billeder[aaben], locale).alt}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/92 px-4 py-6 backdrop-blur-sm"
+          className="moerk-flade fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/92 px-4 py-6 backdrop-blur-sm"
           onClick={luk}
         >
           <button

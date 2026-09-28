@@ -19,10 +19,8 @@ import { bookHref } from "@/lib/bookUrl";
  */
 const COPY = {
   da: {
-    open: "Åben menu",
+    open: "Åben menu med produkter",
     close: "Luk menu",
-    label: "Produkter",
-    labelClose: "Luk",
     proTitle: "Find pakken til festen",
     proText: "Vælg anledning, sammenlign indhold og priser, og book online.",
     proCta: "Se pakker og priser →",
@@ -35,10 +33,8 @@ const COPY = {
     call: "Ring",
   },
   en: {
-    open: "Open menu",
+    open: "Open menu with products",
     close: "Close menu",
-    label: "Products",
-    labelClose: "Close",
     proTitle: "Find your event package",
     proText: "Choose your occasion, compare equipment and prices, and book online.",
     proCta: "Shop packages →",
@@ -90,13 +86,14 @@ export default function BurgerMenu() {
 
         Den var en umærket mørk cirkel på en hvid header: tre streger uden et
         ord, og det eneste sted på sitet hvor hele sortimentet står. Philip
-        spurgte hvorfor produktmenuen var så svær at finde. Nu står der
-        "Produkter" på den, og den har headerens farver i stedet for at flyde
-        oven på dem.
+        spurgte hvorfor produktmenuen var så svær at finde. Den har headerens
+        farver i stedet for at flyde oven på dem. Ordet "Produkter" er taget af
+        igen 28. sept 2026: topmenuen viser nu kategorierne, og burgeren er
+        stedet for resten. Navnet står stadig i aria-label.
       */}
       <button
         onClick={() => setOpen(!open)}
-        className={`fixed top-12 right-4 z-50 flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold shadow-sm transition ${
+        className={`fixed top-12 right-4 z-50 flex items-center gap-2 rounded-full border p-3 text-sm font-semibold shadow-sm transition ${
           open
             ? "border-white/10 bg-black/70 text-white backdrop-blur-md hover:bg-black/85"
             : "border-[#d8e3f2] bg-white text-[#1249cf] hover:border-[#1249cf]"
@@ -113,7 +110,6 @@ export default function BurgerMenu() {
             <path d="M3 12h18M3 6h18M3 18h18" />
           </svg>
         )}
-        <span>{open ? c.labelClose : c.label}</span>
       </button>
 
       {/* Overlay */}

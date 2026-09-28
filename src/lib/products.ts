@@ -672,21 +672,21 @@ export const addons: Addon[] = [
     id: "stativ_enkelt",
     page: "/hojtalerstativer",
     price: 75,
-    image: "/images/product-stativer-white.webp",
+    image: "/images/product-hojtalerstativ-1-white.webp",
     da: { label: "1 højtalerstativ", desc: "Ét Millenium-stativ, løfter højtaleren op i ørehøjde" },
     en: { label: "1 speaker stand", desc: "A single stand, lifts the speaker to ear level" },
   },
   {
     id: "mikrofonstativ",
     price: 95,
-    image: "/images/product-mikrofonstativ-white.webp",
+    image: "/images/product-mikrofonstativ-v2-white.webp",
     da: { label: "Mikrofonstativ", desc: "Gulvstativ med galge, til taler og sang. Mikrofon er ikke med, den vælges for sig" },
     en: { label: "Microphone stand", desc: "Floor stand with boom arm, for speeches and vocals. Microphone not included, choose it separately" },
   },
   {
     id: "lysstativ",
     price: 145,
-    image: "/images/product-lysstativ-white.webp",
+    image: "/images/product-hojtalerstativ-1-white.webp",
     contents: ["Stativ", "Stairville Mini T-Bar 2"],
     da: { label: "Lysstativ", desc: "Stativ med Stairville Mini T-Bar til lyseffekter. Lampen er ikke med, den vælges for sig" },
     en: { label: "Lighting stand", desc: "Stand with T-bar for light effects. The light is not included, choose it separately" },
@@ -694,7 +694,7 @@ export const addons: Addon[] = [
   {
     id: "x_stativ",
     price: 95,
-    image: "/images/product-x-stativ-white.webp",
+    image: "/images/product-x-stativ-v2-white.webp",
     contents: ["Gravity KSX 2 X-stativ"],
     da: { label: "X-stativ", desc: "Gravity KSX 2, sammenklappeligt X-stativ til DJ-pult eller keyboard" },
     en: { label: "X-stand", desc: "Gravity KSX 2, folding X-stand for a DJ controller or keyboard" },
@@ -2090,7 +2090,7 @@ export const TOPMENU: NavLink[] = [
   { href: "/tilbehoer", label: "Tilbehør", label_en: "Accessories" },
 ];
 
-/** Fold-ud-menuen. Sæsonerne (julefrokost, halloween) lægges på, mens de er aktive. */
+/** Burgermenuens "Events & sæson". Sæsonerne (julefrokost, halloween) lægges på, mens de er aktive. */
 export const TOPMENU_MERE: { label: string; label_en: string; links: NavLink[] } = {
   label: "Events & sæson",
   label_en: "Events & seasons",

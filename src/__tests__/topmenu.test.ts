@@ -23,14 +23,15 @@ describe("Topmenuen", () => {
     }
   });
 
-  it("events og sæsoner står i fold-ud-menuen, ikke fremme", () => {
+  it("events og sæsoner står i burgermenuen, ikke i topmenuen", () => {
     expect(TOPMENU_MERE.links.map((l) => l.href)).toEqual(["/eventloesninger", "/cases"]);
     for (const sti of ["/eventloesninger", "/cases", "/julefrokost", "/halloween"]) {
       expect(TOPMENU.map((l) => l.href)).not.toContain(sti);
     }
-    // Sæsonerne kommer ind i panelet, ikke i selve navigationen
-    const panel = header.slice(header.indexOf('className="pro-more-panel"'));
-    expect(panel).toContain("activeSeasons()");
-    expect(header.slice(0, header.indexOf('className="pro-more"'))).not.toContain("activeSeasons().map");
+    // Sæsonerne står i burgermenuen, ikke i topmenuen (28. sept 2026: de stod to steder)
+    expect(header).not.toContain("activeSeasons");
+    const burger = readFileSync(join(process.cwd(), "src/components/BurgerMenu.tsx"), "utf8");
+    expect(burger).toContain("activeSeasons()");
+    expect(burger).toContain("TOPMENU_MERE");
   });
 });

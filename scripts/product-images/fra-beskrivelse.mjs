@@ -41,6 +41,41 @@ const UD_DIR = join(ROD, "public", "images");
  * producentens emballage.
  */
 const OPGAVER = [
+  // ── 28. sept 2026: stativerne. Modellerne er arkets indkøbsnavne. ──
+  {
+    // Arket: Millenium BS-2211B. "1 højtalerstativ skal kun vise et billede af 1 stativ."
+    // Bruges også til lysstativet: arkets lysstativ er et almindeligt 3-fodsstativ.
+    id: "stativ_enkelt",
+    fil: "product-hojtalerstativ-1-white.webp",
+    motiv:
+      "exactly ONE black steel tripod speaker stand, standing alone and fully extended to about head " +
+      "height: three straight splayed legs with rubber feet and three short bracing struts joining the " +
+      "legs to a central collar, a single straight 35 mm round pole rising from the collar with one " +
+      "height adjustment clamp and a locking knob, and a plain top pole end for a speaker to sit on. " +
+      "The whole stand is visible from feet to top. Only one stand, no second stand, no speaker, no cables",
+  },
+  {
+    // Arket: Fun Generation Mic Stand. Det gamle billede var en mikrofon på en skæv bom.
+    id: "mikrofonstativ",
+    fil: "product-mikrofonstativ-v2-white.webp",
+    motiv:
+      "one black microphone boom stand, standing alone and fully visible from feet to top: a folding " +
+      "tripod base with three thin straight legs, a straight upright pole about 1 metre tall with a " +
+      "clutch knob, and on top a telescopic boom arm angled slightly upwards, with a black plastic " +
+      "microphone clip at the end of the boom and a small counterweight at the other end. " +
+      "No microphone in the clip, no cable, only one stand",
+  },
+  {
+    // Arket: Gravity KSX 2. Det gamle billede var et bord med en bordplade.
+    id: "x_stativ",
+    fil: "product-x-stativ-v2-white.webp",
+    motiv:
+      "one empty black steel double-braced X-shaped keyboard stand, standing open on the floor, seen " +
+      "from the front at a slight three-quarter angle: two parallel X frames made of square steel tubing " +
+      "connected by horizontal crossbars, with rubber end caps on the four feet, and two horizontal " +
+      "support arms on top with black rubber padding, a central locking knob at the crossing point. " +
+      "Nothing on top of it: no table top, no board, no keyboard, no DJ controller, no cables",
+  },
   {
     // Philip 28. sept 2026: "Enkelt lyseffekt viser et spejlkuglespot. Det skal
     // være en lyseffekt." Arket: Eurolite LED Mini Z-20 beam-effekt.
