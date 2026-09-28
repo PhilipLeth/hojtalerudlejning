@@ -8,12 +8,13 @@ import { buildProductFaq } from "@/lib/productFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
+import { catalogPrice, prisKr } from "@/lib/products";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: "Lej Lyskæder København | Fra 195 kr | Lejhøjtaler.dk",
+  title: `Leje af lyskæder i København | Fra ${prisKr("lyskaeder")} | Lejhøjtaler.dk`,
   description:
-    "Lej lyskæde i København fra 195 kr/weekend. 10m lyskæde, vælg mellem varm hvid eller farvet. Perfekt til havefest, bryllup og fødselsdag. Betal ved afhentning.",
+    `Lyskæder udlejning i København fra ${prisKr("lyskaeder")}/weekend. 10m lyskæde til udendørs brug, festtelt og havefest, varm hvid eller farvet. Betal ved afhentning.`,
   keywords: [
     "lej lyskæder",
     "lyskæder udlejning",
@@ -28,9 +29,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages(),
-    title: "Lej Lyskæder København | Fra 195 kr",
+    title: `Leje af lyskæder i København | Fra ${prisKr("lyskaeder")}`,
     description:
-      "Lej lyskæde i København fra 195 kr. 10m lyskæde, varm hvid eller farvet. Book online.",
+      `Lej lyskæder i København fra ${prisKr("lyskaeder")}. 10m lyskæde til udendørs fest, varm hvid eller farvet. Book online.`,
     url: "https://lejhojtaler.dk/lyskaeder",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -81,11 +82,12 @@ export default function LyskaederPage() {
             Lej lyskæder i København
             <br />
             <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-              fra 195 kr.
+              fra {prisKr("lyskaeder")}
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">
-            10m lyskæde, vælg mellem almindelig varm hvid eller farvet. Perfekt til enhver fest.
+            10m lyskæde, vælg mellem almindelig varm hvid eller farvet. Til udendørs brug i haven,
+            langs festteltet eller ind over dansegulvet.
           </p>
           <a
             href="/book?product=lyskaeder"
@@ -101,8 +103,9 @@ export default function LyskaederPage() {
         <section id="produkter" className="mx-auto max-w-4xl px-4 py-12 sm:py-24">
           <h2 className="mb-4 text-center text-3xl font-bold sm:text-4xl">Vælg din lyskæde</h2>
           <p className="mx-auto mb-12 max-w-2xl text-center text-white/50">
-            To varianter, begge 10m med strømforsyning og kabelstrips til ophæng.
-            Perfekte til havefest, bryllup og fødselsdag.
+            To varianter, begge 10m med strømforsyning og kabelstrips til ophæng. Leje af lyskæder
+            koster det samme, uanset om du har dem én eller fem dage, og de tåler at hænge udendørs
+            en aften — i festteltet, langs hækken eller over terrassen.
           </p>
           <CategoryProductGrid items={[{ id: "lyskaeder" }, { id: "lyskaeder_farvet" }]} />
         </section>
@@ -134,7 +137,7 @@ export default function LyskaederPage() {
         </section>
 
         <FaqSection
-          items={buildProductFaq({ name: "Lyskæder", price: 195, productId: "lyskaeder", phrase: "en lyskæde" })}
+          items={buildProductFaq({ name: "Lyskæder", price: catalogPrice("lyskaeder"), productId: "lyskaeder", phrase: "en lyskæde" })}
           title="Ofte stillede spørgsmål om lyskæder"
         />
 

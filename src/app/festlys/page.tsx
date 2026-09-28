@@ -9,6 +9,7 @@ import { CATEGORY_FAQ } from "@/lib/categoryFaq";
 import CategoryProductGrid from "@/components/CategoryProductGrid";
 import { LocationKicker } from "@/components/PhoneLink";
 import { localeAlternates } from "@/lib/hreflang";
+import LysValg from "@/components/LysValg";
 
 import { ogImages } from "@/lib/og";
 /** Højtaler + lysbar + røgmaskine hver for sig, tallet i "komplet festpakke fra …". */
@@ -148,6 +149,8 @@ export default function FestlysPage() {
             </Link>
           </div>
         </section>
+
+        <LysValg locale="da" />
 
         {/* Upsell */}
         <section className="mx-auto max-w-3xl px-4 pb-12 sm:pb-24">

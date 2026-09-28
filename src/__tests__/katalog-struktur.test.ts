@@ -8,6 +8,7 @@ import {
   type KatalogKategori,
 } from "@/lib/katalogStruktur";
 import {
+  BATTERIHOJTALERE,
   LADDER_LYD,
   LYD_LADDER_IDS,
   SPEAKERPAKKER,
@@ -143,6 +144,34 @@ describe("En lydside viser lyd, ikke lys", () => {
       expect(trin.hvad_en, trin.navn).toBeTruthy();
       // Et trin på lydstigen må ikke sælge lys i sin egen tekst
       expect(`${trin.hvad} ${trin.hvad_en}`.toLowerCase(), trin.navn).not.toMatch(/lysbar|light bar|røg|fog/);
+    }
+  });
+
+  /**
+   * Arket deler lyd i 1.1 stigen, 1.2 speakerpakker, 1.3 batterihøjtalere,
+   * 1.4 DJ-udstyr og 1.5 mikrofoner. /lydanlaeg byggede 1.1 og 1.2 og sprang
+   * 1.3 over: siden spurgte "hvor mange gæster kommer der?" og svarede med
+   * kabelanlæg hele vejen. Kunden til en havefest uden stikkontakt fik
+   * anbefalet et anlæg, der ikke kan tændes — og Soundboks 4 og Thump GO, de
+   * to mest klikkede produkter i annoncerne, fandtes slet ikke på lydsiden.
+   *
+   * DJ-udstyr og mikrofoner har deres egne sider; 1.1 til 1.3 er dem,
+   * /lydanlaeg lover ved at hedde "anlæg efter antal gæster".
+   */
+  it("/lydanlaeg viser arkets tre anlægsafsnit, ikke kun to", () => {
+    const lyd = KATALOG_AFSNIT.find((a) => a.id === "lyd")!;
+    const batteri = lyd.grupper.find((g) => g.nr === "1.3")!;
+    expect(batteri.ids.sort()).toEqual([...BATTERIHOJTALERE].sort());
+
+    for (const sti of ["src/app/lydanlaeg/page.tsx", "src/app/en/lydanlaeg/page.tsx"]) {
+      const kilde = readFileSync(sti, "utf8");
+      for (const [konstant, afsnit] of [
+        ["LADDER_LYD", "1.1 stigen"],
+        ["SPEAKERPAKKER", "1.2 speakerpakkerne"],
+        ["BATTERIHOJTALERE", "1.3 batterihøjtalerne"],
+      ]) {
+        expect(kilde, `${sti} mangler arkets afsnit ${afsnit}`).toContain(konstant);
+      }
     }
   });
 

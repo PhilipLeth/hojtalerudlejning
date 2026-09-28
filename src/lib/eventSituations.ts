@@ -204,7 +204,7 @@ export const eventSituations = [
   },
   {
     "slug": "reception",
-    "image": "reception-front",
+    "image": "reception-front-v2",
     "packageIds": [
       "event_reception_1",
       "event_reception_2"
