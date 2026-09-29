@@ -4321,7 +4321,8 @@
     "beslutning": "Philip 28. sept 2026: 'Vi er en produktshop fremover.' Topmenuen har fire produktkategorier: Lyd (/lydanlaeg), Lys & effekter (/festlys), Lyd- og lyspakker (/lej-hojtaler) og Tilbehør (/tilbehoer, ny side på begge sprog). Data i TOPMENU i products.ts.",
     "fold_ud": "Eventløsninger, Opstillinger & cases og de aktive sæsoner (julefrokost, halloween) ligger under 'Events & sæson' (TOPMENU_MERE), i headeren som fold-ud-panel og i mobilmenuen som <details>.",
     "cta": "Headerens knap hedder 'Mest udlejede' og peger på /#shop-pakker; forsidens hovedknap peger på /lej-hojtaler i stedet for /eventloesninger.",
-    "test": "topmenu.test.ts låser de fire kategorier, at de findes på begge sprog, og at events/sæsoner kun står i fold-ud-menuen."
+    "test": "topmenu.test.ts låser de fire kategorier, at de findes på begge sprog, og at events/sæsoner kun står i fold-ud-menuen.",
+    "grupper_2026_09_29": "Philip: 'mere naturlige opdelinger i vores menu dropdowns'. TOPMENU har nu grupper med overskrift, vist som kolonner: Lyd = Højtalere (anlæg efter gæster, lille/mellem/stor pakke) · Batterihøjtalere · Tale og mikrofon · DJ; Lys & effekter = Lyspakker · Enkelt lys · Røg; Lyd- og lyspakker = Efter antal gæster · Til anledningen · Med DJ; Tilbehør = én liste."
   },
   "lyd_lys_sider_2026_09_28": {
     "stemningshero": "Første produktside med et genereret stemningsbillede i hero: /festpakke-stor (da+en), også brugt på /lyd-og-lyspakker. Genereret med scripts/product-images/hero-stemning.mjs (Gemini, vores egne produktfotos som reference), ProductLanding tager heroImage. Temaet gør ellers heroen lys; .stemnings-hero i pro-theme.css giver mørkt slør og hvid tekst.",
@@ -4371,5 +4372,6 @@
     "omfang": "Tørkørsel 29. sept: 70 af 99 aktive annoncer, 196 unikke rettelser (Soundboks 595, lille højtalerpakke 395, højtalere/anlæg fra 395, PA 595, lysbar 295, festlys fra 195, røgmaskine 245, uplights 195/495, discokugle 345, lysshow 500, festpakke 0-30 630). Diskolys-grupperne flyttes fra den udgåede /diskolys til /festlys. 'PA-anlæg … stativer' rettet: stativer er et tilvalg.",
     "status": "IKKE kørt: --apply blev afvist af Claude Codes auto-mode ('External System Writes'). Philip kører: python3 ads-export/ret_priser_fra_arket.py --apply",
     "ikke_rørt": "Annoncer i pausede grupper og i de pausede kampagner (Yderområder, PMax) bærer stadig gamle tal — ret dem, før de tændes."
-  }
+  },
+  "discokugle_stoerrelse_2026_09_29": "Philip: '/discokugle viser ikke størrelsen på kuglen'. Siden er 40 cm-kuglens: navn, undertekst, første punkt, titel og meta siger nu 40 cm, og afsnittet med alle tre hedder 'Vælg størrelse: 30 eller 40 cm' med hvad de passer til (da+en). 30 og 40 cm deler stadig samme foto."
 }

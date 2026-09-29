@@ -7,7 +7,7 @@ import { localeAlternates } from "@/lib/hreflang";
 
 import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
-  title: `Disco Ball Rental Copenhagen | ${prisDkk("discokugle")} | Lejhøjtaler.dk`,
+  title: `Disco Ball Rental Copenhagen | 40 cm for ${prisDkk("discokugle")} | Lejhøjtaler.dk`,
   description:
     `Rent a disco ball in Copenhagen for ${prisDkk("discokugle")} per weekend. 40 cm rotating mirror ball with motor, LED spotlight and stand, plug and play. Pay on pickup.`,
   keywords: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-discokugle-v2.webp"),
-    title: `Disco Ball Rental Copenhagen | ${prisDkk("discokugle")}`,
+    title: `Disco Ball Rental Copenhagen | 40 cm for ${prisDkk("discokugle")}`,
     description:
       "40 cm rotating disco ball with motor, LED spotlight and stand. Book online.",
     url: "https://lejhojtaler.dk/en/discokugle",
@@ -37,14 +37,15 @@ export default function Page() {
     <ProductLanding
       locale="en"
       slug="en/discokugle"
-      name="Disco ball"
+      name="Disco ball 40 cm"
       headline="Rent a disco ball in Copenhagen"
-      sub="Rotating mirror ball with a motor and coloured LED spotlight. Ready in 2 minutes."
+      sub="40 cm rotating mirror ball with a motor, spotlight and stand. Also available in 30 cm and in gold."
       imageAlt="Disco ball for rent in Copenhagen"
       productId="discokugle"
       bookLabel="Book the disco ball now"
       faqPhrase="a disco ball"
       bullets={[
+        "The ball is 40 cm across, mirrored facets all the way round",
         "Rotating, with LED colour effects",
         "Plug and play, with hanging kit or stand",
         "Spotlight included",
@@ -58,8 +59,8 @@ export default function Page() {
         promise can actually be booked here.
       */}
       <section className="mx-auto max-w-6xl px-4 pb-16">
-        <h2 className="mb-2 text-2xl font-bold">All three disco balls</h2>
-        <p className="mb-8 text-white/50">30 or 40 cm, silver or gold. Motor, stand and spotlight included in all of them.</p>
+        <h2 className="mb-2 text-2xl font-bold">Choose the size: 30 or 40 cm</h2>
+        <p className="mb-8 text-white/50">30 cm suits a living room or a small party, 40 cm fills a party venue with light. Silver or gold. Motor, stand and spotlight included in all of them.</p>
         <CategoryProductGrid locale="en" items={[{ id: "discokugle_30" }, { id: "discokugle" }, { id: "discokugle_guld" }]} />
       </section>
       <UpsellBox

@@ -12,9 +12,9 @@ export const metadata: Metadata = {
   // k-formen, mens c-formen bliver stående i teksten, så begge stavemåder
   // står på siden. Stien er uændret — en redirect ville koste mere end den
   // giver.
-  title: `Lej Diskokugle København | Fra ${prisKr("discokugle")} | Lejhøjtaler.dk`,
+  title: `Lej Diskokugle København | 40 cm for ${prisKr("discokugle")} | Lejhøjtaler.dk`,
   description:
-    `Lej diskokugle i København fra ${prisKr("discokugle")}/weekend. Roterende discokugle, 30 eller 40 cm, med spot og stativ. Plug-and-play. Betal ved afhentning. Book online.`,
+    `Lej diskokugle i København: 40 cm for ${prisKr("discokugle")}/weekend, eller 30 cm og guld. Roterende discokugle med spot og stativ. Plug-and-play. Betal ved afhentning. Book online.`,
   keywords: [
     "lej diskokugle",
     "diskokugle leje",
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: ogImages("/images/product-discokugle-v2.webp"),
-    title: `Lej Diskokugle København | Fra ${prisKr("discokugle")}`,
+    title: `Lej Diskokugle København | 40 cm for ${prisKr("discokugle")}`,
     description:
-      `Lej diskokugle i København fra ${prisKr("discokugle")}/weekend. Roterende discokugle med LED-lys og farver. Book online.`,
+      `Lej en 40 cm diskokugle i København for ${prisKr("discokugle")}/weekend. Med motor, spot og stativ. Book online.`,
     url: "https://lejhojtaler.dk/discokugle",
     siteName: "Lejhøjtaler.dk",
     locale: "da_DK",
@@ -47,14 +47,15 @@ export default function DiscokuglePage() {
   return (
     <ProductLanding
       slug="discokugle"
-      name="Discokugle"
+      name="Discokugle 40 cm"
       headline="Lej diskokugle i København"
-      sub="Roterende discokugle med LED-lys og farver. Klar på 2 min."
+      sub="40 cm roterende discokugle med motor, spot og stativ. Findes også i 30 cm og i guld."
       imageAlt="Discokugle til leje i København"
       productId="discokugle"
       bookLabel="Book discokugle nu"
       faqPhrase="en discokugle"
       bullets={[
+        "Kuglen er 40 cm i diameter, med spejlfacetter hele vejen rundt",
         "Roterende med LED-farveeffekter",
         "Plug-and-play med ophæng/stativ",
         "Spotlight inkluderet",
@@ -68,8 +69,8 @@ export default function DiscokuglePage() {
         indfries her i stedet for at sende kunden videre.
       */}
       <section className="mx-auto max-w-6xl px-4 pb-16">
-        <h2 className="mb-2 text-2xl font-bold">Alle tre discokugler</h2>
-        <p className="mb-8 text-white/50">30 eller 40 cm, sølv eller guld. Motor, stativ og spot er med i dem alle.</p>
+        <h2 className="mb-2 text-2xl font-bold">Vælg størrelse: 30 eller 40 cm</h2>
+        <p className="mb-8 text-white/50">30 cm passer til stuen og den lille fest, 40 cm fylder et festlokale med lysprikker. Sølv eller guld. Motor, stativ og spot er med i dem alle.</p>
         <CategoryProductGrid items={[{ id: "discokugle_30" }, { id: "discokugle" }, { id: "discokugle_guld" }]} />
       </section>
       <UpsellBox

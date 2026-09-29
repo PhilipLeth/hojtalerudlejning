@@ -7,8 +7,8 @@ import { TOPMENU } from "@/lib/products";
 import "./ProHeader.css";
 
 /**
- * Topmenuen: de fire produktkategorier, hver med en dropdown af undersiderne
- * (hover og tastatur via :focus-within). Se TOPMENU i products.ts. Knappen
+ * Topmenuen: de fire produktkategorier, hver med en dropdown af undersiderne i
+ * grupper med overskrift (hover og tastatur via :focus-within). Se TOPMENU i products.ts. Knappen
  * "Mest udlejede" er fjernet 28. sept 2026.
  * Eventløsninger, cases og sæsonerne står i burgermenuen under "Events &
  * sæson" (Philip, 28. sept 2026: de stod to steder).
@@ -31,11 +31,11 @@ export default function SiteHeader() {
    <Link href={href(l.href)} aria-current={aktiv(l.href) ? "page" : undefined} aria-haspopup="true" onClick={luk}>
     {en ? l.label_en : l.label}<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6"/></svg>
    </Link>
-   <div className="pro-drop-panel">
-    {l.links.map((u) => (
-     <div key={u.href} className="contents">
-      <Link href={href(u.href)} onClick={luk} className={u.under ? "pro-drop-gruppe" : undefined}>{en ? u.label_en : u.label}</Link>
-      {u.under?.map((b) => <Link key={b.href} href={href(b.href)} onClick={luk} className="pro-drop-under">{en ? b.label_en : b.label}</Link>)}
+   <div className={`pro-drop-panel${l.grupper.length > 1 ? " pro-drop-kolonner" : ""}`}>
+    {l.grupper.map((g, i) => (
+     <div key={g.titel ?? i} className="pro-drop-gruppe">
+      {g.titel && <p className="pro-drop-titel">{en ? g.titel_en : g.titel}</p>}
+      {g.links.map((u) => <Link key={u.href} href={href(u.href)} onClick={luk}>{en ? u.label_en : u.label}</Link>)}
      </div>
     ))}
    </div>

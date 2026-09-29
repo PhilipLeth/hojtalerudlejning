@@ -5,4 +5,6 @@
 .pro-drop-panel{position:absolute;top:100%;left:-16px;min-width:230px;display:none;flex-direction:column;background:#fff;border:1px solid #e0e7f0;border-radius:6px;box-shadow:0 12px 30px rgba(18,40,74,.12);padding:8px;z-index:40}
 .pro-drop:hover .pro-drop-panel,.pro-drop:focus-within .pro-drop-panel{display:flex}.pro-drop:hover>a svg,.pro-drop:focus-within>a svg{transform:rotate(180deg)}
 .pro-drop-panel a{padding:9px 12px;border-radius:4px;font-weight:400;white-space:nowrap}.pro-drop-panel a:hover{background:#f4f7fb;text-decoration:none!important;color:#1249cf}
-.pro-drop-panel .pro-drop-gruppe{font-weight:600}.pro-drop-panel .pro-drop-under{padding:6px 12px 6px 26px;font-size:14px;color:#53657d}
+
+.pro-drop-panel.pro-drop-kolonner{flex-direction:row;gap:8px;padding:14px 10px}.pro-drop-gruppe{display:flex;flex-direction:column;min-width:190px}.pro-drop-titel{margin:0 12px 6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a99ad}.pro-drop-kolonner .pro-drop-gruppe+.pro-drop-gruppe{border-left:1px solid #eef2f7;padding-left:8px}
+.pro-drop-panel.pro-drop-kolonner{left:50%;transform:translateX(-50%)}
