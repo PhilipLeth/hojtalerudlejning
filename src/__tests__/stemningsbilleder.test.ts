@@ -20,6 +20,11 @@ describe("Stemningsbilleder", () => {
     expect(heroSti("/en")).toBe("/");
   });
 
+  it("hver side har sit eget billede, ikke det fælles (29. sept 2026)", () => {
+    // Philip: "Det skal være et relevant billede pr. side" — /discokugle viste det fælles
+    for (const s of heroSider()) expect(heroStandard(s.sti), s.sti).not.toBe(HERO_FALLBACK);
+  });
+
   it("alle topmenuens kategorier kan få et stemningsbillede", () => {
     const stier = heroSider().map((s) => s.sti);
     for (const k of TOPMENU) expect(stier, `${k.href} mangler i admin`).toContain(k.href);
@@ -54,6 +59,11 @@ describe("Stemningsbilleder", () => {
       expect(existsSync(join(process.cwd(), "public", src)), src).toBe(true);
     }
     expect(heroStandard("/findes-ikke")).toBe(HERO_FALLBACK);
+    // hero-stemning.mjs lægger en 800 px-udgave ved siden af — srcset peger på den
+    for (const src of Object.values(HERO_STANDARD)) {
+      const mobil = src.replace(/\.webp$/, "-800.webp");
+      expect(existsSync(join(process.cwd(), "public", mobil)), mobil).toBe(true);
+    }
   });
 
   it("den gamle faste hero-baggrund er væk fra siderne", () => {

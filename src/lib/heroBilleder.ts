@@ -36,6 +36,8 @@ export interface HeroSide {
   gruppe: "Kategorier" | "Produkter";
   /** Produkterne, hvis fotos er referencen — grejet i billedet skal være vores */
   productIds: string[];
+  /** Stedet fra gallery/scenes.json (fest, bryllup, havefest …). Uden: se stedFor() */
+  sted?: string;
 }
 
 /**
@@ -49,18 +51,18 @@ const KATEGORIER: Array<Omit<HeroSide, "gruppe">> = [
   { sti: "/tilbehoer", navn: "Tilbehør", productIds: ["lysstativ", "kabeltromle", "roegvaeske"] },
   { sti: "/lej-hojtaler", navn: "Lej højtaler", productIds: ["festival", "party"] },
   { sti: "/roeg", navn: "Røg og low fog", productIds: ["rog", "low_fog"] },
-  { sti: "/lej-mikrofon", navn: "Mikrofoner", productIds: ["mikrofon", "festival"] },
+  { sti: "/lej-mikrofon", navn: "Mikrofoner", productIds: ["mikrofon", "festival"], sted: "firmafest" },
   { sti: "/lysshow", navn: "Lysshow", productIds: ["lys", "discokugle", "rog"] },
   { sti: "/uplights", navn: "Uplights", productIds: ["uplight_4"] },
-  { sti: "/lyskaeder", navn: "Lyskæder", productIds: ["lyskaeder"] },
-  { sti: "/mixer", navn: "Mixer", productIds: ["mixer_stor", "mikrofon"] },
+  { sti: "/lyskaeder", navn: "Lyskæder", productIds: ["lyskaeder"], sted: "havefest" },
+  { sti: "/mixer", navn: "Mixer", productIds: ["mixer_stor", "mikrofon"], sted: "firmafest" },
   { sti: "/festlyd", navn: "Festlyd", productIds: ["festival", "lys"] },
   { sti: "/lydudstyr", navn: "Lydudstyr", productIds: ["festival", "subwoofer"] },
   { sti: "/kobenhavn", navn: "København", productIds: ["festival", "lys"] },
-  { sti: "/bryllup", navn: "Bryllup", productIds: ["festival", "mikrofon", "lyskaeder"] },
-  { sti: "/konfirmation", navn: "Konfirmation", productIds: ["festival", "mikrofon"] },
+  { sti: "/bryllup", navn: "Bryllup", productIds: ["festival", "mikrofon", "lyskaeder"], sted: "bryllup" },
+  { sti: "/konfirmation", navn: "Konfirmation", productIds: ["festival", "mikrofon"], sted: "fest" },
   { sti: "/foedselsdag", navn: "Fødselsdag", productIds: ["party", "lys"] },
-  { sti: "/havefest", navn: "Havefest", productIds: ["soundboks", "lyskaeder"] },
+  { sti: "/havefest", navn: "Havefest", productIds: ["soundboks", "lyskaeder"], sted: "havefest" },
 ];
 
 /**
@@ -102,6 +104,30 @@ export function heroReferencer(side: HeroSide): string[] {
   return ud.slice(0, 6);
 }
 
+/** Batteri- og talegrej hører et andet sted hjemme end en fest i en lagerhal */
+const UDENDØRS = ["soundboks", "thumpgo", "batteri"];
+const TALE = ["mikrofon", "headset", "mikrofon_kabel", "haandholdt_mikrofon_pro", "mikrofonstativ", "mixer_stor"];
+
+/**
+ * Hvor billedet foregår. Philip, 29. sept 2026: "Det skal være et relevant
+ * billede pr. side" — /discokugle viste det fælles billede med en højtaler, vi
+ * ikke har. Referencerne sørger for grejet; stedet sørger for anledningen.
+ */
+/** Produktsider, hvor reglen nedenfor rammer ved siden af */
+const STED_FOR_SIDE: Record<string, string> = {
+  "/julehyggen": "firmafest", // julehygge, ikke en sommerhave — selv om Thump GO er med
+};
+
+export function stedFor(side: HeroSide): string {
+  if (side.sted) return side.sted;
+  if (STED_FOR_SIDE[side.sti]) return STED_FOR_SIDE[side.sti];
+  if (side.productIds.some((id) => UDENDØRS.includes(id))) return "havefest";
+  if (side.productIds.every((id) => TALE.includes(id) || id === "party" || id === "festival")) {
+    if (side.productIds.some((id) => TALE.includes(id))) return "firmafest";
+  }
+  return "fest";
+}
+
 /**
  * Prompten. Samme stil og forbud som produktgalleriet (gallery/scenes.json).
  * Overskriften nævnes ALDRIG: "so headline text can sit on top" fik modellen
@@ -109,15 +135,14 @@ export function heroReferencer(side: HeroSide): string[] {
  */
 export function heroPrompt(side: HeroSide, note?: string): string {
   const stil = (scener as { stil: { faelles: string; forbudt: string } }).stil;
-  const sted =
-    (scener as { steder: Record<string, string> }).steder.fest ??
-    "A Copenhagen party venue at night with white-painted walls and a wooden floor";
+  const steder = (scener as { steder: Record<string, string> }).steder;
+  const sted = steder[stedFor(side)] ?? steder.fest;
   const scene =
-    `${sted}. The rental equipment in the reference photos is set up and in use, each item reproduced ` +
-    `faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower ` +
-    `third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image ` +
-    `is calm, uncluttered and fairly dark, just wall and ceiling with coloured light on them. Absolutely no ` +
-    `words, letters, titles or captions anywhere in the picture. Wide 16:9 composition.`;
+    `${sted}. The rental equipment in the reference photos is the subject of the picture: set up and in ` +
+    `use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed ` +
+    `where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft ` +
+    `focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. ` +
+    `Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition.`;
   const ønske = note?.trim() ? ` The person ordering the image adds: "${note.trim()}". Follow it unless it breaks the rules below.` : "";
   return `${scene}${ønske} ${stil.faelles} ${stil.forbudt}`;
 }

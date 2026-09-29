@@ -1,15 +1,19 @@
 /**
  * Den lille del af stemningsbillederne, som browseren skal bruge: standarden
- * og stierne. Uden imports, så StemningsBaggrund ikke trækker kataloget og
+ * og stierne. Uden kataloget, så StemningsBaggrund ikke trækker produkterne og
  * promptopsætningen med ud til kunden. Resten står i heroBilleder.ts.
  */
 
+import standard from "./heroStandard.json";
+
 export const HERO_FALLBACK = "/images/hero.webp";
 
-export const HERO_STANDARD: Record<string, string> = {
-  "/festpakke-stor": "/images/hero/festpakke-stor.webp",
-  "/lyd-og-lyspakker": "/images/hero/festpakke-stor.webp",
-};
+/**
+ * Kodens stemningsbilleder, sti → billede. Skrives af
+ * scripts/product-images/hero-stemning.mjs, når et billede er lavet og set
+ * efter — derfor JSON og ikke TypeScript.
+ */
+export const HERO_STANDARD: Record<string, string> = standard;
 
 /** KV-nøglen for det godkendte: sti → { src, updatedBy, updatedAt } */
 export const HERO_MANIFEST_KEY = "hero_manifest";

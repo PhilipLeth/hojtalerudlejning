@@ -1,0 +1,442 @@
+[
+  {
+    "sti": "/lydanlaeg",
+    "navn": "Lyd",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-subwoofer-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/festlys",
+    "navn": "Lys & effekter",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-lys-v4-white.webp",
+      "/images/product-discokugle-v2-white.webp",
+      "/images/product-rog-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/lyd-og-lyspakker",
+    "navn": "Lyd- og lyspakker",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-lys-v4-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/tilbehoer",
+    "navn": "Tilbehør",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-hojtalerstativ-1-white.webp",
+      "/images/product-kabeltromle-white.webp",
+      "/images/product-vaeske-5l-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/lej-hojtaler",
+    "navn": "Lej højtaler",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-party-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/roeg",
+    "navn": "Røg og low fog",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-rog-v2-white.webp",
+      "/images/product-lowfog-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/lej-mikrofon",
+    "navn": "Mikrofoner",
+    "sted": "firmafest",
+    "referencer": [
+      "/images/product-mikrofon-pro-v2-white.webp",
+      "/images/product-festival-v2-white.webp"
+    ],
+    "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/lysshow",
+    "navn": "Lysshow",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-lys-v4-white.webp",
+      "/images/product-discokugle-v2-white.webp",
+      "/images/product-rog-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/uplights",
+    "navn": "Uplights",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-uplight-4-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/lyskaeder",
+    "navn": "Lyskæder",
+    "sted": "havefest",
+    "referencer": [
+      "/images/product-lyskaeder-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen backyard garden on a summer evening, wooden fence, apple tree, a long table with mismatched chairs, the last blue light in the sky. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/mixer",
+    "navn": "Mixer",
+    "sted": "firmafest",
+    "referencer": [
+      "/images/product-mixer-tmix-1202-fx-usb.jpg",
+      "/images/product-mikrofon-pro-v2-white.webp"
+    ],
+    "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/festlyd",
+    "navn": "Festlyd",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-lys-v4-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/lydudstyr",
+    "navn": "Lydudstyr",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-subwoofer-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/kobenhavn",
+    "navn": "København",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-lys-v4-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/bryllup",
+    "navn": "Bryllup",
+    "sted": "bryllup",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-mikrofon-pro-v2-white.webp",
+      "/images/product-lyskaeder-v2-white.webp"
+    ],
+    "prompt": "A Danish wedding reception in a bright rustic barn at dusk, long tables with white linen and lit candles, guests seated after the meal, warm string lights overhead, pale wood everywhere. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/konfirmation",
+    "navn": "Konfirmation",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-mikrofon-pro-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/foedselsdag",
+    "navn": "Fødselsdag",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-party-v2-white.webp",
+      "/images/product-lys-v4-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/havefest",
+    "navn": "Havefest",
+    "sted": "havefest",
+    "referencer": [
+      "/images/product-soundboks-v2-white.webp",
+      "/images/product-lyskaeder-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen backyard garden on a summer evening, wooden fence, apple tree, a long table with mismatched chairs, the last blue light in the sky. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/mackie-thump-go",
+    "navn": "Mackie Thump GO",
+    "sted": "havefest",
+    "referencer": [
+      "/images/product-thumpgo-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen backyard garden on a summer evening, wooden fence, apple tree, a long table with mismatched chairs, the last blue light in the sky. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/hojtalerpakke-lille",
+    "navn": "Lille højtalerpakke",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-party-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/soundboks-4",
+    "navn": "Soundboks 4",
+    "sted": "havefest",
+    "referencer": [
+      "/images/product-soundboks-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen backyard garden on a summer evening, wooden fence, apple tree, a long table with mismatched chairs, the last blue light in the sky. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/hojtalerpakke-normal",
+    "navn": "Mellem højtalerpakke",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/hojtalerpakke-bas",
+    "navn": "Stor højtalerpakke",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-bas-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/enkelt-lyseffekt",
+    "navn": "Enkelt lyseffekt",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-lyseffekt-v4-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/lys-pakke",
+    "navn": "Lysbar",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-lys-v4-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/roegmaskine",
+    "navn": "Røgmaskine",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-rog-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/subwoofer",
+    "navn": "Subwoofer 12\"",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-subwoofer-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/hojtalerstativer",
+    "navn": "Højtalerstativer",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-stativer-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/traadloes-mikrofon",
+    "navn": "Trådløs mikrofon",
+    "sted": "firmafest",
+    "referencer": [
+      "/images/product-mikrofon-pro-v2-white.webp"
+    ],
+    "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/ekstra-batteri",
+    "navn": "Soundboks batteri",
+    "sted": "havefest",
+    "referencer": [
+      "/images/product-soundboks-batteri-v3-white.webp"
+    ],
+    "prompt": "A Copenhagen backyard garden on a summer evening, wooden fence, apple tree, a long table with mismatched chairs, the last blue light in the sky. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/haandholdt-mikrofon",
+    "navn": "Mikrofon med ledning",
+    "sted": "firmafest",
+    "referencer": [
+      "/images/product-mikrofon-kabel-v2-white.webp"
+    ],
+    "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/lydmand",
+    "navn": "Lydmand",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-lydmand-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/dj-pult",
+    "navn": "DJ-pult · AlphaTheta XDJ",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-dj-pult-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/festpakke-100",
+    "navn": "Festpakke 50-100",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-bas-v2-white.webp",
+      "/images/product-lys-v4-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/julehyggen",
+    "navn": "Julehyggen",
+    "sted": "firmafest",
+    "referencer": [
+      "/images/product-thumpgo-v2-white.webp",
+      "/images/product-lyskaeder-v2-white.webp",
+      "/images/product-lyseffekt-v4-white.webp"
+    ],
+    "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/festpakke-lille",
+    "navn": "Festpakke 0-30",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-party-v2-white.webp",
+      "/images/product-lys-v4-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/festpakke-stor",
+    "navn": "Festpakke 30-50",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-lys-v4-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/firmafestpakke",
+    "navn": "Firmafestpakke",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-stativer-white.webp",
+      "/images/product-mikrofon-pro-v2-white.webp",
+      "/images/product-subwoofer-v2-white.webp",
+      "/images/product-lys-v4-white.webp",
+      "/images/product-rog-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/stemningslys",
+    "navn": "Stemningslys-pakken",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-uplight-4-v2-white.webp",
+      "/images/product-lyskaeder-v2-white.webp",
+      "/images/product-discokugle-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/soundboks-pakke-lys",
+    "navn": "Stor soundboks pakke",
+    "sted": "havefest",
+    "referencer": [
+      "/images/product-soundboks-v2-white.webp",
+      "/images/product-lys-v4-white.webp"
+    ],
+    "prompt": "A Copenhagen backyard garden on a summer evening, wooden fence, apple tree, a long table with mismatched chairs, the last blue light in the sky. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/speakerpakke",
+    "navn": "Speakerpakke 30-50",
+    "sted": "firmafest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-mikrofon-kabel-v2-white.webp"
+    ],
+    "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/pakke-tale-musik",
+    "navn": "Speakerpakke trådløs 30-50",
+    "sted": "firmafest",
+    "referencer": [
+      "/images/product-festival-v2-white.webp",
+      "/images/product-mikrofon-pro-v2-white.webp"
+    ],
+    "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/discokugle",
+    "navn": "Discokugle 40 cm",
+    "sted": "fest",
+    "referencer": [
+      "/images/product-discokugle-v2-white.webp"
+    ],
+    "prompt": "A Copenhagen party venue at night: a converted warehouse room with white-painted brick, a worn wooden floor and tall windows, dark outside, warm practical lights on the walls. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/headset-mikrofon",
+    "navn": "Trådløst headset",
+    "sted": "firmafest",
+    "referencer": [
+      "/images/product-headset-pro-v2-white.webp"
+    ],
+    "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
+    "sti": "/haandholdt-mikrofon-pro",
+    "navn": "Håndholdt mikrofon PRO (kabel)",
+    "sted": "firmafest",
+    "referencer": [
+      "/images/product-mikrofon-kabel-pro-v2-white.webp"
+    ],
+    "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  }
+]

@@ -4363,6 +4363,13 @@
     "prompt": "heroPrompt() i src/lib/heroBilleder.ts: sidens produktfotos som reference (heroReferencer), galleriets stil og forbud fra gallery/scenes.json, 16:9, roligt øverst i midten, aldrig tekst i billedet.",
     "undtaget": "/dj og halloween-siderne har eget hero-design (UDEN_STEMNINGSHERO). /lej-projektor og /karaoke er på pause og viser bare standardbilledet.",
     "topmenu": "Lyd-dropdown: Højtalerstativer, Subwoofer og Mixer er taget ud; Soundboks 4 og Mackie Thump GO står under 'Batterihøjtalere' (anker #batterihojtalere på /lydanlaeg).",
-    "refaktor": "hentReference og udtrækBillede flyttet fra functions/api/gallery.ts til functions/api/_lib/billedModel.ts, så /api/gallery og /api/hero deler dem."
+    "refaktor": "hentReference og udtrækBillede flyttet fra functions/api/gallery.ts til functions/api/_lib/billedModel.ts, så /api/gallery og /api/hero deler dem.",
+    "pr_side_2026_09_29": "Philip: 'Det skal være et relevant billede pr. side ... jeg skal ikke sidde og klikke igennem dem.' Alle 45 sider har nu eget stemningsbillede, lavet med scripts/product-images/hero-stemning.mjs (samme prompt og referencer som admin-knappen; listen fra gallery/hero-sider.json, som hero-sider-json.test.ts holder i sync). Hver side har et sted (fest, bryllup, havefest, firmafest) via stedFor() — Soundboks/Thump GO i haven, mikrofoner til taler, discokuglen til festen. Billederne ligger i public/images/hero/<side>-<hash>.webp (hash = nyt navn ved ny version, CDN-sikkert) og i src/lib/heroStandard.json. 44 × 0,134 $ ≈ 6 $; tre blev lavet om efter gennemsyn (lyseffekt, trådløs mikrofon, DJ-pult med mærkenavn). Admin (KV) vinder stadig over kodens billede."
+  },
+  "annoncer_priser_2026_09_29": {
+    "script": "ads-export/ret_priser_fra_arket.py — erstatter RSA'er i tændte grupper, hvis tekst lover andre beløb end landingssiden: ny annonce med samme pins og sti, gammel fjernes. Preflight: de nye beløb skal stå i landingssidens HTML.",
+    "omfang": "Tørkørsel 29. sept: 70 af 99 aktive annoncer, 196 unikke rettelser (Soundboks 595, lille højtalerpakke 395, højtalere/anlæg fra 395, PA 595, lysbar 295, festlys fra 195, røgmaskine 245, uplights 195/495, discokugle 345, lysshow 500, festpakke 0-30 630). Diskolys-grupperne flyttes fra den udgåede /diskolys til /festlys. 'PA-anlæg … stativer' rettet: stativer er et tilvalg.",
+    "status": "IKKE kørt: --apply blev afvist af Claude Codes auto-mode ('External System Writes'). Philip kører: python3 ads-export/ret_priser_fra_arket.py --apply",
+    "ikke_rørt": "Annoncer i pausede grupper og i de pausede kampagner (Yderområder, PMax) bærer stadig gamle tal — ret dem, før de tændes."
   }
 }
