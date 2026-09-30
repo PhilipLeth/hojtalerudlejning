@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 export default function LysPakkePage() {
   return (
     <ProductLanding
-      slug="lysbar"
+      slug="lys-pakke"
       name="Lysbar"
       headline="Lej lysbar i København"
       sub="2 farvede LED-lamper + centereffekt på stativ. Klar på få minutter."

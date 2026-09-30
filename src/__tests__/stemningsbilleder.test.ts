@@ -66,6 +66,18 @@ describe("Stemningsbilleder", () => {
     }
   });
 
+  it("ProductLandings slug er sidens egen sti", () => {
+    // /lys-pakke havde slug="lysbar": stemningsbilledet blev slået op under /lysbar,
+    // og produktets URL i schema og brødkrumme pegede på en side, der gav 404.
+    for (const f of globSync("src/app/**/page.tsx", { cwd: process.cwd() })) {
+      const kilde = læs(f);
+      if (!kilde.includes("<ProductLanding")) continue;
+      const slug = kilde.match(/slug="([^"]+)"/)?.[1];
+      const sti = f.replace(/^src\/app\//, "").replace(/\/page\.tsx$/, "");
+      expect(slug, f).toBe(sti);
+    }
+  });
+
   it("den gamle faste hero-baggrund er væk fra siderne", () => {
     const filer = [...globSync("src/app/**/page.tsx", { cwd: process.cwd() }), "src/components/ProductLanding.tsx", "src/components/OccasionLanding.tsx"];
     for (const f of filer) expect(læs(f), f).not.toContain('backgroundImage: "url(/images/hero.webp)"');
