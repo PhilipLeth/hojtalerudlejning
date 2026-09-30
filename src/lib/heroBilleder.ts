@@ -90,10 +90,48 @@ export function heroSider(): HeroSide[] {
   return [...set.values()];
 }
 
+/**
+ * Grej, der skal med i billedet ud over sidens eget. Røgmaskinen alene giver en
+ * grå sky; med lysbaren bliver røgen farvet (Philip, 30. sept 2026: "må der godt
+ * være mere røg og lys"). Står det ikke her, digter modellen sit eget lys.
+ */
+const EKSTRA_REFERENCER: Record<string, string[]> = {
+  "/roegmaskine": ["lys"],
+};
+
+/**
+ * Hvad billedet skal vise, når "grejet i brug" ikke er nok. Skrevet efter
+ * Philips gennemgang 30. sept 2026 — hvert punkt er et billede, der ikke
+ * viste det, siden sælger.
+ */
+export const HERO_MOTIV: Record<string, string> = {
+  "/lys-pakke":
+    "The light bar on its tripod stand is the clear subject, standing at the edge of the dance floor, seen from the " +
+    "front. It has EXACTLY two round coloured LED lamps hanging under a short horizontal bar and ONE round centre " +
+    "effect on top, exactly like the reference photo — not three, not four lamps. The lamps are switched on and throw " +
+    "coloured beams and light patterns across the dancing guests, the floor and the walls.",
+  "/uplights":
+    "Four small uplights stand on the floor against the white walls, each one washing a tall vertical cone of " +
+    "saturated coloured light up the wall towards the ceiling. The uplights and their coloured wall washes are the " +
+    "subject; the room is otherwise dim.",
+  "/discokugle":
+    "The mirror ball hangs directly under the ceiling, at least three metres up and high above the heads of the " +
+    "guests, carried by its tripod stand with the thin telescopic pole fully extended; the small spotlight on the " +
+    "floor is aimed up at it. Hundreds of bright light reflections from the ball sweep across the walls, the ceiling " +
+    "and the dancing guests.",
+  "/roegmaskine":
+    "The fog machine on the floor at the side of the dance floor pumps a thick cloud of fog that fills the lower half " +
+    "of the room, lit from behind by the light bar so the fog glows in blue and magenta beams.",
+  "/lej-mikrofon":
+    "A person standing at the front holds the wireless handheld microphone in their hand, raised to their mouth and " +
+    "clearly visible, giving a speech to seated guests; the speakers on stands are behind them. The microphone is the " +
+    "subject of the picture.",
+};
+
 /** Referencefotos for en side: produktfotoene, højst seks, ingen dubletter */
 export function heroReferencer(side: HeroSide): string[] {
   const ud: string[] = [];
-  for (const id of side.productIds) {
+  for (const id of [...side.productIds, ...(EKSTRA_REFERENCER[side.sti] ?? [])]) {
     try {
       const src = catalogImage(id);
       if (src && !ud.includes(src)) ud.push(src);
@@ -143,6 +181,7 @@ export function heroPrompt(side: HeroSide, note?: string): string {
     `where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft ` +
     `focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. ` +
     `Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition.`;
+  const motiv = HERO_MOTIV[side.sti] ? ` ${HERO_MOTIV[side.sti]}` : "";
   const ønske = note?.trim() ? ` The person ordering the image adds: "${note.trim()}". Follow it unless it breaks the rules below.` : "";
-  return `${scene}${ønske} ${stil.faelles} ${stil.forbudt}`;
+  return `${scene}${motiv}${ønske} ${stil.faelles} ${stil.forbudt}`;
 }
