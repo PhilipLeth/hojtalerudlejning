@@ -1,4 +1,5 @@
 "use client";
+import { erTilbudSti } from "@/lib/tilbudSti";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SiteSearch from "@/components/SiteSearch";
@@ -16,7 +17,7 @@ import "./ProHeader.css";
 export default function SiteHeader() {
  const pathname = usePathname();
 
- if (pathname?.startsWith("/admin")) return null;
+ if (pathname?.startsWith("/admin") || erTilbudSti(pathname)) return null;
  const en = pathname?.startsWith("/en"); const locale = en ? "en" : "da";
  // localizedHref kender kun stier, ikke ankre: "/tilbehoer#stroem" skal blive "/en/tilbehoer#stroem"
  const href = (path:string) => { const [sti, anker] = path.split("#"); return localizedHref(sti,locale) + (anker ? `#${anker}` : ""); };

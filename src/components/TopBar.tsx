@@ -1,4 +1,5 @@
 "use client";
+import { erTilbudSti } from "@/lib/tilbudSti";
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -58,7 +59,8 @@ export default function TopBar() {
   const pathname = usePathname();
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
-  const isAdmin = pathname?.startsWith("/admin");
+  // Tilbuddet er et dokument: ingen bånd og menu henover forsiden
+  const isAdmin = pathname?.startsWith("/admin") || erTilbudSti(pathname);
   const locale: Locale = pathname?.startsWith("/en") ? "en" : "da";
   // Samme kald som anmeldelsessektionen, hooken deler svaret mellem dem
   const { data } = useGoogleReviews(locale, !isAdmin);

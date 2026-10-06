@@ -32,6 +32,7 @@ export const ADMIN_MENU: AdminMenuGroup[] = [
     group: "Drift",
     items: [
       { href: "/admin", label: "Bookinger", hint: "Ordrer, status, betaling" },
+      { href: "/admin/tilbud", label: "Tilbud", hint: "Byg et tilbud og send det til kunden" },
       { href: "/admin/kalender", label: "Kalender", hint: "Hvad er ude hvornår" },
       { href: "/admin/udlevering", label: "Udlevering", hint: "Dagens afhentninger + underskrift" },
       { href: "/admin/lejeseddel", label: "Lejeseddel", hint: "Print lejekontrakt" },

@@ -818,6 +818,24 @@ export const addons: Addon[] = [
       desc: "Fee for payment by invoice",
     },
   },
+  // ── Forbrugsmaterialer (6. okt 2026): tape, batterier, strips og kabelbindere
+  // til en opsætning. Intern vare: lægges på et tilbud eller en ordre fra admin,
+  // i stk. á 100 kr, og kunden kan ikke selv vælge den i bookingen.
+  {
+    id: "forbrugsmaterialer",
+    price: 100,
+    image: null,
+    intern: true,
+    priceUnit: { da: "kr/stk.", en: "DKK each" },
+    da: {
+      label: "Diverse forbrugsmaterialer",
+      desc: "Tape, batterier, strips og kabelbindere til opsætningen",
+    },
+    en: {
+      label: "Consumables",
+      desc: "Tape, batteries, cable ties and other materials for the setup",
+    },
+  },
 ];
 
 /**

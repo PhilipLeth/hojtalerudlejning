@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { erTilbudSti } from "@/lib/tilbudSti";
 import EventInquiryForm from "@/components/EventInquiryForm";
 import PhoneLink from "@/components/PhoneLink";
 import type { Locale } from "@/lib/i18n";
@@ -59,7 +60,9 @@ function skjultPaa(pathname: string | null): boolean {
     pathname.startsWith("/admin") ||
     pathname.startsWith("/accounting") ||
     pathname === "/book" ||
-    pathname === "/en/book"
+    pathname === "/en/book" ||
+    // Tilbuddet er et dokument: fanen lå hen over beløbene på telefonen
+    erTilbudSti(pathname)
   );
 }
 

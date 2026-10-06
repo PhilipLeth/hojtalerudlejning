@@ -1,4 +1,5 @@
 "use client";
+import { erTilbudSti } from "@/lib/tilbudSti";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -78,6 +79,9 @@ export default function BurgerMenu() {
     }
     return () => { document.body.style.overflow = ""; };
   }, [open]);
+
+  // Tilbuddet er et dokument, kunden skal læse og printe, ikke en side i shoppen
+  if (erTilbudSti(pathname)) return null;
 
   return (
     <>

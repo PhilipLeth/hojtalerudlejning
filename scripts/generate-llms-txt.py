@@ -42,7 +42,7 @@ BASE = "https://lejhojtaler.dk"
 
 # Bagkontor og kvitteringssider — samme udeladelser som sitemap.xml.
 EXCLUDE_PREFIXES = ("/admin", "/accounting")
-EXCLUDE_EXACT = {"/404", "/book/tak", "/en/book/tak"}
+EXCLUDE_EXACT = {"/404", "/book/tak", "/en/book/tak", "/tilbud", "/en/tilbud"}
 
 # Prisen for begge veje står ingen steder i markup'en — kun én vej gør, via
 # Product-markup'ens shippingRate. Tallet her skal svare til addon'en

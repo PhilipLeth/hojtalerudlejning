@@ -209,6 +209,7 @@ export const KATALOG_AFSNIT: KatalogAfsnit[] = [
           "lydmand",
           "dj_musikafvikler",
           "faktureringsgebyr",
+          "forbrugsmaterialer",
         ],
       },
     ],

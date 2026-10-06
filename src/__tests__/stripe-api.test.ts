@@ -89,7 +89,7 @@ describe("Server-side prisberegning (pricing)", () => {
   it("afviser tom og absurd lang kurv", async () => {
     const table = await loadPriceTable(fakeKv());
     expect(() => buildLineItems(table, [])).toThrow();
-    expect(() => buildLineItems(table, Array(26).fill({ id: "party" }))).toThrow();
+    expect(() => buildLineItems(table, Array(201).fill({ id: "party" }))).toThrow();
   });
 });
 

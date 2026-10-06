@@ -24,6 +24,11 @@ export interface Catalog {
   rentalProducts: RentalProduct[];
   /** Cheapest visible speaker price (hero, sticky bar, meta) */
   startPrice: number;
+  /**
+   * Sat, når admin-kataloget er hentet (eller kaldet fejlede). Et tilbud skal
+   * lægges i kurven med de priser, kassen opkræver — ikke kodens standarder.
+   */
+  indlaest?: boolean;
 }
 
 interface CatalogResponse {
@@ -187,13 +192,14 @@ export function useProducts(): Catalog {
           ? visible(mergeRentals(data.rentalProducts))
           : visible(defaultRentals);
       const pricedRentals = refreshBundlePrices(rentalProducts, [...speakers, ...addons, ...rentalProducts]);
-      setCatalog({ speakers, addons, rentalProducts: pricedRentals, startPrice: cheapestSpeakerPrice(speakers) });
+      setCatalog({ speakers, addons, rentalProducts: pricedRentals, startPrice: cheapestSpeakerPrice(speakers), indlaest: true });
     };
 
     loadCatalog()
       .then(apply)
       .catch(() => {
         // Keep defaults on failure
+        if (!cancelled) setCatalog((c) => ({ ...c, indlaest: true }));
       });
 
     return () => {

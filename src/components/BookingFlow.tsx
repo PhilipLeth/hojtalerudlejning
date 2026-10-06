@@ -12,6 +12,7 @@ import { localizedHref } from "@/lib/enPages";
 
 import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, isInternalAddon, isServiceAddon, bundleIncludesDelivery, DELIVERY_ADDON_IDS, STROEM_ADDON_IDS } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
+import { kurvFraTilbud, type Tilbud } from "@/lib/tilbud";
 import { trackBookingFormStart, trackPurchase } from "@/lib/analytics";
 import CapacityBadge, { capacityLevel } from "@/components/CapacityBadge";
 import AdresseInput from "@/components/AdresseInput";
@@ -974,7 +975,8 @@ export default function BookingFlow({
     if (variant !== "page") return;
     if (typeof window === "undefined") return;
     const q = new URLSearchParams(window.location.search);
-    setUrlProdukt(q.get("product"));
+    // Et tilbud i URL'en er også en kurv på vej — ikke en tom /book
+    setUrlProdukt(q.get("product") ?? q.get("tilbud"));
     setUrlTjekket(true);
   }, [urlTick, variant]);
 
@@ -1190,6 +1192,89 @@ export default function BookingFlow({
       });
     }
   }, [speaker, selectedAddons, s]);
+
+  /*
+   * /book?tilbud=X — et tilbud fra /admin/tilbud lægges i kurven som det, det
+   * er: hver enhed som kurvlinje, teknikeren som lydmandstimer, kørslen som
+   * kørselsvalg, datoerne og kundens oplysninger udfyldt. Kunden lander på
+   * tilvalgstrinnet og kan rette det hele, før han betaler. Prisen slås op i
+   * kataloget igen her, så det er kassens beløb, ikke tilbuddets.
+   */
+  const tilbudAnvendt = useRef<string | null>(null);
+  const [tilbudId, setTilbudId] = useState<string | null>(null);
+  const [tilbudNr, setTilbudNr] = useState<number | null>(null);
+  const [tilbudFejl, setTilbudFejl] = useState(false);
+  useEffect(() => {
+    if (variant !== "page" || typeof window === "undefined" || !catalog.indlaest) return;
+    const id = new URLSearchParams(window.location.search).get("tilbud");
+    if (!id || tilbudAnvendt.current === id) return;
+    tilbudAnvendt.current = id;
+    (async () => {
+      try {
+        const r = await fetch(`/api/tilbud?id=${encodeURIComponent(id)}`);
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const t = ((await r.json()) as { tilbud?: Tilbud }).tilbud;
+        if (!t) throw new Error("tomt svar");
+        const kurv = kurvFraTilbud(t, catalog);
+        preselected.current = true;
+        setSpeaker(null);
+        setCartItems(kurv.enheder);
+        setSelectedAddons([...(kurv.teknikerTimer ? [LYDMAND_ID] : []), ...(kurv.levering ? [kurv.levering] : [])]);
+        if (kurv.teknikerTimer) setLydmandTimer(kurv.teknikerTimer);
+        if (t.leveringsadresse) setDeliveryAddress(t.leveringsadresse);
+        setForm((f) => ({
+          ...f,
+          name: t.kunde.navn || f.name,
+          email: t.kunde.email || f.email,
+          phone: t.kunde.telefon || f.phone,
+          company: t.kunde.firma || f.company,
+        }));
+        setTilbudId(t.id);
+        setTilbudNr(t.nr);
+
+        // Datoerne fra tilbuddet, hvis de stadig kan vælges i kalenderen
+        let harDatoer = false;
+        if (t.fra && t.fra >= dateKey(new Date()) && !isBeforeEarliestPickup(hours, t.fra)) {
+          const [y, m, d] = t.fra.split("-").map(Number);
+          const fra = new Date(y, m - 1, d);
+          let til = fra;
+          if (t.til) {
+            const [y2, m2, d2] = t.til.split("-").map(Number);
+            til = new Date(y2, m2 - 1, d2);
+          }
+          if (diffDays(fra, til) < 1) til = new Date(fra.getFullYear(), fra.getMonth(), fra.getDate() + 1);
+          if (diffDays(fra, til) <= 5) {
+            setPickupDate(fra);
+            setReturnDate(til);
+            checkDateAvailability(fra, til);
+            harDatoer = true;
+          }
+        }
+
+        // Rabatkoden valideres som hvis kunden selv havde tastet den
+        if (t.rabat?.code) {
+          setCouponInput(t.rabat.code);
+          setVisRabat(true);
+          try {
+            const q = new URLSearchParams({ code: t.rabat.code });
+            if (harDatoer && t.fra) q.set("pickup", t.fra);
+            const res = await fetch(`/api/discount?${q.toString()}`);
+            const json: { valid: boolean; code?: string; pct?: number } = await res.json();
+            if (json.valid && json.code && json.pct) setCoupon({ code: json.code, pct: json.pct });
+          } catch {
+            /* så kan kunden selv trykke "Anvend" */
+          }
+        }
+        setStep(harDatoer ? 3 : 2);
+        console.log("[booking] tilbud i kurven", t.nr, kurv.enheder.length, "enheder");
+      } catch (e) {
+        setTilbudFejl(true);
+        setUrlProdukt(null);
+        console.error("[booking] tilbuddet kunne ikke hentes:", e);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlTick, variant, catalog]);
 
   const isEffectsOnly = speaker === "effects-only";
   const selectedSpeaker = speakers.find((sp) => sp.id === speaker);
@@ -1423,8 +1508,11 @@ export default function BookingFlow({
     const sp = speakers.find((x) => x.id === productId);
     const rp = rentalProducts.find((x) => x.id === productId);
     const ad = addons.find((x) => x.id === productId);
-    const navn = sp?.name ?? (rp ? (locale === "en" ? rp.name_en : rp.name_da) : ad?.label);
-    const pris = sp?.price ?? rp?.price ?? ad?.price;
+    // Interne varer (forbrugsmaterialer) kan kun komme i kurven fra et tilbud,
+    // men så skal + også virke på dem
+    const intern = ad ? undefined : catalog.addons.find((x) => x.id === productId && isInternalAddon(x));
+    const navn = sp?.name ?? (rp ? (locale === "en" ? rp.name_en : rp.name_da) : ad?.label ?? intern?.[locale]?.label);
+    const pris = sp?.price ?? rp?.price ?? ad?.price ?? intern?.price;
     if (!navn || typeof pris !== "number") return;
     setCartItems((prev) => [...prev, { productId, name: navn, price: priceOf(pris) }]);
   }
@@ -1514,6 +1602,8 @@ export default function BookingFlow({
           locale,
           newsletter,
           paymentChoice: payMethod,
+          // Bookingen kommer fra et tilbud: så markerer serveren tilbuddet som booket
+          ...(tilbudId ? { tilbudId } : {}),
           ...form,
         }),
       });
@@ -2012,6 +2102,21 @@ export default function BookingFlow({
 
       {/* ── Content ── */}
       <div className={variant === "page" ? "relative z-20 mx-auto max-w-2xl px-4 py-4 pb-16" : inDrawer ? "relative z-20 mx-auto max-w-lg px-4 py-4 pb-16" : "relative z-20 mx-auto max-w-lg px-4 py-12 sm:py-24"}>
+        {tilbudNr !== null && step < 4 && (
+          <div className="mb-5 rounded-xl border border-brand-500/30 bg-brand-500/10 px-4 py-3 text-sm text-white/80">
+            <strong className="text-white">{locale === "en" ? `Offer no. ${tilbudNr}` : `Tilbud nr. ${tilbudNr}`}</strong>{" "}
+            {locale === "en"
+              ? "is in your cart. Change quantities, add more or remove items before you pay."
+              : "ligger i kurven. Ret antal, læg mere til eller fjern noget, før I betaler."}
+          </div>
+        )}
+        {tilbudFejl && (
+          <div className="mb-5 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+            {locale === "en"
+              ? "We could not load your offer. Open the link from the email again, or call us."
+              : "Vi kunne ikke hente jeres tilbud. Åbn linket fra mailen igen, eller ring til os."}
+          </div>
+        )}
         {tomKurv ? (
           <div className="space-y-5 py-16 text-center">
             <h2 className="text-2xl font-bold">{s.emptyCartTitle}</h2>

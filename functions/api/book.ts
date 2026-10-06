@@ -10,6 +10,7 @@ import type { SaleContext } from "./_lib/weekendSale";
 import { notifyRecipients } from "./_lib/notify";
 import { formatShortDate, formatTimeSlot, isBeforeEarliestPickup } from "../../src/lib/openingHours";
 import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../src/lib/fetchTimeout";
+import { markerBooket } from "./tilbud";
 
 interface Env {
   RESEND_API_KEY: string;
@@ -61,6 +62,8 @@ interface BookingData {
   email: string;
   phone: string;
   comment: string;
+  /** Bookingen kom fra et tilbud (/book?tilbud=X) — tilbuddet markeres som booket */
+  tilbudId?: string;
 }
 
 /** Contextual post-booking upsell (30%). See prd.json → fulfillment_and_upsell */
@@ -451,7 +454,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       // KV ikke svarer — en ordre må aldrig gå tabt, fordi en indstilling er væk.
       to: notifyRecipients(site.company.email || NOTIFY_EMAIL),
       reply_to: data.email,
-      subject: `Ny booking: ${data.speaker}${(data.cartItems?.length ?? 0) > 0 ? ` + ${data.cartItems!.length} mere` : ""} — ${data.period} — ${data.name}`,
+      subject: `Ny booking${data.tilbudId ? " fra tilbud" : ""}: ${data.speaker || data.cartItems?.[0]?.name || "udstyr"}${(data.cartItems?.length ?? 0) > (data.speaker ? 0 : 1) ? ` + ${(data.cartItems?.length ?? 0) - (data.speaker ? 0 : 1)} mere` : ""} — ${data.period} — ${data.name}`,
       html: ownerHtml,
     },
     {
@@ -557,6 +560,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
    * Resten kører videre i waitUntil, efter svaret er sendt.
    */
   const efterbehandling = (async () => {
+    if (data.tilbudId) {
+      try {
+        await markerBooket(context.env.BOOKINGS, data.tilbudId, key);
+      } catch (e) {
+        console.error("[tilbud] kunne ikke markere som booket:", e);
+      }
+    }
     try {
       await notifyPhones(context.env, data, key);
     } catch (e) {

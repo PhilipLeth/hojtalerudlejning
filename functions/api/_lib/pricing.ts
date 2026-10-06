@@ -150,7 +150,7 @@ export interface BuiltLineItem {
     unit_amount: number;
     product_data: { name: string };
   };
-  quantity: 1;
+  quantity: number;
 }
 
 /**
@@ -162,7 +162,10 @@ export function buildLineItems(
   items: LineItemInput[],
   date?: Date | null,
 ): { lineItems: BuiltLineItem[]; totalOre: number } {
-  if (!Array.isArray(items) || items.length === 0 || items.length > 25) {
+  // Et tilbud kan nemt have 4 uplights, 3 højtalere, 6 stativer, 2 teknikertimer
+  // og 10 stk. forbrugsmaterialer — hver enhed er sit eget id her. Ens varer
+  // lægges derfor sammen til én Stripe-linje med antal (Stripe tager højst 100).
+  if (!Array.isArray(items) || items.length === 0 || items.length > 200) {
     throw new Error("Invalid items");
   }
   requireDjGear(items.map(item=>String(item?.id ?? "")));
@@ -177,14 +180,10 @@ export function buildLineItems(
     if (!priced) throw new Error(`Unknown product: ${item?.id}`);
     const dj = id === DJ_ID ? priceDj(item.dj, date) : null;
     const unitAmount = dj ? dj.total * 100 : priced.unitAmount;
-    lineItems.push({
-      price_data: {
-        currency: "dkk",
-        unit_amount: unitAmount,
-        product_data: { name: dj ? djLabel(item.dj as DjHours, "da", date) : priced.name },
-      },
-      quantity: 1,
-    });
+    const name = dj ? djLabel(item.dj as DjHours, "da", date) : priced.name;
+    const ens = lineItems.find((l) => l.price_data.unit_amount === unitAmount && l.price_data.product_data.name === name);
+    if (ens) ens.quantity += 1;
+    else lineItems.push({ price_data: { currency: "dkk", unit_amount: unitAmount, product_data: { name } }, quantity: 1 });
     totalOre += unitAmount;
   }
   return { lineItems, totalOre };

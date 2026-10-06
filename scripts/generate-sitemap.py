@@ -35,7 +35,8 @@ BASE = "https://lejhojtaler.dk"
 EXCLUDE_PREFIXES = ("/admin", "/accounting")
 
 # Not content: a thank-you page has no standalone value, and 404 is not a page.
-EXCLUDE_EXACT = {"/404", "/book/tak", "/en/book/tak"}
+# /tilbud viser ét personligt tilbud ud fra ?id= — uden id er den tom.
+EXCLUDE_EXACT = {"/404", "/book/tak", "/en/book/tak", "/tilbud", "/en/tilbud"}
 
 # Pages whose canonical points somewhere else are dropped automatically. /book
 # is the front page with the booking drawer open and declares the front page as

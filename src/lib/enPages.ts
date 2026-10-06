@@ -89,6 +89,7 @@ export const EN_PAGES = [
   "/lej-hojtaler",
   "/lej-mikrofon",
   "/lejevilkaar",
+  "/tilbud",
   "/priser",
   "/levering",
   "/lydanlaeg",
