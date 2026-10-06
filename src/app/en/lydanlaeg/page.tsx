@@ -201,6 +201,10 @@ export default function Page() {
         </p>
         <CategoryProductGrid locale="en" cols={4} items={LYD_UDSTYR.map((id) => ({ id }))} />
         <p className="mt-6 text-sm text-white/50">
+          Speaker and microphone stands are under{" "}
+          <Link href="/en/tilbehoer#stativer" className="font-semibold text-brand-400">Accessories →</Link>
+        </p>
+        <p className="mt-2 text-sm text-white/50">
           More than two microphones or a technician on the day?{" "}
           <Link href="/en#foresp" className="font-semibold text-brand-400">Get a quote →</Link>
         </p>

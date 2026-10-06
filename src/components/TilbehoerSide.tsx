@@ -12,17 +12,20 @@ import type { Locale } from "@/lib/i18n";
  * Kom til 28. sept 2026, da topmenuen blev en produktshop med fire indgange:
  * Lyd, Lys & effekter, Lyd- og lyspakker og Tilbehør. Mikrofoner, mixer, sub
  * og monitor stod her først, men de er lyd og står på /lydanlaeg (Philip:
- * "Du skal vise alt fra mixere til mics på Lyd"). Her er resten: lys- og
- * DJ-stativer, væskerne fra 2.5 og strøm fra afsnit 4.
+ * "Du skal vise alt fra mixere til mics på Lyd"). Her er resten: stativerne,
+ * væskerne fra 2.5 og strøm fra afsnit 4.
+ *
+ * 6. okt 2026: ALLE stativer bor her, også højtaler- og mikrofonstativerne,
+ * der før stod på /lydanlaeg. Kunden, der leder efter et stativ, skal kun ét sted hen.
  */
 const AFSNIT: { id: string; da: string; en: string; tekstDa: string; tekstEn: string; ids: string[] }[] = [
   {
     id: "stativer",
     da: "Stativer",
     en: "Stands",
-    tekstDa: "Et stativ, der løfter lyset over gæsterne, og stativer til DJ-pulten.",
-    tekstEn: "A stand that lifts the lights above the guests, and stands for the DJ controller.",
-    ids: ["lysstativ", "x_stativ", "dj_stativ"],
+    tekstDa: "Stativer til højtalerne, mikrofonen, lyset og DJ-pulten. Løfter lyden over hovederne og lyset over gæsterne.",
+    tekstEn: "Stands for the speakers, the microphone, the lights and the DJ controller. Lifts the sound over heads and the lights above the guests.",
+    ids: ["stativer", "stativ_enkelt", "mikrofonstativ", "lysstativ", "x_stativ", "dj_stativ"],
   },
   {
     id: "vaesker",

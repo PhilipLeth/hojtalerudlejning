@@ -4375,5 +4375,11 @@
     "status": "IKKE kørt: --apply blev afvist af Claude Codes auto-mode ('External System Writes'). Philip kører: python3 ads-export/ret_priser_fra_arket.py --apply",
     "ikke_rørt": "Annoncer i pausede grupper og i de pausede kampagner (Yderområder, PMax) bærer stadig gamle tal — ret dem, før de tændes."
   },
-  "discokugle_stoerrelse_2026_09_29": "Philip: '/discokugle viser ikke størrelsen på kuglen'. Siden er 40 cm-kuglens: navn, undertekst, første punkt, titel og meta siger nu 40 cm, og afsnittet med alle tre hedder 'Vælg størrelse: 30 eller 40 cm' med hvad de passer til (da+en). 30 og 40 cm deler stadig samme foto."
+  "discokugle_stoerrelse_2026_09_29": "Philip: '/discokugle viser ikke størrelsen på kuglen'. Siden er 40 cm-kuglens: navn, undertekst, første punkt, titel og meta siger nu 40 cm, og afsnittet med alle tre hedder 'Vælg størrelse: 30 eller 40 cm' med hvad de passer til (da+en). 30 og 40 cm deler stadig samme foto.",
+  "stativer_under_tilbehoer_2026_10_06": {
+    "beslutning": "Philip 6. okt 2026: 'opret mikrofonstativer — og sørg for at alle stativer er under tilbehør'.",
+    "mikrofonstativ": "Tilvalget 'mikrofonstativ' (Fun Generation Mic Stand, 95 kr, arkets 1.5) har fået egen produktside /mikrofonstativ + /en/mikrofonstativ og contents med modellen. Stemningsbilledet genbruger haandholdt-mikrofon-pro's (mikrofon på gulvstativ med galge) som mikrofonstativ-162803f8.webp — kan genereres om i admin.",
+    "tilbehoer": "/tilbehoer#stativer viser nu ALLE seks stativer: stativer, stativ_enkelt, mikrofonstativ, lysstativ, x_stativ, dj_stativ. Menupunktet hedder 'Stativer: højtaler, mikrofon, lys og DJ'.",
+    "lydsiden": "Højtaler- og mikrofonstativerne er taget ud af LYD_UDSTYR (/lydanlaeg#udstyr); dér står i stedet et link til /tilbehoer#stativer. katalogStruktur.ts er uændret — den spejler prisarkets afsnit, ikke sitets menu."
+  }
 }

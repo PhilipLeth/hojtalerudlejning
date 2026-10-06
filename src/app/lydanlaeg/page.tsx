@@ -202,6 +202,10 @@ export default function LydanlaegPage() {
         </p>
         <CategoryProductGrid cols={4} items={LYD_UDSTYR.map((id) => ({ id }))} />
         <p className="mt-6 text-sm text-white/50">
+          Højtaler- og mikrofonstativer står under{" "}
+          <Link href="/tilbehoer#stativer" className="font-semibold text-brand-400">Tilbehør →</Link>
+        </p>
+        <p className="mt-2 text-sm text-white/50">
           Flere end to mikrofoner eller en tekniker på dagen?{" "}
           <Link href="/erhverv#tilbud" className="font-semibold text-brand-400">Få et tilbud →</Link>
         </p>

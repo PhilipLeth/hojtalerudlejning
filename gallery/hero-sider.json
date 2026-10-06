@@ -300,6 +300,15 @@
     "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
   },
   {
+    "sti": "/mikrofonstativ",
+    "navn": "Mikrofonstativ",
+    "sted": "firmafest",
+    "referencer": [
+      "/images/product-mikrofonstativ-v2-white.webp"
+    ],
+    "prompt": "A Danish office canteen turned party venue in December, pale oak tables pushed to the white walls, dark blue winter evening in the windows, warm low light. The rental equipment in the reference photos is the subject of the picture: set up and in use, clearly visible and in focus, each item reproduced faithfully and appearing exactly once, placed where it would really stand. A few guests in the lower third of the frame, seen from behind or in soft focus, faces turned away. The upper centre of the image is calm, uncluttered and fairly dark. Absolutely no words, letters, titles or captions anywhere in the picture. Wide 16:9 composition. Photographic, shot on a full-frame camera with a fast prime lens, natural available light, shallow depth of field, true-to-life colours, no HDR look. Understated and real — a rental company's own photograph of a job well set up, not a stock-photo party. Do not invent or substitute equipment: every piece of audio, lighting or fog gear in the frame must be one of the referenced products, reproduced faithfully down to grille shape, colour, proportions and its own markings. Invent nothing else: no made-up brand names, no added logos, no text, no signage, no watermarks, no captions. Faces are turned away, out of focus or cropped — this is about the place, not the people. No confetti cannons, no laser beams, no smoke or haze unless a fog machine is among the referenced products."
+  },
+  {
     "sti": "/lydmand",
     "navn": "Lydmand",
     "sted": "fest",

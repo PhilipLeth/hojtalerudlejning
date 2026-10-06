@@ -41,6 +41,7 @@
 - [Lej Lydmand København](https://lejhojtaler.dk/lydmand) — 1195 kr/weekend: Lej en lydmand til festen eller firmaeventet i København, 1.195 kr pr. time inkl. moms. AV-teknikeren sætter op, laver lydprøve og styrer lyd og mikrofoner, mens I holder fest.
 - [Lej Lysbar København](https://lejhojtaler.dk/lys-pakke) — 295 kr/weekend: Lej lysbar i København fra 295 kr/weekend. 2 farvede LED-lamper + centereffekt på stativ. Plug-and-play festlys. Betal ved afhentning.
 - [Lej Mackie Thump GO København](https://lejhojtaler.dk/mackie-thump-go) — 395 kr/weekend: Lej Mackie Thump GO i København fra 395 kr/weekend. Batteridrevet 8" højtaler med Bluetooth. Ingen strøm nødvendig. Book online.
+- [Lej Mikrofonstativ København](https://lejhojtaler.dk/mikrofonstativ) — 95 kr/weekend: Lej mikrofonstativ i København for 95 kr: gulvstativ med galge til tale, sang og karaoke. Lejes sammen med mikrofonen eller for sig. Fast pris for op til fem dage.
 - [Lej Speakerpakke trådløs 30-50 København](https://lejhojtaler.dk/pakke-tale-musik) — 960 kr/weekend: Mellem højtalerpakke + trådløs mikrofon, taler og musik til events. Spar 80 kr. 960 kr/weekend. Betal ved afhentning. Book online.
 - [Lej Røgmaskine København](https://lejhojtaler.dk/roegmaskine) — 245 kr/weekend: Lej røgmaskine i København fra 245 kr/weekend. Inkl. røgvæske og fjernbetjening. Betal ved afhentning. Kombiner med lyd og lys til komplet festpakke.
 - [Lej en Soundboks i København](https://lejhojtaler.dk/soundboks-4) — 595 kr/weekend: Lej en Soundboks i København, Soundboks 4 fra 595 kr for en hel weekend. Batteridrevet med kraftig bas, intet depositum. Book online, betal ved afhentning.
@@ -124,7 +125,7 @@
 - [Om os](https://lejhojtaler.dk/om): Mød Frederik Scharling, stifter af lejhøjtaler.dk. Københavns mest tilgængelige udlejningsservice for lyd og lys til private fester, firmaevents og alt derimellem.
 - [Priser](https://lejhojtaler.dk/priser): Hele prislisten ét sted: højtalere, festpakker, lys, røg, mikrofoner, skærme, lydmand og DJ. Samme pris om du lejer 1 eller 5 dage, og intet depositum.
 - [Privatlivspolitik](https://lejhojtaler.dk/privatlivspolitik): Sådan behandler Lejhøjtaler.dk dine personoplysninger: hvad vi indsamler, hvorfor, hvor længe vi gemmer det, og hvilke rettigheder du har efter GDPR.
-- [Lej tilbehør København](https://lejhojtaler.dk/tilbehoer): Lej tilbehør i København: lysstativ, DJ-stativer, røg-, sne- og boblevæske, kabeltromler og stikdåser. Fast pris for op til fem dage, book online.
+- [Lej tilbehør København](https://lejhojtaler.dk/tilbehoer): Lej tilbehør i København: højtalerstativer, mikrofonstativ, lysstativ, DJ-stativer, røg-, sne- og boblevæske, kabeltromler og stikdåser. Fast pris for op til fem dage, book online.
 
 ## In English
 
@@ -203,6 +204,7 @@
 - [Party Light Rental Copenhagen, packages from 590 DKK](https://lejhojtaler.dk/en/lyspakker): Light rental in Copenhagen: ready-made light bars for teen parties, party tents, weddings and dancefloors from 590 DKK. Everything is plug and play, pick up for free or have it delivered.
 - [Light Show Rental Copenhagen](https://lejhojtaler.dk/en/lysshow): Rent a complete light show in Copenhagen. Light effects, disco ball, uplights and a fog machine in ready-made packages from 1.140 DKK. We deliver and set it up.
 - [Rent Mackie Thump GO Copenhagen](https://lejhojtaler.dk/en/mackie-thump-go) — 395 kr/weekend: Rent a battery-powered Mackie Thump GO speaker in Copenhagen from 395 DKK/weekend. Up to 12 hours of battery, Bluetooth, no power outlet needed. Pick up Friday, return Monday.
+- [Microphone Stand Rental Copenhagen](https://lejhojtaler.dk/en/mikrofonstativ) — 95 kr/weekend: Rent a microphone stand in Copenhagen for 95 DKK: floor stand with boom arm for speeches, vocals and karaoke. Rent it with the microphone or on its own. One price for up to five days.
 - [Mixer Rental Copenhagen](https://lejhojtaler.dk/en/mixer): Rent an audio mixer in Copenhagen from 295 DKK. Our t.mix xmix 1202 FXMP USB with effects and USB is 345 DKK; small and large models are on request.
 - [About us](https://lejhojtaler.dk/en/om): Meet Frederik Scharling, founder of lejhøjtaler.dk. Copenhagen's most accessible rental service for sound and lights for private parties, corporate events and everything in between.
 - [Wireless Speech Package 30-50 Rental Copenhagen](https://lejhojtaler.dk/en/pakke-tale-musik) — 960 kr/weekend: Medium speaker package + wireless microphone, speeches and music for events. Save 80 DKK. 960 DKK per weekend. Pay on pickup. Book online.
@@ -216,7 +218,7 @@
 - [Ambient Light Package](https://lejhojtaler.dk/en/stemningslys) — 1040 kr/weekend: The ambient light package: 4 LED uplights, 10 m of fairy lights and a disco ball for 1.040 DKK, save 95 DKK. Lighting that transforms a rented venue. Rental in Copenhagen.
 - [Graduation Truck Speaker Rental Copenhagen](https://lejhojtaler.dk/en/studenterkoersel): Rent a battery-powered speaker for a graduation truck in Copenhagen from 595 DKK. Loud enough over the engine and 30 singing students. Spare battery and padded bag included.
 - [Subwoofer 12" Rental Copenhagen](https://lejhojtaler.dk/en/subwoofer) — 695 kr/weekend: Rent a Behringer 12" powered subwoofer in Copenhagen from 695 DKK per weekend. Gives the party the deep bass, fits all our speaker packages. Book online in 2 minutes.
-- [Accessory Rental Copenhagen](https://lejhojtaler.dk/en/tilbehoer): Rent accessories in Copenhagen: lighting stand, DJ stands, fog, snow and bubble fluid, cable reels and power strips. One price for up to five days, book online.
+- [Accessory Rental Copenhagen](https://lejhojtaler.dk/en/tilbehoer): Rent accessories in Copenhagen: speaker stands, microphone stand, lighting stand, DJ stands, fog, snow and bubble fluid, cable reels and power strips. One price for up to five days, book online.
 - [Wireless Microphone Rental Copenhagen](https://lejhojtaler.dk/en/traadloes-mikrofon) — 445 kr/weekend: Rent a wireless handheld microphone in Copenhagen for 445 DKK per weekend. Receiver, batteries and cable included, plugs straight into our speakers. Pay on pickup.
 - [Youth Party Sound and Lights Rental Copenhagen](https://lejhojtaler.dk/en/ungdomsfest): Rent sound and disco lights for a youth party in Copenhagen from 1.040 DKK. Soundboks, mirror ball, light effects and fog in ready-made packages, for 18th birthdays, after-parties and school parties. Book online in 2 minutes.
 - [Uplighting Rental Copenhagen](https://lejhojtaler.dk/en/uplights): Rent uplights in Copenhagen from 195 DKK each, or 495 DKK for a 4-pack. Simple LED floor uplights, plug and play for weddings, confirmations and parties. Pay on pickup.

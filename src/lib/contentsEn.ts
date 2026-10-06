@@ -315,6 +315,7 @@ export const CONTENTS_EN: Record<string, string> = {
   "Soundboks batteri (USB-C)": "Soundboks battery (USB-C)",
   "Opladet ved afhentning": "Charged at pickup",
   "the t.bone MB 60": "the t.bone MB 60",
+  "Fun Generation Mic Stand med galge": "Fun Generation Mic Stand with boom arm",
   "XLR-kabel": "XLR cable",
   "Stairville Mini T-Bar 2": "Stairville Mini T-Bar 2",
   "Gravity KSX 2 X-stativ": "Gravity KSX 2 X-stand",

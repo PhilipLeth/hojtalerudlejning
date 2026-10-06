@@ -678,10 +678,12 @@ export const addons: Addon[] = [
   },
   {
     id: "mikrofonstativ",
+    page: "/mikrofonstativ",
     price: 95,
     image: "/images/product-mikrofonstativ-v2-white.webp",
-    da: { label: "Mikrofonstativ", desc: "Gulvstativ med galge, til taler og sang. Mikrofon er ikke med, den vælges for sig" },
-    en: { label: "Microphone stand", desc: "Floor stand with boom arm, for speeches and vocals. Microphone not included, choose it separately" },
+    contents: ["Fun Generation Mic Stand med galge"],
+    da: { label: "Mikrofonstativ", desc: "Fun Generation gulvstativ med galge, til taler og sang. Mikrofon er ikke med, den vælges for sig" },
+    en: { label: "Microphone stand", desc: "Fun Generation floor stand with boom arm, for speeches and vocals. Microphone not included, choose it separately" },
   },
   {
     id: "lysstativ",
@@ -2195,7 +2197,7 @@ export const TOPMENU: (NavLink & { grupper: TopmenuGruppe[] })[] = [
     grupper: [
       {
         links: [
-          { href: "/tilbehoer#stativer", label: "Lys- og DJ-stativer", label_en: "Lighting and DJ stands" },
+          { href: "/tilbehoer#stativer", label: "Stativer: højtaler, mikrofon, lys og DJ", label_en: "Stands: speaker, microphone, lighting and DJ" },
           { href: "/tilbehoer#vaesker", label: "Røg-, sne- og boblevæske", label_en: "Fog, snow and bubble fluid" },
           { href: "/tilbehoer#stroem", label: "Strøm og forlængerledninger", label_en: "Power and extension leads" },
         ],
@@ -2325,10 +2327,14 @@ export const SPEAKERPAKKER = [
 // Batteriet er et tilvalg på Soundboksen, ikke en højtaler (Philip, 28. sept 2026)
 export const BATTERIHOJTALERE = ["thumpgo", "soundboks"];
 
-/** Lydsidens udstyr: arkets 1.5 mikrofoner og 1.6 tilbehør til lyd, plus monitoren. */
+/**
+ * Lydsidens udstyr: arkets 1.5 mikrofoner og 1.6 tilbehør til lyd, plus monitoren.
+ * Stativerne står ikke her. Alle stativer — højtaler, mikrofon, lys og DJ — har
+ * ét hjem under Tilbehør (Philip, 6. okt 2026), se TilbehoerSide.
+ */
 export const LYD_UDSTYR = [
   "mikrofon", "headset", "mikrofon_kabel", "haandholdt_mikrofon_pro",
-  "mixer_stor", "subwoofer", "monitor", "stativer", "stativ_enkelt", "mikrofonstativ",
+  "mixer_stor", "subwoofer", "monitor",
 ];
 
 export const KATEGORI_PAKKER: Record<string, string[]> = {
