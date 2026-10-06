@@ -449,16 +449,15 @@ describe("BookingFlow - Flere enheder af samme produkt", () => {
     render(<BookingFlow onSummaryChange={onSummary} />);
     if (!(await tilTrin3())) return;
 
-    // Kurven viser hovedproduktet med antal 1 og en +-knap
-    const plus = screen.getByLabelText("Én mere");
-    fireEvent.click(plus);
-    fireEvent.click(plus);
-    fireEvent.click(plus);
+    // Kurven viser hovedproduktet med antal 1 og en +-knap. Slå knappen op
+    // forfra for hvert klik: fra 2 stk. tegner kurven linjen som en gruppe med
+    // sin egen knap, og et klik på den gamle, løsrevne knap gør ingenting.
+    for (let i = 0; i < 3; i++) fireEvent.click(screen.getByLabelText("Én mere"));
 
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
       expect(last?.count).toBe(4);
-      expect(last?.total).toBe(4 * 595);
+      expect(last?.total).toBe(4 * catalogPrice("party"));
     });
 
     // Alle 4 på lager er i kurven → + er slået fra, så der ikke bookes en 5.
@@ -469,7 +468,7 @@ describe("BookingFlow - Flere enheder af samme produkt", () => {
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
       expect(last?.count).toBe(3);
-      expect(last?.total).toBe(3 * 595);
+      expect(last?.total).toBe(3 * catalogPrice("party"));
     });
   });
 

@@ -263,7 +263,7 @@ describe("/admin/lager", () => {
     renderAdmin(<LagerPage />);
     await waitFor(() => expect(screen.getByText("Lagerbeholdning")).toBeInTheDocument());
 
-    const liste = within(screen.getByLabelText("Lagerliste"));
+    const liste = within(lagerliste());
     expect(liste.getByText("Lille højtalerpakke")).toBeInTheDocument();
     expect(liste.getByText("Karaokemaskine")).toBeInTheDocument();
     expect(liste.getByText('55" Storskærm')).toBeInTheDocument();
@@ -273,13 +273,13 @@ describe("/admin/lager", () => {
     mockApi({ party: 2 });
     renderAdmin(<LagerPage />);
     await waitFor(() => expect(screen.getByText(/har ikke noget lagertal/)).toBeInTheDocument());
-    expect(screen.getByRole("button", { name: /Sæt \d+ produkter til 1/ })).toBeInTheDocument();
+    expect(knapMedTekst(/Sæt \d+ produkter til 1/)).toBeInTheDocument();
   });
 
   it("viser pakkens lager som delenes mindste, uden felt at rette i", async () => {
     mockApi({ party: 2, lys: 1 });
     renderAdmin(<LagerPage />);
-    await waitFor(() => expect(screen.getByLabelText("Lagerliste")).toBeInTheDocument());
+    await waitFor(() => expect(lagerliste()).toBeInTheDocument());
 
     // produktarket 17. sept 2026: "Lille festpakke" hedder nu "Festpakke 0-30" og består af party + lys
     const række = rækkeFor("Festpakke 0-30");
@@ -291,7 +291,7 @@ describe("/admin/lager", () => {
   it("gemmer kun det produkt man rettede", async () => {
     mockApi({ party: 2, festival: 2 });
     renderAdmin(<LagerPage />);
-    await waitFor(() => expect(screen.getByLabelText("Lagerliste")).toBeInTheDocument());
+    await waitFor(() => expect(lagerliste()).toBeInTheDocument());
 
     const felt = feltFor("Lille højtalerpakke");
     fireEvent.change(felt, { target: { value: "4" } });
@@ -307,7 +307,7 @@ describe("/admin/lager", () => {
   it("har et overbooking-felt pr. produkt ved siden af lageret", async () => {
     mockApi({ rog: 2 }, { overbook: { rog: 2 } });
     renderAdmin(<LagerPage />);
-    await waitFor(() => expect(screen.getByLabelText("Lagerliste")).toBeInTheDocument());
+    await waitFor(() => expect(lagerliste()).toBeInTheDocument());
 
     const række = rækkeFor("Røgmaskine");
     const felter = række.querySelectorAll('input[type="number"]');
@@ -321,7 +321,7 @@ describe("/admin/lager", () => {
   it("gemmer overbooking for sig, så lagertallet ikke røres", async () => {
     mockApi({ rog: 2 });
     renderAdmin(<LagerPage />);
-    await waitFor(() => expect(screen.getByLabelText("Lagerliste")).toBeInTheDocument());
+    await waitFor(() => expect(lagerliste()).toBeInTheDocument());
 
     const overbookFelt = rækkeFor("Røgmaskine").querySelectorAll('input[type="number"]')[1];
     fireEvent.change(overbookFelt, { target: { value: "3" } });
@@ -351,7 +351,7 @@ describe("/admin/lager", () => {
   it("rydder tallet når feltet tømmes — produktet er ubegrænset igen", async () => {
     mockApi({ party: 2 });
     renderAdmin(<LagerPage />);
-    await waitFor(() => expect(screen.getByLabelText("Lagerliste")).toBeInTheDocument());
+    await waitFor(() => expect(lagerliste()).toBeInTheDocument());
 
     const felt = feltFor("Lille højtalerpakke");
     fireEvent.change(felt, { target: { value: "" } });
@@ -361,9 +361,40 @@ describe("/admin/lager", () => {
   });
 });
 
+/*
+ * Opslag med querySelector frem for getByLabelText/getByRole. Siderne render­er
+ * hele kataloget, og Testing Librarys label- og rolleopslag regner et
+ * tilgængeligt navn ud for hvert element: målt 15 s for ét getAllByLabelText
+ * på /admin/produkter mod 2 ms for querySelector (6. okt 2026). Det var den tid,
+ * der fik testene til at sprænge budgettet — ikke renderingen.
+ */
+function lagerliste(): HTMLElement {
+  const el = document.querySelector<HTMLElement>('[aria-label="Lagerliste"]');
+  if (!el) throw new Error("Lagerlisten er ikke rendret endnu");
+  return el;
+}
+
+/**
+ * Som getAllByText(...).length > 0: matcher et elements egne tekstnoder lagt
+ * sammen (JSX deler " +{extra} JIT" i tre noder), men uden Testing Librarys
+ * omkostning pr. element.
+ */
+function findesTekst(tekst: RegExp): boolean {
+  for (const el of document.body.querySelectorAll("*")) {
+    let egen = "";
+    for (const n of el.childNodes) if (n.nodeType === Node.TEXT_NODE) egen += n.textContent;
+    if (egen && tekst.test(egen)) return true;
+  }
+  return false;
+}
+
+function knapMedTekst(tekst: RegExp): HTMLButtonElement | null {
+  return [...document.querySelectorAll("button")].find((b) => tekst.test(b.textContent ?? "")) ?? null;
+}
+
 /** Lagerrækken for et produktnavn — afgrænset til lagerlisten */
 function rækkeFor(name: string): HTMLElement {
-  const liste = screen.getByLabelText("Lagerliste");
+  const liste = lagerliste();
   const navn = within(liste).getByText(name);
   // Navn → produktkolonne → hele rækken
   return navn.closest("div")!.parentElement!.parentElement as HTMLElement;
@@ -391,22 +422,26 @@ describe("/admin/produkter", () => {
   // når to sessioner bygger samtidig. Med 30 s røg de tilfældigt, og da npm
   // test er porten før et deploy, stoppede de deploys, der burde køre.
   // 60 s er sat efter det værst målte, ikke efter det typiske.
+  //
+  // 6. okt 2026: det meste af tiden var ikke renderingen, men opslagene.
+  // getAllByLabelText tog 15 s alene og getAllByText i waitFor det samme pr.
+  // forsøg; med querySelector-hjælperne nederst i filen tager testene 2-5 s.
   it("har lagertallet på produktet", async () => {
     mockApi({ party: 2 });
     renderAdmin(<ProdukterPage />);
     // Vent på TALLET, ikke på etiketten. "Lager (antal)" står i StockField fra
     // første render, uanset om lageret er hentet — så den beviser ingenting, og
     // den synkrone assertion nedenfor kunne løbe, før tallene var landet.
-    await waitFor(() => expect(screen.getAllByText(/2 stk\./).length).toBeGreaterThan(0), { timeout: 20000 });
-    expect(screen.getAllByText(/lager ikke sat/).length).toBeGreaterThan(0);
+    await waitFor(() => expect(findesTekst(/2 stk\./)).toBe(true), { timeout: 20000 });
+    expect(findesTekst(/lager ikke sat/)).toBe(true);
   }, 60000);
 
   it("har overbooking ved siden af lageret", async () => {
     mockApi({ party: 2 }, { overbook: { party: 1 } });
     renderAdmin(<ProdukterPage />);
     // Samme sag: etiketten er statisk, tallet kommer med hentningen
-    await waitFor(() => expect(screen.getAllByText(/tager imod 3/).length).toBeGreaterThan(0), { timeout: 20000 });
-    expect(screen.getAllByText(/\+1 JIT/).length).toBeGreaterThan(0);
+    await waitFor(() => expect(findesTekst(/tager imod 3/)).toBe(true), { timeout: 20000 });
+    expect(findesTekst(/\+1 JIT/)).toBe(true);
   }, 60000);
 
   it("gemmer lagertallet med det samme, uden at publicere hele kataloget", async () => {
@@ -414,9 +449,10 @@ describe("/admin/produkter", () => {
     renderAdmin(<ProdukterPage />);
     // Vent på det hentede tal, ikke på den statiske etiket — ellers skriver vi i
     // et felt, hvis værdi stadig er ved at blive hentet
-    await waitFor(() => expect(screen.getAllByText(/1 stk\./).length).toBeGreaterThan(0), { timeout: 20000 });
+    await waitFor(() => expect(findesTekst(/1 stk\./)).toBe(true), { timeout: 20000 });
 
-    const felt = screen.getAllByLabelText("Antal på lager")[0] as HTMLInputElement;
+    const felt = document.querySelector('input[aria-label="Antal på lager"]') as HTMLInputElement;
+    expect(felt).not.toBeNull();
     fireEvent.change(felt, { target: { value: "3" } });
     fireEvent.blur(felt);
 
