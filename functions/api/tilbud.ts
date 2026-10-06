@@ -16,12 +16,24 @@ import { loadSiteSettings, mailFooter } from "./_lib/siteSettings";
 import { notifyRecipients } from "./_lib/notify";
 import { formatDkPhone } from "../../src/lib/phone";
 import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../src/lib/fetchTimeout";
+import { hentReference, udtrækBillede } from "./_lib/billedModel";
+import { GALLERY_SPEC } from "../../src/lib/galleryPrompt";
+import { addons, catalogImage, rentalProducts, speakers } from "../../src/lib/products";
+import {
+  MAX_PRODUKT_REFERENCER,
+  TILBUD_BILLED_LOFT,
+  tilbudBilledPrompt,
+  type BilledBasis,
+  type BilledFormat,
+} from "../../src/lib/tilbudBillede";
 import {
   SITE_URL,
   TILBUD_FOERSTE_NR,
   TILBUD_INDEX_KEY,
   TILBUD_PREFIX,
   TILBUD_SEQ_KEY,
+  findVare,
+  gyldigBilledSti,
   gyldigtTilbudId,
   normaliserTilbud,
   nytTilbudId,
@@ -36,6 +48,7 @@ import {
 interface Env {
   BOOKINGS: KVNamespace;
   ADMIN_SECRET?: string;
+  GEMINI_API_KEY?: string;
   RESEND_API_KEY?: string;
   NOTIFY_EMAIL?: string;
 }
@@ -248,6 +261,78 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const index = (await hentIndex(kv)).filter((r) => r.id !== body.id);
     await kv.put(TILBUD_INDEX_KEY, JSON.stringify(index));
     return json({ ok: true });
+  }
+
+  /*
+   * Et AI-billede til "Sådan kan det se ud" eller forsiden. Gemmes INGEN
+   * steder: admin ser det, og først "Brug billedet" komprimerer og uploader
+   * det (samme vej som et billede kollegaen selv uploader).
+   */
+  if (body.action === "billede") {
+    const noegle = context.env.GEMINI_API_KEY;
+    if (!noegle) {
+      return json({ error: "GEMINI_API_KEY mangler i Cloudflare. Kør: wrangler pages secret put GEMINI_API_KEY --project-name=speaker-rental" }, 503);
+    }
+    const forbrugKey = `tilbud_billed_forbrug_${nu.slice(0, 7)}`;
+    const brugt = Number((await kv.get(forbrugKey)) ?? 0);
+    if (brugt >= TILBUD_BILLED_LOFT) {
+      return json({ error: `Månedens loft på ${TILBUD_BILLED_LOFT} tilbudsbilleder er nået. Hæv TILBUD_BILLED_LOFT i src/lib/tilbudBillede.ts, hvis det er med vilje.` }, 429);
+    }
+
+    const format: BilledFormat = body.format === "3:4" || body.format === "4:3" ? body.format : "16:9";
+    const basisSti = gyldigBilledSti(body.basis) ? body.basis : null;
+    const basis: BilledBasis | undefined = basisSti ? (body.basisType === "rettelse" ? "rettelse" : "lokale") : undefined;
+    const katalog = { speakers, addons, rentalProducts };
+    const ids = (Array.isArray(body.produkter) ? body.produkter : []).filter((x): x is string => typeof x === "string").slice(0, 40);
+
+    const base = new URL(context.request.url);
+    const input: Array<Record<string, string>> = [];
+    if (basisSti) {
+      const b = await hentReference(basisSti, base, false);
+      if (!b) return json({ error: "Kunne ikke hente udgangsbilledet" }, 502);
+      input.push({ type: "image", mime_type: b.mime, data: b.data });
+    }
+    const navne: string[] = [];
+    const refs: string[] = [];
+    for (const id of ids) {
+      const vare = findVare(katalog, id, "da");
+      if (!vare || vare.slags === "ydelse" || vare.slags === "levering") continue;
+      navne.push(vare.navn);
+      try {
+        const src = catalogImage(id);
+        if (src && !refs.includes(src) && refs.length < MAX_PRODUKT_REFERENCER - (basisSti ? 1 : 0)) refs.push(src);
+      } catch {
+        /* intet foto — så går det kun med som navn */
+      }
+    }
+    for (const src of refs) {
+      const b = await hentReference(src, base);
+      if (b) input.push({ type: "image", mime_type: b.mime, data: b.data });
+    }
+    if (!input.length) return json({ error: "Læg udstyr med foto i tilbuddet, eller vælg et udgangsbillede — ellers digter modellen grejet frit." }, 400);
+    const prompt = tilbudBilledPrompt({ oenske: String(body.oenske ?? ""), varer: navne, format, basis });
+    input.unshift({ type: "text", text: prompt });
+
+    let svar: unknown;
+    try {
+      const res = await fetch(GALLERY_SPEC.endpoint, {
+        method: "POST",
+        headers: { "x-goog-api-key": noegle, "Content-Type": "application/json", "Api-Revision": GALLERY_SPEC.api_revision },
+        body: JSON.stringify({ model: GALLERY_SPEC.model, input, response_format: { type: "image", aspect_ratio: format, image_size: GALLERY_SPEC.image_size } }),
+      });
+      if (!res.ok) {
+        console.error("[tilbud] billedmodellen svarede", res.status, (await res.text()).slice(0, 300));
+        return json({ error: `Billedmodellen svarede ${res.status}` }, 502);
+      }
+      svar = await res.json();
+    } catch (e) {
+      console.error("[tilbud] billedkald fejlede:", e);
+      return json({ error: "Kunne ikke nå billedmodellen" }, 502);
+    }
+    const b64 = udtrækBillede(svar);
+    if (!b64) return json({ error: "Der kom intet billede tilbage — prøv igen eller ret ønsket" }, 502);
+    await kv.put(forbrugKey, String(brugt + 1));
+    return json({ ok: true, image: b64, mime: "image/jpeg", prompt, referencer: input.length - 1, forbrugt: brugt + 1, loft: TILBUD_BILLED_LOFT });
   }
 
   if (body.action === "send") {

@@ -17,6 +17,7 @@ import AdminNav from "@/components/AdminNav";
 import AdminLogin from "@/components/AdminLogin";
 import TilbudDokument, { kr, periodeTekst } from "@/components/TilbudDokument";
 import { useKontakt } from "@/components/TilbudSide";
+import TilbudBilleder from "@/components/admin/TilbudBilleder";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { useProducts } from "@/lib/useProducts";
 import { useIsMobile } from "@/lib/useIsMobile";
@@ -24,7 +25,6 @@ import { thumbSrcSet, THUMB_IMAGE_SIZES } from "@/lib/imageSrcSet";
 import { DELIVERY_ADDON_IDS } from "@/lib/products";
 import {
   FORBRUG_ID,
-  FORSIDE_BILLEDER,
   STANDARD_FORSIDE,
   TEKNIKER_ID,
   TILBUD_GYLDIG_DAGE,
@@ -74,7 +74,7 @@ function StatusPille({ status }: { status: TilbudStatus }) {
   );
 }
 
-type Fane = "udstyr" | "kunde" | "forside";
+type Fane = "udstyr" | "kunde" | "billeder" | "brev";
 type Filter = "alle" | "hojtaler" | "lyd" | "lys" | "roeg" | "av" | "pakke" | "tilbehoer";
 
 const FILTRE: Array<{ id: Filter; navn: string }> = [
@@ -406,7 +406,8 @@ export default function TilbudAdminPage() {
           [
             ["udstyr", `Udstyr${kladde.linjer.length ? ` (${kladde.linjer.length})` : ""}`],
             ["kunde", "Kunde & event"],
-            ["forside", "Forside & brev"],
+            ["billeder", `Billeder${kladde.billeder?.length ? ` (${kladde.billeder.length})` : ""}`],
+            ["brev", "Brev"],
           ] as Array<[Fane, string]>
         ).map(([id, navn]) => (
           <button
@@ -631,24 +632,12 @@ export default function TilbudAdminPage() {
         </div>
       )}
 
-      {fane === "forside" && (
+      {fane === "billeder" && (
+        <TilbudBilleder secret={secret} katalog={katalog} tilbud={kladde} onChange={(patch) => ret((k) => ({ ...k, ...patch }))} />
+      )}
+
+      {fane === "brev" && (
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
-          <div>
-            <span className={etiket}>Stemningsbillede på forsiden</span>
-            <div className="grid grid-cols-3 gap-2">
-              {FORSIDE_BILLEDER.map((b) => (
-                <button
-                  key={b.src}
-                  type="button"
-                  onClick={() => ret((k) => ({ ...k, forside: b.src }))}
-                  className={`group relative aspect-[3/4] overflow-hidden rounded-lg border-2 ${kladde.forside === b.src ? "border-[#1249cf]" : "border-transparent hover:border-[#c9ccd6]"}`}
-                >
-                  <img src={b.src.replace(/\.webp$/, "-800.webp")} alt="" loading="lazy" className="h-full w-full object-cover" onError={(e) => ((e.target as HTMLImageElement).src = b.src)} />
-                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-2 pb-1.5 pt-4 text-left text-[11px] font-semibold text-white">{b.navn}</span>
-                </button>
-              ))}
-            </div>
-          </div>
           <label className="block">
             <span className={etiket}>Brevet til kunden</span>
             <textarea

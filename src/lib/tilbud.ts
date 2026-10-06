@@ -45,6 +45,29 @@ export interface TilbudLinje {
   antal: number;
 }
 
+/** Et billede i "Sådan kan det se ud" — uploadet, AI-genereret eller fra kunden */
+export interface TilbudBillede {
+  /** /api/image/… (R2) eller /images/… (sitets egne) */
+  src: string;
+  kilde: "upload" | "ai" | "kunde" | "site";
+  /** Prompten for et AI-billede, så det kan laves om med en rettelse */
+  prompt?: string;
+}
+
+/** Højst så mange billeder på et tilbud */
+export const MAX_TILBUD_BILLEDER = 8;
+
+/**
+ * Standard i "Sådan kan det se ud", når tilbuddet ingen egne billeder har:
+ * forsidens to fotos af rigtige opstillinger (EventHeroGallery). Philip, 6. okt
+ * 2026: de generelle stemningsbilleder "ser ikke godt ud" her.
+ */
+export const STANDARD_INSPIRATION = ["/images/events/reception-detail-v2.webp", "/images/events/reception-front-v2.webp"];
+
+export function gyldigBilledSti(src: unknown): src is string {
+  return typeof src === "string" && src.length < 300 && /^\/(api\/image\/[A-Za-z0-9_-]+|images\/[A-Za-z0-9_./-]+\.(webp|jpe?g|png))$/.test(src);
+}
+
 export interface Tilbud {
   /** Uforudsigelig nøgle; står i kundens link */
   id: string;
@@ -67,8 +90,10 @@ export interface Tilbud {
   til?: string;
   sted?: string;
   gaester?: number;
-  /** Stemningsbilledet på forsiden */
+  /** Stemningsbilledet på forsiden — et af FORSIDE_BILLEDER eller et af tilbuddets egne */
   forside: string;
+  /** "Sådan kan det se ud". Tom = STANDARD_INSPIRATION */
+  billeder?: TilbudBillede[];
   linjer: TilbudLinje[];
   /** Adressen vi kører ud til, når der er levering på */
   leveringsadresse?: string;
@@ -353,7 +378,8 @@ export function normaliserTilbud(input: unknown, eksisterende?: Tilbud | null): 
     til,
     sted: tekst(r.sted, 200) || undefined,
     gaester: Number.isFinite(gaester) && gaester > 0 ? Math.min(gaester, 100000) : undefined,
-    forside: FORSIDE_BILLEDER.some((b) => b.src === r.forside) ? (r.forside as string) : STANDARD_FORSIDE,
+    forside: gyldigBilledSti(r.forside) ? r.forside : STANDARD_FORSIDE,
+    billeder: normaliserBilleder(r.billeder),
     linjer,
     leveringsadresse: levering ? tekst(r.leveringsadresse, 300) || undefined : undefined,
     rabat,
@@ -366,6 +392,18 @@ export function normaliserTilbud(input: unknown, eksisterende?: Tilbud | null): 
     booketAt: eksisterende?.booketAt,
     bookingId: eksisterende?.bookingId,
   };
+}
+
+function normaliserBilleder(input: unknown): TilbudBillede[] {
+  const ud: TilbudBillede[] = [];
+  for (const raw of Array.isArray(input) ? input : []) {
+    const b = raw as Record<string, unknown>;
+    if (!gyldigBilledSti(b?.src) || ud.some((x) => x.src === b.src)) continue;
+    const kilde = b.kilde === "ai" || b.kilde === "kunde" || b.kilde === "site" ? b.kilde : "upload";
+    ud.push({ src: b.src, kilde, ...(kilde === "ai" && typeof b.prompt === "string" ? { prompt: b.prompt.slice(0, 2000) } : {}) });
+    if (ud.length >= MAX_TILBUD_BILLEDER) break;
+  }
+  return ud;
 }
 
 /** Det kunden får at se — uden vores egen note */

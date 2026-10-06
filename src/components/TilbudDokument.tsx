@@ -12,17 +12,17 @@
 
 import { useMemo } from "react";
 import QrKode from "./QrKode";
-import { heroStandard, HERO_FALLBACK } from "@/lib/heroStandard";
 import { thumbSrcSet, THUMB_IMAGE_SIZES } from "@/lib/imageSrcSet";
 import {
-  FORSIDE_BILLEDER,
   SITE_URL,
+  STANDARD_INSPIRATION,
   erUdloebet,
   prissaet,
   standardIntro,
   tilbudBookSti,
   type KatalogLike,
   type Tilbud,
+  type TilbudBillede,
 } from "@/lib/tilbud";
 
 type Locale = "da" | "en";
@@ -52,6 +52,8 @@ const TEKST = {
     moms: "Heraf moms",
     inspiration: "Sådan kan det se ud",
     inspirationTekst: "Billeder fra vores udstyr i brug. Lyset og opsætningen tilpasses jeres lokale.",
+    inspirationAi: "Billeder mærket Illustration er lavet til jer ud fra fotos af præcis det udstyr, tilbuddet rummer.",
+    illustration: "Illustration",
     forloeb: "Sådan foregår det",
     trin: [
       ["Book og betal", "Scan koden eller tryk på knappen. Udstyret er reserveret, når I har betalt."],
@@ -96,6 +98,8 @@ const TEKST = {
     moms: "Of which VAT",
     inspiration: "What it can look like",
     inspirationTekst: "Photos of our equipment in use. Lighting and setup are adapted to your venue.",
+    inspirationAi: "Pictures marked Illustration were made for you from photos of exactly the equipment in this offer.",
+    illustration: "Illustration",
     forloeb: "How it works",
     trin: [
       ["Book and pay", "Scan the code or press the button. The equipment is reserved once you have paid."],
@@ -162,6 +166,29 @@ function Sidehoved({ t, side, locale }: { t: Pick<Tilbud, "nr">; side: number; l
   );
 }
 
+/** Gitteret tilpasser sig antallet, så ét eller to billeder ikke står i et hul */
+function BilledGitter({ billeder, etiket }: { billeder: TilbudBillede[]; etiket: string }) {
+  const n = billeder.length;
+  const felt = (b: TilbudBillede, klasse: string, stil?: React.CSSProperties) => (
+    <div key={b.src} className={`relative overflow-hidden rounded-lg bg-[#f4f5f8] ${klasse}`} style={stil}>
+      <img src={b.src} alt="" loading="lazy" className="h-full w-full object-cover" />
+      {b.kilde === "ai" && (
+        <span className="absolute bottom-2 left-2 rounded bg-[#0c0b12]/70 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#fff]">{etiket}</span>
+      )}
+    </div>
+  );
+  if (n === 1) return <div className="mt-5">{felt(billeder[0], "", { aspectRatio: "16 / 9" })}</div>;
+  if (n === 2) return <div className="mt-5 grid grid-cols-2 gap-2.5">{billeder.map((b) => felt(b, "", { aspectRatio: "4 / 5" }))}</div>;
+  if (n === 3)
+    return (
+      <div className="mt-5 grid grid-cols-3 grid-rows-2 gap-2.5" style={{ aspectRatio: "16 / 9" }}>
+        {billeder.map((b, i) => felt(b, i === 0 ? "col-span-2 row-span-2" : ""))}
+      </div>
+    );
+  if (n === 4) return <div className="mt-5 grid grid-cols-2 gap-2.5">{billeder.map((b) => felt(b, "", { aspectRatio: "4 / 3" }))}</div>;
+  return <div className="mt-5 grid grid-cols-3 gap-2.5">{billeder.map((b) => felt(b, "", { aspectRatio: "1 / 1" }))}</div>;
+}
+
 export interface TilbudDokumentProps {
   tilbud: Omit<Tilbud, "note">;
   katalog: KatalogLike;
@@ -179,22 +206,13 @@ export default function TilbudDokument({ tilbud: t, katalog, kontakt, forhaandsv
   const udloebet = !forhaandsvisning && erUdloebet(t) && t.status !== "booket";
   const intro = t.intro?.trim() || standardIntro(t, t.oprettetAf);
 
-  // Inspiration: stemningsbillederne fra produkternes egne sider, ellers et
-  // par af de generelle — aldrig det samme som forsiden
-  const inspiration = useMemo(() => {
-    const valgt: string[] = [];
-    for (const l of sum.linjer) {
-      const side = l.vare?.side;
-      if (!side) continue;
-      const src = heroStandard(side);
-      if (src !== HERO_FALLBACK && src !== t.forside && !valgt.includes(src)) valgt.push(src);
-    }
-    for (const b of FORSIDE_BILLEDER) {
-      if (valgt.length >= 3) break;
-      if (b.src !== t.forside && !valgt.includes(b.src)) valgt.push(b.src);
-    }
-    return valgt.slice(0, 3);
-  }, [sum.linjer, t.forside]);
+  // Inspiration: tilbuddets egne billeder (uploadet, fra kunden eller AI), og
+  // ellers forsidens fotos af rigtige opstillinger
+  const inspiration = useMemo(
+    () => (t.billeder?.length ? t.billeder.slice(0, 6) : STANDARD_INSPIRATION.map((src) => ({ src, kilde: "site" as const }))),
+    [t.billeder],
+  );
+  const harAi = inspiration.some((b) => b.kilde === "ai");
 
   const fakta: Array<[string, string]> = (
     [
@@ -357,14 +375,8 @@ export default function TilbudDokument({ tilbud: t, katalog, kontakt, forhaandsv
         <Sidehoved t={t} side={3} locale={locale} />
 
         <h2 className="mt-8 text-[26px] font-bold tracking-[-0.01em]">{s.inspiration}</h2>
-        <p className="mt-1 text-[13px] text-[#7a7f8c]">{s.inspirationTekst}</p>
-        <div className="mt-5 grid grid-cols-3 grid-rows-2 gap-2.5" style={{ aspectRatio: "16 / 9" }}>
-          {inspiration.map((src, i) => (
-            <div key={src} className={`overflow-hidden rounded-lg bg-[#f4f5f8] ${i === 0 ? "col-span-2 row-span-2" : ""}`}>
-              <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
-            </div>
-          ))}
-        </div>
+        <p className="mt-1 text-[13px] text-[#7a7f8c]">{harAi ? s.inspirationAi : s.inspirationTekst}</p>
+        <BilledGitter billeder={inspiration} etiket={s.illustration} />
 
         <h2 className="mt-10 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1249cf]">{s.forloeb}</h2>
         <ol className="mt-4 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4">

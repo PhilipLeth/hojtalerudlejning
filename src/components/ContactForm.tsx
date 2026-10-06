@@ -3,6 +3,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import PhoneLink from "@/components/PhoneLink";
 import type { Locale } from "@/lib/i18n";
+import VedhaeftBilleder, { tilPayload, type VedhaeftetBillede } from "@/components/VedhaeftBilleder";
 
 /**
  * Formularens faste tekster.
@@ -70,6 +71,7 @@ export default function ContactForm({ locale = "da" }: { locale?: Locale } = {})
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState("");
   const [topic, setTopic] = useState<{ key: string; label: string; hint: string } | null>(null);
+  const [billeder, setBilleder] = useState<VedhaeftetBillede[]>([]);
 
   // Emne kommer fra URL'en (fx /kontakt?emne=erhverv), så et pro-request
   // lander mærket i indbakken frem for som "endnu en kontaktformular"
@@ -87,7 +89,7 @@ export default function ContactForm({ locale = "da" }: { locale?: Locale } = {})
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, topic: topic?.label ?? "" }),
+        body: JSON.stringify({ ...form, topic: topic?.label ?? "", billeder: tilPayload(billeder) }),
       });
       const json = (await res.json()) as { ok?: boolean; error?: string };
       if (!res.ok) {
@@ -177,6 +179,7 @@ export default function ContactForm({ locale = "da" }: { locale?: Locale } = {})
         onChange={(e) => setForm({ ...form, message: e.target.value })}
         className={inputCls}
       />
+      <VedhaeftBilleder locale={locale} billeder={billeder} onChange={setBilleder} inputCls={inputCls} />
       {error && (
         <p className="rounded-xl bg-red-500/10 p-3 text-center text-sm text-red-400" role="alert">
           {error}

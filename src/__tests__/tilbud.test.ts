@@ -123,3 +123,69 @@ describe("Tilbud", () => {
     expect(erTilbudSti("/tilbudspakke")).toBe(false);
   });
 });
+
+import { STANDARD_INSPIRATION, MAX_TILBUD_BILLEDER } from "@/lib/tilbud";
+import { standardOenske, tilbudBilledPrompt } from "@/lib/tilbudBillede";
+import { parseKundeBilleder } from "../../functions/api/contact";
+import { existsSync } from "node:fs";
+
+describe("Tilbuddets billeder", () => {
+  it("tager kun billeder fra sitet selv, højst otte, uden dubletter", () => {
+    const t = normaliserTilbud({
+      kunde: { navn: "A" },
+      billeder: [
+        { src: "/api/image/img_1_abc", kilde: "upload" },
+        { src: "/api/image/img_1_abc", kilde: "upload" },
+        { src: "https://evil.example/x.jpg", kilde: "upload" },
+        { src: "/api/image/kunde_2_x", kilde: "kunde" },
+        { src: "/api/image/img_3_y", kilde: "ai", prompt: "lilla uplights" },
+        ...Array.from({ length: 12 }, (_, i) => ({ src: `/api/image/img_${i}_z`, kilde: "upload" })),
+      ],
+      forside: "/api/image/kunde_2_x",
+    });
+    expect(t.billeder!.length).toBe(MAX_TILBUD_BILLEDER);
+    expect(t.billeder!.some((b) => b.src.startsWith("https"))).toBe(false);
+    expect(t.billeder![2]).toEqual({ src: "/api/image/img_3_y", kilde: "ai", prompt: "lilla uplights" });
+    // Et uploadet billede kan være forsiden
+    expect(t.forside).toBe("/api/image/kunde_2_x");
+  });
+
+  it("standardbillederne er forsidens fotos, og de findes", () => {
+    for (const src of STANDARD_INSPIRATION) expect(existsSync(`public${src}`), src).toBe(true);
+  });
+
+  it("prompten bærer kollegaens ønske ordret og galleriets regler", () => {
+    const p = tilbudBilledPrompt({ oenske: "Uplights i lilla langs væggene", varer: ["4 × Uplight"], format: "16:9" });
+    expect(p).toContain('"Uplights i lilla langs væggene"');
+    expect(p).toContain("4 × Uplight");
+    expect(p).toMatch(/Do not invent or substitute equipment/);
+    expect(tilbudBilledPrompt({ oenske: "", varer: [], format: "3:4", basis: "lokale" })).toMatch(/customer's actual venue/);
+    expect(tilbudBilledPrompt({ oenske: "flyt dem", varer: [], format: "4:3", basis: "rettelse" })).toMatch(/earlier version/);
+  });
+
+  it("forslaget til ønsket bygger på tilbuddet", () => {
+    const o = standardOenske({ titel: "Julefrokost", sted: "kantinen", gaester: 120, fra: "2026-12-04" }, ["4 × Uplight"]);
+    expect(o).toContain("Julefrokost");
+    expect(o).toContain("120");
+    expect(o).toMatch(/Vinteraften/);
+  });
+});
+
+describe("Kundens billeder i kontaktformularen", () => {
+  const b64 = (bytes: number[]) => btoa(String.fromCharCode(...bytes));
+  it("tager rigtige billeder og afviser filer, der kun påstår at være det", () => {
+    const jpeg = b64([0xff, 0xd8, 0xff, 0xe0, 1, 2, 3]);
+    const falsk = b64([0x3c, 0x73, 0x76, 0x67]); // "<svg"
+    const ud = parseKundeBilleder([
+      { navn: "lokale.jpg", data: jpeg },
+      { navn: "x.jpg", data: falsk },
+      { navn: "ikke-base64", data: "%%%" },
+    ]);
+    expect(ud).toHaveLength(1);
+    expect(ud[0].type).toBe("image/jpeg");
+  });
+  it("højst fem billeder", () => {
+    const jpeg = b64([0xff, 0xd8, 0xff, 0xe0]);
+    expect(parseKundeBilleder(Array(9).fill({ navn: "a", data: jpeg }))).toHaveLength(5);
+  });
+});

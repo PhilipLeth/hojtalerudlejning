@@ -6,6 +6,7 @@ import type { Locale } from "@/lib/i18n";
 import { eventSolutions } from "@/lib/eventSolutions";
 import { addons, rentalProducts, speakers } from "@/lib/products";
 import PhoneLink from "@/components/PhoneLink";
+import VedhaeftBilleder, { tilPayload, type VedhaeftetBillede } from "@/components/VedhaeftBilleder";
 
 /**
  * Forespørgsel på et helt arrangement, modstykket til bookingflowet.
@@ -181,6 +182,8 @@ export default function EventInquiryForm({ locale = "da", initialSolution, initi
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locale, initialSolution, initialSituation, initialProduct]);
 
+  const [billeder, setBilleder] = useState<VedhaeftetBillede[]>([]);
+
   function toggleBehov(b: string) {
     setF((prev) => ({
       ...prev,
@@ -203,6 +206,7 @@ export default function EventInquiryForm({ locale = "da", initialSolution, initi
           website: kontakt.website,
           topic: emnelinje(f),
           message: sammensaetBesked(f),
+          billeder: tilPayload(billeder),
         }),
       });
       const json = (await res.json()) as { ok?: boolean; error?: string };
@@ -336,6 +340,9 @@ export default function EventInquiryForm({ locale = "da", initialSolution, initi
           onChange={(e) => setF({ ...f, besked: e.target.value })}
           className={inputCls}
         />
+        <div className="mt-2">
+          <VedhaeftBilleder locale={locale} billeder={billeder} onChange={setBilleder} inputCls={inputCls} />
+        </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">

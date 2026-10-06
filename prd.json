@@ -4392,5 +4392,13 @@
     "priser": "Priserne slås op i kataloget både i tilbuddet, i kurven og i serverens mail-total (serverTotal = samme pristabel som Stripe). Ny intern vare forbrugsmaterialer (100 kr/stk.). Stripe-linjer med ens vare samles nu til én linje med antal, og loftet er hævet fra 25 til 200 enheder — et tilbud med 4 uplights, 3 højtalere, stativer, teknikertimer og forbrugsmaterialer ramte de 25.",
     "mail": "Send til kunde går via Resend fra info@lejhojtaler.dk med bcc til NOTIFY_EMAIL: forsidebillede, beskeden, dato/sted/gyldighed, total og knapperne 'Se tilbuddet' og 'Book og betal'.",
     "ikke_med": "DJ og forespørgselsvarer kan ikke stå på et tilbud (de kan ikke betales i kurven). Ingen fri tekstlinje med egen pris — beløb skal kunne slås op på serveren; brug en rabatkode til en særpris."
+  },
+  "tilbud_billeder_2026_10_06": {
+    "anmodning": "Philip: billeder med de relevante produkter, der kan promptes og justeres; upload af (flere) billeder, også fra kunden via kontaktformularen; nemt at slette og ændre; 'Sådan kan det se ud' skal som standard bruge forsidens hero-billeder.",
+    "model": "Tilbud.billeder: [{src, kilde: upload|kunde|ai|site, prompt?}], højst 8, kun /api/image/… eller /images/…. forside må være et af tilbuddets egne billeder. Tom liste = STANDARD_INSPIRATION (forsidens to fotos af rigtige opstillinger, EventHeroGallery).",
+    "admin": "Fanen Billeder i /admin/tilbud: upload flere ad gangen (komprimeres til WebP ≤1 MB, /api/upload), tilføj fra link (kundens mail), flyt ←→, Forside, slet, 'Ret med AI'/'Brug i AI'. Brev har fået sin egen fane.",
+    "ai": "POST /api/tilbud {action:'billede', oenske, produkter, format 16:9|4:3|3:4, basis?, basisType lokale|rettelse}. Samme model/endpoint som stemningsbillederne (GALLERY_SPEC), fotos af tilbuddets grej som referencer (højst 6), galleriets faste regler efter kollegaens danske ønske. Udgangsbillede: kundens lokale (rummet beholdes, grejet sættes ind) eller et tidligere AI-billede (kun det beskrevne ændres). Svaret gemmes ikke; 'Brug billedet' komprimerer og uploader. Loft 150/md (TILBUD_BILLED_LOFT). AI-billeder mærkes 'Illustration' i tilbuddet.",
+    "kunden": "ContactForm og EventInquiryForm har 'Vedhæft billeder af lokalet' (højst 5, komprimeres i browseren). /api/contact tjekker filsignaturen (JPEG/PNG/WebP), gemmer i R2 som kunde_… og sender dem som vedhæftning + /api/image-links i mailen, klar til 'Link til billede' i tilbuddet.",
+    "ikke_testet": "AI-genereringen er ikke kørt mod Gemini fra denne session (koster penge, nøglen findes kun i produktion). Kontaktmail med billeder er ikke sendt for alvor."
   }
 }
