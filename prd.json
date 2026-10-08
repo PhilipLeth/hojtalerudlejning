@@ -4400,5 +4400,14 @@
     "ai": "POST /api/tilbud {action:'billede', oenske, produkter, format 16:9|4:3|3:4, basis?, basisType lokale|rettelse}. Samme model/endpoint som stemningsbillederne (GALLERY_SPEC), fotos af tilbuddets grej som referencer (højst 6), galleriets faste regler efter kollegaens danske ønske. Udgangsbillede: kundens lokale (rummet beholdes, grejet sættes ind) eller et tidligere AI-billede (kun det beskrevne ændres). Svaret gemmes ikke; 'Brug billedet' komprimerer og uploader. Loft 150/md (TILBUD_BILLED_LOFT). AI-billeder mærkes 'Illustration' i tilbuddet.",
     "kunden": "ContactForm og EventInquiryForm har 'Vedhæft billeder af lokalet' (højst 5, komprimeres i browseren). /api/contact tjekker filsignaturen (JPEG/PNG/WebP), gemmer i R2 som kunde_… og sender dem som vedhæftning + /api/image-links i mailen, klar til 'Link til billede' i tilbuddet.",
     "ikke_testet": "AI-genereringen er ikke kørt mod Gemini fra denne session (koster penge, nøglen findes kun i produktion). Kontaktmail med billeder er ikke sendt for alvor."
+  },
+  "footer_kreditering_2026_10_08": {
+    "beslutning": "Footeren viser 'Udviklet af OpenOcean' / 'Built by OpenOcean' ved copyright-linjen, med link til https://openocean.dk (Philip 2026-10-08).",
+    "regler": [
+      "Ankerteksten er brandnavnet 'OpenOcean', aldrig søgeord som 'webbureau'",
+      "Almindeligt link (ikke nofollow): ægte kreditering af hvem der har bygget sitet",
+      "Står på både dansk og engelsk via Footer-komponenten"
+    ],
+    "fil": "src/components/Footer.tsx"
   }
 }

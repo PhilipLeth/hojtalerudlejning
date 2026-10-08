@@ -301,7 +301,15 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
           <p className="text-xs font-bold uppercase tracking-widest text-white/70">{newsletterLabel}</p>
           <NewsletterForm locale={locale} />
         </div>
-        <p className="text-xs text-white/30">&copy; {new Date().getFullYear()} Lejhøjtaler.dk</p>
+        <p className="text-xs text-white/30">
+          &copy; {new Date().getFullYear()} Lejhøjtaler.dk
+          <span aria-hidden="true"> · </span>
+          {/* Kreditering: sitet er udviklet af OpenOcean. Brandnavnet som ankertekst, ingen søgeord. */}
+          {en ? "Built by " : "Udviklet af "}
+          <a href="https://openocean.dk" className="transition hover:text-brand-400">
+            OpenOcean
+          </a>
+        </p>
       </div>
     </footer>
   );
