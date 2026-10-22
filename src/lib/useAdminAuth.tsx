@@ -15,6 +15,8 @@ export interface AdminUser {
 export interface LoginUserOption {
   id: string;
   name: string;
+  /** Kan der sendes et login-link til brugeren? */
+  hasEmail?: boolean;
 }
 
 export interface AdminAuthState {
@@ -25,6 +27,12 @@ export interface AdminAuthState {
   isLoggedIn: boolean;
   loginUsers: LoginUserOption[];
   login: (userId: string, password: string) => Promise<string | null>;
+  /** Send et login-link på mail. Giver { sentTo } ved succes, ellers { error }. */
+  requestMagicLink: (userId: string) => Promise<{ sentTo: string } | { error: string }>;
+  /** Et ?magic=-link er ved at blive indløst — vis "Logger ind…" i stedet for formularen */
+  redeemingLink: boolean;
+  /** Fejl fra et indløst ?magic=-link (udløbet, brugt), vises i login-formularen */
+  magicError: string;
   logout: () => Promise<void>;
   unauthorized: () => void;
 }
@@ -58,12 +66,45 @@ function useProvideAdminAuth(): AdminAuthState {
   const [user, setUser] = useState<AdminUser | null>(null);
   const [ready, setReady] = useState(false);
   const [loginUsers, setLoginUsers] = useState<LoginUserOption[]>([]);
+  const [magicError, setMagicError] = useState("");
+  const [redeemingLink, setRedeemingLink] = useState(
+    () => typeof window !== "undefined" && new URLSearchParams(window.location.search).has("magic"),
+  );
 
   useEffect(() => {
     const t = readStoredToken();
     setToken(t);
     setUser(readStoredUser());
     setReady(true);
+
+    // Kom vi fra et login-link i mailen? Indløs det og fjern tokenet fra adressen,
+    // så det hverken bliver i historikken eller bogmærket.
+    const params = new URLSearchParams(window.location.search);
+    const magic = params.get("magic");
+    if (magic) {
+      params.delete("magic");
+      const rest = params.toString();
+      window.history.replaceState(null, "", window.location.pathname + (rest ? `?${rest}` : ""));
+      fetch("/api/admin-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ magicToken: magic }),
+      })
+        .then((r) => r.json().then((data: { error?: string; token?: string; user?: AdminUser }) => ({ ok: r.ok, data })))
+        .then(({ ok, data }) => {
+          if (ok && data.token) {
+            localStorage.removeItem(LEGACY_KEY);
+            localStorage.setItem(TOKEN_KEY, data.token);
+            if (data.user) localStorage.setItem(USER_KEY, JSON.stringify(data.user));
+            setToken(data.token);
+            setUser(data.user ?? null);
+          } else {
+            setMagicError(data.error || "Linket virkede ikke. Bed om et nyt.");
+          }
+        })
+        .catch(() => setMagicError("Netværksfejl — prøv linket igen"))
+        .finally(() => setRedeemingLink(false));
+    }
 
     fetch("/api/admin-login")
       .then((r) => r.json())
@@ -107,6 +148,26 @@ function useProvideAdminAuth(): AdminAuthState {
     [persist],
   );
 
+  const requestMagicLink = useCallback(async (userId: string) => {
+    try {
+      const res = await fetch("/api/admin-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "magic", userId }),
+      });
+      let data: { error?: string; sentTo?: string };
+      try {
+        data = await res.json();
+      } catch {
+        return { error: `Kunne ikke sende link (${res.status})` };
+      }
+      if (!res.ok || !data.sentTo) return { error: data.error || "Kunne ikke sende link" };
+      return { sentTo: data.sentTo };
+    } catch {
+      return { error: "Netværksfejl — tjek forbindelsen og prøv igen" };
+    }
+  }, []);
+
   const logout = useCallback(async () => {
     const t = localStorage.getItem(TOKEN_KEY);
     if (t) {
@@ -132,6 +193,9 @@ function useProvideAdminAuth(): AdminAuthState {
     isLoggedIn: !!token,
     loginUsers,
     login,
+    requestMagicLink,
+    redeemingLink,
+    magicError,
     logout,
     unauthorized,
   };

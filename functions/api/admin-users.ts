@@ -2,10 +2,11 @@
  * Admin-brugerstyring — kun for indloggede admins.
  *
  * GET  — liste (uden hashes)
- * POST — create | set_password | rename | deactivate | activate
+ * POST — create | set_password | set_email | rename | deactivate | activate
  */
 import {
   hashPassword,
+  isValidEmail,
   loadAdminUsers,
   randomSalt,
   requireAdmin,
@@ -32,9 +33,10 @@ export const onRequestOptions: PagesFunction<Env> = async () =>
   new Response(null, { status: 204, headers: cors });
 
 function sanitize(users: AdminUserRecord[]) {
-  return users.map(({ id, name, active, createdAt, updatedAt }) => ({
+  return users.map(({ id, name, email, active, createdAt, updatedAt }) => ({
     id,
     name,
+    email: email ?? "",
     active,
     createdAt,
     updatedAt,
@@ -54,6 +56,7 @@ type Body = {
   id?: string;
   name?: string;
   password?: string;
+  email?: string;
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -101,6 +104,21 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     user.updatedAt = now;
     await saveAdminUsers(context.env.BOOKINGS, users);
     console.log("[admin-users] adgangskode skiftet for", id, "af", auth.name);
+    return json({ ok: true, users: sanitize(users) });
+  }
+
+  if (action === "set_email") {
+    const id = String(body.id || "").trim();
+    const email = String(body.email || "").trim().toLowerCase();
+    if (!id) return json({ error: "id påkrævet" }, 400);
+    if (email && !isValidEmail(email)) return json({ error: "Det ligner ikke en e-mailadresse" }, 400);
+    const user = users.find((u) => u.id === id);
+    if (!user) return json({ error: "Bruger ikke fundet" }, 404);
+    if (email) user.email = email;
+    else delete user.email;
+    user.updatedAt = now;
+    await saveAdminUsers(context.env.BOOKINGS, users);
+    console.log("[admin-users] e-mail", email ? "sat" : "fjernet", "for", id, "af", auth.name);
     return json({ ok: true, users: sanitize(users) });
   }
 

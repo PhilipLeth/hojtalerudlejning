@@ -8,6 +8,11 @@
 export const KV_ADMIN_USERS = "admin_users";
 const SESSION_PREFIX = "admin_session_";
 const SESSION_TTL_SEC = 60 * 60 * 24 * 30; // 30 dage
+/** Magic links: engangs-tokens, 15 minutter, højst ét pr. bruger pr. minut */
+const MAGIC_PREFIX = "admin_magic_";
+const MAGIC_LOCK_PREFIX = "admin_magic_sendt_";
+export const MAGIC_TTL_SEC = 60 * 15;
+const MAGIC_LOCK_SEC = 60;
 /** KV-nøgle max 512 tegn — afvis absurd lange ?secret= (fx ved et fejlklist) */
 export const MAX_ADMIN_TOKEN_LEN = 256;
 
@@ -22,6 +27,8 @@ export function isPlausibleAdminToken(token: string): boolean {
 export interface AdminUserRecord {
   id: string;
   name: string;
+  /** Modtager af login-links. Uden e-mail kan brugeren kun logge ind med kode. */
+  email?: string;
   salt: string;
   hash: string;
   active: boolean;
@@ -90,14 +97,14 @@ export async function ensureDefaultUsers(kv: KVNamespace, adminSecret?: string):
 
   const now = new Date().toISOString();
   const bootstrap = [
-    { id: "frederik", name: "Frederik" },
-    { id: "philip", name: "Philip" },
+    { id: "frederik", name: "Frederik", email: "frederik.scharling.dj@gmail.com" },
+    { id: "philip", name: "Philip", email: "philipleth@gmail.com" },
   ];
   const users: AdminUserRecord[] = [];
   for (const u of bootstrap) {
     const salt = randomSalt();
     const hash = await hashPassword(adminSecret, salt);
-    users.push({ id: u.id, name: u.name, salt, hash, active: true, createdAt: now });
+    users.push({ id: u.id, name: u.name, email: u.email, salt, hash, active: true, createdAt: now });
   }
   await kv.put(KV_ADMIN_USERS, JSON.stringify(users));
   console.log("[adminAuth] bootstrap", users.length, "brugere oprettet — skift adgangskoder i /admin/brugere");
@@ -185,6 +192,50 @@ export async function requireAdmin(
   return admin;
 }
 
-export function publicUserList(users: AdminUserRecord[]): Array<{ id: string; name: string }> {
-  return users.filter((u) => u.active).map((u) => ({ id: u.id, name: u.name }));
+export function publicUserList(
+  users: AdminUserRecord[],
+): Array<{ id: string; name: string; hasEmail: boolean }> {
+  return users.filter((u) => u.active).map((u) => ({ id: u.id, name: u.name, hasEmail: !!u.email }));
+}
+
+/** "philipleth@gmail.com" → "ph…@gmail.com" — nok til at genkende, ikke nok til at afsløre. */
+export function maskEmail(email: string): string {
+  const [local, domain] = email.split("@");
+  if (!domain) return "…";
+  return `${local.slice(0, 2)}…@${domain}`;
+}
+
+export function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
+}
+
+/**
+ * Udsted et login-link-token. Returnerer null hvis der er sendt ét inden for
+ * det seneste minut — så kan en fremmed ikke fylde indbakken ved at trykke
+ * på knappen i ét væk. Tokenet er bundet til brugeren og kan kun bruges én gang.
+ */
+export async function createMagicLink(kv: KVNamespace, user: AdminUserRecord): Promise<string | null> {
+  const lockKey = `${MAGIC_LOCK_PREFIX}${user.id}`;
+  if (await kv.get(lockKey)) return null;
+  const token = sessionToken();
+  await kv.put(`${MAGIC_PREFIX}${token}`, JSON.stringify({ userId: user.id }), { expirationTtl: MAGIC_TTL_SEC });
+  await kv.put(lockKey, "1", { expirationTtl: MAGIC_LOCK_SEC });
+  return token;
+}
+
+/** Indløs et login-link. Sletter tokenet, så linket er dødt efter første brug. */
+export async function consumeMagicLink(kv: KVNamespace, token: string): Promise<AdminUserRecord | null> {
+  if (!isPlausibleAdminToken(token)) return null;
+  const key = `${MAGIC_PREFIX}${token}`;
+  const raw = await kv.get(key);
+  if (!raw) return null;
+  await kv.delete(key);
+  let userId: string;
+  try {
+    userId = (JSON.parse(raw) as { userId: string }).userId;
+  } catch {
+    return null;
+  }
+  const users = await loadAdminUsers(kv);
+  return users.find((u) => u.id === userId && u.active) ?? null;
 }
