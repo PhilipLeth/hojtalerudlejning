@@ -8,6 +8,7 @@ import { useAdminAuth } from "@/lib/useAdminAuth";
 interface UserRow {
   id: string;
   name: string;
+  email?: string;
   active: boolean;
   createdAt: string;
   updatedAt?: string;
@@ -44,6 +45,9 @@ export default function BrugerePage() {
 
   const [pwId, setPwId] = useState("");
   const [pwVal, setPwVal] = useState("");
+
+  const [emailId, setEmailId] = useState("");
+  const [emailVal, setEmailVal] = useState("");
 
   const load = useCallback(async () => {
     if (!secret) return;
@@ -126,7 +130,10 @@ export default function BrugerePage() {
             >
               <div>
                 <div style={{ fontWeight: 700 }}>{u.name}</div>
-                <div style={{ fontSize: "12px", color: "#888" }}>{u.id}{!u.active ? " · deaktiveret" : ""}</div>
+                <div style={{ fontSize: "12px", color: "#888" }}>
+                  {u.id}{!u.active ? " · deaktiveret" : ""}
+                  {u.email ? ` · ${u.email}` : " · ingen e-mail (kan ikke få login-link)"}
+                </div>
               </div>
               {u.active && u.id !== user?.id && (
                 <button
@@ -172,6 +179,41 @@ export default function BrugerePage() {
             style={{ padding: "10px 16px", fontSize: "14px", background: "#111", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer" }}
           >
             Gem adgangskode
+          </button>
+        </div>
+
+        <div style={card}>
+          <h2 style={{ margin: "0 0 4px", fontSize: "16px" }}>E-mail til login-link</h2>
+          <p style={{ margin: "0 0 12px", fontSize: "12px", color: "#666" }}>
+            Med en e-mail kan brugeren få et login-link fra login-siden i stedet for at huske koden.
+          </p>
+          <select
+            value={emailId}
+            onChange={(e) => {
+              setEmailId(e.target.value);
+              setEmailVal(users.find((u) => u.id === e.target.value)?.email ?? "");
+            }}
+            style={{ ...input, marginBottom: "8px" }}
+          >
+            <option value="">Vælg bruger…</option>
+            {users.filter((u) => u.active).map((u) => (
+              <option key={u.id} value={u.id}>{u.name}</option>
+            ))}
+          </select>
+          <input
+            type="email"
+            placeholder="navn@eksempel.dk (tom = fjern)"
+            value={emailVal}
+            onChange={(e) => setEmailVal(e.target.value)}
+            style={{ ...input, marginBottom: "8px" }}
+          />
+          <button
+            type="button"
+            disabled={!emailId}
+            onClick={() => post({ action: "set_email", id: emailId, email: emailVal })}
+            style={{ padding: "10px 16px", fontSize: "14px", background: "#111", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer" }}
+          >
+            Gem e-mail
           </button>
         </div>
 

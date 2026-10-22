@@ -4125,7 +4125,7 @@
     "beslutning": "Middelvej, ikke tilbage til 19–34 kr pr. klik: Soundboks-grupper 8 kr; øvrige aktive AAG-grupper Googles første-side-estimat rundet op til 0,50, mindst 9 og højst 12 kr, ingen estimat = 9 kr. Kampagnebudget 100 → 350 kr/dag. AG 1–15 (phrase-grupper) urørt. 91 aktive AAG-grupper, 92 ændringer, preflight OK.",
     "script": "scripts/ads/middelvej.mjs — tørløb som standard, --udfoer skriver.",
     "evaluering": "Mål efter 7 dage (25. sep): pris pr. booking og bookingværdi, ikke klik. Forventning ved 350 kr/dag og ~10 kr CPC: 30–35 klik/dag; ved konverteringsrate 3–4 % ~1 booking/dag. Er pris pr. booking over ~400 kr, sænkes MAX_KR; er tabt på budget over 20 %, hæves budgettet før buddene.",
-    "sidefund": "KV-namespacet i wrangler.toml (c46378bf…) indeholder ingen booking_-nøgler, kun 5 testnøgler. Produktionen bruger tilsyneladende et andet namespace end konfigurationen. Ikke årsag til ordrestoppet, men skal afklares.",
+    "sidefund": "RETTET 2026-10-22: namespacet er det rigtige; 'wrangler kv key list' uden --remote viser et lokalt lager. Se magic_link_login_2026_10_22.rettelse.",
     "status": "LIVE 18. sep 2026: Philip kørte --udfoer, 92 ændringer gemt. Verificeret via GAQL: budget 350 kr/dag, ingen aktive AAG-grupper under 8 kr."
   },
   "produktark_2026_09_17": {
@@ -4427,5 +4427,12 @@
       "KV-kataloget (/admin/produkter) ændrer normalprisen; periodeprisen lægges ovenpå og kan ikke redigeres i admin."
     ],
     "oprydning": "Reglen dør af sig selv efter 1. nov. 2026. Objektet kan slettes fra PERIODE_PRISER (og testen rettes) ved lejlighed, eller stå som skabelon."
+  },
+  "magic_link_login_2026_10_22": {
+    "hvad": "Login-link på mail som alternativ til adgangskoden. På /admin vælger man bruger og trykker 'Send mig et login-link på mail'. Serveren udsteder et engangs-token (KV admin_magic_<token>, 15 min), sender det via Resend fra info@lejhojtaler.dk, og /admin?magic=<token> indløses til en almindelig 30-dages session.",
+    "sikkerhed": "Tokenet er bundet til brugeren, slettes ved første brug, og der kan højst sendes ét pr. bruger pr. minut (KV admin_magic_sendt_<id>). Brugerlisten afslører kun om der FINDES en e-mail (hasEmail), ikke adressen; svaret ved afsendelse viser den maskeret ('ph…@gmail.com'). ?magic= fjernes fra adressen med replaceState, så det ikke ligger i historik eller bogmærker.",
+    "email_paa_brugere": "AdminUserRecord.email, sættes/fjernes med action set_email i /api/admin-users og på /admin/brugere. Bootstrap (når admin_users er tom) giver frederik=frederik.scharling.dj@gmail.com og philip=philipleth@gmail.com — Frederiks adresse er hans Google Ads-login og bør bekræftes af ham.",
+    "nulstilling_2026_10_22": "Ingen kunne logge ind. ADMIN_SECRET sat til en ny kode (wrangler pages secret put), koden er ikke i repoet. admin_users slettet i produktionens KV, så begge brugere blev genskabt med den nye kode som adgangskode. Legacy-adgang (?secret=ADMIN_SECRET) virker fortsat som nødadgang.",
+    "rettelse": "Noten under middelvej_aag_bud_2026_09_18.sidefund om at KV-namespacet i wrangler.toml var tomt var forkert: wrangler kv kører mod et LOKALT lager medmindre man giver --remote. Produktionen bruger c46378bf… som i wrangler.toml."
   }
 }

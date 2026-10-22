@@ -35,11 +35,32 @@ export default function AdminLogin({
   subtitle = "Vælg hvem du er og indtast adgangskode",
   onSuccess,
 }: AdminLoginProps) {
-  const { login, loginUsers } = useAdminAuth();
+  const { login, loginUsers, requestMagicLink, redeemingLink, magicError } = useAdminAuth();
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [linkSentTo, setLinkSentTo] = useState("");
+  const [sendingLink, setSendingLink] = useState(false);
+
+  const shownError = error || (!linkSentTo ? magicError : "");
+  const selected = loginUsers.find((u) => u.id === userId);
+  // Før brugerlisten er hentet ved vi ikke om der er mail — vis knappen, serveren afgør det
+  const canSendLink = !!userId && (selected ? selected.hasEmail !== false : true);
+
+  async function sendLink() {
+    if (!userId) {
+      setError("Vælg hvem du er først");
+      return;
+    }
+    setSendingLink(true);
+    setError("");
+    setLinkSentTo("");
+    const r = await requestMagicLink(userId);
+    setSendingLink(false);
+    if ("error" in r) setError(r.error);
+    else setLinkSentTo(r.sentTo);
+  }
 
   const users: LoginUserOption[] = loginUsers.length
     ? loginUsers
@@ -82,9 +103,21 @@ export default function AdminLogin({
         <h1 style={{ margin: "0 0 8px", fontSize: "24px" }}>{title}</h1>
         <p style={{ margin: "0 0 20px", color: "#666", fontSize: "14px" }}>{subtitle}</p>
 
-        {error && (
+        {redeemingLink && (
+          <div style={{ background: "#e8f0fe", color: "#1a3d7c", padding: "10px 12px", borderRadius: "8px", marginBottom: "12px", fontSize: "14px" }}>
+            Logger ind med dit link…
+          </div>
+        )}
+
+        {shownError && (
           <div style={{ background: "#f8d7da", color: "#721c24", padding: "10px 12px", borderRadius: "8px", marginBottom: "12px", fontSize: "14px" }}>
-            {error}
+            {shownError}
+          </div>
+        )}
+
+        {linkSentTo && (
+          <div style={{ background: "#d4edda", color: "#155724", padding: "10px 12px", borderRadius: "8px", marginBottom: "12px", fontSize: "14px" }}>
+            Login-link sendt til {linkSentTo}. Det virker i 15 minutter. Tjek også spam.
           </div>
         )}
 
@@ -131,6 +164,26 @@ export default function AdminLogin({
         >
           {loading ? "Logger ind…" : "Log ind"}
         </button>
+
+        <div style={{ textAlign: "center", margin: "16px 0 0", fontSize: "14px", color: "#666" }}>
+          Glemt koden?{" "}
+          <button
+            type="button"
+            onClick={sendLink}
+            disabled={sendingLink || !canSendLink}
+            style={{
+              background: "none",
+              border: "none",
+              padding: 0,
+              font: "inherit",
+              color: canSendLink ? "#000" : "#999",
+              textDecoration: "underline",
+              cursor: sendingLink || !canSendLink ? "default" : "pointer",
+            }}
+          >
+            {sendingLink ? "Sender…" : "Send mig et login-link på mail"}
+          </button>
+        </div>
       </form>
     </div>
   );
