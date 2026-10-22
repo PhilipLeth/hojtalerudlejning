@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CapacityBadge from "@/components/CapacityBadge";
 import LivePrice from "@/components/LivePrice";
+import PeriodePrisNote from "@/components/PeriodePrisNote";
 import FaqSection, { type FaqItem } from "@/components/FaqSection";
 import WeekendLedighed from "@/components/WeekendLedighed";
 import GoogleReviews from "@/components/GoogleReviews";
@@ -329,6 +330,7 @@ export default function ProductLanding({
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-lg text-white/60">{sub}</p>
+          {!lukket && !foresporg && <PeriodePrisNote productId={productId} locale={locale} className="mt-3" />}
           {capacity && (
             <div className="mt-4 flex justify-center">
               <CapacityBadge level={capacity.level} label={capacity.label} />

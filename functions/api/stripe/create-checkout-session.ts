@@ -3,7 +3,7 @@
  * Beløb beregnes altid server-side ud fra kataloget — klienten sender kun produkt-id'er.
  */
 import Stripe from "stripe";
-import { loadPriceTable, buildLineItems, type LineItemInput } from "../_lib/pricing";
+import { loadPriceTable, buildLineItems, medPeriodePriser, type LineItemInput } from "../_lib/pricing";
 import { dateFromDay } from "../../../src/lib/dj";
 import { resolveDiscountFor, discountOre } from "../_lib/discounts";
 
@@ -80,7 +80,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   let lineItems, totalOre;
   try {
-    const table = await loadPriceTable(context.env.BOOKINGS);
+    // Halloween-prisen på røg gælder efter lejens datoer, ikke bestillingsdagen
+    const table = medPeriodePriser(
+      await loadPriceTable(context.env.BOOKINGS),
+      dagAf(body.pickupDay, body.pickup),
+      dagAf(body.returnDay, body.returnDate),
+    );
     ({ lineItems, totalOre } = buildLineItems(table, body.items, dateFromDay(body.pickupDay, body.pickup)));
   } catch (e) {
     return json({ error: e instanceof Error ? e.message : "Invalid items" }, 400);

@@ -7,6 +7,7 @@ import { localizedHref } from "@/lib/enPages";
 import { bookHref } from "@/lib/bookUrl";
 import { erForespoergsel, forespoergselHref } from "@/lib/products";
 import { contentsFor } from "@/lib/contentsEn";
+import PeriodePrisNote from "@/components/PeriodePrisNote";
 import type { Locale } from "@/lib/i18n";
 
 /**
@@ -174,6 +175,7 @@ export default function CategoryProductGrid({
             <div className="flex flex-1 flex-col p-5">
               <h3 className={`text-xl font-semibold ${light ? "text-slate-900" : "text-white"}`}>{p.name}</h3>
               <p className={`mt-1 flex-1 text-sm ${light ? "text-slate-500" : "text-white/40"}`}>{p.desc}</p>
+              {!erForespoergsel(p.id) && <PeriodePrisNote productId={p.id} locale={locale} className="mt-2" />}
               <div className="mt-4 flex items-center justify-between gap-3">
                 {/* En forespørgselsvare har ingen fast weekendpris — knappen
                     fører til formularen, ikke til kurven. Se ER_FORESPOERGSEL. */}

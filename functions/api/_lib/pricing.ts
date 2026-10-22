@@ -12,6 +12,7 @@ import {
   type BundlePart,
 } from "../../../src/lib/products";
 import { CATALOG_KEY } from "./channels";
+import { periodePris, periodeNavn } from "../../../src/lib/periodePriser";
 
 export interface PricedItem {
   id: string;
@@ -137,6 +138,26 @@ function deriveBundlePrices(table: Map<string, PricedItem>, kvRentals: CatalogSh
     if (!kendt || !Number.isFinite(kr) || (kr as number) <= 0) continue;
     table.set(b.id, { ...kendt, unitAmount: Math.round((kr as number) * 100) });
   }
+}
+
+/**
+ * Periodepriser (fx Halloween-prisen på røg) lagt oven på pristabellen for
+ * én bestemt leje. Kaldes EFTER loadPriceTable, så pakkerne allerede er
+ * udledt af delene til normalpris — en pakke stiger ikke, fordi røgen gør.
+ * Uden datoer kommer tabellen uændret tilbage.
+ */
+export function medPeriodePriser(
+  table: Map<string, PricedItem>,
+  pickupDay?: string | null,
+  returnDay?: string | null,
+): Map<string, PricedItem> {
+  const ud = new Map(table);
+  for (const [id, item] of table) {
+    const pp = periodePris(id, pickupDay, returnDay);
+    if (!pp) continue;
+    ud.set(id, { ...item, unitAmount: Math.round(pp.pris * 100), name: periodeNavn(item.name, pp.periode, "da") });
+  }
+  return ud;
 }
 
 export interface LineItemInput {

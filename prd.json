@@ -4409,5 +4409,23 @@
       "Står på både dansk og engelsk via Footer-komponenten"
     ],
     "fil": "src/components/Footer.tsx"
+  },
+  "halloween_priser_2026_10_22": {
+    "dato": "2026-10-22",
+    "beslutning": "Frederik (chat 22. okt): røgmaskine op til 395 kr og low fog op til 695 kr, 'bare halloween næste weekend'. Gælder lejer der rammer 30. okt.–1. nov. 2026; alle andre datoer er normalpris (rog 245, low_fog 545).",
+    "regel": "Periodeprisen følger LEJENS datoer, ikke bestillingsdagen. En leje tæller hvis bare én af dens dage ligger i perioden (fredag–mandag og torsdag–mandag rammer begge). Pakker med røg i (Heksetimen, Monsterfesten, lys+røg) stiger ikke: pakkeprisen udledes af delene før periodeprisen lægges på.",
+    "implementering": {
+      "kilde": "src/lib/periodePriser.ts — PERIODE_PRISER er det ene sted tallet står. Næste kampagne (nytår, …) er et nyt objekt i listen.",
+      "server": "functions/api/_lib/pricing.ts medPeriodePriser(table, pickupDay, returnDay) lægges oven på loadPriceTable i create-checkout-session (Stripe) og bookings-update (ret ordre i admin). Stripe-linjen hedder 'Røgmaskine (Halloween-pris)'.",
+      "kasse": "BookingFlow: addonPris/addonLabel og en effekt der sætter kurvlinjer med periodepris om, når datoerne skifter. Kun varer en periode nævner røres.",
+      "sider": "PeriodePrisNote under prisen på /roegmaskine, /en/roegmaskine og i kategorigitteret (/roeg, /en/roeg). Regnes i browseren, så noten forsvinder 2. nov. uden nyt deploy.",
+      "test": "src/__tests__/periode-priser.test.ts"
+    },
+    "ikke_omfattet": [
+      "Betal-ved-afhentning (/api/book) gemmer stadig kassens tal; serveren regner kun Stripe-beløb om. Kassen regner rigtigt, så ordren får 395/695, men der er ingen server-kontrol af det.",
+      "Tilbud (/admin/tilbud) bruger loadPriceTable uden datoer — et tilbud til Halloween-weekenden skal prissættes manuelt.",
+      "KV-kataloget (/admin/produkter) ændrer normalprisen; periodeprisen lægges ovenpå og kan ikke redigeres i admin."
+    ],
+    "oprydning": "Reglen dør af sig selv efter 1. nov. 2026. Objektet kan slettes fra PERIODE_PRISER (og testen rettes) ved lejlighed, eller stå som skabelon."
   }
 }

@@ -12,7 +12,7 @@ import { nulstilBookingIndex } from "./_lib/bookingIndex";
 import { paymentMail, sendOwnerMail } from "./_lib/ownerMail";
 
 import { requireAdmin } from "./_lib/adminAuth";
-import { loadPriceTable } from "./_lib/pricing";
+import { loadPriceTable, medPeriodePriser } from "./_lib/pricing";
 import { bundleIncludesDelivery, isDeliveryAddon, rentalProducts as defaultRentals } from "../../src/lib/products";
 import {
   MAX_ORDER_TOTAL,
@@ -454,8 +454,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           return new Response(JSON.stringify({ error: parsed.error }), { status: 400, headers: corsHeaders });
         }
 
-        // Katalogets priser — aldrig et beløb fra klienten
-        const table = await loadPriceTable(context.env.BOOKINGS);
+        // Katalogets priser — aldrig et beløb fra klienten. Periodepriser (røg
+        // til Halloween) følger ordrens datoer, så en rettet ordre ikke falder
+        // tilbage til normalprisen.
+        const dag = (day: unknown, iso: unknown) =>
+          typeof day === "string" && /^\d{4}-\d{2}-\d{2}$/.test(day) ? day : String(iso ?? "").slice(0, 10);
+        const table = medPeriodePriser(
+          await loadPriceTable(context.env.BOOKINGS),
+          dag(booking.pickupDay, booking.pickup),
+          dag(booking.returnDay, booking.returnDate),
+        );
         const lookup = (id: string): CatalogEntry | undefined => {
           const priced = table.get(id);
           if (!priced) return undefined;

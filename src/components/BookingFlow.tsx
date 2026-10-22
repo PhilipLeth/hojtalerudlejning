@@ -10,6 +10,7 @@ import { rapporterFejl } from "@/lib/errorReport";
 import { type Locale, t } from "@/lib/i18n";
 import { localizedHref } from "@/lib/enPages";
 
+import { periodePris, harPeriodePris, periodeNavn } from "@/lib/periodePriser";
 import { dayMultiplier, isSummerSale, applyDiscount, deliveryDirections, isInternalAddon, isServiceAddon, bundleIncludesDelivery, DELIVERY_ADDON_IDS, STROEM_ADDON_IDS } from "@/lib/products";
 import { useProducts } from "@/lib/useProducts";
 import { kurvFraTilbud, type Tilbud } from "@/lib/tilbud";
@@ -860,8 +861,43 @@ export default function BookingFlow({
     return lydmandFraTil ? `${base} (${tidsrumTekst(lydmandFra, lydmandTil, locale)})` : base;
   })();
   /** Tilvalgets linje og pris som de vises, lydmanden ganges op med timerne */
-  const addonLabel = (a: { id: string; label: string }) => (a.id === DJ_ID ? djNavn : a.id === LYDMAND_ID ? lydmandLabel : a.label);
-  const addonPris = (a: { id: string; price: number }) => (a.id === DJ_ID ? djPris : a.id === LYDMAND_ID ? lydmandPris : a.price);
+  // Periodepriser (røg og low fog til Halloween-weekenden) følger lejens
+  // datoer. Serveren regner det samme ud i medPeriodePriser(), så kurven og
+  // Stripe viser ét tal.
+  const pickupDag = pickupDate ? dateKey(pickupDate) : null;
+  const returnDag = returnDate ? dateKey(returnDate) : null;
+  const periodePrisFor = (id: string) => periodePris(id, pickupDag, returnDag);
+  const addonLabel = (a: { id: string; label: string }) => {
+    if (a.id === DJ_ID) return djNavn;
+    if (a.id === LYDMAND_ID) return lydmandLabel;
+    const pp = periodePrisFor(a.id);
+    return pp ? periodeNavn(a.label, pp.periode, locale) : a.label;
+  };
+  const addonPris = (a: { id: string; price: number }) =>
+    a.id === DJ_ID ? djPris : a.id === LYDMAND_ID ? lydmandPris : (periodePrisFor(a.id)?.pris ?? a.price);
+  // Kurvlinjer bærer deres pris. Skifter datoerne, eller kommer en vare med
+  // periodepris ind efter datovalget, sættes linjen om — kun de varer en
+  // periode nævner, så DJ, lydmand og tilbudspriser står urørt.
+  useEffect(() => {
+    setCartItems((prev) => {
+      let aendret = false;
+      const next = prev.map((ci) => {
+        if (!harPeriodePris(ci.productId)) return ci;
+        const rp = catalog.rentalProducts.find((p) => p.id === ci.productId);
+        const ad = catalog.addons.find((a) => a.id === ci.productId);
+        const basisPris = rp?.price ?? ad?.price;
+        const basisNavn = rp ? (locale === "en" ? rp.name_en : rp.name_da) : ad ? (locale === "en" ? ad.en.label : ad.da.label) : null;
+        if (basisPris === undefined || !basisNavn) return ci;
+        const pp = periodePrisFor(ci.productId);
+        const price = pp ? pp.pris : basisPris;
+        const name = pp ? periodeNavn(basisNavn, pp.periode, locale) : basisNavn;
+        if (price === ci.price && name === ci.name) return ci;
+        aendret = true;
+        return { ...ci, price, name };
+      });
+      return aendret ? next : prev;
+    });
+  }, [cartItems, pickupDag, returnDag, catalog.rentalProducts, catalog.addons, locale]);
   const [deliveryAddress, setDeliveryAddress] = useState("");
   /** Adresse-fejlen vises først når man forsøger at gå videre */
   const [showDeliveryError, setShowDeliveryError] = useState(false);
@@ -1287,10 +1323,13 @@ export default function BookingFlow({
   const visibleAddons = allowedAddonIds
     ? addons.filter((a) => allowedAddonIds.includes(a.id) || isServiceAddon(a))
     : addons;
+  const rentalPeriode = selectedRental ? periodePrisFor(selectedRental.id)?.periode : undefined;
   const rentalName = selectedRental
-    ? locale === "en"
-      ? selectedRental.name_en
-      : selectedRental.name_da
+    ? (rentalPeriode
+        ? periodeNavn(locale === "en" ? selectedRental.name_en : selectedRental.name_da, rentalPeriode, locale)
+        : locale === "en"
+          ? selectedRental.name_en
+          : selectedRental.name_da)
     : null;
   const hasLights = selectedAddons.includes("lys");
   const DELIVERY_IDS: readonly string[] = DELIVERY_ADDON_IDS;
@@ -1305,7 +1344,8 @@ export default function BookingFlow({
   // Bookes ét enkelt tilvalg uden højtaler (fx subwoofer eller røgmaskine),
   // vis produktets eget navn/billede i stedet for den generiske "Kun effekter"
   const soloAddons = addons.filter((a) => selectedAddons.includes(a.id) && !DELIVERY_IDS.includes(a.id));
-  const effectsLabel = soloAddons.length === 1 ? soloAddons[0].label : s.effectsOnlyLabel;
+  // Én vare som hovedlinje bærer sit periodemærke: "Røgmaskine (Halloween-pris)"
+  const effectsLabel = soloAddons.length === 1 ? addonLabel(soloAddons[0]) : s.effectsOnlyLabel;
   const effectsImage =
     soloAddons.length === 1 && soloAddons[0].image
       ? soloAddons[0].image
@@ -1342,10 +1382,11 @@ export default function BookingFlow({
   const summerLabel = t[locale].summer;
   const rentalDays = pickupDate && returnDate ? diffDays(pickupDate, returnDate) : 3;
   const multiplier = dayMultiplier[rentalDays] ?? 1;
+  // Hovedproduktet kan også have periodepris (low fog til Halloween)
   const speakerBasePrice = selectedSpeaker
-    ? Math.round(selectedSpeaker.price * multiplier)
+    ? Math.round((periodePrisFor(selectedSpeaker.id)?.pris ?? selectedSpeaker.price) * multiplier)
     : selectedRental
-      ? Math.round(selectedRental.price * multiplier)
+      ? Math.round((periodePrisFor(selectedRental.id)?.pris ?? selectedRental.price) * multiplier)
       : 0;
   const speakerPrice = summer ? applyDiscount(speakerBasePrice) : speakerBasePrice;
   const addonsBasePrice = addons
