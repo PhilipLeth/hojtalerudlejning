@@ -32,3 +32,5 @@ Originalt checkout i ~/gitprojects/hojtalerudlejning er urørt. Leverancen ligge
 ## Efterfølgende rettelse af firmaadresse
 
 Philip bad om at rette firmaadressen til Njalsgade 40. Rettelsen går igen i footer, vilkår, mailfod og fakturaer. Revision 2026102703 bevarer eventuelle nyere åbningstider fra administrationen. Den fulde kontrol er bestået: 1.310 tests, 7 sprunget over, ingen fejl. Produktionsbuild, sitemap og llms.txt er bestået.
+
+Firmaadressen er publiceret: https://75c48b95.speaker-rental.pages.dev. Offentligt API samt desktop- og mobilvisning er kontrolleret. Før/efter-billeder er føjet til vejledningen.

@@ -4450,7 +4450,7 @@
       "Firmaadresse Njalsgade 40, 2300 København, efter Philips efterfølgende go"
     ],
     "questions": [],
-    "publication": "Live på lejhojtaler.dk. Første produktionsdeploy: https://c072320a.speaker-rental.pages.dev. Endelig aflevering omfatter live-guide og opdateret llms.txt.",
+    "publication": "Live på lejhojtaler.dk, inklusive firmaadresse. Deployment: https://75c48b95.speaker-rental.pages.dev",
     "spreadsheet": "Slutopgørelse, ikke produktkatalog. Ingen pris- eller lagerændringer udledt af den.",
     "validation": "1316 tests: 1308 passed, 7 skipped; one existing inventory test timed out at 21 seconds under concurrent build. Rerun of full inventory file and confirmation-mail tests passed. Final production build, sitemap and llms.txt passed. Live browser verified: normal 595 kr, one other handover 795 kr, both other handovers 995 kr; address and times confirmed on DA/EN contact pages; mobile 390x844 checked. Six live screenshots.",
     "demo": "demo/2026-10-27-saadan-virker-det.html",
@@ -4458,6 +4458,6 @@
     "workspace": "Isolated branch frederik-opdateringer-2026-10-27 from 01b3492; original checkout untouched.",
     "sms_review": "Frederik kræver ny adresse og tider gennem booking og mails. Halloweenpriser 30. oktober–1. november (røg 395, low fog 695) var allerede implementeret. Egen Stripekonto nævnt separat 23. oktober; Frederik skal oprette den, og kontoskift indgår ikke i disse driftsændringer.",
     "company_address": "Philip bad efterfølgende om at rette firmaadressen til Njalsgade 40, 2300 København. Fælles adresse i footer, vilkår, mails og fakturaer. CVR, firmanavn og kontakter bevares. Ingen ubekræftet indgangsbeskrivelse tilføjet.",
-    "company_address_validation": "1310 tests passed, 7 skipped, no failures. Production build, sitemap and llms.txt passed. Ready for production deployment."
+    "company_address_validation": "1310 tests passed, 7 skipped, no failures. Production build, sitemap and llms.txt passed. Public API and live desktop/mobile views confirmed Njalsgade 40. Before/after screenshots in demo/."
   }
 }
