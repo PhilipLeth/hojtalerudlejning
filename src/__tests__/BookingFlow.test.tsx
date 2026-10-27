@@ -457,7 +457,7 @@ describe("BookingFlow - Flere enheder af samme produkt", () => {
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
       expect(last?.count).toBe(4);
-      expect(last?.total).toBe(4 * catalogPrice("party") + 200);
+      expect(last?.total).toBe(4 * catalogPrice("party") + 400);
     });
 
     // Alle 4 på lager er i kurven → + er slået fra, så der ikke bookes en 5.
@@ -468,7 +468,7 @@ describe("BookingFlow - Flere enheder af samme produkt", () => {
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
       expect(last?.count).toBe(3);
-      expect(last?.total).toBe(3 * catalogPrice("party") + 200);
+      expect(last?.total).toBe(3 * catalogPrice("party") + 400);
     });
   });
 

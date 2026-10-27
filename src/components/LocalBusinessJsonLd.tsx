@@ -20,7 +20,7 @@
  */
 
 import { useSiteSettings } from "@/lib/useSiteSettings";
-import { openingHoursSpecification } from "@/lib/openingHours";
+import { formatOneLine, openingHoursSpecification } from "@/lib/openingHours";
 import { socialEntries } from "@/lib/socials";
 
 /**
@@ -56,6 +56,7 @@ export default function LocalBusinessJsonLd({ extra = {} }: { extra?: Record<str
     hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pickupAddress)}`,
     logo: "https://lejhojtaler.dk/icon-512.png",
     openingHoursSpecification: openingHoursSpecification(hours),
+    description: `Afhentning og aflevering: ${formatOneLine(hours)}. Andre tider efter aftale.`,
     ...extra,
   };
 

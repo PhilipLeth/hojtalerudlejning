@@ -1,7 +1,7 @@
 import { DEFAULT_OPENING_HOURS, normalizeOpeningHours } from "./openingHours";
 import { DEFAULT_PICKUP_ADDRESS } from "./pickup";
 
-export const OPERATING_REVISION = 20261027;
+export const OPERATING_REVISION = 2026102702;
 
 /** Læs gamle KV-indstillinger med flytningens nye regler. Gemte ændringer efter
  * migrationen bevares. Ændrer ikke den juridiske firmaadresse eller kontaktdata. */

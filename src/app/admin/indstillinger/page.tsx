@@ -516,7 +516,7 @@ export default function IndstillingerPage() {
           <p style={{ margin: "0 0 12px", fontSize: "12px", color: "#888" }}>
             Slå en dag til for at åbne den. Man kan både hente og aflevere på alle åbne
             dage — formålet er kun til de tilfælde, hvor en dag undtagelsesvis kun er til
-            det ene. Står det tomt, skriver sitet bare tiderne.
+            det ene. Står det tomt, skriver sitet bare tiderne. Samme start- og sluttid betyder et fast aftaletidspunkt, fx kl. 17.
           </p>
 
           {WEEKDAYS.map((day) => (

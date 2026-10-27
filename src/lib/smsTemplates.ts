@@ -258,6 +258,8 @@ export interface SmsBooking {
   period?: unknown;
   pickup?: unknown;
   returnDate?: unknown;
+  pickupTime?: unknown;
+  returnTime?: unknown;
   total?: unknown;
   speaker?: unknown;
   speakerId?: unknown;
@@ -324,8 +326,8 @@ export function smsVarsFor(b: SmsBooking, opts: SmsVarOptions = {}): TemplateVar
     navn,
     produkter: bookingProductNames(b),
     periode: String(b.period ?? ""),
-    dato: formatDay(b.pickup),
-    returdato: formatDay(b.returnDate),
+    dato: [formatDay(b.pickup), typeof b.pickupTime === "string" ? b.pickupTime : ""].filter(Boolean).join(", "),
+    returdato: [formatDay(b.returnDate), typeof b.returnTime === "string" ? b.returnTime : ""].filter(Boolean).join(", "),
     sted: placeLine(b, opts.afhentningsadresse),
     telefon: opts.telefon ?? "31 13 28 52",
     total: Number.isFinite(total) && total > 0 ? `${total.toLocaleString("da-DK")} kr` : "",

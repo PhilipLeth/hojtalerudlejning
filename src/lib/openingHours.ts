@@ -88,8 +88,8 @@ const LUKKET: DayHours = { closed: true, open: "10:00", close: "16:00", purpose:
  * praksis, og den kan derfor oversættes, se otherLine(). Har han skrevet sin
  * egen tekst, vises den som skrevet, for den kan vi ikke oversætte.
  */
-export const DEFAULT_OTHER = "Andre tidspunkter efter aftale: 200 kr pr. booking. Minimumsordre ved afhentning: 500 kr.";
-export const DEFAULT_OTHER_EN = "Other times by arrangement: DKK 200 per booking. Minimum pickup order: DKK 500.";
+export const DEFAULT_OTHER = "Fast afhentning og aflevering mandag og torsdag kl. 17. Andre tider efter aftale: 200 kr pr. ind-/udlevering. Minimumsordre ved afhentning: 500 kr.";
+export const DEFAULT_OTHER_EN = "Pickup and return appointments Monday and Thursday at 5 PM. Other times by arrangement: DKK 200 per pickup or return. Minimum pickup order: DKK 500.";
 
 /**
  * Linjen på sidens sprog.
@@ -105,13 +105,13 @@ export function otherLine(hours: OpeningHours, locale: "da" | "en" = "da"): stri
   return text;
 }
 
-/** Frederiks åbningstider fra mail 26. oktober 2026. */
+/** Faste aftaletider, præciseret af Philip 27. oktober 2026. */
 export const DEFAULT_OPENING_HOURS: OpeningHours = {
   days: {
-    mon: { closed: false, open: "17:00", close: "18:00", purpose: "" },
+    mon: { closed: false, open: "17:00", close: "17:00", purpose: "" },
     tue: { ...LUKKET },
     wed: { ...LUKKET },
-    thu: { closed: false, open: "17:00", close: "18:00", purpose: "" },
+    thu: { closed: false, open: "17:00", close: "17:00", purpose: "" },
     fri: { ...LUKKET },
     sat: { ...LUKKET },
     sun: { ...LUKKET },
@@ -178,6 +178,7 @@ export function formatTime(time: string, locale: "da" | "en" = "da"): string {
 
 /** "14–18", en bindestreg man kan læse, ikke et minustegn */
 export function formatRange(day: DayHours, locale: "da" | "en" = "da"): string {
+  if (day.open === day.close) return locale === "en" ? formatTime(day.open, locale) : `kl. ${formatTime(day.open)}`;
   if (locale === "en") {
     // "2–6 PM" når begge ender er eftermiddag; ellers begge med suffiks
     const a = formatTime(day.open, "en");
@@ -536,7 +537,7 @@ function normalizeDay(input: unknown, fallback: DayHours): DayHours {
     closed: raw.closed === true,
     open,
     // Luk kan ikke ligge før åbn, så ville dagen være tom
-    close: minutesOf(close) > minutesOf(open) ? close : fallback.close,
+    close: minutesOf(close) >= minutesOf(open) ? close : fallback.close,
     purpose,
   };
 }
@@ -594,12 +595,12 @@ function normalizeException(input: unknown): HoursException | null {
   if (!isIsoDate(date)) return null;
   const open = typeof raw.open === "string" && isTime(raw.open) ? raw.open : "14:00";
   const closeRaw = typeof raw.close === "string" && isTime(raw.close) ? raw.close : "18:00";
-  const close = minutesOf(closeRaw) > minutesOf(open) ? closeRaw : "18:00";
+  const close = minutesOf(closeRaw) >= minutesOf(open) ? closeRaw : "18:00";
   return {
     date,
     closed: raw.closed === true,
     open,
-    close: minutesOf(close) > minutesOf(open) ? close : "23:00",
+    close: minutesOf(close) >= minutesOf(open) ? close : "23:00",
     purpose: DAY_PURPOSES.includes(raw.purpose as DayPurpose) ? (raw.purpose as DayPurpose) : "",
     note: typeof raw.note === "string" ? raw.note.trim().slice(0, 120) : "",
   };
@@ -627,7 +628,7 @@ export function validateOpeningHours(
     if (!isTime(open) || !isTime(close)) {
       return { ok: false, error: `${dayName(day)}: tiderne skal være HH:MM (fx 14:00)` };
     }
-    if (!closed && minutesOf(close) <= minutesOf(open)) {
+    if (!closed && minutesOf(close) < minutesOf(open)) {
       return { ok: false, error: `${dayName(day)}: lukketid skal være efter åbningstid` };
     }
     if (!DAY_PURPOSES.includes((value.purpose ?? "") as DayPurpose)) {
@@ -656,7 +657,7 @@ export function validateOpeningHours(
       if (!isTime(open) || !isTime(close)) {
         return { ok: false, error: `${formatShortDate(date)}: tiderne skal være HH:MM (fx 14:00)` };
       }
-      if (!closed && minutesOf(close) <= minutesOf(open)) {
+      if (!closed && minutesOf(close) < minutesOf(open)) {
         return { ok: false, error: `${formatShortDate(date)}: lukketid skal være efter åbningstid` };
       }
       if (!DAY_PURPOSES.includes((item?.purpose ?? "") as DayPurpose)) {
@@ -717,7 +718,8 @@ const SCHEMA_DAY: Record<Weekday, string> = {
  * som en note i /admin/indstillinger.
  */
 export function openingHoursSpecification(hours: OpeningHours = DEFAULT_OPENING_HOURS) {
-  return openDays(hours).map((d) => ({
+  // Et enkelt aftaletidspunkt er ikke et åbningstidsinterval til Google.
+  return openDays(hours).filter(d => d.open !== d.close).map((d) => ({
     "@type": "OpeningHoursSpecification",
     dayOfWeek: SCHEMA_DAY[d.day],
     opens: d.open,

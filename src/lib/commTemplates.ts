@@ -38,7 +38,7 @@ export const SHORTCODES: Shortcode[] = [
   { key: "anmeldelseslink", label: "Knap til Google-anmeldelse", example: "[knap: Anmeld os på Google]" },
   { key: "udsalg", label: "Weekendudsalget — tomt når det er slukket", example: "PS: Vi har weekendudsalg …" },
   // Til bekræftelsen: hvor, hvornår og hvad der skal betales
-  { key: "sted", label: "Levering eller afhentning, med adresse", example: "Hentes hos os: Halvtolv 9, 1. th, 1436 København K" },
+  { key: "sted", label: "Levering eller afhentning, med adresse", example: "Hentes hos os: Njalsgade 40, 2300 København" },
   { key: "telefon", label: "Vores telefonnummer", example: "31 13 28 52" },
   { key: "total", label: "Ordrens pris", example: "1.995 kr" },
   { key: "betaling", label: "Hvad der mangler at blive betalt, og hvordan", example: "Betales ved afhentning — MobilePay" },

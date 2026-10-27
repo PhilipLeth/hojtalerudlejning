@@ -12,12 +12,12 @@ export default function HandoverPicker({ hours, date, value, onChange, label, lo
     <p className="text-sm text-white/60">{formatDateLine(hours, date, locale)}</p>
     {!day.closed && <label className="flex gap-3 items-center text-sm cursor-pointer">
       <input type="radio" name={`handover-${label}`} checked={!outside} onChange={() => onChange("unknown")} className="accent-[#ffd600]" />
-      {en ? "During opening hours" : "I åbningstiden"} · {formatRange(day, locale)} · {en ? "no fee" : "uden gebyr"}
+      {en ? "Scheduled appointment" : "Fast aftaletid"} · {formatRange(day, locale)} · {en ? "no fee" : "uden gebyr"}
     </label>}
     <label className="flex gap-3 items-center text-sm cursor-pointer">
       <input type="radio" name={`handover-${label}`} checked={outside} onChange={() => onChange("outside")} className="accent-[#ffd600]" />
-      {en ? "Outside opening hours by arrangement" : "Uden for åbningstid efter aftale"}
+      {en ? "Another time by arrangement (+DKK 200)" : "Andet tidspunkt efter aftale (+200 kr)"}
     </label>
-    {outside && <p className="text-sm text-amber-900">{en ? "DKK 200 per booking, even if both pickup and return are outside opening hours. Write your preferred time in the comment; we will confirm it with you." : "200 kr pr. booking, også når både afhentning og aflevering er uden for åbningstid. Skriv dit ønskede tidspunkt i kommentaren, så bekræfter vi aftalen."}</p>}
+    {outside && <p className="text-sm text-amber-900">{en ? "DKK 200 for this pickup or return. If both require other times, the total fee is DKK 400. Write your preferred time in the comment; we will confirm it with you." : "200 kr for denne ind- eller udlevering. Skal begge ske på andre tidspunkter, bliver gebyret i alt 400 kr. Skriv dit ønskede tidspunkt i kommentaren, så bekræfter vi aftalen."}</p>}
   </fieldset>;
 }

@@ -50,7 +50,7 @@ export default function Page() {
       faq={[
         { q: "How many guests can the party package 0-30 handle?", a: "Up to about 30 guests in an ordinary venue or a garden. If you are more than 30, we recommend the party package 30-50 with 12\" speakers." },
         { q: "Can I get a microphone for the speeches?", a: "Yes. A wireless microphone is " + prisDkk("mikrofon") + " and can be added directly in the booking. It connects to the speakers in under a minute." },
-        { q: "When do I collect and return?", a: "The standard is collection on Thursday and return on Monday, the same price whether you use it for one day or five. You choose the dates in the booking, with collection from 17:00 to 18:00 on Mondays and Thursdays. Other times are by arrangement for a fee." },
+        { q: "When do I collect and return?", a: "The standard is collection on Thursday and return on Monday, the same price whether you use it for one day or five. You choose the dates in the booking, with collection at 17:00 on Mondays and Thursdays. Other times are by arrangement for a fee." },
         { q: "What if the party is outdoors?", a: "The speakers are fine outdoors in dry weather. If there is no power in the garden, we can recommend a battery-powered Soundboks instead." },
       ]}
       related={[

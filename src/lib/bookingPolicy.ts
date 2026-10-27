@@ -2,7 +2,7 @@ import { formatRange, hoursForDate, type OpeningHours } from "./openingHours";
 import { bundleIncludesDelivery, deliveryDirections, rentalProducts } from "./products";
 import { DJ_ID } from "./dj";
 
-/** Frederiks mail 26/10. Gebyret opkræves én gang pr. ordre, uden rabat. */
+/** Frederiks mail 26/10, præciseret af Philip 27/10: pr. ind-/udlevering. */
 export const PICKUP_MINIMUM = 500;
 export const OUTSIDE_HOURS_FEE = 200;
 
@@ -27,7 +27,9 @@ export function outsideHours(hours: OpeningHours, day: string, slot?: string): b
 
 export function handoverFee(hours: OpeningHours, pickup: string, returned: string, ids: string[], pickupSlot?: string, returnSlot?: string): number {
   const delivery = orderDelivery(ids);
-  return ((!delivery.out && outsideHours(hours, pickup, pickupSlot)) || (!delivery.back && outsideHours(hours, returned, returnSlot))) ? OUTSIDE_HOURS_FEE : 0;
+  const pickupFee = !delivery.out && outsideHours(hours, pickup, pickupSlot) ? OUTSIDE_HOURS_FEE : 0;
+  const returnFee = !delivery.back && outsideHours(hours, returned, returnSlot) ? OUTSIDE_HOURS_FEE : 0;
+  return pickupFee + returnFee;
 }
 
 export function minimumOrderError(amount: number, delivered: boolean, locale: "da" | "en" = "da"): string | null {
@@ -44,7 +46,7 @@ export function handoverLabel(hours: OpeningHours, day: string, slot?: string, l
   return formatRange(hoursForDate(hours, day), locale);
 }
 
-export const outsideFeeLabel = (locale: "da" | "en" = "da") => locale === "en" ? "Out-of-hours appointment (per booking)" : "Aftale uden for åbningstid (pr. booking)";
+export const outsideFeeLabel = (locale: "da" | "en" = "da") => locale === "en" ? "Other pickup/return times (DKK 200 each)" : "Andre ind-/udleveringstider (200 kr pr. gang)";
 
 /** Nye ordrer genberegnes ved vareændringer. Ældre ordrer får ikke et nyt gebyr. */
 export function editedHandoverFee(booking: { outsideHoursFee?: number; pickupDay?: string; returnDay?: string; pickupSlot?: string; returnSlot?: string }, hours: OpeningHours, ids: string[]): number {

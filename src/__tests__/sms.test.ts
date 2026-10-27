@@ -303,6 +303,12 @@ describe("skabeloner", () => {
     expect(vars.total).toBe("1.995 kr");
   });
 
+  it("tager den gemte aftaletid med i begge påmindelser", () => {
+    const vars = smsVarsFor({ ...booking, pickupTime: "kl. 17", returnTime: "kl. 17" });
+    expect(vars.dato).toMatch(/21. aug.*kl. 17$/);
+    expect(vars.returdato).toMatch(/24. aug.*kl. 17$/);
+  });
+
   it("fjerner ukendte shortcodes i stedet for at sende dem til kunden", () => {
     expect(renderSms("Hej {{fornvan}}{{fornavn}}!", { fornavn: "Agnes" })).toBe("Hej Agnes!");
   });

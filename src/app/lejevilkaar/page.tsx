@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const sections = [
   {
     title: "1. Lejeperiode og priser",
-    content: `Prisen for udstyr er den samme for 1–5 dages leje. Du kan for eksempel hente torsdag kl. 17–18 og aflevere mandag kl. 17–18. Aktuelle priser fremgår af bookingformularen. Særlige ydelser, herunder DJ og lydmand, prissættes efter de valgte timer.`,
+    content: `Prisen for udstyr er den samme for 1–5 dages leje. Du kan for eksempel hente torsdag kl. 17 og aflevere mandag kl. 17. Aktuelle priser fremgår af bookingformularen. Særlige ydelser, herunder DJ og lydmand, prissættes efter de valgte timer.`,
   },
   {
     title: "2. Depositum og kaution",
@@ -60,7 +60,7 @@ Udstyret leveres med alle nødvendige kabler.`,
   },
   {
     title: "9. Betaling",
-    content: `Betaling sker online med kort ved booking (via Stripe) eller ved afhentning efter aftale. Prisen er den totalpris, der fremgår af bookingbekræftelsen. Minimumsordre ved afhentning er 500 kr efter rabat, eksklusive gebyr. Ordrer med levering er undtaget. Afhentning eller aflevering uden for åbningstiden sker efter aftale og koster 200 kr pr. booking. Gebyret opkræves én gang, også hvis begge møder ligger uden for åbningstiden, og der gives ikke rabat på gebyret.`,
+    content: `Betaling sker online med kort ved booking (via Stripe) eller ved afhentning efter aftale. Prisen er den totalpris, der fremgår af bookingbekræftelsen. Minimumsordre ved afhentning er 500 kr efter rabat, eksklusive gebyr. Ordrer med levering er undtaget. Afhentning og aflevering sker mandag eller torsdag kl. 17. Andre tidspunkter kræver aftale og koster 200 kr pr. ind- eller udlevering. Én overdragelse på et andet tidspunkt koster 200 kr; to koster 400 kr. Der gives ikke rabat på gebyret.`,
   },
   {
     title: "10. Persondatapolitik",

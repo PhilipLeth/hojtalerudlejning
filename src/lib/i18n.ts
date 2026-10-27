@@ -33,7 +33,7 @@ export const t = {
       deliveryPlaceholder: "Leveringsadresse i København",
       deliveryTitle: "Levering og afhentning",
       deliveryDesc: "Vi kører i hele København. Én vej 495 kr., begge veje 795 kr.",
-      deliveryFree: "I åbningstiden: 0 kr",
+      deliveryFree: "Fast aftaletid: 0 kr",
       deliveryAddressLabel: "Hvor skal vi køre til?",
       deliveryAddressRequired: "Skriv adressen, så vi ved hvor vi skal køre hen",
       deliveryIncludedLabel: "Levering, opsætning og afhentning er med",
@@ -169,7 +169,7 @@ export const t = {
         },
         {
           title: "2. Hent din højtaler",
-          text: "Hent hos os på ADRESSE. Højtalere kommer med alle kabler, iPhone, USB-C og AUX. Mandag og torsdag 17–18 eller efter aftale mod gebyr.",
+          text: "Hent hos os på ADRESSE. Højtalere kommer med alle kabler, iPhone, USB-C og AUX. Mandag og torsdag kl. 17 eller efter aftale mod gebyr.",
         },
         {
           title: "3. Fest!",
@@ -230,7 +230,7 @@ export const t = {
       deliveryPlaceholder: "Delivery address in Copenhagen",
       deliveryTitle: "Delivery and collection",
       deliveryDesc: "We drive anywhere in Copenhagen. One way 495 DKK, both ways 795 DKK.",
-      deliveryFree: "During opening hours: free",
+      deliveryFree: "Scheduled appointment: free",
       deliveryAddressLabel: "Where should we drive to?",
       deliveryAddressRequired: "Add the address so we know where to drive",
       deliveryIncludedLabel: "Delivery, setup and collection included",
@@ -365,7 +365,7 @@ export const t = {
         },
         {
           title: "2. Pick up your speaker",
-          text: "Pick up at ADRESSE. Speakers come with all cables, iPhone, USB-C and AUX. Monday and Thursday 5–6 PM, or by arrangement for a fee.",
+          text: "Pick up at ADRESSE. Speakers come with all cables, iPhone, USB-C and AUX. Monday and Thursday at 5 PM, or by arrangement for a fee.",
         },
         {
           title: "3. Party!",

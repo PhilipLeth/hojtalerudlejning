@@ -4437,26 +4437,26 @@
   },
   "frederik_2026_10_27": {
     "passes": true,
-    "source": "Gmail 1a17786a4c992240, mails 26.–27. oktober 2026",
+    "source": "Gmail 1a17786a4c992240, 26.–27. oktober; Frederiks sms 22.–27. oktober; Philips præciseringer og live-go 27. oktober 2026",
     "scope": [
-      "Afhentning Njalsgade 40, 2300 København, seneste men foreløbige adresse",
-      "Mandag og torsdag 17–18; øvrige tider efter aftale",
+      "Afhentning Njalsgade 40, 2300 København (seneste adresse i Frederiks mail)",
+      "Fast afhentning og aflevering mandag og torsdag kl. 17; øvrige tider efter aftale",
       "Minimumsordre 500 kr efter rabat ved selvafhentning, gebyr tæller ikke med; kørsel undtaget",
-      "200 kr uden for åbningstid, foreløbigt én gang pr. booking, uden rabat",
+      "200 kr pr. ind- eller udlevering på andet tidspunkt: 0 / 200 / 400 kr, uden rabat",
       "Samme regler i dansk/engelsk UI, booking og Stripe",
       "Gamle KV-indstillinger migreres; efterfølgende adminændringer bevares",
-      "Test, build og desktop/mobil-demo før publicering"
+      "Test, build og desktop/mobil-demo før publicering",
+      "Gemte aftaletider følger med i bekræftelse og sms-påmindelser"
     ],
     "questions": [
-      "Bekræft Njalsgade 40 og indgang; gælder flytningen også CVR-adressen?",
-      "Er 200 kr pr. booking eller pr. afhentning/aflevering?",
-      "Skal minimum være efter rabat, og er returafhentning alene nok til undtagelsen?"
+      "Bekræft præcis indgang ved Njalsgade 40; ændret CVR-adresse er ikke bekræftet."
     ],
-    "publication": "Afventer Philips go jf. globale instruktioner. Ingen kundekontakt.",
+    "publication": "Godkendt af Philip; klar til direkte produktionsdeploy til speaker-rental/main.",
     "spreadsheet": "Slutopgørelse, ikke produktkatalog. Ingen pris- eller lagerændringer udledt af den.",
-    "validation": "1305 tests passed; 7 skipped. Production build, sitemap and llms.txt passed. Desktop/mobile browser review, 8 screenshots in demo/. No external messages or transactions.",
+    "validation": "1316 tests: 1308 passed, 7 skipped; one existing inventory test timed out at 21 seconds under concurrent build. Rerun of full inventory file and confirmation-mail tests passed. Final production build in progress. Final production build, sitemap and llms.txt passed.",
     "demo": "demo/2026-10-27-saadan-virker-det.html",
     "admin": "Fee retained and recalculated in order edits, shown in order breakdown and standard invoice.",
-    "workspace": "Isolated branch frederik-opdateringer-2026-10-27 from 01b3492; original checkout untouched."
+    "workspace": "Isolated branch frederik-opdateringer-2026-10-27 from 01b3492; original checkout untouched.",
+    "sms_review": "Frederik kræver ny adresse og tider gennem booking og mails. Halloweenpriser 30. oktober–1. november (røg 395, low fog 695) var allerede implementeret. Egen Stripekonto nævnt separat 23. oktober; Frederik skal oprette den, og kontoskift indgår ikke i disse driftsændringer."
   }
 }

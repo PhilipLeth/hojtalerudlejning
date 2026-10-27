@@ -1,3 +1,4 @@
+import { OUTSIDE_HOURS_FEE } from "@/lib/bookingPolicy";
 import { DJ_DAY_RATE, DJ_NIGHT_RATE, DJ_DELIVERY_KR } from "@/lib/dj";
 /**
  * Priser i sidetekst må ikke sige noget andet end kataloget.
@@ -122,6 +123,8 @@ describe("Priser i sidetekst", () => {
 
   it("nævner ingen beløb, der ikke findes i kataloget", () => {
     const kendte = katalogBeloeb();
+    kendte.add(OUTSIDE_HOURS_FEE);
+    kendte.add(2 * OUTSIDE_HOURS_FEE); // To særskilte ind-/udleveringer.
     const fund: string[] = [];
 
     for (const f of sidefiler()) {

@@ -208,7 +208,7 @@ def facts(pages: list[Page]) -> list[str]:
         "- **Lejeperiode:** 1-5 dage til samme pris. Afhentning torsdag og aflevering mandag kan ske i åbningstiden.",
         "- **Betaling:** online med kort eller ved afhentning.",
         "- **Minimumsordre:** 500 kr efter rabat ved selvafhentning; ordrer med levering er undtaget.",
-        "- **Andre tidspunkter:** efter aftale, 200 kr pr. booking uden rabat. Gebyret tæller ikke med i minimumsordren.",
+        "- **Andre tidspunkter:** efter aftale, 200 kr pr. ind- eller udlevering uden rabat; to særlige aftaler koster 400 kr. Gebyret tæller ikke med i minimumsordren.",
     ]
 
     hours = biz.get("openingHoursSpecification") or []
@@ -220,6 +220,8 @@ def facts(pages: list[Page]) -> list[str]:
             days = [DAYS_DA.get(d, d) for d in days]
             spans.append(f"{', '.join(days)} {h.get('opens')}-{h.get('closes')}")
         lines.append("- **Åbningstider:** " + "; ".join(spans))
+    elif biz.get("description"):
+        lines.append("- **Afhentningstider:** " + biz["description"])
     return lines
 
 

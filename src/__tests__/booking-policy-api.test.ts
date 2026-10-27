@@ -51,11 +51,29 @@ describe("Booking og betaling bruger samme regler", () => {
     expect(saved.total).toBe(795);
     expect(saved.outsideHoursFee).toBe(200);
     expect(saved.pickupTime).toContain("tidspunkt aftales");
-    expect((fetch as any).mock.calls.some(([, init]: any[]) => init?.body?.includes("Aftale uden for åbningstid"))).toBe(true);
+    expect((fetch as any).mock.calls.some(([, init]: any[]) => init?.body?.includes("Andre ind-/udleveringstider"))).toBe(true);
     const payment = await pay({ items: [{ id: "festival" }], bookingId: result.bookingId, pickupDay: "2026-10-30", returnDay: "2026-11-02" }, store);
     expect(payment.status).toBe(200);
     expect((await payment.json() as any).amount).toBe(79500);
     expect(stripe.create.mock.calls[0][0].line_items.at(-1).price_data.unit_amount).toBe(20000);
+  });
+  it.each([
+    ["2026-10-29", "2026-11-02", 0],
+    ["2026-10-30", "2026-11-01", 400],
+  ])("gemmer og opkræver gebyr %s til %s: %s kr", async (pickupDay, returnDay, fee) => {
+    const { response, store } = await bookOrder({ ...order, pickupDay, returnDay });
+    expect(response.status).toBe(200);
+    const { bookingId } = await response.json() as any;
+    const saved = JSON.parse(store.data.get(bookingId)!);
+    expect(saved.outsideHoursFee).toBe(fee);
+    expect(saved.total).toBe(595 + fee);
+    if (fee === 0) {
+      expect(saved.pickupTime).toBe("kl. 17");
+      expect(saved.returnTime).toBe("kl. 17");
+    }
+    const payment = await pay({ items: [{ id: "festival" }], bookingId, pickupDay, returnDay }, store);
+    expect(payment.status).toBe(200);
+    expect((await payment.json() as any).amount).toBe((595 + fee) * 100);
   });
   it("afviser at fjerne et gebyr efter bookingen er gemt", async () => {
     const { response, store } = await bookOrder({ ...order, pickupDay: "2026-10-30" });

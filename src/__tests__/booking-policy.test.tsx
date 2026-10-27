@@ -17,19 +17,19 @@ describe("Frederiks bookingregler 26. oktober", () => {
   });
   it("genberegner gebyr ved ændret kørsel og efteropkræver ikke gamle bookinger", () => {
     const booking = { outsideHoursFee: 200, pickupDay: "2026-10-30", returnDay: "2026-11-01" };
-    expect(editedHandoverFee(booking, hours, ["festival"])).toBe(200);
+    expect(editedHandoverFee(booking, hours, ["festival"])).toBe(400);
     expect(editedHandoverFee(booking, hours, ["festival", "levering_begge"])).toBe(0);
     expect(editedHandoverFee({ ...booking, outsideHoursFee: undefined }, hours, ["festival"])).toBe(0);
   });
   it.each([0, 395, 499.99])("afviser afhentning for %s kr", amount => expect(minimumOrderError(amount, false)).toContain("500 kr"));
   it.each([500, 595])("accepterer afhentning for %s kr", amount => expect(minimumOrderError(amount, false)).toBeNull());
   it("undtager levering fra minimum", () => expect(minimumOrderError(245, true)).toBeNull());
-  it("har præcis mandag og torsdag 17–18", () => {
-    expect(Object.entries(hours.days).filter(([, d]) => !d.closed).map(([day, d]) => [day, d.open, d.close])).toEqual([["mon", "17:00", "18:00"], ["thu", "17:00", "18:00"]]);
+  it("har præcis mandag og torsdag kl. 17", () => {
+    expect(Object.entries(hours.days).filter(([, d]) => !d.closed).map(([day, d]) => [day, d.open, d.close])).toEqual([["mon", "17:00", "17:00"], ["thu", "17:00", "17:00"]]);
   });
   it("almindelig torsdag til mandag har intet gebyr", () => expect(handoverFee(hours, "2026-10-29", "2026-11-02", ["festival"])).toBe(0));
   it("en lukkedag kan ikke skjule gebyret ved at undlade tidsvalg", () => expect(handoverFee(hours, "2026-10-30", "2026-11-02", ["festival"])).toBe(200));
-  it("opkræver kun 200 når begge møder er uden for åbningstid", () => expect(handoverFee(hours, "2026-10-30", "2026-11-01", ["festival"])).toBe(200));
+  it("opkræver 400 når begge møder kræver andre tider", () => expect(handoverFee(hours, "2026-10-30", "2026-11-01", ["festival"])).toBe(400));
   it("et aftalt møde på en åbningsdag giver gebyr", () => expect(handoverFee(hours, "2026-10-29", "2026-11-02", ["festival"], "outside")).toBe(200));
   it("levering begge veje fjerner hele gebyret", () => expect(handoverFee(hours, "2026-10-30", "2026-11-01", ["rog", "levering_begge"], "outside", "outside")).toBe(0));
   it("envejslevering fjerner kun det relevante møde", () => {
@@ -74,14 +74,14 @@ describe("Tidsvalg i kundens booking", () => {
   it("viser gratis åbningstid og et udtrykkeligt tilvalg", () => {
     const change = vi.fn();
     render(<HandoverPicker hours={hours} date="2026-10-29" value="unknown" onChange={change} label="Afhentning" locale="da" />);
-    expect(screen.getByLabelText(/I åbningstiden/)).toBeChecked();
-    fireEvent.click(screen.getByLabelText(/Uden for åbningstid/));
+    expect(screen.getByLabelText(/Fast aftaletid/)).toBeChecked();
+    fireEvent.click(screen.getByLabelText(/Andet tidspunkt efter aftale/));
     expect(change).toHaveBeenCalledWith("outside");
   });
   it("viser aftale og gebyr på engelsk på en lukkedag", () => {
     render(<HandoverPicker hours={hours} date="2026-10-30" value="unknown" onChange={() => {}} label="Pickup" locale="en" />);
-    expect(screen.getByLabelText(/Outside opening hours/)).toBeChecked();
-    expect(screen.getByText(/DKK 200 per booking/)).toBeInTheDocument();
-    expect(screen.queryByText(/During opening hours/)).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/Another time by arrangement/)).toBeChecked();
+    expect(screen.getByText(/DKK 200 for this pickup or return/)).toBeInTheDocument();
+    expect(screen.queryByText(/Scheduled appointment/)).not.toBeInTheDocument();
   });
 });

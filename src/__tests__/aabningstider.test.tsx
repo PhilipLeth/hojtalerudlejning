@@ -54,13 +54,12 @@ function hoursWith(days: Partial<Record<string, { open: string; close: string; p
 }
 
 describe("Standardtiderne", () => {
-  it("er åbent mandag og torsdag 17–18", () => {
-    // Frederik satte butikstiderne 22. september 2026. Før stod der to
-    // eftermiddage om ugen, og det var ikke længere sandt.
+  it("er åbent mandag og torsdag kl. 17", () => {
+    // Faste aftaler kl. 17, bekræftet af Philip 27. oktober 2026.
     const dage = openDays(DEFAULT_OPENING_HOURS);
     expect(dage.map((d) => d.day)).toEqual(["mon", "thu"]);
-    expect(DEFAULT_OPENING_HOURS.days.thu).toMatchObject({ open: "17:00", close: "18:00" });
-    expect(DEFAULT_OPENING_HOURS.days.mon).toMatchObject({ open: "17:00", close: "18:00" });
+    expect(DEFAULT_OPENING_HOURS.days.thu).toMatchObject({ open: "17:00", close: "17:00" });
+    expect(DEFAULT_OPENING_HOURS.days.mon).toMatchObject({ open: "17:00", close: "17:00" });
     expect(DEFAULT_OPENING_HOURS.days.sat.closed).toBe(true);
     expect(DEFAULT_OPENING_HOURS.days.sun.closed).toBe(true);
   });
@@ -103,13 +102,13 @@ describe("Visning", () => {
 
   it("laver footerlinjen af alle åbne dage, mandag først", () => {
     expect(formatOneLine(DEFAULT_OPENING_HOURS)).toBe(
-      "Mandag 17–18 · Torsdag 17–18",
+      "Mandag kl. 17 · Torsdag kl. 17",
     );
   });
 
   it("laver en sætning til brødtekst", () => {
     expect(formatSentence(DEFAULT_OPENING_HOURS)).toBe(
-      "Åbent mandag 17–18 og torsdag 17–18.",
+      "Åbent mandag kl. 17 og torsdag kl. 17.",
     );
     expect(formatSentence(hoursWith({ fri: { open: "14:00", close: "18:00" } }), "en")).toBe(
       "Open Friday 2–6 PM.",
@@ -184,11 +183,11 @@ describe("Validering ved gemning", () => {
 });
 
 describe("Strukturerede data til Google", () => {
-  it("tager kun de åbne dage med", () => {
-    const spec = openingHoursSpecification(DEFAULT_OPENING_HOURS);
-    expect(spec).toEqual([
+  it("publicerer faste aftaletider som beskrivelse, ikke tomme åbningsintervaller", () => {
+    expect(openingHoursSpecification(DEFAULT_OPENING_HOURS)).toEqual([]);
+    const interval = normalizeOpeningHours({ days: { mon: { closed: false, open: "17:00", close: "18:00" } } });
+    expect(openingHoursSpecification(interval)).toEqual([
       { "@type": "OpeningHoursSpecification", dayOfWeek: "Monday", opens: "17:00", closes: "18:00" },
-      { "@type": "OpeningHoursSpecification", dayOfWeek: "Thursday", opens: "17:00", closes: "18:00" },
     ]);
   });
 
@@ -316,8 +315,8 @@ describe("Særlige datoer", () => {
   });
 
   it("holder JSON-LD fri af enkeltdatoer — de er undtagelser, ikke åbningstider", () => {
-    // Seks åbne ugedage — de to undtagelsesdatoer tæller ikke med
-    expect(openingHoursSpecification(nytår)).toHaveLength(openDays(DEFAULT_OPENING_HOURS).length);
+    // Enkeltdatoer bliver ikke normale ugentlige åbningstider.
+    expect(openingHoursSpecification(nytår)).toEqual(openingHoursSpecification(DEFAULT_OPENING_HOURS));
   });
 });
 
@@ -399,7 +398,7 @@ describe("Footeren", () => {
   it("viser engelske dagnavne på den engelske side", async () => {
     mockSettings();
     render(<Footer locale="en" />);
-    await waitFor(() => expect(screen.getByText(/Thursday 5–6 PM/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/Thursday 5 PM/)).toBeInTheDocument());
     expect(screen.getByText("Opening hours:")).toBeInTheDocument();
   });
 
@@ -579,7 +578,7 @@ describe("Checkout", () => {
     render(<BookingFlow />);
 
     await waitFor(() => expect(screen.getByText(/Åbningstider:/)).toBeInTheDocument());
-    expect(screen.getByText(/Torsdag 17–18/)).toBeInTheDocument();
+    expect(screen.getByText(/Torsdag kl. 17/)).toBeInTheDocument();
     // Den særlige dato står med sin note, så kunden ved at datoen kan vælges
     const kort = new Date(`${dato}T12:00:00Z`).toLocaleDateString("da-DK", { day: "numeric", month: "short", timeZone: "UTC" }).replace(/\.$/, "");
     expect(screen.getByText(new RegExp(`${kort} 14–18 \\(afhentning\\) · Nytår`))).toBeInTheDocument();
@@ -672,7 +671,7 @@ describe("/admin/indstillinger", () => {
     }
     // Kun de åbne dage har tidsfelter — søndag er lukket
     expect(screen.getByLabelText("Torsdag åbner")).toHaveValue("17:00");
-    expect(screen.getByLabelText("Mandag lukker")).toHaveValue("18:00");
+    expect(screen.getByLabelText("Mandag lukker")).toHaveValue("17:00");
     expect(screen.getByLabelText("Mandag åbner")).toHaveValue("17:00");
     expect(screen.queryByLabelText("Søndag åbner")).not.toBeInTheDocument();
   });
@@ -682,7 +681,7 @@ describe("/admin/indstillinger", () => {
     renderAdmin(<IndstillingerPage />);
     await waitFor(() => expect(screen.getByText("Sådan står det i footeren")).toBeInTheDocument());
     expect(
-      screen.getByText("Mandag 17–18 · Torsdag 17–18"),
+      screen.getByText("Mandag kl. 17 · Torsdag kl. 17"),
     ).toBeInTheDocument();
   });
 

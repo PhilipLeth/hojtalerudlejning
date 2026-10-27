@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const sections = [
   {
     title: "1. Rental period and prices",
-    content: `Equipment rental costs the same for 1–5 days. For example, collect on Thursday from 17:00 to 18:00 and return on Monday from 17:00 to 18:00. Current prices are shown in the booking form. Services such as a DJ or sound technician are priced by the selected hours.`,
+    content: `Equipment rental costs the same for 1–5 days. For example, collect on Thursday at 17:00 and return on Monday at 17:00. Current prices are shown in the booking form. Services such as a DJ or sound technician are priced by the selected hours.`,
   },
   {
     title: "2. Deposit",
@@ -60,7 +60,7 @@ Equipment is delivered with all necessary cables.`,
   },
   {
     title: "9. Payment",
-    content: `Payment is made online by card at booking (via Stripe) or at pickup by arrangement. The price is the total price shown in the booking confirmation. Pickup orders require at least DKK 500 after discounts, excluding the appointment fee. Orders with delivery are exempt. Pickup or return outside opening hours is by arrangement and costs DKK 200 per booking. The fee is charged once, even if both appointments are outside opening hours, and is not discounted.`,
+    content: `Payment is made online by card at booking (via Stripe) or at pickup by arrangement. The price is the total price shown in the booking confirmation. Pickup orders require at least DKK 500 after discounts, excluding the appointment fee. Orders with delivery are exempt. Pickup and return appointments are Monday or Thursday at 17:00. Other times are by arrangement and cost DKK 200 per pickup or return. One appointment at another time costs DKK 200; two cost DKK 400. This fee is not discounted.`,
   },
   {
     title: "10. Privacy policy",

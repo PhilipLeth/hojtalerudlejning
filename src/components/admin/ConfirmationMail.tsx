@@ -28,7 +28,7 @@ const PREVIEW = {
   navn: "Agnes Dahle Stæhr",
   produkter: "Mellem højtalerpakke, Lysbar",
   periode: "fre 21. aug → man 24. aug",
-  sted: "Du henter hos os: Halvtolv 9, 1. th, 1436 København K",
+  sted: "Du henter hos os: Njalsgade 40, 2300 København",
   betaling: "I alt 1.995 kr — betales ved afhentning med MobilePay.",
   total: 1995,
   telefon: "31 13 28 52",

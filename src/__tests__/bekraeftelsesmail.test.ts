@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { DEFAULT_SETTINGS, buildConfirmationMail, parseCommSettings } from "@/lib/commTemplates";
-import { paymentLine, placeLine } from "../../functions/api/_lib/confirmMail";
+import { paymentLine, placeLine, sendConfirmationMail } from "../../functions/api/_lib/confirmMail";
 import { DEFAULT_SITE_SETTINGS } from "../../functions/api/_lib/siteSettings";
 
 const site = DEFAULT_SITE_SETTINGS;
@@ -83,5 +83,23 @@ describe("bekræftelsesmailen", () => {
     expect(tom.confirmation.subject).toBe(DEFAULT_SETTINGS.confirmation.subject);
     expect(tom.confirmationAutoSend).toBe(true);
     expect(parseCommSettings({ confirmationAutoSend: false }).confirmationAutoSend).toBe(false);
+  });
+});
+
+
+describe("afsendelsens aftaleoplysninger", () => {
+  it("bevarer gemte tider og forklarer gebyret i den færdige mail", async () => {
+    const send = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("{}", { status: 200 }));
+    try {
+      const result = await sendConfirmationMail({ BOOKINGS: { get: async () => null } as any, RESEND_API_KEY: "test" }, {
+        name: "Demo", email: "demo@example.com", pickupTime: "kl. 17", returnTime: "Uden for åbningstid, tidspunkt aftales", outsideHoursFee: 200, total: 795,
+      });
+      expect(result.ok).toBe(true);
+      const html = JSON.parse(String(send.mock.calls[0][1]?.body)).html;
+      expect(html).toContain("Njalsgade 40");
+      expect(html).toContain("Afhentning: kl. 17");
+      expect(html).toContain("Aflevering: Uden for åbningstid, tidspunkt aftales");
+      expect(html).toContain("200 kr pr. gang, med i totalen");
+    } finally { send.mockRestore(); }
   });
 });

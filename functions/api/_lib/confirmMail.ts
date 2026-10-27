@@ -128,7 +128,12 @@ export async function sendConfirmationMail(
     navn,
     produkter: productNames(booking),
     periode: String(booking.period || ""),
-    sted: placeLine(booking, site),
+    sted: [
+      placeLine(booking, site),
+      booking.pickupTime ? `Afhentning: ${booking.pickupTime}` : "",
+      booking.returnTime ? `Aflevering: ${booking.returnTime}` : "",
+      Number(booking.outsideHoursFee) > 0 ? `Andre ind-/udleveringstider: ${booking.outsideHoursFee} kr (200 kr pr. gang, med i totalen)` : "",
+    ].filter(Boolean).join("\n"),
     betaling: paymentLine(booking),
     total: Number(booking.total) || 0,
     telefon: formatDkPhone(site.phone),
