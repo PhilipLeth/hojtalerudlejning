@@ -43,7 +43,7 @@ export default function Page() {
         "HDMI cable included",
         "Works perfectly in daylight",
         "Pay on pickup",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     >
       <UpsellBox

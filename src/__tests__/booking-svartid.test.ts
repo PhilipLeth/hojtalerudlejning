@@ -65,7 +65,7 @@ const ORDRE = {
   returnDay: "2026-09-21",
   days: 4,
   addons: [],
-  addonIds: [],
+  addonIds: ["lys"],
   cartItems: [],
   total: 595,
   paymentChoice: "online",

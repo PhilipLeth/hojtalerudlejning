@@ -228,7 +228,7 @@ export default function LejHojtalerPage() {
             Klar til at leje højtalere?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København S, aflever mandag.{" "}
+            Book online på 2 minutter. Hent torsdag i København S, aflever mandag.{" "}
             <LiveStartPrice prefix="Fra " suffix=" kr/weekend." />
           </p>
           {/* Peger på højtalerne på siden, ikke på /book: kurven er tom,

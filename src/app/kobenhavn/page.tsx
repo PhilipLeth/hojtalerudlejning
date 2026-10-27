@@ -166,7 +166,7 @@ export default function KobenhavnPage() {
               <ul className="mt-4 space-y-2 text-sm text-white/60">
                 <li>&bull; Perfekt til lejlighed, g&aring;rdhave, privat fest</li>
                 <li>&bull; Passer i taske &ndash; nem at tage p&aring; cyklen</li>
-                <li>&bull; Hent fredag, aflever mandag</li>
+                <li>&bull; Hent torsdag, aflever mandag</li>
               </ul>
             </div>
 
@@ -193,7 +193,7 @@ export default function KobenhavnPage() {
               <ul className="mt-4 space-y-2 text-sm text-white/60">
                 <li>&bull; Til st&oslash;rre rum, fester og udend&oslash;rs events</li>
                 <li>&bull; Kraftig, klar lyd med Bluetooth</li>
-                <li>&bull; Hent fredag, aflever mandag</li>
+                <li>&bull; Hent torsdag, aflever mandag</li>
               </ul>
             </div>
           </div>
@@ -341,7 +341,7 @@ export default function KobenhavnPage() {
             Klar til K&oslash;benhavns billigste festlyd?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online p&aring; 2 minutter. Hent fredag i K&oslash;benhavn S, aflever mandag.{" "}
+            Book online p&aring; 2 minutter. Hent torsdag i K&oslash;benhavn S, aflever mandag.{" "}
             <LiveStartPrice prefix="Fra " suffix=" kr/weekend." />
           </p>
           <a

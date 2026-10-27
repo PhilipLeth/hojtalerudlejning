@@ -59,7 +59,7 @@ export default function Soundboks4Page() {
           "Kraftig bas til udendørs fest",
           "Bluetooth + AUX",
           "Oplader og kabler inkluderet",
-          "Hent fredag, aflever mandag",
+          "Hent torsdag, aflever mandag",
         ]}
       >
         {/* Batteriet er et tilvalg på Soundboksen, ikke et produkt for sig på /lydanlaeg (28. sept 2026) */}

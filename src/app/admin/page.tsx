@@ -43,6 +43,7 @@ import AdminNav from "@/components/AdminNav";
 import AdminLogin from "@/components/AdminLogin";
 import SendSmsBox, { SmsModal } from "@/components/admin/SendSmsBox";
 import EditOrderModal from "@/components/admin/EditOrderModal";
+import { outsideFeeLabel } from "@/lib/bookingPolicy";
 import { useAdminAuth, getAdminToken, adminFetch } from "@/lib/useAdminAuth";
 
 interface Booking extends OrderBooking {
@@ -249,7 +250,7 @@ function OrderBreakdown({ b, priceOf }: { b: Booking; priceOf: (id?: string) => 
     return { ...l, unit, kr: typeof unit === "number" ? unit * l.qty : undefined };
   });
   const known = [...priced.map((l) => l.kr), deliveryPrice].filter((v): v is number => typeof v === "number");
-  const sum = known.reduce((a, v) => a + v, 0);
+  const sum = known.reduce((a, v) => a + v, 0) + (b.outsideHoursFee ?? 0);
   const allKnown = priced.every((l) => typeof l.kr === "number") && (!delivery || typeof deliveryPrice === "number");
   const row: React.CSSProperties = { display: "flex", justifyContent: "space-between", gap: "12px", padding: "6px 0", borderBottom: "1px solid #f0f0f0", fontSize: "13px" };
 
@@ -294,6 +295,8 @@ function OrderBreakdown({ b, priceOf }: { b: Booking; priceOf: (id?: string) => 
         </span>
         <span style={{ whiteSpace: "nowrap" }}>{typeof deliveryPrice === "number" ? `${deliveryPrice} kr` : delivery ? "—" : "0 kr"}</span>
       </div>
+
+      {!!b.outsideHoursFee && <div style={row}><span>{outsideFeeLabel()}</span><span>{b.outsideHoursFee} kr</span></div>}
 
       <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", paddingTop: "10px", fontSize: "15px", fontWeight: 800 }}>
         <span>Total på ordren</span>

@@ -1,3 +1,6 @@
+import { loadSiteSettings } from "../_lib/siteSettings";
+import { validateBookingPolicy } from "../_lib/bookingPolicy";
+import { outsideFeeLabel } from "../../../src/lib/bookingPolicy";
 /**
  * Opret Stripe Checkout Session (ui_mode: embedded) til online-betaling af en booking.
  * Beløb beregnes altid server-side ud fra kataloget — klienten sender kun produkt-id'er.
@@ -20,6 +23,8 @@ const json = (body: unknown, status = 200) =>
 
 interface Body {
   items: LineItemInput[];
+  pickupSlot?: string;
+  returnSlot?: string;
   bookingId?: string;
   locale?: string;
   discountCode?: string;
@@ -45,12 +50,11 @@ function dagAf(day: string | undefined, iso: string | undefined): string {
 }
 
 /**
- * Stripe-kupon for en procentsats, oprettet idempotent med deterministisk id
- * (RABAT10, RABAT20, …), så checkout viser en synlig rabatlinje frem for
- * stiltiende lavere stykpriser.
+ * Fast rabatbeløb beregnet på varerne, så aftalegebyret ikke får rabat.
+ * Procentsats og beløb indgår i id'et, så oprettelsen er idempotent.
  */
-async function getOrCreateCoupon(stripe: Stripe, pct: number): Promise<string> {
-  const id = `RABAT${pct}`;
+async function getOrCreateCoupon(stripe: Stripe, pct: number, amount: number): Promise<string> {
+  const id = `RABAT${pct}_${amount}`;
   try {
     await stripe.coupons.retrieve(id);
     return id;
@@ -58,7 +62,7 @@ async function getOrCreateCoupon(stripe: Stripe, pct: number): Promise<string> {
     // findes ikke — opret. Taber vi et kapløb med en anden request, findes
     // den nu, og det er lige så godt.
     try {
-      await stripe.coupons.create({ id, percent_off: pct, duration: "once", name: `Rabat ${pct}%` });
+      await stripe.coupons.create({ id, amount_off: amount, currency: "dkk", duration: "once", name: `Rabat ${pct}%` });
     } catch {
       await stripe.coupons.retrieve(id);
     }
@@ -113,6 +117,23 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     discount = await resolveDiscountFor(context.env.BOOKINGS, body.discountCode, ctx, body.bookingId);
   }
 
+  const discountAmount = discount ? discountOre(totalOre, discount.pct) : 0;
+  let fee: number;
+  try {
+    const site = await loadSiteSettings(context.env.BOOKINGS);
+    fee = validateBookingPolicy({ hours: site.hours, pickupDay: dagAf(body.pickupDay, body.pickup), returnDay: dagAf(body.returnDay, body.returnDate), ids: body.items.map(i => i.id), amountKr: (totalOre - discountAmount) / 100, pickupSlot: body.pickupSlot, returnSlot: body.returnSlot, locale: body.locale === "en" ? "en" : "da" });
+    if (fee) lineItems.push({ price_data: { currency: "dkk", unit_amount: fee * 100, product_data: { name: outsideFeeLabel(body.locale === "en" ? "en" : "da") } }, quantity: 1 });
+    totalOre += fee * 100;
+    if (body.bookingId) {
+      const saved = await context.env.BOOKINGS.get(body.bookingId);
+      if (!saved) throw new Error("Bookingen blev ikke fundet");
+      const booking = JSON.parse(saved);
+      if (Math.round(booking.total * 100) !== totalOre - discountAmount || (booking.outsideHoursFee ?? 0) !== fee) throw new Error("Ordren er ændret. Gå tilbage og bekræft bookingen igen.");
+    }
+  } catch (error) {
+    return json({ error: error instanceof Error ? error.message : "Invalid booking" }, 400);
+  }
+
   const origin = new URL(context.request.url).origin;
   const suffix = Array.from({ length: 8 }, () =>
     "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)]
@@ -126,7 +147,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       currency: "dkk",
       locale: body.locale === "en" ? "en" : "da",
       return_url: `${origin}/book/tak?session_id={CHECKOUT_SESSION_ID}`,
-      ...(discount ? { discounts: [{ coupon: await getOrCreateCoupon(stripe, discount.pct) }] } : {}),
+      ...(discount ? { discounts: [{ coupon: await getOrCreateCoupon(stripe, discount.pct, discountAmount) }] } : {}),
       metadata: {
         bookingId: body.bookingId ?? "",
         source: "lejhojtaler-booking",
@@ -140,7 +161,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return json({
       clientSecret: session.client_secret,
       sessionId: session.id,
-      amount: discount ? totalOre - discountOre(totalOre, discount.pct) : totalOre,
+      amount: totalOre - discountAmount,
       ...(discount ? { discount } : {}),
     });
   } catch (e) {

@@ -33,7 +33,7 @@ export default function Page() {
       imageAlt="Shure BLX trådløs mikrofon til leje"
       productId="traadloes_mikrofon_pro"
       faqPhrase="en trådløs PRO-mikrofon"
-      bullets={["Shure BLX trådløst system", "Håndholdt mikrofon i scenekvalitet", "Modtager + kabelforbindelse", "Perfekt til konference og scene", "Hent fredag, aflever mandag"]}
+      bullets={["Shure BLX trådløst system", "Håndholdt mikrofon i scenekvalitet", "Modtager + kabelforbindelse", "Perfekt til konference og scene", "Hent torsdag, aflever mandag"]}
     />
   );
 }

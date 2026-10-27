@@ -49,7 +49,7 @@ export default function Page() {
         "Remote control included, run the fog from the sofa",
         "Easy setup, warms up in 5 minutes",
         "Pay on pickup, you only pay the rental",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     >
       <UpsellBox

@@ -200,7 +200,7 @@ export default function FestlydPage() {
               <ul className="space-y-3 text-white/60">
                 <li className="flex items-center gap-3">
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
-                  Hent fredag, aflever mandag
+                  Hent torsdag, aflever mandag
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/20 text-xs text-brand-400">✓</span>
@@ -226,7 +226,7 @@ export default function FestlydPage() {
             Klar til festlyd?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København S, aflever mandag.{" "}
+            Book online på 2 minutter. Hent torsdag i København S, aflever mandag.{" "}
             <LiveStartPrice prefix="Fra " suffix=" kr/weekend." />
           </p>
           <a

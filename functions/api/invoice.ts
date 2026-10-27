@@ -13,6 +13,7 @@ import { formatDkPhone } from "../../src/lib/phone";
 import { requireAdmin } from "./_lib/adminAuth";
 import { notifyRecipients } from "./_lib/notify";
 import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../src/lib/fetchTimeout";
+import { outsideFeeLabel } from "../../src/lib/bookingPolicy";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -106,7 +107,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           qty: Math.max(1, Math.round(Number(l.qty) || 1)),
           amount: typeof l.amount === "number" ? Math.round(l.amount) : undefined,
         }))
-      : [{ label: `Leje: ${booking.speaker || "udstyr"}`, qty: 1, amount: total }];
+      : !booking.totalManual && booking.outsideHoursFee > 0 && booking.outsideHoursFee <= total
+        ? [{ label: `Leje: ${booking.speaker || "udstyr"}`, qty: 1, amount: total - booking.outsideHoursFee }, { label: outsideFeeLabel(), qty: 1, amount: booking.outsideHoursFee }]
+        : [{ label: `Leje: ${booking.speaker || "udstyr"}`, qty: 1, amount: total }];
 
   const mailData = {
     invoiceNumber: number,

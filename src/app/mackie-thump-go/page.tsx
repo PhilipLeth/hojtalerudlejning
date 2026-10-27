@@ -39,7 +39,7 @@ export default function MackieThumpGoPage() {
         "Op til 12 timers batteri",
         "Kun 10 kg - klar til cyklen",
         "Oplader og AUX inkluderet",
-        "Hent fredag, aflever mandag",
+        "Hent torsdag, aflever mandag",
       ]}
     />
   );

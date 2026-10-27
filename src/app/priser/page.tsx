@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const vilkaar = [
   {
     title: "Samme pris i 1 til " + MAX_RENTAL_DAYS + " dage",
-    body: "Prisen er for hele lejeperioden, ikke pr. dag. De fleste henter fredag og afleverer mandag.",
+    body: "Prisen er for hele lejeperioden, ikke pr. dag. De fleste henter torsdag og afleverer mandag.",
   },
   {
     title: "Kabler og stativer, der hører til, er med",

@@ -49,7 +49,7 @@ export default function Page() {
         "Centre effect included",
         "Stand, power and cables included",
         "Pay on pickup",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     >
       <UpsellBox

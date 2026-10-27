@@ -49,7 +49,7 @@ export default function HeadsetMikrofonPage() {
         "Modtager og batterier medfølger",
         "Kabel til højtaler/mixer inkl.",
         "Hands-free, perfekt til præsentationer",
-        "Hent fredag aflever mandag",
+        "Hent torsdag aflever mandag",
       ]}
     >
       <UpsellBox

@@ -1,3 +1,4 @@
+import { PICKUP_MINIMUM } from "./bookingPolicy";
 /**
  * Spørgsmål og svar til kategori- og guidesiderne.
  *
@@ -22,7 +23,7 @@ import { prisDkk, prisKr, rabatKr, startPrisKr } from "@/lib/products";
 const AFHENTNING: FaqItem = {
   q: "Skal jeg selv hente udstyret, eller kan I levere?",
   a:
-    "Du kan hente gratis hos os på Vermlandsgade 66, 2300 København. Vil du hellere have det leveret, kører vi ud i " +
+    "Ved ordrer fra " + PICKUP_MINIMUM + " kr kan du hente uden gebyr i åbningstiden hos os på Njalsgade 40, 2300 København. Vil du hellere have det leveret, kører vi ud i " +
     `hele København: ${prisKr("levering_ud")} for levering og opsætning, hvor du selv afleverer bagefter, eller ${prisKr("levering_begge")} hvis vi både ` +
     "skal levere og hente igen efter festen. Du vælger det i bookingen.",
 };
@@ -30,7 +31,7 @@ const AFHENTNING: FaqItem = {
 const LEJEPERIODE: FaqItem = {
   q: "Hvor længe kan jeg leje udstyret?",
   a:
-    "Fra 1 til 5 dage til samme pris — der er ingen dagstillæg. De fleste henter fredag og afleverer mandag. " +
+    "Fra 1 til 5 dage til samme pris — der er ingen dagstillæg. De fleste henter torsdag og afleverer mandag. " +
     "Skal du bruge det længere, så ring på 31 13 28 52, så finder vi ud af det.",
 };
 
@@ -38,7 +39,7 @@ const LEJEPERIODE: FaqItem = {
 const AFHENTNING_EN: FaqItem = {
   q: "Do I collect the equipment myself, or can you deliver?",
   a:
-    "You can collect it for free at Vermlandsgade 66, 2300 Copenhagen. If you would rather have it " +
+    "For orders of DKK " + PICKUP_MINIMUM + " or more, you can collect during opening hours at Njalsgade 40, 2300 Copenhagen. If you would rather have it " +
     `delivered, we drive anywhere in Copenhagen: ${prisDkk("levering_ud")} for delivery and setup, where you return it ` +
     `yourself, or ${prisDkk("levering_begge")} if we both deliver and collect it again after the party. You choose in the booking.`,
 };
@@ -46,7 +47,7 @@ const AFHENTNING_EN: FaqItem = {
 const LEJEPERIODE_EN: FaqItem = {
   q: "How long can I keep the equipment?",
   a:
-    "From 1 to 5 days at the same price — there is no daily surcharge. Most customers collect on Friday and " +
+    "From 1 to 5 days at the same price — there is no daily surcharge. Most customers collect on Thursday and " +
     "return on Monday. If you need it for longer, call us on 31 13 28 52 and we will work it out.",
 };
 
@@ -64,7 +65,7 @@ const udlejning = (q: string): FaqItem => ({
   a:
     "Du vælger datoerne på siden og booker online — vi skriver ikke et tilbud, og du behøver ikke ringe " +
     "først. Ledigheden står i kalenderen, så du kan se med det samme, om det er ledigt den weekend. " +
-    "Bagefter henter du udstyret på Vermlandsgade 66, 2300 København, og betaler ved afhentning eller " +
+    "Bagefter henter du udstyret på Njalsgade 40, 2300 København, og betaler ved afhentning eller " +
     "med kort online. Hverken depositum eller kaution.",
 });
 
@@ -73,7 +74,7 @@ const udlejningEn = (q: string): FaqItem => ({
   a:
     "You pick your dates on the page and book online — we do not write a quote, and you do not have to " +
     "call first. Availability is in the calendar, so you can see straight away whether it is free that " +
-    "weekend. You then collect at Vermlandsgade 66, 2300 Copenhagen, and pay on collection or by card " +
+    "weekend. You then collect at Njalsgade 40, 2300 Copenhagen, and pay on collection or by card " +
     "online. No deposit and no security bond.",
 });
 
@@ -92,7 +93,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
         `Det billigste anlæg starter ved ${startPrisKr()} for hele weekenden, og en lysbar koster ` +
         `${prisKr("lys")}. Vil du have lyd og lys samlet, ligger de små festpakker fra ` +
         `${prisKr("pakke_fest_lille")}. Alle priser er inklusive moms og dækker fra 1 til 5 dages leje, ` +
-        `så en fredag-til-mandag koster det samme som én dag.`,
+        `så en torsdag-til-mandag koster det samme som én dag.`,
     },
     {
       q: "Hvilket udstyr til fest skal jeg bruge?",
@@ -125,7 +126,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
       a:
         `The cheapest speaker starts at ${startPrisKr()} for the whole weekend, and a light bar is ` +
         `${prisKr("lys")}. If you want sound and light together, the small party packages start at ` +
-        `${prisKr("pakke_fest_lille")}. All prices include VAT and cover 1 to 5 days, so Friday to Monday ` +
+        `${prisKr("pakke_fest_lille")}. All prices include VAT and cover 1 to 5 days, so Thursday to Monday ` +
         `costs the same as a single day.`,
     },
     {
@@ -186,7 +187,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvad hvis vi mangler noget på dagen?",
       a:
-        "Ring. Vi ligger på Vermlandsgade 66 på Amager, og har vi delen på hylden, kan den hentes med det samme. " +
+        "Ring. Vi ligger på Njalsgade 40 på Amager, og har vi delen på hylden, aftaler vi en afhentningstid. " +
         "Derfor står alle enkeltprodukter også til leje for sig — en ekstra mikrofon eller en forlængerledning " +
         "behøver ikke være en ny pakke.",
     },
@@ -226,7 +227,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "What if something is missing on the day?",
       a:
-        "Call us. We are at Vermlandsgade 66 on Amager, and if the part is on the shelf you can collect it " +
+        "Call us. We are at Njalsgade 40 on Amager, and if the part is on the shelf you can collect it " +
         "straight away. That is why every single product is also for hire on its own — an extra microphone or an " +
         "extension lead does not have to be a new package.",
     },
@@ -621,8 +622,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Hvor i København henter jeg højtalerne?",
       a:
-        "Hos os på Vermlandsgade 66, 2300 København S. Afhentning er gratis, og der er plads til at holde ved " +
-        "døren, hvis du kommer i bil.",
+        "Hos os på Njalsgade 40, 2300 København S. Afhentning i åbningstiden er uden gebyr ved ordrer fra " + PICKUP_MINIMUM + " kr. Kontakt os om parkering og indgang, hvis du kommer i bil.",
     },
     {
       q: "Leverer I i hele København?",
@@ -923,7 +923,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "Do you deliver, or do I pick the speakers up myself?",
       a:
-        "Both. Pick-up is free at Vermlandsgade 66, 2300 Copenhagen. Delivery and setup anywhere in Copenhagen is " +
+        "Both. For orders of DKK " + PICKUP_MINIMUM + " or more, pickup during opening hours is free at Njalsgade 40, 2300 Copenhagen. Delivery and setup anywhere in Copenhagen is " +
         `${prisDkk("levering_ud")}, where you return the gear yourself, or ${prisDkk("levering_begge")} if we both deliver and collect it afterwards.`,
     },
     {
@@ -935,7 +935,7 @@ export const CATEGORY_FAQ: Record<string, FaqItem[]> = {
     {
       q: "How long can I keep the equipment?",
       a:
-        "From 1 to 5 days at the same price — there is no daily surcharge. Most customers collect on Friday and " +
+        "From 1 to 5 days at the same price — there is no daily surcharge. Most customers collect on Thursday and " +
         "return on Monday. Call 31 13 28 52 if you need it for longer.",
     },
     {

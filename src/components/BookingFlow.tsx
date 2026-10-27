@@ -1,5 +1,7 @@
 "use client";
 import { DJ_ID, DJ_DEFAULT, priceDj, djLabel, djHoursFromRange, rangeFromHours, isDjGear, isDjLight, requireDjGear, type DjHours } from "@/lib/dj";
+import HandoverPicker from "./HandoverPicker";
+import { handoverFee, minimumOrderError, orderDelivery, outsideFeeLabel } from "@/lib/bookingPolicy";
 import DjGearPicker from "./DjGearPicker";
 import DjHoursPicker from "./DjHoursPicker";
 import DjLightsPicker from "./DjLightsPicker";
@@ -477,7 +479,7 @@ function DeliveryPicker({
 
   const { hours, pickupAddress } = useSiteSettings();
   const selfLabel = locale === "en" ? "I pick up and return it myself" : "Jeg henter og afleverer selv";
-  const selfDesc = `${pickupAddress}, ${locale === "en" ? "free" : "gratis"}`;
+  const selfDesc = pickupAddress;
 
   const rows: Array<{ id: string | null; label: string; desc: string; price: number }> = included
     ? [{ id: value, label: s.deliveryIncludedLabel, desc: includedDesc ?? s.deliveryIncludedDesc, price: 0 }]
@@ -1335,7 +1337,7 @@ export default function BookingFlow({
   const DELIVERY_IDS: readonly string[] = DELIVERY_ADDON_IDS;
   // Pakker med lydmand har kørslen med i prisen: den står ikke som tilvalg
   // (så den ikke betales to gange), men ordren får stadig deliveryOptionId
-  const includedDelivery = bundleIncludesDelivery(selectedRental) ?? (orderHasDj ? "levering_begge" : null);
+  const includedDelivery = bundleIncludesDelivery(selectedRental) ?? cartItems.map(c => bundleIncludesDelivery(rentalProducts.find(p => p.id === c.productId))).find(Boolean) ?? (orderHasDj ? "levering_begge" : null);
   const hasDelivery = !!includedDelivery || selectedAddons.some((id) => DELIVERY_IDS.includes(id));
   const deliveryChoice = includedDelivery ?? selectedAddons.find((id) => DELIVERY_IDS.includes(id)) ?? null;
   // Kørsel uden adresse er ubrugelig, så ved vi ikke hvor vi skal hen
@@ -1363,7 +1365,7 @@ export default function BookingFlow({
     const iso = dateKey(pickupDate);
     const slots = timeSlots(hours, iso);
     if (slots.length === 0) return;
-    setPickupSlot((prev) => (slots.some((sl) => sl.id === prev) ? prev : defaultTimeSlot()));
+    setPickupSlot((prev) => (prev === "outside" || slots.some((sl) => sl.id === prev) ? prev : defaultTimeSlot()));
   }, [pickupDate, hours]);
 
   useEffect(() => {
@@ -1371,7 +1373,7 @@ export default function BookingFlow({
     const iso = dateKey(returnDate);
     const slots = timeSlots(hours, iso);
     if (slots.length === 0) return;
-    setReturnSlot((prev) => (slots.some((sl) => sl.id === prev) ? prev : defaultTimeSlot()));
+    setReturnSlot((prev) => (prev === "outside" || slots.some((sl) => sl.id === prev) ? prev : defaultTimeSlot()));
   }, [returnDate, hours]);
 
   // Kører vi selv ud med anlægget, er der ikke noget møde at lægge tid på
@@ -1401,8 +1403,13 @@ export default function BookingFlow({
   const subtotal = speakerPrice + addonsPrice + cartTotal;
   // Rabatkode: procenten kommer fra /api/discount og er kun til visning
   // ved onlinebetaling genberegner serveren alt og lægger Stripe-kuponen på.
-  const total = coupon ? Math.round(subtotal * (1 - coupon.pct / 100)) : subtotal;
-  const totalBeforeDiscount = summer ? speakerBasePrice + addonsBasePrice + cartTotal : subtotal;
+  const discountedSubtotal = coupon ? subtotal - Math.round(subtotal * coupon.pct) / 100 : subtotal;
+  const policyIds = [...(speaker && !isEffectsOnly ? [speaker] : []), ...selectedAddons, ...cartItems.map(c => c.productId)];
+  const directions = orderDelivery(policyIds);
+  const outsideFee = handoverFee(hours, pickupDate ? dateKey(pickupDate) : "", returnDate ? dateKey(returnDate) : "", policyIds, pickupSlot, returnSlot);
+  const minimumError = minimumOrderError(discountedSubtotal, directions.any, locale);
+  const total = discountedSubtotal + outsideFee;
+  const totalBeforeDiscount = (summer ? speakerBasePrice + addonsBasePrice + cartTotal : subtotal) + outsideFee;
 
   /*
    * Flere enheder af samme produkt: hver enhed er sin egen kurvlinje, payload,
@@ -1535,7 +1542,7 @@ export default function BookingFlow({
   }
 
   function nextStep() {
-    if(step===3 && orderHasDj && !selectedDjGear)return;
+    if(step===3 && ((orderHasDj && !selectedDjGear) || minimumError)) return;
     setStep((st) => Math.min(st + 1, 4));
   }
 
@@ -1597,6 +1604,7 @@ export default function BookingFlow({
       setStep(3);
       return;
     }
+    if (minimumError) { setError(minimumError); setStep(3); return; }
     setSubmitting(true);
     setError("");
 
@@ -1634,7 +1642,7 @@ export default function BookingFlow({
           cartItems: [
             ...cartItems.map((item) => ({ name: item.name, price: item.price, productId: item.productId, ...(item.dj ? {dj:item.dj} : {}) })),
             ...(harDj ? [{ name: djNavn, price: djPris, productId: DJ_ID, dj: djHours }] : []),
-            ...(harLydmand ? [{ name: lydmandLabel, price: lydmandPris, productId: LYDMAND_ID }] : []),
+            ...(harLydmand ? [{ name: lydmandLabel, price: lydmandPris, quantity: lydmandAntal, productId: LYDMAND_ID }] : []),
           ],
           deliveryAddress: hasDelivery ? deliveryAddress.trim() : undefined,
           deliveryOptionId: deliveryChoice ?? undefined,
@@ -1688,6 +1696,7 @@ export default function BookingFlow({
           periode: periodLabel,
           sted: hasDelivery && deliveryAddress ? `${s.successDelivery} ${deliveryAddress}` : `${s.successPickup} ${pickupAddress}`,
           linjer: [
+            ...(outsideFee ? [{ label: outsideFeeLabel(locale), value: `${outsideFee} kr` }] : []),
             ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
             ...(isRentalOnly && rentalName ? [{ label: rentalName, value: `${speakerPrice} kr` }] : []),
             ...cartItems.map((c) => ({ label: c.name, value: `${c.price} kr` })),
@@ -1951,6 +1960,7 @@ export default function BookingFlow({
             <span>−{coupon.pct}%</span>
           </div>
         )}
+        {outsideFee > 0 && <div className="mt-3 flex justify-between gap-3 text-sm text-amber-900"><span>{outsideFeeLabel(locale)}</span><span>{outsideFee} kr</span></div>}
         <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
           <span>{s.total}</span>
           <span className={summer ? "text-amber-400" : "text-brand-400"}>
@@ -2523,6 +2533,10 @@ export default function BookingFlow({
               returnDate={returnDate}
             />
 
+            {pickupDate && !directions.out && <HandoverPicker hours={hours} date={dateKey(pickupDate)} value={pickupSlot} onChange={setPickupSlot} label={locale === "en" ? "Pickup time" : "Tid for afhentning"} locale={locale} />}
+            {returnDate && !directions.back && <HandoverPicker hours={hours} date={dateKey(returnDate)} value={returnSlot} onChange={setReturnSlot} label={locale === "en" ? "Return time" : "Tid for aflevering"} locale={locale} />}
+            {minimumError && <p role="alert" className="rounded-xl border border-amber-500/40 bg-amber-50 p-4 text-sm text-amber-900">{minimumError}</p>}
+
             {orderHasDj && <DjGearPicker locale={locale} value={selectedDjGear ?? ""} onChange={chooseDjGear}/>}
             {orderHasDj && (
               <DjLightsPicker
@@ -2816,7 +2830,8 @@ export default function BookingFlow({
                   if (qtyShortageMsg) return;
                   nextStep();
                 }}
-                className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95"
+                disabled={!!minimumError || !!qtyShortageMsg}
+                className="flex-1 rounded-xl bg-brand-500 py-3 font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 {s.next}
               </button>
@@ -2825,10 +2840,11 @@ export default function BookingFlow({
               onClick={() => {
                 if (deliveryAddressMissing) { setShowDeliveryError(true); return; }
                 if (qtyShortageMsg) return;
-                setSelectedAddons((prev) => prev.filter((id) => DELIVERY_IDS.includes(id)));
-                setStep(4);
+                if (minimumError) return;
+                nextStep();
               }}
-              className="w-full py-1 text-center text-sm text-white/40 underline underline-offset-4 transition hover:text-white/70"
+              disabled={!!minimumError || !!qtyShortageMsg}
+              className="w-full py-1 text-center text-sm text-white/40 underline underline-offset-4 transition hover:text-white/70 disabled:opacity-30 disabled:cursor-not-allowed"
             >
               {s.skipAddons}
             </button>
@@ -3079,6 +3095,8 @@ export default function BookingFlow({
                 )}
                 {couponError && <p className="mt-1 text-xs text-red-400">{s.discountInvalid}</p>}
               </div>
+              {outsideFee > 0 && <div className="mt-3 flex justify-between gap-3 text-sm text-amber-900"><span>{outsideFeeLabel(locale)}</span><span>{outsideFee} kr</span></div>}
+              {minimumError && <p role="alert" className="mt-3 text-sm text-amber-900">{minimumError}</p>}
               <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-lg font-bold">
                 <span>{s.total}</span>
                 <span className={summer ? "text-amber-400" : "text-brand-400"}>
@@ -3133,7 +3151,7 @@ export default function BookingFlow({
               </button>
               <button
                 type="submit"
-                disabled={submitting || !!qtyShortageMsg}
+                disabled={submitting || !!qtyShortageMsg || !!minimumError}
                 className="flex-1 rounded-xl bg-brand-500 py-3.5 font-semibold text-black transition hover:bg-brand-400 active:scale-95 disabled:opacity-50"
               >
                 {submitting ? s.sending : payMethod === "online" ? (locale === "en" ? "Continue to payment" : "Videre til betaling") : s.sendBooking}

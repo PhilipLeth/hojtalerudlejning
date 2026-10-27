@@ -50,7 +50,7 @@ export default function SkaermPage() {
         "HDMI-kabel medfølger",
         "Fungerer perfekt i dagslys",
         "Betal ved afhentning",
-        "Hent fredag, aflever mandag",
+        "Hent torsdag, aflever mandag",
       ]}
     >
       <UpsellBox

@@ -26,7 +26,10 @@ import {
 } from "@/lib/openingHours";
 
 /** Standardtiderne i koden: man–fre 9.30–18, lørdag 10–14, søndag lukket */
-const hours = DEFAULT_OPENING_HOURS;
+const hours: OpeningHours = { ...DEFAULT_OPENING_HOURS, days: { ...DEFAULT_OPENING_HOURS.days,
+  fri: { closed: false, open: "09:30", close: "18:00", purpose: "" },
+  sat: { closed: false, open: "10:00", close: "14:00", purpose: "" },
+} };
 
 /**
  * Samme som standarden. Navnet står tilbage, fordi tiderne i koden før var
@@ -221,7 +224,7 @@ describe("tidsvalget i checkout", () => {
       // Kalenderdagen sendes med, så serveren ikke skal gætte ud fra et UTC-tidspunkt
       expect(body.pickupDay).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       // Mellem højtalerpakke 595 (prisarket 28. sept 2026) — og ikke en krone mere for tidspunktet
-      expect(body.total).toBe(595);
+      expect(body.total).toBe(795);
     });
   });
 });

@@ -8,7 +8,7 @@ import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Rent a Soundboks in Copenhagen | Soundboks 4, ${prisDkk("soundboks")}/weekend | Lejhøjtaler.dk`,
   description:
-    `Rent a Soundboks in Copenhagen, Soundboks 4 from ${prisDkk("soundboks")} for a whole weekend. Battery-powered with heavy bass, no deposit. Pick up Friday, return Monday.`,
+    `Rent a Soundboks in Copenhagen, Soundboks 4 from ${prisDkk("soundboks")} for a whole weekend. Battery-powered with heavy bass, no deposit. Pick up Thursday, return Monday.`,
   keywords: [
     "rent soundboks copenhagen",
     "soundboks rental",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     images: ogImages("/images/product-soundboks-v2.webp"),
     title: `Rent a Soundboks in Copenhagen | ${prisDkk("soundboks")}/weekend`,
     description:
-      `Rent a Soundboks in Copenhagen from ${prisDkk("soundboks")}/weekend. Battery-powered, heavy bass, no deposit. Pick up Friday, return Monday.`,
+      `Rent a Soundboks in Copenhagen from ${prisDkk("soundboks")}/weekend. Battery-powered, heavy bass, no deposit. Pick up Thursday, return Monday.`,
     url: "https://lejhojtaler.dk/en/soundboks-4",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -65,7 +65,7 @@ export default function Soundboks4En() {
         "Heavy bass for outdoor parties",
         "Bluetooth + AUX",
         "Charger and cables included",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     >
       {/* The battery is an add-on to the Soundboks, see the Danish page */}

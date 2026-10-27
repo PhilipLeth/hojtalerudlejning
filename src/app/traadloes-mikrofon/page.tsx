@@ -50,7 +50,7 @@ export default function TraadloesMikrofonPage() {
         "Batterier medfølger",
         "Kabel til højtaler/mixer inkl.",
         "Betal ved afhentning – betal kun lejen",
-        "Hent fredag, aflever mandag",
+        "Hent torsdag, aflever mandag",
       ]}
     >
       <UpsellBox

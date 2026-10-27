@@ -155,7 +155,7 @@ export default async function Page({ params }: Props) {
           <section className="mt-16 glass rounded-2xl p-8 text-center">
             <h2 className="text-xl font-bold text-white">Ready to rent? Book your speaker now</h2>
             <p className="mt-2 text-white/50 text-sm">
-              From {startPrisDkk()}/weekend. Collect Friday, return Monday.
+              From {startPrisDkk()}/weekend. Collect Thursday, return Monday.
             </p>
             <Link
               href="/en#shop-pakker"

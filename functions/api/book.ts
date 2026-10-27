@@ -1,5 +1,8 @@
+import { bookingItems, validateBookingPolicy } from "./_lib/bookingPolicy";
+import { buildLineItems, loadPriceTable, medPeriodePriser } from "./_lib/pricing";
+import { handoverLabel, orderDelivery, outsideFeeLabel } from "../../src/lib/bookingPolicy";
 import { DJ_ID, requireDjGear, priceDj, djLabel, dateFromDay, type DjHours } from "../../src/lib/dj";
-import { resolveDiscountFor } from "./_lib/discounts";
+import { resolveDiscountFor, discountOre } from "./_lib/discounts";
 import { sendPush } from "../../src/lib/webpush";
 import { KV_PUSH_SUBS, loadSubscriptions } from "./push";
 import { notifyOverbooking } from "./_lib/overbooking";
@@ -34,7 +37,7 @@ interface BookingData {
   days: number;
   addons: string[];
   addonIds?: string[];
-  cartItems?: Array<{ name: string; price: number; productId?: string; dj?: DjHours }>;
+  cartItems?: Array<{ name: string; price: number; productId?: string; quantity?: number; dj?: DjHours }>;
   /** Lejeperioden som ISO — sendes af kalenderen, bruges til weekendudsalget */
   pickup?: string;
   returnDate?: string;
@@ -52,6 +55,7 @@ interface BookingData {
   /** levering_ud | afhentning_retur | levering_begge — hvilken vej vi kører */
   deliveryOptionId?: string;
   total: number;
+  outsideHoursFee?: number;
   discountCode?: string;
   /** "online" eller "pickup" — vises i push-beskeden */
   paymentChoice?: string;
@@ -310,45 +314,40 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return new Response(JSON.stringify({error: error instanceof Error ? error.message : "Ugyldige DJ-timer"}), {status:400,headers:{"Content-Type":"application/json"}});
   }
 
-  // Har vi lige taget imod præcis denne ordre? Så er det et dobbelttryk, ikke
-  // en ny booking. Kunden får samme kvittering som første gang — han skal ikke
-  // i tvivl om, at det gik igennem.
+  const site = await loadSiteSettings(context.env.BOOKINGS);
+  const pickupDag = bookingDay(data.pickupDay, data.pickup);
+  const returnDag = bookingDay(data.returnDay, data.returnDate);
+  const discount = data.discountCode
+    ? await resolveDiscountFor(context.env.BOOKINGS, data.discountCode, saleContext(data)) : null;
+  try {
+    const items = bookingItems(data);
+    const table = medPeriodePriser(await loadPriceTable(context.env.BOOKINGS), pickupDag, returnDag);
+    const { totalOre } = buildLineItems(table, items, dateFromDay(pickupDag));
+    const discountedOre = totalOre - (discount ? discountOre(totalOre, discount.pct) : 0);
+    data.outsideHoursFee = validateBookingPolicy({ hours: site.hours, pickupDay: pickupDag, returnDay: returnDag, ids: items.map(i => i.id), amountKr: discountedOre / 100, pickupSlot: data.pickupSlot, returnSlot: data.returnSlot, locale: data.locale === "en" ? "en" : "da" });
+    data.total = discountedOre / 100 + data.outsideHoursFee;
+    const delivery = orderDelivery(items.map(i => i.id));
+    data.deliveryOptionId = delivery.out && delivery.back ? "levering_begge" : delivery.out ? "levering_ud" : delivery.back ? "afhentning_retur" : undefined;
+    if (delivery.any && (!data.deliveryAddress || data.deliveryAddress.trim().length < 5)) throw new Error(data.locale === "en" ? "Enter the delivery address." : "Skriv leveringsadressen.");
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Ugyldig booking" }), { status: 400, headers: { "Content-Type": "application/json" } });
+  }
+  // Dobbeltklik genbruger den allerede validerede ordre.
   const dubletKey = await dubletNøgle(data);
   try {
     const tidligere = await context.env.BOOKINGS.get(dubletKey);
-    if (tidligere) {
-      console.log("[book] dobbelttryk afvist, henviser til", tidligere);
-      return new Response(JSON.stringify({ ok: true, bookingId: tidligere, duplikat: true }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-  } catch (e) {
-    // Kan spærren ikke læses, er det bedre at tage imod ordren end at afvise den
-    console.error("[book] kunne ikke tjekke dublet:", e);
-  }
-
-  // Rabatkode valideres mod serverens liste — klientens ord alene tæller ikke.
-  // Weekendudsalgets kode tjekkes desuden mod lageret: den gælder kun udstyr,
-  // der stadig står tilbage netop den weekend.
-  const discount = data.discountCode
-    ? await resolveDiscountFor(context.env.BOOKINGS, data.discountCode, saleContext(data))
-    : null;
+    if (tidligere) return new Response(JSON.stringify({ ok: true, bookingId: tidligere, duplikat: true }), { headers: { "Content-Type": "application/json" } });
+  } catch (error) { console.error("[book] kunne ikke tjekke dublet:", error); }
   const discountRow = discount
-    ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Rabatkode:</td><td>${discount.code} (−${discount.pct}%)</td></tr>`
-    : "";
+    ? `<tr><td>Rabatkode:</td><td>${discount.code} (−${discount.pct}%)</td></tr>` : "";
+  const feeRow = data.outsideHoursFee ? `<tr><td>${outsideFeeLabel(data.locale === "en" ? "en" : "da")}:</td><td>${data.outsideHoursFee} kr</td></tr>` : "";
 
   const addonsText =
     data.addons.length > 0 ? data.addons.join(", ") : "Ingen";
 
   // Adresse, CVR, åbningstider og mail i bekræftelsen kommer fra /admin/indstillinger
-  const site = await loadSiteSettings(context.env.BOOKINGS);
-
   // Tidsrummene som læsbar tekst — de skal stå i mailen og på lejesedlen, ikke
   // kun som "early" i KV
-  const pickupDag = bookingDay(data.pickupDay, data.pickup);
-  const returnDag = bookingDay(data.returnDay, data.returnDate);
-
   // Har vi lukket for nye lejeperioder frem til en dato, gælder det også her.
   // Kalenderen spærrer dagene, men en fane der stod åben inden indstillingen
   // blev sat — eller et kald uden om siden — skal ikke kunne slippe igennem.
@@ -365,8 +364,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       { status: 400, headers: { "Content-Type": "application/json" } },
     );
   }
-  const pickupTime = formatTimeSlot(site.hours, pickupDag, data.pickupSlot);
-  const returnTime = formatTimeSlot(site.hours, returnDag, data.returnSlot);
+  const pickupTime = orderDelivery(orderProductIds(data)).out ? "Levering, tidspunkt aftales" : handoverLabel(site.hours, pickupDag, data.pickupSlot);
+  const returnTime = orderDelivery(orderProductIds(data)).back ? "Afhentning på leveringsadressen, tidspunkt aftales" : handoverLabel(site.hours, returnDag, data.returnSlot);
 
   // Fuld ordreoversigt — kurv-varer blev tidligere slet ikke vist i mailen,
   // så ordrer med flere produkter så ud som ét produkt.
@@ -408,7 +407,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Dage:</td><td>${data.days}</td></tr>
       ${delivery ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Kørsel:</td><td><strong>${delivery}</strong></td></tr>` : `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Kørsel:</td><td>Kunden henter og afleverer selv</td></tr>`}
       ${data.deliveryAddress ? `<tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Adresse:</td><td>${data.deliveryAddress}</td></tr>` : ""}
-      ${discountRow}
+      ${discountRow}${feeRow}
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Total:</td><td><strong>${data.total} kr</strong></td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Betaling:</td><td>${data.paymentChoice === "online" ? "Kunden betaler online (Stripe)" : "Betales ved afhentning"}</td></tr>
       <tr><td style="padding:4px 12px 4px 0;font-weight:bold;">Upsell tilbudt:</td><td>${upsell ? `${upsell.title} @ ${upsell.offerPrice} kr (norm. ${upsell.listPrice})` : "Ingen"}</td></tr>

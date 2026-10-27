@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   title: `Lej Højtaler København | Fra ${startPrisKr()}/weekend | Lejhøjtaler.dk`,
   description:
-    `Lej højtaler i København fra ${startPrisKr()}/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje, hent fredag, aflever mandag. Book online på 2 min.`,
+    `Lej højtaler i København fra ${startPrisKr()}/weekend. PA-anlæg udlejning til fest, event og party. Lydudstyr og festudstyr til leje, hent torsdag, aflever mandag. Book online på 2 min.`,
   keywords: [
     "lej højtaler københavn",
     "højtalerudlejning københavn",

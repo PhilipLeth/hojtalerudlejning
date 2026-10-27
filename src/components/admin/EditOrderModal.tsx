@@ -15,6 +15,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useProducts } from "@/lib/useProducts";
 import { adminFetch } from "@/lib/useAdminAuth";
+import { useSiteSettings } from "@/lib/useSiteSettings";
+import { editedHandoverFee, outsideFeeLabel } from "@/lib/bookingPolicy";
 import {
   MAX_ORDER_QTY,
   orderItemsFromBooking,
@@ -41,6 +43,11 @@ export interface EditableBooking {
   addonIds?: string[];
   total?: number;
   totalManual?: boolean;
+  outsideHoursFee?: number;
+  pickupDay?: string;
+  returnDay?: string;
+  pickupSlot?: string;
+  returnSlot?: string;
   discount?: { code: string; pct: number } | null;
   status?: string;
 }
@@ -88,6 +95,7 @@ function Editor({
   onUpdated: (booking: Record<string, unknown>) => void;
 }) {
   const catalog = useProducts();
+  const { hours } = useSiteSettings();
 
   /** Katalogets varer med den slags-markering ordren bygges op efter */
   const entries = useMemo<CatalogEntry[]>(() => [
@@ -141,13 +149,15 @@ function Editor({
   }, [onClose]);
 
   const manualTotal = manuel ? Number(manuelBeloeb.replace(",", ".")) : null;
+  const outsideHoursFee = editedHandoverFee(booking, hours, items.map(item => item.id));
   const { order } = useMemo(
     () => rebuildOrder(items, lookup, {
       discountPct: booking.discount?.pct,
+      outsideHoursFee,
       legacy,
       manualTotal: manuel && Number.isFinite(manualTotal) ? manualTotal : null,
     }),
-    [items, lookup, legacy, booking.discount, manuel, manualTotal],
+    [items, lookup, legacy, booking.discount, manuel, manualTotal, outsideHoursFee],
   );
 
   const setQty = (id: string, qty: number) => {
@@ -374,6 +384,7 @@ function Editor({
               <span>−{booking.discount.pct}%</span>
             </div>
           )}
+          {!!outsideHoursFee && !manuel && <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "#555" }}><span>{outsideFeeLabel()}</span><span>{outsideHoursFee} kr</span></div>}
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: "15px", fontWeight: 800, marginTop: "4px" }}>
             <span>Ny total</span>
             <span>{nyTotal} kr</span>

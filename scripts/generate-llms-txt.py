@@ -201,12 +201,14 @@ def facts(pages: list[Page]) -> list[str]:
     lines = [
         f"- **Firma:** {biz.get('legalName') or biz.get('name')}"
         + (f" (CVR {biz['taxID'][2:]})" if str(biz.get("taxID", "")).startswith("DK") else ""),
-        f"- **Afhentning:** {address.get('streetAddress')}, {address.get('postalCode')} {address.get('addressLocality')}",
+        f"- **Afhentning:** {address if isinstance(address, str) else str(address.get('streetAddress')) + ', ' + str(address.get('postalCode')) + ' ' + str(address.get('addressLocality'))}",
         f"- **Telefon:** {format_phone(biz.get('telephone'))}",
         f"- **Mail:** {biz.get('email')}",
         f"- **Område:** hele København. {koersel}",
-        "- **Lejeperiode:** 1-5 dage til samme pris. De fleste henter fredag og afleverer mandag.",
+        "- **Lejeperiode:** 1-5 dage til samme pris. Afhentning torsdag og aflevering mandag kan ske i åbningstiden.",
         "- **Betaling:** online med kort eller ved afhentning.",
+        "- **Minimumsordre:** 500 kr efter rabat ved selvafhentning; ordrer med levering er undtaget.",
+        "- **Andre tidspunkter:** efter aftale, 200 kr pr. booking uden rabat. Gebyret tæller ikke med i minimumsordren.",
     ]
 
     hours = biz.get("openingHoursSpecification") or []

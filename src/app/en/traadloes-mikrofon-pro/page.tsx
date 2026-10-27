@@ -46,7 +46,7 @@ export default function Page() {
         "Handheld microphone in stage quality",
         "Receiver and cable connection included",
         "Made for conferences and stages",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     />
   );

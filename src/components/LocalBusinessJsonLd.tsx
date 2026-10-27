@@ -30,12 +30,10 @@ import { socialEntries } from "@/lib/socials";
  * selv skal gætte hører sammen. sameAs og hasMap fortæller det direkte, det er
  * den billigste ting, man kan gøre for lokal synlighed.
  */
-const PLACE_ID = "ChIJ9UxZq-xTUkYRsiSY3hvy-MY";
 const PROFILE_URL = "https://g.page/r/CbIkmN4b8vjGEBM";
-const MAP_URL = `https://www.google.com/maps/place/?q=place_id:${PLACE_ID}`;
 
 export default function LocalBusinessJsonLd({ extra = {} }: { extra?: Record<string, unknown> }) {
-  const { company, hours, e164, socials } = useSiteSettings();
+  const { company, pickupAddress, hours, e164, socials } = useSiteSettings();
 
   const data = {
     "@context": "https://schema.org",
@@ -50,17 +48,12 @@ export default function LocalBusinessJsonLd({ extra = {} }: { extra?: Record<str
     taxID: `DK${company.cvr}`,
     telephone: e164,
     email: company.email,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: company.street,
-      postalCode: company.postalCode,
-      addressLocality: company.city,
-      addressCountry: "DK",
-    },
+    // Det fysiske afhentningssted; firmaets juridiske adresse står i footeren.
+    address: pickupAddress,
     areaServed: { "@type": "City", name: "København" },
     // Profilen først, så de sociale profiler fra /admin/indstillinger
     sameAs: [PROFILE_URL, ...socialEntries(socials).map((l) => l.url)],
-    hasMap: MAP_URL,
+    hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pickupAddress)}`,
     logo: "https://lejhojtaler.dk/icon-512.png",
     openingHoursSpecification: openingHoursSpecification(hours),
     ...extra,

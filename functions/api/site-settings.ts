@@ -1,3 +1,4 @@
+import { migrateOperatingSettings, OPERATING_REVISION } from "../../src/lib/operatingSettings";
 /**
  * Offentlige web-indstillinger: telefonnummer og åbningstider.
  * GET  /api/site-settings — public
@@ -85,7 +86,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     if (!raw) {
       return json(toResponse(DEFAULT_DIGITS, DEFAULT_OPENING_HOURS, DEFAULT_PICKUP_ADDRESS, DEFAULT_COMPANY, TOMME_SOCIALS, null));
     }
-    const doc = JSON.parse(raw) as {
+    const doc = migrateOperatingSettings(JSON.parse(raw)) as {
       phone?: string;
       hours?: unknown;
       pickupAddress?: unknown;
@@ -124,7 +125,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   let stored: { phone?: string; hours?: unknown; pickupAddress?: unknown; company?: unknown; socials?: unknown } = {};
   try {
     const raw = await context.env.BOOKINGS.get(KV_KEY);
-    if (raw) stored = JSON.parse(raw);
+    if (raw) stored = migrateOperatingSettings(JSON.parse(raw));
   } catch {
     // ulæseligt dokument erstattes af det vi gemmer nu
   }
@@ -180,7 +181,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const updatedAt = new Date().toISOString();
   await context.env.BOOKINGS.put(
     KV_KEY,
-    JSON.stringify({ phone: digits, hours, pickupAddress, company, socials, updatedAt }),
+    JSON.stringify({ phone: digits, hours, pickupAddress, company, socials, updatedAt, operatingRevision: OPERATING_REVISION }),
   );
   console.log("[site-settings] gemt telefon", digits, "og", Object.values(hours.days).filter((d) => !d.closed).length, "åbne dage");
   return json({ ok: true, ...toResponse(digits, hours, pickupAddress, company, socials, updatedAt) });

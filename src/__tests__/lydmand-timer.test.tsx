@@ -98,7 +98,7 @@ describe("Lydmand i bookingen", () => {
     await medLydmand();
     expect(screen.getAllByText("Lydmand, 4 timer").length).toBeGreaterThan(0);
     expect(screen.getAllByText(`${catalogPrice("lydmand") * 4} kr`).length).toBeGreaterThan(0);
-    expect(screen.queryByText(/kommentaren/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Skriv antal timer i kommentaren/)).not.toBeInTheDocument();
 
     // Én time mere — timepanelet ligger før kurven, så det er den første "Én mere"
     fireEvent.click(screen.getAllByLabelText("Én mere")[0]);
@@ -120,11 +120,11 @@ describe("Lydmand i bookingen", () => {
 
     await waitFor(() => expect(bookKald()).toBeTruthy());
     const body = JSON.parse(bookKald()[1].body);
-    expect(body.cartItems).toContainEqual({ name: "Lydmand, 5 timer (kl. 18–22.30)", price: catalogPrice("lydmand") * 5, productId: "lydmand" });
+    expect(body.cartItems).toContainEqual({ name: "Lydmand, 5 timer (kl. 18–22.30)", price: catalogPrice("lydmand") * 5, quantity: 5, productId: "lydmand" });
     // Ikke også som tilvalg — så stod den to gange på ordren
     expect(body.addonIds).not.toContain("lydmand");
     expect(body.addons).not.toContain("Lydmand");
-    expect(body.total).toBe(catalogPrice("festival") + catalogPrice("lydmand") * 5);
+    expect(body.total).toBe(catalogPrice("festival") + catalogPrice("lydmand") * 5 + 200);
   });
 
   it("betaler pr. time hos Stripe — id'et sendes én gang pr. time", async () => {

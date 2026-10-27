@@ -4434,5 +4434,29 @@
     "email_paa_brugere": "AdminUserRecord.email, sættes/fjernes med action set_email i /api/admin-users og på /admin/brugere. Bootstrap (når admin_users er tom) giver frederik=frederik.scharling.dj@gmail.com og philip=philipleth@gmail.com — Frederiks adresse er hans Google Ads-login og bør bekræftes af ham.",
     "nulstilling_2026_10_22": "Ingen kunne logge ind. ADMIN_SECRET sat til en ny kode (wrangler pages secret put), koden er ikke i repoet. admin_users slettet i produktionens KV, så begge brugere blev genskabt med den nye kode som adgangskode. Legacy-adgang (?secret=ADMIN_SECRET) virker fortsat som nødadgang.",
     "rettelse": "Noten under middelvej_aag_bud_2026_09_18.sidefund om at KV-namespacet i wrangler.toml var tomt var forkert: wrangler kv kører mod et LOKALT lager medmindre man giver --remote. Produktionen bruger c46378bf… som i wrangler.toml."
+  },
+  "frederik_2026_10_27": {
+    "passes": true,
+    "source": "Gmail 1a17786a4c992240, mails 26.–27. oktober 2026",
+    "scope": [
+      "Afhentning Njalsgade 40, 2300 København, seneste men foreløbige adresse",
+      "Mandag og torsdag 17–18; øvrige tider efter aftale",
+      "Minimumsordre 500 kr efter rabat ved selvafhentning, gebyr tæller ikke med; kørsel undtaget",
+      "200 kr uden for åbningstid, foreløbigt én gang pr. booking, uden rabat",
+      "Samme regler i dansk/engelsk UI, booking og Stripe",
+      "Gamle KV-indstillinger migreres; efterfølgende adminændringer bevares",
+      "Test, build og desktop/mobil-demo før publicering"
+    ],
+    "questions": [
+      "Bekræft Njalsgade 40 og indgang; gælder flytningen også CVR-adressen?",
+      "Er 200 kr pr. booking eller pr. afhentning/aflevering?",
+      "Skal minimum være efter rabat, og er returafhentning alene nok til undtagelsen?"
+    ],
+    "publication": "Afventer Philips go jf. globale instruktioner. Ingen kundekontakt.",
+    "spreadsheet": "Slutopgørelse, ikke produktkatalog. Ingen pris- eller lagerændringer udledt af den.",
+    "validation": "1305 tests passed; 7 skipped. Production build, sitemap and llms.txt passed. Desktop/mobile browser review, 8 screenshots in demo/. No external messages or transactions.",
+    "demo": "demo/2026-10-27-saadan-virker-det.html",
+    "admin": "Fee retained and recalculated in order edits, shown in order breakdown and standard invoice.",
+    "workspace": "Isolated branch frederik-opdateringer-2026-10-27 from 01b3492; original checkout untouched."
   }
 }

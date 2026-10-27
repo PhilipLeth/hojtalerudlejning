@@ -22,7 +22,8 @@ export const KV_SMS_SETTINGS = "sms_settings";
  * Standardadressen i SMS-skabelonerne. Den levende adresse kommer fra
  * /admin/indstillinger — se functions/api/_lib/sms.ts, der sætter den ind.
  */
-export const PICKUP_ADDRESS = "Vermlandsgade 66, 2300 København";
+export { DEFAULT_PICKUP_ADDRESS as PICKUP_ADDRESS } from "./pickup";
+import { DEFAULT_PICKUP_ADDRESS as PICKUP_ADDRESS } from "./pickup";
 
 export type SmsTypeId =
   | "booking_modtaget"

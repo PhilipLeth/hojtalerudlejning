@@ -74,7 +74,7 @@ describe("Kvitteringen efter en booking", () => {
     await waitFor(() => expect(screen.getByText("Booking modtaget!")).toBeInTheDocument(), { timeout: 4000 });
     // Det var netop den her linje, der kastede: afhentningsadressen på kvitteringen.
     // Adressen kommer fra /admin/indstillinger — her er det standardadressen.
-    expect(screen.getByText(/Afhentning:.*Vermlandsgade/)).toBeInTheDocument();
+    expect(screen.getByText(/Afhentning:.*Njalsgade/)).toBeInTheDocument();
   }, 20000);
 
   it("viser ordrenummeret og siger at man ikke skal bestille igen", async () => {

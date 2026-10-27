@@ -16,15 +16,7 @@ export const metadata: Metadata = {
 const sections = [
   {
     title: "1. Lejeperiode og priser",
-    content: `Standardlejeperioden er en weekend (fredag til mandag, 3 dage). Lejeperioden kan forlænges op til 5 dage med følgende prismultiplikatorer:
-
-- 1 dag: 80 % af weekendprisen
-- 2 dage: 90 % af weekendprisen
-- 3 dage (weekend): 100 % (standardpris)
-- 4 dage: 120 % af weekendprisen
-- 5 dage: 140 % af weekendprisen
-
-Aktuelle priser fremgår af bookingformularen på forsiden.`,
+    content: `Prisen for udstyr er den samme for 1–5 dages leje. Du kan for eksempel hente torsdag kl. 17–18 og aflevere mandag kl. 17–18. Aktuelle priser fremgår af bookingformularen. Særlige ydelser, herunder DJ og lydmand, prissættes efter de valgte timer.`,
   },
   {
     title: "2. Depositum og kaution",
@@ -68,7 +60,7 @@ Udstyret leveres med alle nødvendige kabler.`,
   },
   {
     title: "9. Betaling",
-    content: `Betaling sker online med kort ved booking (via Stripe) eller ved afhentning efter aftale. Prisen er den totalpris, der fremgår af bookingbekræftelsen.`,
+    content: `Betaling sker online med kort ved booking (via Stripe) eller ved afhentning efter aftale. Prisen er den totalpris, der fremgår af bookingbekræftelsen. Minimumsordre ved afhentning er 500 kr efter rabat, eksklusive gebyr. Ordrer med levering er undtaget. Afhentning eller aflevering uden for åbningstiden sker efter aftale og koster 200 kr pr. booking. Gebyret opkræves én gang, også hvis begge møder ligger uden for åbningstiden, og der gives ikke rabat på gebyret.`,
   },
   {
     title: "10. Persondatapolitik",

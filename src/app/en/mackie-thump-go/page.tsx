@@ -7,7 +7,7 @@ import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Rent Mackie Thump GO Copenhagen | ${prisDkk("thumpgo")}/weekend | Lejhøjtaler.dk`,
   description:
-    `Rent a battery-powered Mackie Thump GO speaker in Copenhagen from ${prisDkk("thumpgo")}/weekend. Up to 12 hours of battery, Bluetooth, no power outlet needed. Pick up Friday, return Monday.`,
+    `Rent a battery-powered Mackie Thump GO speaker in Copenhagen from ${prisDkk("thumpgo")}/weekend. Up to 12 hours of battery, Bluetooth, no power outlet needed. Pick up Thursday, return Monday.`,
   keywords: [
     "rent battery speaker copenhagen",
     "mackie thump go rental",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     images: ogImages("/images/product-thumpgo-v2.webp"),
     title: `Rent Mackie Thump GO Copenhagen | ${prisDkk("thumpgo")}/weekend | Lejhøjtaler.dk`,
     description:
-      `Rent a battery-powered Mackie Thump GO speaker in Copenhagen from ${prisDkk("thumpgo")}/weekend. Up to 12 hours of battery, Bluetooth, no power outlet needed. Pick up Friday, return Monday.`,
+      `Rent a battery-powered Mackie Thump GO speaker in Copenhagen from ${prisDkk("thumpgo")}/weekend. Up to 12 hours of battery, Bluetooth, no power outlet needed. Pick up Thursday, return Monday.`,
     url: "https://lejhojtaler.dk/en/mackie-thump-go",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -49,7 +49,7 @@ export default function MackieThumpGoEn() {
         "Up to 12 hours of battery",
         "Only 10 kg, fits on a bike",
         "Charger and AUX cable included",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     />
   );

@@ -50,7 +50,7 @@ export default function RoegmaskinePage() {
         "Fjernbetjening medfølger – styr røgen fra sofaen",
         "Nem opsætning – varmer op på 5 minutter",
         "Betal ved afhentning – betal kun lejen",
-        "Hent fredag, aflever mandag",
+        "Hent torsdag, aflever mandag",
       ]}
     >
       <UpsellBox

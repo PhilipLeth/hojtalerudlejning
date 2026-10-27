@@ -39,7 +39,7 @@ export default function HojtalerpakkeNormalPage() {
         '2× 12" EV aktive højtalere',
         "Alle kabler inkl., stativer kan tilkøbes (95 kr)",
         "Bluetooth",
-        "Hent fredag, aflever mandag",
+        "Hent torsdag, aflever mandag",
       ]}
     />
   );

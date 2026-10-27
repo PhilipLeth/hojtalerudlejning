@@ -100,7 +100,7 @@ export function parseOrderItems(raw: unknown): { items: OrderItem[] } | { error:
 export function rebuildOrder(
   items: OrderItem[],
   lookup: (id: string) => CatalogEntry | undefined,
-  opts: { discountPct?: number; legacy?: LegacyLine[]; manualTotal?: number | null } = {},
+  opts: { discountPct?: number; legacy?: LegacyLine[]; manualTotal?: number | null; outsideHoursFee?: number } = {},
 ): { order: RebuiltOrder; ukendte: string[] } {
   const ukendte: string[] = [];
   const produkter: Array<{ entry: CatalogEntry; qty: number }> = [];
@@ -161,13 +161,13 @@ export function rebuildOrder(
 
   const pct = Number(opts.discountPct);
   const rabatteret = Number.isFinite(pct) && pct > 0 && pct <= 100
-    ? Math.round(subtotal * (1 - pct / 100))
+    ? subtotal - Math.round(subtotal * pct) / 100
     : subtotal;
 
   const manuel = opts.manualTotal;
   const total = typeof manuel === "number" && Number.isFinite(manuel) && manuel >= 0
     ? Math.round(manuel)
-    : rabatteret;
+    : rabatteret + (opts.outsideHoursFee ?? 0);
 
   return {
     order: { speaker, speakerId, speakerSize, cartItems, addons, addonIds, subtotal, total },
@@ -181,7 +181,7 @@ export function orderItemsFromBooking(
     speaker?: string;
     speakerId?: string;
     speakerSize?: string;
-    cartItems?: Array<{ name?: string; price?: number; productId?: string }>;
+    cartItems?: Array<{ name?: string; price?: number; productId?: string; quantity?: number }>;
     addons?: string[];
     addonIds?: string[];
   },
@@ -208,11 +208,14 @@ export function orderItemsFromBooking(
 
   for (const item of b.cartItems || []) {
     if (!item?.name && !item?.productId) continue;
+    const quantity = Math.max(1, Math.min(MAX_ORDER_QTY, Math.floor(item.quantity ?? 1)));
+    for (let n = 0; n < quantity; n++) {
     tilfoej(item.productId, {
       label: String(item.name ?? ""),
-      price: Number.isFinite(item.price) ? Number(item.price) : undefined,
+      price: Number.isFinite(item.price) ? Number(item.price) / quantity : undefined,
       kind: "kurv",
     });
+    }
   }
 
   const ids = b.addonIds || [];

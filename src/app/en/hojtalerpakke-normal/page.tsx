@@ -49,7 +49,7 @@ export default function LargeSpeakerPackageEn() {
         '2× 12" EV active speakers',
         "All cables included, stands available as an add-on (95 DKK)",
         "Bluetooth",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     />
   );

@@ -49,7 +49,7 @@ export default function LysPakkePage() {
         "Centereffekt inkluderet",
         "Stativ + strøm og kabler medfølger",
         "Betal ved afhentning",
-        "Hent fredag, aflever mandag",
+        "Hent torsdag, aflever mandag",
       ]}
     >
       <UpsellBox

@@ -53,7 +53,7 @@ export default function Page() {
         { q: "Do you have UV light, strobes or lasers?", a: "Not yet. We rent mirror balls, LED light effects, a light bar on a stand, uplights and a fog machine, that is what is in the packages, and that is what we can deliver. If you want UV, strobe or laser for the party, write to us: with enough requests we will buy it in." },
         { q: "Can a 16- or 18-year-old rent it themselves?", a: "The renter must be 18 and pays at booking. In practice a parent books, and the young one collects together with an adult. Everything is plug and play, so nobody needs to know anything about the technology." },
         { q: "How many guests can the packages handle?", a: "The small youth party package is for up to 50 guests in a basement, garage or living room. The large one with two 12\" speakers handles up to 100 in a hall, add the subwoofer if you are more or want more bass." },
-        { q: "When do I collect and return?", a: "The standard is collection on Friday and return on Monday, the same price whether the party is Friday or Saturday. You choose the dates in the booking, and we can deliver and set up in Copenhagen for " + prisDkk("levering_ud") + "." },
+        { q: "When do I collect and return?", a: "The standard is collection on Thursday and return on Monday, the same price whether the party is Friday or Saturday. You choose the dates in the booking, and we can deliver and set up in Copenhagen for " + prisDkk("levering_ud") + "." },
       ]}
       related={[
         { href: "/festpakke-stor", label: "Party package 30-50", priceId: "pakke_fest_stor" },

@@ -49,7 +49,7 @@ export default function ProjektorPage() {
         "Fjernbetjening medfølger",
         "Nem opsætning, klar på 5 min.",
         "Betal ved afhentning",
-        "Hent fredag, aflever mandag",
+        "Hent torsdag, aflever mandag",
       ]}
     >
       <UpsellBox

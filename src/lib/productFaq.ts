@@ -54,7 +54,7 @@ export interface ProductFaqInput {
  * Hvad der er med i pakken, og hvor mange den rækker til.
  *
  * Hentes fra kataloget og ikke fra sidens bullets: bullets er salgsargumenter
- * ("Kraftig bas til udendørs fest", "Hent fredag, aflever mandag"), og listet
+ * ("Kraftig bas til udendørs fest", "Hent torsdag, aflever mandag"), og listet
  * op som svar på "hvad er inkluderet" bliver de både forkerte og ulæselige.
  * `contents` er den faktiske pakkeliste.
  *
@@ -173,7 +173,7 @@ function buildDa({ it, price, included, guests, extra }: Bygget): FaqItem[] {
   items.push({
     q: `Hvor længe kan jeg leje ${it}?`,
     a:
-      `Fra 1 til ${MAX_RENTAL_DAYS} dage til samme pris — ${price} kr. De fleste henter fredag og afleverer mandag. ` +
+      `Fra 1 til ${MAX_RENTAL_DAYS} dage til samme pris — ${price} kr. De fleste henter torsdag og afleverer mandag. ` +
       `Skal du bruge det længere, så ring på 31 13 28 52, så finder vi ud af det.`,
   });
 
@@ -228,7 +228,7 @@ function buildEn({ it, price, included, guests, extra }: Bygget): FaqItem[] {
   items.push({
     q: `How long can I rent ${it} for?`,
     a:
-      `From 1 to ${MAX_RENTAL_DAYS} days at the same price — ${price} DKK. Most customers collect on Friday and ` +
+      `From 1 to ${MAX_RENTAL_DAYS} days at the same price — ${price} DKK. Most customers collect on Thursday and ` +
       `return on Monday. Call 31 13 28 52 if you need it for longer.`,
   });
 

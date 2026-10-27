@@ -46,7 +46,7 @@ export default function Page() {
         { title: "For the milestone ones: bring a microphone", text: "50th and 60th birthdays are speech parties. A wireless microphone makes sure every speech is heard, including the one where the voice goes thin." },
         { title: "For a kids' party: disco lights", text: "A disco ball at " + prisDkk("discokugle") + " or a single light effect at " + prisDkk("lyseffekt") + " turns the living room into a nightclub. Children are easy to entertain with light and music." },
         { title: "Make the playlist before the guests arrive", text: "The system connects to one phone at a time over Bluetooth. With the list ready in advance you avoid five guests taking turns pairing their phones mid-party." },
-        { title: "Book the weekend, not the day", text: "The price is the same for 1 to 5 days, so collect on Friday and return on Monday even if the party is only on Saturday. That way you can set up in peace." },
+        { title: "Book the weekend, not the day", text: "The price is the same for 1 to 5 days, so collect on Thursday and return on Monday even if the party is only on Saturday. That way you can set up in peace." },
       ]}
       faq={[
         { q: "What does sound for a birthday cost?", a: "Party package 0-30 with two speakers and a light bar is " + prisDkk("pakke_fest_lille") + " for up to 5 days, and Party package 30-50 is " + prisDkk("pakke_fest_stor") + ". For a small birthday a battery-powered Mackie Thump GO is enough, at " + prisDkk("thumpgo") + "." },

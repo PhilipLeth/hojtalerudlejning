@@ -31,7 +31,7 @@ const COPY = {
     book: (navn: string) => `Book ${navn} nu`,
     faqTitle: (navn: string) => `Ofte stillede spørgsmål om ${navn}`,
     ctaTitle: "Klar til at booke?",
-    ctaText: "Book online på 2 minutter. Hent fredag i København S, aflever mandag.",
+    ctaText: "Book online på 2 minutter. Hent torsdag i København S, aflever mandag.",
     allProducts: "← Se alle produkter",
     home: "/",
     pausedTitle: "Udlejes ikke lige nu",
@@ -58,7 +58,7 @@ const COPY = {
     book: (navn: string) => `Book ${navn} now`,
     faqTitle: (navn: string) => `Frequently asked questions about ${navn}`,
     ctaTitle: "Ready to book?",
-    ctaText: "Book online in 2 minutes. Collect on Friday in Copenhagen, return Monday.",
+    ctaText: "Book online in 2 minutes. Collect on Thursday in Copenhagen, return Monday.",
     allProducts: "← See all products",
     home: "/en",
     pausedTitle: "Not available for rent right now",
@@ -141,7 +141,7 @@ export interface ProductLandingProps {
    * en pakke hvor kørslen er med og prisen derfor ikke er en weekendleje.
    */
   priceUnit?: string;
-  /** Sætningen i bunden, når "hent fredag, aflever mandag" ikke passer (ydelser, pakker med levering) */
+  /** Sætningen i bunden, når "hent torsdag, aflever mandag" ikke passer (ydelser, pakker med levering) */
   ctaText?: string;
   /**
    * "extraOnly": kun faqExtra, de automatiske svar handler om weekendleje,

@@ -171,7 +171,7 @@ export default async function BlogPostPage({ params }: Props) {
               Klar til at leje? Book din højtaler nu
             </h2>
             <p className="mt-2 text-white/50 text-sm">
-              {startPrisKr()}/weekend. Hent fredag, aflever mandag.
+              {startPrisKr()}/weekend. Hent torsdag, aflever mandag.
             </p>
             <Link
               href="/#shop-pakker"

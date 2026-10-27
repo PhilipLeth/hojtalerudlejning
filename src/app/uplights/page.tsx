@@ -130,7 +130,7 @@ export default function UplightsPage() {
         <section className="mx-auto max-w-2xl px-4 pb-12 sm:pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Klar til at lyse lokalet op?</h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online på 2 minutter. Hent fredag i København S, aflever mandag.
+            Book online på 2 minutter. Hent torsdag i København S, aflever mandag.
           </p>
           <a
             href="/book?product=uplight"

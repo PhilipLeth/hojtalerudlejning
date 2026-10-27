@@ -46,7 +46,7 @@ export default function Page() {
         "Bodypack transmitter and receiver",
         "Cable connection to speaker or mixer",
         "Made for conferences and stages",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     />
   );

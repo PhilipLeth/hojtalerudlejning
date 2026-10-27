@@ -53,7 +53,7 @@ describe("Ordren bygges om fra katalogets priser", () => {
   it("regner rabatkoden med, så en rettet ordre ikke mister kundens rabat", () => {
     const { order } = rebuildOrder([{ id: "festival", qty: 1 }], lookup, { discountPct: 10 });
     expect(order.subtotal).toBe(995);
-    expect(order.total).toBe(896); // 995 − 10 %
+    expect(order.total).toBe(895.5); // 995 − 10 %, samme øreafrunding som betaling
   });
 
   it("en aftalt pris slår katalogets sum — men kun når den er sat bevidst", () => {

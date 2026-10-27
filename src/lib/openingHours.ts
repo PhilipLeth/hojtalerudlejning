@@ -47,12 +47,7 @@ export interface HoursException {
   note: string;
 }
 
-/**
- * Afhentning uden for åbningstid var et betalt tilvalg her (6.30–21 mod 50 kr).
- * Frederik 25. august 2026: der er ikke mulighed for at komme uden for
- * åbningstiden, heller ikke mod ekstra betaling. Feltet er fjernet frem for at
- * stå og love noget vi ikke holder; ligger det stadig i KV, springes det over.
- */
+/** Åbningstider og dato-undtagelser. Aftalegebyret håndteres af bookingPolicy. */
 export interface OpeningHours {
   days: Record<Weekday, DayHours>;
   /** Linjen under tiderne, fx "Andre tidspunkter efter aftale" */
@@ -93,8 +88,8 @@ const LUKKET: DayHours = { closed: true, open: "10:00", close: "16:00", purpose:
  * praksis, og den kan derfor oversættes, se otherLine(). Har han skrevet sin
  * egen tekst, vises den som skrevet, for den kan vi ikke oversætte.
  */
-export const DEFAULT_OTHER = "Andre tidspunkter vælges direkte i bookingen.";
-export const DEFAULT_OTHER_EN = "Other times can be chosen directly in the booking.";
+export const DEFAULT_OTHER = "Andre tidspunkter efter aftale: 200 kr pr. booking. Minimumsordre ved afhentning: 500 kr.";
+export const DEFAULT_OTHER_EN = "Other times by arrangement: DKK 200 per booking. Minimum pickup order: DKK 500.";
 
 /**
  * Linjen på sidens sprog.
@@ -110,22 +105,15 @@ export function otherLine(hours: OpeningHours, locale: "da" | "en" = "da"): stri
   return text;
 }
 
-/**
- * Butikstider, som Frederik satte dem 22. september 2026: mandag til fredag
- * 9.30–18 og lørdag 10–14. Før stod der kun mandag 15–17 og fredag 14–18,
- * to eftermiddage om ugen, og det var ikke længere sandt.
- *
- * Begge slags dage kan bruges til både afhentning og aflevering, derfor står
- * der ikke noget formål på dem.
- */
+/** Frederiks åbningstider fra mail 26. oktober 2026. */
 export const DEFAULT_OPENING_HOURS: OpeningHours = {
   days: {
-    mon: { closed: false, open: "09:30", close: "18:00", purpose: "" },
-    tue: { closed: false, open: "09:30", close: "18:00", purpose: "" },
-    wed: { closed: false, open: "09:30", close: "18:00", purpose: "" },
-    thu: { closed: false, open: "09:30", close: "18:00", purpose: "" },
-    fri: { closed: false, open: "09:30", close: "18:00", purpose: "" },
-    sat: { closed: false, open: "10:00", close: "14:00", purpose: "" },
+    mon: { closed: false, open: "17:00", close: "18:00", purpose: "" },
+    tue: { ...LUKKET },
+    wed: { ...LUKKET },
+    thu: { closed: false, open: "17:00", close: "18:00", purpose: "" },
+    fri: { ...LUKKET },
+    sat: { ...LUKKET },
     sun: { ...LUKKET },
   },
   other: DEFAULT_OTHER,
@@ -427,7 +415,7 @@ export function upcomingExceptions(
  *   unknown ved det ikke endnu, VALGT PÅ FORHÅND, så tidsvalget ikke koster
  *           kunden et klik, og vi kun får et signal når han selv giver det
  */
-export type TimeSlotId = "early" | "late" | "unknown";
+export type TimeSlotId = "early" | "late" | "unknown" | "outside";
 
 export const TIME_SLOT_IDS: TimeSlotId[] = ["early", "late", "unknown"];
 

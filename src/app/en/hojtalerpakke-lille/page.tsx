@@ -7,7 +7,7 @@ import { ogImages } from "@/lib/og";
 export const metadata: Metadata = {
   title: `Small Speaker Package Rental Copenhagen | ${prisDkk("party")} | Lejhøjtaler.dk`,
   description:
-    `Rent two 10" Alto speakers with Bluetooth in Copenhagen from ${prisDkk("party")}/weekend. Enough sound for up to 30 guests, all cables included. Pick up Friday, return Monday.`,
+    `Rent two 10" Alto speakers with Bluetooth in Copenhagen from ${prisDkk("party")}/weekend. Enough sound for up to 30 guests, all cables included. Pick up Thursday, return Monday.`,
   keywords: [
     "speaker package rental copenhagen",
     "rent speakers for party copenhagen",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     images: ogImages("/images/product-party-v2.webp"),
     title: `Small Speaker Package Rental Copenhagen | ${prisDkk("party")} | Lejhøjtaler.dk`,
     description:
-      `Rent two 10" Alto speakers with Bluetooth in Copenhagen from ${prisDkk("party")}/weekend. Enough sound for up to 30 guests, all cables included. Pick up Friday, return Monday.`,
+      `Rent two 10" Alto speakers with Bluetooth in Copenhagen from ${prisDkk("party")}/weekend. Enough sound for up to 30 guests, all cables included. Pick up Thursday, return Monday.`,
     url: "https://lejhojtaler.dk/en/hojtalerpakke-lille",
     siteName: "Lejhøjtaler.dk",
     locale: "en_GB",
@@ -49,7 +49,7 @@ export default function SmallSpeakerPackageEn() {
         '2× 10" Alto speakers with Bluetooth',
         "All cables included, stands and microphone available as add-ons",
         "Only 12 kg",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     />
   );

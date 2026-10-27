@@ -40,7 +40,7 @@ export default function Page() {
         "Stable tripod stand",
         "Set up in 2 minutes",
         "Combine with a projector from 495 DKK",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     />
   );

@@ -1,3 +1,4 @@
+import { migrateOperatingSettings, OPERATING_REVISION } from "../../../src/lib/operatingSettings";
 /** Sitets indstillinger, læst fra KV på serveren.
  *
  * Mails og SMS'er skal sige det samme som hjemmesiden: samme adresse, samme
@@ -34,7 +35,7 @@ export async function loadSiteSettings(kv: KVNamespace): Promise<ServerSiteSetti
   try {
     const raw = await kv.get(SITE_SETTINGS_KEY);
     if (!raw) return DEFAULT_SITE_SETTINGS;
-    const doc = JSON.parse(raw) as { phone?: string; hours?: unknown; pickupAddress?: unknown; company?: unknown };
+    const doc = migrateOperatingSettings(JSON.parse(raw)) as { phone?: string; hours?: unknown; pickupAddress?: unknown; company?: unknown };
     const digits = String(doc.phone || "").replace(/\D/g, "");
     return {
       company: normalizeCompany(doc.company),

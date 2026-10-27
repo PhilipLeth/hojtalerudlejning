@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const terms = [
   {
     title: `Same price for 1 to ${MAX_RENTAL_DAYS} days`,
-    body: "The price covers the whole rental period, not each day. Most people collect on Friday and return on Monday.",
+    body: "The price covers the whole rental period, not each day. Most people collect on Thursday and return on Monday.",
   },
   {
     title: "Cables and stands are included",

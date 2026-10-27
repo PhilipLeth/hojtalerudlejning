@@ -63,7 +63,7 @@ describe("telefonnumre", () => {
 
 describe("beskedlængde", () => {
   it("tæller dansk tekst som GSM-7 — æ, ø og å fylder ét tegn", () => {
-    const text = "Husk at aflevere højtaleren i dag på Vermlandsgade 66. Ring hvis I mangler mere tid.";
+    const text = "Husk at aflevere højtaleren i dag på Njalsgade 40. Ring hvis I mangler mere tid.";
     const t = smsLength(text);
     expect(t.unicode).toBe(false);
     expect(t.segments).toBe(1);
@@ -324,7 +324,7 @@ describe("skabeloner", () => {
       "Hentes hos os",
     );
     // Standardadressen; den levende kommer fra /admin/indstillinger
-    expect(placeLine({})).toContain("Vermlandsgade 66");
+    expect(placeLine({})).toContain("Njalsgade 40");
     expect(placeLine({}, "Testvej 1, 2100 København Ø")).toContain("Testvej 1");
   });
 

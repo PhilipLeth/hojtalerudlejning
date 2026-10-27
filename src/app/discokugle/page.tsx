@@ -60,7 +60,7 @@ export default function DiscokuglePage() {
         "Plug-and-play med ophæng/stativ",
         "Spotlight inkluderet",
         "Betal ved afhentning",
-        "Hent fredag, aflever mandag",
+        "Hent torsdag, aflever mandag",
       ]}
     >
       {/*

@@ -284,12 +284,12 @@ function fakeKv(start: Record<string, string> = {}) {
 
 const ORDRE = {
   speaker: "Lille højtalerpakke",
-  speakerId: "lille",
+  speakerId: "party",
   speakerSize: "—",
   period: "—",
   days: 2,
   addons: [],
-  addonIds: [],
+  addonIds: ["lys"],
   cartItems: [],
   total: 995,
   paymentChoice: "online",

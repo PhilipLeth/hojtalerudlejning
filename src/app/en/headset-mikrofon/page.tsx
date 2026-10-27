@@ -50,7 +50,7 @@ export default function Page() {
         "Receiver and batteries included",
         "Cable to speaker or mixer included",
         "Hands-free, made for presentations",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     >
       <UpsellBox

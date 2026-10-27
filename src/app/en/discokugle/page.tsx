@@ -50,7 +50,7 @@ export default function Page() {
         "Plug and play, with hanging kit or stand",
         "Spotlight included",
         "Pay on pickup",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     >
       {/*

@@ -46,7 +46,7 @@ export default function Page() {
         "XLR cable included",
         "Made for vocals and speeches",
         "Plugs straight into our speakers",
-        "Collect Friday, return Monday",
+        "Collect Thursday, return Monday",
       ]}
     />
   );

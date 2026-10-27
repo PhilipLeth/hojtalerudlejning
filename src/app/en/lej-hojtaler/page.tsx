@@ -214,7 +214,7 @@ export default function Page() {
         <section className="mx-auto max-w-2xl px-4 pb-12 sm:pb-24 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">Ready to rent speakers?</h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online in 2 minutes. Collect on Friday in Copenhagen S, return Monday.{" "}
+            Book online in 2 minutes. Collect on Thursday in Copenhagen S, return Monday.{" "}
             <LiveStartPrice prefix="From " suffix=" DKK/weekend." />
           </p>
           <a

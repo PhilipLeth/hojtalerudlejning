@@ -195,7 +195,7 @@ export default function Page() {
             Ready to light up the party?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-white/50">
-            Book online in 2 minutes. Collect on Friday in Copenhagen S, return Monday.
+            Book online in 2 minutes. Collect on Thursday in Copenhagen S, return Monday.
           </p>
           <a
             href="/en/book?product=lys"

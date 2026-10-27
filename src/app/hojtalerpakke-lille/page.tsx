@@ -39,7 +39,7 @@ export default function HojtalerpakkeLillePage() {
         '2× 10" Alto med Bluetooth',
         "Alle kabler inkl., stativer og mikrofon kan tilkøbes",
         "Kun 12 kg",
-        "Hent fredag, aflever mandag",
+        "Hent torsdag, aflever mandag",
       ]}
     />
   );

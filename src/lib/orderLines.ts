@@ -20,6 +20,7 @@ export interface OrderBooking {
   cartItems?: Array<{ name: string; price?: number; productId?: string }>;
   deliveryAddress?: string;
   total?: number;
+  outsideHoursFee?: number;
 }
 
 export interface OrderLine {

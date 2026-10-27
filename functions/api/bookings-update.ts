@@ -23,6 +23,7 @@ import {
 } from "../../src/lib/orderEdit";
 import { loadSiteSettings, mailFooter } from "./_lib/siteSettings";
 import { TIMEOUT_MAIL_MS, timeoutSignal } from "../../src/lib/fetchTimeout";
+import { editedHandoverFee } from "../../src/lib/bookingPolicy";
 
 interface Env {
   BOOKINGS: KVNamespace;
@@ -487,8 +488,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           manualTotal = beloeb;
         }
 
+        const outsideHoursFee = editedHandoverFee(booking, (await loadSiteSettings(context.env.BOOKINGS)).hours, parsed.items.map(item => item.id));
         const { order, ukendte } = rebuildOrder(parsed.items, lookup, {
           discountPct: booking.discount?.pct,
+          outsideHoursFee,
           legacy,
           manualTotal,
         });
@@ -516,6 +519,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         booking.addonIds = order.addonIds;
         booking.total = order.total;
         booking.totalManual = manualTotal !== null;
+        if (booking.outsideHoursFee !== undefined) booking.outsideHoursFee = outsideHoursFee;
 
         // Kørslen står to steder: som tilvalg og som deliveryOptionId, der
         // afgør hvad bekræftelsesmailen skriver om hentested. Fjernes eller
