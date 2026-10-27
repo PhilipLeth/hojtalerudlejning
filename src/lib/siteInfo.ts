@@ -6,14 +6,14 @@
  * skifter mailen, skulle en udvikler finde dem alle.
  *
  * Nu er standarden koden, og admin kan overskrive den i KV (site_settings.company).
- * Bemærk at afhentningsadressen er noget andet — se src/lib/pickup.ts: kunden
- * henter ét sted, firmaet er registreret et andet.
+ * Afhentningsadressen styres separat i src/lib/pickup.ts. Begge adresser er
+ * Njalsgade 40 efter Philips godkendelse 27. oktober 2026.
  */
 
 export interface CompanyInfo {
   /** Firmanavnet på fakturaen og i footeren */
   name: string;
-  /** Vej og nummer, fx "Vermlandsgade 66" */
+  /** Vej og nummer, fx "Njalsgade 40" */
   street: string;
   postalCode: string;
   city: string;
@@ -25,7 +25,7 @@ export interface CompanyInfo {
 
 export const DEFAULT_COMPANY: CompanyInfo = {
   name: "Scharling Studio",
-  street: "Vermlandsgade 66",
+  street: "Njalsgade 40",
   postalCode: "2300",
   city: "København",
   cvr: "40994904",
@@ -98,7 +98,7 @@ export function validateCompany(
   return { ok: true, company: normalizeCompany({ ...raw, cvr, email }) };
 }
 
-/** "Vermlandsgade 66, 2300 København" */
+/** "Njalsgade 40, 2300 København" */
 export function formatAddress(c: CompanyInfo): string {
   return `${c.street}, ${c.postalCode} ${c.city}`;
 }

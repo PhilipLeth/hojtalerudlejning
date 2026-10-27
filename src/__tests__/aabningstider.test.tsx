@@ -424,8 +424,8 @@ describe("Footeren", () => {
 
 describe("Firmaoplysningerne", () => {
   it("har standarden fra koden", () => {
-    expect(formatCompanyLine(DEFAULT_COMPANY)).toBe("Scharling Studio · Vermlandsgade 66 · 2300 København · CVR 40994904");
-    expect(formatAddress(DEFAULT_COMPANY)).toBe("Vermlandsgade 66, 2300 København");
+    expect(formatCompanyLine(DEFAULT_COMPANY)).toBe("Scharling Studio · Njalsgade 40 · 2300 København · CVR 40994904");
+    expect(formatAddress(DEFAULT_COMPANY)).toBe("Njalsgade 40, 2300 København");
   });
 
   it("falder tilbage felt for felt ved skrald i KV", () => {

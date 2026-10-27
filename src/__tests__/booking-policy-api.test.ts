@@ -117,6 +117,7 @@ describe("Booking og betaling bruger samme regler", () => {
     const response = await settings({ env: { BOOKINGS: store } } as any);
     const result = await response.json() as any;
     expect(result.pickupAddress).toBe("Njalsgade 40, 2300 København");
+    expect(result.company.street).toBe("Njalsgade 40");
     expect(result.hours.days.mon.open).toBe("17:00");
     expect(result.hours.onlyOpenDays).toBe(false);
   });

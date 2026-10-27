@@ -55,13 +55,20 @@ describe("Frederiks bookingregler 26. oktober", () => {
 });
 
 describe("Flytning og gemte indstillinger", () => {
-  it("flytter gamle KV-indstillinger uden at ændre CVR-adresse eller telefon", () => {
-    const legacy = { phone: "12345678", pickupAddress: "Vermlandsgade 66", company: { street: "Firmaadresse" }, hours: { ...hours, onlyOpenDays: true } };
+  it("flytter begge adresser uden at ændre CVR, firmanavn, mail eller telefon", () => {
+    const legacy = { phone: "12345678", pickupAddress: "Vermlandsgade 66", company: { street: "Firmaadresse", name: "Demofirma", cvr: "12345678", email: "demo@example.com" }, hours: { ...hours, onlyOpenDays: true } };
     const migrated = migrateOperatingSettings(legacy);
     expect(migrated.pickupAddress).toBe("Njalsgade 40, 2300 København");
     expect(migrated.hours.onlyOpenDays).toBe(false);
-    expect(migrated.company).toEqual(legacy.company);
+    expect(migrated.company).toEqual({ ...legacy.company, street: "Njalsgade 40", postalCode: "2300", city: "København" });
     expect(migrated.phone).toBe(legacy.phone);
+  });
+  it("ændrer kun firmaadressen når tider og afhentning allerede er migreret", () => {
+    const saved = { operatingRevision: 2026102702, hours: { ...hours, other: "Særlig aftale" }, pickupAddress: "Indgang fra gården" };
+    const migrated = migrateOperatingSettings(saved);
+    expect(migrated.hours).toEqual(saved.hours);
+    expect(migrated.pickupAddress).toBe(saved.pickupAddress);
+    expect(migrated.operatingRevision).toBe(OPERATING_REVISION);
   });
   it("bevarer efterfølgende adminændringer og er idempotent", () => {
     const saved = { operatingRevision: OPERATING_REVISION, pickupAddress: "Ny adresse", hours };
