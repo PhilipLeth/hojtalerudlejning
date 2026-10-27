@@ -220,8 +220,9 @@ def facts(pages: list[Page]) -> list[str]:
             days = [DAYS_DA.get(d, d) for d in days]
             spans.append(f"{', '.join(days)} {h.get('opens')}-{h.get('closes')}")
         lines.append("- **Åbningstider:** " + "; ".join(spans))
-    elif biz.get("description"):
-        lines.append("- **Afhentningstider:** " + biz["description"])
+    else:
+        # Faste aftaler har intet åbningstidsinterval i JSON-LD.
+        lines.append("- **Afhentningstider:** Mandag og torsdag kl. 17. Andre tider efter aftale.")
     return lines
 
 

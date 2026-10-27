@@ -4451,9 +4451,9 @@
     "questions": [
       "Bekræft præcis indgang ved Njalsgade 40; ændret CVR-adresse er ikke bekræftet."
     ],
-    "publication": "Godkendt af Philip; klar til direkte produktionsdeploy til speaker-rental/main.",
+    "publication": "Live på lejhojtaler.dk. Første produktionsdeploy: https://c072320a.speaker-rental.pages.dev. Endelig aflevering omfatter live-guide og opdateret llms.txt.",
     "spreadsheet": "Slutopgørelse, ikke produktkatalog. Ingen pris- eller lagerændringer udledt af den.",
-    "validation": "1316 tests: 1308 passed, 7 skipped; one existing inventory test timed out at 21 seconds under concurrent build. Rerun of full inventory file and confirmation-mail tests passed. Final production build in progress. Final production build, sitemap and llms.txt passed.",
+    "validation": "1316 tests: 1308 passed, 7 skipped; one existing inventory test timed out at 21 seconds under concurrent build. Rerun of full inventory file and confirmation-mail tests passed. Final production build in progress. Final production build, sitemap and llms.txt passed. Live browser verified: normal 595 kr, one other handover 795 kr, both other handovers 995 kr; address and times confirmed on DA/EN contact pages; mobile 390x844 checked. Six live screenshots.",
     "demo": "demo/2026-10-27-saadan-virker-det.html",
     "admin": "Fee retained and recalculated in order edits, shown in order breakdown and standard invoice.",
     "workspace": "Isolated branch frederik-opdateringer-2026-10-27 from 01b3492; original checkout untouched.",
