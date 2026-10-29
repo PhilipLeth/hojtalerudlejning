@@ -4472,8 +4472,8 @@
       "Dansk og engelsk fulgt ad. Leveringsside skelner kørsel fra tilkøbt opsætning."
     ],
     "decision": "Andre tidspunkter er fortsat efter aftale og skal bekræftes. Ingen automatisk accept af valgfrit klokkeslæt eller løfte om Philips tilgængelighed.",
-    "validation": "1314 tests passed, 7 skipped, 0 failures. Browser: to særskilte aftaler 595 + 400 = 995 kr; den fjernede valgmulighed er væk.",
-    "publication": "Afventer deploy og live-kontrol i denne opgave.",
+    "validation": "1314 tests passed, 7 skipped, 0 failures. Browser: to særskilte aftaler 595 + 400 = 995 kr; den fjernede valgmulighed er væk. Produktionsbuild bestået. Live kontrolleret på desktop og mobil 390x844: 0/200/400 kr i gebyr, dansk/engelsk, adresse og fjernet tilvalg. Ingen ordre eller betaling oprettet.",
+    "publication": "Live på lejhojtaler.dk. Deployment: https://1aa5c28a.speaker-rental.pages.dev",
     "demo": "demo/2026-10-29-saadan-virker-det.html"
   }
 }
