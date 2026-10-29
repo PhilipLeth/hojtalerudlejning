@@ -201,7 +201,7 @@ describe("BookingFlow - Step 3: Addons", () => {
       // en tilvalgs-række
       expect(screen.getByText("Levering og afhentning")).toBeInTheDocument();
       expect(screen.getByText("Levering")).toBeInTheDocument();
-      expect(screen.getByText("Afhentning efter festen")).toBeInTheDocument();
+      expect(screen.queryByText("Afhentning efter festen")).not.toBeInTheDocument();
       expect(screen.getByText("Levering og afhentning (begge veje)")).toBeInTheDocument();
       expect(screen.getByText("Jeg henter og afleverer selv")).toBeInTheDocument();
     }

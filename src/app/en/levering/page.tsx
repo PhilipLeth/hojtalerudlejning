@@ -21,9 +21,8 @@ export default function DeliveryPage() {
         <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">Delivery · Copenhagen</p>
         <h1 className="mt-4 text-4xl font-bold sm:text-5xl">Collect it yourself, or let us drive</h1>
         <p className="mt-6 max-w-2xl text-lg text-slate-600">
-          You can pick the equipment up from us and return it after the party — that costs nothing. If you have no car,
-          or you would rather not spend the afternoon setting up, we drive anywhere in Copenhagen and set it up ready to
-          use.
+          You can collect and return the equipment at our scheduled times with no fee.
+          We also deliver across Copenhagen. Setup and takedown can be added with delivery and collection both ways.
         </p>
         <PickupSummary locale="en" className="mt-4 text-sm text-slate-500" />
       </section>
@@ -37,12 +36,12 @@ export default function DeliveryPage() {
               Pick it up from us and bring it back after the party. Most of it fits in an ordinary car, and the smaller
               items travel fine by bike.
             </p>
-            <p className="mt-3 font-semibold">Free</p>
+            <p className="mt-3 font-semibold">No fee at the scheduled times</p>
           </div>
           <div className="rounded-xl border border-slate-200 p-5">
-            <h3 className="font-semibold">We deliver and set up</h3>
+            <h3 className="font-semibold">We deliver</h3>
             <p className="mt-2 text-sm text-slate-600">
-              We drive out, set everything up and plug it in, so all you do is switch it on. You return it yourself.
+              We bring the equipment to you. You return it to Njalsgade 40, 2300 Copenhagen afterwards.
             </p>
             <p className="mt-3 font-semibold">
               <LivePrice productId="levering_ud" prefix="" suffix=" DKK" />
@@ -51,7 +50,7 @@ export default function DeliveryPage() {
           <div className="rounded-xl border-2 border-brand-600 p-5">
             <h3 className="font-semibold">Both ways</h3>
             <p className="mt-2 text-sm text-slate-600">
-              We deliver, set up and collect everything again after the party. You never have to drive.
+              We deliver and collect the equipment again after the party. You never have to drive.
             </p>
             <p className="mt-3 font-semibold">
               <LivePrice productId="levering_begge" prefix="" suffix=" DKK" />
@@ -59,9 +58,11 @@ export default function DeliveryPage() {
           </div>
         </div>
         <p className="mt-4 text-sm text-slate-500">
-          If you can collect it but not return it, we can do just the trip back for{" "}
-          <LivePrice productId="afhentning_retur" prefix="" suffix=" DKK" />. All three options are in the booking under
-          &quot;Delivery and collection&quot;, where you also give us the address.
+          Choose transport under &quot;Delivery and collection&quot; in the booking and enter the delivery address.
+          Delivery both ways with setup and takedown costs{" "}
+          <LivePrice productId="levering_begge_opsaetning" prefix="" suffix=" DKK" />.
+          Collecting and returning it yourself on Monday and Thursday at 5 PM is free.
+          Other times by arrangement cost DKK 200 per pickup or return.
         </p>
       </section>
 

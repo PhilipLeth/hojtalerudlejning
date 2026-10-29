@@ -129,12 +129,12 @@ export default function PriceTable({ locale = "da" }: { locale?: Locale }) {
   });
 
   const kørsel = addons
-    .filter((a) => delivery.has(a.id))
+    .filter((a) => delivery.has(a.id) && a.id !== "afhentning_retur")
     .map<Row>((a) => ({ id: a.id, name: a[locale].label, desc: a[locale].desc, price: a.price }));
   if (kørsel.length) {
     groups.push({
       title: da ? "Levering og afhentning" : "Delivery and collection",
-      note: da ? "Vælges i bookingen. Du kan også hente selv, det er gratis." : "Chosen during booking. Collecting it yourself is free.",
+      note: da ? "Vælges i bookingen. Du kan hente og aflevere selv uden gebyr på de faste tidspunkter. Andre tider efter aftale koster 200 kr pr. ind- eller udlevering." : "Chosen during booking. Pickup and return at the scheduled times are free. Other times by arrangement cost DKK 200 per pickup or return.",
       rows: kørsel,
     });
   }

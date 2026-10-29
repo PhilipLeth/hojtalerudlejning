@@ -1,15 +1,16 @@
 "use client";
-import { formatDateLine, formatRange, hoursForDate, type OpeningHours, type TimeSlotId } from "@/lib/openingHours";
+import { formatBookingDateLine, formatRange, hoursForDate, type OpeningHours, type TimeSlotId } from "@/lib/openingHours";
 
-export default function HandoverPicker({ hours, date, value, onChange, label, locale }: {
-  hours: OpeningHours; date: string; value: TimeSlotId; onChange: (value: TimeSlotId) => void; label: string; locale: "da" | "en";
+export default function HandoverPicker({ hours, date, value, onChange, label, locale, address }: {
+  hours: OpeningHours; date: string; value: TimeSlotId; onChange: (value: TimeSlotId) => void; label: string; locale: "da" | "en"; address?: string;
 }) {
   const day = hoursForDate(hours, date);
   const outside = day.closed || value === "outside";
   const en = locale === "en";
   return <fieldset className="rounded-xl border border-white/15 p-4 space-y-3">
     <legend className="px-1 font-semibold">{label}</legend>
-    <p className="text-sm text-white/60">{formatDateLine(hours, date, locale)}</p>
+    {address && <p className="text-sm font-medium">{address}</p>}
+    <p className="text-sm text-white/60">{formatBookingDateLine(hours, date, locale)}</p>
     {!day.closed && <label className="flex gap-3 items-center text-sm cursor-pointer">
       <input type="radio" name={`handover-${label}`} checked={!outside} onChange={() => onChange("unknown")} className="accent-[#ffd600]" />
       {en ? "Scheduled appointment" : "Fast aftaletid"} · {formatRange(day, locale)} · {en ? "no fee" : "uden gebyr"}

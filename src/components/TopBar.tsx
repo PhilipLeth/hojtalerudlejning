@@ -53,7 +53,7 @@ const AFHENTNING: Record<Locale, string> = {
   en: "Collect in Copenhagen S, or have it delivered",
 };
 
-const AABENT: Record<Locale, string> = { da: "Åbent", en: "Open" };
+const AABENT: Record<Locale, string> = { da: "Åben", en: "Open" };
 
 export default function TopBar() {
   const pathname = usePathname();
@@ -111,7 +111,7 @@ export default function TopBar() {
       {/* Mobile: rotér én USP ad gangen med tilhørende ikon */}
       <div className="md:hidden">
         <span
-          className={`flex items-center justify-center gap-2 transition-all duration-300 ${
+          className={`flex items-center justify-center gap-2 text-center text-xs sm:text-sm transition-all duration-300 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
           }`}
         >

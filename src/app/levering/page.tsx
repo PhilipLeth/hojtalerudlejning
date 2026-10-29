@@ -21,8 +21,8 @@ export default function LeveringPage() {
         <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">Levering · København</p>
         <h1 className="mt-4 text-4xl font-bold sm:text-5xl">Hent selv, eller lad os køre det ud</h1>
         <p className="mt-6 max-w-2xl text-lg text-slate-600">
-          Du kan hente udstyret hos os og aflevere det igen efter festen — det koster ikke noget. Har du ikke bil, eller
-          skal I ikke bruge tid på at stille op, kører vi ud i hele København og sætter det op, så det er klar til brug.
+          Du kan hente og aflevere udstyret hos os uden gebyr på de faste tidspunkter.
+          Vi tilbyder også levering i hele København. Vil I have udstyret stillet op og pakket ned, kan det vælges sammen med kørsel begge veje.
         </p>
         <PickupSummary className="mt-4 text-sm text-slate-500" />
       </section>
@@ -36,12 +36,12 @@ export default function LeveringPage() {
               Du henter hos os og afleverer igen efter festen. Det meste kan være i en almindelig bil, og de mindre
               ting kan køres på cykel.
             </p>
-            <p className="mt-3 font-semibold">Gratis</p>
+            <p className="mt-3 font-semibold">Uden gebyr på de faste tidspunkter</p>
           </div>
           <div className="rounded-xl border border-slate-200 p-5">
-            <h3 className="font-semibold">Vi leverer og sætter op</h3>
+            <h3 className="font-semibold">Vi leverer</h3>
             <p className="mt-2 text-sm text-slate-600">
-              Vi kører ud, stiller op og tilslutter, så der bare skal tændes. Du afleverer selv bagefter.
+              Vi kører ud med udstyret. Du afleverer selv bagefter på Njalsgade 40, 2300 København.
             </p>
             <p className="mt-3 font-semibold">
               <LivePrice productId="levering_ud" prefix="" />
@@ -50,7 +50,7 @@ export default function LeveringPage() {
           <div className="rounded-xl border-2 border-brand-600 p-5">
             <h3 className="font-semibold">Begge veje</h3>
             <p className="mt-2 text-sm text-slate-600">
-              Vi leverer, sætter op og henter det hele igen efter festen. Du skal ikke selv køre nogen af vejene.
+              Vi leverer og henter udstyret igen efter festen. Du skal ikke selv køre nogen af vejene.
             </p>
             <p className="mt-3 font-semibold">
               <LivePrice productId="levering_begge" prefix="" />
@@ -58,9 +58,11 @@ export default function LeveringPage() {
           </div>
         </div>
         <p className="mt-4 text-sm text-slate-500">
-          Skal vi kun hente igen bagefter, fordi du selv kan hente, men ikke aflevere, koster den tur{" "}
-          <LivePrice productId="afhentning_retur" prefix="" suffix=" kr" />. Alle tre valg ligger i bookingen under &quot;Levering og
-          afhentning&quot;, og du skriver adressen, når du vælger dem.
+          Vælg kørsel under &quot;Levering og afhentning&quot; i bookingen, og skriv leveringsadressen.
+          Levering begge veje med opsætning og nedtagning koster{" "}
+          <LivePrice productId="levering_begge_opsaetning" prefix="" suffix=" kr" />.
+          Henter og afleverer du selv, er mandag og torsdag kl. 17:00 uden gebyr.
+          Andre tider efter aftale koster 200 kr pr. ind- eller udlevering.
         </p>
       </section>
 

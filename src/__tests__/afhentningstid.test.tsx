@@ -189,9 +189,9 @@ describe("tidsvalget i checkout", () => {
     expect(screen.queryByText("Hvornår afleverer du?")).not.toBeInTheDocument();
     expect(screen.queryByText("Før 12")).not.toBeInTheDocument();
     expect(screen.queryByText("Ved jeg ikke endnu")).not.toBeInTheDocument();
-    // Og ingen gebyrlinje — der er stadig intet at opkræve
+    // Ingen gamle tidsknapper; det aktuelle aftalegebyr vises allerede her.
     expect(screen.queryByText(/uden for åbningstid/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/\+\d+ kr/)).not.toBeInTheDocument();
+    expect(screen.getByText(/Fredag: efter aftale \(\+200 kr\)/)).toBeInTheDocument();
   });
 
   it("sender stadig standardvalget med til serveren, så mails og lejeseddel virker uændret", async () => {

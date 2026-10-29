@@ -25,6 +25,7 @@ import { useSiteSettings } from "@/lib/useSiteSettings";
 import {
   defaultTimeSlot,
   formatDateLine,
+  formatBookingDateLine,
   formatOneLine,
   formatSentence,
   formatShortDate,
@@ -112,18 +113,6 @@ function AntalVælger({ antal, onMinus, onPlus, locale }: {
 
 /* ───── Mini Calendar ───── */
 
-function getNextFridays(today: Date, count: number): Set<string> {
-  const fridays = new Set<string>();
-  const d = new Date(today);
-  // Advance to next Friday
-  d.setDate(d.getDate() + ((5 - d.getDay() + 7) % 7 || 7));
-  for (let i = 0; i < count; i++) {
-    fridays.add(dateKey(d));
-    d.setDate(d.getDate() + 7);
-  }
-  return fridays;
-}
-
 function MiniCalendar({
   pickupDate,
   returnDate,
@@ -158,8 +147,6 @@ function MiniCalendar({
     td.setHours(0, 0, 0, 0);
     return td;
   }, []);
-
-  const hotFridays = useMemo(() => getNextFridays(today, 2), [today]);
 
   const daysInMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
   const firstDayOfWeek = (new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1).getDay() + 6) % 7;
@@ -204,46 +191,40 @@ function MiniCalendar({
           const isReturn = returnDate && isSameDay(date, returnDate);
           const isInRange = pickupDate && returnDate && date > pickupDate && date < returnDate;
           const isTooFar = pickupDate && !returnDate && diffDays(pickupDate, date) > 5;
-          const isHotFriday = hotFridays.has(iso);
           // Åbningstiderne for netop denne dato, en særlig dato slår ugedagen ud
           const resolved = hoursForDate(hours, iso);
-          const isSpecial = !!resolved.exception && !resolved.closed;
           // Kun når admin har slået "kun åbne dage" til, spærrer en lukket dag
           const isClosed = hours.onlyOpenDays && resolved.closed;
-          const label = formatDateLine(hours, iso, locale);
+          const disabled = isPast || isTooEarly || !!isTooFar || isClosed;
+          const label = formatBookingDateLine(hours, iso, locale);
           const title = resolved.exception?.note ? `${label}, ${resolved.exception.note}` : label;
 
           return (
             <button
               type="button"
               key={iso}
-              disabled={isPast || isTooEarly || !!isTooFar || isClosed}
+              disabled={disabled}
               onClick={() => onSelectDate(date)}
               title={title}
               aria-label={`${date.getDate()}. ${s.monthNames[date.getMonth()]}, ${title}`}
+              aria-pressed={!!(isPickup || isReturn)}
               className={`
-                relative h-10 rounded-lg text-sm font-medium transition
-                ${isPast || isTooEarly || isTooFar || isClosed ? "text-white/15 cursor-not-allowed" : "hover:bg-white/10 cursor-pointer"}
-                ${isPickup ? "bg-brand-500 text-black font-bold" : ""}
-                ${isReturn ? "bg-brand-600 text-black font-bold" : ""}
-                ${isInRange ? "bg-brand-500/20 text-brand-300" : ""}
-                ${isHotFriday && !isPast && !isTooEarly && !isPickup ? "ring-1 ring-orange-400/50" : ""}
-                ${isSpecial && !isPast && !isTooEarly && !isPickup && !isReturn ? "ring-1 ring-brand-400 text-brand-300" : ""}
+                relative h-11 rounded-lg text-sm font-medium transition
+                ${disabled ? "text-white/15 cursor-not-allowed" : resolved.closed ? "bg-amber-100 text-amber-950 hover:bg-amber-200" : "bg-emerald-100 text-emerald-950 hover:bg-emerald-200"}
+                ${isPickup || isReturn ? "ring-2 ring-inset ring-blue-700 font-bold" : isInRange ? "ring-1 ring-inset ring-blue-300" : ""}
               `}
             >
               {date.getDate()}
-              {isSpecial && !isPast && !isTooEarly && (
-                <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-brand-400" />
-              )}
-              {isHotFriday && !isPast && !isTooEarly && (
-                <span className="absolute -top-1 -right-1 flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 animate-ping" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-orange-400" />
-                </span>
-              )}
             </button>
           );
         })}
+      </div>
+
+      <div className="mt-4 space-y-2 text-xs text-slate-700">
+        <p className="font-semibold">{locale === "en" ? "When collecting and returning it yourself:" : "Når du henter og afleverer selv:"}</p>
+        <p className="flex items-center gap-2"><span aria-hidden="true" className="h-3 w-3 shrink-0 rounded bg-emerald-200 border border-emerald-600" />{locale === "en" ? "Green: scheduled time, no fee" : "Grøn: fast tidspunkt uden gebyr"}</p>
+        {!hours.onlyOpenDays && <p className="flex items-center gap-2"><span aria-hidden="true" className="h-3 w-3 shrink-0 rounded bg-amber-200 border border-amber-600" />{locale === "en" ? "Yellow: by arrangement, DKK 200 per pickup or return" : "Gul: efter aftale, 200 kr pr. ind- eller udlevering"}</p>}
+        <p>{formatSentence(hours, locale)} {!hours.onlyOpenDays && (locale === "en" ? "Other times must be confirmed with us. Two separate appointments cost DKK 400 in total. Delivery is chosen in the next step." : "Andre tidspunkter skal bekræftes med os. To særskilte aftaler koster i alt 400 kr. Levering vælges i næste trin.")}</p>
       </div>
 
       {/* Hvad gælder på de valgte datoer, inkl. særlige åbninger som 30. dec */}
@@ -318,11 +299,11 @@ function SelectedDayHours({ hours, pickupDate, returnDate, locale = "da", whenEm
           <div key={row.key} className="flex flex-wrap items-baseline gap-x-2">
             <span className="text-white/40">{row.label}:</span>
             <span className={resolved.closed ? "text-white/50" : "text-brand-300"}>
-              {formatDateLine(hours, row.iso, locale)}
+              {formatBookingDateLine(hours, row.iso, locale)}
             </span>
             {resolved.closed && (
               <span className="text-white/40">
-                {locale === "en" ? " we will call you to agree on a time" : " vi ringer og aftaler tidspunktet"}
+                {locale === "en" ? " time must be confirmed with us" : " tidspunktet skal bekræftes med os"}
               </span>
             )}
             {note && <span className="text-brand-400">· {note}</span>}
@@ -2421,6 +2402,9 @@ export default function BookingFlow({
               </div>
             )}
 
+            <p className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
+              <strong>{locale === "en" ? "Pickup and return: " : "Afhentning og aflevering: "}</strong>{pickupAddress}
+            </p>
             <MiniCalendar
               pickupDate={pickupDate}
               returnDate={returnDate}
@@ -2516,7 +2500,7 @@ export default function BookingFlow({
                   : undefined
               }
               options={addons
-                .filter((a) => DELIVERY_IDS.includes(a.id))
+                .filter((a) => DELIVERY_IDS.includes(a.id) && a.id !== "afhentning_retur")
                 .map((a) => ({ id: a.id, label: a.label, desc: a.desc, price: a.price }))}
               value={deliveryChoice}
               onSelect={(id) => {
@@ -2533,8 +2517,8 @@ export default function BookingFlow({
               returnDate={returnDate}
             />
 
-            {pickupDate && !directions.out && <HandoverPicker hours={hours} date={dateKey(pickupDate)} value={pickupSlot} onChange={setPickupSlot} label={locale === "en" ? "Pickup time" : "Tid for afhentning"} locale={locale} />}
-            {returnDate && !directions.back && <HandoverPicker hours={hours} date={dateKey(returnDate)} value={returnSlot} onChange={setReturnSlot} label={locale === "en" ? "Return time" : "Tid for aflevering"} locale={locale} />}
+            {pickupDate && !directions.out && <HandoverPicker hours={hours} date={dateKey(pickupDate)} value={pickupSlot} onChange={setPickupSlot} label={locale === "en" ? "Pickup time" : "Tid for afhentning"} locale={locale} address={pickupAddress} />}
+            {returnDate && !directions.back && <HandoverPicker hours={hours} date={dateKey(returnDate)} value={returnSlot} onChange={setReturnSlot} label={locale === "en" ? "Return time" : "Tid for aflevering"} locale={locale} address={pickupAddress} />}
             {minimumError && <p role="alert" className="rounded-xl border border-amber-500/40 bg-amber-50 p-4 text-sm text-amber-900">{minimumError}</p>}
 
             {orderHasDj && <DjGearPicker locale={locale} value={selectedDjGear ?? ""} onChange={chooseDjGear}/>}
@@ -3042,6 +3026,9 @@ export default function BookingFlow({
                   {s.successDelivery}: {deliveryAddress}
                 </div>
               )}
+              {(!directions.out || !directions.back) && <p className="rounded-lg bg-slate-50 p-3 text-sm text-slate-700">
+                <strong>{locale === "en" ? "Meet us at: " : "Mødested: "}</strong>{pickupAddress}
+              </p>}
               {/* Rabatkode */}
               <div className="mt-3 border-t border-white/10 pt-3">
                 {coupon ? (

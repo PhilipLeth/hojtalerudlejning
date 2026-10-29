@@ -652,10 +652,10 @@ describe("Checkout", () => {
     // 31., er alle lukkede dage i visningen fortid og dermed spærrede uanset)
     fireEvent.click(screen.getByLabelText("Næste måned"));
 
-    const lukkede = screen.getAllByRole("button").filter((b) => b.getAttribute("title")?.includes("lukket"));
-    expect(lukkede.length).toBeGreaterThan(0);
-    // Som hidtil: man kan vælge dagen — tidspunktet vælges bagefter i checkout
-    const fremtidige = lukkede.filter((b) => !b.className.includes("cursor-not-allowed"));
+    const aftaledage = screen.getAllByRole("button").filter((b) => b.getAttribute("title")?.includes("efter aftale (+200 kr)"));
+    expect(aftaledage.length).toBeGreaterThan(0);
+    // Dagen er valgfri, men aftale og gebyr er synlige inden valget.
+    const fremtidige = aftaledage.filter((b) => !b.className.includes("cursor-not-allowed"));
     expect(fremtidige.length).toBeGreaterThan(0);
   });
 });

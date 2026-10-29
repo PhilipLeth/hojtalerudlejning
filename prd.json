@@ -4459,5 +4459,21 @@
     "sms_review": "Frederik kræver ny adresse og tider gennem booking og mails. Halloweenpriser 30. oktober–1. november (røg 395, low fog 695) var allerede implementeret. Egen Stripekonto nævnt separat 23. oktober; Frederik skal oprette den, og kontoskift indgår ikke i disse driftsændringer.",
     "company_address": "Philip bad efterfølgende om at rette firmaadressen til Njalsgade 40, 2300 København. Fælles adresse i footer, vilkår, mails og fakturaer. CVR, firmanavn og kontakter bevares. Ingen ubekræftet indgangsbeskrivelse tilføjet.",
     "company_address_validation": "1310 tests passed, 7 skipped, no failures. Production build, sitemap and llms.txt passed. Public API and live desktop/mobile views confirmed Njalsgade 40. Before/after screenshots in demo/."
+  },
+  "frederik_feedback_2026_10_29": {
+    "passes": true,
+    "source": "Frederiks mail 28. oktober 2026 kl. 17.33, Gmail 1a1835c0aebcebb7, og Philips besked om at udføre rettelserne 29. oktober.",
+    "scope": [
+      "Grøn/gul kalender med tekstforklaring på faste tider og 200 kr pr. særskilt ind-/udlevering.",
+      "Valgbare dage uden fast tid hedder efter aftale; adminspærrede dage forbliver lukkede.",
+      "Toplinjen skriver mandag og torsdag fuldt ud med kl. 17:00.",
+      "Afhentning efter festen fjernet fra nye kundevalg, prisliste og leveringsside. Gamle ordrers katalog/prisgrundlag bevares.",
+      "Adresse ved kalender, begge tidsvalg og ordreoversigt.",
+      "Dansk og engelsk fulgt ad. Leveringsside skelner kørsel fra tilkøbt opsætning."
+    ],
+    "decision": "Andre tidspunkter er fortsat efter aftale og skal bekræftes. Ingen automatisk accept af valgfrit klokkeslæt eller løfte om Philips tilgængelighed.",
+    "validation": "1314 tests passed, 7 skipped, 0 failures. Browser: to særskilte aftaler 595 + 400 = 995 kr; den fjernede valgmulighed er væk.",
+    "publication": "Afventer deploy og live-kontrol i denne opgave.",
+    "demo": "demo/2026-10-29-saadan-virker-det.html"
   }
 }

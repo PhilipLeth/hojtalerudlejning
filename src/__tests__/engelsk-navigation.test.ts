@@ -99,7 +99,7 @@ describe("Engelsk navigation", () => {
     // Åbningstiden skrives ikke i hånden — den bygges af de levende
     // indstillinger, og kompaktAabningstid() kan begge sprog
     expect(src).toContain("kompaktAabningstid");
-    expect(src).toMatch(/da: "Åbent", en: "Open"/);
+    expect(src).toMatch(/da: "Åben", en: "Open"/);
   });
 });
 

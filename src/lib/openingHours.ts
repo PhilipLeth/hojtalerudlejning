@@ -204,6 +204,11 @@ export interface OpenDay extends DayHours {
 export function kompaktAabningstid(hours: OpeningHours, locale: "da" | "en" = "da"): string {
   const dage = openDays(hours);
   if (dage.length === 0) return "";
+  // Faste mødetider skal være læselige, ikke ligne et forkortet åbningstidsinterval.
+  if (dage.length <= 2 && dage.every((d) => d.open === d.close)) {
+    return dage.map((d) => `${dayName(d.day, locale)} ${locale === "en" ? `at ${formatTime(d.open, locale)}` : `kl. ${d.open}`}`)
+      .join(locale === "en" ? " and " : " og ");
+  }
 
   // Nabodage med samme åbnings- og lukketid bliver til ét spænd
   const spænd: OpenDay[][] = [];
@@ -367,6 +372,15 @@ export function formatDateLine(hours: OpeningHours, isoDate: string, locale: "da
   }
   const p = purposeName(r.purpose, locale);
   return `${hvornår} ${formatRange(r, locale)}${p ? ` (${p})` : ""}`;
+}
+
+/** I bookingen betyder en dag uden fast åbningstid en betalt aftale,
+ * medmindre admin udtrykkeligt har spærret for de dage. */
+export function formatBookingDateLine(hours: OpeningHours, isoDate: string, locale: "da" | "en" = "da"): string {
+  const r = hoursForDate(hours, isoDate);
+  if (!r.closed || hours.onlyOpenDays) return formatDateLine(hours, isoDate, locale);
+  const day = r.exception ? formatShortDate(r.date, locale) : dayName(r.day, locale);
+  return locale === "en" ? `${day}: by arrangement (+DKK 200)` : `${day}: efter aftale (+200 kr)`;
 }
 
 /** "30. dec" / "Dec 30" */

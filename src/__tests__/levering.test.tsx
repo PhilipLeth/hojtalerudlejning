@@ -38,15 +38,15 @@ async function toAddonStep() {
 }
 
 describe("Levering og afhentning i bookingen", () => {
-  it("viser begge veje som selvstændige valg med pris", async () => {
+  it("viser levering og begge veje, men ikke returafhentning alene", async () => {
     await toAddonStep();
     expect(screen.getByText("Levering")).toBeInTheDocument();
-    expect(screen.getByText("Afhentning efter festen")).toBeInTheDocument();
+    expect(screen.queryByText("Afhentning efter festen")).not.toBeInTheDocument();
     expect(screen.getByText("Levering og afhentning (begge veje)")).toBeInTheDocument();
     // Prisarkets fjerde valg: kørsel MED opsætning og nedtagning
     expect(screen.getByText("Levering og afhentning + opsætning og nedtagning")).toBeInTheDocument();
     // Priserne skal stå på knapperne — én vej 495, begge veje 795
-    expect(screen.getAllByText("+495,-").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText("+495,-")).toBeInTheDocument();
     expect(screen.getByText("+795,-")).toBeInTheDocument();
   });
 
@@ -69,12 +69,12 @@ describe("Levering og afhentning i bookingen", () => {
 
   it("lægger kørslen i totalen og sender den med til serveren", async () => {
     await toAddonStep();
-    fireEvent.click(screen.getByText("Afhentning efter festen"));
+    fireEvent.click(screen.getByText("Levering og afhentning (begge veje)"));
     fireEvent.change(screen.getByPlaceholderText("Leveringsadresse i København"), {
       target: { value: "Nørrebrogade 1" },
     });
-    // Mellem højtalerpakke 595 (prisarket 28. sept 2026) + afhentning 495
-    expect(screen.getAllByText("1290 kr").length).toBeGreaterThan(0);
+    // Pakke 595 + kørsel begge veje 795. Ingen særskilte møder på lageret.
+    expect(screen.getAllByText("1390 kr").length).toBeGreaterThan(0);
 
     fireEvent.click(screen.getByText("Videre"));
     await waitFor(() => expect(screen.getByText("Dine oplysninger")).toBeInTheDocument());
@@ -90,10 +90,10 @@ describe("Levering og afhentning i bookingen", () => {
       const call = (global.fetch as any).mock.calls.find((c: any[]) => c[0] === "/api/book");
       expect(call).toBeTruthy();
       const body = JSON.parse(call[1].body);
-      expect(body.addonIds).toContain("afhentning_retur");
-      expect(body.deliveryOptionId).toBe("afhentning_retur");
+      expect(body.addonIds).toContain("levering_begge");
+      expect(body.deliveryOptionId).toBe("levering_begge");
       expect(body.deliveryAddress).toBe("Nørrebrogade 1");
-      expect(body.total).toBe(1290);
+      expect(body.total).toBe(1390);
     });
   });
 });
