@@ -4477,7 +4477,7 @@
     "demo": "demo/2026-10-29-saadan-virker-det.html"
   },
   "kurv_antal_2026_11_02": {
-    "status": "testet_klar_til_live",
+    "status": "live",
     "bestilt": "Philip 2. november: færdiggør flere produkter/booking og publicér",
     "acceptance": [
       "Antal kan ændres allerede på datotrinnet, også for tilvalg booket alene.",
@@ -4485,6 +4485,8 @@
       "Lagerloft, minus/fjern og serverberegnet booking/Stripe bevares.",
       "Dansk og engelsk testes; produktionsbuild og live desktop/mobil dokumenteres."
     ],
-    "kontrol": "1322 tests bestået, 4 udeladt; produktionsbuild bestået. Lokal browser: 2 lysbarer + 1 Soundboks = 1185 kr. Typecheck har eksisterende fejl uden for ændringen; nye tests rettet."
+    "kontrol": "1322 tests bestået, 4 udeladt; produktionsbuild bestået. Lokal browser: 2 lysbarer + 1 Soundboks = 1185 kr. Typecheck har eksisterende fejl uden for ændringen; nye tests rettet.",
+    "deployment": "https://28587eba.speaker-rental.pages.dev",
+    "guide": "demo/2026-11-02-produktantal/saadan-virker-det.html"
   }
 }
