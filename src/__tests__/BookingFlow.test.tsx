@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import BookingFlow from "@/components/BookingFlow";
+import { vælgDatoer } from "./vaelgDatoer";
 import { catalogPrice } from "@/lib/products";
 
 // Mock next/image
@@ -301,7 +302,7 @@ describe("BookingFlow - Preselect via ?product=", () => {
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
-    expect(screen.getByText("Speakerpakke trådløs 30-50")).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Speakerpakke trådløs 30-50" })).toBeInTheDocument();
     expect(screen.queryByText(/udsolgt/i)).not.toBeInTheDocument();
   });
 
@@ -311,7 +312,7 @@ describe("BookingFlow - Preselect via ?product=", () => {
     await waitFor(() => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
-    expect(screen.getByText("Low fog-maskine (røggulv)")).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Low fog-maskine (røggulv)" })).toBeInTheDocument();
   });
 
   it("Book-knap på et tilvalg (subwoofer) preselecter det og viser produktets navn", async () => {
@@ -321,7 +322,7 @@ describe("BookingFlow - Preselect via ?product=", () => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
     // Viser tilvalgets eget navn, ikke den generiske "Kun effekter"
-    expect(screen.getByText('Subwoofer 12"')).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: 'Subwoofer 12"' })).toBeInTheDocument();
     expect(screen.queryByText("Kun effekter")).not.toBeInTheDocument();
   });
 
@@ -404,23 +405,7 @@ describe("BookingFlow - Flere enheder af samme produkt", () => {
       expect(screen.getByText("Vælg datoer")).toBeInTheDocument();
     });
 
-    const today = new Date();
-    const pickupDay = new Date(today);
-    pickupDay.setDate(pickupDay.getDate() + 1);
-    const returnDay = new Date(today);
-    returnDay.setDate(returnDay.getDate() + 3);
-    if (pickupDay.getMonth() !== today.getMonth() || returnDay.getMonth() !== today.getMonth()) {
-      return false;
-    }
-
-    const clickDay = (d: Date) => {
-      const buttons = screen
-        .getAllByRole("button")
-        .filter((b) => b.textContent === d.getDate().toString() && !(b as HTMLButtonElement).disabled);
-      if (buttons.length > 0) fireEvent.click(buttons[0]);
-    };
-    clickDay(pickupDay);
-    clickDay(returnDay);
+    expect(vælgDatoer()).toBe(true);
 
     await waitFor(() => {
       expect(screen.getByText("Videre")).not.toBeDisabled();
@@ -449,6 +434,8 @@ describe("BookingFlow - Flere enheder af samme produkt", () => {
     render(<BookingFlow onSummaryChange={onSummary} />);
     if (!(await tilTrin3())) return;
 
+    const grundTotal = onSummary.mock.calls.at(-1)![0].total;
+
     // Kurven viser hovedproduktet med antal 1 og en +-knap. Slå knappen op
     // forfra for hvert klik: fra 2 stk. tegner kurven linjen som en gruppe med
     // sin egen knap, og et klik på den gamle, løsrevne knap gør ingenting.
@@ -457,7 +444,7 @@ describe("BookingFlow - Flere enheder af samme produkt", () => {
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
       expect(last?.count).toBe(4);
-      expect(last?.total).toBe(4 * catalogPrice("party") + 400);
+      expect(last?.total).toBe(grundTotal + 3 * catalogPrice("party"));
     });
 
     // Alle 4 på lager er i kurven → + er slået fra, så der ikke bookes en 5.
@@ -468,7 +455,7 @@ describe("BookingFlow - Flere enheder af samme produkt", () => {
     await waitFor(() => {
       const last = onSummary.mock.calls.at(-1)?.[0];
       expect(last?.count).toBe(3);
-      expect(last?.total).toBe(3 * catalogPrice("party") + 400);
+      expect(last?.total).toBe(grundTotal + 2 * catalogPrice("party"));
     });
   });
 

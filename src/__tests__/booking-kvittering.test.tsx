@@ -44,10 +44,11 @@ async function frem() {
   fireEvent.click(videre[0].closest("button")!);
 }
 
-async function tilKontakt(vælgProdukt = "Soundboks 4") {
+async function tilKontakt(vælgProdukt = "Soundboks 4", antal = 1) {
   render(<BookingFlow />);
   fireEvent.click(screen.getAllByText(vælgProdukt)[0].closest("button")!);
   await waitFor(() => expect(screen.getByText("Vælg datoer")).toBeInTheDocument());
+  for (let i = 1; i < antal; i++) fireEvent.click(screen.getByLabelText("Én mere"));
   vælgDatoer();
   await waitFor(() => expect(screen.getByText("Videre").closest("button")).not.toBeDisabled());
   await frem();
@@ -176,4 +177,18 @@ describe("Flere varer i samme ordre", () => {
     expect(navne.join(" ")).toMatch(/Lille højtalerpakke|Soundboks/);
     expect(sendtPayload.total).toBeGreaterThan(0);
   }, 25000);
+});
+
+
+describe("Flere af samme produkt i booking og kvittering", () => {
+  it("sender alle tre enheder og viser det samlede antal efter booking", async () => {
+    await tilKontakt("Soundboks 4", 3);
+    udfyld();
+    fireEvent.click(screen.getByRole("radio", { name: "Betal ved afhentning" }));
+    fireEvent.click(screen.getByRole("button", { name: "Send booking" }));
+    await screen.findByText("Booking modtaget!");
+    expect(sendtPayload.speakerId).toBe("soundboks");
+    expect(sendtPayload.cartItems.filter((c: any) => c.productId === "soundboks")).toHaveLength(2);
+    expect(screen.getByText("3 × Soundboks 4")).toBeInTheDocument();
+  });
 });

@@ -4475,5 +4475,16 @@
     "validation": "1314 tests passed, 7 skipped, 0 failures. Browser: to særskilte aftaler 595 + 400 = 995 kr; den fjernede valgmulighed er væk. Produktionsbuild bestået. Live kontrolleret på desktop og mobil 390x844: 0/200/400 kr i gebyr, dansk/engelsk, adresse og fjernet tilvalg. Ingen ordre eller betaling oprettet.",
     "publication": "Live på lejhojtaler.dk. Deployment: https://1aa5c28a.speaker-rental.pages.dev",
     "demo": "demo/2026-10-29-saadan-virker-det.html"
+  },
+  "kurv_antal_2026_11_02": {
+    "status": "testet_klar_til_live",
+    "bestilt": "Philip 2. november: færdiggør flere produkter/booking og publicér",
+    "acceptance": [
+      "Antal kan ændres allerede på datotrinnet, også for tilvalg booket alene.",
+      "Ens produkter samles med antal og linjetotal i kurv, oversigt og kvittering.",
+      "Lagerloft, minus/fjern og serverberegnet booking/Stripe bevares.",
+      "Dansk og engelsk testes; produktionsbuild og live desktop/mobil dokumenteres."
+    ],
+    "kontrol": "1322 tests bestået, 4 udeladt; produktionsbuild bestået. Lokal browser: 2 lysbarer + 1 Soundboks = 1185 kr. Typecheck har eksisterende fejl uden for ændringen; nye tests rettet."
   }
 }

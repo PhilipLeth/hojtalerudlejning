@@ -92,7 +92,7 @@ function AntalVælger({ antal, onMinus, onPlus, locale }: {
         type="button"
         onClick={onMinus}
         aria-label={locale === "en" ? "One less" : "Én færre"}
-        className="flex h-6 w-6 items-center justify-center rounded-md border border-white/15 text-white/60 transition hover:border-white/40 hover:text-white"
+        className="flex h-10 w-10 items-center justify-center rounded-md border border-white/15 text-white/60 transition hover:border-white/40 hover:text-white"
       >
         −
       </button>
@@ -103,7 +103,7 @@ function AntalVælger({ antal, onMinus, onPlus, locale }: {
         disabled={!onPlus}
         aria-label={locale === "en" ? "One more" : "Én mere"}
         title={onPlus ? undefined : locale === "en" ? "No more available in the selected period" : "Ikke flere ledige i den valgte periode"}
-        className="flex h-6 w-6 items-center justify-center rounded-md border border-white/15 text-white/60 transition hover:border-white/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+        className="flex h-10 w-10 items-center justify-center rounded-md border border-white/15 text-white/60 transition hover:border-white/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
       >
         +
       </button>
@@ -1446,7 +1446,7 @@ export default function BookingFlow({
     : "";
 
   // Kurv-summary op til draweren (fane når draweren er pakket væk)
-  const cartCount = cartItems.length + (speaker ? 1 : 0);
+  const cartCount = cartItems.length + (speaker && !isEffectsOnly ? 1 : 0) + soloAddons.length;
   const tomKurv =
     variant === "page" &&
     urlTjekket &&
@@ -1533,6 +1533,7 @@ export default function BookingFlow({
 
   /** Læg endnu en enhed af et produkt i kurven, "4 stk. af samme højtaler" */
   function lægEnhedTil(productId: string) {
+    if (!kanLæggeTil(productId)) return;
     const priceOf = (base: number) => (isSummerSale() ? applyDiscount(base) : base);
     const sp = speakers.find((x) => x.id === productId);
     const rp = rentalProducts.find((x) => x.id === productId);
@@ -1678,10 +1679,7 @@ export default function BookingFlow({
           sted: hasDelivery && deliveryAddress ? `${s.successDelivery} ${deliveryAddress}` : `${s.successPickup} ${pickupAddress}`,
           linjer: [
             ...(outsideFee ? [{ label: outsideFeeLabel(locale), value: `${outsideFee} kr` }] : []),
-            ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
-            ...(isRentalOnly && rentalName ? [{ label: rentalName, value: `${speakerPrice} kr` }] : []),
-            ...cartItems.map((c) => ({ label: c.name, value: `${c.price} kr` })),
-            ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: addonLabel(a), value: `${addonPris(a)} kr` })),
+            ...kvitteringsLinjer(),
           ],
           total,
           betaling: payMethod,
@@ -1809,91 +1807,70 @@ export default function BookingFlow({
     };
   }, [checkoutSecret, s.errorRetry]);
 
-  /* ── Kurven (trin 2 og 3) ──
-   * Hovedproduktet står øverst og kan fjernes som resten. Står den også på
-   * datotrinnet, kan kunden se, at det første produkt stadig er med, når de
-   * kommer tilbage fra "Fortsæt med at shoppe" og booker en ting mere. */
+  // Samme antal og linjetotal på alle trin og på kvitteringen.
+  const ordreLinjer = (() => {
+    const grupper = new Map<string, { id: string; navn: string; antal: number; pris: number }>();
+    const læg = (id: string, navn: string, pris: number) => {
+      const g = grupper.get(id);
+      if (g) { g.antal++; g.pris += pris; }
+      else grupper.set(id, { id, navn, antal: 1, pris });
+    };
+    if (speaker && !isEffectsOnly) læg(speaker, selectedSpeaker?.name ?? rentalName ?? speaker, speakerPrice);
+    for (const a of addons.filter(a => selectedAddons.includes(a.id))) {
+      læg(a.id, addonLabel(a), summer && a.id !== DJ_ID ? applyDiscount(addonPris(a)) : addonPris(a));
+    }
+    for (const c of cartItems) læg(c.productId, c.name, c.price);
+    return [...grupper.values()];
+  })();
+  const kvitteringsLinjer = () => ordreLinjer.map(g => ({
+    label: g.antal > 1 ? `${g.antal} × ${g.navn}` : g.navn, value: `${g.pris} kr`,
+  }));
+
+  function fjernVare(id: string, alle = false) {
+    if (!alle && cartItems.some(c => c.productId === id)) { fjernEnhed(id); return; }
+    setCartItems(prev => prev.filter(c => c.productId !== id));
+    const restTilvalg = selectedAddons.filter(a => a !== id);
+    setSelectedAddons(restTilvalg);
+    const restVarer = restTilvalg.filter(a => !DELIVERY_IDS.includes(a));
+    const fjernerHoved = speaker === id || (isEffectsOnly && restVarer.length === 0);
+    if (fjernerHoved) setSpeaker(null);
+    if ((fjernerHoved || !speaker) && !cartItems.some(c => c.productId !== id) && !restVarer.length) setStep(1);
+  }
+
   function KurvListe() {
-    if (cartItems.length === 0 && !speaker) return null;
+    const varer = ordreLinjer.filter(g => !DELIVERY_IDS.includes(g.id));
+    if (!varer.length) return null;
     return (
-      <div className="glass rounded-xl p-4">
-        <p className="text-xs text-white/40 mb-2">{locale === "en" ? "In your cart:" : "I din kurv:"}</p>
-        {/* Hovedproduktet, ekstra enheder af samme produkt er kurvlinjer og vises her som ét antal */}
-        {!!speaker && (() => {
-          const ekstra = cartItems.filter((c) => c.productId === speaker);
-          const antal = 1 + ekstra.length;
-          const pris = (isEffectsOnly ? soloPris : speakerPrice) + ekstra.reduce((sum, c) => sum + c.price, 0);
-          return (
-            <div className="flex items-center justify-between gap-2 text-sm py-1">
-              <span className="min-w-0 flex-1 truncate text-white/70">
-                {isEffectsOnly ? effectsLabel : isRentalOnly ? rentalName : selectedSpeaker?.name}
-              </span>
-              {!isEffectsOnly && (
-                <AntalVælger
-                  antal={antal}
-                  onMinus={() => (ekstra.length ? fjernEnhed(speaker) : fjernHovedprodukt())}
-                  onPlus={kanLæggeTil(speaker) ? () => lægEnhedTil(speaker) : undefined}
-                  locale={locale}
-                />
-              )}
-              <span className="flex shrink-0 items-center gap-3">
-                <span className="text-brand-400">{pris} kr</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setCartItems((prev) => prev.filter((c) => c.productId !== speaker));
-                    fjernHovedprodukt();
-                  }}
-                  aria-label={locale === "en" ? "Remove" : "Fjern"}
-                  className="text-white/30 hover:text-red-400 text-xs"
-                >
-                  ✕
-                </button>
-              </span>
-            </div>
-          );
-        })()}
-        {/* Resten af kurven, én linje pr. produkt med antal */}
-        {(() => {
-          const grupper = new Map<string, { navn: string; antal: number; pris: number }>();
-          for (const c of cartItems) {
-            if (c.productId === speaker) continue;
-            const g = grupper.get(c.productId);
-            if (g) {
-              g.antal += 1;
-              g.pris += c.price;
-            } else {
-              grupper.set(c.productId, { navn: c.name, antal: 1, pris: c.price });
-            }
-          }
-          return [...grupper.entries()].map(([id, g]) => (
-            <div key={id} className="flex items-center justify-between gap-2 text-sm py-1">
-              <span className="min-w-0 flex-1 truncate text-white/70">{g.navn}</span>
-              <AntalVælger
-                antal={g.antal}
-                onMinus={() => fjernEnhed(id)}
-                onPlus={kanLæggeTil(id) ? () => lægEnhedTil(id) : undefined}
-                locale={locale}
-              />
-              <span className="flex shrink-0 items-center gap-3">
-                <span className="text-brand-400">{g.pris} kr</span>
-                <button
-                  type="button"
-                  onClick={() => setCartItems((prev) => prev.filter((x) => x.productId !== id))}
-                  aria-label={locale === "en" ? "Remove" : "Fjern"}
-                  className="text-white/30 hover:text-red-400 text-xs"
-                >
-                  ✕
-                </button>
-              </span>
-            </div>
-          ));
-        })()}
-        <p className="mt-1 text-[11px] text-white/30">
+      <div className="glass rounded-xl p-4" role="group" aria-label={locale === "en" ? "Your cart" : "Din kurv"}>
+        <p className="text-sm font-semibold mb-2">{locale === "en" ? "In your cart:" : "I din kurv:"}</p>
+        {varer.map(g => (
+          <div key={g.id} role="group" aria-label={g.navn} className="flex flex-wrap items-center justify-between gap-2 text-sm py-2">
+            <span className="min-w-0 basis-full sm:basis-auto sm:flex-1 text-white/70">{g.navn}</span>
+            {g.id !== DJ_ID && g.id !== LYDMAND_ID && (
+              <AntalVælger antal={g.antal} onMinus={() => fjernVare(g.id)}
+                onPlus={kanLæggeTil(g.id) ? () => lægEnhedTil(g.id) : undefined} locale={locale} />
+            )}
+            <span className="flex shrink-0 items-center gap-3">
+              <span className="text-brand-400">{g.pris} kr</span>
+              <button type="button" onClick={() => fjernVare(g.id, true)}
+                aria-label={locale === "en" ? "Remove" : "Fjern"}
+                className="h-10 w-10 text-white/50 hover:text-red-400">✕</button>
+            </span>
+          </div>
+        ))}
+        <p className="mt-2 text-xs text-white/60">
           {locale === "en" ? "Use + to rent more than one of the same product" : "Brug + til at leje flere af samme produkt"}
         </p>
       </div>
     );
+  }
+
+  function OrdreLinjer() {
+    return <>{ordreLinjer.map(g => (
+      <div key={g.id} className="flex justify-between gap-3 text-sm text-white/70">
+        <span>{g.antal > 1 ? `${g.antal} × ${g.navn}` : g.navn}</span><span className="shrink-0">{g.pris} kr</span>
+      </div>
+    ))}</>;
   }
 
   /* ── Price Summary (reused) ── */
@@ -1906,35 +1883,7 @@ export default function BookingFlow({
             {summerLabel.banner}
           </div>
         )}
-        {selectedSpeaker && (
-          <div className="flex justify-between text-sm text-white/50">
-            <span>{selectedSpeaker.name}{s.speakerSuffix}</span>
-            <span>
-              {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
-              {speakerPrice} kr
-            </span>
-          </div>
-        )}
-        {isRentalOnly && rentalName && (
-          <div className="flex justify-between text-sm text-white/50">
-            <span>{rentalName}</span>
-            <span>
-              {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
-              {speakerPrice} kr
-            </span>
-          </div>
-        )}
-        {addons
-          .filter((a) => selectedAddons.includes(a.id))
-          .map((a) => (
-            <div key={a.id} className="flex justify-between text-sm text-white/50">
-              <span>{addonLabel(a)}</span>
-              <span>
-                {summer && <span className="line-through text-white/30 mr-2">{addonPris(a)} kr</span>}
-                {summer && a.id !== DJ_ID ? applyDiscount(addonPris(a)) : addonPris(a)} kr
-              </span>
-            </div>
-          ))}
+        <OrdreLinjer />
         {coupon && (
           <div className="flex justify-between text-sm text-emerald-400">
             <span>{coupon.code}</span>
@@ -1964,11 +1913,7 @@ export default function BookingFlow({
   }
 
   if (done) {
-    const orderItems = [
-      ...(selectedSpeaker ? [{ label: `${selectedSpeaker.name}${s.speakerSuffix} (${selectedSpeaker.size})`, value: `${speakerPrice} kr` }] : []),
-      ...(isRentalOnly && rentalName ? [{ label: rentalName, value: `${speakerPrice} kr` }] : []),
-      ...addons.filter((a) => selectedAddons.includes(a.id)).map((a) => ({ label: addonLabel(a), value: `${addonPris(a)} kr` })),
-    ];
+    const orderItems = kvitteringsLinjer();
 
     return (
       <section id={inDrawer ? undefined : "book"} className="relative overflow-hidden">
@@ -2339,7 +2284,7 @@ export default function BookingFlow({
 
             {/* Ligger der allerede noget i kurven, skal det stå her — ellers ser
                 det ud, som om den nye vare har erstattet den første */}
-            {cartItems.length > 0 && <KurvListe />}
+            <KurvListe />
 
             {/* Produktinfo: beskrivelse + indhold, især vigtigt for pakker */}
             {(selectedRental || selectedSpeaker) && (
@@ -2971,56 +2916,8 @@ export default function BookingFlow({
                   {summerLabel.banner}
                 </div>
               )}
-              {(() => {
-                const grupper = new Map<string, { navn: string; antal: number; pris: number }>();
-                for (const c of cartItems) {
-                  const g = grupper.get(c.productId);
-                  if (g) {
-                    g.antal += 1;
-                    g.pris += c.price;
-                  } else {
-                    grupper.set(c.productId, { navn: c.name, antal: 1, pris: c.price });
-                  }
-                }
-                return [...grupper.entries()].map(([id, g]) => (
-                  <div key={id} className="flex justify-between text-sm text-white/50">
-                    <span>{g.antal > 1 ? `${g.antal} × ${g.navn}` : g.navn}</span>
-                    <span>{g.pris} kr</span>
-                  </div>
-                ));
-              })()}
-              {selectedSpeaker && (
-                <div className="flex justify-between text-sm text-white/50">
-                  <span>{selectedSpeaker.name}{s.speakerSuffix}</span>
-                  <span>
-                    {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
-                    {speakerPrice} kr
-                  </span>
-                </div>
-              )}
-              {isRentalOnly && rentalName && (
-                <div className="flex justify-between text-sm text-white/50">
-                  <span>{rentalName}</span>
-                  <span>
-                    {summer && <span className="line-through text-white/30 mr-2">{speakerBasePrice} kr</span>}
-                    {speakerPrice} kr
-                  </span>
-                </div>
-              )}
-              <div className="text-sm text-white/30">
-                <span>{periodLabel}</span>
-              </div>
-              {addons
-                .filter((a) => selectedAddons.includes(a.id))
-                .map((a) => (
-                  <div key={a.id} className="flex justify-between text-sm text-white/50">
-                    <span>{addonLabel(a)}</span>
-                    <span>
-                      {summer && <span className="line-through text-white/30 mr-2">{addonPris(a)} kr</span>}
-                      {summer && a.id !== DJ_ID ? applyDiscount(addonPris(a)) : addonPris(a)} kr
-                    </span>
-                  </div>
-                ))}
+              <OrdreLinjer />
+              <div className="text-sm text-white/30"><span>{periodLabel}</span></div>
               {hasDelivery && deliveryAddress && (
                 <div className="text-sm text-white/30">
                   {s.successDelivery}: {deliveryAddress}
