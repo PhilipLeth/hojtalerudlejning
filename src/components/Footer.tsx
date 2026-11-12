@@ -273,6 +273,11 @@ export default function Footer({ locale = "da" }: { locale?: Locale }) {
             <OpeningHoursLine locale={locale} />
           </div>
           <SocialLine />
+          <a href="https://bestilt.dk/udlejer/lejhojtaler-dk/" target="_blank" rel="noopener" className="mt-6 inline-block max-w-full" aria-label={locale === "da" ? "Se vores verificering hos Bestilt.dk" : "View our verification on Bestilt.dk (Danish)"}>
+            {/* Fælles Bestilt-badge; profilen viser den aktuelle verificering. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://bestilt.dk/brand/verificeret-udlejer.svg" alt={locale === "da" ? "Verificeret udlejer hos Bestilt.dk" : "Verified rental company on Bestilt.dk"} width="420" height="96" className="h-auto w-[280px] max-w-full" loading="lazy" />
+          </a>
         </div>
 
         {SPALTER.map((c) => (

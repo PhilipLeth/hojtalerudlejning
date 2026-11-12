@@ -1,4 +1,5 @@
 {
+  "bestiltBadge": {"date":"2026-11-12","status":"in_progress","acceptance":"Philip har bekræftet alle fire verificeringspunkter og bedt om fælles Bestilt-badge i sidefoden med link til /udlejer/lejhojtaler-dk/. Begge sprog; ingen ændring af booking. Browser desktop/mobil, npm test og build, livekontrol."},
   "project": "lejhojtaler.dk",
   "description": "Udlejning af højtalere, lys, røgmaskine, discokugle, lyskæder og AV-udstyr i København. App-feel booking, lavest mulig friktion, betaling ved afhentning. Dark tema med amber/guld brand-farve (#ffd600).",
   "business": {
