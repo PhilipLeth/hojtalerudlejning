@@ -1,5 +1,11 @@
 {
-  "bestiltBadge": {"date":"2026-11-12","status":"complete","deployment":"https://1625fde1.speaker-rental.pages.dev","verification":"1322 tests, build og live browserkontrol af DA/EN samt desktop/mobil bestået. Screenshots i demo og eksisterende kundemappe i Drive.","acceptance":"Philip har bekræftet alle fire verificeringspunkter og bedt om fælles Bestilt-badge i sidefoden med link til /udlejer/lejhojtaler-dk/. Begge sprog; ingen ændring af booking. Browser desktop/mobil, npm test og build, livekontrol."},
+  "bestiltBadge": {
+    "date": "2026-11-12",
+    "status": "complete",
+    "deployment": "https://1625fde1.speaker-rental.pages.dev",
+    "verification": "1322 tests, build og live browserkontrol af DA/EN samt desktop/mobil bestået. Screenshots i demo og eksisterende kundemappe i Drive.",
+    "acceptance": "Philip har bekræftet alle fire verificeringspunkter og bedt om fælles Bestilt-badge i sidefoden med link til /udlejer/lejhojtaler-dk/. Begge sprog; ingen ændring af booking. Browser desktop/mobil, npm test og build, livekontrol."
+  },
   "project": "lejhojtaler.dk",
   "description": "Udlejning af højtalere, lys, røgmaskine, discokugle, lyskæder og AV-udstyr i København. App-feel booking, lavest mulig friktion, betaling ved afhentning. Dark tema med amber/guld brand-farve (#ffd600).",
   "business": {
@@ -3293,7 +3299,8 @@
     "kurv": {
       "princip": "Draweren ER kurven. Flere produkter kan lægges i kurven ('+ Tilføj et produkt mere' går tilbage til produktvalg med datoerne bevaret). Kurvlinjer kan fjernes enkeltvis. Total vises løbende.",
       "pakkes_ind": "Når draweren klikkes væk (X, backdrop, Escape) pakkes den ind til højre: en gul kurv-fane i højre side (kurv-ikon + antal + total) vises så længe der ligger noget i kurven. Klik på fanen åbner draweren igen med al state bevaret. Tom kurv = ingen fane.",
-      "tilbage_til_shop": "Kunden kan altid lukke draweren og shoppe videre — intet mistes."
+      "tilbage_til_shop": "Kunden kan altid lukke draweren og shoppe videre — intet mistes.",
+      "huskes_i_browseren": "2026-11-24: Frederik: 'svært at booke flere produkter, den husker ikke kurven'. Årsag: kurven lå kun i React-state, og produktsidernes Book-knapper er almindelige <a href=/book?product=…> med fuld sideindlæsning, så hvert nyt produkt startede fra nul. Nu gemmes kurven i localStorage (booking_kurv: kurvlinjer, valgt produkt, tilvalg, DJ-timer, lydmand, datoer, mødetider, leveringsadresse, trin) og læses igen ved opstart FØR ?product=, så det igangværende produkt lægges i kurven og det nye bliver det aktuelle. Gemt kurv ældre end 3 dage, ukendte produkt-id'er og datoer i fortiden tages ikke med. Tømmes når ordren er gået igennem (done/kvittering). Test: kurv-huskes.test.tsx. Bemærk: jsdom's localStorage mangler metoder under vitest her, tests mocker den selv (mønster fra kurv-detaljer.test)."
     },
     "steps": [
       "1. Produktvalg: højtalere + effekter + 'Andet udstyr'-grid (alle rentals) — fuld produktvælger",

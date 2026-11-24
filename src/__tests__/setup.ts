@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom/vitest";
 import { configure } from "@testing-library/react";
+import { vi, beforeEach } from "vitest";
 
 /*
  * waitFor's standard er 1 sekund. Det er rigeligt alene, men i fuld suite
@@ -26,3 +27,16 @@ global.fetch = vi.fn(() =>
       }),
   })
 ) as any;
+
+/*
+ * Kurven gemmes nu i localStorage (BookingFlow → booking_kurv), og jsdom
+ * deler window mellem tests i samme fil. Uden det her tog hver test den
+ * forriges kurv med sig, og "stabler ikke dubletter" talte tre produkter.
+ */
+beforeEach(() => {
+  try {
+    window.localStorage.clear();
+  } catch {
+    /* en test kan have erstattet localStorage med en mock uden clear */
+  }
+});

@@ -85,7 +85,8 @@ describe("Kunden skal ikke skrive sig selv ind igen", () => {
     expect((screen.getByPlaceholderText("Navn") as HTMLInputElement).value).toBe("Agnes");
     const kommentar = screen.getByPlaceholderText(/kommentar|Kommentar|besked/i) as HTMLTextAreaElement;
     expect(kommentar.value).toBe("");
-    expect(store.size).toBe(1);
+    // Kurven selv ligger også i browseren (booking_kurv), men intet andet
+    expect([...store.keys()].filter((k) => k !== "booking_kurv")).toEqual(["booking_kontakt"]);
   });
 
   it("tåler ugyldigt indhold i browserens hukommelse", async () => {

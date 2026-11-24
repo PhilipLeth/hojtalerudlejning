@@ -564,6 +564,32 @@ interface KvitteringData {
 }
 
 const KVITTERING_NØGLE = "booking_kvittering_";
+/**
+ * Kurven i kundens egen browser. Produktsiderne sender til /book med en rigtig
+ * sideindlæsning (og kunden opdaterer, åbner et nyt faneblad, kommer tilbage
+ * fra Google), og så er al React-state væk. Uden det her stod kunden med en
+ * tom kurv, hver gang han gik fra ét produkt til det næste.
+ */
+const KURV_NØGLE = "booking_kurv";
+/** En gemt kurv ældre end tre dage tages ikke frem igen, festen er nok en anden */
+const KURV_LEVETID_MS = 3 * 24 * 60 * 60 * 1000;
+interface GemtKurv {
+  v: 1;
+  gemt: number;
+  cartItems: { productId: string; name: string; price: number; dj?: DjHours }[];
+  speaker: string | null;
+  selectedAddons: string[];
+  djHours: DjHours;
+  lydmandTimer: number;
+  lydmandFra: string;
+  lydmandTil: string;
+  pickupDate: string | null;
+  returnDate: string | null;
+  pickupSlot: TimeSlotId;
+  returnSlot: TimeSlotId;
+  deliveryAddress: string;
+  step: number;
+}
 
 /**
  * Rækkefølgen tilvalgene vises i, de fem første er dem, folk faktisk tilføjer
@@ -975,6 +1001,68 @@ export default function BookingFlow({
   const [availSelected, setAvailSelected] = useState<AvailabilityData | null>(null);
   const [soldOutMsg, setSoldOutMsg] = useState("");
   const preselected = useRef(false);
+  /** Først når den gemte kurv er læst, må ?product= lægge noget oveni */
+  const [kurvHentet, setKurvHentet] = useState(false);
+
+  /*
+   * Hent den gemte kurv én gang ved opstart. Det sker FØR ?product= læses,
+   * så et produkt der allerede var i gang lægges i kurven i stedet for at
+   * blive overskrevet af det nye. Ukendte produkter og datoer i fortiden
+   * tages ikke med, kalenderen og kataloget ville alligevel afvise dem.
+   */
+  useEffect(() => {
+    try {
+      const rå = window.localStorage.getItem(KURV_NØGLE);
+      if (!rå) return;
+      const gemt = JSON.parse(rå) as Partial<GemtKurv>;
+      if (gemt.v !== 1 || typeof gemt.gemt !== "number" || Date.now() - gemt.gemt > KURV_LEVETID_MS) {
+        window.localStorage.removeItem(KURV_NØGLE);
+        return;
+      }
+      const kendt = (id: string) =>
+        speakers.some((x) => x.id === id) || rentalProducts.some((x) => x.id === id) || catalog.addons.some((x) => x.id === id);
+      const linjer = (Array.isArray(gemt.cartItems) ? gemt.cartItems : []).filter(
+        (c) => c && typeof c.productId === "string" && typeof c.name === "string" && typeof c.price === "number" && kendt(c.productId),
+      );
+      const valgt =
+        typeof gemt.speaker === "string" && (gemt.speaker === "effects-only" || kendt(gemt.speaker)) ? gemt.speaker : null;
+      const tilvalg = (Array.isArray(gemt.selectedAddons) ? gemt.selectedAddons : []).filter(
+        (id): id is string => typeof id === "string" && addons.some((a) => a.id === id),
+      );
+      if (!linjer.length && !valgt && !tilvalg.some((id) => !DELIVERY_IDS.includes(id))) return;
+      setCartItems(linjer);
+      setSpeaker(valgt);
+      setSelectedAddons(tilvalg);
+      if (gemt.djHours && typeof gemt.djHours.before23 === "number" && typeof gemt.djHours.after23 === "number") {
+        try {
+          const v = priceDj(gemt.djHours);
+          setDjHours({ before23: v.before23, after23: v.after23 });
+        } catch {
+          /* ugyldige timer: standardvalget beholdes */
+        }
+      }
+      if (typeof gemt.lydmandTimer === "number" && gemt.lydmandTimer > 0) setLydmandTimer(gemt.lydmandTimer);
+      if (typeof gemt.lydmandFra === "string") setLydmandFra(gemt.lydmandFra);
+      if (typeof gemt.lydmandTil === "string") setLydmandTil(gemt.lydmandTil);
+      const idag = new Date();
+      idag.setHours(0, 0, 0, 0);
+      const p = gemt.pickupDate ? new Date(gemt.pickupDate) : null;
+      const r = gemt.returnDate ? new Date(gemt.returnDate) : null;
+      if (p && r && !isNaN(p.getTime()) && !isNaN(r.getTime()) && p >= idag && r >= p) {
+        setPickupDate(p);
+        setReturnDate(r);
+        if (gemt.pickupSlot === "early" || gemt.pickupSlot === "late") setPickupSlot(gemt.pickupSlot);
+        if (gemt.returnSlot === "early" || gemt.returnSlot === "late") setReturnSlot(gemt.returnSlot);
+      }
+      if (typeof gemt.deliveryAddress === "string") setDeliveryAddress(gemt.deliveryAddress);
+      if (valgt && typeof gemt.step === "number" && gemt.step >= 1 && gemt.step <= 4) setStep(Math.floor(gemt.step));
+    } catch {
+      /* ugyldigt indhold eller privat tilstand: så starter kurven tom */
+    } finally {
+      setKurvHentet(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Drawer: scroll altid til toppen når man skifter step
   useEffect(() => {
@@ -1065,7 +1153,7 @@ export default function BookingFlow({
   // Er der allerede et produkt i gang, lægges det i kurven først, så
   // "book endnu en ting" aldrig smider det første valg væk.
   useEffect(() => {
-    if (preselected.current || typeof window === "undefined") return;
+    if (!kurvHentet || preselected.current || typeof window === "undefined") return;
     const product = new URLSearchParams(window.location.search).get("product");
     if (!product) return;
 
@@ -1129,7 +1217,7 @@ export default function BookingFlow({
 
     console.log("[booking] Product not found yet, waiting:", product);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [speakers, rentalProducts, addons, urlTick, speaker, selectedAddons, stashSelectionToCart]);
+  }, [kurvHentet, speakers, rentalProducts, addons, urlTick, speaker, selectedAddons, stashSelectionToCart]);
 
   /**
    * Kommer man tilbage til /?kvittering=NR, opdatering, bogmærke, en mail til
@@ -1457,6 +1545,39 @@ export default function BookingFlow({
   useEffect(() => {
     onSummaryChange?.({ count: cartCount, total });
   }, [cartCount, total, onSummaryChange]);
+
+  // Gem kurven, så den står der igen efter et sideskift. Tømmes når ordren er
+  // sendt, kunden skal ikke møde en fuld kurv efter at have betalt.
+  useEffect(() => {
+    if (!kurvHentet) return;
+    try {
+      const harIndhold = cartItems.length > 0 || !!speaker || selectedAddons.some((id) => !DELIVERY_IDS.includes(id));
+      if (done || !harIndhold) {
+        window.localStorage.removeItem(KURV_NØGLE);
+        return;
+      }
+      const gemt: GemtKurv = {
+        v: 1,
+        gemt: Date.now(),
+        cartItems,
+        speaker,
+        selectedAddons,
+        djHours,
+        lydmandTimer,
+        lydmandFra,
+        lydmandTil,
+        pickupDate: pickupDate ? pickupDate.toISOString() : null,
+        returnDate: returnDate ? returnDate.toISOString() : null,
+        pickupSlot,
+        returnSlot,
+        deliveryAddress,
+        step,
+      };
+      window.localStorage.setItem(KURV_NØGLE, JSON.stringify(gemt));
+    } catch {
+      /* privat tilstand eller fyldt lager: så huskes kurven ikke */
+    }
+  }, [kurvHentet, done, cartItems, speaker, selectedAddons, djHours, lydmandTimer, lydmandFra, lydmandTil, pickupDate, returnDate, pickupSlot, returnSlot, deliveryAddress, step]);
 
   // GA4 form_start, booking step 4 (kontaktoplysninger), ikke kontakt/nyhedsbrev
   useEffect(() => {

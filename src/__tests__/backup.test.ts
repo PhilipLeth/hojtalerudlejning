@@ -72,17 +72,20 @@ describe("sikkerhedskopi", () => {
   });
 
   it("rydder kopier ældre end 90 dage — og kun dem", async () => {
+    // Relativt til i dag: en fast "ny" dato blev selv ældre end 90 dage i
+    // november 2026, og så rød testen uden at koden havde ændret sig
     const old = new Date("2026-01-01T02:00:00Z");
-    const recent = new Date("2026-08-17T02:00:00Z");
+    const recent = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000);
+    const recentKey = backupKey(recent);
     const r2 = fakeR2({
       "backups/2026-01-01.json": { size: 10, uploaded: old },
-      "backups/2026-08-17.json": { size: 10, uploaded: recent },
+      [recentKey]: { size: 10, uploaded: recent },
     });
 
     const removed = await pruneBackups({ BOOKINGS: {} as KVNamespace, MEDIA: r2.bucket });
 
     expect(removed).toEqual(["backups/2026-01-01.json"]);
-    expect(Object.keys(r2.store)).toEqual(["backups/2026-08-17.json"]);
+    expect(Object.keys(r2.store)).toEqual([recentKey]);
   });
 
   it("viser nyeste kopi først", async () => {
