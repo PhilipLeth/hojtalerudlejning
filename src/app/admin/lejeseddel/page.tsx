@@ -189,10 +189,15 @@ export default function LejeseddelPage() {
         body { background: #f5f5f5 !important; color: #111 !important; }
         @page { size: A4; margin: 12mm; }
         @media print {
+          /* Kun dokumentet skal på papir — shopmenuen ligger uden for admin. */
+          body > :not(.admin-shell) { display: none !important; }
           .no-print { display: none !important; }
           body { margin: 0; padding: 0; background: #fff !important; }
-          .print-page { padding: 0 !important; margin: 0 !important; max-width: none !important; box-shadow: none !important; border-radius: 0 !important; }
+          .admin-shell { min-height: 0 !important; background: #fff !important; }
+          .print-page { width: 100% !important; padding: 0 !important; margin: 0 !important; max-width: none !important; box-shadow: none !important; border-radius: 0 !important; }
           .seddel { font-size: 10pt; }
+          .seddel .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+          .seddel .box { min-width: 0; overflow-wrap: anywhere; }
           .seddel table { page-break-inside: avoid; }
           /* Én side er hele pointen — hellere lidt mindre skrift end to sider */
           .seddel .udstyr td { padding: 2.5px 6px; }
