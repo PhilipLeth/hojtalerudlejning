@@ -4498,11 +4498,17 @@
     "guide": "demo/2026-11-02-produktantal/saadan-virker-det.html"
   },
   "faktura_moms_2026_11_26": {
-    "status": "under_kontrol",
+    "status": "live",
     "bestilt": "Philip 26. november 2026: moms på printet faktura, printtest, prod-udgivelse og besked til Frederik efter verificeret levering.",
     "aendring": "Fakturamail og admins print/lejeseddel viser pris inkl. moms og Heraf moms (25 %). Moms beregnes af hele lejeprisen før indbetalinger; depositum indgår ikke. Øre bevares i beløbsvisningen.",
     "afgraensning": "Eksisterende danske faktura- og adminprintflows; ingen ændring af pris, betalinger, fakturanumre eller kundemails ved test.",
-    "kontrol": "51 målrettede tests og fuld suite: 1334 bestået, 7 udeladt. Build og hosted printkontrol følger før udgivelse.",
-    "rollback": "c909b85e615bed693924f8ebc52e7dbcced86eb4; deployment b22e5959-a956-4ebf-a9ed-c30bef350e82"
+    "kontrol": "1334 tests bestået,7 udeladt;51 målrettede genkørt efter printCSS;produktionsbuild bestået.8/8 hosted printprøver og8/8 efterkontroller, alle1A4 med korrekt moms og rest. Printmenu skjult og højrekant kontrolleret. Syntetiske data; ingen virkelig faktura til Robert sendt under test.",
+    "rollback": "c909b85e615bed693924f8ebc52e7dbcced86eb4; deployment b22e5959-a956-4ebf-a9ed-c30bef350e82",
+    "printlayout": "Lejesedlens print skjuler shopmenu og grå adminbaggrund og holder indholdet inden for papiret.",
+    "kode": "28663b7744c184fb929cea1389cd57571220d25c",
+    "staging": "https://32ce6b8d.speaker-rental.pages.dev",
+    "deployment": "https://9572069d.speaker-rental.pages.dev",
+    "produktion": "https://lejhojtaler.dk",
+    "kommunikation": "Frederik orienteret i Gmail-tråd1a218df555c0f1dc, sendt besked1a21982486f7c6a2 til lejhojtaler@gmail.com. Kundens egen faktura er ikke sendt af denne chat."
   }
 }
