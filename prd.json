@@ -4496,5 +4496,13 @@
     "kontrol": "1322 tests bestået, 4 udeladt; produktionsbuild bestået. Lokal browser: 2 lysbarer + 1 Soundboks = 1185 kr. Typecheck har eksisterende fejl uden for ændringen; nye tests rettet.",
     "deployment": "https://28587eba.speaker-rental.pages.dev",
     "guide": "demo/2026-11-02-produktantal/saadan-virker-det.html"
+  },
+  "faktura_moms_2026_11_26": {
+    "status": "under_kontrol",
+    "bestilt": "Philip 26. november 2026: moms på printet faktura, printtest, prod-udgivelse og besked til Frederik efter verificeret levering.",
+    "aendring": "Fakturamail og admins print/lejeseddel viser pris inkl. moms og Heraf moms (25 %). Moms beregnes af hele lejeprisen før indbetalinger; depositum indgår ikke. Øre bevares i beløbsvisningen.",
+    "afgraensning": "Eksisterende danske faktura- og adminprintflows; ingen ændring af pris, betalinger, fakturanumre eller kundemails ved test.",
+    "kontrol": "51 målrettede tests og fuld suite: 1334 bestået, 7 udeladt. Build og hosted printkontrol følger før udgivelse.",
+    "rollback": "c909b85e615bed693924f8ebc52e7dbcced86eb4; deployment b22e5959-a956-4ebf-a9ed-c30bef350e82"
   }
 }

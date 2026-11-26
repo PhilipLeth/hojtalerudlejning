@@ -105,6 +105,14 @@ describe("Lejesedlen", () => {
     expect(screen.getAllByText("500 kr")).toHaveLength(2);
   });
 
+  it("viser moms af hele lejeprisen, selv om der er betalt og lagt depositum", async () => {
+    await openSeddel();
+    expect(screen.getByText("Lejepris inkl. moms").parentElement).toHaveTextContent("2.000 kr");
+    expect(screen.getByText("Heraf moms (25 %)").parentElement).toHaveTextContent("400,00 kr");
+    fireEvent.change(screen.getByDisplayValue("500"), { target: { value: "1500" } });
+    expect(screen.getByText("Heraf moms (25 %)").parentElement).toHaveTextContent("400,00 kr");
+  });
+
   it("bærer en underskriftslinje til kunden — og kun til kunden", async () => {
     await openSeddel();
     expect(screen.getByText(/Lejers underskrift/)).toBeInTheDocument();

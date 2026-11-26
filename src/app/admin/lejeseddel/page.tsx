@@ -8,6 +8,7 @@ import { useState, useEffect, useCallback } from "react";
 import { orderLines, deliveryInfo, type OrderBooking } from "@/lib/orderLines";
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import { formatCompanyLine } from "@/lib/siteInfo";
+import { includedVat, formatDkk as kr } from "@/lib/vat";
 
 interface Booking extends OrderBooking {
   id: string;
@@ -172,7 +173,6 @@ export default function LejeseddelPage() {
   const equipment = getEquipmentRows(selected);
   const paid = (selected.payments ?? []).reduce((sum, p) => sum + (Number(p?.amount) || 0), 0);
   const rest = Math.max(0, (Number(selected.total) || 0) - paid);
-  const kr = (n: number) => `${Math.round(n).toLocaleString("da-DK")} kr`;
   const delivery = deliveryInfo(selected);
   const koersel = !delivery
     ? "Lejer henter og afleverer selv"
@@ -308,7 +308,8 @@ export default function LejeseddelPage() {
             <div className="grid" style={{ marginTop: "12px" }}>
               <div className="box">
                 <h2 style={{ margin: "0 0 3px" }}>Betaling</h2>
-                <div className="row"><b>Lejepris</b> <span>{kr(Number(selected.total) || 0)}</span></div>
+                <div className="row"><b>Lejepris inkl. moms</b> <span>{kr(Number(selected.total) || 0)}</span></div>
+                <div className="row"><b>Heraf moms (25 %)</b> <span>{kr(includedVat(Number(selected.total) || 0), 2)}</span></div>
                 <div className="row"><b>Betalt</b> <span>{paid > 0 ? kr(paid) : "—"}</span></div>
                 <div className="row">
                   <b>Rest</b>{" "}

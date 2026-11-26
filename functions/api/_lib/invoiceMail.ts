@@ -8,6 +8,7 @@
 
 import { DEFAULT_COMPANY, formatAddress } from "../../../src/lib/siteInfo";
 import { DEFAULT_PHONE } from "../../../src/lib/phone";
+import { includedVat, formatDkk as kr } from "../../../src/lib/vat";
 
 export interface InvoiceLine {
   label: string;
@@ -59,10 +60,6 @@ export const DEFAULT_SELLER: InvoiceSeller = {
   email: DEFAULT_COMPANY.email,
   phone: DEFAULT_PHONE.display,
 };
-
-function kr(n: number): string {
-  return `${new Intl.NumberFormat("da-DK").format(Math.round(n))} kr`;
-}
 
 function dkDate(iso: string): string {
   const d = new Date(iso);
@@ -138,8 +135,12 @@ export function invoiceHtml(data: InvoiceMailData): string {
     <table style="width:100%;border-collapse:collapse;font-size:14px;">
       ${rows}
       <tr>
-        <td style="padding:10px 0 6px;font-weight:bold;">I alt</td>
+        <td style="padding:10px 0 6px;font-weight:bold;">I alt inkl. moms</td>
         <td style="padding:10px 0 6px;text-align:right;font-weight:bold;white-space:nowrap;">${kr(data.total)}</td>
+      </tr>
+      <tr>
+        <td style="padding:0 0 6px;color:#444;">Heraf moms (25 %)</td>
+        <td style="padding:0 0 6px;text-align:right;color:#444;white-space:nowrap;">${kr(includedVat(data.total), 2)}</td>
       </tr>
       ${paidRow}
       <tr>
